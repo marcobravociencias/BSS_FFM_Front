@@ -467,8 +467,8 @@ li {
 }
 
 .imgResumen {
-  width: 150px;
-  height: 80px;
+  width: 140px;
+  height: 75px;
   box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
   cursor: pointer;
 }
@@ -508,7 +508,7 @@ tfoot {
 }
 
 .custom-file-label {
-  width: 250px;
+  width: 200px;
   display: inline-block;
   white-space: nowrap;
   overflow: hidden;

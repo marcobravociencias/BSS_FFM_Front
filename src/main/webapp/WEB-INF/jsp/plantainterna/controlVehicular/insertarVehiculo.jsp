@@ -28,7 +28,9 @@
                             maxlength="8" ng-model="vehiculo.placa" capitalize autocomplete="off" />
                     </div>
                     <div class="col-3 form-group">
-                        <label class="label-vehiculo">Tipo veh&iacute;culo <i ng-if="!data.tipoVehiculos.length" class="icono-noseleccion fas fa-exclamation-circle ml-2" title="No se encontr&oacute;o el catalogo de tipo veh&iacute;culo"></i></label>
+                        <label class="label-vehiculo">Tipo veh&iacute;culo <i ng-if="!data.tipoVehiculos.length"
+                                class="icono-noseleccion fas fa-exclamation-circle ml-2"
+                                title="No se encontr&oacute;o el catalogo de tipo veh&iacute;culo"></i></label>
                         <select class="form-control form-control-sm custom-select" name="tipo" id="tipo"
                             ng-change="loadMarca()" ng-model="vehiculo.idTipo">
                             <option value="" selected>NO HAY SELECCI&Oacute;N</option>
@@ -82,7 +84,9 @@
                         </select>
                     </div>
                     <div class="col-3 form-group">
-                        <label class="label-vehiculo">Color <i ng-if="!data.tipoVehiculos.length" class="icono-noseleccion fas fa-exclamation-circle ml-2" title="No se encontr&oacute;o el catalogo de colores"></i></label>
+                        <label class="label-vehiculo">Color <i ng-if="!data.tipoVehiculos.length"
+                                class="icono-noseleccion fas fa-exclamation-circle ml-2"
+                                title="No se encontr&oacute;o el catalogo de colores"></i></label>
                         <select class="form-control form-control-sm custom-select" id="color"
                             ng-model="vehiculo.idColor">
                             <option value="" selected>NO HAY SELECCI&Oacute;N</option>
@@ -93,7 +97,52 @@
                 </div>
                 <div class="form-row">
                     <div class="col-3 form-group">
-                        <label class="label-vehiculo">Geograf&iacute;a <i ng-if="!geografiaList.length" class="icono-noseleccion fas fa-exclamation-circle ml-2" title="No se encontr&oacute;o el catalogo de geograf&iacute;a"></i></label>
+                        <label class="label-vehiculo">Tipo operaci&oacute;n </label>
+                        <select class="form-control form-control-sm custom-select" id="operacion"
+                            ng-model="vehiculo.idOperacion">
+                            <option value="" selected>NO HAY SELECCI&Oacute;N</option>
+                            <option value="{{operacion.id}}" ng-repeat="operacion in data.operaciones">
+                                {{operacion.descripcion}}</option>
+                        </select>
+                    </div>
+                    <div class="col-3 form-group">
+                        <label class="label-vehiculo">Tipo cuadrilla </label>
+                        <select class="form-control form-control-sm custom-select" id="cuadrilla"
+                            ng-model="vehiculo.idTipoCuadrilla">
+                            <option value="" selected>NO HAY SELECCI&Oacute;N</option>
+                            <option value="{{cuadrilla.id}}" ng-repeat="cuadrilla in data.cuadrillas">
+                                {{cuadrilla.descripcion}}</option>
+                        </select>
+                    </div>
+                    <div class="col-3 form-group">
+                        <label class="label-vehiculo">Empresa </label>
+                        <select class="form-control form-control-sm custom-select" id="empresa"
+                            ng-model="vehiculo.idEmpresa">
+                            <option value="" selected>NO HAY SELECCI&Oacute;N</option>
+                            <option value="{{empresa.id}}" ng-repeat="empresa in data.empresas">
+                                {{empresa.descripcion}}</option>
+                        </select>
+                    </div>
+                    <div class="col-3 form-group">
+                        <label class="label-vehiculo">Centro de costos </label>
+                        <select class="form-control form-control-sm custom-select" id="centroCostos"
+                            ng-model="vehiculo.idCosto">
+                            <option value="" selected>NO HAY SELECCI&Oacute;N</option>
+                            <option value="{{costo.id}}" ng-repeat="costo in data.costos">
+                                {{costo.descripcion}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="col-3 form-group">
+                        <label class="label-vehiculo">Expediente </label>
+                        <input type="text" class="form-control form-control-sm" id="expediente" maxlength="15"
+                            ng-model="vehiculo.expediente" capitalize autocomplete="off" />
+                    </div>
+                    <div class="col-3 form-group">
+                        <label class="label-vehiculo">Geograf&iacute;a <i ng-if="!geografiaList.length"
+                                class="icono-noseleccion fas fa-exclamation-circle ml-2"
+                                title="No se encontr&oacute;o el catalogo de geograf&iacute;a"></i></label>
                         <input ng-click="abrirModalGeografia()" readonly type="text" id="arbol_vehiculo_consulta"
                             class="form-control form-control-sm" placeholder="NO HAY SELECCI&Oacute;N" />
                     </div>
@@ -119,7 +168,9 @@
             <div class="col-12">
                 <div class="form-row">
                     <div class="col-3 form-group">
-                        <label class="label-vehiculo">Aseguradora <i ng-if="!data.seguros.length" class="icono-noseleccion fas fa-exclamation-circle ml-2" title="No se encontr&oacute;o el catalogo de tipo veh&iacute;culo"></i></label>
+                        <label class="label-vehiculo">Aseguradora <i ng-if="!data.seguros.length"
+                                class="icono-noseleccion fas fa-exclamation-circle ml-2"
+                                title="No se encontr&oacute;o el catalogo de tipo veh&iacute;culo"></i></label>
                         <select class="form-control form-control-sm custom-select" id="aseguradora"
                             ng-model="vehiculo.detalle.idAseguradora">
                             <option value="" selected>NO HAY SELECCI&Oacute;N</option>
@@ -248,8 +299,8 @@
                     <div class="col-3 form-group">
                         <label class="label-vehiculo">Motivo </label>
                         <span ng-if="motivos.length == 0" id="msjInterno">Seleccione Estatus</span>
-                        <select ng-if="motivos.length > 0" class="form-control form-control-sm custom-select" ng-model="vehiculo.idMotivo"
-                            id="motivo">
+                        <select ng-if="motivos.length > 0" class="form-control form-control-sm custom-select"
+                            ng-model="vehiculo.idMotivo" id="motivo">
                             <option value="" selected>-- Seleccione motivo --</option>
                             <option value="{{mot.idEstatus}}" ng-repeat="mot in motivos">{{mot.nombre}}</option>
                         </select>
@@ -270,7 +321,7 @@
         <div class="tab-pane pills-pane fade" id="pills-imagenes" role="tabpanel" aria-labelledby="pills-imagenes-tab">
             <div class="col-12">
                 <div class="form-row">
-                    <div class="col-3 form-group">
+                    <div class="col-2 form-group mr-3 ml-3">
                         <label class="label-vehiculo">Foto placa </label>
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" id="filePlaca" ng-model="filePlaca"
@@ -279,19 +330,20 @@
                                 Imagen</label>
                         </div>
                         <div ng-if="(vehiculo.urlFotoPlaca && vehiculo.urlFotoPlaca !== 'delete')  || filePlaca"
-                            style="margin-left: 3em; margin-top: 20px; width: 20em;">
+                            style="margin-left: 1.5em; margin-top: 20px; width: 10em;">
                             <img alt="Placa" src="" class="imgResumen" id="placaImagenTab"
                                 onclick="showImgResumen(this)" />
                         </div>
-                        <div ng-if="filePlaca.nombre" class="file-delete" style="margin-left: 3em;">
+                        <div ng-if="filePlaca.nombre" class="file-delete" style="margin-left: 1.5em;">
                             <span class="text-img">{{filePlaca.nombre}} </span><i class="fa fa-trash"
                                 onclick="deleteFile('fotoPlaca')"></i>
                         </div>
-                        <div ng-if="vehiculo.urlFotoPlaca && vehiculo.urlFotoPlaca !== 'delete'  && !filePlaca.nombre" class="file-delete" style="margin-left: 3em;"><span class="text-img">placa</span>
+                        <div ng-if="vehiculo.urlFotoPlaca && vehiculo.urlFotoPlaca !== 'delete'  && !filePlaca.nombre"
+                            class="file-delete" style="margin-left: 1.5em;"><span class="text-img">placa</span>
                             <i class="fa fa-trash" ng-click="deleteFileUrl('fotoPlaca')"></i>
                         </div>
                     </div>
-                    <div class="col-3 form-group">
+                    <div class="col-2 form-group mr-3 ml-3">
                         <label class="label-vehiculo">Foto veh&iacute;culo </label>
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" id="fileFoto" accept="image/*"
@@ -300,20 +352,21 @@
                                 Imagen</label>
                         </div>
                         <div ng-if="(vehiculo.urlFotoVehiculo && vehiculo.urlFotoVehiculo !== 'delete') || fileVehiculo"
-                            style="margin-left: 3em; margin-top: 20px; width: 20em;">
+                            style="margin-left: 1.5em; margin-top: 20px; width: 10em;">
                             <img alt="Vehiculo" src="" class="imgResumen" id="vehiculoImagenTab"
                                 onclick="showImgResumen(this)" />
                         </div>
-                        <div ng-if="fileVehiculo.nombre" class="file-delete" style="margin-left: 3em;"> <span
+                        <div ng-if="fileVehiculo.nombre" class="file-delete" style="margin-left: 1.5em;"> <span
                                 class="text-img">{{fileVehiculo.nombre}} </span>
                             <i class="fa fa-trash" onclick="deleteFile('fotoVehiculo')"></i>
                         </div>
-                        <div ng-if="vehiculo.urlFotoVehiculo && vehiculo.urlFotoVehiculo !== 'delete' &&!fileVehiculo.nombre" class="file-delete" style="margin-left: 3em;">
+                        <div ng-if="vehiculo.urlFotoVehiculo && vehiculo.urlFotoVehiculo !== 'delete' &&!fileVehiculo.nombre"
+                            class="file-delete" style="margin-left: 1.5em;">
                             <span class="text-img">vehiculo</span>
                             <i class="fa fa-trash" ng-click="deleteFileUrl('fotoVehiculo')"></i>
                         </div>
                     </div>
-                    <div class="col-3 form-group">
+                    <div class="col-2 form-group mr-3 ml-3">
                         <label class="label-vehiculo">Tarjeta circulaci&oacute;n
                         </label>
                         <div class="custom-file">
@@ -323,21 +376,22 @@
                                 Imagen</label>
                         </div>
                         <div ng-if="(vehiculo.detalle.urlFotoTarjetaCirculacion && vehiculo.detalle.urlFotoTarjetaCirculacion !== 'delete') || fileCirculacion"
-                            style="margin-left: 3em; margin-top: 20px; width: 20em;">
+                            style="margin-left: 1.5em; margin-top: 20px; width: 10em;">
                             <img alt="Tarjeta Circulacion" src="" id="circulacionImagenTab"
                                 onclick="showImgResumen(this)" class="imgResumen" />
                         </div>
-                        <div ng-if="fileCirculacion.nombre" class="file-delete" style="margin-left: 3em;">
+                        <div ng-if="fileCirculacion.nombre" class="file-delete" style="margin-left: 1.5em;">
                             <span class="text-img">{{fileCirculacion.nombre}} </span><i class="fa fa-trash"
                                 onclick="deleteFile('fotoTarjetaCirculaion')"></i>
                         </div>
-                        <div ng-if="vehiculo.detalle.urlFotoTarjetaCirculacion && vehiculo.detalle.urlFotoTarjetaCirculacion !== 'delete' && !fileCirculacion.nombre" class="file-delete"
-                            style="margin-left: 3em;"> <span class="text-img">tarjetaCirculacion</span>
+                        <div ng-if="vehiculo.detalle.urlFotoTarjetaCirculacion && vehiculo.detalle.urlFotoTarjetaCirculacion !== 'delete' && !fileCirculacion.nombre"
+                            class="file-delete" style="margin-left: 1.5em;"> <span
+                                class="text-img">tarjetaCirculacion</span>
                             <i class="fa fa-trash" ng-click="deleteFileUrl('fotoTarjetaCirculaion')"></i>
                         </div>
                     </div>
 
-                    <div class="col-3 form-group">
+                    <div class="col-2 form-group mr-3 ml-3">
                         <label class="label-vehiculo">Tarjeta gasolina </label>
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" id="fileTarjetaGas" accept="image/*"
@@ -346,17 +400,40 @@
                                 Imagen</label>
                         </div>
                         <div ng-if="(vehiculo.detalle.urlFotoTarjetaGasolina && vehiculo.detalle.urlFotoTarjetaGasolina !== 'delete') || fileGasolina"
-                            style="margin-left: 3em; margin-top: 20px; width: 20em;">
+                            style="margin-left: 1.5em; margin-top: 20px; width: 10em;">
                             <img alt="Tarjeta Gasolina" src="" id="gasolinaImagenTab" onclick="showImgResumen(this)"
                                 class="imgResumen" />
                         </div>
-                        <div ng-if="fileGasolina.nombre" class="file-delete" style="margin-left: 3em;">
+                        <div ng-if="fileGasolina.nombre" class="file-delete" style="margin-left: 1.5em;">
                             <span class="text-img">{{fileGasolina.nombre}} </span><i class="fa fa-trash"
                                 onclick="deleteFile('fotoTarjetaGasolina')"></i>
                         </div>
-                        <div ng-if="vehiculo.detalle.urlFotoTarjetaGasolina && vehiculo.detalle.urlFotoTarjetaGasolina !== 'delete' && !fileGasolina.nombre" class="file-delete"
-                            style="margin-left: 3em;"> <span class="text-img">tarjetaGasolina</span>
+                        <div ng-if="vehiculo.detalle.urlFotoTarjetaGasolina && vehiculo.detalle.urlFotoTarjetaGasolina !== 'delete' && !fileGasolina.nombre"
+                            class="file-delete" style="margin-left: 1.5em;"> <span
+                                class="text-img">tarjetaGasolina</span>
                             <i class="fa fa-trash" ng-click="deleteFileUrl('fotoTarjetaGasolina')"></i>
+                        </div>
+                    </div>
+                    <div class="col-2 form-group mr-3 ml-3">
+                        <label class="label-vehiculo">Foto licencia </label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="fileFotoLicencia" accept="image/*"
+                                ng-on-change="subirArchivo($event, 'fotoLicencia')" ng-model="fileFotoLicencia" />
+                            <label class="custom-file-label" for="fileFotoLicencia" id="fotoLicencia">Cargar
+                                Imagen</label>
+                        </div>
+                        <div ng-if="(vehiculo.detalle.urlFotoIdentificacion && vehiculo.detalle.urlFotoIdentificacion !== 'delete') || fileLicencia"
+                            style="margin-left: 1.5em; margin-top: 20px; width: 10em;">
+                            <img alt="Foto licencia" src="" id="licenciaImagenTab" onclick="showImgResumen(this)"
+                                class="imgResumen" />
+                        </div>
+                        <div ng-if="fileLicencia.nombre" class="file-delete" style="margin-left: 1.5em;">
+                            <span class="text-img">{{fileLicencia.nombre}} </span><i class="fa fa-trash"
+                                onclick="deleteFile('fotoLicencia')"></i>
+                        </div>
+                        <div ng-if="vehiculo.detalle.urlFotoIdentificacion && vehiculo.detalle.urlFotoIdentificacion !== 'delete' && !fileLicencia.nombre"
+                            class="file-delete" style="margin-left: 1.5em;"> <span class="text-img">fotoLicencia</span>
+                            <i class="fa fa-trash" ng-click="deleteFileUrl('fotoLicencia')"></i>
                         </div>
                     </div>
                 </div>
@@ -392,6 +469,21 @@
                         <td class="tableTextTitle">* Geograf&iacute;a: </td>
                         <td class="tableText" colspan="7">{{vehiculoText.geografiaText ? vehiculoText.geografiaText :
                             'Sin asignar'}}</td>
+                    </tr>
+                    <tr>
+                        <td class="tableTextTitle">* Tipo operaci&oacute;n: </td>
+                        <td class="tableText">{{vehiculoText.operacionText ? vehiculoText.operacionText : 'Sin asignar'}}</td>
+                        <td class="tableTextTitle">* Tipo cuadrilla: </td>
+                        <td class="tableText">{{vehiculoText.cuadrillaText ? vehiculoText.cuadrillaText : 'Sin asignar'}}</td>
+                        <td class="tableTextTitle">* Empresa: </td>
+                        <td class="tableText" colspan="7">{{vehiculoText.empresaText ? vehiculoText.empresaText :
+                            'Sin asignar'}}</td>
+                    </tr>
+                    <tr>
+                        <td class="tableTextTitle">* Centro de costos: </td>
+                        <td class="tableText">{{vehiculoText.costoText ? vehiculoText.costoText : 'Sin asignar'}}</td>
+                        <td class="tableTextTitle">* Expediente: </td>
+                        <td class="tableText">{{vehiculo.expediente ? vehiculo.expediente : 'Sin asignar'}}</td>
                     </tr>
                 </table>
                 <table class="resumeTable">
@@ -472,23 +564,33 @@
                     </tr>
                 </table>
                 <div class="row imagenes">
-                    <div class="col-2" ng-if="(vehiculo.urlFotoPlaca && vehiculo.urlFotoPlaca !== 'delete') || filePlaca">
+                    <div class="col-2"
+                        ng-if="(vehiculo.urlFotoPlaca && vehiculo.urlFotoPlaca !== 'delete') || filePlaca">
                         <p class="tableTextTitle">* Foto placa</p>
                         <img alt="Placa" src="" class="imgResumen" id="placaImagen" onclick="showImgResumen(this)" />
                     </div>
-                    <div class="col-2" ng-if="(vehiculo.urlFotoVehiculo && vehiculo.urlFotoVehiculo !== 'delete') || fileVehiculo">
+                    <div class="col-2"
+                        ng-if="(vehiculo.urlFotoVehiculo && vehiculo.urlFotoVehiculo !== 'delete') || fileVehiculo">
                         <p class="tableTextTitle">* Foto veh&iacute;culo</p>
                         <img alt="Vehiculo" src="" class="imgResumen" id="vehiculoImagen"
                             onclick="showImgResumen(this)" />
                     </div>
-                    <div class="col-2" ng-if="(vehiculo.detalle.urlFotoTarjetaCirculacion && vehiculo.detalle.urlFotoTarjetaCirculacion !== 'delete') || fileCirculacion">
+                    <div class="col-2"
+                        ng-if="(vehiculo.detalle.urlFotoTarjetaCirculacion && vehiculo.detalle.urlFotoTarjetaCirculacion !== 'delete') || fileCirculacion">
                         <p class="tableTextTitle">* Foto tarjeta circulaci&oacute;n</p>
                         <img alt="Tarjeta Circulacion" src="" id="circulacionImagen" onclick="showImgResumen(this)"
                             class="imgResumen" />
                     </div>
-                    <div class="col-2" ng-if="(vehiculo.detalle.urlFotoTarjetaGasolina && vehiculo.detalle.urlFotoTarjetaGasolina !== 'delete') || fileGasolina">
+                    <div class="col-2"
+                        ng-if="(vehiculo.detalle.urlFotoTarjetaGasolina && vehiculo.detalle.urlFotoTarjetaGasolina !== 'delete') || fileGasolina">
                         <p class="tableTextTitle">* Foto tarjeta gasolina</p>
                         <img alt="Tarjeta Gasolina" src="" id="gasolinaImagen" onclick="showImgResumen(this)"
+                            class="imgResumen" />
+                    </div>
+                    <div class="col-2"
+                        ng-if="(vehiculo.detalle.urlFotoIdentificacion && vehiculo.detalle.urlFotoIdentificacion !== 'delete') || fileLicencia">
+                        <p class="tableTextTitle">* Foto licencia</p>
+                        <img alt="Foto Licencia" src="" id="licenciaImagen" onclick="showImgResumen(this)"
                             class="imgResumen" />
                     </div>
                 </div>
@@ -498,8 +600,8 @@
                     informaci&oacute;n antes de guardar</h5>
             </div>
             <div style="text-align: right; margin: 1em 0 0 0;">
-                <button type="button" class="btn btn-primary ripple-surface btnGuardarVehiculo" onclick="guardarCambios()"
-                    style="margin-bottom: 1em;">
+                <button type="button" class="btn btn-primary ripple-surface btnGuardarVehiculo"
+                    onclick="guardarCambios()" style="margin-bottom: 1em;">
                     Guardar
                 </button>
             </div>

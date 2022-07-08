@@ -64,6 +64,46 @@ public class ControlVehicularController {
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 	
+	@GetMapping("/consultarOperaciones")
+	public ResponseEntity<?> consultarOperaciones() {
+		logger.info("##### CONSULTANDO consultarOperaciones");
+		ServiceResponseResult response = controlVehicularService.consultarOperaciones();
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+	
+	@GetMapping("/consultarTipoCuadrilla")
+	public ResponseEntity<?> consultarTipoCuadrilla() {
+		logger.info("##### CONSULTANDO consultarTipoCuadrilla");
+		ServiceResponseResult response = controlVehicularService.consultarTipoCuadrilla();
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+	
+	@GetMapping("/consultarEmpresas")
+	public ResponseEntity<?> consultarEmpresas() {
+		logger.info("##### CONSULTANDO consultarEmpresas");
+		ServiceResponseResult response = controlVehicularService.consultarEmpresas();
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+	
+	@GetMapping("/consultarCentroCostos")
+	public ResponseEntity<?> consultarCentroCostos() {
+		logger.info("##### CONSULTANDO consultarCentroCostos");
+		ServiceResponseResult response = controlVehicularService.consultarCentroCostos();
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+	
 	
 	@PostMapping("/crearVehiculo")
     public ResponseEntity<?> crearVehiculo(@RequestBody String params){

@@ -8,6 +8,10 @@ public interface ControlVehicularService {
     public ServiceResponseResult consultarColores();
     public ServiceResponseResult consultarSeguros();
     public ServiceResponseResult consultarEstatus();
+    public ServiceResponseResult consultarOperaciones();
+    public ServiceResponseResult consultarTipoCuadrilla();
+    public ServiceResponseResult consultarEmpresas();
+    public ServiceResponseResult consultarCentroCostos();
     public ServiceResponseResult consultarEncierros(String params);
     public ServiceResponseResult crearVehiculo(String params);
     public ServiceResponseResult consultarVehiculoPlaca(String params);

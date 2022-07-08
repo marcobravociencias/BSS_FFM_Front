@@ -28,6 +28,7 @@ app.controller('controlVehicularController',
 			$scope.fileVehiculo;
 			$scope.fileCirculacion;
 			$scope.fileGasolina;
+			$scope.fileLicencia;
 			$scope.padre;
 			$scope.permisosConfigUser = [];
 			$scope.accionesUserConfigText = []
@@ -330,6 +331,10 @@ app.controller('controlVehicularController',
 					controlVehicularService.consultarColoresControlVehicular(),
 					controlVehicularService.consultarSegurosControlVehicular(),
 					controlVehicularService.consultarEstatusControlVehicular(),
+					controlVehicularService.consultarOperacionesControlVehicular(),
+					controlVehicularService.consultarCuadrillaControlVehicular(),
+					controlVehicularService.consultarEmpresasControlVehicular(),
+					controlVehicularService.consultarCostosControlVehicular(),
 				]).then(function (results) {
 					if (results[0].data !== undefined) {
 						if (results[0].data.respuesta) {
@@ -346,7 +351,7 @@ app.controller('controlVehicularController',
 							toastr.warning(results[0].data.resultDescripcion);
 						}
 					} else {
-						toastr.error('Ha ocurrido un error en la consulta de catalogo de tipo veh\u00EDculo');
+						toastr.error('Ha ocurrido un error en la consulta del catalogo de tipo veh\u00EDculo');
 					}
 
 					if (results[1].data !== undefined) {
@@ -364,7 +369,7 @@ app.controller('controlVehicularController',
 							toastr.warning(results[1].data.resultDescripcion);
 						}
 					} else {
-						toastr.error('Ha ocurrido un error en la consulta de catalogo de colores');
+						toastr.error('Ha ocurrido un error en la consulta del catalogo de colores');
 					}
 
 					if (results[2].data !== undefined) {
@@ -382,7 +387,7 @@ app.controller('controlVehicularController',
 							toastr.warning(results[2].data.resultDescripcion);
 						}
 					} else {
-						toastr.error('Ha ocurrido un error en la consulta de catalogo de seguros');
+						toastr.error('Ha ocurrido un error en la consulta del catalogo de seguros');
 					}
 
 					if (results[3].data !== undefined) {
@@ -410,7 +415,79 @@ app.controller('controlVehicularController',
 							toastr.warning(results[3].data.resultDescripcion);
 						}
 					} else {
-						toastr.error('Ha ocurrido un error en la consulta de catalogo de estatus');
+						toastr.error('Ha ocurrido un error en la consulta del catalogo de estatus');
+					}
+
+					if (results[4].data !== undefined) {
+						if (results[4].data.respuesta) {
+							if (results[4].data.result) {
+								if (results[4].data.result.length) {
+									$scope.data.operaciones = results[4].data.result;
+								} else {
+									toastr.info('No se encontr\u00F3 catalogo de operaciones');
+								}
+							} else {
+								toastr.info('No se encontr\u00F3 catalogo de operaciones');
+							}
+						} else {
+							toastr.warning(results[4].data.resultDescripcion);
+						}
+					} else {
+						toastr.error('Ha ocurrido un error en la consulta del catalogo de operaciones');
+					}
+
+					if (results[5].data !== undefined) {
+						if (results[5].data.respuesta) {
+							if (results[5].data.result) {
+								if (results[5].data.result.length > 0) {
+									$scope.data.cuadrillas = results[5].data.result;
+								} else {
+									toastr.info('No se encontr\u00F3 catalogo de tipo cuadrillas');
+								}
+							} else {
+								toastr.info('No se encontr\u00F3 catalogo de tipo cuadrillas');
+							}
+						} else {
+							toastr.warning(results[5].data.resultDescripcion);
+						}
+					} else {
+						toastr.error('Ha ocurrido un error en la consulta del catalogo de tipo cuadrillas');
+					}
+
+					if (results[6].data !== undefined) {
+						if (results[6].data.respuesta) {
+							if (results[6].data.result) {
+								if (results[6].data.result.length > 0) {
+									$scope.data.empresas = results[6].data.result;
+								} else {
+									toastr.info('No se encontr\u00F3 catalogo de empresas');
+								}
+							} else {
+								toastr.info('No se encontr\u00F3 catalogo de empresas');
+							}
+						} else {
+							toastr.warning(results[6].data.resultDescripcion);
+						}
+					} else {
+						toastr.error('Ha ocurrido un error en la consulta del catalogo de empresas');
+					}
+
+					if (results[7].data !== undefined) {
+						if (results[7].data.respuesta) {
+							if (results[7].data.result) {
+								if (results[7].data.result.length > 0) {
+									$scope.data.costos = results[7].data.result;
+								} else {
+									toastr.info('No se encontr\u00F3 catalogo de centro de costos');
+								}
+							} else {
+								toastr.info('No se encontr\u00F3 catalogo de centro de costos');
+							}
+						} else {
+							toastr.warning(results[7].data.resultDescripcion);
+						}
+					} else {
+						toastr.error('Ha ocurrido un error en la consulta del catalogo de centro de costos');
 					}
 				}).catch(err => handleError(err));
 			}
@@ -794,6 +871,30 @@ app.controller('controlVehicularController',
 					}
 				})
 
+				$scope.data.operaciones.map(function (c) {
+					if (c.id == Number($scope.vehiculo.idOperacion)) {
+						$scope.vehiculoText.operacionText = c.descripcion.toUpperCase();
+					}
+				})
+
+				$scope.data.costos.map(function (c) {
+					if (c.id == Number($scope.vehiculo.idCosto)) {
+						$scope.vehiculoText.costoText = c.descripcion.toUpperCase();
+					}
+				})
+
+				$scope.data.cuadrillas.map(function (c) {
+					if (c.id == Number($scope.vehiculo.idTipoCuadrilla)) {
+						$scope.vehiculoText.cuadrillaText = c.descripcion.toUpperCase();
+					}
+				})
+
+				$scope.data.empresas.map(function (c) {
+					if (c.id == Number($scope.vehiculo.idEmpresa)) {
+						$scope.vehiculoText.empresaText = c.descripcion.toUpperCase();
+					}
+				})
+
 				$scope.data.seguros.map(function (s) {
 					if ($scope.vehiculo.detalle && s.idSeguro == Number($scope.vehiculo.detalle.idAseguradora)) {
 						$scope.vehiculoText.aseguradoraText = s.descripcion;
@@ -849,6 +950,7 @@ app.controller('controlVehicularController',
 				if ($scope.vehiculo.detalle) {
 					$("#circulacionImagen").attr("src", $scope.vehiculo.detalle.urlFotoTarjetaCirculacion);
 					$("#gasolinaImagen").attr("src", $scope.vehiculo.detalle.urlFotoTarjetaGasolina);
+					$("#licenciaImagen").attr("src", $scope.vehiculo.detalle.urlFotoIdentificacion);
 					if ($scope.vehiculo.detalle.holograma) $scope.vehiculo.detalle.holograma = $scope.vehiculo.detalle.holograma.toUpperCase();
 				}
 
@@ -866,6 +968,10 @@ app.controller('controlVehicularController',
 					$("#gasolinaImagen").attr("src", "data:image/jpeg;base64," + $scope.fileGasolina.archivo);
 				}
 
+				if ($scope.fileLicencia) {
+					$("#licenciaImagen").attr("src", "data:image/jpeg;base64," + $scope.fileLicencia.archivo);
+				}
+
 			}
 
 			$scope.printImgTab = function () {
@@ -875,6 +981,7 @@ app.controller('controlVehicularController',
 				if ($scope.vehiculo.detalle) {
 					$("#circulacionImagenTab").attr("src", $scope.vehiculo.detalle.urlFotoTarjetaCirculacion + nameTemp);
 					$("#gasolinaImagenTab").attr("src", $scope.vehiculo.detalle.urlFotoTarjetaGasolina + nameTemp);
+					$("#licenciaImagenTab").attr("src", $scope.vehiculo.detalle.urlFotoIdentificacion + nameTemp);
 				}
 				if ($scope.filePlaca) {
 					$("#placaImagenTab").attr("src", "data:image/jpeg;base64," + $scope.filePlaca.archivo);
@@ -888,6 +995,10 @@ app.controller('controlVehicularController',
 
 				if ($scope.fileGasolina) {
 					$("#gasolinaImagenTab").attr("src", "data:image/jpeg;base64," + $scope.fileGasolina.archivo);
+				}
+
+				if ($scope.fileLicencia) {
+					$("#licenciaImagenTab").attr("src", "data:image/jpeg;base64," + $scope.fileLicencia.archivo);
 				}
 
 			}
@@ -1002,6 +1113,7 @@ app.controller('controlVehicularController',
 				paramsTemp.fotoVehiculo = actualObject;
 				paramsTemp.detalle.fotoTarjetaCirculacion = actualObject;
 				paramsTemp.detalle.fotoTarjetaGasolina = actualObject;
+				paramsTemp.detalle.fotoLicencia= actualObject;
 
 				if ($scope.filePlaca) {
 					$scope.filePlaca.nombre = pathImg + $scope.filePlaca.nombre;
@@ -1012,6 +1124,7 @@ app.controller('controlVehicularController',
 					$scope.fileVehiculo.nombre = pathImg + $scope.fileVehiculo.nombre;
 					paramsTemp.fotoVehiculo = $scope.fileVehiculo;
 				}
+
 
 				paramsTemp.idGeografia = clustersparam[0];
 				paramsTemp.anio = $("#anio").val();
@@ -1032,6 +1145,11 @@ app.controller('controlVehicularController',
 				if ($scope.fileGasolina) {
 					$scope.fileGasolina.nombre = pathImg + $scope.fileGasolina.nombre;
 					paramsTemp.detalle.fotoTarjetaGasolina = $scope.fileGasolina;
+				}
+
+				if ($scope.fileLicencia) {
+					$scope.fileLicencia.nombre = pathImg + $scope.fileLicencia.nombre;
+					paramsTemp.detalle.fotoLicencia = $scope.fileLicencia;
 				}
 
 				if ($("#fechaVerificacion").val()) {
@@ -1061,6 +1179,10 @@ app.controller('controlVehicularController',
 
 					if (!$scope.fileGasolina && paramsTemp.detalle.urlFotoTarjetaGasolina == 'delete') {
 						paramsTemp.detalle.fotoTarjetaGasolina = deleteObject;
+					}
+
+					if (!$scope.fileLicencia && paramsTemp.detalle.urlFotoIdentificacion == 'delete') {
+						paramsTemp.detalle.fotoLicencia = deleteObject;
 					}
 				}
 				//console.log(paramsTemp);
@@ -1167,6 +1289,9 @@ app.controller('controlVehicularController',
 				$("#fileTarjetaGas").val('');
 				$("#fotoTarjetaGasolina").text('Cargar Imagen');
 
+				$("#fileLicencia").val('');
+				$("#fotoLicencia").text('Cargar Imagen');
+
 				let geografiaAlta = angular.copy($scope.geografiaList);
 				geografiaAlta.push({ id: 0, nombre: "TOTALPLAY", nivel: 0, padre: "#", state: { opened: true } });
 				geografiaAlta.map((e) => {
@@ -1185,6 +1310,7 @@ app.controller('controlVehicularController',
 				$scope.fileVehiculo = null;
 				$scope.fileCirculacion = null;
 				$scope.fileGasolina = null;
+				$scope.fileLicencia = null;
 				$("#rotuladoSi").prop("checked", true);
 				$(".form-control-sm").removeClass("input-valid-error");
 			}
@@ -1282,9 +1408,34 @@ app.controller('controlVehicularController',
 					text += "<li>Color</li>";
 				}
 
-				if ($("#combustible").val() === "" || $("#combustible").val() === undefined) {
-					$("#combustible").addClass("input-valid-error");
-					text += "<li>Combustible</li>";
+				if ($("#operacion").val() === "" || $("#operacion").val() === undefined) {
+					$("#operacion").addClass("input-valid-error");
+					text += "<li>Tipo operaci&oacute;n</li>";
+				}
+
+				if ($("#cuadrilla").val() === "" || $("#cuadrilla").val() === undefined) {
+					$("#cuadrilla").addClass("input-valid-error");
+					text += "<li>Tipo cuadrilla</li>";
+				}
+
+				if ($("#empresa").val() === "" || $("#empresa").val() === undefined) {
+					$("#empresa").addClass("input-valid-error");
+					text += "<li>Empresa</li>";
+				}
+
+				if ($("#color").val() === "" || $("#color").val() === undefined) {
+					$("#color").addClass("input-valid-error");
+					text += "<li>Color</li>";
+				}
+
+				if ($("#centroCostos").val() === "" || $("#centroCostos").val() === undefined) {
+					$("#centroCostos").addClass("input-valid-error");
+					text += "<li>Centro de costos</li>";
+				}
+
+				if ($("#expediente").val() === "" || $("#expediente").val() === undefined) {
+					$("#expediente").addClass("input-valid-error");
+					text += "<li>Expediente</li>";
 				}
 
 				if ($("#placa").val() === "" || $("#placa").val() === undefined) {
@@ -1465,6 +1616,13 @@ app.controller('controlVehicularController',
 							$scope.fileGasolina = img;
 							$("#fileTarjetaGas").val("");
 						}
+
+						if (name == 'fotoLicencia') {
+							img.nombre = 'fotoLicencia.' + imgExt;
+							$scope.fileLicencia = img;
+							$("#fileFotoLicencia").val("");
+						}
+
 						$scope.$apply();
 						$scope.printImgTab();
 						$scope.$apply();
@@ -1491,6 +1649,10 @@ app.controller('controlVehicularController',
 
 					if (name == 'fotoTarjetaGasolina') {
 						$scope.fileGasolina = null;
+					}
+
+					if (name == 'fotoLicencia') {
+						$scope.fileLicencia = null;
 					}
 					$(labelFile).text('Cargar Imagen');
 					$scope.$apply();
@@ -1524,6 +1686,11 @@ app.controller('controlVehicularController',
 					$("#fileTarjetaGas").prop("src", "");
 				}
 
+				if (name == 'fotoLicencia') {
+					$scope.fileLicencia = null;
+					$("#fileLicencia").prop("src", "");
+				}
+
 				$(labelFile).text('Cargar Imagen');
 				$scope.$apply();
 				$scope.printImgTab();
@@ -1549,6 +1716,10 @@ app.controller('controlVehicularController',
 
 				if (name == 'fotoTarjetaGasolina') {
 					$scope.vehiculo.detalle.urlFotoTarjetaGasolina = 'delete';
+				}
+
+				if (name == 'fotoLicencia') {
+					$scope.vehiculo.detalle.urlFotoIdentificacion = 'delete';
 				}
 			}
 

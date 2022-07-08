@@ -36,6 +36,42 @@ app.service("controlVehicularService", function($http) {
         });
     };
 
+    this.consultarOperacionesControlVehicular = function () {
+        return $http({
+            method: "get",
+            url: "req/consultarOperaciones",
+            headers: {'Content-Type': "application/json; charset=utf-8"},
+            transformRequest: angular.identity
+        });
+    };
+
+    this.consultarCuadrillaControlVehicular = function () {
+        return $http({
+            method: "get",
+            url: "req/consultarTipoCuadrilla",
+            headers: {'Content-Type': "application/json; charset=utf-8"},
+            transformRequest: angular.identity
+        });
+    };
+
+    this.consultarEmpresasControlVehicular = function () {
+        return $http({
+            method: "get",
+            url: "req/consultarEmpresas",
+            headers: {'Content-Type': "application/json; charset=utf-8"},
+            transformRequest: angular.identity
+        });
+    };
+
+    this.consultarCostosControlVehicular = function () {
+        return $http({
+            method: "get",
+            url: "req/consultarCentroCostos",
+            headers: {'Content-Type': "application/json; charset=utf-8"},
+            transformRequest: angular.identity
+        });
+    };
+
     this.crearVehiculo = function (params) {
         return $http({
             method: "post",
