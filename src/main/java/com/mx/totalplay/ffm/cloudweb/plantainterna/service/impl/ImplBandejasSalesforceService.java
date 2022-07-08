@@ -105,7 +105,7 @@ public class ImplBandejasSalesforceService implements BandejasSalesforceService 
 		String urlRequest = "";
 		
 		if(idUnidadNegocio == 1) {
-			urlRequest = principalDetail.getDireccionAmbiente().concat(constBandejasSalesforce.getConsultaFactibilidadResidencialBandejasSF());
+			urlRequest = "http://34.94.115.103".concat(constBandejasSalesforce.getConsultaFactibilidadResidencialBandejasSF());
 		}else if(idUnidadNegocio == 2) {
 			urlRequest = principalDetail.getDireccionAmbiente().concat(constBandejasSalesforce.getConsultaFactibilidadEmpresarialBandejasSF());
 		}

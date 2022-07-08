@@ -587,23 +587,23 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
             if (response.data !== undefined) {
                 if (response.data.respuesta) {
                     if (response.data.result) {                       
-                        let respFact=response.data.result                     
+                        let respFact = response.data.result;                
                         if (Number(response.data.result.factibilidad) === 0) {
                             mostrarMensajeWarningValidacion('Sin factibilidad en esta ubicaci&oacute;n');
                             $scope.flagRespuestaFactibilidad='noencontrada'
                         }else{
                             let resultFactibilidad = {
                                 factibilidad:               respFact.factibilidad,
-                                regionIdc:                  respFact.regionEnlace.split("-")[0],
-                                region:                     respFact.regionEnlace.split("-")[1],
-                                ciudad:                     respFact.ciudadEnlace,
-                                distrito:                   respFact.distritoEnlace,
-                                cluster:                    respFact.clusterTotalplay,
+                                regionIdc:                  respFact.regionEnlace ? respFact.regionEnlace.split("-")[0] : respFact.regionTotalplay ? respFact.regionTotalplay.split("-")[0] : "Sin info",
+                                region:                     respFact.regionEnlace ? respFact.regionEnlace.split("-")[1] : respFact.regionTotalplay ? respFact.regionTotalplay.split("-")[1] : "Sin info",
+                                ciudad:                     respFact.ciudadEnlace ? respFact.ciudadEnlace : respFact.ciudadTotalplay ? respFact.ciudadTotalplay : "Sin info",
+                                distrito:                   respFact.distritoEnlace ? respFact.distritoEnlace : respFact.distritoTotalplay ? respFact.distritoTotalplay : "Sin info",
+                                cluster:                    respFact.clusterTotalplay ? respFact.clusterTotalplay : respFact.clusterTotalplay ? respFact.clusterTotalplay : "Sin info",
                                 latitud: latitud,
                                 longitud: longitud,
                                 tipoFibra:                  respFact.tipoFibra,
                                 tipoCoberturaMicroonda:     respFact.tipoCoberturaMicroonda,
-                                regionEnlace:               respFact.regionEnlace,
+                                regionEnlace:               respFact.regionEnlace ? respFact.regionEnlace.split("-")[0] : respFact.regionTotalplay ? respFact.regionTotalplay : "Sin info",
                                 nombreRadiobase:            respFact.nombreRadiobase,
                                 nombreOlt:                  respFact.nombreOlt,
                                 infraestructura:            respFact.infraestructura,
@@ -645,7 +645,6 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
     }
     
     $scope.validarDatos = function() {
-    	console.log("SE VALIDA");
     	$scope.listContactosAgendamiento = []
         $scope.infoFactibilidad = {};	
         $scope.elementoCSP = {};
@@ -682,37 +681,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                             $scope.setMarkerAgendamiento( latitud , longitud );                                                            
                             $scope.consultarFactibilidadAgendamiento( '1' , latitud , longitud  );
                             
-                            switch($scope.GEOGRAFIA_UNO_AGENDA){
-	                        	case "cluster":
-	                        		$scope.GEOGRAFIA_UNO_AGENDA_NOMBRE = $scope.elementoCSP.infoSitio.clusterInstalacionC;
-	                        		break;
-	                        	case "ciudad":
-	                        		$scope.GEOGRAFIA_UNO_AGENDA_NOMBRE = $scope.elementoCSP.infoSitio.plazaC;
-	                        		break;
-	                        	case "distrito":
-	                        		$scope.GEOGRAFIA_UNO_AGENDA_NOMBRE = $scope.elementoCSP.infoSitio.distritoInstalacionC;
-	                        		break;
-	                        	case "region":
-	                        		$scope.GEOGRAFIA_UNO_AGENDA_NOMBRE = $scope.elementoCSP.infoSitio.regionInstalacionC;
-	                        		break;
-                            }
-                            
-                            switch($scope.GEOGRAFIA_DOS_AGENDA){
-	                        	case "cluster":
-	                        		$scope.GEOGRAFIA_DOS_AGENDA_NOMBRE = $scope.elementoCSP.infoSitio.clusterInstalacionC;
-	                        		break;
-	                        	case "ciudad":
-	                        		$scope.GEOGRAFIA_DOS_AGENDA_NOMBRE = $scope.elementoCSP.infoSitio.plazaC;
-	                        		break;
-	                        	case "distrito":
-	                        		$scope.GEOGRAFIA_DOS_AGENDA_NOMBRE = $scope.elementoCSP.infoSitio.distritoInstalacionC;
-	                        		break;
-	                        	case "region":
-	                        		$scope.GEOGRAFIA_DOS_AGENDA_NOMBRE = $scope.elementoCSP.infoSitio.regionInstalacionC;
-	                        		break;
-	                        }
-                            
-                            $scope.consultarDisponibilidad();
+                            $scope.asignarGeografiasUnoDos();
                             
                         }else{
                             mostrarMensajeInformativo("No se encontr&oacute; informaci&oacute;n del sitio");
@@ -737,6 +706,41 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         $scope.isFactibilidad = false;
         $scope.isFechaSelected = false;
 	}
+    
+    $scope.asignarGeografiasUnoDos = function() {
+		
+    	switch($scope.GEOGRAFIA_UNO_AGENDA){
+	    	case "cluster":
+	    		$scope.GEOGRAFIA_UNO_AGENDA_NOMBRE = $scope.elementoCSP.infoSitio.clusterInstalacionC;
+	    		break;
+	    	case "ciudad":
+	    		$scope.GEOGRAFIA_UNO_AGENDA_NOMBRE = $scope.elementoCSP.infoSitio.plazaC;
+	    		break;
+	    	case "distrito":
+	    		$scope.GEOGRAFIA_UNO_AGENDA_NOMBRE = $scope.elementoCSP.infoSitio.distritoInstalacionC;
+	    		break;
+	    	case "region":
+	    		$scope.GEOGRAFIA_UNO_AGENDA_NOMBRE = $scope.elementoCSP.infoSitio.regionInstalacionC;
+	    		break;
+	    }
+	    
+	    switch($scope.GEOGRAFIA_DOS_AGENDA){
+	    	case "cluster":
+	    		$scope.GEOGRAFIA_DOS_AGENDA_NOMBRE = $scope.elementoCSP.infoSitio.clusterInstalacionC;
+	    		break;
+	    	case "ciudad":
+	    		$scope.GEOGRAFIA_DOS_AGENDA_NOMBRE = $scope.elementoCSP.infoSitio.plazaC;
+	    		break;
+	    	case "distrito":
+	    		$scope.GEOGRAFIA_DOS_AGENDA_NOMBRE = $scope.elementoCSP.infoSitio.distritoInstalacionC;
+	    		break;
+	    	case "region":
+	    		$scope.GEOGRAFIA_DOS_AGENDA_NOMBRE = $scope.elementoCSP.infoSitio.regionInstalacionC;
+	    		break;
+	    }
+	    
+	    $scope.consultarDisponibilidad();
+    }
     
     $scope.consultarDisponibilidad = function() {
     	let dataDisp={

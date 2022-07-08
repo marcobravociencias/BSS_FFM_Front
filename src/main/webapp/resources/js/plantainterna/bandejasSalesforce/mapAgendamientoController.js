@@ -48,7 +48,6 @@ app.agendamientoMap = function ($scope, bandejasSalesforceService) {
         }
     }
     $scope.functionDragEndMap=function(event){
-        console.log("drgend")
             markerAg.setMap(mapAgendamiento)
             $scope.latitudSelectedMap = this.getPosition().lat();
             $scope.longitudSelectedMap = this.getPosition().lng();
@@ -58,7 +57,6 @@ app.agendamientoMap = function ($scope, bandejasSalesforceService) {
             $scope.consultarFactibilidadAgendamiento('empresarial', $scope.latitudSelectedMap, $scope.longitudSelectedMap);
     }
     $scope.functiondbclickMap=function(e){
-        console.log("dbclock")
         markerAg.setMap(mapAgendamiento)
         let positionDoubleclick = e.latLng;
         markerAg.setPosition(positionDoubleclick);
@@ -80,23 +78,17 @@ app.agendamientoMap = function ($scope, bandejasSalesforceService) {
     }
    
     $scope.placesChangedMap=function(){
-        console.log("places_changed ")
-
         let places = searchBox.getPlaces();
-        // console.log(places);
         if (places.length == 0 || places.length > 1) {
             return;
         }
         let bounds = new google.maps.LatLngBounds();
         markerAg.setMap(mapAgendamiento)
         places.forEach(function (place) {
-            console.log("places_changed forEach")
-
             $scope.latitudSelectedMap = place.geometry.location.lat();
             $scope.longitudSelectedMap = place.geometry.location.lng();
             $scope.flagConsultandoFactibilidad = true;
-            $scope.$apply()
-
+            $scope.$apply();
 
             markerAg.setPosition(new google.maps.LatLng( $scope.latitudSelectedMap, $scope.longitudSelectedMap) );
             mapAgendamiento.setZoom(17);
@@ -117,7 +109,6 @@ app.agendamientoMap = function ($scope, bandejasSalesforceService) {
         mapAgendamiento.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
       
         mapAgendamiento.addListener('bounds_changed', function () {
-            console.log("bounds_changed ")
             searchBox.setBounds(mapAgendamiento.getBounds());
         });
         searchBox.addListener('places_changed', $scope.placesChangedMap );
@@ -136,8 +127,8 @@ app.agendamientoMap = function ($scope, bandejasSalesforceService) {
 
     }
     $scope.actualizarFactibilidadResidencial=function(){
-        console.log("acutalizando factibilidad residencial")
     }
+    
     $scope.actualizarFactibilidadEmpresarial=function(){
         swal({
             title: "\u00BFDesea actualizar la factibilidad?",
@@ -183,20 +174,25 @@ app.agendamientoMap = function ($scope, bandejasSalesforceService) {
                 let params={    
                     "plazaC":               $scope.infoFactibilidad.ciudad,       
                     "zonaInstalacionC":     "",
-                    "clusterInstalacionC":  $scope.infoFactibilidad.clusterTotalplay,
+                    "clusterInstalacionC":  $scope.infoFactibilidad.cluster,
                     "distritoInstalacionC": $scope.infoFactibilidad.distrito,
                     "ciudadInstalacionC":   $scope.infoFactibilidad.ciudad,
                     "regionInstalacionC":   $scope.infoFactibilidad.region,
                     "regionInstalacionIdC": $scope.infoFactibilidad.regionIdc,
                     "geolocalizacionInstalacionLatitudeS":  $scope.infoFactibilidad.latitud ,            
                     "geolocalizacionInstalacionLongitudeS": $scope.infoFactibilidad.longitud,
-                    "cuenta":               $scope.elementoCSP.infoSitio.numeroCuenta
-                }                   
+                    "cuenta":               $scope.elementoCSP.infoSitio.numeroCuenta,
+                }
+                
                 bandejasSalesforceService.actualizarFactibilidadSitio(params).then(function success(response) {
-                    console.log(response);
                     if (response.data !== undefined && response.data.result != undefined) {
                         mostrarMensajeExitoAlert( response.data.result.mensaje )
-                        swal.close();                        
+                        swal.close();   
+                        $scope.elementoCSP.infoSitio.regionInstalacionC = $scope.infoFactibilidad.region;
+                        $scope.elementoCSP.infoSitio.plazaC = $scope.infoFactibilidad.ciudad;
+                        $scope.elementoCSP.infoSitio.distritoInstalacionC = $scope.infoFactibilidad.distrito;
+                        $scope.elementoCSP.infoSitio.clusterInstalacionC = $scope.infoFactibilidad.cluster;
+                        $scope.asignarGeografiasUnoDos();
                     } else {
                         mostrarMensajeErrorAlert('Ha ocurrido un error al actualizar la factibilidad');
                         swal.close();
