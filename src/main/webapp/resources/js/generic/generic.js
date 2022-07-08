@@ -215,7 +215,7 @@ class GenericAccionRealizada {
 		});
 	}
 
-	getAccionesRecientesUsuario = function() {
+	getAccionesRecientesUsuario() {
 		//let usuario = document.getElementById('tipo1').value;
 		let params = {
             fechaInicio: moment(new Date()).subtract(5,'d').format('YYYY-MM-DD'),

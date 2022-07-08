@@ -2374,6 +2374,10 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             mostrarMensajeWarningValidacion('Operaci&oacute;n cancelada');
         });
     }
+
+    $scope.busquedaGeografiaAsignarGeocerca = function () {
+        $("#geografiaTecnicosGeocerca").jstree("search", $('#buscadorGeografiaAsignarGeocerca').val());
+    }
 }
 /**
 
