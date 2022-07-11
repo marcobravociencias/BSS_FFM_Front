@@ -330,6 +330,7 @@ div.dataTables_wrapper div.dataTables_filter input {
   color: #61cae6;
   font-style: oblique;
   font-weight: bold;
+  font-size: 0.9em;
 }
 
 .custom-file-label::after {

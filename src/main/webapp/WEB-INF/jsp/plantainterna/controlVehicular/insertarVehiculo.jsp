@@ -285,6 +285,11 @@
                             <label class="form-check-label" for="rotuladoNo"> No </label>
                         </div>
                     </div>
+                    <div class="col-3 form-group" ng-if="!isEdit">
+                        <label class="label-vehiculo">Comentarios </label> 
+                        <textarea class="form-control form-control-sm" id="comentarios" rows="2" style="height: auto !important;"
+                            ng-model="vehiculo.detalle.comentarios" maxlength="250"></textarea>
+                    </div>
                     <div class="col-3 form-group" ng-if="isEdit">
                         <label class="label-vehiculo">Estatus </label>
                         <select class="form-control form-control-sm custom-select" id="estatus"
@@ -298,17 +303,15 @@
                 <div class="form-row" ng-if="isEdit">
                     <div class="col-3 form-group">
                         <label class="label-vehiculo">Motivo </label>
-                        <span ng-if="motivos.length == 0" id="msjInterno">Seleccione Estatus</span>
+                        <span ng-if="motivos.length == 0" id="msjInterno">Seleccione estatus</span>
                         <select ng-if="motivos.length > 0" class="form-control form-control-sm custom-select"
                             ng-model="vehiculo.idMotivo" id="motivo">
                             <option value="" selected>-- Seleccione motivo --</option>
                             <option value="{{mot.idEstatus}}" ng-repeat="mot in motivos">{{mot.nombre}}</option>
                         </select>
                     </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-12 form-group">
-                        <label class="label-vehiculo">Comentarios </label>
+                    <div class="col-9 form-group">
+                        <label class="label-vehiculo">Comentarios </label> 
                         <textarea class="form-control form-control-sm" id="comentarios"
                             ng-model="vehiculo.detalle.comentarios" maxlength="250"></textarea>
                     </div>
