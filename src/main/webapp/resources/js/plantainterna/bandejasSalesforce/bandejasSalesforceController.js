@@ -803,7 +803,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         		"comentarios": comentarios,
         		"fechaAgendamiento":$scope.elementoCSP.fechaAgendamiento,
         		"hora": "12:00",
-        		"confirmacion":"1", 
+        		"confirmacion":"0", 
         		"distribuidor":"",
         		"idTicketSF": "",
         		"posventa": false	
@@ -854,7 +854,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                 	bandejasSalesforceService.agendarPendienteBandejaSF(params).then(function success(response) {
                         if (response.data !== undefined) {
                             if (response.data.respuesta) {
-                            	mostrarMensajeExitoAlert("CSP Agendado correctamente");
+                            	mostrarMensajeExitoAlert("Se agendó la orden de trabajo " + response.data.result.idOTFFM + " con la " + response.data.result.ordenServicio + ".");
                             	$scope.isAgendamiento = false;
                                 $scope.cambiarVistaSF(1);
                                 $scope.elementoCSP = {};
