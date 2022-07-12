@@ -41,15 +41,12 @@ app.agendamientoCalendar = function ($scope, bandejasSalesforceService) {
             },
             dateClick: function (info) {
             },
-            datesSet: function () {
-                setTimeout(function () {
-                    $scope.calendarAgendamiento.render()
-                }, 1000)
-            }
+            
         });
-        setTimeout(function () {
-        }, 0500);
         $scope.calendarAgendamiento.render();
+        setTimeout(function () {
+        	$scope.flagCargandoCalendar = false;
+        }, 1500);
     }
 
     $scope.muestraDisponibilidadCalendar = function (listDisponibilidad) {

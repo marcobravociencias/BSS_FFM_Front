@@ -145,7 +145,7 @@
             </div>
             <div class="container-text-content-detalle">
                 <select ng-model="idContactoSelected" ng-change="colocarContactoSeleccionado()" class="form-control form-control-sm custom-select selectContactoAgendamiento" id="contactoAgendamiento" name="contactoAgendamiento" style="font-size: .8em;"
-                        ng-options="contactoAg.id as contactoAg.nombreCompleto for  contactoAg in listContactosAgendamiento"  >
+                        ng-options="contactoAg.id as contactoAg.nombreCompleto for contactoAg in listContactosAgendamiento"  >
                     <option  value="">Seleccione ...</option>
                 </select>
             </div>
@@ -211,8 +211,15 @@
             </ul>
             <div class="tab-content" id="v-pills-tabContent">
                 <div class="tab-pane fade show active" id="opcion-calendarioAgendamiento" role="tabpanel" aria-labelledby="opcion-calendarioAgendamiento-tab">
-                    <div id="calendar_agendamiento"></div>
+                    <div  class="spinner-border spinner-cargando-info" ng-if="flagCargandoCalendar" role="status">
+						<span class="visually-hidden">Loading...</span>
+					</div>
+					<span class="title-factbilidad-result" ng-show="flagCargandoCalendar">
+						Cargando calendario...
+					</span>
+                    <div id="calendar_agendamiento" ng-show="!flagCargandoCalendar"></div>
                 </div>
+                
                 <div class="tab-pane fade" id="opcion-factibilidad" role="tabpanel" aria-labelledby="opcion-factibilidad-tab">
                     <div class="row">
                         <div class="col-12" style="text-align: right;">
@@ -301,7 +308,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-12">
+        <div class="col-md-12" ng-show="!flagCargandoCalendar">
             <div class="row ">
                 <div class="col-6 mt-3">
                     <div class="">

@@ -39,6 +39,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
     $scope.subtipoIntervencionDisponibilidad = null;
     $scope.isCspAgendado = false;
     $scope.mensajeCspAgendado = "";
+    $scope.flagCargandoCalendar = true;
 
     app.agendamientoCalendar($scope, bandejasSalesforceService);
     app.agendamientoMap($scope, bandejasSalesforceService);
@@ -642,6 +643,8 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
     }
 
     visualizarAgendamiento = function (index) {
+    	$scope.flagCargandoCalendar = true;
+    	$scope.muestraDisponibilidadCalendar([]);
     	$scope.consultarValidacionCSP(index);
     	$scope.indexPendienteSeleccionada = index;
     	$scope.isCspAgendado = false;
@@ -820,6 +823,21 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
 
         if ($scope.elementoCSP.turnoAgendamiento == undefined || $scope.elementoCSP.turnoAgendamiento == '') {
             mensajeError += "<li>Debe seleccionar un turno del Calendario</li>";
+            isValid = false;
+        }
+        
+        if ($("#entreCallesAgendamiento").val() == undefined || $("#entreCallesAgendamiento").val() == '') {
+            mensajeError += "<li>Debe ingresar el campo entre calles</li>";
+            isValid = false;
+        }
+        
+        if ($("#referenciasAgendamiento").val() == undefined || $("#referenciasAgendamiento").val() == '') {
+            mensajeError += "<li>Debe ingresar la(s) referencias</li>";
+            isValid = false;
+        }
+        
+        if (Object.entries($scope.contactoSelected).length === 0) {
+            mensajeError += "<li>Debe seleccionar un contacto</li>";
             isValid = false;
         }
         
