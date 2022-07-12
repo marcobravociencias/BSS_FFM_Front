@@ -175,4 +175,15 @@ app.service("controlVehicularService", function($http) {
         });
     };
 
+    this.generarReporteControlVehicular = function (params) {
+        return $http({
+            method: "post",
+            url: "req/generarReporteControlVehicular",
+            data: JSON.stringify(params),
+            headers: {'Content-Type': "application/json; charset=utf-8"},
+            transformRequest: angular.identity
+        });
+    };
+
+
 });

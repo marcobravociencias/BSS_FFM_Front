@@ -20,5 +20,6 @@ public interface ControlVehicularService {
     public ServiceResponseResult editarVehiculo(String params);
     public ServiceResponseResult consultarHistorialVehiculo(String params);
     public ServiceResponseResult eliminarVehiculo(String params);
+    public ServiceResponseResult generarReporteControlVehicular(String params);
    
 }

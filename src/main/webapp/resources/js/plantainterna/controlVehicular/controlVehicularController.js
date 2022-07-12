@@ -38,6 +38,7 @@ app.controller('controlVehicularController',
 			$scope.configPermisoAccionEliminaVehiculos = false;
 			$scope.configPermisoAccionActivaVehiculos = false;
 			$scope.configPermisoAccionConsultaActivaVehiculos = false;
+			$scope.configPermisoAccionDescargaReporte = false;
 
 			angular.element(document).ready(function () {
 				$("#modal_cluster_arbol_vehiculo").on("hidden.bs.modal", function () {
@@ -91,6 +92,15 @@ app.controller('controlVehicularController',
 					clearBtn: false,
 					orientation: "bottom"
 				});
+
+				$('.datepickerReporte').datepicker({
+					format: 'dd/mm/yyyy',
+					autoclose: true,
+					language: 'es',
+					todayHighlight: true,
+					clearBtn: false
+				});
+				$('.datepickerReporte').datepicker('update', new Date());
 			});
 
 
@@ -169,6 +179,7 @@ app.controller('controlVehicularController',
 										$scope.configPermisoAccionEliminaVehiculos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionEliminaVehiculos" })[0] != undefined);
 										$scope.configPermisoAccionActivaVehiculos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionActivaVehiculos" })[0] != undefined);
 										$scope.configPermisoAccionConsultaActivaVehiculos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaActivaVehiculos" })[0] != undefined);
+										$scope.configPermisoAccionDescargaReporte = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaReporte" })[0] != undefined);
 									}
 
 									if (!$scope.configPermisoAccionConsultaVehiculos && $scope.configPermisoAccionCreaVehiculos) {
@@ -517,7 +528,7 @@ app.controller('controlVehicularController',
 										})
 									}
 
-								}else{
+								} else {
 									toastr.info('No se encontraron encierros');
 								}
 							} else {
@@ -665,7 +676,7 @@ app.controller('controlVehicularController',
 
 										arrayRow.push(row);
 									})
-								} 
+								}
 							} else {
 								toastr.info('No se encontraron veh\u00EDculos inactivos');
 							}
@@ -1113,7 +1124,7 @@ app.controller('controlVehicularController',
 				paramsTemp.fotoVehiculo = actualObject;
 				paramsTemp.detalle.fotoTarjetaCirculacion = actualObject;
 				paramsTemp.detalle.fotoTarjetaGasolina = actualObject;
-				paramsTemp.detalle.fotoLicencia= actualObject;
+				paramsTemp.detalle.fotoLicencia = actualObject;
 
 				if ($scope.filePlaca) {
 					$scope.filePlaca.nombre = pathImg + $scope.filePlaca.nombre;
@@ -1385,22 +1396,22 @@ app.controller('controlVehicularController',
 
 				if ($("#tipo").val() === "" || $("#tipo").val() === undefined) {
 					$("#tipo").addClass("input-valid-error");
-					text += "<li>Tipo Veh&iacute;culo</li>";
+					text += "<li>Tipo veh&iacute;culo</li>";
 				}
 
 				if ($("#marca").val() === "" || $("#marca").val() === undefined) {
 					$("#marca").addClass("input-valid-error");
-					text += "<li>Marca Veh&iacute;culo</li>";
+					text += "<li>Marca veh&iacute;culo</li>";
 				}
 
 				if ($("#linea").val() === "" || $("#linea").val() === undefined) {
 					$("#linea").addClass("input-valid-error");
-					text += "<li>L&iacute;nea Veh&iacute;culo</li>";
+					text += "<li>L&iacute;nea veh&iacute;culo</li>";
 				}
 
 				if ($("#anio").val() === "" || $("#anio").val() === undefined || !year.test($("#anio").val())) {
 					$("#anio").addClass("input-valid-error");
-					text += "<li>A&ntilde;o del Veh&iacute;culo</li>";
+					text += "<li>A&ntilde;o del veh&iacute;culo</li>";
 				}
 
 				if ($("#color").val() === "" || $("#color").val() === undefined) {
@@ -1462,7 +1473,7 @@ app.controller('controlVehicularController',
 
 				if (($("#numSerie").val() === "" || $("#numSerie").val() === undefined) || !hasLetterAndNumber.test($("#numSerie").val())) {
 					$("#numSerie").addClass("input-valid-error");
-					text += "<li>N&uacute;m. de Serie (17 car&aacute;cteres)</li>";
+					text += "<li>N&uacute;m. de serie (17 car&aacute;cteres)</li>";
 				}
 
 				if (clustersparam.length == 0 || document.getElementById('arbol_vehiculo_consulta').placeholder == 'NO HAY SELECCI\u00D3N') {
@@ -2005,6 +2016,41 @@ app.controller('controlVehicularController',
 					});
 					$scope.buildTableVehiculos(list);
 				}
+			}
+
+			$scope.openModalReporte = function () {
+				$('.datepickerReporte').datepicker('update', new Date());
+				$("#reporteModal").modal('show');
+			}
+
+			$scope.generarReporteControlVehicular = function () {
+				let params = {
+					fechaInicio: $scope.getFechaFormato($("#filtro_fecha_inicio").val())
+				}
+				controlVehicularService.generarReporteControlVehicular(params).then(function success(response) {
+					if (response.data !== undefined) {
+						if (response.data.respuesta) {
+							if (response.data.result) {
+								const data = JSON.parse(response.data.result).vehiculos;
+								const fileName = 'Resporte vehiculos';
+								const exportType = 'xls';
+
+								window.exportFromJSON({ data, fileName, exportType })
+								$("#reporteModal").modal('hide');
+							} else {
+								swal.close();
+								toastr.info('No se encontraron resultados');
+							}
+						} else {
+							swal.close();
+							mostrarMensajeErrorAlert(response.data.resultDescripcion);
+						}
+					} else {
+						swal.close();
+						mostrarMensajeErrorAlert(response.data.resultDescripcion);
+					}
+				});
+
 			}
 
 		}

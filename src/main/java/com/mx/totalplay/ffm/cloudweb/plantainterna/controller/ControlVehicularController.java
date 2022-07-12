@@ -184,4 +184,14 @@ public class ControlVehicularController {
 		}
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
+	
+	@PostMapping("/generarReporteControlVehicular")
+	public ResponseEntity<?> generarReporteControlVehicular(@RequestBody String params) {
+		logger.info("#### Metodo generarReporteControlVehicular: " + params);
+		ServiceResponseResult response = controlVehicularService.generarReporteControlVehicular(params);
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
 }

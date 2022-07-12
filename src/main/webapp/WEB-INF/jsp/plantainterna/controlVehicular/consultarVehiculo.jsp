@@ -11,7 +11,10 @@
                 <i class="fa fa-search"></i>
             </button>
         </div>
-        <div class="col-md-9 search-form form-group" style="padding-left: 3em;">
+        <div class="col-md-1 column-style-consulta mt-4" style="margin-left: -2em;" ng-if="configPermisoAccionDescargaReporte">
+            <img alt="excel" src="./resources/img/generic/group-10.png" style="cursor:pointer" ng-click="openModalReporte()">
+        </div>
+        <div class="col-md-8 search-form form-group" style="padding-left: 3em;">
             <ul class="nav nav-tabs" id="tabContadoresVehiculos" role="tablist">
                 <li class="nav-item contenedorContadoresEstadosVehiculos" ng-click="busquedaVehiculosEstado('todos')" id="todosVehiculos">
                     <label class="nav-link active etiquetaContadoresEstadosVehiculos" data-toggle="tab" href="#"
