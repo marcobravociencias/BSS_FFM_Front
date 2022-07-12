@@ -37,6 +37,8 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
     $scope.GEOGRAFIA_UNO_AGENDA_NOMBRE = null;
     $scope.GEOGRAFIA_DOS_AGENDA_NOMBRE = null;
     $scope.subtipoIntervencionDisponibilidad = null;
+    $scope.isCspAgendado = false;
+    $scope.mensajeCspAgendado = "";
 
     app.agendamientoCalendar($scope, bandejasSalesforceService);
     app.agendamientoMap($scope, bandejasSalesforceService);
@@ -642,6 +644,8 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
     visualizarAgendamiento = function (index) {
     	$scope.consultarValidacionCSP(index);
     	$scope.indexPendienteSeleccionada = index;
+    	$scope.isCspAgendado = false;
+        $scope.mensajeCspAgendado = "";
     }
     
     $scope.validarDatos = function() {
@@ -855,6 +859,8 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                         if (response.data !== undefined) {
                             if (response.data.respuesta) {
                             	mostrarMensajeExitoAlert("Se agendó la orden de trabajo " + response.data.result.idOTFFM + " con la " + response.data.result.ordenServicio + ".");
+                            	$scope.isCspAgendado = true;
+                                $scope.mensajeCspAgendado = "Se agendó la orden de trabajo " + response.data.result.idOTFFM + " con la " + response.data.result.ordenServicio + ".";
                             	$scope.isAgendamiento = false;
                                 $scope.cambiarVistaSF(1);
                                 $scope.elementoCSP = {};

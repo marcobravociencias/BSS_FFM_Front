@@ -14,6 +14,11 @@
                 <i class="fa fa-search" ></i>
             </button>
         </div>
+        
+        <div class="col-md-6" style="height: 25px" ng-show="isCspAgendado">
+            <div id="message-success-resumen" class="alert alert-success" style="height: 30px;margin-top: 23px;padding: 7px;font-size: 0.7em;" role="alert" ng-bind="mensajeCspAgendado"></div>
+        </div>
+        
     </div>
 </div>
 <div class="row">
