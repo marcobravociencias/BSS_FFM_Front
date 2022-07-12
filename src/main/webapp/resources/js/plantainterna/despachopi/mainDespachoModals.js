@@ -2349,7 +2349,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             .filter(e => e.original.nivel == $scope.nfiltroGeografiaGeocercaT)
             .map(e => e.id)
         if (clustersparam.length == 0) {
-            mostrarMensajeWarningValidacion('Selecciona cluster v&aacute;lido');
+            mostrarMensajeWarningValidacion('Selecciona una Geocerca');
             return false;
         }
 

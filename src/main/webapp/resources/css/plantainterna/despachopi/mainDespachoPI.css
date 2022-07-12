@@ -3157,6 +3157,11 @@ i.fas.fa-lock.iconoAsignacionOtPermiso {
 /* TOOLTIP */
 
 /* ASIGNAR TECNICOS GEOCERCA */
+
+#geografiaTecnicosGeocerca .jstree-clicked {
+  color: #ffff !important;
+}
+
 .asignacion-color-despacho:hover {
   color: #cf7ae4;
 }
