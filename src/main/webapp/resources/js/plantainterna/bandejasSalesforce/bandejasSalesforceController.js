@@ -40,6 +40,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
     $scope.isCspAgendado = false;
     $scope.mensajeCspAgendado = "";
     $scope.flagCargandoCalendar = true;
+    $scope.isDatosFactibilidad = true;
 
     app.agendamientoCalendar($scope, bandejasSalesforceService);
     app.agendamientoMap($scope, bandejasSalesforceService);
@@ -644,6 +645,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
 
     visualizarAgendamiento = function (index) {
     	$scope.flagCargandoCalendar = true;
+    	$scope.isDatosFactibilidad = true;
     	$scope.muestraDisponibilidadCalendar([]);
     	$scope.consultarValidacionCSP(index);
     	$scope.indexPendienteSeleccionada = index;
@@ -1281,6 +1283,14 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
             } 
         });
     }
+    
+    $scope.ocultarDatosFactibilidad = function() {
+		if($scope.isDatosFactibilidad){
+			$scope.isDatosFactibilidad = false;
+		}else{
+			$scope.isDatosFactibilidad = true;
+		}
+	}
 
     angular.element(document).ready(function () {
         $('#moduloBandejasSalesforce').addClass('active');

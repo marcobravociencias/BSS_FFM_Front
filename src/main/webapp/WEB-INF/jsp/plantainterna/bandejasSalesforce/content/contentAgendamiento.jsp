@@ -258,9 +258,9 @@
                                 <span class="title-factbilidad-result" ng-show="flagConsultandoFactibilidad">
                                     Cargando...
                                 </span>
-                                <span class="icono-hideoptions-mapa-ubicacion icono-accion-card icono-ocultar-mostrar-map fa fa-minus">&nbsp;</span>
+                                <span class="icono-hideoptions-mapa-ubicacion icono-accion-card icono-ocultar-mostrar-map fa fa-minus" ng-click="ocultarDatosFactibilidad()">&nbsp;</span>
                             </div>
-                            <div class="card-body card-body-factibilidad" style="padding: 0;" ng-if="!flagConsultandoFactibilidad && flagRespuestaFactibilidad=='exito'">
+                            <div class="card-body card-body-factibilidad" style="padding: 0;" ng-if="!flagConsultandoFactibilidad && flagRespuestaFactibilidad=='exito' && isDatosFactibilidad">
                                 <div style="text-align: left;" class="info_ot_detail">
                                     <div class="col-md-12">
                                         <b class="title_span_detalle"> Regi&oacute;n:</b>
@@ -286,16 +286,15 @@
                                     </div>
                                 </div>                                
                             </div>
-                            <div class="card-body card-body-factibilidad" style="padding: 0;" ng-if="!flagConsultandoFactibilidad && flagRespuestaFactibilidad=='noencontrada'">
+                            <div class="card-body card-body-factibilidad" style="padding: 0;" ng-if="!flagConsultandoFactibilidad && flagRespuestaFactibilidad=='noencontrada' && isDatosFactibilidad">
                                 <div style="text-align: center;font-size: 0.9em;" class="info_ot_detail">
                                     <span class="mensaje-result-factibilidad">
                                         No se encontr&oacute; factibilidad  
                                     </span>
                                     <span class="mensaje-result-factibilidad"> Selecciona otra ubicaci&oacute;n </span>
-
                                 </div>
                             </div>
-                            <div class="card-body card-body-factibilidad" style="padding: 0;" ng-if="!flagConsultandoFactibilidad && flagRespuestaFactibilidad=='error'">
+                            <div class="card-body card-body-factibilidad" style="padding: 0;" ng-if="!flagConsultandoFactibilidad && flagRespuestaFactibilidad=='error' && isDatosFactibilidad">
                                 <div style="text-align: center;font-size: 0.9em;" class="info_ot_detail">
                                     <span class="mensaje-result-factibilidad">
                                         No se pudo consultar la factibilidad 
