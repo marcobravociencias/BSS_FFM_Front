@@ -656,6 +656,12 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
     	$("#calendar_agendamiento").css('visibility', 'hidden');
     });
     
+    $scope.actualizarCalendario = function() {
+    	setTimeout(function () {
+    		$scope.calendarAgendamiento.render();
+        }, 250);
+	}
+    
     $scope.validarDatos = function() {
     	$scope.listContactosAgendamiento = []
         $scope.infoFactibilidad = {};	
@@ -755,6 +761,10 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
     }
     
     $scope.consultarDisponibilidad = function() {
+    	
+    	$scope.elementoCSP.turnoAgendamiento = '';
+        $scope.elementoCSP.fechaAgendamiento = '';
+    	
     	let dataDisp={
             	geografia1: $scope.GEOGRAFIA_UNO_AGENDA_NOMBRE != null ? $scope.GEOGRAFIA_UNO_AGENDA_NOMBRE : "CIUDAD DE MEXICO-CENTRO",
                 geografia2: $scope.GEOGRAFIA_DOS_AGENDA_NOMBRE != null ? $scope.GEOGRAFIA_DOS_AGENDA_NOMBRE : "NORESTE CENTRO G",
@@ -791,6 +801,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
 	}
 
     $scope.colocarContactoSeleccionado=function(){
+    	$("#contactoAgendamiento").removeClass("campoNoValido");
         $scope.contactoSelected={}    
         if($scope.idContactoSelected==undefined)
             return 
@@ -822,26 +833,32 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         };
 
         if ($("#comentariosAgendamiento").val() == undefined || $("#comentariosAgendamiento").val() == '') {
+			$("#comentariosAgendamiento").addClass("campoNoValido");
             mensajeError += "<li>Debe ingresar un comentario para Agendar</li>";
             isValid = false;
         }
 
         if ($scope.elementoCSP.turnoAgendamiento == undefined || $scope.elementoCSP.turnoAgendamiento == '') {
+        	$("#etiquetaFechaAgendamiento").addClass("campoLabelNoValido");
+        	$("#etiquetaTurnoAgendamiento").addClass("campoLabelNoValido");
             mensajeError += "<li>Debe seleccionar un turno del Calendario</li>";
             isValid = false;
         }
         
         if ($("#entreCallesAgendamiento").val() == undefined || $("#entreCallesAgendamiento").val() == '') {
+        	$("#entreCallesAgendamiento").addClass("campoNoValido");
             mensajeError += "<li>Debe ingresar el campo entre calles</li>";
             isValid = false;
         }
         
         if ($("#referenciasAgendamiento").val() == undefined || $("#referenciasAgendamiento").val() == '') {
+        	$("#referenciasAgendamiento").addClass("campoNoValido");
             mensajeError += "<li>Debe ingresar la(s) referencias</li>";
             isValid = false;
         }
         
         if (Object.entries($scope.contactoSelected).length === 0) {
+        	$("#contactoAgendamiento").addClass("campoNoValido");
             mensajeError += "<li>Debe seleccionar un contacto</li>";
             isValid = false;
         }
@@ -904,6 +921,17 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
             mostrarMensajeWarningValidacion(mensajeError);
         }
     }
+    
+    $(".inputFormAgendamiento").keyup(function() {
+		var input = $(this).attr("id");
+		console.log(input);
+		console.log($(this).val());
+		if( $(this).val()  === "" || $(this).val() === undefined ){
+			$("#"+input).addClass("campoNoValido");
+		}else{
+			$("#"+input).removeClass("campoNoValido");
+		}
+	});
 
     $scope.getFechaFormato = function (fecha) {
         let fechaPrueba = fecha.split('/');
@@ -991,18 +1019,22 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                                 swal.close();
                             } else {
                                 mostrarMensajeInformativo("No se encontraron pendientes de agendar");
+                                $scope.reiniciarTablaPendientesAgendar();
                                 swal.close();
                             }
                         } else {
                             mostrarMensajeInformativo("No se encontraron pendientes de agendar");
+                            $scope.reiniciarTablaPendientesAgendar();
                             swal.close();
                         }
                     } else {
                         mostrarMensajeErrorAlert(response.data.resultDescripcion);
+                        $scope.reiniciarTablaPendientesAgendar();
                         swal.close();
                     }
                 } else {
                     mostrarMensajeErrorAlert(response.data.resultDescripcion);
+                    $scope.reiniciarTablaPendientesAgendar();
                     swal.close();
                 }
             });
@@ -1010,6 +1042,24 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
             mostrarMensajeWarningValidacion(mensajeError);
         }
     }
+    
+    $scope.reiniciarTablaPendientesAgendar = function() {
+    	if (pendientesAgendarTable) {
+            pendientesAgendarTable.destroy();
+        }
+
+    	pendientesAgendarTable = $('#tablePendientesAgendar').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": false,
+            "pageLength": 10,
+            "info": true,
+            "autoWidth": true,
+            "data": [],
+            "language": idioma_espanol_not_font
+        });
+	}
 
     $scope.consultarRescataventasBandejas = function () {
         let isValid = true;

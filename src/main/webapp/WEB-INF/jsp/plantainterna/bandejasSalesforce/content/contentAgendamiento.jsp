@@ -98,7 +98,7 @@
             </div>
         </div>
         <div class="">
-            <textarea class="form-control textarea-agendamiento" id="entreCallesAgendamiento" rows="2" id=""></textarea>
+            <textarea class="form-control textarea-agendamiento inputFormAgendamiento" id="entreCallesAgendamiento" rows="2" id=""></textarea>
         </div>
         <div class="container-fluid agendamiento-content">
             <div class="">
@@ -106,7 +106,7 @@
             </div>
         </div>
         <div class="">
-            <textarea class="form-control textarea-agendamiento" id="referenciasAgendamiento" rows="2" id=""></textarea>
+            <textarea class="form-control textarea-agendamiento inputFormAgendamiento" id="referenciasAgendamiento" rows="2" id=""></textarea>
         </div>
         <div class="col-12">
             <div class="row">
@@ -203,7 +203,7 @@
         <div class="col-md-12">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" id="opcion-calendarioAgendamiento-tab" data-toggle="tab" href="#opcion-calendarioAgendamiento" role="tab" aria-controls="opcion-calendarioAgendamiento" aria-selected="true">Disponibilidad</a>
+                    <a class="nav-link active" id="opcion-calendarioAgendamiento-tab" data-toggle="tab" ng-click="actualizarCalendario()" href="#opcion-calendarioAgendamiento" role="tab" aria-controls="opcion-calendarioAgendamiento" aria-selected="true">Disponibilidad</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="opcion-factibilidad-tab" data-toggle="tab" href="#opcion-factibilidad" role="tab" aria-controls="opcion-factibilidad" aria-selected="false">Factibilidad</a>
@@ -312,18 +312,18 @@
                 <div class="col-6 mt-3">
                     <div class="">
                         <span class="text-tile-agendamiento">Fecha de agendamiento: </span>
-                        <span ng-click="abrirDisponibilidad()" class="text-content-agendamiento text-agrega-contacto" ng-if="!isFechaSelected">Sin selecci&oacute;n </span>
+                        <span id="etiquetaFechaAgendamiento" ng-click="abrirDisponibilidad()" class="text-content-agendamiento text-agrega-contacto" ng-if="!isFechaSelected">Sin selecci&oacute;n </span>
                         <span class="text-content-agendamiento" ng-if="isFechaSelected" ng-bind="elementoCSP.fechaAgendamiento" ></span>
                     </div>
                     <div class="">
                         <span class="text-tile-agendamiento">Turno: </span>
-                        <span ng-click="abrirDisponibilidad()" class="text-content-agendamiento text-agrega-contacto" ng-if="!isFechaSelected">Sin selecci&oacute;n </span>
+                        <span id="etiquetaTurnoAgendamiento" ng-click="abrirDisponibilidad()" class="text-content-agendamiento text-agrega-contacto" ng-if="!isFechaSelected">Sin selecci&oacute;n </span>
                         <span class="text-content-agendamiento" ng-if="isFechaSelected" ng-bind="elementoCSP.turnoAgendamiento" ></span>
                     </div>
                 </div>
                 <div class="col-6">
                     <span class="text-tile-agendamiento">Comentarios </span>
-                    <textarea class="form-control textarea-agendamiento" id="comentariosAgendamiento" rows="2" id=""></textarea>
+                    <textarea class="form-control textarea-agendamiento inputFormAgendamiento" id="comentariosAgendamiento" rows="2" id=""></textarea>
 
                 </div>
             </div>

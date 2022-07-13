@@ -1874,4 +1874,13 @@ span.text-content-detallePaquete {
 .li_item_modelo {
   font-size: .8em !important;
 }
+
+.campoNoValido {
+	border-bottom: 2px solid rgb(245, 87, 86);
+}
+
+.campoLabelNoValido {
+	color: rgb(245, 87, 86) !important;
+}
+
 /* DETALLE CSP */

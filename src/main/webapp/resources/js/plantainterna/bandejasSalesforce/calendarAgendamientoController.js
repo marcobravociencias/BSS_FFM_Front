@@ -1,7 +1,7 @@
 app.agendamientoCalendar = function ($scope, bandejasSalesforceService) {
 
     let calendar_agendamiento;
-    var calendarAgendamiento;
+    $scope.calendarAgendamiento;
     let arregloDisponibilidad;
     $scope.isFechaSelected = false;
 
@@ -14,7 +14,7 @@ app.agendamientoCalendar = function ($scope, bandejasSalesforceService) {
         }
         
         calendar_agendamiento = document.getElementById('calendar_agendamiento');
-        calendarAgendamiento = new FullCalendar.Calendar(calendar_agendamiento, {
+        $scope.calendarAgendamiento = new FullCalendar.Calendar(calendar_agendamiento, {
             height: 550,
             locale: 'es',
             displayEventTime: true,
@@ -38,6 +38,9 @@ app.agendamientoCalendar = function ($scope, bandejasSalesforceService) {
                 $scope.isFechaSelected = true;
                 $scope.elementoCSP.turnoAgendamiento = info.event._def.extendedProps.tipo;
                 $scope.elementoCSP.fechaAgendamiento = info.event._def.extendedProps.objetodisponibilidad.fecha;
+                $("#etiquetaFechaAgendamiento").removeClass("campoLabelNoValido");
+            	$("#etiquetaTurnoAgendamiento").removeClass("campoLabelNoValido");
+                $scope.$apply(); 
             },
             dateClick: function (info) {
             },
@@ -45,7 +48,7 @@ app.agendamientoCalendar = function ($scope, bandejasSalesforceService) {
             	verCalendario();
             }
         });
-        calendarAgendamiento.render();
+        $scope.calendarAgendamiento.render();
     }
     
     verCalendario = function() {
@@ -54,8 +57,8 @@ app.agendamientoCalendar = function ($scope, bandejasSalesforceService) {
 	}	
 
     $scope.muestraDisponibilidadCalendar = function (listDisponibilidad) {
-        if (calendarAgendamiento) {
-            calendarAgendamiento.destroy();
+        if ($scope.calendarAgendamiento) {
+        	$scope.calendarAgendamiento.destroy();
         }
         arregloDisponibilidad = [];
         let eventoDisponibilibidadTurno = {};

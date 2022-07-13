@@ -118,14 +118,16 @@ app.agendamientoMap = function ($scope, bandejasSalesforceService) {
     }
 
     $scope.actualizarFactibilidadBandejas = function () {
-        $scope.actualizarFactibilidadEmpresarial()
-        if($scope.tipoGeografiaFact =='empresarial ')
-            $scope.actualizarFactibilidadEmpresarial()
-        
-        if($scope.tipoGeografiaFact =='residencial ')
-            $scope.actualizarFactibilidadResidencial()
-
+    	$scope.flagCargandoCalendar = true;
+    	$("#calendar_agendamiento").css('visibility', 'hidden');
+        $scope.actualizarFactibilidadEmpresarial();
+//        if($scope.tipoGeografiaFact =='empresarial ')
+//            $scope.actualizarFactibilidadEmpresarial()
+//        
+//        if($scope.tipoGeografiaFact =='residencial ')
+//            $scope.actualizarFactibilidadResidencial()
     }
+    
     $scope.actualizarFactibilidadResidencial=function(){
     }
     
@@ -159,15 +161,6 @@ app.agendamientoMap = function ($scope, bandejasSalesforceService) {
         }).then(function (isConfirm) {
             if (isConfirm) {                         
                 $scope.isFactibilidad = true;
-                //Se muestra en la vista del plan
-                /**
-                $scope.elementoCSP.niveluno = $scope.infoFactibilidad.region;
-                $scope.elementoCSP.niveldos = $scope.infoFactibilidad.ciudad;
-                $scope.elementoCSP.niveltres = $scope.infoFactibilidad.distrito;
-                $scope.elementoCSP.nivelcuatro = $scope.infoFactibilidad.cluster;                
-                $scope.elementoCSP.latitud = $scope.infoFactibilidad.latitud;
-                $scope.elementoCSP.longitud = $scope.infoFactibilidad.longitud;                 
-                **/
                 $scope.$apply();                           
                 swal({ text: 'Espera un momento...', allowOutsideClick: false });
                 swal.showLoading();                  
