@@ -3,7 +3,7 @@
         <span class="" style="font-weight: bold;">Cliente: {{elementoCSP.cuentaFacturaSf.nombreCuentaFactura}}</span>
     </div>
     <div class="col-2 pr-0">
-        <button ng-click="isAgendamiento = false" type="button" class="btn-close" style="float: right; padding: 0.5em;"></button>
+        <button id="cerrarAgendamiento" ng-click="isAgendamiento = false" type="button" class="btn-close" style="float: right; padding: 0.5em;"></button>
     </div>
     <div class="divider-agendamiento"></div>
 </div>
@@ -217,7 +217,7 @@
 					<span class="title-factbilidad-result" ng-show="flagCargandoCalendar">
 						Cargando calendario...
 					</span>
-                    <div id="calendar_agendamiento" ng-show="!flagCargandoCalendar"></div>
+                    <div id="calendar_agendamiento"></div>
                 </div>
                 
                 <div class="tab-pane fade" id="opcion-factibilidad" role="tabpanel" aria-labelledby="opcion-factibilidad-tab">

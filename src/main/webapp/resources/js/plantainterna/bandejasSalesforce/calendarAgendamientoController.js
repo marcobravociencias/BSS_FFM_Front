@@ -1,7 +1,7 @@
 app.agendamientoCalendar = function ($scope, bandejasSalesforceService) {
 
     let calendar_agendamiento;
-    $scope.calendarAgendamiento;
+    var calendarAgendamiento;
     let arregloDisponibilidad;
     $scope.isFechaSelected = false;
 
@@ -12,8 +12,9 @@ app.agendamientoCalendar = function ($scope, bandejasSalesforceService) {
         } else {
             fechaCal = anio + '-' + mes + '-' + '01';
         }
+        
         calendar_agendamiento = document.getElementById('calendar_agendamiento');
-        $scope.calendarAgendamiento = new FullCalendar.Calendar(calendar_agendamiento, {
+        calendarAgendamiento = new FullCalendar.Calendar(calendar_agendamiento, {
             height: 550,
             locale: 'es',
             displayEventTime: true,
@@ -37,21 +38,24 @@ app.agendamientoCalendar = function ($scope, bandejasSalesforceService) {
                 $scope.isFechaSelected = true;
                 $scope.elementoCSP.turnoAgendamiento = info.event._def.extendedProps.tipo;
                 $scope.elementoCSP.fechaAgendamiento = info.event._def.extendedProps.objetodisponibilidad.fecha;
-                $scope.$apply();
             },
             dateClick: function (info) {
             },
-            
+            datesSet: function(info) {
+            	verCalendario();
+            }
         });
-        $scope.calendarAgendamiento.render();
-        setTimeout(function () {
-        	$scope.flagCargandoCalendar = false;
-        }, 1500);
+        calendarAgendamiento.render();
     }
+    
+    verCalendario = function() {
+    	$("#calendar_agendamiento").css('visibility', 'visible');
+    	$scope.flagCargandoCalendar = false;
+	}	
 
     $scope.muestraDisponibilidadCalendar = function (listDisponibilidad) {
-        if ($scope.calendarAgendamiento) {
-            $scope.calendarAgendamiento.destroy();
+        if (calendarAgendamiento) {
+            calendarAgendamiento.destroy();
         }
         arregloDisponibilidad = [];
         let eventoDisponibilibidadTurno = {};

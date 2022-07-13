@@ -1,6 +1,6 @@
 var app = angular.module('bandejasSalesforceApp', []);
 app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesforceService', 'genericService', 'busquedaSalesforceService', function ($scope, $q, bandejasSalesforceService, genericService, busquedaSalesforceService) {
-    app.busquedaSalesforce($scope, busquedaSalesforceService)
+	app.busquedaSalesforce($scope, busquedaSalesforceService)
     $scope.banderaNoticiasTicket = false;
     $scope.banderaNoticiasOportunidad = false;
     $scope.banderaNoticiasOs = false;
@@ -646,12 +646,15 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
     visualizarAgendamiento = function (index) {
     	$scope.flagCargandoCalendar = true;
     	$scope.isDatosFactibilidad = true;
-    	$scope.muestraDisponibilidadCalendar([]);
     	$scope.consultarValidacionCSP(index);
     	$scope.indexPendienteSeleccionada = index;
     	$scope.isCspAgendado = false;
         $scope.mensajeCspAgendado = "";
     }
+    
+    $("#cerrarAgendamiento").click(function() {
+    	$("#calendar_agendamiento").css('visibility', 'hidden');
+    });
     
     $scope.validarDatos = function() {
     	$scope.listContactosAgendamiento = []
