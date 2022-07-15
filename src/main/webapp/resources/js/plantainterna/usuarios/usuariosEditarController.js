@@ -193,10 +193,10 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 	                	        	case "tabInformacionVW_CUADRILLA":
 	                	        		if(conf.valor == "true"){
 	                	        			$scope.tabInformacionVW_CUADRILLA_mod = true;
-	                                    	var txtCuadrilla = $scope.listaResultCuadrillas.find((e) => e.id == $scope.detalleUsuario.tipoCuadrilla);
-//		                                    setTimeout(function() {
-		                                    $("#cuadrilla_select_mod").val(txtCuadrilla.descripcion);
-//	                                    	},500);
+	                	        			if($scope.detalleUsuario.tipoCuadrilla !== undefined && $scope.detalleUsuario.tipoCuadrilla !== null &&$scope.detalleUsuario.tipoCuadrilla !== ""){
+	                	        				var txtCuadrilla = $scope.listaResultCuadrillas.find((e) => e.id == $scope.detalleUsuario.tipoCuadrilla);
+			                                    $("#cuadrilla_select_mod").val(txtCuadrilla.descripcion);
+	                	        			}
 	                	    			}
 	                	        		break;
 	                	        	case "tabArbol_LB_N1":
