@@ -164,15 +164,15 @@ app.controller('reportesLogController', ['$scope', '$q', 'reportesLogService', '
                         let resultConf = results[0].data.result
                         if (resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves) {
                             let llavesResult = results[0].data.result.MODULO_ACCIONES_USUARIO.llaves;
-                            $scope.nGeografiaUsuario = 2//llavesResult.N_FILTRO_GEOGRAFIA_USUARIO;
-                            $scope.nGeografiaGeneral = 2//llavesResult.N_FILTRO_GEOGRAFIA_GENERAL;
+                            $scope.nGeografiaUsuario = llavesResult.N_FILTRO_GEOGRAFIA_USUARIO;
+                            $scope.nGeografiaGeneral = llavesResult.N_FILTRO_GEOGRAFIA_GENERAL;
                             $scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
 
                             if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
-                                $scope.configPermisoAccionConsultaLogsGeneral = true//($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaLogsGeneral" })[0] != undefined);
-                                $scope.configPermisoAccionConsultaLogsUsuario = true//($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaLogsUsuario" })[0] != undefined);
-                                $scope.configPermisoAccionDescargaLogsGeneral = true//($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaLogsGeneral" })[0] != undefined);
-                                $scope.configPermisoAccionDescargaLogsUsuario = true//($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaLogsUsuario" })[0] != undefined);
+                                $scope.configPermisoAccionConsultaLogsGeneral = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaLogsGeneral" })[0] != undefined);
+                                $scope.configPermisoAccionConsultaLogsUsuario = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaLogsUsuario" })[0] != undefined);
+                                $scope.configPermisoAccionDescargaLogsGeneral = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaLogsGeneral" })[0] != undefined);
+                                $scope.configPermisoAccionDescargaLogsUsuario = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaLogsUsuario" })[0] != undefined);
                             }
                         }
 
