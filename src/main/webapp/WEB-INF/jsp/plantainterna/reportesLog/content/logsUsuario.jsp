@@ -1,4 +1,4 @@
-<div class="container-fluid" id="container_cambia_contrasena">
+<div class="container-fluid p-0" id="container_logs_usuario">
     <div class="col-12">
         <div class="row">
             <div class="col-2 form-group columna-filtro-ind-rep">
@@ -32,7 +32,7 @@
             </div>
             <div class="col-md-1 search-form">
                 <button id="btnBuscar" type="button" class="btn btn-primary btnTotal"
-                    ng-click="consultarUsuariosContrasena(true)" style="margin-top: 2.3em;">
+                    ng-click="consultarUsuarios()" style="margin-top: 2.3em;">
                     <i class="fa fa-search"></i>
                 </button>
             </div>
@@ -41,7 +41,7 @@
 
     <div class="content-fluid">
         <div class="table-responsive">
-            <table id="cambiaContrasenaTable" class="display table" cellspacing="0" width="100%">
+            <table id="logsUsuarioTable" class="display table" cellspacing="0" width="100%">
                 <thead id="thead_table">
                     <tr>
                         <th>Foto</th>
@@ -50,7 +50,7 @@
                         <th>Usuario</th>
                         <th>Nombre</th>
                         <th>Ubicaci&oacute;n</th>
-                        <th>Cambiar contrase&ntilde;a</th>
+                        <th>Consultar</th>
                     </tr>
                 </thead>
                 <tbody>

@@ -1,16 +1,21 @@
 package com.mx.totalplay.ffm.cloudweb.utilerias.controller;
 
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mx.totalplay.ffm.cloudweb.plantainterna.model.consultaOTPI.ParamConsultaOTPI;
+import com.mx.totalplay.ffm.cloudweb.utilerias.model.DataTableResponse;
 import com.mx.totalplay.ffm.cloudweb.utilerias.model.ServiceResponseResult;
 import com.mx.totalplay.ffm.cloudweb.utilerias.service.GenericAccionesService;
 
@@ -19,7 +24,8 @@ import com.mx.totalplay.ffm.cloudweb.utilerias.service.GenericAccionesService;
 public class GenericAccionesController {
 	
 	private final Logger logger = LogManager.getLogger(GenericAccionesController.class.getName());
-	
+	private DataTableResponse dataTableResponse;
+
 	@Autowired
     private GenericAccionesService genericAccionesService;
 	 /**
@@ -83,12 +89,32 @@ public class GenericAccionesController {
 	}
 	
 	@PostMapping("/registrarAccionesRealizadasService")
-	public ResponseEntity<?> registrarAccionesRealizadasService(@RequestBody String params){
+	public ResponseEntity<?> registrarAccionesRealizadasService(@RequestBody String params,  HttpServletRequest request){
 		logger.info("##### CONSULTANDO registrarAccionesRealizadasService");
-		ServiceResponseResult response = genericAccionesService.agregarMensajeAccionService(params);
+		ServiceResponseResult response = genericAccionesService.agregarMensajeAccionService(params, request);
 		if (response.getResult() instanceof Integer){
 			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
 		}
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+	
+	@PostMapping("/consultarReporteLogGeneral")
+	public ResponseEntity<?> consultarReporteLogGeneral(@RequestBody String params){
+		logger.info("##### CONSULTANDO consultarReporteLogGeneral");
+		ServiceResponseResult response = genericAccionesService.consultarReporteLogGeneral(params);
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+	
+	@PostMapping("/consultarLogGeneral")
+	public ResponseEntity<DataTableResponse> consultarLogGeneral(@ModelAttribute ParamConsultaOTPI params) {
+		logger.info("##### CONSULTANDO consultarLogGeneral");
+		dataTableResponse = genericAccionesService.consultarLogGeneral(params);
+		if (dataTableResponse.getResult() instanceof Integer){
+			return new ResponseEntity<DataTableResponse>(dataTableResponse, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<DataTableResponse>(dataTableResponse, HttpStatus.ACCEPTED);
 	}
 }

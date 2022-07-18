@@ -49,6 +49,9 @@ public class ConstantesGeneric implements Serializable{
 	
 	@Value("${registrarAccionesRealizadas}")
 	private String registrarAccionesRealizadas;
+	
+	@Value("${consultarReporteLogGeneral}")
+	private String consultarReporteLogGeneral;
 
 	@Value("${version.deploy.ffm-cloud}")
 	private String versionDeploy;

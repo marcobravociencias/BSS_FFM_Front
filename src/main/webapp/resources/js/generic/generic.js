@@ -124,19 +124,19 @@ class GenericAccionRealizada {
 
 	/**
 	 * 
-	 * @param {*} nombreModuloAccion; 
+	 * @param {*} idModuloAccion; 
 	 * @param {*} posicionBotonAccion; 
 	 */
 
-	constructor(nombreModuloAccion, posicionBotonAccion) {
-		this.nombreModuloAccion = nombreModuloAccion;
+	constructor(idModuloAccion, posicionBotonAccion) {
+		this.idModuloAccion = idModuloAccion;
 		this.posicionBotonAccion = posicionBotonAccion;
 		this.usuarioAccionGestion=document.getElementById('numempleadohidden').value;
 	}
 
 	getObjectAccionRealizada(mensajeAccion, tipoMensaje , tituloAccion) {
 		return {
-			identificadorModulo: this.nombreModuloAccion,
+			identificadorModulo: this.idModuloAccion,
 			mensaje: mensajeAccion,
 			tipoMensaje: tipoMensaje,
 			usuario:  this.usuarioAccionGestion,
@@ -149,11 +149,12 @@ class GenericAccionRealizada {
 
 	getObjectAccionRealizadaService(mensajeAccion, tipoMensaje , tituloAccion) {
 		return {
-			idModulo: this.nombreModuloAccion,
+			idModulo: this.idModuloAccion,
 			comentarios: 'test',
 			descripcionEstatusHttp: tipoMensaje,
 			descripcionAccion: tituloAccion,
-			descripcionMensajeHttp:  mensajeAccion
+			descripcionMensajeHttp:  mensajeAccion,
+			idOrigen: 1
 		}
 	}
 
@@ -237,8 +238,8 @@ class GenericAccionRealizada {
 		if (localStorage.getItem('MODULO_MENSAJES_ACCIONES_RECIENTES')) {
 			accionesList = JSON.parse(localStorage.getItem('MODULO_MENSAJES_ACCIONES_RECIENTES'));
 			localStorage.removeItem('MODULO_MENSAJES_ACCIONES_RECIENTES');
-			accionesListGeneral = accionesList.filter(e => { return e.identificadorModulo !== this.nombreModuloAccion });
-			accionesListModulo = accionesList.filter(e => { return e.usuario === usuario && e.identificadorModulo === this.nombreModuloAccion });
+			accionesListGeneral = accionesList.filter(e => { return e.identificadorModulo !== this.idModuloAccion });
+			accionesListModulo = accionesList.filter(e => { return e.usuario === usuario && e.identificadorModulo === this.idModuloAccion });
 			accionesList = [];
 
 			if (accionesListModulo.length > 50) {
@@ -259,7 +260,7 @@ class GenericAccionRealizada {
 		}
 		*/
 
-		//let accionesUsuario = accionesList.filter(e => { return e.usuario === usuario && e.identificadorModulo === this.nombreModuloAccion });
+		//let accionesUsuario = accionesList.filter(e => { return e.usuario === usuario && e.identificadorModulo === this.idModuloAccion });
 		
 	}
 
@@ -279,7 +280,7 @@ class GenericAccionRealizada {
 		//let listaUltimasAcciones = this.getAccionesRecientesUsuario();
 		let listaUltimasAcciones = [];
 		let accionesListGeneral;
-		let idModuloConsulta = this.nombreModuloAccion;
+		let idModuloConsulta = this.idModuloAccion;
 		this.getAccionesRecientesUsuario().done(function (jsonResponse) {
 			if (jsonResponse.respuesta) {
 				if (jsonResponse.result) {

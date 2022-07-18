@@ -139,6 +139,11 @@ public class PlantaInternaViewsController {
 	public String organigrama() {		
 		return "plantainterna/organigrama/mainOrganigrama";
 	}
+	
+	@GetMapping("/moduloReportesLog")
+	public String reportesLogs() {		
+		return "plantainterna/reportesLog/mainReportesLog";
+	}
 
 }
 
