@@ -81,27 +81,40 @@
                                 aria-selected="false"><i class="icon-menu-left fas fa-file-alt"></i>&nbsp;<span
                                     class="titulo-menu">Asignadas Compensaci&oacute;n</span></a>
                         </li>
+                        <li class="nav-item opcion-menu" ng-if="configPermisoAccionConsultaTecnicosTiposOrdenes">
+                            <a id="tecnicosTiposOrdenes-tab" data-toggle="tab"
+                                ng-click="cambiaReporte('tecnicos',true,'tecnicosTiposOrdenes')"
+                                href="tecnicosTiposOrdenes" role="tab" aria-controls="tecnicosTiposOrdenes"
+                                aria-selected="false">
+                                <i class="icon-menu-left fas fa-user"></i>&nbsp;<span class="titulo-menu">Skills instaladores</span>
+							</a>
+                        </li>
+                        
                     </ul>
                     <div class="right-content tab-content">
                         <div class="row tab-content">
                             <div class="tab-pane fade" id="seguimientoDiario" role="tabpanel"
                                 ng-show="configPermisoAccionConsultaReporteSeguimiento"
                                 aria-labelledby="seguimientoDiario-tab">
-                                <h5 id="texto_header_reportes" class="text-center">Reporte Seguimiento
-                                    Diario</h5>
+                                <h5 id="texto_header_reportes" class="text-center">Reporte seguimiento
+                                    diario</h5>
                                 <jsp:include page="./reporteSeguimientoDiario.jsp"></jsp:include>
                             </div>
                             <div class="tab-pane fade" id="cierreDiario" role="tabpanel"
                                 aria-labelledby="cierreDiario-tab" ng-show="configPermisoAccionConsultaReporteCierre">
-                                <h5 id="texto_header_reportes" class="text-center">Reporte Cierre Diario</h5>
+                                <h5 id="texto_header_reportes" class="text-center">Reporte cierre diario</h5>
                                 <jsp:include page="./reporteCierreDiario.jsp"></jsp:include>
                             </div>
                             <div class="tab-pane fade" id="asignadasCompensacion" role="tabpanel"
                                 aria-labelledby="asignadasCompensacion-tab"
                                 ng-show="configPermisoAccionConsultaReporteAsignadas">
-                                <h5 id="texto_header_reportes" class="text-center">Reporte Asignadas Compensaci&oacute;n
+                                <h5 id="texto_header_reportes" class="text-center">Reporte asignadas compensaci&oacute;n
                                 </h5>
                                 <jsp:include page="./reporteAsignadasCompensacion.jsp"></jsp:include>
+                            </div>
+                            <div class="tab-pane fade" id="tecnicosTiposOrdenes" role="tabpanel" ng-show="configPermisoAccionConsultaTecnicosTiposOrdenes" aria-labelledby="tecnicosTiposOrdenes-tab">
+                                <h5 id="texto_header_reportes" class="text-center">Reporte skills instaladores</h5>
+                                <jsp:include page="./content/reporteTecnicosTiposOrdenes.jsp"></jsp:include>
                             </div>
                         </div>
                     </div>
@@ -114,8 +127,8 @@
 
     <!-- LIBRERIAS -->
     <script src="${pageContext.request.contextPath}/resources/libraries/angularjs/js/angular.min.js"></script>
-    <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.js"></script>
+    	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.min.js"></script>
     <script type="text/javascript"
         src="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/js/mdb.min.js"></script>
     <script src="${pageContext.request.contextPath}/resources/libraries/popper/popper.min.js"></script>
@@ -140,7 +153,7 @@
         src="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/lib/moment.es.js"></script>
 
     <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/plantainterna/reportesPI/reportesPIController.js?v=${sessionScope.versionDepl}"></script>
+        src="${pageContext.request.contextPath}/resources/js/plantainterna/reportesPI/reportesPIController.js?v=${sessionScope.versionDepl}" charset="UTF-8"></script>
     <script type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/plantainterna/reportesPI/reportesPIFilters.js?v=${sessionScope.versionDepl}"></script>
     <script type="text/javascript"

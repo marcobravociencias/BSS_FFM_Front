@@ -55,4 +55,8 @@ public class ConstReportePI implements Serializable{
   
   @Value("${consultaAsignadasCompensacion}")
   private String consultarAsignadasCompensacion;
+  
+  @Value("${consultarTecnicosTiposOrdenes}")
+  private String consultarTecnicosTiposOrdenes;
+  
 }

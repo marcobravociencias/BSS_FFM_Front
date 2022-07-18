@@ -7,6 +7,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 	let reporteSeguimientoTable;
 	let reporteCierreTable;
 	let reporteAsignadasTable;
+	let tableTecnicosTiposOrdenes;
 	$scope.filtrosGeneral = {};
 	$scope.repDiario = {};
 	$scope.repCierreDiario = {};
@@ -36,6 +37,8 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 	$scope.configPermisoAccionDescargaReporteCierre = false;
 	$scope.configPermisoAccionConsultaReporteAsignadas = false;
 	$scope.configPermisoAccionDescargaReporteAsignadas = false;
+	$scope.configPermisoAccionConsultaTecnicosTiposOrdenes = false;
+	$scope.configPermisoAccionGenerarReporteTecnicosTiposOrdenes = false;
 
 	//Total rows en tabla para excel
 	$scope.resultReporteDiario = null;
@@ -50,7 +53,6 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 		});
 		$('#' + idInput).val(textoGeografias);
 	}
-
 	
 	$scope.setTextFiltro = function () {
 		if ($scope.tipoReporte === 'seguimiento') {
@@ -72,15 +74,20 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 	angular.element(document).ready(function () {
 		$('#searchGeo-seguimiento').on('keyup', function () {
 			$("#jstree-proton-seguimiento").jstree("search", this.value);
-		})
+		});
 
 		$('#searchGeo-cierre').on('keyup', function () {
 			$("#jstree-proton-cierre").jstree("search", this.value);
-		})
+		});
 
 		$('#searchGeo-asignadas').on('keyup', function () {
 			$("#jstree-proton-asignadas").jstree("search", this.value);
-		})
+		});
+		
+		$('#searchGeo-tecnicos').on('keyup', function () {
+			$("#jstree-proton-tecnicos").jstree("search", this.value);
+		});
+		
 		$("#modalCluster").on("hidden.bs.modal", function () {
 			if ($scope.tipoReporte === 'seguimiento') {
 				$scope.getTextGeografia('jstree-proton-seguimiento', 'clusterO');
@@ -93,13 +100,16 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 			if ($scope.tipoReporte === 'asignadas') {
 				$scope.getTextGeografia('jstree-proton-asignadas', 'cluster-asignadas');
 			}
+			
+			if ($scope.tipoReporte === 'tecnicos') {
+				$scope.getTextGeografia('jstree-proton-tecnicos', 'cluster-tecnicos');
+			}
 		})
 		$('.drop-down-filters').on("change.bs.dropdown", function (e) {
 			$scope.setTextFiltro();
 		});
 
 	})
-
 
 	$scope.abrirModalGeografiaRep = function (type) {
 		$("#jstree-proton-" + type).jstree("search", '');
@@ -108,6 +118,123 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 		setTimeout(function () {
 			$("#searchGeo-" + type).focus();
 		}, 750);
+	}
+	
+	$scope.consultarTecnicosTiposOrdenes = function() {
+		
+//		let clustersparam = $("#jstree-proton-seguimiento").jstree("get_selected", true).filter(e => e.original.nivel == $scope.nfiltrogeografiaSeguimientoDiario).map(e => parseInt(e.id));
+		
+		let clustersparam = $("#jstree-proton-tecnicos").jstree("get_selected", true).filter(e => e).map(e => parseInt(e.id));
+		let params = {"idGeografias": [100]};
+		
+		swal({ text: 'Espera un momento...', allowOutsideClick: false });
+        swal.showLoading();
+        reportesPIService.consultarTecnicosTiposOrdenes(params).then(function success(response) {
+            if (response.data !== undefined) {
+            	if (response.data.respuesta) {
+                	if (response.data.result !== undefined) {
+                		if(response.data.result.tecnicos !== null){
+    	            		if(response.data.result.tecnicos.length > 0){
+    	            			$scope.listaSkills = response.data.result.encabezados;
+    	            			$scope.listaTecnicos = response.data.result.tecnicos;
+    	            			$scope.pintarDatosTablaTecnicos();
+    	            		}else{
+    	            			mostrarMensajeInformativo("¡Actualmente no existen técnicos!");
+    	            		}
+                		}else{
+                			mostrarMensajeInformativo("¡Actualmente no existen técnicos!");
+                		}
+                    }else{
+                    	mostrarMensajeInformativo("¡Actualmente no existen técnicos!");
+                    }                 
+                } else {
+                	mostrarMensajeWarningValidacion(response.data.resultDescripcion);
+                }
+            } else {
+                mostrarMensajeErrorAlert("Error interno en el servidor.");
+            }
+            swal.close();
+        });
+	}
+	
+	$scope.pintarDatosTablaTecnicos = function() {
+		if (tableTecnicosTiposOrdenes) {
+			tableTecnicosTiposOrdenes.destroy()
+		}
+		angular.forEach($scope.listaTecnicos,function(tec,index){
+			var skillsRegistradas = [];
+			skillsRegistradas = tec.skills.replace(/ /g, "").split(",");
+			tec.listaSkills = angular.copy($scope.listaSkills);
+			angular.forEach(tec.listaSkills,function(skill,index){
+				var isSkillRegistrada = skillsRegistradas.find((e) => e == skill.id) != undefined;
+				if(isSkillRegistrada){
+					skill.isRegistrada = true;
+				}else{
+					skill.isRegistrada = false;
+				}
+			});
+		});
+		
+		var dataTecnicos = [];
+		
+		angular.forEach($scope.listaTecnicos,function(tec,index){
+			let rowTec = [];
+			rowTec[0] = tec.nombretecnico;
+			rowTec[1] = tec.usuario;
+			angular.forEach(tec.listaSkills,function(skills,index){
+				if(skills.isRegistrada){
+					rowTec[index + 2] = "<i class='fa fa-check'></i>";
+				}else{
+					rowTec[index + 2] = "";
+				}
+			});
+            dataTecnicos.push(rowTec);
+        });
+
+		var titulos = [{ "title": "Cuadrilla", "sClass": "rowCuadrillaTecnico", "targets": 0 },{ "title": "Usuario FFM", "sClass": "rowUsuarioFFMTecnico", "targets": 1 }];
+		
+		angular.forEach($scope.listaSkills,function(skill,index){
+			var pos = index + 2;
+			titulos.push({ "title": skill.descripcion, "sClass": "cuerpoTablaTecnicos", "targets": pos });
+		});
+		
+		tableTecnicosTiposOrdenes = $('#tableTecnicosTiposOrdenes').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "ordering": false,
+            "pageLength": 10,
+            "info": true,
+            "searching": true,
+            "scrollX": true,
+            "columnDefs": titulos,
+            "data": dataTecnicos,
+            "autoWidth": false,
+            "language": idioma_espanol_not_font
+        });
+		
+	}
+	
+	$scope.generarReporteTecnicosTiposOrdenes = function() {
+		let params = {
+				"tecnicos" : $scope.listaTecnicos
+		}
+		
+		swal({ text: 'Espera un momento...', allowOutsideClick: false });
+        swal.showLoading();
+        reportesPIService.generarReporteTecnicosTiposOrdenes(params).then((result) => {
+			swal.close()
+			if (result.data.respuesta) {
+				const data = JSON.parse(result.data.result).tecnicos;
+				const fileName = 'Reporte skills instaladores';
+				const exportType = 'xls';
+
+				window.exportFromJSON({ data, fileName, exportType });
+			} else {
+				mostrarMensajeErrorAlert("Ocurrió un error al generar el reporte.");
+			}
+			swal.close();
+		}).catch(err => handleError(err));
+        
 	}
 
 	$scope.cambiaReporte = function (type, save, tab) {
@@ -137,6 +264,10 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 					swal({ text: 'Cargando registros...', allowOutsideClick: false });
 					swal.showLoading();
 				}
+				break;
+			case 'tecnicos':
+				geografiaReporte = angular.copy($scope.listaGeografiaReporte.tecnicos);
+				//$scope.consultarTecnicosTiposOrdenes();
 				break;
 		}
 
@@ -170,6 +301,12 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 						if ($scope.resultReporteAsignadas == null) {
 							$scope.consultarReporteAsignadasCompensacion();
 						}
+						break;
+					case 'tecnicos':
+						$scope.getTextGeografia('jstree-proton-tecnicos', 'cluster-tecnicos');
+//						if ($scope.resultReporteAsignadas == null) {
+							$scope.consultarTecnicosTiposOrdenes();
+//						}
 						break;
 				}
 
@@ -217,6 +354,15 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 				break;
 			case 'asignadas':
 				$scope.listaGeografiaReporte.asignadas.map((e) => {
+					e.state = {
+						opened: true,
+						selected: arbolActual.find((t) => t == parseInt(e.id)) > 0 ? true : false,
+					}
+					return e
+				});
+				break;
+			case 'tecnicos':
+				$scope.listaGeografiaReporte.tecnicos.map((e) => {
 					e.state = {
 						opened: true,
 						selected: arbolActual.find((t) => t == parseInt(e.id)) > 0 ? true : false,
@@ -302,6 +448,10 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 								$scope.configPermisoAccionDescargaReporteCierre = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaCierreDiario" })[0] != undefined);
 								$scope.configPermisoAccionConsultaReporteAsignadas = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaAsignadasCompensacion" })[0] != undefined);
 								$scope.configPermisoAccionDescargaReporteAsignadas = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaAsignadasCompensacion" })[0] != undefined);
+								$scope.configPermisoAccionConsultaTecnicosTiposOrdenes = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaTecnicosTiposOrdenes" })[0] != undefined);
+								$scope.configPermisoAccionGenerarReporteTecnicosTiposOrdenes = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaReporteTecnicosTiposOrdenes" })[0] != undefined);
+								$scope.configPermisoAccionConsultaTecnicosTiposOrdenes = true;
+								$scope.configPermisoAccionGenerarReporteTecnicosTiposOrdenes  = true;
 							}
 
 							let firstNav = '';
@@ -324,6 +474,13 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 								if (firstNav === '') {
 									firstNav = 'asignadasCompensacion-tab';
 									$scope.tipoReporte = 'asignadas';
+								}
+							}
+							
+							if ($scope.configPermisoAccionConsultaTecnicosTiposOrdenes) {
+								if (firstNav === '') {
+									firstNav = 'tecnicosTiposOrdenes-tab';
+									$scope.tipoReporte = 'tecnicos';
 								}
 							}
 
@@ -419,7 +576,6 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 							$scope.nfiltrogeografiaCierre = $scope.nfiltrogeografiaCierre ? $scope.nfiltrogeografiaCierre : $scope.obtenerNivelUltimoJerarquia();
 							$scope.nfiltrogeografiaAsignadas = $scope.nfiltrogeografiaAsignadas ? $scope.nfiltrogeografiaAsignadas : $scope.obtenerNivelUltimoJerarquia();
 
-
 							if ($scope.configPermisoAccionConsultaReporteSeguimiento) {
 								let geografia = $scope.ordenarGeografia(results[0].data.result.geografia, $scope.nfiltrogeografiaSeguimientoDiario);
 								$scope.listaGeografiaReporte.seguimiento = angular.copy(geografia);
@@ -433,6 +589,11 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 							if ($scope.configPermisoAccionConsultaReporteAsignadas) {
 								let geografia = $scope.ordenarGeografia(results[0].data.result.geografia, $scope.nfiltrogeografiaAsignadas);
 								$scope.listaGeografiaReporte.asignadas = angular.copy(geografia);
+							}
+							
+							if ($scope.configPermisoAccionConsultaTecnicosTiposOrdenes) {
+								let geografiaTec = $scope.ordenarGeografia(results[0].data.result.geografia, $scope.nfiltrogeografiaAsignadas);
+								$scope.listaGeografiaReporte.tecnicos = angular.copy(geografiaTec);
 							}
 
 						} else {
@@ -466,18 +627,11 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 	}
 
 	$scope.setCheckFiltroGeneric = function (filtroParent) {
-		console.log(filtroParent.checkedOpcion)
-		console.log("#####---------")
-		console.log(filtroParent.children)
-
 		filtroParent.checkedOpcion = !filtroParent.checkedOpcion
 		filtroParent.children.map(function (e) {
 			e.checkedOpcion = filtroParent.checkedOpcion
 			return e
 		})
-		console.log("#####")
-		console.log(filtroParent.children)
-		console.log(filtroParent.checkedOpcion)
 	}
 	$scope.setCheckSubFiltroGeneric = function (subFiltro, parentFiltro) {
 		subFiltro.checkedOpcion = !subFiltro.checkedOpcion
@@ -575,6 +729,19 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 			"language": idioma_espanol_not_font,
 			"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
 		});
+		
+//		tableTecnicosTiposOrdenes = $('#tableTecnicosTiposOrdenes').DataTable({
+//			"paging": true,
+//			"lengthChange": false,
+//			"bSort": false,
+//			"searching": false,
+//			"ordering": false,
+//			"pageLength": 10,
+//			"info": true,
+//			"autoWidth": true,
+//			"language": idioma_espanol_not_font,
+//			"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">'
+//		});
 
 	}
 

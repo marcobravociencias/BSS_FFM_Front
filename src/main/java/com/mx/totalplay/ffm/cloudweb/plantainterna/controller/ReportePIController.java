@@ -135,5 +135,22 @@ public class ReportePIController {
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
 
+    @PostMapping("/consultarTecnicosTiposOrdenes")
+    public ResponseEntity<?> consultarTecnicosTiposOrdenes(@RequestBody String params) {
+        ServiceResponseResult result = reportePIService.consultarTecnicosTiposOrdenes(params);
+        if (result.getResult() instanceof Integer){
+            return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
+    }
+    
+    @PostMapping("/generarReporteTecnicosTiposOrdenes")
+    public ResponseEntity<?> generarReporteTecnicosTiposOrdenes(@RequestBody String params) {
+    	ServiceResponseResult result = reportePIService.generarReporteTecnicosTiposOrdenes(params);
+        if (result.getResult() instanceof Integer){
+            return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
+    }
 
 }

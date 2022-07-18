@@ -1055,5 +1055,56 @@ public class ImplReportePIService implements ReportePIService {
 		logger.info("#### RESULT CONSULTA DE REPORTE ASIGNADAS COMPENSACION: \n" + gson.toJson(response));
 		return response;
 	}
+	
+	@Override
+	public ServiceResponseResult consultarTecnicosTiposOrdenes(String params) {
+		logger.info("ImplReportePIService.class [metodo = consultarTecnicosTiposOrdenes() ]\n");
+		LoginResult principalDetail=utilerias.obtenerObjetoPrincipal();
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		String tokenAcces=principalDetail.getAccess_token();
+		logger.info("params ---> "+jsonObject.toString());	 
+		String url = principalDetail.getDireccionAmbiente().concat(constReportePI.getConsultarTecnicosTiposOrdenes());
+		ServiceResponseResult response= restCaller.callPostBearerTokenRequest(jsonObject.toString(), url, ServiceResponseResult.class, tokenAcces);
+		logger.info("RESULT consultarTecnicosTiposOrdenes " + gson.toJson(response));
+		return response;
+	}
+	
+	@Override
+	public ServiceResponseResult generarReporteTecnicosTiposOrdenes(String params) {
+		logger.info("ImplReportePIService.class [metodo = generarReporteTecnicosTiposOrdenes() ]\n");
+		ServiceResponseResult response = null;
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        JsonArray tecnicosArray = jsonObject.getAsJsonArray("tecnicos");
+        JsonArray tecnicosReporte = new JsonArray();
+        JsonObject tecnicosR = new JsonObject();
+        if (tecnicosArray.size() > 0) {
+        	for (int i = 0; i < tecnicosArray.size(); i++) {
+        		JsonObject object = (JsonObject) tecnicosArray.get(i);
+        		
+        		JsonObject jsonObjTecnico = gson.fromJson(tecnicosArray.get(i), JsonObject.class);
+                JsonArray objListaSkills = jsonObjTecnico.getAsJsonArray("listaSkills");
+        		
+                JsonObject result = new JsonObject();
+                
+                result.add("Cuadrilla", object.get("nombretecnico"));
+                result.addProperty("Usuario FFM", object.get("usuario") != null && object.get("usuario").getAsString() != "" ? object.get("usuario").getAsString() : "");
+                
+                
+                for (int s = 0; s < objListaSkills.size(); s++) {
+                	JsonObject objectSkill = (JsonObject) objListaSkills.get(s);
+                    result.addProperty(objectSkill.get("descripcion").getAsString(), objectSkill.get("isRegistrada") != null && objectSkill.get("isRegistrada").getAsString() != "" && objectSkill.get("isRegistrada").getAsString().equals("true") ? "✓" : "");
+                }
+                
+                tecnicosReporte.add(result);
+        	}
+            tecnicosR.add("tecnicos", tecnicosReporte);
+            response = ServiceResponseResult.builder()
+                    .result(tecnicosR.toString())
+                    .isRespuesta(true).build();
+        }
+        logger.info("#### RESULT GENERAR REPORTE TÉCNICOS: \n" + gson.toJson(response));
+        return response;
+		
+	}
 
 }

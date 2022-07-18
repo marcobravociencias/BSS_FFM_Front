@@ -27,4 +27,9 @@ public interface ReportePIService {
   public DataTableResponse consultarReporteAsignadasCompensacion(ParamConsultaOTPI params);
   
   public ServiceResponseResult consultarReporteAsignadasEx(String params);
+  
+  public ServiceResponseResult consultarTecnicosTiposOrdenes(String params);
+  
+  public ServiceResponseResult generarReporteTecnicosTiposOrdenes(String params);
+  
 }

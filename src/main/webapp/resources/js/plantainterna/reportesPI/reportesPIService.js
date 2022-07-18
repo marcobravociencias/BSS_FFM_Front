@@ -84,5 +84,27 @@ app.service("reportesPIService", function ($http) {
 			}
 		})
     }
+    
+    this.consultarTecnicosTiposOrdenes = function(params){
+        return $http({
+			method: "post",
+			url: "req/consultarTecnicosTiposOrdenes",
+			data: JSON.stringify(params),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+    }
+    
+    this.generarReporteTecnicosTiposOrdenes = function(params){
+        return $http({
+			method: "post",
+			url: "req/generarReporteTecnicosTiposOrdenes",
+			data: JSON.stringify(params),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+    }
 	
 });
