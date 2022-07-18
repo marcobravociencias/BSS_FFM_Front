@@ -1,6 +1,7 @@
 var app = angular.module('reportesLogApp', []);
 
 app.controller('reportesLogController', ['$scope', '$q', 'reportesLogService', '$filter', function ($scope, $q, reportesLogService, $filter) {
+    var regexUrl = /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/;
 
     var logsUsuarioTable;
     var logsGeneralTable;
@@ -28,6 +29,14 @@ app.controller('reportesLogController', ['$scope', '$q', 'reportesLogService', '
     $('.list-filter').on("click.bs.dropdown", function (e) {
         e.stopPropagation();
     });
+
+    $('#searchGeoConsultaUsuario').on('keyup', function () {
+        $("#jstreeLogsUsuario").jstree("search", this.value);
+    })
+
+    $('#searchGeoGeneral').on('keyup', function () {
+        $("#jstreeLogsGeneral").jstree("search", this.value);
+    })
 
     logsUsuarioTable = $('#logsUsuarioTable').DataTable({
         "paging": true,
@@ -443,7 +452,7 @@ app.controller('reportesLogController', ['$scope', '$q', 'reportesLogService', '
                             $.each(response.data.result.usuarios, function (i, elemento) {
                                 let row = [];
                                 let url = imgDefault;
-                                if (elemento.urlFoto) {
+                                if (regexUrl.test(elemento.urlFoto)) {
                                     url = elemento.urlFoto;
                                 }
                                 row[0] = '<img class="imgFoto" src="' + url + '" alt="Foto" width="30" height="30" onclick="showImage(' + "'" + elemento.noEmpleado + "', 'usuario'" + ')"/>';
@@ -735,6 +744,21 @@ app.controller('reportesLogController', ['$scope', '$q', 'reportesLogService', '
 
 
     }
+
+    showImage = function (id, type) {
+        let url = './resources/img/plantainterna/despacho/tecnicootasignada.png';
+        let usuario = {};
+        usuario = $scope.listaUsuarios.find((e) => e.noEmpleado == id);
+        if (!regexUrl.test(usuario.urlFoto)) {
+            usuario.urlFoto = url;
+        }
+        $scope.usuarioFoto = usuario;
+        $('#img_tec').attr('src', usuario.urlFoto);
+        $scope.$apply();
+        $('#modalFotoTecnico').modal('show');
+
+    }
+
 
     angular.element(document).ready(function () {
         setTimeout(() => {
