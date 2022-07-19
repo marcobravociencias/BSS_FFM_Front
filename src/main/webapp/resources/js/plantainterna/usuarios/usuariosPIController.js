@@ -134,17 +134,27 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     		usuarioPIService.consultarCuadrillasGestionUsuarios()
         ]).then(function(results) {
         	
-        	//********************* PENDIENTE VALIDAR *********************
-        	$scope.listaResultCuadrillas = results[7].data.result.tipoCuadrillas;
-        	$scope.listaCuadrillas = [];
-        	angular.forEach($scope.listaResultCuadrillas,function(cuadrllaPadre,index){
-        		cuadrllaPadre.checkedOpcion = 0;
-    			if(cuadrllaPadre.idPadre == null){
-    				cuadrllaPadre.cuadrillasHijas = $scope.listaResultCuadrillas.filter(e => {return e.idPadre == cuadrllaPadre.id});
-    				$scope.listaCuadrillas.push(cuadrllaPadre);
-    			}
-    		});
-        	//******************* FIN PENDIENTE VALIDAR *******************
+        	if (results[7].data !== undefined) {
+            	if(results[7].data.respuesta){
+            		if(results[7].data.result.tipoCuadrillas !== undefined && results[7].data.result.tipoCuadrillas !== null && results[7].data.result.tipoCuadrillas.length > 0){
+            			$scope.listaResultCuadrillas = results[7].data.result.tipoCuadrillas;
+                    	$scope.listaCuadrillas = [];
+                    	angular.forEach($scope.listaResultCuadrillas,function(cuadrllaPadre,index){
+                    		cuadrllaPadre.checkedOpcion = 0;
+                			if(cuadrllaPadre.idPadre == null){
+                				cuadrllaPadre.cuadrillasHijas = $scope.listaResultCuadrillas.filter(e => {return e.idPadre == cuadrllaPadre.id});
+                				$scope.listaCuadrillas.push(cuadrllaPadre);
+                			}
+                		});
+            		}else{
+            			toastr.info('¡Actualmente no existen cuadrillas!');
+            		}
+            	}else{
+            		toastr.info(results[7].data.resultDescripcion);
+            	}
+        	}else{
+        		toastr.error('Error interno en el servidor.');
+        	}
         	
         	// *** CONFIGURACIÓN DESPACHO ***
         	var nivelUsuario; 				
