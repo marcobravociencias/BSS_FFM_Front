@@ -4,8 +4,7 @@
             
             <div class="col-md-2 columna-filtro-indRR borderFilterR" style="margin-left: 0.5em;">
                 <label class="label-filter">Geograf&iacute;a</label>
-                <input readonly placeholder="GEOGRAF&Iacute;A" type="text" id="cluster-asignadas"
-                    class="input-filtro form-control form-control-sm" ng-click="abrirModalGeografiaRep('tecnicos')" />
+                <input readonly placeholder="GEOGRAF&Iacute;A" type="text" id="cluster-tecnicos" class="input-filtro form-control form-control-sm" ng-click="abrirModalGeografiaRep('tecnicos')" />
             </div>
 
             <div class="col-md-1 div-btn-busqueda borderFilterR" style="width: 55px;">

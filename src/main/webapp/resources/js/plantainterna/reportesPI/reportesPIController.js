@@ -14,11 +14,13 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 	$scope.repAsignadas = {};
 	$scope.filtroEstatusInt = {};
 	$scope.listaGeografiaReporte = {};
+	$scope.listaTecnicos = [];
 
 	$scope.tipoReporte = '';
 
 	//Permisos y llaves
 	$scope.nfiltrogeografiaSeguimientoDiario = "";
+	$scope.nfiltrogeografiaTecnicosTiposOrdenes = "";
 	$scope.nfiltrointervencionesSeguimientoDiario = "";
 	$scope.nfiltroestatuspendienteSeguimientoDiario = "";
 
@@ -122,10 +124,12 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 	
 	$scope.consultarTecnicosTiposOrdenes = function() {
 		
-//		let clustersparam = $("#jstree-proton-seguimiento").jstree("get_selected", true).filter(e => e.original.nivel == $scope.nfiltrogeografiaSeguimientoDiario).map(e => parseInt(e.id));
+		if($scope.nfiltrogeografiaTecnicosTiposOrdenes === undefined || $scope.nfiltrogeografiaTecnicosTiposOrdenes === null || $scope.nfiltrogeografiaTecnicosTiposOrdenes === ""){
+			$scope.nfiltrogeografiaTecnicosTiposOrdenes = $scope.obtenerNivelUltimoJerarquia();
+		}
 		
-		let clustersparam = $("#jstree-proton-tecnicos").jstree("get_selected", true).filter(e => e).map(e => parseInt(e.id));
-		let params = {"idGeografias": [100]};
+		let clustersparam = $("#jstree-proton-tecnicos").jstree("get_selected", true).filter(e => e.original.nivel == $scope.nfiltrogeografiaTecnicosTiposOrdenes).map(e => parseInt(e.id));
+		let params = {"idGeografias": clustersparam};
 		
 		swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
@@ -215,26 +219,29 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 	}
 	
 	$scope.generarReporteTecnicosTiposOrdenes = function() {
-		let params = {
-				"tecnicos" : $scope.listaTecnicos
-		}
-		
-		swal({ text: 'Espera un momento...', allowOutsideClick: false });
-        swal.showLoading();
-        reportesPIService.generarReporteTecnicosTiposOrdenes(params).then((result) => {
-			swal.close()
-			if (result.data.respuesta) {
-				const data = JSON.parse(result.data.result).tecnicos;
-				const fileName = 'Reporte skills instaladores';
-				const exportType = 'xls';
-
-				window.exportFromJSON({ data, fileName, exportType });
-			} else {
-				mostrarMensajeErrorAlert("Ocurrió un error al generar el reporte.");
+		if($scope.listaTecnicos.length > 0){
+			let params = {
+					"tecnicos" : $scope.listaTecnicos
 			}
-			swal.close();
-		}).catch(err => handleError(err));
-        
+			
+			swal({ text: 'Espera un momento...', allowOutsideClick: false });
+	        swal.showLoading();
+	        reportesPIService.generarReporteTecnicosTiposOrdenes(params).then((result) => {
+				swal.close()
+				if (result.data.respuesta) {
+					const data = JSON.parse(result.data.result).tecnicos;
+					const fileName = 'Reporte skills instaladores';
+					const exportType = 'xls';
+
+					window.exportFromJSON({ data, fileName, exportType });
+				} else {
+					mostrarMensajeErrorAlert("Ocurrió un error al generar el reporte.");
+				}
+				swal.close();
+			}).catch(err => handleError(err));
+		}else{
+			mostrarMensajeInformativo("¡Actualmente no existen técnicos para generar el reporte!");
+		}
 	}
 
 	$scope.cambiaReporte = function (type, save, tab) {
@@ -425,6 +432,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 							let llavesResult = results[3].data.result.MODULO_ACCIONES_USUARIO.llaves;
 
 							$scope.nfiltrogeografiaSeguimientoDiario = llavesResult.N_FILTRO_GEOGRAFIA_SEGUIMIENTODIARIO ? llavesResult.N_FILTRO_GEOGRAFIA_SEGUIMIENTODIARIO : llavesResult.N_FILTRO_GEOGRAFIA;
+							$scope.nfiltrogeografiaTecnicosTiposOrdenes = llavesResult.N_FILTRO_GEOGRAFIA_TECNICOS_TIPOS_ORDENES ? llavesResult.N_FILTRO_GEOGRAFIA_TECNICOS_TIPOS_ORDENES : llavesResult.N_FILTRO_GEOGRAFIA;
 							$scope.nfiltrointervencionesSeguimientoDiario = llavesResult.N_FILTRO_INTERVENCIONES_SEGUIMIENTODIARIO ? llavesResult.N_FILTRO_INTERVENCIONES_SEGUIMIENTODIARIO : llavesResult.N_FILTRO_INTERVENCIONES;
 							$scope.nfiltroestatuspendienteSeguimientoDiario = llavesResult.N_ESTATUS_PENDIENTES_SEGUIMIENTODIARIO ? llavesResult.N_ESTATUS_PENDIENTES_SEGUIMIENTODIARIO : llavesResult.N_ESTATUS_PENDIENTES;
 

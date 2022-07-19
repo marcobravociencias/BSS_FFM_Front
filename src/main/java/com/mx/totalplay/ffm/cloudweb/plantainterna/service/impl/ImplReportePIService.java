@@ -1080,27 +1080,19 @@ public class ImplReportePIService implements ReportePIService {
         if (tecnicosArray.size() > 0) {
         	for (int i = 0; i < tecnicosArray.size(); i++) {
         		JsonObject object = (JsonObject) tecnicosArray.get(i);
-        		
         		JsonObject jsonObjTecnico = gson.fromJson(tecnicosArray.get(i), JsonObject.class);
                 JsonArray objListaSkills = jsonObjTecnico.getAsJsonArray("listaSkills");
-        		
                 JsonObject result = new JsonObject();
-                
                 result.add("Cuadrilla", object.get("nombretecnico"));
                 result.addProperty("Usuario FFM", object.get("usuario") != null && object.get("usuario").getAsString() != "" ? object.get("usuario").getAsString() : "");
-                
-                
                 for (int s = 0; s < objListaSkills.size(); s++) {
                 	JsonObject objectSkill = (JsonObject) objListaSkills.get(s);
                     result.addProperty(objectSkill.get("descripcion").getAsString(), objectSkill.get("isRegistrada") != null && objectSkill.get("isRegistrada").getAsString() != "" && objectSkill.get("isRegistrada").getAsString().equals("true") ? "✓" : "");
                 }
-                
                 tecnicosReporte.add(result);
         	}
             tecnicosR.add("tecnicos", tecnicosReporte);
-            response = ServiceResponseResult.builder()
-                    .result(tecnicosR.toString())
-                    .isRespuesta(true).build();
+            response = ServiceResponseResult.builder().result(tecnicosR.toString()).isRespuesta(true).build();
         }
         logger.info("#### RESULT GENERAR REPORTE TÉCNICOS: \n" + gson.toJson(response));
         return response;
