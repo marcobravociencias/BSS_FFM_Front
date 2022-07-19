@@ -458,8 +458,6 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 								$scope.configPermisoAccionDescargaReporteAsignadas = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaAsignadasCompensacion" })[0] != undefined);
 								$scope.configPermisoAccionConsultaTecnicosTiposOrdenes = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaTecnicosTiposOrdenes" })[0] != undefined);
 								$scope.configPermisoAccionGenerarReporteTecnicosTiposOrdenes = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaReporteTecnicosTiposOrdenes" })[0] != undefined);
-								$scope.configPermisoAccionConsultaTecnicosTiposOrdenes = true;
-								$scope.configPermisoAccionGenerarReporteTecnicosTiposOrdenes  = true;
 							}
 
 							let firstNav = '';
