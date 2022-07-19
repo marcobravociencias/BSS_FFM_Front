@@ -220,7 +220,8 @@ class GenericAccionRealizada {
 		//let usuario = document.getElementById('tipo1').value;
 		let params = {
 			fechaInicio: moment(new Date()).subtract(2, 'd').format('YYYY-MM-DD'),
-			fechaFin: moment(new Date()).format("YYYY-MM-DD")
+			fechaFin: moment(new Date()).format("YYYY-MM-DD"),
+			idModulo: this.idModuloAccion
 		}
 
 		return $.ajax({
@@ -280,14 +281,11 @@ class GenericAccionRealizada {
 		$("#loading-data").show();
 		//let listaUltimasAcciones = this.getAccionesRecientesUsuario();
 		let listaUltimasAcciones = [];
-		let accionesListGeneral;
-		let idModuloConsulta = this.idModuloAccion;
 		this.getAccionesRecientesUsuario().done(function (jsonResponse) {
 			if (jsonResponse.respuesta) {
 				if (jsonResponse.result) {
 					if (jsonResponse.result.modulos) {
-						accionesListGeneral = jsonResponse.result.modulos;
-						listaUltimasAcciones = accionesListGeneral.filter(e => { return e.idModulo === idModuloConsulta });
+						listaUltimasAcciones = jsonResponse.result.modulos;
 					}
 				}
 			}

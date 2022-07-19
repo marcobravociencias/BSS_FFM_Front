@@ -268,8 +268,6 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
     }
 
     $scope.consultarCatalogosInspectorCobertura = function () {
-        swal({ text: 'Espera un momento...', allowOutsideClick: false });
-        swal.showLoading();
         $q.all([
             inspectorCoberturaService.consultarConfiguracionDespacho({ "moduloAccionesUsuario": "moduloInspectorCoberturasPE" }),
             inspectorCoberturaService.consultarFallasCoberturaPE(),
@@ -357,27 +355,22 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                             $('#texto_cluster_seleccionado').text('Sin selecci\u00F3n');
                             setTimeout(function () {
                                 $scope.pintarNombreEstatus($scope.filtrosInspector.fallas, '#txtFalla');
-                                swal.close();
                             }, 500);
                         } else {
                             mostrarMensajeWarningValidacion('<li>No se encontraron datos para la geograf&iacute;a</li>Va');
                             $scope.banderaErrorGeografia = true;
-                            swal.close();
                         }
                     } else {
                         mostrarMensajeWarningValidacion('<li>No se encontraron datos para la geograf&iacute;a</li>');
                         $scope.banderaErrorGeografia = true;
-                        swal.close();
                     }
                 } else {
                     mostrarMensajeWarningValidacion('<li>' + results[1].data.resultDescripcion + '</li>');
                     $scope.banderaErrorGeografia = true;
-                    swal.close();
                 }
             } else {
                 mostrarMensajeWarningValidacion('<li>Ha ocurrido un error en la consulta de geograf&iacute;a</li>');
                 $scope.banderaErrorGeografia = true;
-                swal.close();
             }
         });
     }

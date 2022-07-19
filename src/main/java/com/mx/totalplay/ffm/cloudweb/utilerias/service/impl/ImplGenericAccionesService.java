@@ -176,6 +176,11 @@ public class ImplGenericAccionesService implements GenericAccionesService {
 		if (jsonObject.get("idUsuario") != null && jsonObject.get("idUsuario").getAsInt() != 0) {
 			paramsRequestGet.put("idUsuario", "" + jsonObject.get("idUsuario").getAsInt());
 		}
+		
+		if (jsonObject.get("idModulo") != null && jsonObject.get("idModulo").getAsInt() != 0) {
+			paramsRequestGet.put("idModulo", "" + jsonObject.get("idModulo").getAsInt());
+			urlRequest = urlRequest.concat("&idModulo={idModulo}");
+		}
 		logger.info("DATA " + paramsRequestGet.toString());
 		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
 				ServiceResponseResult.class, tokenAcces);

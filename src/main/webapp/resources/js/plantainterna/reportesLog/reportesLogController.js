@@ -618,7 +618,6 @@ app.controller('reportesLogController', ['$scope', '$q', 'reportesLogService', '
 
     $scope.getCategoryLogs = function (list) {
         let data = groupBy(list, 'idModulo');
-        console.log(data);
         let listaTipos = [];
         list.map(function (e) {
             let isExist = listaTipos.find((t) => e.idModulo == t.id)
@@ -746,7 +745,6 @@ app.controller('reportesLogController', ['$scope', '$q', 'reportesLogService', '
     }
 
     $scope.getTextEstatus = function (text) {
-        console.log(text);
         let newText = text;
         switch (text) {
             case "success":
