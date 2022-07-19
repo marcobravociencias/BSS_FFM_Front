@@ -40,4 +40,9 @@ public class ProjectManagerViewsController {
 	public String monitorPMS() {
 		return "projectmanager/monitorPMS/monitorPMS";
 	}
+	
+	@GetMapping("/moduloOportunidades")
+	public String oportunidades() {
+		return "projectmanager/oportunidades/mainOportunidades";
+	}
 }
