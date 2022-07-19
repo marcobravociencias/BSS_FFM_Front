@@ -17,7 +17,7 @@
 }
 
 #myTab .nav-link.active {
-    color: varvar(--estandar-color) !important;
+    color: var(--estandar-color) !important;
     font-weight: bolder;
     background: #f9f9f9;
 }

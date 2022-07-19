@@ -142,11 +142,11 @@ public class ImplGenericAccionesService implements GenericAccionesService {
 		logger.info("ImplGenericAccionesService.class [metodo = agregarMensajeAccionService() ]\n" + params);
 		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
 		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-		
-		if (request.getHeader("x-forwarded-for") == null) { 
+
+		if (request.getHeader("x-forwarded-for") == null) {
 			jsonObject.addProperty("ip", request.getRemoteAddr());
 		}
-		
+
 		String tokenAcces = principalDetail.getAccess_token();
 		logger.info("json object params## " + jsonObject.toString());
 		String urlRequest = principalDetail.getDireccionAmbiente()
@@ -172,8 +172,8 @@ public class ImplGenericAccionesService implements GenericAccionesService {
 		paramsRequestGet.put("fechaInicio", jsonObject.get("fechaInicio").getAsString());
 		paramsRequestGet.put("fechaFin", jsonObject.get("fechaFin").getAsString());
 		paramsRequestGet.put("idUsuario", "" + principalDetail.getIdUsuario());
-		
-		if(jsonObject.get("idUsuario") != null && jsonObject.get("idUsuario").getAsInt() != 0) {
+
+		if (jsonObject.get("idUsuario") != null && jsonObject.get("idUsuario").getAsInt() != 0) {
 			paramsRequestGet.put("idUsuario", "" + jsonObject.get("idUsuario").getAsInt());
 		}
 		logger.info("DATA " + paramsRequestGet.toString());
@@ -187,33 +187,32 @@ public class ImplGenericAccionesService implements GenericAccionesService {
 	public ServiceResponseResult consultarReporteLogGeneral(String params) {
 		logger.info("ImplGenericAccionesService.class [metodo = consultarReporteLogGeneral() ]\n" + params);
 		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
-		
+
 		ServiceResponseResult response = null;
-		
+
 		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
 		String tokenAcces = principalDetail.getAccess_token();
 		logger.info("json object params## " + jsonObject.toString());
 		String urlRequest = principalDetail.getDireccionAmbiente()
 				.concat(constantesAmbiente.getConsultarReporteLogGeneral());
-		
-		if(jsonObject.get("idUsuario") != null && jsonObject.get("idUsuario").getAsInt() != 0) {
+
+		if (jsonObject.get("idUsuario") != null && jsonObject.get("idUsuario").getAsInt() != 0) {
 			Map<String, String> paramsRequestGet = new HashMap<String, String>();
 			paramsRequestGet.put("fechaInicio", jsonObject.get("fechaInicio").getAsString());
 			paramsRequestGet.put("fechaFin", jsonObject.get("fechaFin").getAsString());
 			paramsRequestGet.put("idUsuario", "" + principalDetail.getIdUsuario());
-			
+
 			urlRequest = principalDetail.getDireccionAmbiente()
 					.concat(constantesAmbiente.getConsultarAccionesRealizadas());
-			
-			response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
-					ServiceResponseResult.class, tokenAcces);
-			
-		}else {
+
+			response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest, ServiceResponseResult.class,
+					tokenAcces);
+
+		} else {
 			response = restCaller.callPostBearerTokenRequest(jsonObject.toString(), urlRequest,
-				ServiceResponseResult.class, tokenAcces);
+					ServiceResponseResult.class, tokenAcces);
 		}
-		
-		
+
 		if (response.getResult() instanceof Integer) {
 			response = ServiceResponseResult.builder().isRespuesta(false).result(response.getResult()).build();
 		} else {
@@ -228,21 +227,26 @@ public class ImplGenericAccionesService implements GenericAccionesService {
 					logger.info("objeto: " + object);
 
 					result.addProperty("MODULO",
-							object.get("descripcionModulo") != null ? object.get("descripcionModulo").getAsString().trim()
+							object.get("descripcionModulo") != null
+									? object.get("descripcionModulo").getAsString().trim()
 									: "Sin dato");
 					result.addProperty("ACCION",
-							object.get("descripcionAccion") != null ? object.get("descripcionAccion").getAsString().trim()
+							object.get("descripcionAccion") != null
+									? object.get("descripcionAccion").getAsString().trim()
 									: "Sin dato");
 					result.addProperty("ESTATUS",
-							object.get("descripcionEstatusHttp") != null ? object.get("descripcionEstatusHttp").getAsString().trim() : "Sin dato");
+							object.get("descripcionEstatusHttp") != null
+									? object.get("descripcionEstatusHttp").getAsString().trim()
+									: "Sin dato");
 					result.addProperty("MENSAJE",
-							object.get("descripcionMensajeHttp") != null ? object.get("descripcionMensajeHttp").getAsString().trim()
+							object.get("descripcionMensajeHttp") != null
+									? object.get("descripcionMensajeHttp").getAsString().trim()
 									: "Sin dato");
 					result.addProperty("COMENTARIOS",
-							object.get("comentarios") != null ? object.get("comentarios").getAsString().trim() : "Sin dato");
+							object.get("comentarios") != null ? object.get("comentarios").getAsString().trim()
+									: "Sin dato");
 					result.addProperty("FECHA REGISTRO",
-							object.get("fechaRegistro") != null
-									? object.get("fechaRegistro").getAsString().trim()
+							object.get("fechaRegistro") != null ? object.get("fechaRegistro").getAsString().trim()
 									: "Sin dato");
 					result.addProperty("NOMBRE",
 							object.get("nombreUsuario") != null ? object.get("nombreUsuario").getAsString().trim()
@@ -251,12 +255,35 @@ public class ImplGenericAccionesService implements GenericAccionesService {
 							object.get("numEmpleado") != null ? object.get("numEmpleado").getAsString().trim()
 									: "Sin dato");
 					result.addProperty("USUARIO",
-							object.get("usuarioFFM") != null ? object.get("usuarioFFM").getAsString().trim() : "Sin dato");
+							object.get("usuarioFFM") != null ? object.get("usuarioFFM").getAsString().trim()
+									: "Sin dato");
 					result.addProperty("MAC",
 							object.get("mac") != null ? object.get("mac").getAsString().trim() : "Sin dato");
 					result.addProperty("IP",
 							object.get("ip") != null ? object.get("ip").getAsString().trim() : "Sin dato");
-					
+					if (object.get("descripcionEstatusHttp") != null) {
+						switch (result.get("ESTATUS").getAsString()) {
+						case "success":
+							result.addProperty("ESTATUS", "Éxito");
+							break;
+
+						case "error":
+							result.addProperty("ESTATUS", "Error");
+							break;
+
+						case "warning":
+							result.addProperty("ESTATUS", "Advertencia");
+							break;
+
+						case "info":
+							result.addProperty("ESTATUS", "Informativo");
+							break;
+
+						default:
+							break;
+						}
+					}
+
 					modulosReporte.add(result);
 				}
 				modulos.add("modulos", modulosReporte);
@@ -276,19 +303,18 @@ public class ImplGenericAccionesService implements GenericAccionesService {
 		logger.info("ImplTraspasoService.class [metodo consultaTraspasos() ]\n" + gson.toJson(params));
 		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
 		String[][] dataArray = new String[0][13];
-		
-		
 
 		DataTableResponse dataResponse = DataTableResponse.builder().isRespuesta(false).data(dataArray).paginaActual(0)
 				.registrosTotales(0).recordsFiltered("0").recordsTotal("0").draw(params.getDraw() + "").result(null)
 				.build();
 		params.setPagina((Integer.parseInt(params.getStart()) + 10) / 10);
-		
+
 		logger.info("### Object: " + gson.toJson(params));
 
 		String tokenAcces = principalDetail.getAccess_token();
 		logger.info("consultaTraspasos ##+" + tokenAcces);
-		String urlRequest = principalDetail.getDireccionAmbiente().concat(constantesAmbiente.getConsultarReporteLogGeneral());
+		String urlRequest = principalDetail.getDireccionAmbiente()
+				.concat(constantesAmbiente.getConsultarReporteLogGeneral());
 		logger.info("URL ##+" + urlRequest);
 
 		ServiceResponseResult response = restCaller.callPostBearerTokenRequest(gson.toJson(params), urlRequest,
@@ -344,6 +370,30 @@ public class ImplGenericAccionesService implements GenericAccionesService {
 								&& object.get("usuarioFFM").getAsString().trim() != "")
 										? object.get("usuarioFFM").getAsString().trim()
 										: "Sin dato";
+
+						if (object.get("descripcionEstatusHttp") != null) {
+							switch (dataArray[count][2]) {
+							case "success":
+								dataArray[count][2] = "Éxito";
+								break;
+
+							case "error":
+								dataArray[count][2] = "Error";
+								break;
+
+							case "warning":
+								dataArray[count][2] = "Advertencia";
+								break;
+
+							case "info":
+								dataArray[count][2] = "Informativo";
+								break;
+
+							default:
+								break;
+							}
+						}
+
 						count++;
 
 					}

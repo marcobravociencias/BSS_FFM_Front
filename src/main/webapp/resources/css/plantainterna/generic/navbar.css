@@ -814,6 +814,12 @@ img.img-despacho-navbar.img-user-profile-navbar {
   /*z-index: 2;*/
 }
 
+#loading-data{
+  margin-left: 45%;
+  color: #ccc;
+  margin-top: 20%;
+}
+
 @keyframes monster-play {
   0% { transform: rotate(0deg); right: 0px; visibility: visible;  opacity: 0;}
   25% { transform: rotate(20deg); right: 0px; visibility: visible; opacity: 1;}

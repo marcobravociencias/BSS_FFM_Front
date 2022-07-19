@@ -1,8 +1,8 @@
 
-const MENSAJE_ACCION_EXITO="success"
-const MENSAJE_ACCION_ERROR='error';
-const MENSAJE_ACCION_WARNING='warning'
-const MENSAJE_ACCION_INFO='info'
+const MENSAJE_ACCION_EXITO = "success"
+const MENSAJE_ACCION_ERROR = 'error';
+const MENSAJE_ACCION_WARNING = 'warning'
+const MENSAJE_ACCION_INFO = 'info'
 class GenericMapa {
 	/**
 	 * 
@@ -18,9 +18,9 @@ class GenericMapa {
 	}
 	inicializarKmz() {
 		let kmzArray = this.arrayKmzLayerMapa
-		let mapSet=this.mapa;
+		let mapSet = this.mapa;
 		$.each(this.kmzConfigArray, function (index, elemento) {
-			
+
 			let ctaLayer = new google.maps.KmlLayer({
 				url: elemento.value,
 				map: elemento.banderaDefaultKmz ? mapSet : null,
@@ -37,9 +37,9 @@ class GenericMapa {
 		let optionCheckBox = ''
 		let tempCont = this.contenedorId
 
-		let textBanderaCheck=''
+		let textBanderaCheck = ''
 		$.each(this.kmzConfigArray, function (index, elm) {
-			textBanderaCheck= elm.banderaDefaultKmz ? 'checked' : ''
+			textBanderaCheck = elm.banderaDefaultKmz ? 'checked' : ''
 			optionCheckBox += `
 				<div class="form-check form-check-vistamapa">
 					<input ${textBanderaCheck} tag-index="${index}" id="${tempCont}-${index}"  type="checkbox" class="form-check-input checkinput-${tempCont}">			
@@ -98,19 +98,19 @@ class GenericMapa {
 		}, 1000)
 	}
 }
-GenericMapa.prototype.callPrototypeMapa = function (listadoData,arrayPreseleccionado) {
-	let listadoKmzConfig = []	
+GenericMapa.prototype.callPrototypeMapa = function (listadoData, arrayPreseleccionado) {
+	let listadoKmzConfig = []
 	for (const elm in listadoData) {
 		if (elm.toUpperCase().includes("KMZ_")) {
 
-			let banderaDefault=false			
-			if( arrayPreseleccionado != undefined &&  arrayPreseleccionado.length>0 && 
-				arrayPreseleccionado.find( (e) =>  e ===elm.trim() ) != undefined  ){
-				banderaDefault=true
+			let banderaDefault = false
+			if (arrayPreseleccionado != undefined && arrayPreseleccionado.length > 0 &&
+				arrayPreseleccionado.find((e) => e === elm.trim()) != undefined) {
+				banderaDefault = true
 			}
-							
+
 			listadoKmzConfig.push({
-				banderaDefaultKmz:banderaDefault,
+				banderaDefaultKmz: banderaDefault,
 				identificador: elm,
 				text: elm.substring(elm.indexOf("_") + 1, elm.length).replaceAll('_', ' '),
 				value: listadoData[elm]
@@ -131,29 +131,29 @@ class GenericAccionRealizada {
 	constructor(idModuloAccion, posicionBotonAccion) {
 		this.idModuloAccion = idModuloAccion;
 		this.posicionBotonAccion = posicionBotonAccion;
-		this.usuarioAccionGestion=document.getElementById('numempleadohidden').value;
+		this.usuarioAccionGestion = document.getElementById('numempleadohidden').value;
 	}
 
-	getObjectAccionRealizada(mensajeAccion, tipoMensaje , tituloAccion) {
+	getObjectAccionRealizada(mensajeAccion, tipoMensaje, tituloAccion) {
 		return {
 			identificadorModulo: this.idModuloAccion,
 			mensaje: mensajeAccion,
 			tipoMensaje: tipoMensaje,
-			usuario:  this.usuarioAccionGestion,
+			usuario: this.usuarioAccionGestion,
 			hora: this.formatHora(new Date()),
 			fecha: this.formatDateAccion(new Date()),
 			sysdateJs: new Date(),
-			tituloAccion:tituloAccion
+			tituloAccion: tituloAccion
 		}
 	}
 
-	getObjectAccionRealizadaService(mensajeAccion, tipoMensaje , tituloAccion) {
+	getObjectAccionRealizadaService(mensajeAccion, tipoMensaje, tituloAccion) {
 		return {
 			idModulo: this.idModuloAccion,
 			comentarios: 'test',
 			descripcionEstatusHttp: tipoMensaje,
 			descripcionAccion: tituloAccion,
-			descripcionMensajeHttp:  mensajeAccion,
+			descripcionMensajeHttp: mensajeAccion,
 			idOrigen: 1
 		}
 	}
@@ -181,8 +181,8 @@ class GenericAccionRealizada {
 		return num.toString().padStart(2, '0');
 	}
 
-	guardarAccionesRecientesModulo(mensajeAccion, tipoMensaje  , tituloAccion) {
-		let objectGuardado=this.getObjectAccionRealizadaService(mensajeAccion, tipoMensaje,tituloAccion)		
+	guardarAccionesRecientesModulo(mensajeAccion, tipoMensaje, tituloAccion) {
+		let objectGuardado = this.getObjectAccionRealizadaService(mensajeAccion, tipoMensaje, tituloAccion)
 		this.guardarAccionesRecientesService(objectGuardado);
 
 		/*
@@ -200,18 +200,18 @@ class GenericAccionRealizada {
 
 	guardarAccionesRecientesService(params) {
 		$.ajax({
-			url : 'req/registrarAccionesRealizadasService',
-			type : "POST",
-			data : JSON.stringify(params),
-			dataType : "json",
+			url: 'req/registrarAccionesRealizadasService',
+			type: "POST",
+			data: JSON.stringify(params),
+			dataType: "json",
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			success : function(jsonResponse, textStatus, jqXHR) {
-				
+			success: function (jsonResponse, textStatus, jqXHR) {
+
 			},
-			error : function(jqXHR, textStatus, errorThrown) {
-				
+			error: function (jqXHR, textStatus, errorThrown) {
+
 			}
 		});
 	}
@@ -219,21 +219,21 @@ class GenericAccionRealizada {
 	getAccionesRecientesUsuario() {
 		//let usuario = document.getElementById('tipo1').value;
 		let params = {
-            fechaInicio: moment(new Date()).subtract(5,'d').format('YYYY-MM-DD'),
-            fechaFin: moment(new Date()).format("YYYY-MM-DD")
-        }
-		
+			fechaInicio: moment(new Date()).subtract(2, 'd').format('YYYY-MM-DD'),
+			fechaFin: moment(new Date()).format("YYYY-MM-DD")
+		}
+
 		return $.ajax({
-			url : 'req/consultarAccionesRealizadasService',
-			type : "POST",
-			data : JSON.stringify(params),
-			async : false,
-			dataType : "json",
+			url: 'req/consultarAccionesRealizadasService',
+			type: "POST",
+			data: JSON.stringify(params),
+			async: false,
+			dataType: "json",
 			headers: {
 				'Content-Type': 'application/json'
 			}
 		});
-		
+
 		/*
 		if (localStorage.getItem('MODULO_MENSAJES_ACCIONES_RECIENTES')) {
 			accionesList = JSON.parse(localStorage.getItem('MODULO_MENSAJES_ACCIONES_RECIENTES'));
@@ -261,7 +261,7 @@ class GenericAccionRealizada {
 		*/
 
 		//let accionesUsuario = accionesList.filter(e => { return e.usuario === usuario && e.identificadorModulo === this.idModuloAccion });
-		
+
 	}
 
 	ocultarUltimasAcciones() {
@@ -272,11 +272,12 @@ class GenericAccionRealizada {
 
 	mostrarUltimasAccionesUsuario() {
 
-		let validarAcci=function(dato){
-			return  (dato == undefined || dato == '') ? 'Sin dato' :dato  
+		let validarAcci = function (dato) {
+			return (dato == undefined || dato == '') ? 'Sin dato' : dato
 		}
 
 		$("#container-ultimasAcciones").show();
+		$("#loading-data").show();
 		//let listaUltimasAcciones = this.getAccionesRecientesUsuario();
 		let listaUltimasAcciones = [];
 		let accionesListGeneral;
@@ -298,37 +299,41 @@ class GenericAccionRealizada {
 				if (accion.descripcionEstatusHttp == 'success') {
 					contentAcciones += '<li class="timeline-actions timeline-icon-success active">' +
 						'					<div class="action-time">' + validarAcci(accion.fechaRegistro) + '</div>' +
-						'					<h6 class="action-title">'+validarAcci(accion.descripcionAccion)+'</h6>' +
+						'					<h6 class="action-title">' + validarAcci(accion.descripcionAccion) + '</h6>' +
 						'					<p class="action-text">' + validarAcci(accion.descripcionMensajeHttp) + '</p>' +
 						'				</li>';
 				} else if (accion.descripcionEstatusHttp == 'warning') {
 					contentAcciones += '<li class="timeline-actions timeline-icon-warning active">' +
 						'					<div class="action-time">' + validarAcci(accion.fechaRegistro) + '</div>' +
-						'					<h6 class="action-title">'+validarAcci(accion.descripcionAccion)+'</h6>' +
+						'					<h6 class="action-title">' + validarAcci(accion.descripcionAccion) + '</h6>' +
 						'					<p class="action-text">' + validarAcci(accion.descripcionMensajeHttp) + '</p>' +
 						'				</li>';
 				} else if (accion.descripcionEstatusHttp == 'error') {
 					contentAcciones += '<li class="timeline-actions timeline-icon-error active">' +
 						'					<div class="action-time">' + validarAcci(accion.fechaRegistro) + '</div>' +
-						'					<h6 class="action-title">'+validarAcci(accion.descripcionAccion)+'</h6>' +
+						'					<h6 class="action-title">' + validarAcci(accion.descripcionAccion) + '</h6>' +
 						'					<p class="action-text">' + validarAcci(accion.descripcionMensajeHttp) + '</p>' +
 						'				</li>';
-				}	else if (accion.descripcionEstatusHttp == 'info') {
+				} else if (accion.descripcionEstatusHttp == 'info') {
 					contentAcciones += '<li class="timeline-actions timeline-icon-info active">' +
 						'					<div class="action-time">' + validarAcci(accion.fechaRegistro) + '</div>' +
-						'					<h6 class="action-title">'+validarAcci(accion.descripcionAccion)+'</h6>' +
+						'					<h6 class="action-title">' + validarAcci(accion.descripcionAccion) + '</h6>' +
 						'					<p class="action-text">' + validarAcci(accion.descripcionMensajeHttp) + '</p>' +
 						'				</li>';
 				}
 			});
-			$("#listAccionesRecientes").append(contentAcciones);
+			setTimeout(() => {
+				$("#loading-data").hide();
+				$("#listAccionesRecientes").append(contentAcciones);
+			}, 300);
+
 		} else {
 			$("#ultimasAccionesContent").empty();
 			contentAcciones = '<div class="text-no-acciones">' +
-			'	<i class="icon-not-action fas fa-ban"></i>' +
-			'	<b class="text-not-action">Sin movimientos para mostrar</b>' +
-			'</div>';
-			
+				'	<i class="icon-not-action fas fa-ban"></i>' +
+				'	<b class="text-not-action">Sin movimientos para mostrar</b>' +
+				'</div>';
+
 			$("#ultimasAccionesContent").append(contentAcciones);
 		}
 
@@ -353,8 +358,8 @@ class GenericAccionRealizada {
 			'				</div>' +
 			'				<div class="col-2" style="text-align: right; padding-right: 0;">' +
 			'					<div class="row">' +
-			'						<button id="cerrarUltimasAcciones" type="button" class="btn-refreshAcciones">'+
-			'							<i class="fas fa-redo-alt"></i>'+
+			'						<button id="cerrarUltimasAcciones" type="button" class="btn-refreshAcciones">' +
+			'							<i class="fas fa-redo-alt"></i>' +
 			'						</button> &nbsp;&nbsp;' +
 			'						<button id="cerrarUltimasAcciones" type="button" class="btn-close btn-closeAcciones"></button>' +
 			'					</div>' +
@@ -363,6 +368,9 @@ class GenericAccionRealizada {
 			'		</div>' +
 			'		<div id="ultimasAccionesContent">' +
 			'			<div class="activity">' +
+			'				<div  id="loading-data" class="spinner-border spinner-cargando-info">' +
+			'					<span class="visually-hidden">Loading...</span>' +
+			'				</div>' +
 			'				<ul id="listAccionesRecientes" class="styleAction action-timeline mb-0">' +
 			'				</ul>' +
 			'			</div>' +
@@ -659,10 +667,10 @@ $("#modalCambiaContraseniaLogin").on("shown.bs.modal", function () {
 	$("#confirmPasswordUserLogin").val('');
 	$("#comentariosPasswordUserLogin").val('');
 	$("#msj-valida").css("display", validateCreed ? 'block' : 'none');
-	let textValidate = '<i class="fas fa-warning"></i>&nbsp;La contrase&ntilde;a debera tener m&iacute;nimo 9'+
-	'caracteres alfanum&eacute;ricos, al menos un n&uacute;mero y un caracter especial'+
-	'(@$!%*#?&).'
-	if(validateCreedMask !== null && validateCreedText !== ''){
+	let textValidate = '<i class="fas fa-warning"></i>&nbsp;La contrase&ntilde;a debera tener m&iacute;nimo 9' +
+		'caracteres alfanum&eacute;ricos, al menos un n&uacute;mero y un caracter especial' +
+		'(@$!%*#?&).'
+	if (validateCreedMask !== null && validateCreedText !== '') {
 		textValidate = '<i class="fas fa-warning"></i>&nbsp;' + validateCreedText;
 	}
 	$("#creedText").text(textValidate);
@@ -674,8 +682,8 @@ $('.dropdown-menu-login-info').on("click.bs.dropdown", function (e) {
 	e.stopPropagation();
 });
 
-$( document ).ready(function() {
-	if(window.usuario){
+$(document).ready(function () {
+	if (window.usuario) {
 		function disableF5(e) { if ((e.which || e.keyCode) == 116) e.preventDefault(); };
 		$(".hidenn-nav-menu").css("display", "none");
 		$("#otros-nav-menu-temp").css("display", "block");
@@ -695,25 +703,25 @@ inOutImg = function (size) {
 	}
 }
 
-cambiarFotoUsuarioLog = function(evento) {
+cambiarFotoUsuarioLog = function (evento) {
 	var fileFoto = $("#fileFotoUsuarioLog")[0].files[0];
 	var idUsuarioLog = $("#empleadohidden").val();
 	var nombreFoto = $("#numempleadohidden").val();
-	
+
 	let reader = new FileReader();
 	reader.readAsDataURL(fileFoto);
 	reader.onload = function () {
 		let base64 = reader.result.toString().split(",");
 		let imgMod = {
 			"archivo": base64[1],
-			"nombre": "usuarios/mex/"+nombreFoto+"/fotoPerfil"
+			"nombre": "usuarios/mex/" + nombreFoto + "/fotoPerfil"
 		}
-		
+
 		let paramsCambiarFotoUsuarioLog = {
-				id: idUsuarioLog,
-				fotoPerfil: imgMod
+			id: idUsuarioLog,
+			fotoPerfil: imgMod
 		};
-		
+
 		swal({ text: 'Espera un momento...', allowOutsideClick: false });
 		swal.showLoading();
 		$.ajax({
@@ -744,7 +752,7 @@ var monster = document.getElementById('monsterPlay');
 
 function showMonster() {
 	var min = 30, max = 180;
-	var rand = Math.floor(Math.random() * (max - min + 1) + min); 
+	var rand = Math.floor(Math.random() * (max - min + 1) + min);
 	var monsterAnimation = Math.floor(Math.random() * (2 - 0 + 1));
 	switch (monsterAnimation) {
 		case 0:
@@ -769,43 +777,43 @@ showMonster();
 
 cargarEstatusUs = function () {
 	let catalogoEstatusUsuarios = {
-		    "success": true,
-		    "mensaje": "Se consultaron los datos",
-		    "result": {
-		        "catalogoEstatusUsuarios": [
-		            {
-		                "id": "5",
-		                "descripcion": "Activo",
-		                "color":"#0cd040"
-		            },
-		            {
-		                "id": "6",
-		                "descripcion": "Comida",
-		                "color":"#ffb62c"
-		            },
-		            {
-		                "id": "7",
-		                "descripcion": "Supervision",
-		                "color":"#458cff"
-		            },
-		            {
-		                "id": "8",
-		                "descripcion": "Ausente",
-		                "color":"#848484"
-		            }
-		        ],
-		        "infoHorasUser": {
-		            "horaEntrada": "2021-11-26 11:42:57",
-		            "ultimoEstatus": "Activo-#0cd040"
-		        }
-		    }
-		};
-	
+		"success": true,
+		"mensaje": "Se consultaron los datos",
+		"result": {
+			"catalogoEstatusUsuarios": [
+				{
+					"id": "5",
+					"descripcion": "Activo",
+					"color": "#0cd040"
+				},
+				{
+					"id": "6",
+					"descripcion": "Comida",
+					"color": "#ffb62c"
+				},
+				{
+					"id": "7",
+					"descripcion": "Supervision",
+					"color": "#458cff"
+				},
+				{
+					"id": "8",
+					"descripcion": "Ausente",
+					"color": "#848484"
+				}
+			],
+			"infoHorasUser": {
+				"horaEntrada": "2021-11-26 11:42:57",
+				"ultimoEstatus": "Activo-#0cd040"
+			}
+		}
+	};
+
 	$(".elementosListaEstatus").remove();
-	
-	$.each( catalogoEstatusUsuarios.result.catalogoEstatusUsuarios, function( index, value ) {
-		var etiquetaA = "<a class='dropdown-item elementosListaEstatus' ng-click=''><i class='fas fa-circle' style='color: "+value.color+" ;'></i> "+value.descripcion+"</a>";
-		$( "#listaEstatusUsuarios" ).append(etiquetaA);
+
+	$.each(catalogoEstatusUsuarios.result.catalogoEstatusUsuarios, function (index, value) {
+		var etiquetaA = "<a class='dropdown-item elementosListaEstatus' ng-click=''><i class='fas fa-circle' style='color: " + value.color + " ;'></i> " + value.descripcion + "</a>";
+		$("#listaEstatusUsuarios").append(etiquetaA);
 	});
 
 }

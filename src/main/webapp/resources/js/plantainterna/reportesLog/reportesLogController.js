@@ -92,7 +92,7 @@ app.controller('reportesLogController', ['$scope', '$q', 'reportesLogService', '
             if (isInFilter) {
                 row[0] = elemento.descripcionModulo ? elemento.descripcionModulo : 'Sin informaci&oacute;n';
                 row[1] = elemento.descripcionAccion ? elemento.descripcionAccion : 'Sin informaci&oacute;n';
-                row[2] = elemento.descripcionEstatusHttp ? elemento.descripcionEstatusHttp : 'Sin informaci&oacute;n';
+                row[2] = elemento.descripcionEstatusHttp ?  $scope.getTextEstatus(elemento.descripcionEstatusHttp) : 'Sin informaci&oacute;n';
                 row[3] = elemento.descripcionMensajeHttp ? elemento.descripcionMensajeHttp : 'Sin informaci&oacute;n';
                 row[4] = elemento.comentarios ? elemento.comentarios : 'Sin informaci&oacute;n';
                 row[5] = elemento.fechaRegistro ? elemento.fechaRegistro : 'Sin informaci&oacute;n';
@@ -653,7 +653,7 @@ app.controller('reportesLogController', ['$scope', '$q', 'reportesLogService', '
             if (isInFilter) {
                 row[0] = elemento.descripcionModulo ? elemento.descripcionModulo : 'Sin informaci&oacute;n';
                 row[1] = elemento.descripcionAccion ? elemento.descripcionAccion : 'Sin informaci&oacute;n';
-                row[2] = elemento.descripcionEstatusHttp ? elemento.descripcionEstatusHttp : 'Sin informaci&oacute;n';
+                row[2] = elemento.descripcionEstatusHttp ?  $scope.getTextEstatus(elemento.descripcionEstatusHttp) : 'Sin informaci&oacute;n';
                 row[3] = elemento.descripcionMensajeHttp ? elemento.descripcionMensajeHttp : 'Sin informaci&oacute;n';
                 row[4] = elemento.comentarios ? elemento.comentarios : 'Sin informaci&oacute;n';
                 row[5] = elemento.fechaRegistro ? elemento.fechaRegistro : 'Sin informaci&oacute;n';
@@ -704,7 +704,7 @@ app.controller('reportesLogController', ['$scope', '$q', 'reportesLogService', '
 
                                 row[0] = elemento.descripcionModulo ? elemento.descripcionModulo : 'Sin informaci&oacute;n';
                                 row[1] = elemento.descripcionAccion ? elemento.descripcionAccion : 'Sin informaci&oacute;n';
-                                row[2] = elemento.descripcionEstatusHttp ? elemento.descripcionEstatusHttp : 'Sin informaci&oacute;n';
+                                row[2] = elemento.descripcionEstatusHttp ? $scope.getTextEstatus(elemento.descripcionEstatusHttp) : 'Sin informaci&oacute;n';
                                 row[3] = elemento.descripcionMensajeHttp ? elemento.descripcionMensajeHttp : 'Sin informaci&oacute;n';
                                 row[4] = elemento.comentarios ? elemento.comentarios : 'Sin informaci&oacute;n';
                                 row[5] = elemento.fechaRegistro ? elemento.fechaRegistro : 'Sin informaci&oacute;n';
@@ -744,6 +744,30 @@ app.controller('reportesLogController', ['$scope', '$q', 'reportesLogService', '
 
 
     }
+
+    $scope.getTextEstatus = function (text) {
+        console.log(text);
+        let newText = text;
+        switch (text) {
+            case "success":
+                newText = "&Eacute;xito";
+                break;
+            case "error":
+                newText = "Error";
+                break;
+            case "warning":
+                newText = "Advertencia";
+                break;
+            case "info":
+                newText = "Informativo";
+                break;
+            default:
+                break;
+        }
+
+        return newText;
+    }
+
 
     showImage = function (id, type) {
         let url = './resources/img/plantainterna/despacho/tecnicootasignada.png';
