@@ -1,7 +1,4 @@
 <div class="row">
-    <div ng-show="isAbiertoOSNoticias">
-        <jsp:include page="noticiasGeneralesOs.jsp"></jsp:include>
-    </div>
 </div>
 <div  ng-show="showOs" class="header-back-title col-4">
     <div  ng-click="regresarConsulta()" class="container-regresar-button text-center">

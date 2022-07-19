@@ -1,8 +1,6 @@
 
 <div class="row">
-    <div ng-show="isAbiertoOSNoticias">
-        <jsp:include page="noticiasGeneralesOp.jsp"></jsp:include>
-    </div>
+    
 </div>
 
 <div  ng-show="showOportunidad" class="header-back-title col-2">

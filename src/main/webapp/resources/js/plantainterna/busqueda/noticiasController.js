@@ -17,7 +17,8 @@ app.noticiasController = function ($scope, $q, busquedaService) {
             $scope.objectoConsulta()
         }
         $scope.isAbiertoOSNoticias = !$scope.isAbiertoOSNoticias
-
+        $(".container-noticia-elemento").height($(".container-busqueda").height()-45);
+        $('.content-noticias-general').css({"maxHeight":$(".container-busqueda").height()-155}); 
         $scope.isConsultaPrimeraVezNoticias = true
     }
 
@@ -210,31 +211,31 @@ app.noticiasController = function ($scope, $q, busquedaService) {
         if ($scope.noticiaAnterior) {
             if ($scope.noticiaAnterior !== numero) {
                 $scope.banderaShow = false;
-                document.getElementById('content-subcomentario-os-' + $scope.noticiaAnterior).style.display = 'none';
-                document.getElementById('content-subcomentario-op-' + $scope.noticiaAnterior).style.display = 'none';
+                // document.getElementById('content-subcomentario-os-' + $scope.noticiaAnterior).style.display = 'none';
+                // document.getElementById('content-subcomentario-op-' + $scope.noticiaAnterior).style.display = 'none';
                 document.getElementById('content-subcomentario-ticket-' + $scope.noticiaAnterior).style.display = 'none';
                 $scope.resetFile($scope.noticiaAnterior)
             }
         }
         if ($scope.banderaShow) {
             if ($scope.tipoResponse !== 0) {
-                document.getElementById('texto-subcomentario-os-' + numero).value = '';
-                document.getElementById('texto-subcomentario-op-' + numero).value = '';
+                // document.getElementById('texto-subcomentario-os-' + numero).value = '';
+                // document.getElementById('texto-subcomentario-op-' + numero).value = '';
                 document.getElementById('texto-subcomentario-ticket-' + numero).value = '';
                 $scope.tipoResponse = 0;
             } else {
-                document.getElementById('content-subcomentario-os-' + numero).style.display = 'none';
-                document.getElementById('content-subcomentario-op-' + numero).style.display = 'none';
+                // document.getElementById('content-subcomentario-os-' + numero).style.display = 'none';
+                // document.getElementById('content-subcomentario-op-' + numero).style.display = 'none';
                 document.getElementById('content-subcomentario-ticket-' + numero).style.display = 'none';
                 $scope.banderaShow = false;
                 $scope.tipoResponse = null;
             }
         } else {
-            document.getElementById('content-subcomentario-os-' + numero).style.display = 'block';
-            document.getElementById('content-subcomentario-op-' + numero).style.display = 'block';
+            // document.getElementById('content-subcomentario-os-' + numero).style.display = 'block';
+            // document.getElementById('content-subcomentario-op-' + numero).style.display = 'block';
             document.getElementById('content-subcomentario-ticket-' + numero).style.display = 'block';
-            document.getElementById('texto-subcomentario-os-' + numero).value = '';
-            document.getElementById('texto-subcomentario-op-' + numero).value = '';
+            // document.getElementById('texto-subcomentario-os-' + numero).value = '';
+            // document.getElementById('texto-subcomentario-op-' + numero).value = '';
             document.getElementById('texto-subcomentario-ticket-' + numero).value = '';
             $scope.tipoResponse = 0;
             $scope.banderaShow = true;
@@ -439,8 +440,8 @@ app.noticiasController = function ($scope, $q, busquedaService) {
                 if (response.data.result) {
                     if (response.data.result.result === '0') {
                         $scope.resetFile(params.newId);
-                        document.getElementById('texto-subcomentario-os-' + params.newId).value = ''
-                        document.getElementById('texto-subcomentario-op-' + params.newId).value = ''
+                        // document.getElementById('texto-subcomentario-os-' + params.newId).value = ''
+                        // document.getElementById('texto-subcomentario-op-' + params.newId).value = ''
                         document.getElementById('texto-subcomentario-ticket-' + params.newId).value = ''
                         $scope.objectoConsulta();
                     } else {
@@ -690,13 +691,13 @@ app.noticiasController = function ($scope, $q, busquedaService) {
     cambiar = function (evento) {
         let noticia = evento.id.split('-')[1]
         if ($('#' + evento.id).get(0).files[0] === undefined) {
-            document.getElementById('spnNombreAdSubComentarioOs-' + noticia).innerHTML = ''
-            document.getElementById('spnNombreAdSubComentarioOp-' + noticia).innerHTML = ''
+            // document.getElementById('spnNombreAdSubComentarioOs-' + noticia).innerHTML = ''
+            // document.getElementById('spnNombreAdSubComentarioOp-' + noticia).innerHTML = ''
             document.getElementById('spnNombreAdSubComentarioTicket-' + noticia).innerHTML = ''
             $scope.showEliminarSubCom = false;
         } else {
-            document.getElementById('spnNombreAdSubComentarioOs-' + noticia).innerHTML = $('#' + evento.id).get(0).files[0].name
-            document.getElementById('spnNombreAdSubComentarioOp-' + noticia).innerHTML = $('#' + evento.id).get(0).files[0].name
+            // document.getElementById('spnNombreAdSubComentarioOs-' + noticia).innerHTML = $('#' + evento.id).get(0).files[0].name
+            // document.getElementById('spnNombreAdSubComentarioOp-' + noticia).innerHTML = $('#' + evento.id).get(0).files[0].name
             document.getElementById('spnNombreAdSubComentarioTicket-' + noticia).innerHTML = $('#' + evento.id).get(0).files[0].name
             $scope.showEliminarSubCom = true;
         }
@@ -707,8 +708,8 @@ app.noticiasController = function ($scope, $q, busquedaService) {
         $("#fileSubComentarioOs-" + noticia).val("");
         $("#fileSubComentariotOp-" + noticia).val("");
         $("#fileSubComentarioTicket-" + noticia).val("");
-        document.getElementById('spnNombreAdSubComentarioOs-' + noticia).innerHTML = ''
-        document.getElementById('spnNombreAdSubComentarioOp-' + noticia).innerHTML = ''
+        // document.getElementById('spnNombreAdSubComentarioOs-' + noticia).innerHTML = ''
+        // document.getElementById('spnNombreAdSubComentarioOp-' + noticia).innerHTML = ''
         document.getElementById('spnNombreAdSubComentarioTicket-' + noticia).innerHTML = ''
         $scope.showEliminarSubCom = false;
     }

@@ -1096,11 +1096,11 @@ b.title-info-services.dnsmensaje-config {
 .container-noticia-elemento {
   background: #f7f7f7;
   position: absolute;
-  width: 71%;
+  width: 71%!important;
   right: 0.8em !important;
-  height: 44em !important;
+  /* height: 100% !important; */
   z-index: 10;
-  top: 3.1em !important;
+  /* top: 3.5em !important; */
   box-shadow: -6px 0px 15px 1px #e9e9e9;
 }
 
@@ -1820,4 +1820,8 @@ span.text-activacion-warning {
   position: absolute;
   top: 44px;
   left: 51%;
+}
+.container-noticia-elemento {
+  box-shadow: none !important;
+  border: 1px solid #e1e1e1;
 }

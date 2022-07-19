@@ -504,7 +504,7 @@
             </div>
 
 
-           
+            <jsp:include page="./content/noticiasGeneralesTicket.jsp"></jsp:include>
             <jsp:include page="./content/detalleCuenta.jsp"></jsp:include>
             <jsp:include page="./content/detalleActivar.jsp"></jsp:include>
             <jsp:include page="./content/detalleCotizacion.jsp"></jsp:include>
