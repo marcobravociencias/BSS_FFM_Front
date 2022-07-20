@@ -961,17 +961,23 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
 
         swal({ text: 'Cambiando estatus ...', allowOutsideClick: false });
         swal.showLoading();
+        let tituloAccion = "Cambiar estatus t&eacute;cnico";
+        let mensajeEnvio = 'Ha ocurrido un error al cambiar el estatus del t&eacute;cnico ' + $scope.elementEstatusTecnico.tecnico.nombreCompleto + ' a ' + $scope.elementEstatusTecnico.status.descripcion;
         mainDespachoService.cambiarEstatusTecnicoPI(params).then(function success(response) {
 
             $("#modalStatusOperario").modal('hide')
             if (response.data !== undefined) {
                 if (response.data.respuesta) {
                     if (response.data.codigoEstatusService == 201) {
+                        mensajeEnvio = 'Se cambi&oacute; el estatus del t&eacute;cnico ' + $scope.elementEstatusTecnico.tecnico.nombreCompleto + ' a ' + $scope.elementEstatusTecnico.status.descripcion;
+                        objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
                         toastr.success(response.data.result.description);
                     } else {
+                        objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                         toastr.warning("No se pudo actualizar estatus ");
                     }
                 } else {
+                    objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                     toastr.warning(response.data.resultDescripcionn);
                 }
             }
@@ -995,7 +1001,9 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             "esConfirmada": $scope.objConfirmaDesc.isConfirmadoDesconfirmado ? 1 : 0,
             "comentarios": $scope.objConfirmaDesc.comentarios
         }
-        
+        let textTemp = $scope.objConfirmaDesc.isConfirmadoDesconfirmado ? "confirmar" : "desconfirmar";
+        let tituloAccion = $scope.objConfirmaDesc.isConfirmadoDesconfirmado ? "Confirmar OT" : "Desconfirmar OT";
+        let mensajeEnvio = 'Ha ocurrido un error al ' + textTemp + ' la OT: ' + params.idOrden;
         mainDespachoService.confirmaDesconfirmaOtDespacho(params).then(function success(response) {
             $scope.banderaRegresarCheckbox = true;
             if (response.data !== undefined) {
@@ -1004,10 +1012,15 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                     swal.close()
                     toastr.success('Cambio de estatus correcto');
                     $scope.refrescarBusqueda()
+                    textTemp = $scope.objConfirmaDesc.isConfirmadoDesconfirmado ? "confirm&oacute;" : "desconfirm&oacute;" ;
+                    mensajeEnvio = 'Se ' + textTemp + ' la OT: ' + params.idOrden;
+                    objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
                 } else {
+                    objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                     toastr.info("No se pudo cambiar el estatus de la ot");
                 }
             } else {
+                objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                 toastr.info("No se pudo cambiar el estatus de la ot");
             }
             $scope.objConfirmaDesc.procesando = false
@@ -1362,7 +1375,9 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         let isValido = true;
         let params = {};
         $scope.tipoaccioncambioestatus = tipo
+        let estatusTemp = '';
         if (tipo === 'asigna') {
+            estatusTemp = "asignado"
             let horaasignacionInicio = angular.copy($scope.asignacionObject.otInfo.fechahoraasignacion);
             let horaasignacionFin = angular.copy($scope.asignacionObject.otInfo.fechahoraasignacion);
             horaasignacionFin = moment(horaasignacionFin).add(3, 'hours').format();
@@ -1400,6 +1415,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 fechaHoraFin: formatFechaHoraFin
             }
         } else if (tipo === 'reasigna') {
+            estatusTemp = "reasignado"
             let horaasignacionInicio = angular.copy($scope.reAsignacionObject.otInfo.fechahoraasignacion);
             let horaasignacionFin = angular.copy($scope.reAsignacionObject.otInfo.fechahoraasignacion);
             horaasignacionFin = moment(horaasignacionFin).add(3, 'hours').format();
@@ -1434,7 +1450,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 idtipoAsignacion: $scope.reAsignacionObject.otInfo.tipoAsignacion
             }
         } else if (tipo === 'desasigna') {
-
+            estatusTemp = "desasignado"
             if (!$scope.elementoDesasigna || $scope.elementoDesasigna.comentario.trim() === '') {
                 errorMensaje += 'Completa campo comentario.'
                 isValido = false;
@@ -1458,7 +1474,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
 
 
         } else if (tipo === 'calendariza') {
-
+            estatusTemp = "calendarizado"
             if ($scope.elementCalendarizado.fechaCalendarizado.trim() === '') {
                 errorMensaje += '<li>Completa campo fecha</li>'
                 isValido = false;
@@ -1519,7 +1535,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 }
             }
         } else if (tipo === 'cancela') {
-
+            estatusTemp = "enviar a rescate";
             if (!$scope.elementoRescate || !$scope.elementoRescate.motivo) {
                 errorMensaje += '<li>Seleccione campo motivo.</li>'
                 isValido = false;
@@ -1566,7 +1582,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             }
 
         } else if (tipo === 'reagendamiento') {
-
+            estatusTemp = "reagendado"
             if (!$scope.elementReagendaOT || $scope.elementReagendaOT.fechaReagendamiento.trim() === '') {
                 errorMensaje += '<li>Completa campo fecha.</li>'
                 isValido = false;
@@ -1628,7 +1644,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 }
             }
         } else if (tipo === 'termina') {
-
+            estatusTemp = "terminado"
             if (!$scope.elementTerminar || !$scope.elementTerminar.estado) {
                 errorMensaje += '<li>Seleccione campo motivo.</li>'
                 isValido = false;
@@ -1675,6 +1691,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             }
 
         } else if (tipo === 'gestoria') {
+            estatusTemp = "enviar a plaza"
             if (!$scope.elementoPlazaComercial || !$scope.elementoPlazaComercial.estado) {
                 errorMensaje += '<li>Seleccione campo estado.</li>'
                 isValido = false;
@@ -1727,7 +1744,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
 
         }
         if (isValido) {
-            envioCambioStatus(params);
+            envioCambioStatus(params, estatusTemp);
         } else {
             errorMensaje += '</ul>'
             mostrarMensajeWarningValidacion(errorMensaje)
@@ -1735,9 +1752,13 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
 
     }
 
-    envioCambioStatus = function (params) {
+    envioCambioStatus = function (params, text) {
         swal({ text: 'Cambiando estatus de la OT ...', allowOutsideClick: false });
         swal.showLoading();
+        let tituloAccion = "Actualizaci&oacute;n estatus orden";
+        let tecnicoTemp = $scope.listadoTecnicosGeneral.find((e) => e.idTecnico == params.idUsuarioTecnico);
+        let mensajeEnvio = tecnicoTemp ? 'Ha ocurrido un error al cambiar el estatus a "' + text + '" de la OT: ' + params.ot + ' para el t&eacute;cnico ' + tecnicoTemp.nombre + ' ' + tecnicoTemp.apellidoPaterno + ' ' + tecnicoTemp.apellidoMaterno : 'Ha ocurrido un error al cambiar el estatus a "' + text + '" de la OT: ' + params.ot;
+        
         genericService.cambioStatusOts(params).then(result => {
             $scope.procesandoAsignacion = false;
             $scope.procesandoReasignacion = false
@@ -1750,7 +1771,8 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             if (result.data.respuesta) {
 
                 toastr.success(result.data.result.mensaje);
-
+                mensajeEnvio = tecnicoTemp ? 'Se actualiz&oacute; el estatus a "' + text + '" de la OT: ' + params.ot + ' para el t&eacute;cnico ' + tecnicoTemp.nombre + ' ' + tecnicoTemp.apellidoPaterno + ' ' + tecnicoTemp.apellidoMaterno : 'Se actualiz&oacute; el estatus a "' + text + '" de la OT: ' + params.ot;
+                objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
                 switch ($scope.tipoaccioncambioestatus) {
                     case 'asigna':
                         $("#modalAsignacionOrdenTrabajo").modal('hide')
@@ -1765,7 +1787,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 }
             } else {
                 toastr.warning(result.data.resultDescripcion);
-
+                objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
             }
         }).catch(err => handleError(err));
     }
@@ -1941,24 +1963,31 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 }
                 swal({ text: 'Cambiando estatus de la OT ...', allowOutsideClick: false });
                 swal.showLoading();
+                let tituloAccion = "Cambiar direcci&oacute;n de OT";
+                let mensajeEnvio = 'Ha ocurrido un error al cambiar la direcci&oacute;n de la OT: ' + params.idOrdenTrabajo;
                 mainDespachoService.actualizarDireccionOt(params).then(function success(response) {
                     swal.close()
                     if (response.data !== undefined) {
                         if (response.data.respuesta) {
                             if (response.data.result) {
-                                $scope.infoOtDetalle.direccion.longitud =  $scope.longitudModDireccionOt;
-                                $scope.infoOtDetalle.direccion.latitud =  $scope.latitudModDireccionOt;
+                                $scope.infoOtDetalle.direccion.longitud = $scope.longitudModDireccionOt;
+                                $scope.infoOtDetalle.direccion.latitud = $scope.latitudModDireccionOt;
                                 $scope.verMapaCambioDireccion($scope.infoOtDetalle.direccion.latitud, $scope.infoOtDetalle.direccion.longitud);
                                 toastr.success('Direcci&oacute;n actualizada');
+                                mensajeEnvio = 'Se cambio la direcci&oacute;n de la OT: ' + params.idOrdenTrabajo;
+                                objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
                                 $scope.regresarVistaCambioDireccion()
                             } else {
                                 toastr.warning('No se cambio la direcci&oacute;n');
+                                objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                             }
                         } else {
                             toastr.warning(response.data.resultDescripcion);
+                            objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                         }
                     } else {
                         toastr.error('Ha ocurrido un error en el cambio de direcci&oacute;n');
+                        objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                     }
                 }).catch(err => handleError(err));
             } else {

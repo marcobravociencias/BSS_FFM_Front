@@ -10,6 +10,8 @@ var app = angular.module('despacho', []);
 var triggerOperarioKeyup;
 var accionDetalleSf;
 
+var objectTempAccion;
+
 var mapubicacionoperario;
 var mapaucotizaciondetalle;
 var mapavistageneral;
@@ -1140,7 +1142,8 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
                 }
                    
 
-               
+                objectTempAccion = new GenericAccionRealizada(""+resultConf.MODULO_ACCIONES_USUARIO.id, 'TOP_RIGHT');
+                objectTempAccion.inicializarBotonAccionesRecientes();
 
 
                 $scope.iniciarMapaAlertas();
@@ -1582,17 +1585,21 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
 
                 swal({ text: 'Cargando registros...', allowOutsideClick: false });
                 swal.showLoading();
+                let tituloAccion = "Descarga reporte seguimiento diario";
+                let mensajeEnvio = 'Ha ocurrido un error al descargar el reporte';
                 mainDespachoService.consultaReporteDiario(paramsR).then((result) => {
                     console.log(result.data)
                     swal.close()
                     if (result.data.respuesta) {
                         const data = JSON.parse(result.data.result).ordenes
                         console.log(JSON.parse(result.data.result))
-                        const fileName = 'Resporte Seguimiento Diario'
-                        const exportType = 'xls'
-
+                        const fileName = 'Resporte Seguimiento Diario';
+                        const exportType = 'xls';
+                        mensajeEnvio = 'Se ha descargado el reporte';
+                        objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
                         window.exportFromJSON({ data, fileName, exportType })
                     } else {
+                        objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                         mostrarMensajeErrorAlert('Ocurrio un error al generar reporte.')
                     }
 

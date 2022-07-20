@@ -163,7 +163,7 @@ app.controller('reportesLogController', ['$scope', '$q', 'reportesLogService', '
 
     $scope.getInformacionGeneral = function () {
         $q.all([
-            reportesLogService.consultarConfiguracion({ "moduloAccionesUsuario": "moduloGestionUniversal" }),
+            reportesLogService.consultarConfiguracion({ "moduloAccionesUsuario": "moduloReportesLog" }),
             reportesLogService.consulCatalogoGeografiaGeneral(),
             reportesLogService.consultaPuestos()
         ]).then(function (results) {
@@ -608,16 +608,8 @@ app.controller('reportesLogController', ['$scope', '$q', 'reportesLogService', '
         })
     }
 
-    let groupBy = function (xs, key) {
-        return xs.reduce(function (rv, x) {
-            (rv[x[key]] = rv[x[key]] || []).push(x);
-            return rv;
-        }, {});
-    };
-
 
     $scope.getCategoryLogs = function (list) {
-        let data = groupBy(list, 'idModulo');
         let listaTipos = [];
         list.map(function (e) {
             let isExist = listaTipos.find((t) => e.idModulo == t.id)
