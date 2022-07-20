@@ -1749,54 +1749,73 @@ label.dropdown-item.form-check-inputfiltro {
 }
 
 .rowCuadrillaTecnico {
-	width: 180px !important;
-	min-width: 180px !important;
-	position: absolute !important;
-	position: -webkit-sticky !important;
-  	position: sticky !important;
-  	left: 0 !important;
-  	z-index: 2 !important;
-  	text-align: center;
+    width: 180px !important;
+    min-width: 180px !important;
+    position: absolute !important;
+    position: -webkit-sticky !important;
+    position: sticky !important;
+    left: 0 !important;
+    z-index: 2 !important;
+    text-align: center;
 }
 
 .rowUsuarioFFMTecnico {
-	width: 100px !important;
-	min-width: 100px !important;
-	position: absolute !important;
-	position: -webkit-sticky !important;
-  	position: sticky !important;
-  	left: 213px !important;
-  	z-index: 2 !important;
-  	text-align: center;
+    width: 100px !important;
+    min-width: 100px !important;
+    position: absolute !important;
+    position: -webkit-sticky !important;
+    position: sticky !important;
+    left: 210px !important;
+    z-index: 2 !important;
+    text-align: center;
 }
 
 .cuerpoTablaTecnicos {
-  	text-align: center;
+    text-align: center;
 }
 
 #tableTecnicosTiposOrdenes th:first-child,
 #tableTecnicosTiposOrdenes td:first-child {
-	position: -webkit-sticky !important;
-  	position: sticky !important;
-  	left: 0 !important;
-  	z-index: 2 !important;
+    position: -webkit-sticky !important;
+    position: sticky !important;
+    left: 0 !important;
+    z-index: 2 !important;
 }
 
 #tableTecnicosTiposOrdenes td {
-	background-color: white !important;
+    background-color: white !important;
 }
 
 #tableTecnicosTiposOrdenes th:nth-child(2),
 #tableTecnicosTiposOrdenes td:nth-child(2) {
-	position: absolute !important;
-	position: -webkit-sticky !important;
-	position: sticky !important;
-	left: 213px !important;
-	z-index: 2 !important;
+    position: absolute !important;
+    position: -webkit-sticky !important;
+    position: sticky !important;
+    left: 210px !important;
+    z-index: 2 !important;
 }
 
 .contenedorTablaTecnicos {
-	overflow-y: hidden !important;
+    overflow-y: hidden !important;
+}
+
+.imagen-no-results {
+    text-align: center!important;
+    margin-top: 3em;
+}
+
+#tableTecnicosTiposOrdenes_wrapper #tableTecnicosTiposOrdenes {
+    overflow-y: auto !important;
+    display: block;
+    height: 100% !important;
+}
+
+#tableTecnicosTiposOrdenes {
+    width:100%
+}
+
+#tableTecnicosTiposOrdenes_paginate {
+    margin-top: 0.5em;
 }
 
 /* ORDER COLUMNS TABLE */

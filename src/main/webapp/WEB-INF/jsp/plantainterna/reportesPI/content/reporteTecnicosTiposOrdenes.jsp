@@ -22,14 +22,18 @@
         </div>
     </div>
     <div class="content-fluid">
-        <div class="table-responsive contenedorTablaTecnicos">
+        <div ng-show="isTablaTecnicos">
             <table id="tableTecnicosTiposOrdenes" class="display nowrap table" cellspacing="0" width="100%">
                 <thead id="headTecnicosTiposOrdenes">
                 </thead>
                 <tbody>
-
                 </tbody>
             </table>
         </div>
+        <div ng-show="!isTablaTecnicos" class="imagen-no-results">
+			<img src="${pageContext.request.contextPath}/resources/img/generic/no-results.png">
+			<br>
+			<span class="span-no-result">No se encontraron resultados</span>
+		</div>
     </div>
 </div>

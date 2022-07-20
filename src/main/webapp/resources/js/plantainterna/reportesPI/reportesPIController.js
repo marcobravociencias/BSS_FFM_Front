@@ -16,6 +16,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 	$scope.filtroEstatusInt = {};
 	$scope.listaGeografiaReporte = {};
 	$scope.listaTecnicos = [];
+	$scope.isTablaTecnicos = false;
 
 	$scope.tipoReporte = '';
 
@@ -129,8 +130,13 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 	
 	$scope.consultarTecnicosTiposOrdenes = function() {
 		
+		$scope.isTablaTecnicos = false;
+		$scope.listaSkills = [];
+		$scope.listaTecnicos = [];
+		
 		if($scope.nfiltrogeografiaTecnicosTiposOrdenes === undefined || $scope.nfiltrogeografiaTecnicosTiposOrdenes === null || $scope.nfiltrogeografiaTecnicosTiposOrdenes === ""){
 			$scope.nfiltrogeografiaTecnicosTiposOrdenes = $scope.obtenerNivelUltimoJerarquia();
+//			$scope.nfiltrogeografiaTecnicosTiposOrdenes = 2;
 		}
 		
 		let clustersparam = $("#jstree-proton-tecnicos").jstree("get_selected", true).filter(e => e.original.nivel == $scope.nfiltrogeografiaTecnicosTiposOrdenes).map(e => parseInt(e.id));
@@ -146,6 +152,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
     	            		if(response.data.result.tecnicos.length > 0){
     	            			$scope.listaSkills = response.data.result.encabezados;
     	            			$scope.listaTecnicos = response.data.result.tecnicos;
+    	            			$scope.isTablaTecnicos = true;
     	            			$scope.pintarDatosTablaTecnicos();
     	            		}else{
     	            			mostrarMensajeInformativo("¡Actualmente no existen técnicos!");
@@ -214,7 +221,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
             "pageLength": 10,
             "info": true,
             "searching": true,
-            "scrollX": true,
+//            "scrollX": true,
             "columnDefs": titulos,
             "data": dataTecnicos,
             "autoWidth": false,
