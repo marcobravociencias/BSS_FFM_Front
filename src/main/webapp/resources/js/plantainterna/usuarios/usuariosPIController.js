@@ -892,6 +892,9 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	        	case "tabInformacionVW_CUADRILLA":
 	        		if(conf.valor == "true"){
 	        			$scope.tabInformacionVW_CUADRILLA = true;
+	        			if($scope.listaCuadrillas === undefined || $scope.listaCuadrillas === null || $scope.listaCuadrillas.length < 1){
+	        				toastr.info("¡Actualmente no existen cuadrillas!");
+	        			}
 	    			}
 	        		break;
 	        	case "tabArbol_LB_N1":
@@ -2129,15 +2132,6 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	$scope.cuadrillaSeleccion = function(cuadrillaSeleccionada) {
     	$('#cuadrilla_select_registro').val(cuadrillaSeleccionada.descripcion);
     	$("#cuadrilla_select_registro").css("border-bottom", "2px solid #d9d9d9");
-//		angular.forEach($scope.listaCuadrillas,function(cuadrillaPadre,index){
-//			angular.forEach(cuadrillaPadre.cuadrillasHijas,function(cuadrillaHija,index){
-//				if(cuadrillaHija.id == cuadrillaSeleccionada.id){
-//					cuadrillaHija.checkedOpcion = 1;
-//				}else{
-//					cuadrillaHija.checkedOpcion = 0;
-//				}
-//			});
-//		});
 	}
 	
 	//VERIFICA EL ESTADO DEL CHECK PARA COLOCAR 'SI' O 'NO', SEGÚN EL ESTADO - PESTAÑA INFORMACIÓN REGISTRO USUARIO
