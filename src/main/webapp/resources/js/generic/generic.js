@@ -278,7 +278,7 @@ class GenericAccionRealizada {
 		}
 
 		$("#container-ultimasAcciones").show();
-		$("#loading-data").show();
+		
 		//let listaUltimasAcciones = this.getAccionesRecientesUsuario();
 		let listaUltimasAcciones = [];
 		this.getAccionesRecientesUsuario().done(function (jsonResponse) {
@@ -293,6 +293,7 @@ class GenericAccionRealizada {
 		$("#listAccionesRecientes").empty();
 		let contentAcciones = "";
 		if (listaUltimasAcciones.length > 0) {
+			$("#loading-data").show();
 			$.each(listaUltimasAcciones, function (i, accion) {
 				if (accion.descripcionEstatusHttp == 'success') {
 					contentAcciones += '<li class="timeline-actions timeline-icon-success active">' +

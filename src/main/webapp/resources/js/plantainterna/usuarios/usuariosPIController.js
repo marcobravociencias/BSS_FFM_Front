@@ -1,5 +1,6 @@
 var app = angular.module('usuarioApp', []);
 var detalleTable;
+var objectTempAccion;
 
 app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filter', function ($scope, $q, usuarioPIService, $filter) {
 	
@@ -207,6 +208,8 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 				$scope.configPermisoAccionEditaUsuarios = ($scope.permisosUsuariosAcciones.filter(e => {return e.clave == "accionEditaUsuarios"})[0] != undefined);
 				$scope.configPermisoAccionEliminaUsuarios = ($scope.permisosUsuariosAcciones.filter(e => {return e.clave == "accionEliminaUsuarios"})[0] != undefined);
 				$scope.bucketIdImg = resultConf.BUCKETID_FB;
+				objectTempAccion = new GenericAccionRealizada("" + resultConf.MODULO_ACCIONES_USUARIO.id, 'TOP_RIGHT');
+				objectTempAccion.inicializarBotonAccionesRecientes();
 				if(window.usuario){
 					consultarDetalleUsuario(window.usuario)
 				}
@@ -1489,11 +1492,15 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
     	        if (isConfirm) {
     	        	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
     	    		swal.showLoading();
+					let tituloAccion = "Crear usuario";
+					let mensajeEnvio = 'Ha ocurrido un error al crear el usuario ' + paramsRegistro.usuario;
     	        	$q.all([
     	        		usuarioPIService.guardarUsuario(paramsRegistro)
     	            ]).then(function(results) {
     	            	swal.close();
     	            	if(results[0].data.respuesta){
+							mensajeEnvio = 'Se ha creado el usuario ' + paramsRegistro.usuario;
+							objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
     	            		$scope.limpiarDatosRegistro();
     	            		swal("Correcto", "¡Registro guardado con éxito!", "success");
     	            		$scope.resetearTablaUsuariosConsulta();
@@ -1501,6 +1508,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 		            			$scope.consultaUsuariosPorGeoCompPuestos();
 		    	        	}, 1000);
     	            	}else{
+							objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
     	            		swal("Error", results[0].data.resultDescripcion, "error");
     	            	}
     	            });
@@ -2811,6 +2819,7 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
 	}
 	
 	//MÉTODO PARA ELIMINAR USUARIOS (BAJA LÓGICA)
+
     eliminarUsuario = function(idUsuario) {
     	if($scope.configPermisoAccionEliminaUsuarios){
     		
@@ -2848,16 +2857,23 @@ app.controller('usuarioController', ['$scope', '$q', 'usuarioPIService', '$filte
         	        	params.comentarios = motivo;
         	        	swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
         	    		swal.showLoading();
+						let tituloAccion = "Eliminar usuario";
+					
         	        	$q.all([
-        	        		usuarioPIService.eliminarUsuario(params)
+        	        		usuarioPIService.eliminarUsuario(params),
+							usuarioPIService.consultaUsuarioPorId({idUsuario:idUsuario})
         	            ]).then(function(results) {
         	            	swal.close();
+							let mensajeEnvio = 'Ha ocurrido un error al eliminar el usuario ' + results[1].data.result.usuario.usuario;
         	            	if(results[0].data.respuesta){
+								mensajeEnvio = 'Se ha eliminado el usuario ' + results[1].data.result.usuario.usuario;
+								objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
         	            		swal("Correcto", "¡Usuario eliminado con éxito!", "success");
         	            		setTimeout(function() {
         	            			$scope.consultaUsuariosPorGeoCompPuestos();
         	    	        	}, 1000);
         	            	}else{
+								objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
         	            		swal("Error", results[0].data.resultDescripcion, "error");
         	            	}
         	            });

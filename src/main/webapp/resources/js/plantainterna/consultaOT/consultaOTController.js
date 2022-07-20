@@ -1,6 +1,8 @@
 var app = angular.module('consultaOTApp', []);
 var tableMaterialesDespacho;
-app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'genericService','evidenciaService', function ($scope, $q, consultaOTService, genericService, evidenciaService) {
+var objectTempAccion;
+
+app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'genericService', 'evidenciaService', function ($scope, $q, consultaOTService, genericService, evidenciaService) {
 	app.evidenciaController($scope, evidenciaService)
 
 	$("#moduloConsultaOt").addClass('active')
@@ -423,10 +425,14 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 							if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
 								$scope.configPermisoAccionConsultaOrdenes = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaOT" })[0] != undefined);
 								$scope.configPermisoAccionDescargaReporteOrdenes = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaReporteOT" })[0] != undefined);
+								objectTempAccion = new GenericAccionRealizada("" + $scope.permisosConfigUser.id, 'TOP_RIGHT');
+								objectTempAccion.inicializarBotonAccionesRecientes();
 							}
+							
 							$("#idBody").removeAttr("style");
 							validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
 							validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
+
 						}
 					} else {
 						swal.close();
@@ -1937,19 +1943,24 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 				elementosPorPagina: $scope.elementosRegistro,
 				pagina: 1
 			}
-
+			let tituloAccion = "Descarga reporte ordenes de trabajo";
+			let mensajeEnvio = 'Ha ocurrido un error al descargar el reporte';
 			consultaOTService.consultaReporteConsultaOt(JSON.stringify(params)).then((result) => {
 				if (result.data.respuesta) {
 					if (result.data.result) {
 						const data = JSON.parse(result.data.result).ordenes
 						const fileName = 'Resporte Consulta Ot'
 						const exportType = 'xls'
-
+						mensajeEnvio = 'Se ha descargado el reporte';
+						objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
 						window.exportFromJSON({ data, fileName, exportType })
 					} else {
-						mostrarMensajeWarningValidacion('No hay datos en el reporte.')
+						mensajeEnvio = 'No se encontraron resultados';
+						objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_WARNING, tituloAccion);
+						toastr.info('No se encontraron resultados');
 					}
 				} else {
+					objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
 					mostrarMensajeErrorAlert('Ocurrio un erro.')
 				}
 			}).catch(err => handleError(err))

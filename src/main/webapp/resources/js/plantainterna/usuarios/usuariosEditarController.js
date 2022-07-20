@@ -1862,11 +1862,15 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 
 					swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
 		    		swal.showLoading();
+					let tituloAccion = "Editar usuario";
+					let mensajeEnvio = 'Ha ocurrido un error al editar el usuario ' + paramsMod.usuario;
 		        	$q.all([
 		        		usuarioPIService.modificarUsuario(paramsMod)
 		            ]).then(function(results) {
 		            	swal.close();
 		            	if(results[0].data.respuesta){
+							mensajeEnvio = 'Se ha editado el usuario ' + paramsMod.usuario;
+							objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
 		            		swal("Correcto", "¡Modificación realizada con éxito!", "success");
 		            		$scope.limpiarDatosModificacion();
 		            		$scope.resetearTablaUsuariosConsulta();
@@ -1874,6 +1878,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 		            			$scope.consultaUsuariosPorGeoCompPuestos();
 		    	        	}, 1000);
 		            	}else{
+							objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
 		            		swal("Error", results[0].data.resultDescripcion, "error");
 		            	}
 		            });

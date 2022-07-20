@@ -1,4 +1,5 @@
 var app = angular.module('reportesPIApp', []);
+var objectTempAccion;
 
 app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'genericService', function ($scope, $q, reportesPIService, genericService) {
 	app.filtroReportes($scope, reportesPIService)
@@ -462,6 +463,8 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 								$scope.configPermisoAccionDescargaReporteAsignadas = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaAsignadasCompensacion" })[0] != undefined);
 								$scope.configPermisoAccionConsultaTecnicosTiposOrdenes = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaTecnicosTiposOrdenes" })[0] != undefined);
 								$scope.configPermisoAccionGenerarReporteTecnicosTiposOrdenes = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaReporteTecnicosTiposOrdenes" })[0] != undefined);
+								objectTempAccion = new GenericAccionRealizada("" + $scope.permisosConfigUser.id, 'TOP_RIGHT');
+								objectTempAccion.inicializarBotonAccionesRecientes();
 							}
 
 							let firstNav = '';
@@ -965,6 +968,8 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 
 			swal({ text: 'Cargando registros...', allowOutsideClick: false });
 			swal.showLoading();
+			let tituloAccion = "Descarga reporte seguimiento diario";
+			let mensajeEnvio = 'Ha ocurrido un error al descargar el reporte';
 
 			reportesPIService.consultaReporteDiario(paramsR).then((result) => {
 				swal.close()
@@ -972,9 +977,11 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 					const data = JSON.parse(result.data.result).ordenes
 					const fileName = 'Resporte Seguimiento Diario'
 					const exportType = 'xls'
-
+					mensajeEnvio = 'Se ha descargado el reporte';
+					objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
 					window.exportFromJSON({ data, fileName, exportType })
 				} else {
+					objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
 					mostrarMensajeErrorAlert('Ocurrio un error al generar reporte.')
 				}
 
@@ -1192,16 +1199,19 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 
 			swal({ text: 'Cargando registros...', allowOutsideClick: false });
 			swal.showLoading();
-
+			let tituloAccion = "Descarga reporte cierre diario";
+			let mensajeEnvio = 'Ha ocurrido un error al descargar el reporte';
 			reportesPIService.consultaReporteCierreDiario(paramsR).then((result) => {
 				swal.close()
 				if (result.data.respuesta) {
 					const data = JSON.parse(result.data.result).ordenes
 					const fileName = 'Resporte Cierre Diario'
 					const exportType = 'xls'
-
+					mensajeEnvio = 'Se ha descargado el reporte';
+					objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
 					window.exportFromJSON({ data, fileName, exportType })
 				} else {
+					objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
 					mostrarMensajeErrorAlert('Ocurrio un error al generar reporte.')
 				}
 
@@ -1420,16 +1430,19 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 
 			swal({ text: 'Cargando registros...', allowOutsideClick: false });
 			swal.showLoading();
-
+			let tituloAccion = "Descarga reporte asignadas compensaci&oacute;n";
+			let mensajeEnvio = 'Ha ocurrido un error al descargar el reporte';
 			reportesPIService.consultaReporteAsignadas(paramsR).then((result) => {
 				swal.close()
 				if (result.data.respuesta) {
 					const data = JSON.parse(result.data.result).ordenes
 					const fileName = 'Resporte Asignadas Compensacion'
 					const exportType = 'xls'
-
+					mensajeEnvio = 'Se ha descargado el reporte';
+					objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
 					window.exportFromJSON({ data, fileName, exportType })
 				} else {
+					objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
 					mostrarMensajeErrorAlert('Ocurrio un error al generar reporte.')
 				}
 

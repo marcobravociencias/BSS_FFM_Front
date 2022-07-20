@@ -123,6 +123,7 @@
     </body>
     <!-- LIBRERIAS -->
     <script src="${pageContext.request.contextPath}/resources/libraries/angularjs/js/angular.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/moment.min.js"></script>
     <script type="text/javascript"
         src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.min.js"></script>
     <script type="text/javascript"
