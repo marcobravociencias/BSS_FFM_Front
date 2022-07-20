@@ -6,30 +6,32 @@
     <meta charset="ISO-8859-1" />
     <title>FFM Total play</title>
 
-    <link rel="icon" type="image/png" sizes="192x192" href="${pageContext.request.contextPath}/resources/img/iconsistema/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="${pageContext.request.contextPath}/resources/img/iconsistema/android-icon-192x192.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-96x96.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-16x16.png" />
+
+    <!-- Libraries -->
+    <link rel="manifest" href="${pageContext.request.contextPath}/resources/img/iconsistema/manifest.json" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/css/mdb.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/jquery.dataTables.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/bootstrap/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/dataTables.fontAwesome.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/selectPicker/css/bootstrap-select.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/jstree/default/style.min.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/jstree/themes/proton/style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/sweetalert/css/sweetalert2.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/jstree/themes/proton/style.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/datePicker/css/bootstrap-datepicker3_1.9.0.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
-
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/css/mdb.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css"/>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/magnific_popup/magnific-popup.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/magnific_popup/magnific-popup.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/fullcalendar/main.css">
+    <!-- Libraries -->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/plantainterna/vistaAuditoria/mainVistaAuditoria.css?v=${sessionScope.versionDepl}" />
-
 </head>
 
-<body id="idBody" ng-controller="auditoriaTecnicoController" class="body">
+<body id="idBody" ng-controller="auditoriaTecnicoController" style="display: none;">
     <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
     <div class="container">
         <div class="container container-title-header" style="padding: 0 !important;">
@@ -60,7 +62,7 @@
             </div>
         </div>
 
-        <div class="container-fluid" id="container_auditoria" ng-show="!isDetalle">
+        <div class="container-fluid pt-2" id="container_auditoria" ng-show="!isDetalle">
             <table class="display table table-hover" width="100%" id="tableAuditoriaTecnico">
                 <thead id="thead_auditoriaTecnico">
                     <tr>
@@ -69,7 +71,7 @@
                         <th>Distrito</th>
                         <th>Regi&oacute;n</th>
                         <th>Aprobaci&oacute;n de Cuadrillas</th>
-                        <th>Opciones</th>
+                        <th class="text-center">Opciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -110,8 +112,8 @@
                             <th>OS</th>
                             <th>Fecha y Hora</th>
                             <th>Equipo de T&eacute;cnico</th>
-                            <th>Estatus</th>
-                            <th>Opciones</th>
+                            <th class="text-center">Estatus</th>
+                            <th class="text-center">Opciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -125,13 +127,15 @@
 </body>
 <!-- Scripts libraries -->
 <script src="${pageContext.request.contextPath}/resources/libraries/angularjs/js/angular.min.js"></script>
-<script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/moment.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/js/mdb.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-ui.js"></script>
-<script src="${pageContext.request.contextPath}/resources/libraries/popper\popper.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/libraries/popper/popper.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/libraries/bootstrap/js/bootstrap.min.js"></script>
-
+<script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/moment.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/main.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/locales-all.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/jquery-ui.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/jquery.dataTables.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/dataTables.bootstrap4.min.js"></script>
@@ -141,7 +145,7 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker.es.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/magnific_popup/jquery.magnific-popup.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/fullcalendaremp/lib/moment.es.js"></script>
+<!-- Scripts libraries -->
 
 <script src="${pageContext.request.contextPath}/resources/js/plantainterna/vistaAuditoria/vistaAuditoriaController.js?v=${sessionScope.versionDepl}"></script>
 <script src="${pageContext.request.contextPath}/resources/js/plantainterna/vistaAuditoria/vistaAuditoriaService.js?v=${sessionScope.versionDepl}"></script>

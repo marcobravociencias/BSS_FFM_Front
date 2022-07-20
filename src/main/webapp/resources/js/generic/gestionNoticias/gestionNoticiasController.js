@@ -440,12 +440,15 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 			"paging": true,
 			"lengthChange": false,
 			"searching": true,
-			"ordering": false,
+			"ordering": true,
 			"pageLength": 10,
 			"info": false,
 			"autoWidth": true,
 			"language": idioma_espanol_not_font,
-			"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">'
+			"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+			"aoColumnDefs": [
+				{ "aTargets": [9], "bSortable": false }
+			]
 		})
 		swal.close()
 	}

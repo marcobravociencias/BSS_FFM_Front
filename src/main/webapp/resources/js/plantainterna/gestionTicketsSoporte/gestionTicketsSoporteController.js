@@ -60,11 +60,14 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
     let ingenieroTable = $('#ingenierosTable').DataTable({
         "paging": true,
         "lengthChange": false,
-        "ordering": false,
+        "ordering": true,
         "pageLength": 10,
         "info": true,
         "autoWidth": true,
-        "language": idioma_espanol_not_font
+        "language": idioma_espanol_not_font,
+        "aoColumnDefs": [
+            { "aTargets": [5], "bSortable": false }
+        ]
     });
 
     $scope.contentprincipal = true
@@ -101,7 +104,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         "paging": true,
         "lengthChange": false,
         "searching": true,
-        "ordering": false,
+        "ordering": true,
         "pageLength": 10,
         "info": true,
         "autoWidth": true,
@@ -112,7 +115,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         "paging": true,
         "lengthChange": false,
         "searching": true,
-        "ordering": false,
+        "ordering": true,
         "pageLength": 10,
         "info": true,
         "autoWidth": true,
@@ -123,7 +126,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         "paging": true,
         "lengthChange": false,
         "searching": true,
-        "ordering": false,
+        "ordering": true,
         "pageLength": 10,
         "info": true,
         "autoWidth": true,
@@ -134,7 +137,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         "paging": true,
         "lengthChange": false,
         "searching": true,
-        "ordering": false,
+        "ordering": true,
         "pageLength": 10,
         "info": true,
         "autoWidth": true,
@@ -546,11 +549,14 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         tecnicosCuentaTable = $('#tecnicosCuentaTable').DataTable({
             "paging": true,
             "lengthChange": false,
-            "ordering": false,
+            "ordering": true,
             "pageLength": 10,
             "info": true,
             "autoWidth": true,
-            "language": idioma_espanol_not_font
+            "language": idioma_espanol_not_font,
+            "aoColumnDefs": [
+                { "aTargets": [7], "bSortable": false }
+            ],
         });
         ticketSoporteTable = $('#tableTicketSoporte').DataTable({
             "paging": true,
@@ -783,16 +789,19 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         tecnicosCuentaTable = $('#tecnicosCuentaTable').DataTable({
             "paging": true,
             "lengthChange": false,
-            "ordering": false,
+            "ordering": true,
             "pageLength": 10,
             "info": true,
             "scrollX": false,
             "data": arrayRow,
             "autoWidth": false,
             "language": idioma_espanol_not_font,
+            "aoColumnDefs": [
+                { "aTargets": [7], "bSortable": false }
+            ],
             'fnCreatedRow': function (nRow, aData, iDataIndex) {
                 $(nRow).attr('id', 'tecnico_' + aData[1]); // or whatever you choose to set as the id
-            },
+            }
         });
 
         if (arrayRow && arrayRow.length > 0) {
@@ -1086,7 +1095,6 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                 "info": true,
                 "lengthChange": false,
                 "searching": false,
-                "ordering": false,
                 "pageLength": 10,
                 "ajax": {
                     "url": "req/consultaTicketsSoporte",
@@ -1101,9 +1109,12 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                     },
                     "dataSrc": function (json) {
                         $scope.ticketsSoporte = [];
-                        if (json.result != undefined && json.result.ordenes != undefined)
+                        $scope.tempTicketsSoporte = [];
+                        $scope.ticketsSoporte = [];
+                        if (json.result != undefined && json.result.tickets != undefined) {
                             $scope.ticketsSoporte = json.result.tickets;
-
+                            $scope.tempTicketsSoporte = json.data;
+                        }
                         return json.data;
                     },
                     "error": function (xhr, error, thrown) {
@@ -1450,7 +1461,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         ingenieroTable = $('#ingenierosTable').DataTable({
             "paging": true,
             "lengthChange": false,
-            "ordering": false,
+            "ordering": true,
             "pageLength": 10,
             "info": true,
             "scrollX": false,
@@ -1460,6 +1471,9 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             'fnCreatedRow': function (nRow, aData, iDataIndex) {
                 $(nRow).attr('id', 'ingeniero_' + aData[1]);
             },
+            "aoColumnDefs": [
+                { "aTargets": [5], "bSortable": false }
+            ]
         });
         document.getElementById('ingenierosTable_paginate').addEventListener('click', function () {
             $.each($scope.listIngenieros, function (i, elemento) {
@@ -2017,7 +2031,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                     if (response.data.result.orden) {
                         $scope.infoOtDetalle = angular.copy(response.data.result.orden);
                         $scope.permisosModalDetalleOT = $scope.elementosConfigGeneral.get("MODAL_CO_FLUJO_" + $scope.infoOtDetalle.idFlujo).split(",");
-                        console.log($scope.permisosModalDetalleOT);
+                        // console.log($scope.permisosModalDetalleOT);
                         is_consulta_info_ot = true;
                         $('#modal-detalleOT').modal('show');
                         swal.close();
@@ -2077,7 +2091,6 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
     retornarFormatoSliders = function (imagen, contador) {
         var imgs_blocks = "";
         var indicators_carousel = "";
-        console.log(imagen);
 
         imagen.forEach((img, index) => {
             indicators_carousel += ' <li class="' + ((index === 0) ? 'active' : '') + '" data-target="#carouselExampleIndicators' + contador + '" data-slide-to="' + index + '" ></li>';
@@ -2354,7 +2367,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                             tablePagosDetalleOT = $('#tablePagosDetalleOT').DataTable({
                                 "paging": true,
                                 "lengthChange": false,
-                                "ordering": false,
+                                "ordering": true,
                                 "pageLength": 10,
                                 "info": true,
                                 "data": arrayRow,
@@ -2409,7 +2422,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                                     "paging": true,
                                     "lengthChange": false,
                                     "searching": false,
-                                    "ordering": false,
+                                    "ordering": true,
                                     "pageLength": 10,
                                     "info": true,
                                     "autoWidth": true,
@@ -2547,7 +2560,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                                     tableMaterialesDetalleOT = $('#tableMaterialesDetalleOT').DataTable({
                                         "paging": true,
                                         "lengthChange": false,
-                                        "ordering": false,
+                                        "ordering": true,
                                         "pageLength": 10,
                                         "info": true,
                                         "data": arrayRow,
@@ -2603,9 +2616,6 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                                 is_consulta_detalle_recoleccion = true;
                                 $scope.tecnicoConsultaRecoleccion = angular.copy(response.data.result);
                                 $scope.equiposTecnicoRecoleccion = angular.copy(response.data.result.detalleEquipos);
-                                console.log($scope.tecnicoConsultaRecoleccion);
-                                console.log($scope.equiposTecnicoRecoleccion);
-
                                 let arrayRow = [];
                                 if (tableRecoleccionDetalleOT) {
                                     tableRecoleccionDetalleOT.destroy();
@@ -2631,7 +2641,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                                 tableRecoleccionDetalleOT = $('#tableRecoleccionDetalleOT').DataTable({
                                     "paging": true,
                                     "lengthChange": false,
-                                    "ordering": false,
+                                    "ordering": true    ,
                                     "pageLength": 10,
                                     "info": true,
                                     "scrollX": false,
@@ -2674,6 +2684,58 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         is_consulta_detalle_recoleccion = false;
         document.querySelector('#informacion-ot').click();
     });
+
+    $(document.body).on("click", ".orderColumnTable", function () {
+        let colOrder = $(this).attr('data-idColumn');
+        let isNumber = $(this).attr('data-isNumber');
+        if ($(this).hasClass('orderColumnAscTable')) {
+            $scope.orderTableByColumnGeneric(colOrder, true, isNumber);
+            $(this).removeClass('orderColumnAscTable');
+            $(this).addClass('orderColumnDescTable');
+        } else {
+            $scope.orderTableByColumnGeneric(colOrder, false, isNumber);
+            $(this).addClass('orderColumnAscTable');
+            $(this).removeClass('orderColumnDescTable');
+        }
+    });
+
+    $scope.orderTableByColumnGeneric = function (colNumber, isAsc, isNumber) {
+        $scope.arrayTicketSort = [];
+        $scope.arrayTicketSort = angular.copy($scope.tempTicketsSoporte);
+        if (isNumber === 'true') {
+            $scope.arrayTicketSort.sort(function (a, b) {
+                if (a[colNumber] == '' || a[colNumber] == undefined) {
+                    a[colNumber] = 0;
+                }
+                if (b[colNumber] == '' || b[colNumber] == undefined) {
+                    b[colNumber] = 0;
+                }
+                if (isAsc) {
+                    return (Number(a[colNumber]) > Number(b[colNumber])) ? 1 : (Number((a[colNumber]) < Number(b[colNumber])) ? -1 : 0);
+                } else {
+                    return (Number(b[colNumber]) > Number(a[colNumber])) ? 1 : (Number((b[colNumber]) < Number(a[colNumber])) ? -1 : 0);
+                }
+            });
+        } else {
+            $scope.arrayTicketSort.sort(function (a, b) {
+                if (a[colNumber] == '' || a[colNumber] == undefined || a[colNumber] == null) {
+                    a[colNumber] = 'Sin Informaci&oacute;n'
+                }
+                if (b[colNumber] == '' || b[colNumber] == undefined || b[colNumber] == null) {
+                    b[colNumber] = 'Sin Informaci&oacute;n'
+                }
+                if (isAsc) {
+                    return (a[colNumber].replace(/ /g, '').toLowerCase() > b[colNumber].replace(/ /g, '').toLowerCase()) ? 1 : ((a[colNumber].replace(/ /g, '').toLowerCase() < b[colNumber].replace(/ /g, '').toLowerCase()) ? -1 : 0);
+                } else {
+                    return (b[colNumber].replace(/ /g, '').toLowerCase() > a[colNumber].replace(/ /g, '').toLowerCase()) ? 1 : ((b[colNumber].replace(/ /g, '').toLowerCase() < a[colNumber].replace(/ /g, '').toLowerCase()) ? -1 : 0);
+                }
+            });
+        }
+
+        $.each($scope.arrayTicketSort, function (index, elemento) {
+            ticketSoporteTable.row(index).data(elemento);
+        });
+    }
 
 }]);
 

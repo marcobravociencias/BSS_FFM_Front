@@ -53,7 +53,7 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
         "paging": true,
         "lengthChange": false,
         "searching": true,
-        "ordering": false,
+        "ordering": true,
         "pageLength": 10,
         "info": true,
         "autoWidth": true,
@@ -64,7 +64,7 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
         "paging": true,
         "lengthChange": false,
         "searching": true,
-        "ordering": false,
+        "ordering": true,
         "pageLength": 10,
         "info": true,
         "autoWidth": true,
@@ -75,7 +75,7 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
         "paging": true,
         "lengthChange": false,
         "searching": true,
-        "ordering": false,
+        "ordering": true,
         "pageLength": 10,
         "info": true,
         "autoWidth": true,
@@ -86,7 +86,7 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
         "paging": true,
         "lengthChange": false,
         "searching": true,
-        "ordering": false,
+        "ordering": true,
         "pageLength": 10,
         "info": true,
         "autoWidth": true,
@@ -274,7 +274,7 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
     seguimientoTable = $('#seguimientoTable').DataTable({
         "paging": true,
         "lengthChange": false,
-        "ordering": false,
+        "ordering": true,
         "pageLength": 10,
         "info": true,
         "scrollX": false,
@@ -287,12 +287,15 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
     ticketTable = $('#ticketTable').DataTable({
         "paging": true,
         "lengthChange": false,
-        "ordering": false,
+        "ordering": true,
         "pageLength": 10,
         "info": true,
         "scrollX": false,
         "autoWidth": false,
         "language": idioma_espanol_not_font,
+        "aoColumnDefs": [
+            { "aTargets": [8], "bSortable": false }
+        ]
     });
 
     $('#searchTextGeneral').on('keyup', function () {
@@ -423,7 +426,7 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
                 seguimientoTable = $('#seguimientoTable').DataTable({
                     "paging": true,
                     "lengthChange": false,
-                    "ordering": false,
+                    "ordering": true,
                     "pageLength": 10,
                     "info": true,
                     "data": arraRow,
@@ -511,13 +514,16 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
                 ticketTable = $('#ticketTable').DataTable({
                     "paging": true,
                     "lengthChange": false,
-                    "ordering": false,
+                    "ordering": true,
                     "pageLength": 10,
                     "info": true,
                     "scrollX": false,
                     "data": arraRow,
                     "autoWidth": false,
                     "language": idioma_espanol_not_font,
+                    "aoColumnDefs": [
+                        { "aTargets": [8], "bSortable": false }
+                    ]
                 });
             }).catch(err => handleError(err));
         }
@@ -1198,7 +1204,7 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
                             tablePagosDetalleOT = $('#tablePagosDetalleOT').DataTable({
                                 "paging": true,
                                 "lengthChange": false,
-                                "ordering": false,
+                                "ordering": true,
                                 "pageLength": 10,
                                 "info": true,
                                 "data": arrayRow,
@@ -1253,7 +1259,7 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
                                     "paging": true,
                                     "lengthChange": false,
                                     "searching": false,
-                                    "ordering": false,
+                                    "ordering": true,
                                     "pageLength": 10,
                                     "info": true,
                                     "autoWidth": true,
@@ -1391,7 +1397,7 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
                                     tableMaterialesDetalleOT = $('#tableMaterialesDetalleOT').DataTable({
                                         "paging": true,
                                         "lengthChange": false,
-                                        "ordering": false,
+                                        "ordering": true,
                                         "pageLength": 10,
                                         "info": true,
                                         "data": arrayRow,
@@ -1479,7 +1485,7 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
                                 tableRecoleccionDetalleOT = $('#tableRecoleccionDetalleOT').DataTable({
                                     "paging": true,
                                     "lengthChange": false,
-                                    "ordering": false,
+                                    "ordering": true,
                                     "pageLength": 10,
                                     "info": true,
                                     "scrollX": false,

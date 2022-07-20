@@ -163,17 +163,17 @@
                         <table id="evidenciasTable" class="display table" cellspacing="0" width="100%">
                             <thead id="thead_evidencias">
                                 <tr>
-                                    <th>OT</th>
-                                    <th>OS</th>
-                                    <th>Cliente</th>
-                                    <th>Cuenta</th>
-                                    <th>Ciudad</th>
-                                    <th>Fecha agenda</th>
-                                    <th>Tipo</th>
-                                    <th>Subtipo</th>
-                                    <th>Estatus</th>
-                                    <th>Estado</th>
-                                    <th>Motivo</th>
+                                    <th data-idColumn="0" data-isNumber="true" class="orderColumnTable orderColumnAscTable">OT</th>
+                                    <th data-idColumn="1" data-isNumber="false" class="orderColumnTable orderColumnAscTable">OS</th>
+                                    <th data-idColumn="2" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Cliente</th>
+                                    <th data-idColumn="3" data-isNumber="true" class="orderColumnTable orderColumnAscTable">Cuenta</th>
+                                    <th data-idColumn="4" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Ciudad</th>
+                                    <th data-idColumn="5" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Fecha agenda</th>
+                                    <th data-idColumn="6" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Tipo</th>
+                                    <th data-idColumn="7" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Subtipo</th>
+                                    <th data-idColumn="8" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Estatus</th>
+                                    <th data-idColumn="9" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Estado</th>
+                                    <th data-idColumn="10" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Motivo</th>
                                     <th style="text-align: center;">Evidencia</th>
                                 </tr>
                             </thead>

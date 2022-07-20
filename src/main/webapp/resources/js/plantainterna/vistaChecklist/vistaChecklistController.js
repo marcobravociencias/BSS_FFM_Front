@@ -22,6 +22,7 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
     $scope.configPermisoAccionActualizaEvidencia = false;
     $scope.configPermisoAccionConsultaEvidencia = false;
     $scope.configPermisoAccionConsultaOt = false;
+    $scope.tempArrayEvidencias = [];
 
     $('.drop-down-filters').on("click.bs.dropdown", function (e) {
         e.stopPropagation();
@@ -48,7 +49,7 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
         "info": false,
         "autoWidth": true,
         "language": idioma_espanol_not_font,
-        "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+        "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">'
     });
 
     $('.datepicker').datepicker({
@@ -340,7 +341,6 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
                 "paging": true,
                 "lengthChange": false,
                 "searching": false,
-                "ordering": false,
                 "ajax": {
                     "url": "req/consultarEvidencias",
                     "type": "POST",
@@ -352,6 +352,7 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
                         }
                     },
                     "dataSrc": function (json) {
+                        $scope.tempArrayEvidencias = json.data;
                         return json.data;
                     },
                     "error": function (xhr, error, thrown) {
@@ -368,7 +369,10 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
                         $(".btn-evidencia i").removeClass("fa-exchange-alt");
                         $(".btn-evidencia i").addClass("fa-unlock");
                     }
-                }
+                },
+                "aoColumnDefs": [
+                    { "aTargets": [11], "bSortable": false }
+                ]
             });
         } else {
             mostrarMensajeWarningValidacion(errorMensaje);
@@ -816,6 +820,59 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
             return 1
         }
         return 0
+    }
+
+    $(document.body).on("click", ".orderColumnTable", function () {
+        let colOrder = $(this).attr('data-idColumn');
+        let isNumber = $(this).attr('data-isNumber');
+        if ($(this).hasClass('orderColumnAscTable')) {
+            $scope.orderTableByColumnGeneric(colOrder, true, isNumber);
+            $(this).removeClass('orderColumnAscTable');
+            $(this).addClass('orderColumnDescTable');
+        } else {
+            $scope.orderTableByColumnGeneric(colOrder, false, isNumber);
+            $(this).addClass('orderColumnAscTable');
+            $(this).removeClass('orderColumnDescTable');
+        }
+    });
+
+    $scope.orderTableByColumnGeneric = function (colNumber, isAsc, isNumber) {
+        let arraySort = [];
+        arraySort = angular.copy($scope.tempArrayEvidencias);
+
+        if (isNumber === 'true') {
+            arraySort.sort(function (a, b) {
+                if (a[colNumber] == '' || a[colNumber] == undefined) {
+                    a[colNumber] = 0;
+                }
+                if (b[colNumber] == '' || b[colNumber] == undefined) {
+                    b[colNumber] = 0;
+                }
+                if (isAsc) {
+                    return (Number(a[colNumber]) > Number(b[colNumber])) ? 1 : (Number((a[colNumber]) < Number(b[colNumber])) ? -1 : 0);
+                } else {
+                    return (Number(b[colNumber]) > Number(a[colNumber])) ? 1 : (Number((b[colNumber]) < Number(a[colNumber])) ? -1 : 0);
+                }
+            });
+        } else {
+            arraySort.sort(function (a, b) {
+                if (a[colNumber] == '' || a[colNumber] == undefined || a[colNumber] == null) {
+                    a[colNumber] = 'Sin Informaci&oacute;n'
+                }
+                if (b[colNumber] == '' || b[colNumber] == undefined || b[colNumber] == null) {
+                    b[colNumber] = 'Sin Informaci&oacute;n'
+                }
+                if (isAsc) {
+                    return (a[colNumber].replace(/ /g, '').toLowerCase() > b[colNumber].replace(/ /g, '').toLowerCase()) ? 1 : ((a[colNumber].replace(/ /g, '').toLowerCase() < b[colNumber].replace(/ /g, '').toLowerCase()) ? -1 : 0);
+                } else {
+                    return (b[colNumber].replace(/ /g, '').toLowerCase() > a[colNumber].replace(/ /g, '').toLowerCase()) ? 1 : ((b[colNumber].replace(/ /g, '').toLowerCase() < a[colNumber].replace(/ /g, '').toLowerCase()) ? -1 : 0);
+                }
+            });
+        }
+
+        $.each(arraySort, function (index, elemento) {
+            evidenciasTable.row(index).data(elemento);
+        });
     }
 
 }])

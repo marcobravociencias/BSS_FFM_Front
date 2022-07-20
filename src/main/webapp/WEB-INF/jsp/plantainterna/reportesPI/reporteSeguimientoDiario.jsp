@@ -124,21 +124,21 @@
             <table id="reporteSeguimientoTable" class="display table" cellspacing="0" width="100%">
                 <thead id="thead_reporteSeguimiento">
                     <tr>
-                        <th>OT</th>
-                        <th>OS</th>
-                        <th>Cuenta</th>
-                        <th>Tipo</th>
-                        <th>Subtipo</th>
-                        <th>Estatus</th>
-                        <th>Estado</th>
-                        <th>Motivo</th>
-                        <th>Ciudad</th>
-                        <th>Geograf&iacute;a</th>
-                        <th>#Empleado</th>
-                        <th>#Usuario</th>
-                        <th>T&eacute;cnico</th>
-                        <th>Fecha agenda</th>
-                        <th>Fecha fin</th>
+                        <th data-idColumn="0" data-isNumber="true" data-typeTable="seguimientoDiario" class="orderColumnTable orderColumnAscTable">OT</th>
+                        <th data-idColumn="1" data-isNumber="false" data-typeTable="seguimientoDiario" class="orderColumnTable orderColumnAscTable">OS</th>
+                        <th data-idColumn="2" data-isNumber="true" data-typeTable="seguimientoDiario" class="orderColumnTable orderColumnAscTable">Cuenta</th>
+                        <th data-idColumn="3" data-isNumber="false" data-typeTable="seguimientoDiario" class="orderColumnTable orderColumnAscTable">Tipo</th>
+                        <th data-idColumn="4" data-isNumber="false" data-typeTable="seguimientoDiario" class="orderColumnTable orderColumnAscTable">Subtipo</th>
+                        <th data-idColumn="5" data-isNumber="false" data-typeTable="seguimientoDiario" class="orderColumnTable orderColumnAscTable">Estatus</th>
+                        <th data-idColumn="6" data-isNumber="false" data-typeTable="seguimientoDiario" class="orderColumnTable orderColumnAscTable">Estado</th>
+                        <th data-idColumn="7" data-isNumber="false" data-typeTable="seguimientoDiario" class="orderColumnTable orderColumnAscTable">Motivo</th>
+                        <th data-idColumn="8" data-isNumber="false" data-typeTable="seguimientoDiario" class="orderColumnTable orderColumnAscTable">Ciudad</th>
+                        <th data-idColumn="9" data-isNumber="false" data-typeTable="seguimientoDiario" class="orderColumnTable orderColumnAscTable">Geograf&iacute;a</th>
+                        <th data-idColumn="10" data-isNumber="true" data-typeTable="seguimientoDiario" class="orderColumnTable orderColumnAscTable">#Empleado</th>
+                        <th data-idColumn="11" data-isNumber="true" data-typeTable="seguimientoDiario" class="orderColumnTable orderColumnAscTable">#Usuario</th>
+                        <th data-idColumn="12" data-isNumber="false" data-typeTable="seguimientoDiario" class="orderColumnTable orderColumnAscTable">T&eacute;cnico</th>
+                        <th data-idColumn="13" data-isNumber="false" data-typeTable="seguimientoDiario" class="orderColumnTable orderColumnAscTable">Fecha agenda</th>
+                        <th data-idColumn="14" data-isNumber="false" data-typeTable="seguimientoDiario" class="orderColumnTable orderColumnAscTable">Fecha fin</th>
 
                     </tr>
                 </thead>

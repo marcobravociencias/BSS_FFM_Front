@@ -1,12 +1,11 @@
 <div class="row">
 	<div class="col-md-12">
-		<h5>Informaci&oacute;n detalle detenci&oacute;n</h5>
+		<h5 class="modal-title-consulta-ot">Informaci&oacute;n detalle detenci&oacute;n</h5>
 	</div>
 </div>
-<div class="row row-not-result-detalle-pe" ng-show="infoDetalleOtPe.detalleDetencion == undefined || 
-						  infoDetalleOtPe.detalleDetencion.length <= 0" >
+<div class="row row-not-result-detalle-pe" ng-show="infoDetalleOtPe.detalleDetencion == undefined || infoDetalleOtPe.detalleDetencion.length <= 0" >
 	<div class="col-md-12">
-		<b class="not-result-detallepe">No se encontraron resultados</b>
+		<b class="not-result-detallepe modal-title-consulta-ot">No se encontraron resultados</b>
 	</div>
 </div>
 

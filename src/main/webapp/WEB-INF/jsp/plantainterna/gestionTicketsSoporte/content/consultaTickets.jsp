@@ -83,16 +83,16 @@
             <table class="display table" width="100%" id="tableTicketSoporte">
                 <thead id="thead_ticketSoporte">
                     <tr>
-                        <th>OT FFM</th>
-                        <th>OT Soporte</th>
-                        <th>Cuenta</th>
-                        <th>Folio</th>
-                        <th>Cliente</th>
-                        <th>Falla</th>
-                        <th>Categoria</th>
-                        <th>Subcategoria</th>
-                        <th>Estatus</th>
-                        <th>Fecha creaci&oacute;n</th>
+                        <th data-idColumn="0" data-isNumber="true" class="orderColumnTable orderColumnAscTable">OT FFM</th>
+                        <th data-idColumn="1" data-isNumber="true" class="orderColumnTable orderColumnAscTable">OT Soporte</th>
+                        <th data-idColumn="2" data-isNumber="true" class="orderColumnTable orderColumnAscTable">Cuenta</th>
+                        <th data-idColumn="3" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Folio</th>
+                        <th data-idColumn="4" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Cliente</th>
+                        <th data-idColumn="5" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Falla</th>
+                        <th data-idColumn="6" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Categoria</th>
+                        <th data-idColumn="7" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Subcategoria</th>
+                        <th data-idColumn="8" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Estatus</th>
+                        <th data-idColumn="9" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Fecha creaci&oacute;n</th>
                         <th style="width: 100px !important;">Acciones</th>
                     </tr>
                 </thead>

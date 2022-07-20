@@ -119,23 +119,29 @@ app.controller('controlVehicularController',
 			vehiculoTable = $('#vehiculoTable').DataTable({
 				"paging": true,
 				"lengthChange": false,
-				"ordering": false,
+				"ordering": true,
 				"pageLength": 10,
 				"info": true,
 				"scrollX": false,
 				"autoWidth": false,
 				"language": idioma_espanol_not_font,
+				"aoColumnDefs": [
+					{ "aTargets": [9,10], "bSortable": false },
+				]
 			});
 
 			vehiculoActivaTable = $('#vehiculoActivaTable').DataTable({
 				"paging": true,
 				"lengthChange": false,
-				"ordering": false,
+				"ordering": true,
 				"pageLength": 10,
 				"info": true,
 				"scrollX": false,
 				"autoWidth": false,
 				"language": idioma_espanol_not_font,
+				"aoColumnDefs": [
+					{ "aTargets": [9], "bSortable": false },
+				]
 			});
 
 			historicoTable = $('#historicoTable').DataTable({
@@ -690,13 +696,16 @@ app.controller('controlVehicularController',
 					vehiculoActivaTable = $('#vehiculoActivaTable').DataTable({
 						"paging": true,
 						"lengthChange": false,
-						"ordering": false,
+						"ordering": true,
 						"pageLength": 10,
 						"info": true,
 						"scrollX": false,
 						"data": arrayRow,
 						"autoWidth": false,
 						"language": idioma_espanol_not_font,
+						"aoColumnDefs": [
+							{ "aTargets": [9], "bSortable": false },
+						]
 					});
 				})
 			}
@@ -747,13 +756,16 @@ app.controller('controlVehicularController',
 				vehiculoTable = $('#vehiculoTable').DataTable({
 					"paging": true,
 					"lengthChange": false,
-					"ordering": false,
+					"ordering": true,
 					"pageLength": 10,
 					"info": true,
 					"scrollX": false,
 					"data": arrayRow,
 					"autoWidth": false,
 					"language": idioma_espanol_not_font,
+					"aoColumnDefs": [
+						{ "aTargets": [9,10], "bSortable": false },
+					]
 				});
 
 				swal.close();

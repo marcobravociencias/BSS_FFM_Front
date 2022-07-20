@@ -63,15 +63,15 @@
         <table id="table_pendiente" class="table">
             <thead id="thead_pendiente">
                 <tr>
-                    <th>OT</th>
-                    <th>OS</th>
-                    <th>Cuenta</th>
-                    <th>Cliente</th>
-                    <th>Fecha actualizaci&oacute;n</th>
-                    <th>Status</th>
-                    <th>Estado</th>
-                    <th>Motivo</th>
-                    <th>Actualizar Reg</th>
+                    <th data-idColumn="0" data-isNumber="true" data-typeTable="reportePendiente" class="orderColumnTable orderColumnAscTable">OT</th>
+                    <th data-idColumn="1" data-isNumber="false" data-typeTable="reportePendiente" class="orderColumnTable orderColumnAscTable">OS</th>
+                    <th data-idColumn="2" data-isNumber="true" data-typeTable="reportePendiente" class="orderColumnTable orderColumnAscTable">Cuenta</th>
+                    <th data-idColumn="3" data-isNumber="false" data-typeTable="reportePendiente" class="orderColumnTable orderColumnAscTable">Cliente</th>
+                    <th data-idColumn="4" data-isNumber="false" data-typeTable="reportePendiente" class="orderColumnTable orderColumnAscTable">Fecha actualizaci&oacute;n</th>
+                    <th data-idColumn="5" data-isNumber="false" data-typeTable="reportePendiente" class="orderColumnTable orderColumnAscTable">Status</th>
+                    <th data-idColumn="6" data-isNumber="false" data-typeTable="reportePendiente" class="orderColumnTable orderColumnAscTable">Estado</th>
+                    <th data-idColumn="7" data-isNumber="false" data-typeTable="reportePendiente" class="orderColumnTable orderColumnAscTable">Motivo</th>
+                    <th data-idColumn="8" data-isNumber="false" data-typeTable="reportePendiente" class="orderColumnTable orderColumnAscTable">Actualizar Reg</th>
                     <th style="text-align: center;">Acciones</th>
                 </tr>
             </thead>

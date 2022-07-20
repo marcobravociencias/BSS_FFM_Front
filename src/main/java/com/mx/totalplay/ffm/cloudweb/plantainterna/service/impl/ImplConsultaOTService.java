@@ -124,7 +124,7 @@ public class ImplConsultaOTService implements ConsultaOTService {
                         dataArray[count][10] = ( object.get("descripcionMotivo") != null && object.get("descripcionMotivo").getAsString().trim() !="" )  ? object.get("descripcionMotivo").getAsString().trim() : "Sin dato";
 
                         dataArray[count][11] = "<div class='tooltip-btn'> <span onclick='consultaImagenesOT(" + String.valueOf(object.get("idOrden").getAsInt()) + ", "+ String.valueOf(object.get("claveCliente")) + ")' class='btn-option btn-floating btn-evidencia btn-sm btn-secondary waves-effect waves-light'><th><i class='icono_cons_bg fa fa-picture-o' aria-hidden='true'></i></th></span></div>";
-                        dataArray[count][12] = "<div class='tooltip-btn'> <span onclick='consultaDetalleOt("+i+")' class='btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones'><th><i class='icono_cons_bg fa fa-bars' aria-hidden='true'></i></th></span></div>";
+                        dataArray[count][12] = "<div class='tooltip-btn'> <span onclick='consultaDetalleOt("+ String.valueOf(object.get("idOrden").getAsInt()) +")' class='btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones'><th><i class='icono_cons_bg fa fa-bars' aria-hidden='true'></i></th></span></div>";
 
                         count++;
 

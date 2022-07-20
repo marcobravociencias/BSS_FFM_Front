@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-md-12">
-		<h5>Informaci&oacute;n general OT</h5>
+		<h5 class="modal-title-consulta-ot">Informaci&oacute;n general OT</h5>
 	</div>
 </div>
 <div class="row">

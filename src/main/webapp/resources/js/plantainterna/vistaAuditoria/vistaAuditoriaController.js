@@ -64,7 +64,6 @@ app.controller('auditoriaTecnicoController', ['$scope', '$q', 'vistaAuditoriaSer
 
     $scope.consultarGeografiaVistaAuditoria = function () {
         genericService.consulCatalogoGeografia().then(function success(response) {
-            console.log(response);
             $scope.listadogeografiacopy = response.data.result.geografia
             geografia = response.data.result.geografia
             $scope.nivelGeografia = 3;
@@ -81,7 +80,8 @@ app.controller('auditoriaTecnicoController', ['$scope', '$q', 'vistaAuditoriaSer
                 return e
             })
             $('#jstree-proton-3').bind('loaded.jstree', function (e, data) {
-
+                $scope.consultarAuditoriasTecnico();
+                $("#idBody").removeAttr("style");
             }).jstree({
                 'plugins': ["wholerow", "checkbox", 'search'],
                 'search': {
@@ -112,25 +112,31 @@ app.controller('auditoriaTecnicoController', ['$scope', '$q', 'vistaAuditoriaSer
         tableAuditoriaTecnico = $('#tableAuditoriaTecnico').DataTable({
             "paging": true,
             "lengthChange": false,
-            "searching": false,
-            "ordering": false,
+            "searching": true,
+            "ordering": true,
             "pageLength": 10,
             "info": false,
             "autoWidth": true,
             "language": idioma_espanol_not_font,
-            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+            "aoColumnDefs": [
+                { "aTargets": [5], "bSortable": false },
+                { "aTargets": [4], "sClass": "text-center"}
+            ]
 
         });
         tableDetalleAuditoria = $('#tableDetalleAuditoria').DataTable({
             "paging": true,
             "lengthChange": false,
-            "searching": false,
-            "ordering": false,
+            "searching": true,
+            "ordering": true,
             "pageLength": 10,
             "info": false,
             "autoWidth": true,
             "language": idioma_espanol_not_font,
-            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+            "aoColumnDefs": [
+                { "aTargets": [5], "bSortable": false },
+                { "aTargets": [4], "sClass": "text-center"}
+            ]
 
         });
         $scope.consultarGeografiaVistaAuditoria();
@@ -237,9 +243,12 @@ app.controller('auditoriaTecnicoController', ['$scope', '$q', 'vistaAuditoriaSer
                             '</span>' : '<span class="content-error-generic">' +
                             '<i class="icono-error-generic fas fa-times"></i>' +
                             '</span>';
-                        rowDetalle[5] = '<a class="icon-table" id="detalleAuditoria' + elemento.folio + '" onclick="consultarModalDetalleAuditoria(' + i + ')">' +
-                            '<i class="fas fa-bars" style="background-color: #58b3bf" title="Detalle"></i>' +
-                            '</a>';
+                        rowDetalle[5] =
+                            '<div class="text-center">' +
+                            '   <span title="Detalle" id="detalleAuditoria' + elemento.folio + '" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones" onclick="consultarModalDetalleAuditoria(' + i + ')">' +
+                            '       <i class="fa fa-bars"></i>' +
+                            '   </span>' +
+                            '</div>';
                         arrayDetalleRow.push(rowDetalle);
 
                         if (elemento.estatus === 'APROBADO') {
@@ -253,13 +262,16 @@ app.controller('auditoriaTecnicoController', ['$scope', '$q', 'vistaAuditoriaSer
                     tableDetalleAuditoria = $('#tableDetalleAuditoria').DataTable({
                         "paging": true,
                         "lengthChange": false,
-                        "ordering": false,
+                        "ordering": true,
                         "pageLength": 10,
                         "info": false,
                         "data": arrayDetalleRow,
                         "autoWidth": true,
                         "language": idioma_espanol_not_font,
-                        "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+                        "aoColumnDefs": [
+                            { "aTargets": [5], "bSortable": false },
+                            { "aTargets": [4], "sClass": "text-center"}
+                        ]
                     });
                     $scope.isDetalle = true;
                     swal.close();
@@ -343,21 +355,27 @@ app.controller('auditoriaTecnicoController', ['$scope', '$q', 'vistaAuditoriaSer
                             row[2] = elemento.distrito !== undefined ? elemento.distrito : 'Sin informaci&oacute;n';
                             row[3] = elemento.region !== undefined ? elemento.region : 'Sin informaci&oacute;n';
                             row[4] = elemento.aprobacion_cuadrillas !== undefined ? elemento.aprobacion_cuadrillas : 'Sin informaci&oacute;n';
-                            row[5] = '<a class="icon-table" id="detalleAuditoria' + elemento.id_supervisor + '" onclick="consultarDetalleAuditoria(' + i + ')"  >' +
-                                '<i class="fas fa-bars" style="background-color: #58b3bf" title="Detalle"></i>' +
-                                '</a>';
+                            row[5] =
+                                '<div class="text-center">' +
+                                '   <span title="Detalle" id="detalleAuditoria' + elemento.id_supervisor + '" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones" onclick="consultarDetalleAuditoria(' + i + ')">' +
+                                '       <i class="fa fa-bars"></i>' +
+                                '   </span>' +
+                                '</div>';
                             arrayRow.push(row);
                         });
                         tableAuditoriaTecnico = $('#tableAuditoriaTecnico').DataTable({
                             "paging": true,
                             "lengthChange": false,
-                            "ordering": false,
+                            "ordering": true,
                             "pageLength": 10,
                             "info": false,
                             "data": arrayRow,
                             "autoWidth": true,
                             "language": idioma_espanol_not_font,
-                            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+                            "aoColumnDefs": [
+                                { "aTargets": [5], "bSortable": false },
+                                { "aTargets": [4], "sClass": "text-center"}
+                            ]
                         });
                         swal.close();
                     } else {

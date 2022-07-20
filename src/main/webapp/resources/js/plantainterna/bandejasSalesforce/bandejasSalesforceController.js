@@ -64,17 +64,20 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
             "paging": true,
             "lengthChange": false,
             "searching": true,
-            "ordering": false,
+            "ordering": true,
             "pageLength": 10,
             "info": true,
             "autoWidth": true,
-            "language": idioma_espanol_not_font
+            "language": idioma_espanol_not_font,
+            "aoColumnDefs" : [
+                { "aTargets": [11], "bSortable": false }
+            ]
         });
         rescataventasTable = $('#tableRescataventas').DataTable({
             "paging": true,
             "lengthChange": false,
             "searching": true,
-            "ordering": false,
+            "ordering": true,
             "pageLength": 10,
             "info": true,
             "autoWidth": true,
@@ -84,7 +87,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
             "paging": true,
             "lengthChange": false,
             "searching": true,
-            "ordering": false,
+            "ordering": true,
             "pageLength": 10,
             "info": true,
             "autoWidth": true,
@@ -1003,14 +1006,15 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                                 pendientesAgendarTable = $('#tablePendientesAgendar').DataTable({
                                     "paging": true,
                                     "lengthChange": false,
-                                    "ordering": false,
+                                    "ordering": true,
                                     "pageLength": 10,
                                     "info": true,
                                     "data": arrayAgendarRow,
                                     "autoWidth": true,
                                     "language": idioma_espanol_not_font,
                                     "aoColumnDefs" : [ 
-                    		        	{"aTargets" : [0], "sClass":  "rowTablaCsp"}
+                    		        	{"aTargets" : [0], "sClass":  "rowTablaCsp"},
+                                        { "aTargets": [11], "bSortable": false }
                     		        ]
                                 });
                                 if (!$scope.isPermisoAgendamiento) {
@@ -1048,16 +1052,19 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
             pendientesAgendarTable.destroy();
         }
 
-    	pendientesAgendarTable = $('#tablePendientesAgendar').DataTable({
+        pendientesAgendarTable = $('#tablePendientesAgendar').DataTable({
             "paging": true,
             "lengthChange": false,
             "searching": true,
-            "ordering": false,
+            "ordering": true,
             "pageLength": 10,
             "info": true,
             "autoWidth": true,
             "data": [],
-            "language": idioma_espanol_not_font
+            "language": idioma_espanol_not_font,
+            "aoColumnDefs": [
+                { "aTargets": [11], "bSortable": false }
+            ]
         });
 	}
 
@@ -1108,7 +1115,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                                 rescataventasTable = $('#tableRescataventas').DataTable({
                                     "paging": true,
                                     "lengthChange": false,
-                                    "ordering": false,
+                                    "ordering": true,
                                     "pageLength": 10,
                                     "info": true,
                                     "data": arrayResRow,
@@ -1191,7 +1198,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                                 pendientesActivarTable = $('#tablePendienteActivar').DataTable({
                                     "paging": true,
                                     "lengthChange": false,
-                                    "ordering": false,
+                                    "ordering": true,
                                     "pageLength": 10,
                                     "info": true,
                                     "data": arrayRow,

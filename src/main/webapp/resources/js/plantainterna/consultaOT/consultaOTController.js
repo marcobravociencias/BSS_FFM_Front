@@ -234,7 +234,6 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 				"paging": true,
 				"lengthChange": false,
 				"searching": false,
-				"ordering": false,
 				"pageLength": 10,
 				"ajax": {
 					"url": "req/consultaOT",
@@ -245,14 +244,15 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 							swal({ text: 'Cargando registros...', allowOutsideClick: false });
 							swal.showLoading();
 						}
-
 					},
 					"dataSrc": function (json) {
 						$scope.elementosRegistro = json.registrosTotales
+						$scope.tempArrayConsultaOT = [];
 						$scope.listadoConsultaOtsDisponibles = [];
-						if (json.result != undefined && json.result.ordenes != undefined)
+						if (json.result != undefined && json.result.ordenes != undefined) {
+							$scope.tempArrayConsultaOT = json.data;
 							$scope.listadoConsultaOtsDisponibles = json.result.ordenes;
-
+						}
 						return json.data;
 					},
 					"error": function (xhr, error, thrown) {
@@ -262,12 +262,64 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 						swal.close()
 					}
 				},
-				"columns": [null, null, null, null,null, null, null, null, null, null, null, null, null],
+				"columns": [null, null, null, null, null, null, null, null, null, null, null, null, null],
 				"language": idioma_espanol_not_font
 			});
 		} else {
 			mostrarMensajeWarningValidacion(errorMensaje);
 		}
+	}
+
+	$(document.body).on("click", ".orderColumnTable", function () {
+		let colOrder = $(this).attr('data-idColumn');
+		let isNumber = $(this).attr('data-isNumber');
+		if ($(this).hasClass('orderColumnAscTable')) {
+			$scope.orderTableByColumnGeneric(colOrder, true, isNumber);
+			$(this).removeClass('orderColumnAscTable');
+			$(this).addClass('orderColumnDescTable');
+		} else {
+			$scope.orderTableByColumnGeneric(colOrder, false, isNumber);
+			$(this).addClass('orderColumnAscTable');
+			$(this).removeClass('orderColumnDescTable');
+		}
+	});
+
+	$scope.orderTableByColumnGeneric = function (colNumber, isAsc, isNumber) {
+		$scope.arrayConsultaOTSort = [];
+		$scope.arrayConsultaOTSort = angular.copy($scope.tempArrayConsultaOT);
+		if (isNumber === 'true') {
+			$scope.arrayConsultaOTSort.sort(function (a, b) {
+				if (a[colNumber] == '' || a[colNumber] == undefined) {
+					a[colNumber] = 0;
+				}
+				if (b[colNumber] == '' || b[colNumber] == undefined) {
+					b[colNumber] = 0;
+				}
+				if (isAsc) {
+					return (Number(a[colNumber]) > Number(b[colNumber])) ? 1 : (Number((a[colNumber]) < Number(b[colNumber])) ? -1 : 0);
+				} else {
+					return (Number(b[colNumber]) > Number(a[colNumber])) ? 1 : (Number((b[colNumber]) < Number(a[colNumber])) ? -1 : 0);
+				}
+			});
+		} else {
+			$scope.arrayConsultaOTSort.sort(function (a, b) {
+				if (a[colNumber] == '' || a[colNumber] == undefined || a[colNumber] == null) {
+					a[colNumber] = 'Sin Informaci&oacute;n'
+				}
+				if (b[colNumber] == '' || b[colNumber] == undefined || b[colNumber] == null) {
+					b[colNumber] = 'Sin Informaci&oacute;n'
+				}
+				if (isAsc) {
+					return (a[colNumber].replace(/ /g, '').toLowerCase() > b[colNumber].replace(/ /g, '').toLowerCase()) ? 1 : ((a[colNumber].replace(/ /g, '').toLowerCase() < b[colNumber].replace(/ /g, '').toLowerCase()) ? -1 : 0);
+				} else {
+					return (b[colNumber].replace(/ /g, '').toLowerCase() > a[colNumber].replace(/ /g, '').toLowerCase()) ? 1 : ((b[colNumber].replace(/ /g, '').toLowerCase() < a[colNumber].replace(/ /g, '').toLowerCase()) ? -1 : 0);
+				}
+			});
+		}
+
+		$.each($scope.arrayConsultaOTSort, function (index, elemento) {
+			otTabla.row(index).data(elemento);
+		});
 	}
 
 	$scope.realizarConversionAnidado = function (array) {
@@ -369,7 +421,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 							$scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
 
 							if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
-								$scope.configPermisoAccionConsultaOrdenes = true//($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaOT" })[0] != undefined);
+								$scope.configPermisoAccionConsultaOrdenes = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaOT" })[0] != undefined);
 								$scope.configPermisoAccionDescargaReporteOrdenes = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaReporteOT" })[0] != undefined);
 							}
 							$("#idBody").removeAttr("style");
@@ -633,15 +685,13 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			"info": false,
 			"autoWidth": true,
 			"language": idioma_espanol_not_font,
-			"sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
-
 		});
 
 		tableRecoleccionOt = $('#table-recoleccion-temp').DataTable({
 			"paging": true,
 			"lengthChange": false,
 			"searching": false,
-			"ordering": false,
+			"ordering": true,
 			"pageLength": 10,
 			"info": false,
 			"autoWidth": true,
@@ -653,7 +703,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			"lengthChange": false,
 			"info": true,
 			"searching": false,
-			"ordering": false,
+			"ordering": true,
 			"pageLength": 10,
 			"autoWidth": true,
 			"language": idioma_espanol_not_font,
@@ -664,7 +714,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			"lengthChange": false,
 			"info": true,
 			"searching": false,
-			"ordering": false,
+			"ordering": true,
 			"pageLength": 10,
 			"autoWidth": true,
 			"language": idioma_espanol_not_font,
@@ -674,7 +724,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			"paging": true,
 			"lengthChange": false,
 			"searching": false,
-			"ordering": false,
+			"ordering": true,
 			"pageLength": 10,
 			"info": false,
 			"autoWidth": true,
@@ -901,10 +951,10 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	$scope.datoOt;
 	$scope.datoInt;
 	$scope.datoSubInt;
-	consultaDetalleOt = function (indexOtConsulta) {
+	consultaDetalleOt = function (idOrden) {
 		$scope.infoOtDetalle = {};
 		$scope.infoDetalleOtPe = {};
-		let otConsultaTemp = $scope.listadoConsultaOtsDisponibles[indexOtConsulta]
+		let otConsultaTemp = $scope.listadoConsultaOtsDisponibles.find((e) => e.idOrden == idOrden);
 		$scope.datoOt = otConsultaTemp.idOrden
 		is_consulta_info_trayectoria = false;
 		$scope.$apply();
@@ -913,8 +963,8 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 
 	$scope.consultaDetalleOtGeneric = function (ordenObject) {
 		let params = {
-			idOT:  ordenObject.idOrden,
-			idOt:  ordenObject.idOrden
+			idOT: ordenObject.idOrden,
+			idOt: ordenObject.idOrden
 		}
 		swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 		swal.showLoading();
@@ -1028,13 +1078,12 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 	$scope.inicializarTableMaterialesOt = function () {
 		tableMaterialesDespacho = $('#table-materiales-ot').DataTable({
 			"processing": false,
-			"ordering": false,
 			"serverSide": false,
 			"scrollX": false,
 			"paging": true,
 			"lengthChange": false,
 			"searching": true,
-			"ordering": false,
+			"ordering": true,
 			"pageLength": 10,
 			"bAutoWidth": false,
 			"columns": [null, null, null, null, null, null, null, null, null, null, null, null, null],
@@ -2151,14 +2200,13 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 				}
 				pagosOtTable = $('#table_pagos_ot').DataTable({
 					"processing": false,
-					"ordering": false,
+					"ordering": true,
 					"serverSide": false,
 					"scrollX": false,
 					"paging": true,
 					"lengthChange": false,
 					"searching": true,
 					"bDestroy": true,
-					"ordering": false,
 					"data": arrayRow,
 					"pageLength": 10,
 					"columns": [null, null, null, null, null, null, null, null, null,null,null],
@@ -2245,7 +2293,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			"paging": true,
 			"lengthChange": false,
 			"searching": false,
-			"ordering": false,
+			"ordering": true,
 			"pageLength": 10,
 			"info": true,
 			"autoWidth": true,
@@ -2388,7 +2436,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 							tableRecoleccionOt = $('#table-recoleccion-temp').DataTable({
 								"paging": true,
 								"lengthChange": false,
-								"ordering": false,
+								"ordering": true,
 								"pageLength": 10,
 								"info": true,
 								"scrollX": false,
@@ -2492,7 +2540,7 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		tableOrdenesPlantaExternaOt = $('#tableOrdenesPlantaExternaOt').DataTable({
 			"paging": true,
 			"lengthChange": false,
-			"ordering": false,
+			"ordering": true,
 			"pageLength": 10,
 			"info": true,
 			"scrollX": false,

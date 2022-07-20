@@ -1,13 +1,13 @@
 <div class="row">
 	<div class="col-md-12">
-		<h5>Informaci&oacute;n detalle inspector</h5>
+		<h5 class="modal-title-consulta-ot">Informaci&oacute;n detalle inspector</h5>
 	</div>
 </div>
 <div class="row row-not-result-detalle-pe" ng-show="  infoDetalleOtPe.detalleInspeccion == undefined ||  
 							infoDetalleOtPe.detalleInspeccion.fallas == undefined ||  
 							infoDetalleOtPe.detalleInspeccion.fallas.length <= 0" >
 	<div class="col-md-12">
-		<b class="not-result-detallepe">No se encontraron resultados</b>
+		<b class="not-result-detallepe modal-title-consulta-ot">No se encontraron resultados</b>
 	</div>
 </div>
 <div id="" ng-show="infoDetalleOtPe.detalleInspeccion != undefined &&  

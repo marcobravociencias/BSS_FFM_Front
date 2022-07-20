@@ -117,7 +117,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                 "paging": true,
                 "lengthChange": false,
                 "searching": false,
-                "ordering": false,
+                "ordering": true,
                 "pageLength": 10,
                 "recordsTotal": 100,
                 "info": false,
@@ -125,6 +125,9 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                 "data": [],
                 "language": idioma_espanol_not_font,
                 "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+                "aoColumnDefs": [
+                    { "aTargets": [5], "bSortable": false }
+                ]
             });
         }, timeTable);
 
@@ -464,7 +467,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                             "paging": true,
                             "lengthChange": false,
                             "searching": false,
-                            "ordering": false,
+                            "ordering": true,
                             "pageLength": 10,
                             "recordsTotal": 100,
                             "info": false,
@@ -472,6 +475,9 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                             "data": [],
                             "language": idioma_espanol_not_font,
                             "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+                            "aoColumnDefs": [
+                                { "aTargets": [5], "bSortable": false }
+                            ]
                         });
                         mostrarMensajeWarningValidacion("No hay disponibilidad.");
                     }
@@ -823,6 +829,9 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
             "data": [],
             "language": idioma_espanol_not_font,
             "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+            "aoColumnDefs": [
+                { "aTargets": [5], "bSortable": false }
+            ]
         });
     }
 
@@ -863,6 +872,9 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
             "data": [],
             "language": idioma_espanol_not_font,
             "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+            "aoColumnDefs": [
+                { "aTargets": [5], "bSortable": false }
+            ]
         });
     }
 
@@ -1031,7 +1043,9 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
             "autoWidth": true,
             "data": arraRow,
             "language": idioma_espanol_not_font,
-            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+            "aoColumnDefs": [
+                { "aTargets": [5], "bSortable": false }
+            ]
         });
     }
 

@@ -227,7 +227,7 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
             "paging": true,
             "lengthChange": false,
             "searching": false,
-            "ordering": false,
+            "ordering": true,
             "pageLength": 10,
             "info": true,
             "scrollX": false,
@@ -240,7 +240,7 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
             "paging": true,
             "lengthChange": false,
             "searching": false,
-            "ordering": false,
+            "ordering": true,
             "pageLength": 10,
             "info": true,
             "scrollX": false,
@@ -252,19 +252,22 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
             "paging": true,
             "lengthChange": false,
             "searching": false,
-            "ordering": false,
+            "ordering": true,
             "pageLength": 10,
             "info": true,
             "scrollX": false,
             "autoWidth": false,
-            "language": idioma_espanol_not_font
+            "language": idioma_espanol_not_font,
+            "aoColumnDefs": [
+                { "aTargets": [9], "bSortable": false }
+            ]
         });
         
         tableJustificaciones = $('#tableJustificaciones').DataTable({
             "paging": true,
             "lengthChange": false,
             "searching": false,
-            "ordering": false,
+            "ordering": true,
             "pageLength": 10,
             "info": true,
             "scrollX": false,
@@ -276,7 +279,7 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
             "paging": true,
             "lengthChange": false,
             "searching": false,
-            "ordering": false,
+            "ordering": true,
             "pageLength": 10,
             "info": true,
             "autoWidth": false,
@@ -288,7 +291,7 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
             "paging": true,
             "lengthChange": false,
             "searching": false,
-            "ordering": false,
+            "ordering": true,
             "pageLength": 10,
             "info": true,
             "autoWidth": false,
@@ -695,7 +698,7 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
         tableOtsTrabajadas = $('#tableOtsTrabajadas').DataTable({
             "paging": true,
             "lengthChange": false,
-            "ordering": false,
+            "ordering": true,
             "pageLength": 10,
             "info": true,
             "scrollX": false,
@@ -706,7 +709,8 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
             	{"aTargets" : [4], "sClass":  "columnasCentradas"},
             	{"aTargets" : [5], "sClass":  "columnasCentradas"},
             	{"aTargets" : [8], "sClass":  "columnasCentradas"},
-	        	{"aTargets" : [9], "sClass":  "columnasCentradas"}
+	        	{"aTargets" : [9], "sClass":  "columnasCentradas"},
+                { "aTargets": [9], "bSortable": false }
 	        ]
         });
     }
@@ -731,7 +735,7 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
         tableDetalleOtTrabajada = $('#tableDetalleOtTrabajada').DataTable({
             "paging": true,
             "lengthChange": false,
-            "ordering": false,
+            "ordering": true,
             "pageLength": 10,
             "info": true,
             "scrollX": false,
@@ -759,19 +763,19 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
         tableDiasTrabajados = $('#tableDiasTrabajados').DataTable({
             "paging": true,
             "lengthChange": false,
-            "ordering": false,
+            "ordering": true,
             "pageLength": 10,
             "info": true,
             "scrollX": false,
             "data": arrayDiasTRow,
             "autoWidth": false,
             "language": idioma_espanol_not_font,
-            "aoColumnDefs" : [
-            	{"aTargets" : [0], "sClass":  "columnasCentradas"},
-            	{"aTargets" : [1], "sClass":  "columnasCentradas"},
-            	{"aTargets" : [2], "sClass":  "columnasCentradas"},
-	        	{"aTargets" : [3], "sClass":  "columnasCentradas"}
-	        ]
+            "aoColumnDefs": [
+                { "aTargets": [0], "sClass": "columnasCentradas" },
+                { "aTargets": [1], "sClass": "columnasCentradas" },
+                { "aTargets": [2], "sClass": "columnasCentradas" },
+                { "aTargets": [3], "sClass": "columnasCentradas" }
+            ]
         });
     }
 
@@ -793,19 +797,19 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
         tableJustificaciones = $('#tableJustificaciones').DataTable({
             "paging": true,
             "lengthChange": false,
-            "ordering": false,
+            "ordering": true,
             "pageLength": 10,
             "info": true,
             "scrollX": false,
             "data": arrayJustificacionRow,
             "autoWidth": false,
             "language": idioma_espanol_not_font,
-            "aoColumnDefs" : [
-            	{"aTargets" : [2], "sClass":  "columnasCentradas"},
-            	{"aTargets" : [3], "sClass":  "columnasCentradas"},
-            	{"aTargets" : [4], "sClass":  "columnasCentradas"},
-	        	{"aTargets" : [5], "sClass":  "columnasCentradas"}
-	        ]
+            "aoColumnDefs": [
+                { "aTargets": [2], "sClass": "columnasCentradas" },
+                { "aTargets": [3], "sClass": "columnasCentradas" },
+                { "aTargets": [4], "sClass": "columnasCentradas" },
+                { "aTargets": [5], "sClass": "columnasCentradas" }
+            ]
         });
     }
 
@@ -993,16 +997,17 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
         tableArchivosJustificacion = $('#tableArchivosJustificacion').DataTable({
             "paging": true,
             "lengthChange": false,
-            "ordering": false,
+            "ordering": true,
             "pageLength": 10,
             "info": true,
             "data": arrayRow,
             "autoWidth": true,
             "language": idioma_espanol_not_font,
-            "aoColumnDefs" : [ 
-            	{"aTargets" : [2], "sClass":  "columnasCentradas"},
-	        	{"aTargets" : [3], "sClass":  "columnasCentradas"}
-	        ]
+            "aoColumnDefs": [
+                { "aTargets": [2], "sClass": "columnasCentradas" },
+                { "aTargets": [3], "sClass": "columnasCentradas" },
+                { "aTargets": [3], "bSortable": false }
+            ]
         });
         $("#modal-archivos-justificacion").modal('show');
         $scope.isCargaArchivos = false;
@@ -1481,7 +1486,7 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
                             tableDetalleTrabajo = $('#tableDetalleTrabajo').DataTable({
                                 "paging": true,
                                 "lengthChange": false,
-                                "ordering": false,
+                                "ordering": true,
                                 "pageLength": 10,
                                 "info": true,
                                 "data": arrayRow,

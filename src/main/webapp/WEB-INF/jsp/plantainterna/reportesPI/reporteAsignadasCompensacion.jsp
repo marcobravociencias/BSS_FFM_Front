@@ -122,21 +122,21 @@
             <table id="reporteAsignadasTable" class="display table" cellspacing="0" width="100%">
                 <thead id="thead_asignadas">
                     <tr>
-                        <th>OT</th>
-                        <th>OS</th>
-                        <th>Cuenta</th>
-                        <th>Tipo</th>
-                        <th>Subtipo</th>
-                        <th>Proveedor</th>
-                        <th>Geograf&iacute;a</th>
-                        <th>Geograf&iacute;a</th>
-                        <th>#Empleado</th>
-                        <th>#Usuario</th>
-                        <th>Instalador</th>
-                        <th>Fecha creaci&oacute;n</th>
-                        <th>Fecha agenda</th>
-                        <th>Fecha fin</th>
-
+                        <th data-idColumn="0" data-isNumber="true" data-typeTable="asignadasCompensacion" class="orderColumnTable orderColumnAscTable">OT</th>
+                        <th data-idColumn="1" data-isNumber="false" data-typeTable="asignadasCompensacion" class="orderColumnTable orderColumnAscTable">OS</th>
+                        <th data-idColumn="2" data-isNumber="true" data-typeTable="asignadasCompensacion" class="orderColumnTable orderColumnAscTable">Cuenta</th>
+                        <th data-idColumn="3" data-isNumber="false" data-typeTable="asignadasCompensacion" class="orderColumnTable orderColumnAscTable">Tipo</th>
+                        <th data-idColumn="4" data-isNumber="false" data-typeTable="asignadasCompensacion" class="orderColumnTable orderColumnAscTable">Subtipo</th>
+                        <th data-idColumn="5" data-isNumber="false" data-typeTable="asignadasCompensacion" class="orderColumnTable orderColumnAscTable">Proveedor</th>
+                        <th data-idColumn="6" data-isNumber="false" data-typeTable="asignadasCompensacion" class="orderColumnTable orderColumnAscTable">Geograf&iacute;a</th>
+                        <th data-idColumn="7" data-isNumber="false" data-typeTable="asignadasCompensacion" class="orderColumnTable orderColumnAscTable">Geograf&iacute;a</th>
+                        <th data-idColumn="8" data-isNumber="true" data-typeTable="asignadasCompensacion" class="orderColumnTable orderColumnAscTable">#Empleado</th>
+                        <th data-idColumn="9" data-isNumber="true" data-typeTable="asignadasCompensacion" class="orderColumnTable orderColumnAscTable">#Usuario</th>
+                        <th data-idColumn="10" data-isNumber="false" data-typeTable="asignadasCompensacion" class="orderColumnTable orderColumnAscTable">Instalador</th>
+                        <th data-idColumn="11" data-isNumber="false" data-typeTable="asignadasCompensacion" class="orderColumnTable orderColumnAscTable">Fecha creaci&oacute;n</th>
+                        <th data-idColumn="12" data-isNumber="false" data-typeTable="asignadasCompensacion" class="orderColumnTable orderColumnAscTable">Fecha agenda</th>
+                        <th data-idColumn="13" data-isNumber="false" data-typeTable="asignadasCompensacion" class="orderColumnTable orderColumnAscTable">Fecha fin</th>
+ 
                     </tr>
                 </thead>
                 <tbody>

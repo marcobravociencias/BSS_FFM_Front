@@ -1375,6 +1375,9 @@ img#full-image {
 	text-overflow:ellipsis; overflow: hidden; max-width:1px;
 }
 
+#datatable-noticias thead th.sorting:after {
+    color: #000;
+}
 
 .text-tooltip-parent:hover .toltip-text-content {
     visibility: block;

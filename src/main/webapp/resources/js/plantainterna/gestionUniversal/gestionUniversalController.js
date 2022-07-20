@@ -29,35 +29,44 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
     pagosTecnicosTable = $('#pagosTecnicosTable').DataTable({
         "paging": true,
         "lengthChange": false,
-        "ordering": false,
+        "ordering": true,
         "pageLength": 10,
         "info": true,
         "scrollX": false,
         "autoWidth": false,
-        "language": idioma_espanol_not_font
+        "language": idioma_espanol_not_font,
+        "aoColumnDefs": [
+            { "aTargets": [5], "bSortable": false }
+        ]
     });
 
 
     pagosLiberarTable = $('#pagosLiberarTable').DataTable({
         "paging": true,
         "lengthChange": false,
-        "ordering": false,
+        "ordering": true,
         "pageLength": 5,
         "info": true,
         "scrollX": false,
         "autoWidth": false,
-        "language": idioma_espanol_not_font
+        "language": idioma_espanol_not_font,
+        "aoColumnDefs": [
+            { "aTargets": [9], "bSortable": false }
+        ]
     });
 
     usuariosCambiaContrasena = $('#cambiaContrasenaTable').DataTable({
         "paging": true,
         "lengthChange": false,
-        "ordering": false,
+        "ordering": true,
         "pageLength": 10,
         "info": true,
         "scrollX": false,
         "autoWidth": false,
-        "language": idioma_espanol_not_font
+        "language": idioma_espanol_not_font,
+        "aoColumnDefs": [
+            { "aTargets": [6], "bSortable": false }
+        ]
     });
 
     $('#searchTextGeneral').on('keyup', function () {
@@ -237,13 +246,16 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
             pagosTecnicosTable = $('#pagosTecnicosTable').DataTable({
                 "paging": true,
                 "lengthChange": false,
-                "ordering": false,
+                "ordering": true,
                 "pageLength": 10,
                 "info": true,
                 "scrollX": false,
                 "data": arraRow,
                 "autoWidth": false,
                 "language": idioma_espanol_not_font,
+                "aoColumnDefs": [
+                    { "aTargets": [5], "bSortable": false }
+                ]
             });
             swal.close();
         })
@@ -475,13 +487,16 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
             pagosLiberarTable = $('#pagosLiberarTable').DataTable({
                 "paging": true,
                 "lengthChange": false,
-                "ordering": false,
+                "ordering": true,
                 "pageLength": 5,
                 "info": true,
                 "scrollX": false,
                 "data": arraRow,
                 "autoWidth": false,
-                "language": idioma_espanol_not_font
+                "language": idioma_espanol_not_font,
+                "aoColumnDefs": [
+                    { "aTargets": [9], "bSortable": false }
+                ]
             });
             $('#modalPagos').modal('show');
         } else {
@@ -657,13 +672,16 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
             usuariosCambiaContrasena = $('#cambiaContrasenaTable').DataTable({
                 "paging": true,
                 "lengthChange": false,
-                "ordering": false,
+                "ordering": true,
                 "pageLength": 10,
                 "info": true,
                 "scrollX": false,
                 "data": arraRow,
                 "autoWidth": false,
                 "language": idioma_espanol_not_font,
+                "aoColumnDefs": [
+                    { "aTargets": [6], "bSortable": false }
+                ]
             });
             swal.close();
         })

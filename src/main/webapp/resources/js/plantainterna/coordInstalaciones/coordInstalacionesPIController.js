@@ -31,6 +31,13 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 	$scope.nombreBandeja = "";
 
 	$scope.nivelArbol = 0;
+	$scope.tempReporteAsignada = [];
+	$scope.tempReporteCalendarizada = [];
+	$scope.tempReporteCancelada = [];
+	$scope.tempReporteDetenida = [];
+	$scope.tempReporteGestoria = [];
+	$scope.tempReportePendiente = [];
+	$scope.tempReporteTerminada = [];
 
 	$scope.consultarCatalogos = function() {
 		$q.all([
@@ -536,7 +543,6 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 				"paging": true,
 				"lengthChange": false,
 				"searching": false,
-				"ordering": false,
 				"pageLength": 10,
 				"ajax": {
 					"url": "req/consultarBandejaFFM",
@@ -553,6 +559,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 						if (json.result) {
 							$scope.resultPendientes = json.result.ordenes ? json.result.ordenes : [];
 						}
+						$scope.tempReportePendiente = json.data;
 						//$scope.elementosRegistro = json.registrosTotales
 						return json.data;
 					},
@@ -619,7 +626,6 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 				"paging": true,
 				"lengthChange": false,
 				"searching": false,
-				"ordering": false,
 				"pageLength": 10,
 				"ajax": {
 					"url": "req/consultarBandejaFFM",
@@ -634,6 +640,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 					},
 					"dataSrc": function (json) {
 						//$scope.elementosRegistro = json.registrosTotales
+						$scope.tempReporteAsignada = json.data;
 						return json.data;
 					},
 					"error":function(xhr, error, thrown){
@@ -699,7 +706,6 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 				"paging": true,
 				"lengthChange": false,
 				"searching": false,
-				"ordering": false,
 				"pageLength": 10,
 				"ajax": {
 					"url": "req/consultarBandejaFFM",
@@ -714,6 +720,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 					},
 					"dataSrc": function (json) {
 						//$scope.elementosRegistro = json.registrosTotales
+						$scope.tempReporteDetenida = json.data;
 						return json.data;
 					},
 					"error":function(xhr, error, thrown){
@@ -780,7 +787,6 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 				"paging": true,
 				"lengthChange": false,
 				"searching": false,
-				"ordering": false,
 				"pageLength": 10,
 				"ajax": {
 					"url": "req/consultarBandejaFFM",
@@ -795,6 +801,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 					},
 					"dataSrc": function (json) {
 						//$scope.elementosRegistro = json.registrosTotales
+						$scope.tempReporteTerminada = json.data;
 						return json.data;
 					},
 					"error":function(xhr, error, thrown){
@@ -860,7 +867,6 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 				"paging": true,
 				"lengthChange": false,
 				"searching": false,
-				"ordering": false,
 				"pageLength": 10,
 				"ajax": {
 					"url": "req/consultarBandejaFFM",
@@ -875,6 +881,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 					},
 					"dataSrc": function (json) {
 						//$scope.elementosRegistro = json.registrosTotales
+						$scope.tempReporteCancelada = json.data;
 						return json.data;
 					},
 					"error":function(xhr, error, thrown){
@@ -942,7 +949,6 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 				"paging": true,
 				"lengthChange": false,
 				"searching": false,
-				"ordering": false,
 				"pageLength": 10,
 				"ajax": {
 					"url": "req/consultarBandejaFFM",
@@ -960,6 +966,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 							$scope.resultCalendarizada = json.result.ordenes ? json.result.ordenes : [];
 						}
 						//$scope.elementosRegistro = json.registrosTotales
+						$scope.tempReporteCalendarizada = json.data;
 						return json.data;
 					},
 					"error":function(xhr, error, thrown){
@@ -1028,7 +1035,6 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 				"paging": true,
 				"lengthChange": false,
 				"searching": false,
-				"ordering": false,
 				"pageLength": 10,
 				"ajax": {
 					"url": "req/consultarBandejaFFM",
@@ -1046,6 +1052,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 							$scope.resultGestoria = json.result.ordenes ? json.result.ordenes : [];
 						}
 						//$scope.elementosRegistro = json.registrosTotales
+						$scope.tempReporteGestoria = json.data;
 						return json.data;
 					},
 					"error":function(xhr, error, thrown){
@@ -1362,7 +1369,6 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 			"paging": true,
 			"lengthChange": false,
 			"searching": false,
-			"ordering": false,
 			"pageLength": 10,
 			"ajax": {
 				"url": "req/consultarBandejaFFM",
@@ -1378,6 +1384,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 				"dataSrc": function (json) {
 					console.log(json);
 					$scope.elementosRegistro = json.registrosTotales
+					$scope.tempReporteTerminada = json.data;
 					return json.data;
 				},
 				"error":function(xhr, error, thrown){
@@ -2380,7 +2387,6 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 			"paging": true,
 			"lengthChange": false,
 			"searching": false,
-			"ordering": false,
 			"pageLength": 10,
 			"language": idioma_espanol_not_font,
 			"data": []
@@ -2393,7 +2399,6 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 			"paging": true,
 			"lengthChange": false,
 			"searching": false,
-			"ordering": false,
 			"pageLength": 10,
 			"language": idioma_espanol_not_font,
 			"data": []
@@ -2406,7 +2411,6 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 			"paging": true,
 			"lengthChange": false,
 			"searching": false,
-			"ordering": false,
 			"pageLength": 10,
 			"language": idioma_espanol_not_font,
 			"data": []
@@ -2419,7 +2423,6 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 			"paging": true,
 			"lengthChange": false,
 			"searching": false,
-			"ordering": false,
 			"pageLength": 10,
 			"language": idioma_espanol_not_font,
 			"data": []
@@ -2432,7 +2435,6 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 			"paging": true,
 			"lengthChange": false,
 			"searching": false,
-			"ordering": false,
 			"pageLength": 10,
 			"language": idioma_espanol_not_font,
 			"data": []
@@ -2445,7 +2447,6 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 			"paging": true,
 			"lengthChange": false,
 			"searching": false,
-			"ordering": false,
 			"pageLength": 10,
 			"language": idioma_espanol_not_font,
 			"data": []
@@ -2458,7 +2459,6 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 			"paging": true,
 			"lengthChange": false,
 			"searching": false,
-			"ordering": false,
 			"pageLength": 10,
 			"language": idioma_espanol_not_font,
 			"data": []
@@ -2504,6 +2504,100 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 
 
 	// -----------------------------------------------------------------------
+	// ORDENAMIENTO TABLAS
+	$(document.body).on("click", ".orderColumnTable", function () {
+		let colOrder = $(this).attr('data-idColumn');
+		let isNumber = $(this).attr('data-isNumber');
+		let typeTable = $(this).attr('data-typeTable');
+		if ($(this).hasClass('orderColumnAscTable')) {
+			$scope.orderTableByColumnGeneric(colOrder, typeTable, true, isNumber);
+			$(this).removeClass('orderColumnAscTable');
+			$(this).addClass('orderColumnDescTable');
+		} else {
+			$scope.orderTableByColumnGeneric(colOrder, typeTable, false, isNumber);
+			$(this).addClass('orderColumnAscTable');
+			$(this).removeClass('orderColumnDescTable');
+		}
+	});
 
+	$scope.orderTableByColumnGeneric = function (colNumber, typeTable, isAsc, isNumber) {
+		let arraySort = [];
+		if (typeTable == 'reportePendiente') {
+			arraySort = angular.copy($scope.tempReportePendiente);
+		} else if (typeTable == 'reporteAsignada') {
+			arraySort = angular.copy($scope.tempReporteAsignada); 
+		} else if (typeTable == 'reporteDetenida') {
+			arraySort = angular.copy($scope.tempReporteDetenida); 
+		} else if (typeTable == 'reporteTerminada') {
+			arraySort = angular.copy($scope.tempReporteTerminada); 
+		} else if (typeTable == 'reporteCancelada') {
+			arraySort = angular.copy($scope.tempReporteCancelada); 
+		} else if (typeTable == 'reporteCalendarizada') {
+			arraySort = angular.copy($scope.tempReporteCalendarizada); 
+		} else if (typeTable == 'reporteGestoria') {
+			arraySort = angular.copy($scope.tempReporteGestoria); 
+		}
+
+
+		if (isNumber === 'true') {
+			arraySort.sort(function (a, b) {
+				if (a[colNumber] == '' || a[colNumber] == undefined) {
+					a[colNumber] = 0;
+				}
+				if (b[colNumber] == '' || b[colNumber] == undefined) {
+					b[colNumber] = 0;
+				}
+				if (isAsc) {
+					return (Number(a[colNumber]) > Number(b[colNumber])) ? 1 : (Number((a[colNumber]) < Number(b[colNumber])) ? -1 : 0);
+				} else {
+					return (Number(b[colNumber]) > Number(a[colNumber])) ? 1 : (Number((b[colNumber]) < Number(a[colNumber])) ? -1 : 0);
+				}
+			});
+		} else {
+			arraySort.sort(function (a, b) {
+				if (a[colNumber] == '' || a[colNumber] == undefined || a[colNumber] == null) {
+					a[colNumber] = 'Sin Informaci&oacute;n'
+				}
+				if (b[colNumber] == '' || b[colNumber] == undefined || b[colNumber] == null) {
+					b[colNumber] = 'Sin Informaci&oacute;n'
+				}
+				if (isAsc) {
+					return (a[colNumber].replace(/ /g, '').toLowerCase() > b[colNumber].replace(/ /g, '').toLowerCase()) ? 1 : ((a[colNumber].replace(/ /g, '').toLowerCase() < b[colNumber].replace(/ /g, '').toLowerCase()) ? -1 : 0);
+				} else {
+					return (b[colNumber].replace(/ /g, '').toLowerCase() > a[colNumber].replace(/ /g, '').toLowerCase()) ? 1 : ((b[colNumber].replace(/ /g, '').toLowerCase() < a[colNumber].replace(/ /g, '').toLowerCase()) ? -1 : 0);
+				}
+			});
+		}
+
+		if (typeTable == 'reportePendiente') {
+			$.each(arraySort, function (index, elemento) {
+				tablePendiente.row(index).data(elemento);
+			});
+		} else if (typeTable == 'reporteAsignada') {
+			$.each(arraySort, function (index, elemento) {
+				tableAsignada.row(index).data(elemento);
+			});
+		} else if (typeTable == 'reporteDetenida') {
+			$.each(arraySort, function (index, elemento) {
+				tableDetenida.row(index).data(elemento);
+			});
+		} else if (typeTable == 'reporteTerminada') {
+			$.each(arraySort, function (index, elemento) {
+				tableTerminada.row(index).data(elemento);
+			}); 
+		} else if (typeTable == 'reporteCancelada') {
+			$.each(arraySort, function (index, elemento) {
+				tableCancelada.row(index).data(elemento);
+			});
+		} else if (typeTable == 'reporteCalendarizada') {
+			$.each(arraySort, function (index, elemento) {
+				tableCalendarizada.row(index).data(elemento);
+			});
+		} else if (typeTable == 'reporteGestoria') { 
+			$.each(arraySort, function (index, elemento) {
+				tableGestoria.row(index).data(elemento);
+			});
+		}
+	}
 
 }]);

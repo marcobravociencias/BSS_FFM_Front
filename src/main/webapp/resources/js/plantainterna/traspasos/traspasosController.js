@@ -31,6 +31,8 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 	$scope.configPermisoAccionConsultaTraspasos = false;
 	$scope.configPermisoAccionDescargaTraspasosRep = false;
 	$scope.isFactibilidad = false;
+	$scope.tempArrayOTS = [];
+	$scope.tempArrayTraspasos = [];
 
 	$('.drop-down-filters').on("click.bs.dropdown", function (e) {
 		e.stopPropagation();
@@ -243,7 +245,6 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 				"info": true,
 				"lengthChange": false,
 				"searching": false,
-				"ordering": false,
 				"pageLength": 10,
 				"ajax": {
 					"url": "req/consultaTraspasoOt",
@@ -259,8 +260,10 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 					"dataSrc": function (json) {
 						$scope.elementosRegistro = json.registrosTotales
 						$scope.listadoConsultaOtsDisponibles = [];
-						if (json.result != undefined && json.result.ordenes != undefined)
+						if (json.result != undefined && json.result.ordenes != undefined) {
 							$scope.listadoConsultaOtsDisponibles = json.result.ordenes;
+							$scope.tempArrayOTS = json.data;
+						}
 
 						return json.data;
 					},
@@ -384,7 +387,6 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 				"info": true,
 				"lengthChange": false,
 				"searching": false,
-				"ordering": false,
 				"pageLength": 10,
 				"ajax": {
 					"url": "req/consultaTraspasos",
@@ -402,7 +404,7 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 						$scope.listadoConsultaTraspasosDisponibles = [];
 						if (json.result != undefined && json.result.ordenes != undefined)
 							$scope.listadoConsultaTraspasosDisponibles = json.result.ordenes;
-
+							$scope.tempArrayTraspasos = json.data;
 						return json.data;
 					},
 					"error": function (xhr, error, thrown) {
@@ -1707,4 +1709,68 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 		$("#nav-bar-otros-options ul li.active").closest("#nav-bar-otros-options").addClass('active-otros-navbar');
 
 	});
+
+	$(document.body).on("click", ".orderColumnTable", function () {
+		let colOrder = $(this).attr('data-idColumn');
+		let isNumber = $(this).attr('data-isNumber');
+		let typeTable = $(this).attr('data-typeTable');
+		if ($(this).hasClass('orderColumnAscTable')) {
+			$scope.orderTableByColumnGeneric(colOrder, typeTable, true, isNumber);
+			$(this).removeClass('orderColumnAscTable');
+			$(this).addClass('orderColumnDescTable');
+		} else {
+			$scope.orderTableByColumnGeneric(colOrder, typeTable, false, isNumber);
+			$(this).addClass('orderColumnAscTable');
+			$(this).removeClass('orderColumnDescTable');
+		}
+	});
+
+	$scope.orderTableByColumnGeneric = function (colNumber, typeTable, isAsc, isNumber) {
+		let arraySort = [];
+		if (typeTable == 'otTable') {
+			arraySort = angular.copy($scope.tempArrayOTS);
+		} else if (typeTable == 'traspasoTable') {
+			arraySort = angular.copy($scope.tempArrayTraspasos); 
+		}
+		
+		if (isNumber === 'true') {
+			arraySort.sort(function (a, b) {
+				if (a[colNumber] == '' || a[colNumber] == undefined) {
+					a[colNumber] = 0;
+				}
+				if (b[colNumber] == '' || b[colNumber] == undefined) {
+					b[colNumber] = 0;
+				}
+				if (isAsc) {
+					return (Number(a[colNumber]) > Number(b[colNumber])) ? 1 : (Number((a[colNumber]) < Number(b[colNumber])) ? -1 : 0);
+				} else {
+					return (Number(b[colNumber]) > Number(a[colNumber])) ? 1 : (Number((b[colNumber]) < Number(a[colNumber])) ? -1 : 0);
+				}
+			});
+		} else {
+			arraySort.sort(function (a, b) {
+				if (a[colNumber] == '' || a[colNumber] == undefined || a[colNumber] == null) {
+					a[colNumber] = 'Sin Informaci&oacute;n'
+				}
+				if (b[colNumber] == '' || b[colNumber] == undefined || b[colNumber] == null) {
+					b[colNumber] = 'Sin Informaci&oacute;n'
+				}
+				if (isAsc) {
+					return (a[colNumber].replace(/ /g, '').toLowerCase() > b[colNumber].replace(/ /g, '').toLowerCase()) ? 1 : ((a[colNumber].replace(/ /g, '').toLowerCase() < b[colNumber].replace(/ /g, '').toLowerCase()) ? -1 : 0);
+				} else {
+					return (b[colNumber].replace(/ /g, '').toLowerCase() > a[colNumber].replace(/ /g, '').toLowerCase()) ? 1 : ((b[colNumber].replace(/ /g, '').toLowerCase() < a[colNumber].replace(/ /g, '').toLowerCase()) ? -1 : 0);
+				}
+			});
+		}
+
+		if (typeTable == 'otTable') {
+			$.each(arraySort, function (index, elemento) {
+				otsTable.row(index).data(elemento);
+			});
+		} else if (typeTable == 'traspasoTable') {
+			$.each(arraySort, function (index, elemento) {
+				traspasosTable.row(index).data(elemento);
+			});
+		}
+	}
 }])

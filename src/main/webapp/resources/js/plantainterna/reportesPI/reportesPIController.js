@@ -47,6 +47,10 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 	$scope.resultReporteCierre = null;
 	$scope.resultReporteAsignadas = null;
 
+	$scope.tempSeguimientoDiario = [];
+	$scope.tempReporteCierre = [];
+	$scope.tempReporteAsignadas = [];
+
 	$scope.getTextGeografia = function (idJsTree, idInput) {
 		var geografias = $('#' + idJsTree).jstree("get_selected", true);
 		let textoGeografias = [];
@@ -854,6 +858,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 					},
 					"dataSrc": function (json) {
 						$scope.resultReporteDiario = json.registrosTotales
+						$scope.tempSeguimientoDiario = json.data;
 						return json.data;
 					},
 					"error": function (xhr, error, thrown) {
@@ -1078,6 +1083,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 					},
 					"dataSrc": function (json) {
 						$scope.resultReporteCierre = json.registrosTotales;
+						$scope.tempReporteCierre = json.data;
 						return json.data;
 					},
 					"error": function (xhr, error, thrown) {
@@ -1305,6 +1311,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 					},
 					"dataSrc": function (json) {
 						$scope.resultReporteAsignadas = json.registrosTotales;
+						$scope.tempReporteAsignadas = json.data;
 						return json.data;
 					},
 					"error": function (xhr, error, thrown) {
@@ -1440,5 +1447,74 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 		$("#nav-bar-otros-options ul li.active").closest("#nav-bar-otros-options").addClass('active-otros-navbar');
 	});
 
+	$(document.body).on("click", ".orderColumnTable", function () {
+		let colOrder = $(this).attr('data-idColumn');
+		let isNumber = $(this).attr('data-isNumber');
+		let typeTable = $(this).attr('data-typeTable');
+		if ($(this).hasClass('orderColumnAscTable')) {
+			$scope.orderTableByColumnGeneric(colOrder, typeTable, true, isNumber);
+			$(this).removeClass('orderColumnAscTable');
+			$(this).addClass('orderColumnDescTable');
+		} else {
+			$scope.orderTableByColumnGeneric(colOrder, typeTable, false, isNumber);
+			$(this).addClass('orderColumnAscTable');
+			$(this).removeClass('orderColumnDescTable');
+		}
+	});
+
+	$scope.orderTableByColumnGeneric = function (colNumber, typeTable, isAsc, isNumber) {
+		let arraySort = [];
+		if (typeTable == 'seguimientoDiario') {
+			arraySort = angular.copy($scope.tempSeguimientoDiario);
+		} else if (typeTable == 'cierreDiario') {
+			arraySort = angular.copy($scope.tempReporteCierre); 
+		} else if (typeTable == 'asignadasCompensacion') {
+			arraySort = angular.copy($scope.tempReporteAsignadas); 
+		}
+
+		if (isNumber === 'true') {
+			arraySort.sort(function (a, b) {
+				if (a[colNumber] == '' || a[colNumber] == undefined) {
+					a[colNumber] = 0;
+				}
+				if (b[colNumber] == '' || b[colNumber] == undefined) {
+					b[colNumber] = 0;
+				}
+				if (isAsc) {
+					return (Number(a[colNumber]) > Number(b[colNumber])) ? 1 : (Number((a[colNumber]) < Number(b[colNumber])) ? -1 : 0);
+				} else {
+					return (Number(b[colNumber]) > Number(a[colNumber])) ? 1 : (Number((b[colNumber]) < Number(a[colNumber])) ? -1 : 0);
+				}
+			});
+		} else {
+			arraySort.sort(function (a, b) {
+				if (a[colNumber] == '' || a[colNumber] == undefined || a[colNumber] == null) {
+					a[colNumber] = 'Sin Informaci&oacute;n'
+				}
+				if (b[colNumber] == '' || b[colNumber] == undefined || b[colNumber] == null) {
+					b[colNumber] = 'Sin Informaci&oacute;n'
+				}
+				if (isAsc) {
+					return (a[colNumber].replace(/ /g, '').toLowerCase() > b[colNumber].replace(/ /g, '').toLowerCase()) ? 1 : ((a[colNumber].replace(/ /g, '').toLowerCase() < b[colNumber].replace(/ /g, '').toLowerCase()) ? -1 : 0);
+				} else {
+					return (b[colNumber].replace(/ /g, '').toLowerCase() > a[colNumber].replace(/ /g, '').toLowerCase()) ? 1 : ((b[colNumber].replace(/ /g, '').toLowerCase() < a[colNumber].replace(/ /g, '').toLowerCase()) ? -1 : 0);
+				}
+			});
+		}
+
+		if (typeTable == 'seguimientoDiario') {
+			$.each(arraySort, function (index, elemento) {
+				reporteSeguimientoTable.row(index).data(elemento);
+			});
+		} else if (typeTable == 'cierreDiario') {
+			$.each(arraySort, function (index, elemento) {
+				reporteCierreTable.row(index).data(elemento);
+			});
+		} else if (typeTable == 'asignadasCompensacion') {
+			$.each(arraySort, function (index, elemento) {
+				reporteAsignadasTable.row(index).data(elemento);
+			}); 
+		}
+	}
 
 }]);

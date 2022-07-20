@@ -1374,6 +1374,7 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
             }
         }
 
+        $scope.arrayTempReporteDiario = [];
         consultarReporteDiario = function () {
             let mensaje = '<ul>';
             let isValid = true;
@@ -1479,6 +1480,7 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
                             },
                             "dataSrc": function (json) {
                                 $scope.resultReporteDiario = json.registrosTotales
+                                $scope.arrayTempReporteDiario = json.data;
                                 return json.data;
                             },
                             "error": function (xhr, error, thrown) {
@@ -1650,6 +1652,58 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
                 $scope.banderaNoticiasOs = false; 
             }
             
+        }
+
+        $(document.body).on("click", ".orderColumnTable", function () {
+            let colOrder = $(this).attr('data-idColumn');
+            let isNumber = $(this).attr('data-isNumber');
+            if ($(this).hasClass('orderColumnAscTable')) {
+                $scope.orderTableByColumnGeneric(colOrder, true, isNumber);
+                $(this).removeClass('orderColumnAscTable');
+                $(this).addClass('orderColumnDescTable');
+            } else {
+                $scope.orderTableByColumnGeneric(colOrder, false, isNumber);
+                $(this).addClass('orderColumnAscTable');
+                $(this).removeClass('orderColumnDescTable');
+            }
+        });
+    
+        $scope.orderTableByColumnGeneric = function (colNumber, isAsc, isNumber) {
+            $scope.arraySort = [];
+            $scope.arraySort = angular.copy($scope.arrayTempReporteDiario);
+            if (isNumber === 'true') {
+                $scope.arraySort.sort(function (a, b) {
+                    if (a[colNumber] == '' || a[colNumber] == undefined) {
+                        a[colNumber] = 0;
+                    }
+                    if (b[colNumber] == '' || b[colNumber] == undefined) {
+                        b[colNumber] = 0;
+                    }
+                    if (isAsc) {
+                        return (Number(a[colNumber]) > Number(b[colNumber])) ? 1 : (Number((a[colNumber]) < Number(b[colNumber])) ? -1 : 0);
+                    } else {
+                        return (Number(b[colNumber]) > Number(a[colNumber])) ? 1 : (Number((b[colNumber]) < Number(a[colNumber])) ? -1 : 0);
+                    }
+                });
+            } else {
+                $scope.arraySort.sort(function (a, b) {
+                    if (a[colNumber] == '' || a[colNumber] == undefined || a[colNumber] == null) {
+                        a[colNumber] = 'Sin Informaci&oacute;n'
+                    }
+                    if (b[colNumber] == '' || b[colNumber] == undefined || b[colNumber] == null) {
+                        b[colNumber] = 'Sin Informaci&oacute;n'
+                    }
+                    if (isAsc) {
+                        return (a[colNumber].replace(/ /g, '').toLowerCase() > b[colNumber].replace(/ /g, '').toLowerCase()) ? 1 : ((a[colNumber].replace(/ /g, '').toLowerCase() < b[colNumber].replace(/ /g, '').toLowerCase()) ? -1 : 0);
+                    } else {
+                        return (b[colNumber].replace(/ /g, '').toLowerCase() > a[colNumber].replace(/ /g, '').toLowerCase()) ? 1 : ((b[colNumber].replace(/ /g, '').toLowerCase() < a[colNumber].replace(/ /g, '').toLowerCase()) ? -1 : 0);
+                    }
+                });
+            }
+
+            $.each($scope.arraySort, function (index, elemento) {
+                tableReporte.row(index).data(elemento);
+            });
         }
 
     }]);
