@@ -40,7 +40,7 @@ public class ImplAutentificacionService  implements AutentificacionService{
 	@Override
 	public LoginResult getAutentificacion(String us, String crdospas) {		
 		logger.info("jgetAutentificacion## "+us+" -- "+crdospas);
-		String urlService=env.getProperty("dep.envirom.web").concat(":8151").concat(env.getProperty("ws.url.validausrffm"));		
+		String urlService="http://34.94.124.52/dsfc/login/auth/";	
 		LoginResult responseLog = (LoginResult) restCaller.callPostReturnClassBasicAuthXwwwUrlFormed(
 				urlService ,  us, crdospas, LoginResult.class
 		);
