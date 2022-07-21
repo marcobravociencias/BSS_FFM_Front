@@ -1,5 +1,8 @@
 package com.mx.totalplay.ffm.cloudweb.projectmanager.service.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +53,26 @@ public class ImplOportunidadService implements OportunidadService{
                 urlRequest,
                 ServiceResponseResult.class,
                 tokenAcces);
-        logger.info("### RESULT busquedaGeneralSF(): " + gson.toJson(response));
+        logger.info("### RESULT consultarOportunidades(): " + gson.toJson(response));
+        return response;
+	}
+
+	@Override
+	public ServiceResponseResult consultarDetalleOportunidad(String params) {
+		logger.info("ImplOportunidadService.class consultarDetalleOportunidad(): \n" + params);
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+        String tokenAcces = principalDetail.getAccess_token();
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constOportunidades.getConsultarDetalleOportunidad());
+        logger.info("###URL consultarOportunidades(): "+ urlRequest);
+        Map<String, String> paramsRequestGet = new HashMap<>();
+        paramsRequestGet.put("oportunidad", jsonObject.get("oportunidad").getAsString());
+        ServiceResponseResult response = restCaller.callGetBearerTokenRequest(
+                paramsRequestGet,
+                urlRequest,
+                ServiceResponseResult.class,
+                tokenAcces);
+        logger.info("### RESULT consultarDetalleOportunidad(): " + gson.toJson(response));
         return response;
 	}
 
