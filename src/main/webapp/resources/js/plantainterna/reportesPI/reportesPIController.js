@@ -237,15 +237,19 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 			
 			swal({ text: 'Espera un momento...', allowOutsideClick: false });
 	        swal.showLoading();
+			let tituloAccion = "Descarga reporte skills instaladores";
+			let mensajeEnvio = 'Ha ocurrido un error al descargar el reporte';
 	        reportesPIService.generarReporteTecnicosTiposOrdenes(params).then((result) => {
 				swal.close()
 				if (result.data.respuesta) {
 					const data = JSON.parse(result.data.result).tecnicos;
 					const fileName = 'Reporte skills instaladores';
 					const exportType = 'xls';
-
+					mensajeEnvio = 'Se ha descargado el reporte';
+					objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
 					window.exportFromJSON({ data, fileName, exportType });
 				} else {
+					objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
 					mostrarMensajeErrorAlert("Ocurrió un error al generar el reporte.");
 				}
 				swal.close();

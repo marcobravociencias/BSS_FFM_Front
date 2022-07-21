@@ -1,4 +1,5 @@
 var app = angular.module('ordenesUniversalesApp', []);
+var objectTempAccion;
 
 app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversalesService', 'genericService', function ($scope, $q, ordenesUniversalesService, genericService) {
 
@@ -132,6 +133,9 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
                 $scope.nGeografia1 = 2;
                 $scope.nGeografia2 = 5;
             }
+
+            objectTempAccion = new GenericAccionRealizada("" + resultConf.MODULO_ACCIONES_USUARIO.id, 'TOP_RIGHT');
+			objectTempAccion.inicializarBotonAccionesRecientes();
 
         
             let arrayDefaultKmzElemts=results[0].data.result.KEY_DEFAULT_KMZ ? results[0].data.result.KEY_DEFAULT_KMZ.split(",") : null;
@@ -1152,6 +1156,8 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
 
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
+        let tituloAccion = "Crear orden de trabajo universal";
+		let mensajeEnvio = 'Ha ocurrido un error al crear la OT para el cliente: ' + jsonEnvio.cliente.nombre + ' ' +  jsonEnvio.cliente.apellidoPaterno + ' ' +  jsonEnvio.cliente.apellidoMaterno;
         ordenesUniversalesService.creacionOrdenTrabajoUniversal(JSON.stringify(jsonEnvio)).then(function success(response) {
             console.log(response.data)
             $scope.isGuardadoProcess = true
@@ -1175,13 +1181,16 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
                         $('#dia-form-turno').datepicker('update', FECHA_HOY_DATE).trigger('change');
                         let textCalendar = $('#dia-form-turno').val()
                         $scope.infoBasica.fechaTurnoTextAplica = textCalendar;
-
+                        mensajeEnvio =  $scope.mensajeRequestGuardado ?  $scope.mensajeRequestGuardado :  'Se ha creado la OT para el cliente: ' + jsonEnvio.cliente.nombre + ' ' +  jsonEnvio.cliente.apellidoPaterno + ' ' +  jsonEnvio.cliente.apellidoMaterno;
+						objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
                     } else {
                         $scope.isGuardadoCreacion = false
+                        objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                     }
                 } else {
                     $scope.isGuardadoCreacion = false
                     $scope.mensajeRequestGuardado = response.data.resultDescripcion
+                    objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                 }
                 swal.close();
             } else {
@@ -1189,6 +1198,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
                 $scope.isGuardadoCreacion = false
                 $scope.mensajeRequestGuardado = response.data.resultDescripcion
                 mostrarMensajeErrorAlert(response.data.resultDescripcion)
+                objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
             }
         }).catch(err => handleError(err));
     }

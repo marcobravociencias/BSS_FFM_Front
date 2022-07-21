@@ -1,4 +1,5 @@
 var app = angular.module('gestionUniversalApp', []);
+var objectTempAccion;
 
 app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalService', '$filter', function ($scope, $q, gestionUniversalService, $filter) {
     $scope.nGeografiaPagos = '';
@@ -302,6 +303,8 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                                 $scope.configPermisoAccionConsultaTecnicosPagos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaTecnicosPagosPlanning" })[0] != undefined);
                                 $scope.configPermisoAccionConsultaPagos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaPagosPlanning" })[0] != undefined);
                                 $scope.configPermisoAccionCambiaContrasena = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionCambiaContrasenaPlanning" })[0] != undefined);
+                                objectTempAccion = new GenericAccionRealizada("" + $scope.permisosConfigUser.id, 'TOP_RIGHT');
+				                objectTempAccion.inicializarBotonAccionesRecientes();
                             }
 
                             if (!$scope.configPermisoAccionConsultaCambiaContrasena && $scope.configPermisoAccionConsultaTecnicosPagos) {
@@ -542,6 +545,8 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                         idsPagos: ids,
                         comentarios: comentario
                     }
+                    let tituloAccion = "Liberar pagos";
+					let mensajeEnvio = 'Ha ocurrido un error al liberar '+ ids.length+' pago(s) del usuario ' + $scope.tecnicoPagos.usuarioFFM;
                     gestionUniversalService.liberarPago(params).then(function success(response) {
                         swal.close();
                         if (response.data !== undefined) {
@@ -550,14 +555,19 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                                     $('#modalPagos').modal('hide');
                                     $scope.consultarTecnicosPagos(false);
                                     toastr.success('Se han liberado los pagos correctamente');
+                                    mensajeEnvio = 'Se ha liberado '+ ids.length+' pago(s) del usuario ' + $scope.tecnicoPagos.usuarioFFM;
+							        objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
 
                                 } else {
+                                    objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                                     toastr.warning('No se liberaron los pagos');
                                 }
                             } else {
+                                objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                                 toastr.warning(response.data.resultDescripcion);
                             }
                         } else {
+                            objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                             toastr.error('Ha ocurrido un error al liberar el pago');
                         }
                     })
@@ -736,6 +746,9 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
         }
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
+        let userTemp = $scope.listaUsuarios.find((u) => u.idUsuario == $scope.idUsuario)
+        let tituloAccion = "Cambiar constrase\u00F1a";
+        let mensajeEnvio = 'Ha ocurrido un error al cambiar la constrase\u00F1a del usuario ' + userTemp.nombreCompleto;
         gestionUniversalService.restaurarContrasena(params).then(function success(response) {
             swal.close();
             if (response.data !== undefined) {
@@ -744,13 +757,18 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                         $("#modalRestablecerContrasena").modal('hide');
                         toastr.success('Contrase\u00F1a restablecida correctamente');
                         $scope.consultarUsuariosContrasena(false);
+                        mensajeEnvio = 'Se ha cambiado la constrase\u00F1a del usuario ' + userTemp.nombreCompleto;
+						objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
                     } else {
+                        objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                         toastr.warning('No se restablecio la contrase\u00F1a');
                     }
                 } else {
+                    objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                     toastr.warning(response.data.resultDescripcion);
                 }
             } else {
+                objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                 toastr.error('Ha ocurrido un error al restablecer la contrase\u00F1a');
             }
         })

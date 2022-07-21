@@ -85,10 +85,14 @@ app.edicionNoticiaController=function($scope,gestionNoticiasService){
 		  }).then(function () {
 			swal({html: '<strong>Espera un momento...</strong>',allowOutsideClick: false});
 			swal.showLoading();
+			let tituloAccion = "Eliminar noticia";
+			let mensajeEnvio = 'Ha ocurrido un error al eliminar la noticia: ' + $scope.eliminarObject.tituloPrincipal + ' / ' + $scope.eliminarObject.tituloSecundario;
 			gestionNoticiasService.eliminarNoticia(params).then((result) => {
 				swal.close()
 				if (result.data !== undefined) {
 					if(result.data.respuesta){
+						mensajeEnvio = "Se ha eliminado la noticia: " + $scope.eliminarObject.tituloPrincipal + ' / ' + $scope.eliminarObject.tituloSecundario;
+						objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
 						swal("Correcto", "¡Noticia eliminada con éxito!", "success");
 						setTimeout(function() {
 							$scope.consultarNoticias();
@@ -96,12 +100,15 @@ app.edicionNoticiaController=function($scope,gestionNoticiasService){
 					}else{
 						swal.close();
 						swal("Error", results.data.resultDescripcion, "error");
+						objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
 					}
 				} else {
 					swal.close()
 					toastr.warning(result.data.resultDescripcion)
+					objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
 				}
 			}).catch((err) => handleError(err));
+
 			$q.all([
 				gestionNoticiasService.eliminarNoticia(params)
 			]).then(function(results) {
@@ -267,19 +274,24 @@ app.edicionNoticiaController=function($scope,gestionNoticiasService){
             
             swal({ text: 'Editando registro...', allowOutsideClick: false });
             swal.showLoading();
-
+			let tituloAccion = "Editar noticia";
+			let mensajeEnvio = 'Ha ocurrido un error al editar la noticia: ' + $scope.editObj.tituloPrincipal + ' / ' + $scope.editObj.tituloSecundario;
             gestionNoticiasService.actualizarNoticia($scope.editObj).then((result) => {       
 				if (result.data !== undefined) {
 					if (result.data.respuesta) {
+						mensajeEnvio = "Se ha editado la noticia: " + $scope.editObj.tituloPrincipal + ' / ' + $scope.editObj.tituloSecundario;
+						objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
 						toastr.success(result.data.result.description);
                         $scope.limpiarFormularioEditarNotica()
                         $scope.consultarNoticias()
                         $scope.edicionNoticaContent=false
 					} else {
+						objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
 						toastr.warning( result.data.resultDescripcion )
            				swal.close()
 					}
 				} else {
+					objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
 					toastr.warning( result.data.resultDescripcion )
        				swal.close()
 				}

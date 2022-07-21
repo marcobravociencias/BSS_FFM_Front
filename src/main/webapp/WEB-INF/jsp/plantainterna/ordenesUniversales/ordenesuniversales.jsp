@@ -121,7 +121,7 @@
 <script src="${pageContext.request.contextPath}/resources/libraries/jstree/jstree.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/libraries/sweetalert/js/sweetalert2.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker_1.9.0.min.js"></script>
-<scriptsrc="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker.es.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker.es.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/js/mdb.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/libraries/timepicker/js/toastr.min.js"></script>

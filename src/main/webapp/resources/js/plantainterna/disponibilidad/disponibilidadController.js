@@ -1,4 +1,5 @@
 var app = angular.module('disponibilidadApp', []);
+var objectTempAccion;
 
 app.controller('disponibilidadController', ['$scope', 'disponibilidadService', 'genericService', '$q', function ($scope, disponibilidadService, genericService, $q) {
     $("#li-disponibilidad-navbar").addClass('active')
@@ -166,6 +167,10 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                     if($scope.accessConsultaDisponibilidad){
                         $scope.inicialCalendario();
                     }
+
+                    objectTempAccion = new GenericAccionRealizada("" + resultConf.MODULO_ACCIONES_USUARIO.id, 'TOP_RIGHT');
+				    objectTempAccion.inicializarBotonAccionesRecientes();
+
                     validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
                     validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
                    
@@ -636,17 +641,21 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
 
             swal({ text: 'Espera un momento...', allowOutsideClick: false });
             swal.showLoading();
-
+            let tituloAccion = "Crear disponibilidad";
+			let mensajeEnvio = 'Ha ocurrido un error al crear disponibilidad para las fechas ' + fechaInicioC + ' al ' + fechaFinC;
             disponibilidadService.insertarDisponibilidad(JSON.stringify(params)).then(function success(response) {
                 console.log(response.data);
                 if (response.data.respuesta) {
                     //removerClasesElementosValidacion(arrayIdsElementosValidacionInsercion)
+                    mensajeEnvio = "Se ha creado la disponibilidad para las fechas " + fechaInicioC + ' al ' + fechaFinC;
+                    objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
                     mostrarMensajeExitoAlert('Se agreg\u00F3 correctamente la disponibilidad');
                     $scope.consultaDisponibilidad();
                     $("#moda-add-disponibilidad").modal('hide')
                     swal.close();
                 } else {
                     swal.close();
+                    objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                     mostrarMensajeErrorAlert(response.data.resultDescripcion);
                 }
             }).catch(err => handleError(err));
@@ -758,17 +767,21 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
 
             swal({ text: 'Espera un momento...', allowOutsideClick: false });
             swal.showLoading();
-
+            let tituloAccion = "Editar disponibilidad";
+			let mensajeEnvio = 'Ha ocurrido un error al editar disponibilidad para las fechas ' + fechaInicioC + ' al ' + fechaFinC;
             disponibilidadService.actualizarDisponibilidad(JSON.stringify(params)).then(function success(response) {
                 console.log(response.data);
                 $("#modificar_disponibilidad_modal").modal('hide');
                 $('#consulta_disponibilidad').trigger('click');
                 $('#datatable_disponibilidad').dataTable().fnDestroy();
                 if (response.data.respuesta) {
+                    mensajeEnvio = "Se ha editado la disponibilidad para las fechas " + fechaInicioC + ' al ' + fechaFinC;
+                    objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
                     $("#tipo_select").trigger('change');
                     mostrarMensajeExitoAlert("Actualizaci\u00F3n correcta");
                     $scope.consultaDisponibilidad();
                 } else {
+                    objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                     swal.close();
                     mostrarMensajeErrorAlert(response.data.resultDescripcion);
                 }

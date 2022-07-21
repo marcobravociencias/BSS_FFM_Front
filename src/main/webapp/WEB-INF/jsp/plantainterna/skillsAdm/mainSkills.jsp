@@ -366,6 +366,7 @@
 	</body>
 	<!-- LIBRERIAS -->
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-2.2.4.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/moment.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/selectPicker/js/popper.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/bootstrap/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/angularjs/js/angular.min.js"></script>

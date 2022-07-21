@@ -1,5 +1,7 @@
 var app = angular.module('gestionNoticiasApp', []);
 var dataTableConsultaNoticias;
+var objectTempAccion;
+
 app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestionNoticiasService', function ($scope, $q, $filter, gestionNoticiasService) {
 
 	app.edicionNoticiaController($scope, gestionNoticiasService)
@@ -197,6 +199,8 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 				$scope.configPermisoAccionCreaNoticia = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionCreacionNoticias" })[0] != undefined);
 				$scope.configPermisoAccionEditaNoticia = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionEdicionNoticias" })[0] != undefined);
 				$scope.configPermisoAccionEliminaNoticia = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionEliminarNoticias" })[0] != undefined);
+				objectTempAccion = new GenericAccionRealizada("" + $scope.permisosConfigUser.id, 'TOP_RIGHT');
+				objectTempAccion.inicializarBotonAccionesRecientes();
 			}
 
 		
@@ -500,21 +504,25 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 
 			$scope.saveObj.idGeografias = geografiaEnvio;
 			$scope.saveObj.soloImagen = $scope.soloImagenCheck == true ? 1 : 0;
-			
 			swal({ text: 'Guardando registro...', allowOutsideClick: false });
 			swal.showLoading();
-
+			let tituloAccion = "Crear noticia";
+			let mensajeEnvio = 'Ha ocurrido un error al crear la noticia: ' + $scope.saveObj.tituloPrincipal + ' / ' + $scope.saveObj.tituloSecundario;
 			gestionNoticiasService.registrarNoticia($scope.saveObj).then((result) => {
 				swal.close()
 				if (result.data !== undefined) {
 					if (result.data.respuesta) {
+						mensajeEnvio = "Se ha creado la noticia: " + $scope.editObj.tituloPrincipal + ' / ' + $scope.editObj.tituloSecundario;
+						objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
 						toastr.success(result.data.result.description);
 						$scope.limpiarFormularioCrearNotica();
 						$scope.consultarNoticias();
 					} else {
+						objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
 						toastr.warning(result.data.resultDescripcion)
 					}
 				} else {
+					objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
 					toastr.warning(result.data.resultDescripcion)
 				}
 			}).catch((err) => handleError(err));

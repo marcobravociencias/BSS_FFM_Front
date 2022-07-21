@@ -1,4 +1,6 @@
 var app = angular.module('traspasosApp', []);
+var objectTempAccion;
+
 app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'genericService', function ($scope, $q, traspasosService, genericService) {
 	app.calendarController($scope);
 	app.mapController($scope, traspasosService);
@@ -496,6 +498,8 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 								$scope.configPermisoAccionTraspaso = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionTraspaso" })[0] != undefined);
 								$scope.configPermisoAccionConsultaTraspasos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaTraspasos" })[0] != undefined);
 								$scope.configPermisoAccionDescargaTraspasosRep = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaTraspasosReporte" })[0] != undefined);
+								objectTempAccion = new GenericAccionRealizada("" + $scope.permisosConfigUser.id, 'TOP_RIGHT');
+								objectTempAccion.inicializarBotonAccionesRecientes();
 							}
 							validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
 							validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
@@ -749,7 +753,7 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 
 							var count_cantidad_por_tipo = groupBy(response.data.result.evidencias, 'idCatEvidencia');
 							response.data.result.evidencias.map(function (e) {
-								let isExist = listaTipos.find((t) => e.idCatEvidencia == t.id)
+								let isExist = listaTipos.find((t) => e.idCatEvidencia == t.id);
 								if (!isExist) {
 									let imagenes = [];
 									if (count_cantidad_por_tipo[e.idCatEvidencia].length) {
@@ -1286,16 +1290,19 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 			}
 			swal({ text: 'Cargando registros...', allowOutsideClick: false });
 			swal.showLoading();
-
+			let tituloAccion = "Descarga reporte ordenes de trabajo";
+			let mensajeEnvio = 'Ha ocurrido un error al descargar el reporte';
 			traspasosService.consultaReporteTraspasosOts(params).then((result) => {
 				swal.close()
 				if (result.data.respuesta) {
 					const data = JSON.parse(result.data.result).ordenes
 					const fileName = 'Traspasos OTs'
 					const exportType = 'xls'
-
+					mensajeEnvio = 'Se ha descargado el reporte';
+					objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
 					window.exportFromJSON({ data, fileName, exportType })
 				} else {
+					objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
 					mostrarMensajeErrorAlert('Ocurrio un error al generar reporte.')
 				}
 
@@ -1393,16 +1400,19 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 			}
 			swal({ text: 'Cargando registros...', allowOutsideClick: false });
 			swal.showLoading();
-
+			let tituloAccion = "Descarga reporte traspasos";
+			let mensajeEnvio = 'Ha ocurrido un error al descargar el reporte';
 			traspasosService.consultaReporteTraspasos(params).then((result) => {
 				swal.close()
 				if (result.data.respuesta) {
 					const data = JSON.parse(result.data.result).ordenes
 					const fileName = 'Traspasos'
 					const exportType = 'xls'
-
+					mensajeEnvio = 'Se ha descargado el reporte';
+					objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
 					window.exportFromJSON({ data, fileName, exportType })
 				} else {
+					objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
 					mostrarMensajeErrorAlert('Ocurrio un error al generar reporte.')
 				}
 
@@ -1442,6 +1452,8 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 		}
 		swal({ text: 'Espere...', allowOutsideClick: false });
 		swal.showLoading();
+		let tituloAccion = "Agendar traspaso de OT";
+		let mensajeEnvio = 'Ha ocurrido un error al traspasar la OT: ' + params.idOrden;
 		traspasosService.agendarTraspasosOt(params).then(function success(response) {
 			swal.close();
 			if (response.data !== undefined) {
@@ -1449,11 +1461,15 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 					if (response.data.result) {
 						$scope.isTraspaso = false;
 						if (response.data.result.description) {
+							mensajeEnvio = 'Se ha traspasado la OT: ' + params.idOrden;
+							objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
 							toastr.success('Traspaso de orden exitoso: "' + response.data.result.description + '"');
 						} else {
+							objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
 							toastr.success('Traspaso de orden exitoso');
 						}
 					} else {
+						objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
 						mostrarMensajeWarningValidacion('No se traspas&oacute; la orden');
 					}
 				} else {

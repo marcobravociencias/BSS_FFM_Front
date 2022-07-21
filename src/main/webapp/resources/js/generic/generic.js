@@ -278,7 +278,7 @@ class GenericAccionRealizada {
 		}
 
 		$("#container-ultimasAcciones").show();
-		
+		$("#loading-data").show();
 		//let listaUltimasAcciones = this.getAccionesRecientesUsuario();
 		let listaUltimasAcciones = [];
 		this.getAccionesRecientesUsuario().done(function (jsonResponse) {
@@ -293,7 +293,7 @@ class GenericAccionRealizada {
 		$("#listAccionesRecientes").empty();
 		let contentAcciones = "";
 		if (listaUltimasAcciones.length > 0) {
-			$("#loading-data").show();
+
 			$.each(listaUltimasAcciones, function (i, accion) {
 				if (accion.descripcionEstatusHttp == 'success') {
 					contentAcciones += '<li class="timeline-actions timeline-icon-success active">' +
@@ -332,8 +332,11 @@ class GenericAccionRealizada {
 				'	<i class="icon-not-action fas fa-ban"></i>' +
 				'	<b class="text-not-action">Sin movimientos para mostrar</b>' +
 				'</div>';
+			setTimeout(() => {
+				$("#loading-data").hide();
+				$("#ultimasAccionesContent").append(contentAcciones);
+			}, 300);
 
-			$("#ultimasAccionesContent").append(contentAcciones);
 		}
 
 	}
@@ -365,11 +368,11 @@ class GenericAccionRealizada {
 			'				</div>' +
 			'			</div>' +
 			'		</div>' +
+			'		<div  id="loading-data" class="spinner-border spinner-cargando-info">' +
+			'			<span class="visually-hidden">Loading...</span>' +
+			'		</div>' +
 			'		<div id="ultimasAccionesContent">' +
 			'			<div class="activity">' +
-			'				<div  id="loading-data" class="spinner-border spinner-cargando-info">' +
-			'					<span class="visually-hidden">Loading...</span>' +
-			'				</div>' +
 			'				<ul id="listAccionesRecientes" class="styleAction action-timeline mb-0">' +
 			'				</ul>' +
 			'			</div>' +

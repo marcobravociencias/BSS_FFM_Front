@@ -1,4 +1,6 @@
 var app = angular.module('vistaChecklistApp', []);
+var objectTempAccion;
+
 
 app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistService', '$filter', 'genericService', function ($scope, $q, vistaChecklistService, $filter, genericService) {
     var regexUrl = /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/;
@@ -18,7 +20,7 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
         idot: '',
         idos: ''
     }
-
+    $scope.idOrden = 0;
     $scope.configPermisoAccionActualizaEvidencia = false;
     $scope.configPermisoAccionConsultaEvidencia = false;
     $scope.configPermisoAccionConsultaOt = false;
@@ -108,6 +110,8 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
                             $scope.configPermisoAccionConsultaOt = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaOtChecklist" })[0] != undefined);
                             $scope.configPermisoAccionConsultaEvidencia = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaEvidenciaChecklist" })[0] != undefined);
                             $scope.configPermisoAccionActualizaEvidencia = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionActualizaEvidenciaChecklist" })[0] != undefined);
+                            objectTempAccion = new GenericAccionRealizada("" +  $scope.permisosConfigUser.id, 'TOP_RIGHT');
+                            objectTempAccion.inicializarBotonAccionesRecientes();
                         }
                         $("#idBody").css("display", "block");
 
@@ -389,9 +393,10 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
 
     consultaDetalle = function (id, usuario) {
         if ($scope.configPermisoAccionConsultaEvidencia) {
+            $scope.idOrden = id;
             let params = {
                 idOt: id,
-                idUsuario: usuario 
+                idUsuario: usuario
             }
             swal({ text: 'Espera un momento...', allowOutsideClick: false });
             swal.showLoading();
@@ -561,16 +566,22 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
         }
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
+        let tituloAccion = "Guardar evidencia";
+        let mensajeEnvio = 'Ha ocurrido un error al guardar la evidencia para la OT: ' + $scope.idOrden;
         vistaChecklistService.guardarEvidencia(newObjectGroup).then(function success(response) {
             swal.close();
             if (response.data !== undefined) {
                 if (response.data.respuesta) {
+                    mensajeEnvio = "Se ha guardado la evidencia para la OT: " + $scope.idOrden;
+                    objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
                     toastr.success('Las evidencias se guardaron con &eacute;xito');
                     $("#modalDetalle").modal('hide');
                 } else {
+                    objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
                     toastr.error('No se guardaron las evidencias');
                 }
             } else {
+                objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
                 toastr.error('Ocurri&oacute; un arror al guardar la evidencia');
             }
         }).catch(err => handleError(err));
