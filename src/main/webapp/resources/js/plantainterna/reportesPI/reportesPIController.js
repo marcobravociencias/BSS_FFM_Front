@@ -136,7 +136,6 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 		
 		if($scope.nfiltrogeografiaTecnicosTiposOrdenes === undefined || $scope.nfiltrogeografiaTecnicosTiposOrdenes === null || $scope.nfiltrogeografiaTecnicosTiposOrdenes === ""){
 			$scope.nfiltrogeografiaTecnicosTiposOrdenes = $scope.obtenerNivelUltimoJerarquia();
-//			$scope.nfiltrogeografiaTecnicosTiposOrdenes = 2;
 		}
 		
 		let clustersparam = $("#jstree-proton-tecnicos").jstree("get_selected", true).filter(e => e.original.nivel == $scope.nfiltrogeografiaTecnicosTiposOrdenes).map(e => parseInt(e.id));
@@ -410,12 +409,13 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 	}
 
 	$scope.ordenarGeografia = function (lista, filtro) {
-
+		
 		let listaGeografiaTemp = lista.filter(e => e.nivel <= parseInt(filtro));
+		listaGeografiaTemp.push({id: 0, nombre: "TOTALPLAY", nivel: 0, padre: "#", state:{opened: true}});
 
 		let geografia = angular.copy(listaGeografiaTemp);
 		geografia.map((e) => {
-			e.parent = e.padre == undefined ? "#" : e.padre;
+			e.parent = e.padre == null ? 0 : e.padre;
 			e.text = e.nombre;
 			e.icon = "fa fa-globe";
 			e.state = {
@@ -445,6 +445,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 
 							$scope.nfiltrogeografiaSeguimientoDiario = llavesResult.N_FILTRO_GEOGRAFIA_SEGUIMIENTODIARIO ? llavesResult.N_FILTRO_GEOGRAFIA_SEGUIMIENTODIARIO : llavesResult.N_FILTRO_GEOGRAFIA;
 							$scope.nfiltrogeografiaTecnicosTiposOrdenes = llavesResult.N_FILTRO_GEOGRAFIA_TECNICOS_TIPOS_ORDENES ? llavesResult.N_FILTRO_GEOGRAFIA_TECNICOS_TIPOS_ORDENES : llavesResult.N_FILTRO_GEOGRAFIA;
+							
 							$scope.nfiltrointervencionesSeguimientoDiario = llavesResult.N_FILTRO_INTERVENCIONES_SEGUIMIENTODIARIO ? llavesResult.N_FILTRO_INTERVENCIONES_SEGUIMIENTODIARIO : llavesResult.N_FILTRO_INTERVENCIONES;
 							$scope.nfiltroestatuspendienteSeguimientoDiario = llavesResult.N_ESTATUS_PENDIENTES_SEGUIMIENTODIARIO ? llavesResult.N_ESTATUS_PENDIENTES_SEGUIMIENTODIARIO : llavesResult.N_ESTATUS_PENDIENTES;
 
@@ -595,7 +596,8 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 							$scope.nfiltrogeografiaSeguimientoDiario = $scope.nfiltrogeografiaSeguimientoDiario ? $scope.nfiltrogeografiaSeguimientoDiario : $scope.obtenerNivelUltimoJerarquia();
 							$scope.nfiltrogeografiaCierre = $scope.nfiltrogeografiaCierre ? $scope.nfiltrogeografiaCierre : $scope.obtenerNivelUltimoJerarquia();
 							$scope.nfiltrogeografiaAsignadas = $scope.nfiltrogeografiaAsignadas ? $scope.nfiltrogeografiaAsignadas : $scope.obtenerNivelUltimoJerarquia();
-
+							$scope.nfiltrogeografiaTecnicosTiposOrdenes = $scope.nfiltrogeografiaTecnicosTiposOrdenes ? $scope.nfiltrogeografiaTecnicosTiposOrdenes : $scope.obtenerNivelUltimoJerarquia();
+							
 							if ($scope.configPermisoAccionConsultaReporteSeguimiento) {
 								let geografia = $scope.ordenarGeografia(results[0].data.result.geografia, $scope.nfiltrogeografiaSeguimientoDiario);
 								$scope.listaGeografiaReporte.seguimiento = angular.copy(geografia);
@@ -612,7 +614,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 							}
 							
 							if ($scope.configPermisoAccionConsultaTecnicosTiposOrdenes) {
-								let geografiaTec = $scope.ordenarGeografia(results[0].data.result.geografia, $scope.nfiltrogeografiaAsignadas);
+								let geografiaTec = $scope.ordenarGeografia(results[0].data.result.geografia, $scope.nfiltrogeografiaTecnicosTiposOrdenes);
 								$scope.listaGeografiaReporte.tecnicos = angular.copy(geografiaTec);
 							}
 
