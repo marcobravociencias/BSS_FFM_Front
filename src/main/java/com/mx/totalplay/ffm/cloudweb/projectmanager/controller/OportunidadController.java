@@ -37,5 +37,15 @@ public class OportunidadController {
 		}
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
+	
+	@PostMapping("/consultarDetalleOportunidad")
+	public ResponseEntity<?> consultarDetalleOportunidad(@RequestBody String params) {
+		logger.info("###### OportunidadController - consultarOportunidades");
+		ServiceResponseResult response = oportunidadService.consultarDetalleOportunidad(params);
+		if(response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
 
 }

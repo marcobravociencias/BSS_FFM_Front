@@ -22,49 +22,29 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/magnific_popup/magnific-popup.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css" />
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/generic/busquedaSalesforce\styleMainBusqueda.css?v=${sessionScope.versionDepl}">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/projectmanager/oportunidades/styleOportunidad.css?v=${sessionScope.versionDepl}" />
 </head>
 
-<body id="idBody" ng-controller="oportunidadController" class="body" style="display: none;">
+<body id="idBody" ng-controller="oportunidadController" ng-init="initOportunidades()" class="body" style="display: none;">
     <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
-    <div class="container">
+    <div class="container" ng-show="!detalleSalesforceView">
         <div class="content-fluid container-filtros-oportunidad contenedor-oportunidad" ng-show="showTable">
             <div class="row col-12" id="filtros_config">
                 <div class="col-2 columna-filtro-ind" style="width: 110px; padding-right: 0px !important;">
-                    <label for="filtro_fecha_fin_consultaOt" class="label-filter">Fecha</label>
-                    <input readonly type="text" id="filtro_fecha_fin_consultaOt" class="datepicker input-filtro-oportunidad form-control form-control-sm" style="width: 100px;" />
-                </div>
-                <div class="col-2 column-style-consulta columna-filtro-ind">
-                    <i class="icono-noseleccion fas fa-exclamation-circle me-2" title="No se encontraron catalogo de estatus" ng-show="banderaErrorEstatus"></i>
-                    <label for="filtro-estatus-substatus" class="label-filter">Estatus</label>
-                    <div class="dropdown">
-                        <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Seleccione..." type="text" id="filtro-estatus-substatus" class="input-filtro-oportunidad form-control form-control-sm" />
-                        <ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-estatus-substatus">
-                            <li style="text-align: center;">
-                                <button ng-click="seleccionarTodosRecursivo(filtrosGeneral.estatusdisponibles); pintarNombreEstatus(filtrosGeneral.estatusdisponibles,'#filtro-estatus-substatus');" id="todo_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
-                                <button ng-click="deseleccionarTodosRecursivo(filtrosGeneral.estatusdisponibles); pintarNombreEstatus(filtrosGeneral.estatusdisponibles,'#filtro-estatus-substatus');" id="ninguno_filtro" type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
-                            </li>
-                            <li class="elemento_menu dropdown-divider"></li>
-                            <li ng-repeat="filtro in filtrosGeneral.estatusdisponibles " class="element-menu-filter" class="element-menu-filter">
-                                <label class="dropdown-item form-check-inputfiltro">
-                                    <input ng-click="setCheckFiltroGenericV2(filtro,filtrosGeneral.estatusdisponibles); pintarNombreEstatus(filtrosGeneral.estatusdisponibles,'#filtro-estatus-substatus');" id="filtrotext-{{filtro.id}}" class="form-check-input" type="checkbox" ng-model="filtro.checkedOpcion" ng-checked="filtro.checkedOpcion" />
-                                    <span for="filtrotext-{{filtro.id}}" class="dropdown-item item-text-filtro" href="#" ng-bind="filtro.nombre"></span>
-                                </label>
-                                <ul ng-if="filtro.children !== undefined &&  filtro.children.length > 0" ng-include="'filtroEstatus.html'" class="dropdown-menu"></ul>
-                            </li>
-                        </ul>
-                    </div>
+                    <label for="fecha_oportunidad" class="label-filter">Fecha</label>
+                    <input readonly type="text" id="fecha_oportunidad" class="input-filtro-oportunidad form-control form-control-sm" style="width: 100px;" />
                 </div>
                 <div class="col-2 column-style-consulta">
                     <label for="idot" class="label-filter">No. Oportunidad</label>
-                    <input type="text" id="idot" placeholder="Ej: 65434" ng-model="camposFiltro.idot" ng-change="limpiarCamposFiltro(1)" class="form-control input-filtro-oportunidad form-control-sm">
+                    <input type="text" id="idot" placeholder="Ej: 65434" ng-model="camposFiltro.oportunidad" ng-change="limpiarCamposFiltro(1)" class="form-control input-filtro-oportunidad form-control-sm">
                 </div>
                 <div class="col-2 column-style-consulta">
                     <label for="idos" class="label-filter">Nombre cliente</label>
-                    <input type="text" id="idos" placeholder="Ej: 23214" ng-model="camposFiltro.idos" ng-change="limpiarCamposFiltro(2)" class="form-control input-filtro-oportunidad form-control-sm">
+                    <input type="text" id="idos" placeholder="Ej: 23214" ng-model="camposFiltro.nombreCliente" ng-change="limpiarCamposFiltro(2)" class="form-control input-filtro-oportunidad form-control-sm">
                 </div>
                 <div class="col-1 div-btn-busqueda" style="width: 65px;">
-                    <button id="btn_consultar_oportunidades" type="button" class="btn btn-sm  btn-primary  waves-effect waves-light" ng-click="consultaOT()">
+                    <button id="btn_consultar_oportunidades" type="button" class="btn btn-sm  btn-primary  waves-effect waves-light" ng-click="consultarOportunidades()">
                         <i class="fa fa-search"></i>
                     </button>
                 </div>
@@ -72,7 +52,7 @@
                     <img alt="excel" src="./resources/img/generic/group-10.png" style="cursor:pointer" ng-click="descargarReporteConsultaOt()">
                 </div>
             </div>
-            <div class="col-12">
+            <!--div class="col-12">
                 <div class="row">
                     <div class="col-1 content-contador contadores_border_right form-group" style="margin-left:20%;">
                         <span class="valor_contador" ng-bind="contadorGeneral.numOportunidad"></span>
@@ -101,7 +81,40 @@
                         
                     </div>
                 </div>
-                
+            </div-->
+            <div class="col-12" id="contentContadoresPrincipal">
+                <ul class="nav nav-tabs" id="tabContadorOportunidades" role="tablist">
+                    <li class="nav-item contenedor_contador_detalle_oportunidad border_contenedor_contador_detalle" ng-click="filtrarOportunidades(1)">
+                        <label class="nav-link active label_contador_detalle_oportunidad" style="padding: 1em; padding-left: 1.5em; padding-right: 1.5em;" data-toggle="tab" href="#" role="tab">
+                            <p class="contador_detalle_oportunidad" ng-bind="contadorGeneral.numOportunidad ? contadorGeneral.numOportunidad : '0'"></p>
+                            Oportunidades
+                        </label>
+                    </li>
+                    <li class="nav-item contenedor_contador_detalle_oportunidad border_contenedor_contador_detalle" ng-click="filtrarOportunidades(2)">
+                        <label class="nav-link label_contador_detalle_oportunidad" style="padding: 1em; padding-left: 1.5em; padding-right: 1.5em;" data-toggle="tab" href="#" role="tab">
+                            <p class="contador_detalle_oportunidad" ng-bind="contadorGeneral.numCsp ? contadorGeneral.numCsp : '0'"></p>
+                            CSP
+                        </label>
+                    </li>
+                    <li class="nav-item contenedor_contador_detalle_oportunidad border_contenedor_contador_detalle" ng-click="filtrarOportunidades(3)">
+                        <label class="nav-link label_contador_detalle_oportunidad" style="padding: 1em; padding-left: 1.5em; padding-right: 1.5em;" data-toggle="tab" href="#" role="tab">
+                            <p class="contador_detalle_oportunidad" ng-bind="contadorGeneral.numImplementadas ? contadorGeneral.numImplementadas : '0'"></p>
+                            CSP Implementadas
+                        </label>
+                    </li>
+                    <li class="nav-item contenedor_contador_detalle_oportunidad border_contenedor_contador_detalle" ng-click="filtrarOportunidades(4)">
+                        <label class="nav-link label_contador_detalle_oportunidad" style="padding: 1em; padding-left: 1.5em; padding-right: 1.5em;" data-toggle="tab" href="#" role="tab">
+                            <p class="contador_detalle_oportunidad" ng-bind="contadorGeneral.numCanceladas ? contadorGeneral.numCanceladas : '0'"></p>
+                            CSP Canceladas
+                        </label>
+                    </li>
+                    <li class="nav-item contenedor_contador_detalle_oportunidad">
+                        <label class="nav-link label_contador_detalle_oportunidad" style="padding: 1em; padding-left: 1.5em; padding-right: 1.5em;" >
+                            <p class="contador_detalle_oportunidad" ng-bind="contadorGeneral.avance ? contadorGeneral.avance +'%' : '0%'"></p>
+                            Avance
+                        </label>
+                    </li>
+                </ul>
             </div>
             <div class="content-fluid">
                 <div class="table-responsive">
@@ -117,10 +130,11 @@
                                 <th>Implementadas</th>
                                 <th>Canceladas</th>
                                 <th>Avance</th>
-                                <th>R</th>
-                                <th>E</th>
+                                <th><img style="height: 16px;" src="./resources/img/iconsistema/icon_residencial.svg" alt=""></th>
+                                <th><img style="height: 16px;" src="./resources/img/iconsistema/icon_empresarial.svg" alt=""></th>
                                 <th>Lider tecnico</th>
                                 <th>Torre de Control</th>
+                                <th>Detalle</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -134,42 +148,42 @@
             <div class="col-12">
                 <i ng-click="regresarPaginaPrincipal()" class="fa fa-chevron-circle-left fa-lg icon_regresar_principal"></i>
                 <span class="detalle_oportunidad_estatic">Detalle de la oportunidad</span>
-                <span class="detalle_oportunidad_dinamic">Gonzales Vela Asociados /</span>
+                <span class="detalle_oportunidad_dinamic" ng-bind="objectOportunidad.nombreCliente + ' /'"></span>
                 <span class="detalle_oportunidad_estatic">Cotizaci&oacute;n</span>
-                <span class="detalle_oportunidad_dinamic">COT324345643 /</span>
+                <span class="detalle_oportunidad_dinamic" ng-bind="objectOportunidad.cotizacion + ' /'"></span>
                 <span class="detalle_oportunidad_estatic">CSP ASOCIADOS</span>
-                <span class="detalle_oportunidad_dinamic">100</span>
+                <span class="detalle_oportunidad_dinamic" ng-bind="contadorDetalleOportunidad.numCsp"></span>
             </div>
             <br>
             <div class="col-12" id="contentContadores">
                 <ul class="nav nav-tabs" id="tabContadorDetalleOportunidades" role="tablist">
-                    <li class="nav-item contenedor_contador_detalle_oportunidad border_contenedor_contador_detalle" ng-click="busquedaVehiculosEstado('todos')" id="todosVehiculos">
+                    <li class="nav-item contenedor_contador_detalle_oportunidad border_contenedor_contador_detalle" ng-click="busquedaVehiculosEstado('todos')">
                         <label class="nav-link active label_contador_detalle_oportunidad" style="padding: 1em; padding-left: 1.5em; padding-right: 1.5em;" data-toggle="tab" href="#" role="tab">
-                            <p class="contador_detalle_oportunidad">100</p>
+                            <p class="contador_detalle_oportunidad" ng-bind="contadorDetalleOportunidad.numCsp"></p>
                             CSP
                         </label>
                     </li>
                     <li class="nav-item contenedor_contador_detalle_oportunidad border_contenedor_contador_detalle" ng-click="busquedaVehiculosEstado('asignado')">
                         <label class="nav-link label_contador_detalle_oportunidad" style="padding: 1em; padding-left: 1.5em; padding-right: 1.5em;" data-toggle="tab" href="#" role="tab">
-                            <p class="contador_detalle_oportunidad">40</p>
+                            <p class="contador_detalle_oportunidad">0</p>
                             Enviados a Infra
                         </label>
                     </li>
                     <li class="nav-item contenedor_contador_detalle_oportunidad border_contenedor_contador_detalle" ng-click="busquedaVehiculosEstado('disponible')">
                         <label class="nav-link label_contador_detalle_oportunidad" style="padding: 1em; padding-left: 1.5em; padding-right: 1.5em;" data-toggle="tab" href="#" role="tab">
-                            <p class="contador_detalle_oportunidad">30</p>
+                            <p class="contador_detalle_oportunidad">0</p>
                             Recibidos de Infra
                         </label>
                     </li>
                     <li class="nav-item contenedor_contador_detalle_oportunidad border_contenedor_contador_detalle" ng-click="busquedaVehiculosEstado('no disponible')">
                         <label class="nav-link label_contador_detalle_oportunidad" style="padding: 1em; padding-left: 1.5em; padding-right: 1.5em;" data-toggle="tab" href="#" role="tab">
-                            <p class="contador_detalle_oportunidad">20</p>
+                            <p class="contador_detalle_oportunidad">0</p>
                             Implementados
                         </label>
                     </li>
                     <li class="nav-item contenedor_contador_detalle_oportunidad" ng-click="busquedaVehiculosEstado('baja')">
                         <label class="nav-link label_contador_detalle_oportunidad" style="padding: 1em; padding-left: 1.5em; padding-right: 1.5em;" data-toggle="tab" href="#" role="tab">
-                            <p class="contador_detalle_oportunidad">10</p>
+                            <p class="contador_detalle_oportunidad">0</p>
                             Calendarizados
                         </label>
                     </li>
@@ -202,7 +216,7 @@
            
         </div>
     </div>
-
+    <jsp:include page="/WEB-INF/jsp/generic/busquedaSalesforce/mainBusquedaSalesforce.jsp"></jsp:include>
 </body>
 <!-- Scripts libraries -->
 <script src="${pageContext.request.contextPath}/resources/libraries/angularjs/js/angular.min.js"></script>
@@ -227,6 +241,8 @@
 <script type="text/javascript">let contex_project = "${pageContext.request.contextPath}";</script>
 <script src="${pageContext.request.contextPath}/resources/js/projectmanager/oportunidades/oportunidadesController.js?v=${sessionScope.versionDepl}"></script>
 <script src="${pageContext.request.contextPath}/resources/js/projectmanager/oportunidades/oportunidadesService.js?v=${sessionScope.versionDepl}" charset="UTF-8"></script>
+<script src="${pageContext.request.contextPath}/resources/js/generic/busquedaSalesforce/busquedaSalesforceController.js?v=${sessionScope.versionDepl}"></script>
+<script src="${pageContext.request.contextPath}/resources/js/generic/busquedaSalesforce/busquedaSalesforceService.js?v=${sessionScope.versionDepl}"></script>
 <script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js?v=${sessionScope.versionDepl}"></script>
 <script src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>
 <script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js?v=${sessionScope.versionDepl}"></script>

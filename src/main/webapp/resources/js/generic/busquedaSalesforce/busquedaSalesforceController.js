@@ -102,6 +102,61 @@ app.busquedaSalesforce = function ($scope, busquedaSalesforceService) {
         }).catch((err) => handleError(err));
     }
 
+    consultarDetalleObjectosSF = function (id, keyObjeto) {
+        console.log("id: " + id + " tipo del objeto: " + keyObjeto)
+        $scope.isConsultaPrimeraVezNoticias = false;
+        $scope.isAbiertoOSNoticias = false;
+        swal({ text: 'Buscando datos ...', allowOutsideClick: false });
+        swal.showLoading();
+        let params = {
+            idObjectSF: id,
+            typeObjectSF: keyObjeto
+        }
+        busquedaSalesforceService.consultaDetalleObjectSF(params).then((result) => {
+            console.log(result)
+            swal.close()
+            $scope.mostrarTintoreria = false;
+            $scope.mostrarNotaCF = false;
+            if (result.data.respuesta) {
+                if (result.data.result) {
+                    $("#modalDetalleSalesforce").modal('show');
+                    switch (keyObjeto) {
+                        case "CS":
+                            $scope.mostrarDetalleCotSitio(result.data.result.detalleCotSitio, keyObjeto);
+                            break;
+                        case "CP":
+                            $scope.mostrarDetalleCotSitioPlan(result.data.result.detalleCotSitioPlan, keyObjeto);
+                            break;
+                        case "CO":
+                            $scope.mostrarDetalleCotizacion(result.data.result.detalleCotizacion, keyObjeto);
+                            break;
+                        case "CF":
+                            $scope.mostrarDetalleCuentaFactura(result.data.result.detalleCuentaFactura, keyObjeto);
+                            break;
+                        case "CU":
+                            $scope.mostrarDetalleCuenta(result.data.result.detalleCuenta, keyObjeto);
+                            break;
+                        case "OP":
+                            $scope.mostrarDetalleOportunidad(result.data.result.detalleOportunidad, keyObjeto);
+                            break;
+                        case "OS":
+                            $scope.mostrarDetalleOs(result.data.result.detalleOs, keyObjeto);
+                            break;
+                        case "TK":
+                            $scope.mostrarDetalleTicket(result.data.result.detalleTk, keyObjeto);
+                            break;
+                        default:
+                            break;
+                    }
+                } else {
+                    mostrarMensajeWarningValidacion('No se encontr\u00F3 informaci\u00F3n')
+                }
+            } else {
+                mostrarMensajeErrorAlert(result.data.resultDescripcion)
+            }
+        }).catch((err) => handleError(err));
+    }
+
     $scope.mostrarDetalleCuenta = function (detalle, keyObject) {
         if (detalle) {
             $scope.cerrarDetalles();

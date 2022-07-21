@@ -11,4 +11,7 @@ public class ConstOportunidades {
 	@Value("${consultarOportunidades}")
     private String consultarOportunidades;
 	
+	@Value("${consultarDetalleOportunidad}")
+	private String consultarDetalleOportunidad;
+	
 }
