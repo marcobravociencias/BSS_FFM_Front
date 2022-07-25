@@ -577,11 +577,11 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
                     toastr.success('Las evidencias se guardaron con &eacute;xito');
                     $("#modalDetalle").modal('hide');
                 } else {
-                    objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
+                    objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                     toastr.error('No se guardaron las evidencias');
                 }
             } else {
-                objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
+                objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                 toastr.error('Ocurri&oacute; un arror al guardar la evidencia');
             }
         }).catch(err => handleError(err));

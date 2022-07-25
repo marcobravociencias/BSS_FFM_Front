@@ -631,6 +631,8 @@ cambiarContraseniaUserLogin = function () {
 
 	swal({ text: 'Espera un momento...', allowOutsideClick: false });
 	swal.showLoading();
+	let tituloAccion = "Cambiar constrase\u00F1a sesión";
+	let mensajeEnvio = 'Ha ocurrido un error al cambiar la constrase\u00F1a';
 	$.ajax({
 		url: "req/restaurarContrasena",
 		type: "POST",
@@ -641,8 +643,11 @@ cambiarContraseniaUserLogin = function () {
 		error: function (xhr, error, thrown) {
 			handleError(xhr);
 			swal.close();
+			objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
 		},
 		complete: function (response) {
+			mensajeEnvio = 'Se ha cambiado la constrase\u00F1a';
+			objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
 			$("#actualPasswordUserLogin").val('');
 			$("#newPasswordUserLogin").val('');
 			$("#confirmPasswordUserLogin").val('');

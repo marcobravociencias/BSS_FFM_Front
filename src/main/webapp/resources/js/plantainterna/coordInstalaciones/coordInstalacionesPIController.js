@@ -8,6 +8,8 @@ var geografiaTerminada = [];
 var geografiaCancelada = [];
 var geografiaCalendarizada = [];
 var geografiaGestoria = [];
+var objectTempAccion;
+
 app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIService' ,'genericService', function($scope, $q, coordInstalacionesPIService, genericService) {
 
 	app.coordInstalacionesSF($scope,coordInstalacionesPIService,$q,genericService)
@@ -82,6 +84,8 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 							if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
 								$scope.configPermisoAccionConsultaOrdenes = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaOT" })[0] != undefined);
 								$scope.configPermisoAccionDescargaReporteOrdenes = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaReporteOT" })[0] != undefined);
+								objectTempAccion = new GenericAccionRealizada("" +  $scope.permisosConfigUser.id, 'TOP_RIGHT');
+								objectTempAccion.inicializarBotonAccionesRecientes();
 							}
 							$("#idBody").removeAttr("style");
 							validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
@@ -1078,7 +1082,9 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
         let isValido = true;
         let params = {};
         $scope.tipoaccioncambioestatus=tipo
+		let textTemp = "";
         if (tipo === 'calendariza') {
+			textTemp = "calendarizado";
             if ($scope.elementCalendarizado.fechaCalendarizado.trim() === '') {
                 errorMensaje += '<li>Completa campo fecha</li>'
                 isValido = false;
@@ -1115,6 +1121,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 				}
             }
         } else if (tipo === 'reagendamiento') {
+			textTemp = "reagendado";
             if (!$scope.elementReagendaOT || $scope.elementReagendaOT.fechaReagendamiento.trim() === '') {
                 errorMensaje += '<li>Completa campo fecha.</li>'
                 isValido = false;
@@ -1151,6 +1158,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 				}
             }
         } else if (tipo === 'gestoria'){
+			textTemp = "enviar a plaza"
             if (!$scope.elementoPlazaComercial || !$scope.elementoPlazaComercial.estado) {
                 errorMensaje += '<li>Seleccione campo estado.</li>'
                 isValido = false;
@@ -1181,21 +1189,26 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
             }
         }
         if (isValido) {
-            envioCambioStatus(params);
+            envioCambioStatus(params, textTemp);
         } else {
             errorMensaje += '</ul>'
             mostrarMensajeWarningValidacion(errorMensaje)
         }
     }
 
-	envioCambioStatus = function(params) {
+	envioCambioStatus = function(params, text) {
         swal({ text: 'Cambiando estatus de la OT ...', allowOutsideClick: false });
         swal.showLoading();
+		let tituloAccion = "Actualización estatus orden";
+        let mensajeEnvio = 'Ha ocurrido un error al cambiar el estatus a "' + text + '" de la OT: ' + params.ot;
+        
         genericService.cambioStatusOts(params).then(result =>{
             console.log(result);
             swal.close();
             
             if(result.data.respuesta){
+				mensajeEnvio = 'Se actualiz&oacute; el estatus a "' + text + '" de la OT: ' + params.ot;
+                objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
                 toastr.success( result.data.result.mensaje );
 				if ($scope.vistaCoordinacion === 1) {
 					$scope.consultarPendientes();
@@ -1206,6 +1219,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 				}
                 $("#modalDetalleOt").modal('hide');
             }else{
+				objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                 console.log(result.data.resultDescripcion)
                 toastr.warning( result.data.resultDescripcion );
             }

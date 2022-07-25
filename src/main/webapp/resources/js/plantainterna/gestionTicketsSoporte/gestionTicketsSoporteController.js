@@ -1563,13 +1563,17 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
         if ($scope.editTicket.detalleTicketSc.numEmpleadoInge) {
+            let tituloAccion = "Reasignar ingeniero";
+			let mensajeEnvio = 'Ha ocurrido un error al reasignar el ingeniero ' + $scope.ingenieroSelect.nombreCompleto +' a la OS : ' + $scope.editTicket.detalleTicketSc.folioSistema;
             gestionTicketSoporteService.reasigarTicketIngeniero(params).then((response) => {
                 swal.close()
                 $scope.estatusList = angular.copy($scope.estatusListOriginal);
                 if (response.data.respuesta) {
+                    mensajeEnvio = 'Se ha reasignado el ingeniero ' + $scope.ingenieroSelect.nombreCompleto +' a la OS : ' + $scope.editTicket.detalleTicketSc.folioSistema;
+					objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
                     $scope.estatusList = $scope.estatusList.filter((e) => { return e.id != 2 });
 
-                    toastr.success('Ingeniero asignado con exito');
+                    toastr.success('Ingeniero reasignado con &eacute;xito');
                     $("#modalAsignarTicket").modal('hide');
                     $scope.consultaIngeniero();
                     $(".content-detalle-ticket .inputTicket").prop("disabled", false);
@@ -1577,14 +1581,19 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                     $(".btn-disabled").prop("disabled", false);
                     $("#btnGuardarCambios").prop("disabled", false);
                 } else {
+                    objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                     mostrarMensajeWarningValidacion('No se pudo realizar la operaci&oacute;n')
                 }
             }).catch((err) => handleError(err));
         } else {
+            let tituloAccion = "Asignar ingeniero";
+			let mensajeEnvio = 'Ha ocurrido un error al asignar el ingeniero ' + $scope.ingenieroSelect.nombreCompleto +' a la OS : ' + $scope.editTicket.detalleTicketSc.folioSistema;
             gestionTicketSoporteService.asigarTicketIngeniero(params).then((response) => {
                 swal.close()
                 if (response.data.respuesta) {
-                    toastr.success('Ingeniero asignado con exito');
+                    mensajeEnvio = 'Se ha asignado el ingeniero ' + $scope.ingenieroSelect.nombreCompleto +' a la OS : ' + $scope.editTicket.detalleTicketSc.folioSistema;
+					objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
+                    toastr.success('Ingeniero asignado con &eacute;xito');
                     $("#modalAsignarTicket").modal('hide');
                     $scope.consultaIngeniero();
                     $(".content-detalle-ticket .inputTicket").prop("disabled", false);
@@ -1592,6 +1601,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                     $(".btn-disabled").prop("disabled", false);
                     $("#btnGuardarCambios").prop("disabled", false);
                 } else {
+                    objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                     mostrarMensajeWarningValidacion('No se pudo realizar la operaci&oacute;n')
                 }
             }).catch((err) => handleError(err));
@@ -1731,10 +1741,14 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
         }
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
+        let tituloAccion = "Editar detalle ticket";
+		let mensajeEnvio = 'Ha ocurrido un error al editar el detalle de la OS: '+ params.folioSistema;
         gestionTicketSoporteService.guardarTicketDetalle(params).then(response => {
             swal.close()
             if (response.data.respuesta) {
                 if (response.data.result) {
+                    mensajeEnvio = 'Se ha editado el detalle de la OS: '+ params.folioSistema;
+                    objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
                     $scope.limpiarContentDetalleTicket();
                     $scope.contentdetalleticket = false;
                     $scope.contentprincipal = true;
@@ -1742,9 +1756,11 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                     mostrarMensajeExitoAlert(response.data.result.mensaje);
                     $scope.consultarTicketsSoporte();
                 } else {
+                    objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                     mostrarMensajeWarningValidacion(response.data.result.mensaje)
                 }
             } else {
+                objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                 mostrarMensajeWarningValidacion('No se pudo realizar la operaci&oacute;n')
             }
         }).catch((err) => handleError(err));

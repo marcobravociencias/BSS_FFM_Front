@@ -210,8 +210,9 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
         let ot = $scope.otsAlertas.find((t) => t.tecnico.id == usuario);
         abrirModalFoto(ot.tecnico.nombre, ot.tecnico.urlFotoPerfil, ot.tecnico.numEmpleado, ot.tecnico.telefonoContacto, '#0B50C4', 'Sin dato')
     }
-
+    $scope.idOrdenTemp = 0;
     consultarEvidencia = function (id, usuario) {
+        $scope.idOrdenTemp = id;
         $(".cards-lertas").css("border-left", "1px solid #dddddd");
         $(".cards-lertas").css("box-shadow", "0 0 0 0 #ffffff");
         $("#cardAlerta_" + id).css("border-left", "4px solid var(--estandar-color)");
@@ -459,15 +460,21 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
         }
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
+        let tituloAccion = "Guardar evidencia";
+        let mensajeEnvio = 'Ha ocurrido un error al guardar la evidencia para la OT: ' + $scope.idOrdenTemp;
         mainAlertasService.guardarEvidencia(newObjectGroup).then(function success(response) {
             swal.close();
             if (response.data !== undefined) {
                 if (response.data.respuesta) {
+                    mensajeEnvio = "Se ha guardado la evidencia para la OT: " + $scope.idOrdenTemp;
+                    objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
                     toastr.success('Las evidencias se guardaron con &eacute;xito');
                 } else {
+                    objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                     toastr.error('No se guardaron las evidencias');
                 }
             } else {
+                objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                 toastr.error('Ocurri&oacute; un arror al guardar la evidencia');
             }
         }).catch(err => handleError(err));
@@ -1411,14 +1418,21 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
 
             swal({ text: 'Cambiando estatus de la OT...', allowOutsideClick: false });
             swal.showLoading();
+            console.log(params);
+
+            let tituloAccion = "Actualizar estatus alerta";
+			let mensajeEnvio = 'Ha ocurrido un error al actualizar el estatus "'+ $scope.accionOtSeleccionadaAlerta.descripcion +'" de la OT: ' + params.ot;
             genericService.cambioStatusOtsGeneric(params).then(result => {
                 swal.close();
                 if (result.data.respuesta) {
+                    mensajeEnvio = 'Se ha a actualizado el estatus "'+ $scope.accionOtSeleccionadaAlerta.descripcion +'" de la OT: ' + params.ot;
+					objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
                     $("#idTituloAccionesAlertas").text("OPCIONES");
                     swal("Correcto", "¡Acción realizada con éxito!", "success");
                     $scope.cerrarAlertas();
                     $scope.consultarConteoAlertasPI();
                 } else {
+                    objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                     toastr.error(result.data.resultDescripcion);
                 }
             }).catch(err => handleError(err));

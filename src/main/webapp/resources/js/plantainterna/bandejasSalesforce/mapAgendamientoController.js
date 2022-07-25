@@ -176,9 +176,14 @@ app.agendamientoMap = function ($scope, bandejasSalesforceService) {
                     "geolocalizacionInstalacionLongitudeS": $scope.infoFactibilidad.longitud,
                     "cuenta":               $scope.elementoCSP.infoSitio.numeroCuenta,
                 }
+
+                let tituloAccion = "Actualizar factibilidad";
+                let mensajeEnvio = 'Ha ocurrido un error al actualizar la factibilidad para la cuenta: ' + params.cuenta;
                 
                 bandejasSalesforceService.actualizarFactibilidadSitio(params).then(function success(response) {
                     if (response.data !== undefined && response.data.result != undefined) {
+                        mensajeEnvio = "Se ha actualizado la factibilidad para la cuenta: " + params.cuenta;
+                        objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
                         mostrarMensajeExitoAlert( response.data.result.mensaje )
                         swal.close();   
                         $scope.elementoCSP.infoSitio.regionInstalacionC = $scope.infoFactibilidad.region;
@@ -187,6 +192,7 @@ app.agendamientoMap = function ($scope, bandejasSalesforceService) {
                         $scope.elementoCSP.infoSitio.clusterInstalacionC = $scope.infoFactibilidad.cluster;
                         $scope.asignarGeografiasUnoDos();
                     } else {
+                        objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                         mostrarMensajeErrorAlert('Ha ocurrido un error al actualizar la factibilidad');
                         swal.close();
                     }

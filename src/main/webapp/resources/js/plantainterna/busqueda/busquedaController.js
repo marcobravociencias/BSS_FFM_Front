@@ -1,4 +1,5 @@
 var app = angular.module('busquedaApp', []);
+var objectTempAccion;
 
 app.controller('busquedaController', ['$scope', '$q', 'busquedaService', 'genericService', function ($scope, $q, busquedaService, genericService) {
     $scope.showSearch = true;
@@ -30,6 +31,7 @@ app.controller('busquedaController', ['$scope', '$q', 'busquedaService', 'generi
     $scope.limitTelefoniaCf = 10;
     $scope.limitTvCf = 10;
     $scope.limitIps = 10;
+    
 
     app.activacionController($scope, $q, busquedaService)
     app.noticiasController($scope, $q, busquedaService)
@@ -39,7 +41,22 @@ app.controller('busquedaController', ['$scope', '$q', 'busquedaService', 'generi
             moduloAccionesUsuario: 'moduloBusqueda'
         }
         genericService.consultarConfiguracionDespachoDespacho(params).then((result) => {
-            console.log(result)
+            if (result.data !== undefined) {
+                if (result.data.respuesta) {
+                    if (result.data.result) {
+                        let resultConf = result.data.result;
+                        objectTempAccion = new GenericAccionRealizada(""+resultConf.MODULO_ACCIONES_USUARIO.id, 'TOP_RIGHT');
+                        objectTempAccion.inicializarBotonAccionesRecientes();
+
+                    } else {
+                        toastr.warning('No se encontraron datos para la configuraci\u00F3n');
+                    }
+                } else {
+                    toastr.warning(result.data.resultDescripcion);
+                }
+            } else {
+                toastr.error('Ha ocurrido un error en la consulta de configuraci\u00F3n');
+            }
         }).catch((err) => handleError(err));
     }
     $scope.consultaPermisos();

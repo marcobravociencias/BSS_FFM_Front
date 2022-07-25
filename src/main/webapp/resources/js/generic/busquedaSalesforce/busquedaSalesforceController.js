@@ -798,21 +798,27 @@ app.busquedaSalesforce = function ($scope, busquedaSalesforceService) {
         console.log(params);
         swal({ text: 'Cargando informaci\u00f3n ...', allowOutsideClick: false });
         swal.showLoading();
+        let tituloAccion = "Crear comentario noticia";
+        let mensajeEnvio = 'Ha ocurrido un error al crear el comentario para: ' + $scope.detalle.nombre;
         busquedaSalesforceService.crearNoticia(params).then((response) => {
-            console.log(response)
             if (response.data.respuesta) {
                 if (response.data.result) {
                     if (response.data.result.result === '0') {
+                        mensajeEnvio = 'Se ha creado el comentario para: ' + $scope.detalle.nombre;
+                        objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
                         $scope.resetFileGeneralBusqueda();
                         $scope.mensajeGeneral = '';
                         $scope.objectoConsulta();
                     } else {
+                        objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                         mostrarMensajeWarningValidacion(response.data.result.resultDescripcion)
                     }
                 } else {
+                    objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                     mostrarMensajeWarningValidacion(response.data.resultDescripcion)
                 }
             } else {
+                objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                 mostrarMensajeWarningValidacion(response.data.resultDescripcion)
             }
 
@@ -1050,26 +1056,34 @@ app.busquedaSalesforce = function ($scope, busquedaSalesforceService) {
     $scope.crearSubComnetarioBusqueda = function (params) {
         swal({ text: 'Cargando informaci\u00f3n ...', allowOutsideClick: false });
         swal.showLoading();
+        let tituloAccion = "Crear sub-comentario noticia";
+        let mensajeEnvio = 'Ha ocurrido un error al crear el comentario para: ' + $scope.detalle.nombre;
         busquedaSalesforceService.crearSubNoticia(params).then(function success(response) {
             console.log(response)
             if (response.data.respuesta) {
                 if (response.data.result) {
                     if (response.data.result.result === '0') {
+                        mensajeEnvio = 'Se ha creado el sub-comentario para: ' + $scope.detalle.nombre;
+                        objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
                         $scope.resetFileBusqueda(params.newId);
                         // document.getElementById('texto-subcomentario-os-' + params.newId).value = ''
                         // document.getElementById('texto-subcomentario-op-' + params.newId).value = ''
                         document.getElementById('texto-subcomentario-ticket-' + params.newId).value = ''
                         $scope.objectoConsulta();
                     } else {
+                        objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                         mostrarMensajeErrorAlert(response.data.result.resultDescription)
                         swal.close()
                     }
                 } else {
+                    objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                     mostrarMensajeErrorAlert("Hubo un error, por favor de intentar mas tarde.")
                     swal.close()
                 }
             } else {
+                objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                 mostrarMensajeErrorAlert(response.data.resultDescription)
+                swal.close()
             }
 
         }).catch((err) => handleError(err));
@@ -1198,20 +1212,27 @@ app.busquedaSalesforce = function ($scope, busquedaSalesforceService) {
     $scope.enviareliminarComentarioBusqueda = function (params) {
         swal({ text: 'Cargando informaci\u00f3n ...', allowOutsideClick: false });
         swal.showLoading();
+        let tituloAccion = "Eliminar comentario noticia";
+        let mensajeEnvio = 'Ha ocurrido un error al eliminar el comentario para: ' + $scope.detalle.nombre;
         busquedaSalesforceService.eliminarNoticia(params).then(function success(response) {
             if (response.data.respuesta) {
                 if (response.data.result !== undefined) {
                     if (response.data.result.result === "0") {
+                        mensajeEnvio = 'Se ha eliminado el comentario para: ' + $scope.detalle.nombre;
+                        objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
                         $scope.objectoConsulta();
                     } else {
+                        objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                         mostrarMensajeErrorAlert(response.data.result.resultDescription)
                         swal.close()
                     }
                 } else {
+                    objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                     mostrarMensajeErrorAlert("Error al consultar")
                     swal.close()
                 }
             } else {
+                objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                 mostrarMensajeErrorAlert("Error en el servidor")
                 swal.close()
             }
@@ -1224,21 +1245,28 @@ app.busquedaSalesforce = function ($scope, busquedaSalesforceService) {
     $scope.enviarEliminarSubBusqueda = function (params) {
         swal({ text: 'Cargando informaci\u00f3n ...', allowOutsideClick: false });
         swal.showLoading();
+        let tituloAccion = "Eliminar sub-comentario noticia";
+        let mensajeEnvio = 'Ha ocurrido un error al eliminar el sub-comentario para: ' + $scope.detalle.nombre;
         busquedaSalesforceService.eliminarSubNoticia(params).then(function success(response) {
             console.log(response);
             if (response.data.respuesta) {
                 if (response.data.result !== undefined) {
                     if (response.data.result.result === "0") {
+                        mensajeEnvio = 'Se ha eliminado el sub-comentario para: ' + $scope.detalle.nombre;
+                        objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
                         $scope.objectoConsulta();
                     } else {
+                        objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                         mostrarMensajeErrorAlert(response.data.result.resultDescription)
                         swal.close()
                     }
                 } else {
+                    objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                     mostrarMensajeErrorAlert("Error al consultar")
                     swal.close()
                 }
             } else {
+                objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                 mostrarMensajeErrorAlert("Error en el servidor")
                 swal.close()
             }

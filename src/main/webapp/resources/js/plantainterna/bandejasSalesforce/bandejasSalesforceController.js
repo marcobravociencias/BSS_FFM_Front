@@ -1,4 +1,6 @@
 var app = angular.module('bandejasSalesforceApp', []);
+var objectTempAccion;
+
 app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesforceService', 'genericService', 'busquedaSalesforceService', function ($scope, $q, bandejasSalesforceService, genericService, busquedaSalesforceService) {
 	app.busquedaSalesforce($scope, busquedaSalesforceService)
     $scope.banderaNoticiasTicket = false;
@@ -339,6 +341,8 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                 $scope.isPermisoConsultaRescataventas = ($scope.permisosUsuario.filter(e => { return e.clave == "accionConsultarRescataventas" })[0] != undefined);
                 $scope.isPermisoConsultaPendientesActivar = ($scope.permisosUsuario.filter(e => { return e.clave == "accionConsultarPendientesActivar" })[0] != undefined);
                 $scope.isPermisoAgendamiento = ($scope.permisosUsuario.filter(e => { return e.clave == "accionAgendamiento" })[0] != undefined);
+                objectTempAccion = new GenericAccionRealizada("" +  resultConf.MODULO_ACCIONES_USUARIO.id, 'TOP_RIGHT');
+                objectTempAccion.inicializarBotonAccionesRecientes();
             }
 
             if (results[1].data !== undefined) {
@@ -547,10 +551,14 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         let copyContacto=angular.copy(contacto);
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
+        let tituloAccion = "Guardar contacto";
+        let mensajeEnvio = 'Ha ocurrido un error al guardar el contacto para la cuenta: ' + params.numeroCuenta;
         bandejasSalesforceService.guardarContactoSalesforce(params).then(function success(response) {
             if (response.data !== undefined) {
                 if (response.data.result!=undefined) {
                     if(response.data.result.ids != undefined && response.data.result.ids.length>0){
+                        mensajeEnvio = "Se ha guardado el contacto para la cuenta: " + params.numeroCuenta;
+                        objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
                         copyContacto.id=response.data.result.ids[0]
                         $scope.listContactosAgendamiento.push(copyContacto);
                         $scope.idContactoSelected= copyContacto.id
@@ -559,14 +567,17 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                         mostrarMensajeExitoAlert("Contacto agregado correctamente");
                         swal.close();
                     }else{
+                        objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                         mostrarMensajeWarningValidacion('No se pudo guardar el contacto');
                         swal.close();
                     }                 
                 } else {
+                    objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                     mostrarMensajeErrorAlert(response.data.resultDescripcion);
                     swal.close();
                 }
             } else {
+                objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                 mostrarMensajeErrorAlert('Ha ocurrido un error al consultar la factibilidad');
                 swal.close();
             }
@@ -898,10 +909,14 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                 if (isConfirm) {
                 	swal({ text: 'Espera un momento...', allowOutsideClick: false });
                     swal.showLoading();
+                    let tituloAccion = "Agendar pendiente";
+                    let mensajeEnvio = 'Ha ocurrido un error al agendar la OT con la cuenta: ' + params.numeroCuenta;
                 	bandejasSalesforceService.agendarPendienteBandejaSF(params).then(function success(response) {
                         if (response.data !== undefined) {
                             if (response.data.respuesta) {
-                            	mostrarMensajeExitoAlert("Se agendó la orden de trabajo " + response.data.result.idOTFFM + " con la " + response.data.result.ordenServicio + ".");
+                                mensajeEnvio = "Se agendó la orden de trabajo " + response.data.result.idOTFFM + " con la " + response.data.result.ordenServicio;
+                                objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
+                                mostrarMensajeExitoAlert("Se agendó la orden de trabajo " + response.data.result.idOTFFM + " con la " + response.data.result.ordenServicio + ".");
                             	$scope.isCspAgendado = true;
                                 $scope.mensajeCspAgendado = "Se agendó la orden de trabajo " + response.data.result.idOTFFM + " con la " + response.data.result.ordenServicio + ".";
                             	$scope.isAgendamiento = false;
@@ -909,10 +924,12 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                                 $scope.elementoCSP = {};
                                 swal.close();
                             }else{
+                                objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                             	mostrarMensajeInformativo(response.data.resultDescripcion);
                             	swal.close();
                             }
                         }else{
+                            objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                         	mostrarMensajeWarningValidacion("Error interno en el servidor.");
                         	swal.close();
                         }
