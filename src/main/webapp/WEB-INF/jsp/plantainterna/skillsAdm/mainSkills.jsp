@@ -70,7 +70,7 @@
 									<input id="idBuscadorGeografia" type="text" class="form-control form-control-sm buscar-input-operario" placeholder="Buscar geograf&iacute;a" ng-keyup="busquedaGeografiaIndividual()"> 
 									<span class="search-icon-operario-busq fa fa-search"></span>
 								</div>
-								<div class="scrollGeneralArbolGeografiaIndividual">
+								<div class="scrollGeneralArbolGeografiaIndividual" style="margin-top: 0.5em;">
 									<div id="arbolGeografiasVistaIndividual" class="proton-demo"></div>
 								</div>
 								<div id="divMensajeSeleccioneElemento" class="content-noseleccion">
@@ -82,9 +82,9 @@
 									<input id="buscadorTecnicoConsultaVistaIndividual" type="text" class="form-control form-control-sm buscar-input-operario" ng-model="buscarTecnico" placeholder="Buscar T&eacute;cnico"> 
 									<span class="search-icon-operario-busq fa fa-search" id="buscar-operario"></span>
 								</div>
-								<div class="tecnicos-container">
+								<div class="tecnicos-container" style="margin-top: 0.5em;">
 									<div class="scrollGeneral" id="divTecnicos" style="display: none">
-										<div ng-repeat="tecnico in tecnicosMostradas | filter:buscarTecnico track by $index" class="user-section">
+										<div ng-repeat="tecnico in tecnicosMostradas | filter:{nombre: buscarTecnico} | filter:{geografia: buscarTecnico} track by $index" class="user-section">
 											<div id="contenedorTecnicoConsulta{{tecnico.idUsuario}}" class="valign-wrapper tecnicosDiv">
 												<div class="col-2 media-image online pr-0">
 													<img src="{{tecnico.urlFotoPerfil !=undefined && tecnico.urlFotoPerfil ? tecnico.urlFotoPerfil :'./resources/img/plantainterna/despacho/tecnicootasignada.png'}}" class="circle z-depth-2 responsive-img">
@@ -113,11 +113,17 @@
 								</div>
 								<div id="divContenedorSkills" style="display: none">
 									<div class="row">
-										<div class="col-md-7" style="padding-right: 2em;">
+										<div class="col-md-10" style="text-align: right;">
+											<b class="multiseleccion-interve">Multiselecci&oacute;n</b>
 										</div>
-										<div class="col-md-5">
-											<div style=" text-align: right;">
-												<a class="multiseleccion-interve" ng-click="mostrarContenedoresMultiseleccion()" href="">Multiselecci&oacute;n</a>
+										<div class="col-md-1" style="padding: 3px;">
+											<div class="btnAgregarMultiseleccion">
+												<i ng-click="mostrarContenedoresMultiseleccion('1')" class="fa fa-plus" style="color: white; font-size: 0.9em;"></i>
+											</div>
+										</div>
+										<div class="col-md-1" style="padding: 3px;">
+											<div class="btnEliminarMultiseleccion">
+												<i ng-click="mostrarContenedoresMultiseleccion('0')" class="fa fa-minus" style="color: white; font-size: 0.9em;"></i>
 											</div>
 										</div>
 									</div>
@@ -233,7 +239,7 @@
                                     <div class="input-group input-group-sm content-seach-group  ">
                                         <input id="buscadorTecnicoMultiseleccion" type="text" class="form-control form-control-sm buscar-input-operario" ng-model="buscarTecnico" placeholder="Buscar T&eacute;cnico"> <span class="search-icon-operario-busq fa fa-search" id="buscar-operario"></span>
                                     </div>
-                                    <div class="tecnicos-container">
+                                    <div class="tecnicos-container" style="margin-top: 0.5em;">
                                         <div class="scrollGeneral" id="divTecnicos">
                                             <div class=" valign-wrapper">
                                                 <div class="col-12 pl-0">
@@ -277,15 +283,29 @@
                                         <div style="margin: 10px; text-align: right;">
                                             <span id="txtContadorSkillsMultiseleccion">Skills seleccionadas: {{contadorSkillsSeleccionadasMultiseleccion}}</span>
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-cerrar-modal btn-secondary ripple-surface" data-mdb-dismiss="modal" ng-click="regresarContenedorIndividual()">CERRAR</button>
-                                            <button class="btn btn-primary btn-aceptar-modal btnGuardarSkillsModal" ng-click="guardarAsignacionSkillsMultiseleccion()">GUARDAR</button>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="modal-footer">
+                    	<div class="container">
+	                    	<div class="row">
+	                    		<div class="col-md-9">
+	                    			<div ng-show="tipoMultiseleccion == '1'" class="content-text-tipo-multiseleccion">
+										<b id="textTipoMultiseleccion" class="text-tipo-multiseleccion"><i class="icono-noseleccion fas fa-exclamation-circle"></i> Seleccionaste la opción de <font color="#f55756">agregar</font> multiples skills.</b>
+									</div>
+									<div ng-show="tipoMultiseleccion == '0'" class="content-text-tipo-multiseleccion">
+										<b id="textTipoMultiseleccion" class="text-tipo-multiseleccion"><i class="icono-noseleccion fas fa-exclamation-circle"></i> Seleccionaste la opción de <font color="#f55756">eliminar</font> multiples skills.</b>
+									</div>
+	                    		</div>
+	                    		<div class="col-md-3">
+	                    			<button type="button" class="btn btn-cerrar-modal btn-secondary ripple-surface" data-mdb-dismiss="modal" ng-click="regresarContenedorIndividual()">CERRAR</button>
+									<button class="btn btn-primary btn-aceptar-modal btnGuardarSkillsModal" ng-click="guardarAsignacionSkillsMultiseleccion()">GUARDAR</button>
+	                    		</div>
+	                    	</div>
+                    	</div>
+					</div>
                 </div>
             </div>
         </div>

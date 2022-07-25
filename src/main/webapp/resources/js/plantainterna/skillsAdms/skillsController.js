@@ -26,6 +26,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 	$scope.skillsSeleccionadasMultiseleccion = [];
 	$scope.nivelSkill = null;
 	$scope.txtbusq='';
+	$scope.tipoMultiseleccion = null;
 	
 	//Funciones pendientes por revisar
 	$scope.busquedaT=function(){
@@ -113,11 +114,11 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 						$scope.$apply();
 					}, 250);
 				}else{
-					toastr.warning('¡No se encontraron técnicos asignados a la geografía seleccionada!');
+					toastr.info('¡No se encontraron técnicos asignados a la geografía seleccionada!');
 				}
 				$('#contadorTecnicos').text("Técnicos encontrados: " + $scope.tecnicosMostradas.length);
 			} else {
-					
+				toastr.warning(response.data.resultDescripcion);
 			}
 			swal.close();
 		}).catch(err => handleError(err));
@@ -237,10 +238,17 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 	}
 	
 	//FUNCIÓN QUE MUESTRA ES APARTADO DE MULTISELECCIÓN PARA REALIZAR LA MULTIASIGNACIÓN DE SKILLS / CARGA EL ÁRBOL DE INTERVENCIONES - SKILLS
-	$scope.mostrarContenedoresMultiseleccion = function(){
+	$scope.mostrarContenedoresMultiseleccion = function(tipo){
+		$scope.tipoMultiseleccion = tipo;
 		$(".checkedTecnicos").prop("checked",true);
 		$("#checkTotdosTecnicos").prop("checked",true);
 		$("#modalMultiseleccion").modal('show');
+		
+//		if($scope.tipoMultiseleccion == "1"){
+//			$("#textTipoMultiseleccion").text("Seleccionaste la opción de agregar multiples skills.");
+//		}else if($scope.tipoMultiseleccion == "0"){
+//			$("#textTipoMultiseleccion").text("Seleccionaste la opción de " + '<font color="#f55756">palabra</font>' + " eliminar multiples skills.");
+//		}
 		
 		angular.forEach($scope.listadoIntervencionesMultiseleccion,function(intervencion,index){
 			intervencion.check = 0;
@@ -323,8 +331,9 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 	
 	$scope.cargarGeografiasArbolTabla = function() {
 		let geografia = $scope.listaGeografiasTabla;
+		
         geografia.map((e)=>{
-        	e.parent=e.padre ==undefined ? "#" : e.padre;
+        	e.parent = e.padre == null ? 0 : e.padre;
             e.text= e.nombre;
             e.icon= "fa fa-globe";
             return e
@@ -625,8 +634,11 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
                         	$scope.listaGeografiasIndividual = listGeografias;
                         	$scope.listaGeografiasTabla = listGeografias;
 							let geografia = $scope.listaGeografiasIndividual;
+							
+							geografia.push({id: 0, nombre: "TOTALPLAY", nivel: 0, padre: "#", state:{opened: true}});
+							
                             geografia.map((e)=>{
-                                e.parent=e.padre ==undefined ? "#" : e.padre;
+                            	e.parent = e.padre == null ? 0 : e.padre;
                                 e.text= e.nombre;
                                 e.icon= "fa fa-globe";
                                 return e
@@ -912,7 +924,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 				$scope.skillsSeleccionadasMultiseleccion.push(skillSeleccionada.id);
 			}
 		});
-		
+
 		if($scope.skillsSeleccionadasMultiseleccion != ""){
 			swal({
 				title: "Se guardarán las asignaciones de skills",
@@ -949,6 +961,10 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 							}	
 						}
 					}
+					
+					if($scope.tipoMultiseleccion == "0"){
+						params.borrar = 1;
+					}
 
 					let tituloAccion = "Actualizar skill multiple";
 					let mensajeEnvio = 'Ha ocurrido un error al actualizar los skill a los técnicos: ' + strTempName;
@@ -963,10 +979,14 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 								mensajeEnvio = 'Se ha actualizado los skill a los técnicos: ' + strTempName;
 								objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
 							} else {
+								swal.close();
+								$('#arbolSkillsMultiseleccion').jstree("deselect_all");
 								objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
 								mostrarMensajeWarningValidacion(results[0].data.resultDescripcion);
 							}
 						} else {
+							swal.close();
+							$('#arbolSkillsMultiseleccion').jstree("deselect_all");
 							objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
 							mostrarMensajeErrorAlert('Ha ocurrido un error actualizar ');
 						}
