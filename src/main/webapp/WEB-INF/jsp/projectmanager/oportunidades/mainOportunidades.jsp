@@ -205,7 +205,6 @@
                                 <th>N&uacute;m OS</th>
                                 <th>Plaza Com.</th>
                                 <th>Agendar</th>
-                                <th>Generar OU</th>
                             </tr>
                         </thead>
                         <tbody>

@@ -18,7 +18,8 @@ app.controller('oportunidadController', ['$scope', '$q', 'oportunidadesService',
         $('#fecha_oportunidad').datepicker({
             format: "dd/mm/yyyy",
             startView: "months", 
-            minViewMode: "months"
+            minViewMode: "months",
+            language: 'es'
         });
         $('#fecha_oportunidad').datepicker('update', new Date());
 
@@ -128,9 +129,9 @@ app.controller('oportunidadController', ['$scope', '$q', 'oportunidadesService',
         angular.forEach(array, function (elemento, index) {
             let row = [];
             row[0] = elemento.numOportunidad ? '<span onclick="consultarDetalleObjectosSF(' + "'" + elemento.idOportunidad + "','OP'" + ')" class="link_table">' + elemento.numOportunidad + '</span>' : "";
-            row[1] = elemento.nombreCliente ? elemento.nombreCliente : "";
-            row[2] = elemento.eimAsignado ? elemento.eimAsignado : "";
-            row[3] = elemento.fechaCierre ? elemento.fechaCierre : "";
+            row[1] = elemento.nombreCliente ? elemento.nombreCliente : "NA";
+            row[2] = elemento.eimAsignado ? elemento.eimAsignado : "NA";
+            row[3] = elemento.fechaCierre ? elemento.fechaCierre : "NA";
             row[4] = "NA";
             row[5] = elemento.contadores.total;
             row[6] = elemento.contadores.implementados;
@@ -235,12 +236,11 @@ app.controller('oportunidadController', ['$scope', '$q', 'oportunidadesService',
             row[2] = "NA";
             row[3] = "NA";
             row[4] = elemento.nombreCuentaFactura ? '<span onclick="consultarDetalleObjectosSF(' + "'" + elemento.idCuentaFactura + "','CF'" + ')" class="link_table">' + elemento.nombreCuentaFactura + '</span>' : "";
-            row[5] = elemento.estatusCsp ? elemento.estatusCsp : "";
-            row[6] = elemento.estatusOs ? elemento.estatusOs : "";
-            row[7] = elemento.folioOs ? elemento.folioOs : "";
+            row[5] = elemento.estatusCsp ? elemento.estatusCsp : "NA";
+            row[6] = elemento.estatusOs ? elemento.estatusOs : "NA";
+            row[7] = elemento.folioOs ? elemento.folioOs : "NA";
             row[8] = '<input type="checkbox">';
             row[9] = '<div class="tooltip-btn"> <span class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones"><th><i class="icono_cons_bg fa fa-calendar" aria-hidden="true"></i></th></span></div>';
-            row[10] = '<div class="tooltip-btn"> <span class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones"><th><i class="icono_cons_bg fa fa-bars" aria-hidden="true"></i></th></span></div>';
             arrayRow.push(row);
 
             $scope.contadorDetalleOportunidad.numCsp++;
