@@ -1076,8 +1076,14 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 	}
 	
 	$scope.contadorSkillsVistaIndividual = function() {
-		var conSkillsArbolIndividual = $('#arbolSkillsVistaIndividual').jstree("get_selected", true).length;
-		$scope.contadorSkillsSeleccionadas = conSkillsArbolIndividual;
+		var conSkillsArbolIndividual = $('#arbolSkillsVistaIndividual').jstree("get_selected", true);
+		var conSkillsSelec = 0;
+		angular.forEach(conSkillsArbolIndividual,function(skillSeleccionada,index){
+			if(skillSeleccionada.original.nivel == $scope.nivelSkill){
+				conSkillsSelec = conSkillsSelec + 1;
+			}
+		});
+		$scope.contadorSkillsSeleccionadas = conSkillsSelec;
 	}
 	
 	//-------------------------------------------------- FIN CAMBIOS REYNEL --------------------------------------------------
