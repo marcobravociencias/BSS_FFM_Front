@@ -307,13 +307,13 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                 }
 
                 if (llavesResult.N_FILTRO_GEOGRAFIA_RESCATAVENTAS) {
-                    $scope.nfiltrogeografiaRescataVentas = llavesResult.N_FILTRO_GEOGRAFIA_PENDIENTES_ACTIVAR;
+                    $scope.nfiltrogeografiaRescataVentas = llavesResult.N_FILTRO_GEOGRAFIA_RESCATAVENTAS;
                 } else if (llavesResult.N_FILTRO_GEOGRAFIA) {
                     $scope.nfiltrogeografiaRescataVentas = llavesResult.N_FILTRO_GEOGRAFIA;
                 }
 
                 if (llavesResult.N_FILTRO_GEOGRAFIA_PENDIENTES_AGENDAR) {
-                    $scope.nfiltrogeografiaPendienteAgendar = llavesResult.N_FILTRO_GEOGRAFIA_PENDIENTES_ACTIVAR;
+                    $scope.nfiltrogeografiaPendienteAgendar = llavesResult.N_FILTRO_GEOGRAFIA_PENDIENTES_AGENDAR;
                 } else if (llavesResult.N_FILTRO_GEOGRAFIA) {
                     $scope.nfiltrogeografiaPendienteAgendar = llavesResult.N_FILTRO_GEOGRAFIA;
                 }
