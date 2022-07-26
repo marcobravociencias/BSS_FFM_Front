@@ -423,7 +423,7 @@
                 aria-labelledby="panelsStayOpen-headingThree">
                 <div class="accordion-body">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-5">
                             <div class="content-checkbox content-dictamen-folio">
                                 <!--div class="container-fluid ticket-content opciones-checkbox-dictamen">
                                     <div class="container-text-title-dictamen"><span class="text-tile-ticket">VISITA
@@ -452,10 +452,10 @@
 
                             </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-7">
                             <form ng-show="agregarNuevoEquipoContent">
                                 <div class="form-row">
-                                    <div class="form-group col-md-2">
+                                    <div class="form-group col-md-3 field-old inputTicket-select">
                                         <label class="label-nuevo-equipo" for="selectTipoEquipoAdd">Tipo</label>
                                         <select
                                             ng-class="{'error-captura-input': !cambioEquipo.idTipoEquipo  && isEvaluarNuevoEquipo}"
@@ -468,39 +468,58 @@
                                             </option>
                                         </select>
                                     </div>
-                                    <div class="form-group col-md-2">
-                                        <label class="label-nuevo-equipo" for="noSerieAnteriorEquipo">No. Serie</label>
+                                    <div class="form-group col-md-3 field-old inputTicket-select">
+                                        <label class="label-nuevo-equipo" for="modeloViejoEquipo">Modelo actual</label>
+                                        <input
+                                            ng-class="{'error-captura-input': !cambioEquipo.modeloViejo && isEvaluarNuevoEquipo}" readonly ng-click="abrirModalModelos(false)"
+                                            maxlength="30" ng-model="cambioEquipo.modeloViejo" type="text"
+                                            class="form-control form-control-sm inputTicket" id="modeloViejoEquipo"
+                                            placeholder="Seleccione...">
+                                    </div>
+                                    <div class="form-group col-md-3 field-old">
+                                        <label class="label-nuevo-equipo" for="noSerieAnteriorEquipo">No. Serie actual</label>
                                         <input
                                             ng-class="{'error-captura-input': !cambioEquipo.numSerieViejo && isEvaluarNuevoEquipo}"
                                             maxlength="30" ng-model="cambioEquipo.numSerieViejo" type="text"
                                             class="form-control form-control-sm inputTicket" id="noSerieAnteriorEquipo"
                                             placeholder="">
                                     </div>
-                                    <div class="form-group col-md-2">
-                                        <label class="label-nuevo-equipo" for="noMacViejoEquipo">MAC</label>
+                                    <div class="form-group col-md-3 field-old">
+                                        <label class="label-nuevo-equipo" for="noMacViejoEquipo">MAC actual</label>
                                         <input
                                             ng-class="{'error-captura-input': !cambioEquipo.macViejo && isEvaluarNuevoEquipo}"
                                             maxlength="30" ng-model="cambioEquipo.macViejo" type="text"
                                             class="form-control form-control-sm inputTicket" id="noMacViejoEquipo"
                                             placeholder="">
                                     </div>
-                                    <div class="form-group col-md-2">
-                                        <label class="label-nuevo-equipo" for="noSerieNuevoEquipo">No. Serie</label>
+         
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-3 inputTicket-select">
+                                        <label class="label-nuevo-equipo" for="modeloNuevoEquipo">Modelo nuevo</label>
+                                        <input
+                                            ng-class="{'error-captura-input': !cambioEquipo.modeloNuevo && isEvaluarNuevoEquipo}" ng-click="abrirModalModelos(true)" readonly
+                                            maxlength="30" ng-model="cambioEquipo.modeloNuevo" type="text"
+                                            class="form-control form-control-sm inputTicket" id="modeloNuevoEquipo"
+                                            placeholder="Seleccione...">
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label class="label-nuevo-equipo" for="noSerieNuevoEquipo">No. Serie nuevo</label>
                                         <input
                                             ng-class="{'error-captura-input': !cambioEquipo.numeSerieNuevo && isEvaluarNuevoEquipo}"
                                             maxlength="30" ng-model="cambioEquipo.numeSerieNuevo" type="text"
                                             class="form-control form-control-sm inputTicket" id="noSerieNuevoEquipo"
                                             placeholder="">
                                     </div>
-                                    <div class="form-group col-md-2">
-                                        <label class="label-nuevo-equipo" for="noMacNuevoEquipo">MAC</label>
+                                    <div class="form-group col-md-3">
+                                        <label class="label-nuevo-equipo" for="noMacNuevoEquipo">MAC nuevo</label>
                                         <input
                                             ng-class="{'error-captura-input': !cambioEquipo.macNueva && isEvaluarNuevoEquipo}"
                                             maxlength="30" ng-model="cambioEquipo.macNueva" type="text"
                                             class="form-control form-control-sm inputTicket" id="noMacNuevoEquipo"
                                             placeholder="">
                                     </div>
-                                    <div class="form-group col-md-2">
+                                    <div class="form-group col-md-3">
                                         <button ng-click="agregarRegistroCambioEquipo()" id="agregarnuevoEquivo"
                                             type="button"
                                             class="btn btn-sm btn-primary btn-lg btn-floating btn-disabled">
@@ -515,8 +534,10 @@
                                         <th scope="col">Tipo </th>
                                         <th scope="col">No. serie actual</th>
                                         <th scope="col">MAC actual</th>
+                                        <th scope="col">Modelo actual</th>
                                         <th scope="col">No serie nueva</th>
                                         <th scope="col">MAC nueva</th>
+                                        <th scope="col">Modelo nuevo</th>
                                         <th scope="col"></th>
                                     </tr>
                                 </thead>
@@ -527,9 +548,11 @@
                                         <td ng-bind="itemRegistro.numSerieViejo" title="{{itemRegistro.numSerieViejo}}">
                                         </td>
                                         <td ng-bind="itemRegistro.macViejo" title="{{itemRegistro.macViejo}}"></td>
+                                        <td ng-bind="itemRegistro.modeloViejo" title="{{itemRegistro.modeloViejo}}"></td>
                                         <td ng-bind="itemRegistro.numeSerieNuevo"
                                             title="{{itemRegistro.numeSerieNuevo}}"></td>
                                         <td ng-bind="itemRegistro.macNueva" title="{{itemRegistro.macNueva}}"></td>
+                                        <td ng-bind="itemRegistro.modeloNuevo" title="{{itemRegistro.modeloNuevo}}"></td>
                                         <td>
                                             <button ng-click="eliminarRegistro($index)" type="button"
                                                 class="eliminar-registro-cambioequipo btn btn-sm btn-danger btn-disabled">

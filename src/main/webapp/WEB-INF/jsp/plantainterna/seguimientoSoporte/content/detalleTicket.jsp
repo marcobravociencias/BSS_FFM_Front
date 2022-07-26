@@ -407,8 +407,10 @@
                                         <th scope="col">Tipo </th>
                                         <th scope="col">No. serie actual</th>
                                         <th scope="col">MAC actual</th>
+                                        <th scope="col">Modelo actual</th>
                                         <th scope="col">No serie nueva</th>
                                         <th scope="col">MAC nueva</th>
+                                        <th scope="col">Modelo nuevo</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -418,9 +420,11 @@
                                         <td ng-bind="itemRegistro.numSerieViejo" title="{{itemRegistro.numSerieViejo}}">
                                         </td>
                                         <td ng-bind="itemRegistro.macViejo" title="{{itemRegistro.macViejo}}"></td>
+                                        <td ng-bind="itemRegistro.modeloViejo" title="{{itemRegistro.modeloViejo}}"></td>
                                         <td ng-bind="itemRegistro.numeSerieNuevo"
                                             title="{{itemRegistro.numeSerieNuevo}}"></td>
                                         <td ng-bind="itemRegistro.macNueva" title="{{itemRegistro.macNueva}}"></td>
+                                        <td ng-bind="itemRegistro.modeloNuevo" title="{{itemRegistro.modeloNuevo}}"></td>
                                     </tr>
                                     <tr ng-show="listadoNuevoViejosEquipo.length <= 0">
                                         <td class="col-listadoregistros" colspan="6">Sin registros</td>

@@ -480,4 +480,21 @@ public class ImplSoporteCentralizadoService implements SoporteCentralizadoServic
 		return response;
 	}
 
+	@Override
+	public ServiceResponseResult consultarModelosTicketSoporte() {
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		String tokenAccess = principalDetail.getAccess_token();
+		logger.info("consultarModelosTicketSoporte ## " + tokenAccess);
+
+		String urlRequest = principalDetail.getDireccionAmbiente()
+				.concat(constSoporteCentralizado.getConsultaModelosTicketSoporte());
+		logger.info("### URL consultarModelosTicketSoporte():" + urlRequest);
+
+		Map<String, String> paramsRequestGet = new HashMap<String, String>();
+		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
+				ServiceResponseResult.class, tokenAccess);
+		logger.info("### RESULT consultarModelosTicketSoporte(): " + gson.toJson(response));
+		return response;
+	}
+
 }

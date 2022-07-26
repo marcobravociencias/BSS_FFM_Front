@@ -43,4 +43,6 @@ public interface SoporteCentralizadoService {
     public ServiceResponseResult reasignarIngenieroTicket(String params);
     
     public ServiceResponseResult consultarIngenierosSoporte(String params);
+    
+    public ServiceResponseResult consultarModelosTicketSoporte();
 }

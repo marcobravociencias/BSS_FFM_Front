@@ -100,6 +100,28 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
     let is_consulta_detalle_dispositivos = false;
     let is_consulta_detalle_recoleccion = false;
 
+    $scope.isNuevo = false;
+
+    angular.element(document).ready(function () {
+        $("#modal-arbol-modelo").on("hidden.bs.modal", function () {
+            var modelo = $('#jstree-modelo').jstree("get_selected", true);
+            if($scope.isNuevo){
+                $scope.cambioEquipo.modeloNuevo = modelo[0].text;
+                $scope.cambioEquipo.idNuevo = modelo[0].id.split("_")[0];
+                $scope.cambioEquipo.idArbolNuevo = modelo[0].id;
+            }else{
+                $scope.cambioEquipo.modeloViejo = modelo[0].text;
+                $scope.cambioEquipo.idViejo = modelo[0].id.split("_")[0];
+                $scope.cambioEquipo.idArbolViejo = modelo[0].id;
+            }
+            $scope.$apply();
+        })
+    });
+
+    $scope.busquedaPaquete = function () {
+        $("#jstree-modelo").jstree("search", $('#searhArbolModelo').val());
+    }
+
     let tableRecoleccionDetalleOT = $('#tableRecoleccionDetalleOT').DataTable({
         "paging": true,
         "lengthChange": false,
@@ -168,6 +190,13 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             isError = true
         }
 
+        if (!$scope.cambioEquipo.modeloNuevo) {
+            isError = true
+        }
+        if (!$scope.cambioEquipo.modeloViejo) {
+            isError = true
+        }
+
         if (isError) {
             $scope.isEvaluarNuevoEquipo = true
             return false;
@@ -178,6 +207,10 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             macViejo: $scope.cambioEquipo.macViejo,
             macNueva: $scope.cambioEquipo.macNueva,
             numeSerieNuevo: $scope.cambioEquipo.numeSerieNuevo,
+            modeloNuevo: $scope.cambioEquipo.modeloNuevo,
+            modeloViejo: $scope.cambioEquipo.modeloViejo,
+            idNuevo: $scope.cambioEquipo.idNuevo,
+            idViejo: $scope.cambioEquipo.idViejo,
             idTipoEquipo: $scope.cambioEquipo.idTipoEquipo,
             descripcion: $scope.equiposList.find((e) => e.id == $scope.cambioEquipo.idTipoEquipo).descripcion,
         })
@@ -311,7 +344,8 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
             gestionTicketSoporteService.consultaPropietariosTicketSoporte(),
             gestionTicketSoporteService.consultaEquiposSoporte(),
             gestionTicketSoporteService.consultaEstatusTicketSoporte(),
-            gestionTicketSoporteService.consultaTecnologiaTicketSoporte()
+            gestionTicketSoporteService.consultaTecnologiaTicketSoporte(),
+            gestionTicketSoporteService.consultarModelosSoporte()
         ]).then(function (results) {
             swal.close();
             if (results[0].data !== undefined) {
@@ -522,6 +556,46 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                 }
             } else {
                 mostrarMensajeWarningValidacion('No se pudo realizar la consulta de tecnolog\u00EDas.')
+            }
+
+            if (results[10].data.respuesta) {
+                if (results[10].data.result) {
+                    let modelos = results[10].data.result.modelos;
+                    let index = 0
+                    modelos.map((e) => {
+                        e.id =  e.id + '_' +index;
+                        e.parent = e.padre == undefined ? "#" : e.padre;
+                        e.text = e.description;
+                        e.icon = "fa fa-check-circle";
+                        e.state = {
+                            opened: false,
+                            selected: false,
+                        }
+                        index++;
+                        return e
+                    })
+                    $('#jstree-modelo').bind('loaded.jstree', function (e, data) {
+                    }).jstree({
+                        plugins: ["wholerow", 'search'],
+                        core: {
+                            data: modelos,
+                            themes: {
+                                name: 'proton',
+                                responsive: true,
+                                "icons": true
+                            },
+                            animation: 100
+                        },
+                        "search": {
+                            "case_sensitive": false,
+                            "show_only_matches": true
+                        }
+                    });
+                } else {
+                    mostrarMensajeWarningValidacion('No se pudo realizar la consulta de los modelos.')
+                }
+            } else {
+                mostrarMensajeWarningValidacion('No se pudo realizar la consulta de los modelos.')
             }
         });
     }
@@ -2611,6 +2685,22 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                 }
 			}).catch(err => handleError(err));
 		}
+    }
+
+    $scope.abrirModalModelos = function(isNuevo){
+        $scope.isNuevo = isNuevo;
+        $('#jstree-modelo').jstree("deselect_all");
+        $("#searhArbolModelo").val("");
+        $("#jstree-modelo").jstree("search", '');
+        if($scope.cambioEquipo.idArbolNuevo && isNuevo){
+            $('#jstree-modelo').jstree('select_node', $scope.cambioEquipo.idArbolNuevo);
+        }else if($scope.cambioEquipo.idArbolViejo && !isNuevo){
+            $('#jstree-modelo').jstree('select_node', $scope.cambioEquipo.idArbolViejo);
+        }
+        $("#modal-arbol-modelo").modal('show');
+        setTimeout(function () {
+            $("#searhArbolModelo").focus();
+        }, 750);
     }
     
     $scope.consultarRecoleccionDetalleOt = function () {

@@ -213,4 +213,14 @@ public class SoporteCentralizadoController {
 		}
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
+	
+	@GetMapping("/consultarModelosSoporte")
+	public ResponseEntity<?> consultarModelosSoporte() {
+		logger.info("###### SoporteCentralizadoController - consultarEquiposSoporte");
+		ServiceResponseResult response = soporteCentralizadoService.consultarModelosTicketSoporte();
+		if (response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
 }

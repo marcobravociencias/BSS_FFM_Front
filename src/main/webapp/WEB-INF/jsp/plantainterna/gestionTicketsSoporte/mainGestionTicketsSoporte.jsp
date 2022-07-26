@@ -119,6 +119,7 @@
         <jsp:include page="./modals/modalAsignarTicket.jsp"></jsp:include>
         <jsp:include page="./modals/modalEvidenciaOT.jsp"></jsp:include>
         <jsp:include page="./modals/modalDetalleOT.jsp"></jsp:include>
+        <jsp:include page="./modals/modalModelo.jsp"></jsp:include>
     </body>
     <!-- Scripts libraries -->
     <script type="text/javascript"

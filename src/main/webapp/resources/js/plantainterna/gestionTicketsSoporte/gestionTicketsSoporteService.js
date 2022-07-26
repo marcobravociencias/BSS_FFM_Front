@@ -221,6 +221,17 @@ app.service("gestionTicketSoporteService", function ($http) {
         });
     };
 
+    this.consultarModelosSoporte = function () {
+        return $http({
+            method: "get",
+            url: "req/consultarModelosSoporte",
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    };
+
+
     this.reasigarTicketIngeniero = function (params) {
         return $http({
             method: "post",

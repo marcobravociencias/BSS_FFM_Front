@@ -841,10 +841,17 @@ span.text-content-vehiculo {
     height: 2.2em;
 }
 
+#panelsStayOpen-collapseThree .inputTicket {
+    height: 2.1em !important;
+    padding: 0 0.5em !important;
+    font-size: 0.7em;
+}
+
+
 .inputTicket-select::after {
     content: "";
     position: absolute;
-    right: 5%;
+    right: 6%;
     width: 0;
     height: 0;
     border-left: 4px solid transparent;
@@ -1846,3 +1853,15 @@ img.img-recoleccion {
     font-size: 14px;
 }
 /* ORDER COLUMNS TABLE */
+
+.field-old{
+    margin: 0 !important;
+}
+
+#jstree-modelo.proton-demo .jstree-wholerow-clicked {
+    background: linear-gradient(to bottom, #3392e3 0%, #3392e3 100%) !important;
+}
+
+#jstree-modelo.proton-demo .jstree-clicked {
+    color: #fff !important;
+}
