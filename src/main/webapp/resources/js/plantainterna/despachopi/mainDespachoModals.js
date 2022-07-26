@@ -755,9 +755,12 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         $scope.arrayIntervenciones = [];
         $scope.arrayIntervenciones = data_tecnico.idSubIntervenciones;
         $scope.treeIntervencion = angular.copy($scope.arbolIntervenciones);
-        $scope.treeIntervencion.map((intervencion) => {
-            intervencion.check = ($scope.arrayIntervenciones.filter(e => { return Number(e) === intervencion.id })[0] != undefined);
-        });
+        if($scope.arrayIntervenciones && $scope.arrayIntervenciones.length){
+            $scope.treeIntervencion.map((intervencion) => {
+                intervencion.check = ($scope.arrayIntervenciones.filter(e => { return Number(e) === intervencion.id })[0] != undefined);
+            });
+        }
+        
         $scope.treeIntervencion.map((e) => {
             e.parent = e.idPadre == undefined ? "#" : e.idPadre;
             e.text = e.nombre;
@@ -794,9 +797,12 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
 
         let geografia = angular.copy($scope.listadogeografiacopy);
         let selectedGeografia = data_tecnico.idClusters;
-        geografia.map((geo) => {
-            geo.check = (selectedGeografia.filter(e => { return Number(e) === geo.id })[0] != undefined);
-        });
+        if(selectedGeografia && selectedGeografia.length){
+            geografia.map((geo) => {
+                geo.check = (selectedGeografia.filter(e => { return Number(e) === geo.id })[0] != undefined);
+            });
+        }
+
         geografia.map((e) => {
             e.parent = e.padre == undefined ? "#" : e.padre;
             e.text = e.nombre;
