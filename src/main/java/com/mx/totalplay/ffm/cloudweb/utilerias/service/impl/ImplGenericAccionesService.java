@@ -156,6 +156,27 @@ public class ImplGenericAccionesService implements GenericAccionesService {
 
 		return response;
 	}
+	
+	@Override
+	public ServiceResponseResult agregarMensajeAccionServiceLogin(String params, String token) {
+		logger.info("ImplGenericAccionesService.class [metodo = agregarMensajeAccionService() ]\n" + params);
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		
+		String tokenAcces = token;
+		if(tokenAcces == null) {
+			String urlService = env.getProperty("dep.envirom.web").concat(":8151").concat(env.getProperty("ws.url.validausrffm"));
+			LoginResult responseLog = (LoginResult) restCaller.callPostReturnClassBasicAuthXwwwUrlFormed(urlService, "PIRESIDENCIAL",
+					"12345", LoginResult.class);
+			tokenAcces = responseLog.getAccess_token();
+		}
+		
+		logger.info("json object params## " + jsonObject.toString());
+		String urlRequest = env.getProperty("dep.envirom.web").concat(constantesAmbiente.getRegistrarAccionesRealizadas());
+		ServiceResponseResult response = restCaller.callPostBearerTokenRequest(jsonObject.toString(), urlRequest,
+				ServiceResponseResult.class, tokenAcces);
+
+		return response;
+	}
 
 	@Override
 	public ServiceResponseResult consultarAccionesRecientesService(String params) {

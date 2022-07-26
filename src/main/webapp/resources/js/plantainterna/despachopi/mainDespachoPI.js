@@ -420,9 +420,9 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
             let arrayGeocerca = tecnico.idGeografia1 ? tecnico.idGeografia1.split(',') : [];
 
             let isIntervencion = arrayIntervencion.find(e => e == event.objectevent.idtipoOrden);
-            let isSubIntervencion = tecnico.idSubIntervenciones.find(e => e == event.objectevent.idSubtipoOrden);
+            let isSubIntervencion = tecnico.idSubIntervenciones ? tecnico.idSubIntervenciones.find(e => e == event.objectevent.idSubtipoOrden) : false;
             let isGeoagrafia = arrayGeografias.find(e => e == event.objectevent.idGeografia);
-            let isGeocerca = tecnico.idClusters.find(e => e == event.objectevent.idGeografia1);
+            let isGeocerca = tecnico.idClusters ? tecnico.idClusters.find(e => e == event.objectevent.idGeografia1) : false;
 
             if (isIntervencion || isSubIntervencion) {
                 if (isGeoagrafia || isGeocerca) {
@@ -1129,7 +1129,11 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
                         if ($scope.accionAsignacionOtPermiso != undefined) {
                             $scope.accionAsignacionOtPermiso = $scope.accionAsignacionOtPermiso.banderaPermiso
                         }
+                        objectTempAccion = new GenericAccionRealizada(""+$scope.permisosConfigUser.id, 'TOP_RIGHT');
+                        objectTempAccion.inicializarBotonAccionesRecientes();
                     } else {
+                        objectTempAccion = new GenericAccionRealizada(""+$scope.permisosConfigUser.id, 'TOP_RIGHT');
+                        objectTempAccion.inicializarBotonAccionesRecientes();
                         $scope.permisosConfigUser = {}
                         $scope.accionesUserConfigText = []
                         $scope.permisosConfigUser.permisos = []
@@ -1140,11 +1144,6 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
                     $scope.accionesUserConfigText = []
                     $scope.permisosConfigUser.permisos = []
                 }
-                   
-
-                objectTempAccion = new GenericAccionRealizada(""+resultConf.MODULO_ACCIONES_USUARIO.id, 'TOP_RIGHT');
-                objectTempAccion.inicializarBotonAccionesRecientes();
-
 
                 $scope.iniciarMapaAlertas();
 

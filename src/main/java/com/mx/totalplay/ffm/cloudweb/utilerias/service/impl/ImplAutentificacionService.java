@@ -16,9 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.mx.totalplay.ffm.cloudweb.utilerias.model.LoginResult;
 import com.mx.totalplay.ffm.cloudweb.utilerias.model.Permiso;
 import com.mx.totalplay.ffm.cloudweb.utilerias.service.AutentificacionService;
+import com.mx.totalplay.ffm.cloudweb.utilerias.service.GenericAccionesService;
 import com.mx.totalplay.ffm.cloudweb.utilerias.utils.ConsumeRest;
 import com.mx.totalplay.ffm.cloudweb.utilerias.model.ConfiguracionesGenerales;
 
@@ -30,11 +32,14 @@ public class ImplAutentificacionService  implements AutentificacionService{
 	private final ConsumeRest restCaller;
 	private final int VALOR_NAVBAR=5;
 	private Gson gson = new Gson();
+    private final GenericAccionesService genericAccionesService;
+
 
 	@Autowired
-	public ImplAutentificacionService(Environment env, ConsumeRest restCaller) {
+	public ImplAutentificacionService(Environment env, ConsumeRest restCaller, GenericAccionesService genericAccionesService) {
 		this.env = env;
 		this.restCaller = restCaller;
+		this.genericAccionesService = genericAccionesService;
 	}
 	
 	@Override
@@ -45,6 +50,14 @@ public class ImplAutentificacionService  implements AutentificacionService{
 		LoginResult responseLog = (LoginResult) restCaller.callPostReturnClassBasicAuthXwwwUrlFormed(
 				urlService ,  us, crdospas, LoginResult.class
 		);
+		
+		 JsonObject dataLog = new JsonObject();
+	     dataLog.addProperty("idModulo", 32);
+	     dataLog.addProperty("comentarios", "test");
+	     dataLog.addProperty("descripcionEstatusHttp", "error");
+	     dataLog.addProperty("descripcionAccion", "Inicio de sesión");
+	     dataLog.addProperty("descripcionMensajeHttp", "Ha ocurrido un error al iniciar sesión con el usuario " + us);
+	     dataLog.addProperty("idOrigen", 1);
 		
 		String urlPermisos=env.getProperty("dep.envirom.web").concat(":8133").concat(env.getProperty("ws.url.validausrffmpermisos"));
 		Map<String, String> paramsGet = new HashMap<String, String>();
@@ -60,6 +73,10 @@ public class ImplAutentificacionService  implements AutentificacionService{
 		responseLog.setConfiguraciones(permisosModulos.getConfiguracionesGenerales());
 		logger.info(gson.toJson(responseLog));
 		if (responseLog.getIdUsuario() != 0) {
+			
+		    dataLog.addProperty("descripcionEstatusHttp", "success");
+			dataLog.addProperty("descripcionMensajeHttp", "El usuario " + us + " ha iniciado sesión");
+			
 			String base64Creds = Base64.getEncoder().encodeToString(crdospas.getBytes());
 			responseLog.setCreedResult(base64Creds);
 			Map<String, Object> configuraciones = responseLog.getConfiguraciones();
@@ -80,8 +97,10 @@ public class ImplAutentificacionService  implements AutentificacionService{
 					ordenamiento=String.join(",", responseLog.getModulos().stream().map(e-> {return e.getClave();}).collect(Collectors.toList()));
 				}
 			}
-		}	
+		}
 		logger.info("RESULT" + gson.toJson(responseLog));
+
+		genericAccionesService.agregarMensajeAccionServiceLogin(dataLog.toString(),responseLog.getAccess_token());
 		return responseLog;
 	}
 	

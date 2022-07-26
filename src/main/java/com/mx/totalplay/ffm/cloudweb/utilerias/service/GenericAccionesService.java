@@ -23,5 +23,7 @@ public interface GenericAccionesService {
     ServiceResponseResult consultarReporteLogGeneral(String params);
     
 	public DataTableResponse consultarLogGeneral(ParamConsultaOTPI params);
+	
+	ServiceResponseResult agregarMensajeAccionServiceLogin(String params, String token);
 
 }

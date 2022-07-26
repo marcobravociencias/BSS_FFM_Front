@@ -379,8 +379,8 @@ app.controller('reportesLogController', ['$scope', '$q', 'reportesLogService', '
         }
 
         let params = {
-            fechaInicio: new Date().toISOString().split('T')[0],
-            fechaFin: new Date().toISOString().split('T')[0],
+            fechaInicio: moment(new Date()).format("YYYY-MM-DD"),
+            fechaFin: moment(new Date()).format("YYYY-MM-DD"),
             idUsuario: $scope.idDetalle
         };
 
