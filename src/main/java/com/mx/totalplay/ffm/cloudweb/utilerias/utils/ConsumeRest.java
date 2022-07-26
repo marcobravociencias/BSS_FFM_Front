@@ -73,7 +73,7 @@ public class ConsumeRest {
                     .result(result).build();
 
         } catch (Exception e) {
-            logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO", e.getMessage());
+            logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO"+ e.getMessage());
             response.setResultDescripcion(e.getMessage());
         }
         return response;
@@ -109,7 +109,7 @@ public class ConsumeRest {
             response = responseEntity.getBody().toString();
             return gson.fromJson(response, classConversion);
         } catch (Exception e) {
-            logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO", e.getMessage());
+            logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO"+ e.getMessage());
 
             return gson.fromJson(gson.toJson(
                     LoginResult.builder().
@@ -187,7 +187,7 @@ public class ConsumeRest {
             response = responseEntity.getBody().toString();
             return gson.fromJson(response, classConversion);
         } catch (Exception e) {
-            logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO", e.getMessage());
+            logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO"+ e.getMessage());
 
             return gson.fromJson(gson.toJson(
                     LoginResult.builder().
@@ -422,6 +422,7 @@ public class ConsumeRest {
                     break;
             }
         } catch (Exception e) {
+        	logger.error("e" ,e);
             logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO" + e.getMessage());
             response.setResultDescripcion(e.getMessage());
         }
@@ -685,7 +686,7 @@ public class ConsumeRest {
             response = responseEntity.getBody();
             
         }catch (HttpClientErrorException e){
-        	logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO", e.getMessage());
+        	logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO"+ e.getMessage());
 
             return gson.fromJson(gson.toJson(
                     LoginResult.builder().

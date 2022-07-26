@@ -24,11 +24,11 @@ spec:
           name: ffm-web
           resources:
             requests:
-              cpu: 250m
-              memory: 512Mi
+              cpu: 1000m
+              memory: 4Gi
             limits:
-              cpu: 250m
-              memory: 512Mi
+              cpu: 1000m
+              memory: 4Gi
           env:
             - name: PAAS_APP_NAME
               value: ffm-web
