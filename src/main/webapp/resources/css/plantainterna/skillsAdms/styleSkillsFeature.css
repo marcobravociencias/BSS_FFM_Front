@@ -44,7 +44,7 @@ b.text-no-seleccion-geografia {
 }
 
 .text-tipo-multiseleccion {
-    font-size: 1.3em;
+    font-size: 0.9em;
 }
 
 i.icono-noseleccion {
@@ -70,8 +70,9 @@ img.responsive-img, video.responsive-video {
     /* height: auto; */
     box-shadow: 0 4px 5px 0 rgb(0 0 0 / 14%), 0 1px 10px 0 rgb(0 0 0 / 12%), 0 2px 4px -1px rgb(0 0 0 / 30%);
     border-radius: 50%;
-    height: 2.4em;
-    width: 2.4em;
+    height: 2.5em;
+    width: 2.5em;
+    margin-top: 0.2em;
 }
 
 
@@ -98,7 +99,7 @@ body{
 }
 
 p.text-adds-teccnico {
-    font-size: .7em;
+    font-size: .6em;
     color: #3e3e3e;
     margin-bottom: 0;
     text-overflow: ellipsis;

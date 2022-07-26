@@ -81,6 +81,11 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 				if(response.data.result.usuarios != ""){
 					$scope.tecnicosMostradas = response.data.result.usuarios;
 					var primerTec = $scope.tecnicosMostradas[0];
+					
+					angular.forEach($scope.tecnicosMostradas,function(tec,index){
+						tec.geografias = [];
+					});
+					
 //					----------------------------------------------------------------------------------
 					$scope.listaTecnicosTabla = response.data.result.usuarios;
 					$("#divMensajeSeleccionaGeografiaVistaTabla").hide();
@@ -403,6 +408,11 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
     				    }, 750);
 //    					-----------------------------------------------------------------------------------
     					$scope.tecnicosMostradas = response.data.result.usuarios;
+    					
+    					angular.forEach($scope.tecnicosMostradas,function(tec,index){
+    						tec.geografias = [];
+    					});
+    					
     					$('#divContenedorSkills').hide();
     					$('#divBotonGuardarSkills').hide();
     					$('#divMensajeSeleccionaTecnico').show();
@@ -1120,4 +1130,5 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 	        $("#idBuscadorGeografia").focus();
 	    }, 750);
     });
+	
 }]);

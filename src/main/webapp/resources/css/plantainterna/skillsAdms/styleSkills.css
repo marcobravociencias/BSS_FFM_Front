@@ -492,6 +492,16 @@ table.dataTable thead th, table.dataTable thead td{
 	text-align:justify;
 }
 
+.scrollGeneralSkillsIndividual {
+    margin-bottom:.5em;
+	margin:4px, 4px;
+	padding:4px;
+	height: 300px;
+	overflow-x: hidden;
+	overflow-y: auto;
+	text-align:justify;
+}
+
 .scrollGeneralArbolGeografiaIndividual {
     margin-bottom:.5em;
 	margin:4px, 4px;
@@ -701,21 +711,23 @@ table.dataTable thead th, table.dataTable thead td{
 
 .text-tecnico-nombre-modal{
     font-family: 'Montserrat';
-    font-size: .8em;
+    font-size: .7em;
     font-weight: bold;
     margin-bottom: 0;
-    display: flex;    
-    cursor:pointer;
+    display: flex;
+    cursor:
+    pointer;
 }
 .text-adds-teccnico-modal{
     font-family: 'Montserrat';
-    font-size: .8em;
+    font-size: .7em;
     color: #3e3e3e;
     margin-bottom: 0;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    cursor:pointer;
+    cursor:
+    pointer;
 }
 
 #contadorTecnicosMultiseleccion,

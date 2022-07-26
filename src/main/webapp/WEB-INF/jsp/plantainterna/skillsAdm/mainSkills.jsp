@@ -84,7 +84,7 @@
 								</div>
 								<div class="tecnicos-container" style="margin-top: 0.5em;">
 									<div class="scrollGeneral" id="divTecnicos" style="display: none">
-										<div ng-repeat="tecnico in tecnicosMostradas | filter:{nombre: buscarTecnico} | filter:{geografia: buscarTecnico} track by $index" class="user-section">
+										<div ng-repeat="tecnico in tecnicosMostradas | filter:buscarTecnico track by $index" class="user-section">
 											<div id="contenedorTecnicoConsulta{{tecnico.idUsuario}}" class="valign-wrapper tecnicosDiv">
 												<div class="col-2 media-image online pr-0">
 													<img src="{{tecnico.urlFotoPerfil !=undefined && tecnico.urlFotoPerfil ? tecnico.urlFotoPerfil :'./resources/img/plantainterna/despacho/tecnicootasignada.png'}}" class="circle z-depth-2 responsive-img">
@@ -92,6 +92,7 @@
 												<div id="{{tecnico.idUsuario}}" class="col-10 pl-0" ng-click="consultarSkillsAsignadasTecnico(tecnico.idUsuario, tecnico.nombre, tecnico.apellidoPaterno, tecnico.apellidoMaterno)">
 													<p class="text-tecnico-nombre">{{tecnico.nombre}} {{tecnico.apellidoPaterno}} {{tecnico.apellidoMaterno}}</p>
 													<p class="text-adds-teccnico">{{tecnico.no_empleado ? tecnico.no_empleado : 'Sin dato'}} - {{tecnico.geografia}}</p>
+													<p class="text-adds-teccnico">Cuadrilla: {{tecnico.tipoCuadrilla ? tecnico.tipoCuadrilla : 'Sin dato'}}</p>
 												</div>
 												<div id="checkTecnicoSeleccionado{{tecnico.idUsuario}}"	class="content-checkbox-operario checkTecnicoSeleccionado" style="display: none">
 													<input class="form-check-input input-operario-checkbox" type="checkbox" checked="checked" disabled="disabled" />
@@ -127,7 +128,7 @@
 											</div>
 										</div>
 									</div>
-									<div class="intervenciones-container scrollGeneral">
+									<div class="intervenciones-container scrollGeneralSkillsIndividual">
 										<div id="arbolSkillsVistaIndividual" class="jstree-proton-3 proton-demo" ng-click="contadorSkillsVistaIndividual()">
 										</div>
 									</div>
@@ -250,13 +251,14 @@
                                                 </div>
                                             </div>
                                             <div ng-repeat="tecnico in tecnicosMostradas | filter:buscarTecnico track by $index" class="user-section">
-                                                <div id="{{tecnico.idUsuario}}" class="valign-wrapper tecnicosDiv" style="height: 50px;">
+                                                <div id="{{tecnico.idUsuario}}" class="valign-wrapper tecnicosDiv" style="height: 60px;">
                                                     <div class="col-md-2 media-image online pr-0">
                                                         <img src="{{tecnico.urlFotoPerfil !=undefined && tecnico.urlFotoPerfil ? tecnico.urlFotoPerfil :'./resources/img/plantainterna/despacho/tecnicootasignada.png'}}" class="circle z-depth-2 responsive-img">
                                                     </div>
                                                     <div id="{{tecnico.idUsuario}}" class="col-md-10 pl-0" ng-click="seleccionarTecnicoMultiseleccion(tecnico.idUsuario)">
-                                                        <label   class="text-tecnico-nombre-modal">{{tecnico.nombre}}</label>
-														<label   class="text-adds-teccnico-modal">{{tecnico.no_empleado ? tecnico.no_empleado : 'Sin dato'}} - {{tecnico.apellidoPaterno}} {{tecnico.apellidoMaterno}}</label>
+                                                    	<p class="text-tecnico-nombre-modal">{{tecnico.nombre}} {{tecnico.apellidoPaterno}} {{tecnico.apellidoMaterno}}</p>
+														<p class="text-adds-teccnico-modal">{{tecnico.no_empleado ? tecnico.no_empleado : 'Sin dato'}} - {{tecnico.geografia}}</p>
+														<p class="text-adds-teccnico-modal">Cuadrilla: {{tecnico.tipoCuadrilla ? tecnico.tipoCuadrilla : 'Sin dato'}}</p>
                                                     </div>
                                                     <div class="content-checkbox-operario">
                                                         <input class="form-check-input input-operario-checkbox checkedTecnicos" type="checkbox"	id="checkTecnicoMultiseleccion{{tecnico.idUsuario}}" value="{{tecnico.idUsuario}}" checked="checked"/>
@@ -293,10 +295,10 @@
 	                    	<div class="row">
 	                    		<div class="col-md-9">
 	                    			<div ng-show="tipoMultiseleccion == '1'" class="content-text-tipo-multiseleccion">
-										<b id="textTipoMultiseleccion" class="text-tipo-multiseleccion"><i class="icono-noseleccion fas fa-exclamation-circle"></i> Seleccionaste la opción de <font color="#f55756">agregar</font> multiples skills.</b>
+										<b id="textTipoMultiseleccion" class="text-tipo-multiseleccion"><i class="icono-noseleccion fas fa-exclamation-circle"></i> Seleccionaste la opci&oacute;n de <font color="#f55756">asignar</font> m&uacute;ltiples skills.</b>
 									</div>
 									<div ng-show="tipoMultiseleccion == '0'" class="content-text-tipo-multiseleccion">
-										<b id="textTipoMultiseleccion" class="text-tipo-multiseleccion"><i class="icono-noseleccion fas fa-exclamation-circle"></i> Seleccionaste la opción de <font color="#f55756">eliminar</font> multiples skills.</b>
+										<b id="textTipoMultiseleccion" class="text-tipo-multiseleccion"><i class="icono-noseleccion fas fa-exclamation-circle"></i> Seleccionaste la opci&oacute;n de <font color="#f55756">desasignar</font> m&uacute;ltiples skills.</b>
 									</div>
 	                    		</div>
 	                    		<div class="col-md-3">
