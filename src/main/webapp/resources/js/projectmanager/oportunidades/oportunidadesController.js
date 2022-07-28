@@ -1,7 +1,8 @@
 var app = angular.module('oportunidadApp', []);
 
-app.controller('oportunidadController', ['$scope', '$q', 'oportunidadesService', 'genericService', 'busquedaSalesforceService', function ($scope, $q, oportunidadesService, genericService, busquedaSalesforceService) {
+app.controller('oportunidadController', ['$scope', '$q', 'oportunidadesService', 'genericService', 'busquedaSalesforceService', 'agendamientoService', function ($scope, $q, oportunidadesService, genericService, busquedaSalesforceService, agendamientoService) {
     app.busquedaSalesforce($scope, busquedaSalesforceService)
+    app.agendamientoController($scope, agendamientoService, $q)
     $("#idBody").removeAttr("style");
     $scope.showTable = true;
 
@@ -56,7 +57,15 @@ app.controller('oportunidadController', ['$scope', '$q', 'oportunidadesService',
                             if (permisosResult != undefined && permisosResult.permisos != undefined && permisosResult.permisos.length > 0) {
                                 $scope.configPermisoAccionConsultaOportunidad = (permisosResult.permisos.filter(e => { return e.clave == "accionConsultaOportunidades" })[0] != undefined);
                             }
+
+                            
                         }
+                        let arrayDefaultKmzElemts = results[0].data.result.KEY_DEFAULT_KMZ ? results[0].data.result.KEY_DEFAULT_KMZ.split(",") : null;
+            GenericMapa.prototype.callPrototypeMapa(results[0].data.result, arrayDefaultKmzElemts);
+                        $scope.initMapaAgendamiento();
+                        
+                        $scope.GEOGRAFIA_DOS_AGENDA = "cluster";
+                        $scope.GEOGRAFIA_UNO_AGENDA= "ciudad";
                         
                     }
                 }
@@ -68,11 +77,17 @@ app.controller('oportunidadController', ['$scope', '$q', 'oportunidadesService',
     }
     
     $scope.consultarOportunidades = function() {
+        // $scope.params = {
+        //     numeroOportunidad: $scope.camposFiltro.oportunidad ? $scope.camposFiltro.oportunidad : "",
+        //     nombreCliente: $scope.camposFiltro.nombreCliente ? $scope.camposFiltro.nombreCliente : "",
+        //     fechaInicio: moment($("#fecha_oportunidad").val(), 'DD/MM/YYYY').startOf('month').format('YYYY-MM-DD'),
+        //     fechaFin: moment($("#fecha_oportunidad").val(), 'DD/MM/YYYY').endOf('month').format('YYYY-MM-DD')
+        // };
         $scope.params = {
-            numeroOportunidad: $scope.camposFiltro.oportunidad ? $scope.camposFiltro.oportunidad : "",
-            nombreCliente: $scope.camposFiltro.nombreCliente ? $scope.camposFiltro.nombreCliente : "",
-            fechaInicio: moment($("#fecha_oportunidad").val(), 'DD/MM/YYYY').startOf('month').format('YYYY-MM-DD'),
-            fechaFin: moment($("#fecha_oportunidad").val(), 'DD/MM/YYYY').endOf('month').format('YYYY-MM-DD')
+            numeroOportunidad: "",
+            nombreCliente: "",
+            fechaInicio: "",
+            fechaFin: ""
         };
         swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 		swal.showLoading();
@@ -240,7 +255,7 @@ app.controller('oportunidadController', ['$scope', '$q', 'oportunidadesService',
             row[6] = elemento.estatusOs ? elemento.estatusOs : "NA";
             row[7] = elemento.folioOs ? elemento.folioOs : "NA";
             row[8] = '<input type="checkbox">';
-            row[9] = '<div class="tooltip-btn"> <span class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones"><th><i class="icono_cons_bg fa fa-calendar" aria-hidden="true"></i></th></span></div>';
+            row[9] = '<div class="tooltip-btn"> <span onclick="mostrarAgendamientoGenerico(' + "'" + index + "'" + ')" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones"><th><i class="icono_cons_bg fa fa-calendar" aria-hidden="true"></i></th></span></div>';
             arrayRow.push(row);
 
             $scope.contadorDetalleOportunidad.numCsp++;
@@ -282,6 +297,21 @@ app.controller('oportunidadController', ['$scope', '$q', 'oportunidadesService',
 
     $scope.validacionGenerica = function () {
 
+    }
+
+    $scope.elementoCSP;
+    mostrarAgendamientoGenerico = function(index) {
+        $scope.listContactosAgendamiento = []
+        $scope.infoFactibilidad = {};	
+        $scope.elementoCSP = {};
+        $scope.elementoCSP = $scope.detalleOportunidad[index];
+        $scope.GEOGRAFIA_UNO_AGENDA_NOMBRE = null;
+        $scope.GEOGRAFIA_DOS_AGENDA_NOMBRE = null;
+        let paramsDetalleSitio={
+            //cuenta:$scope.elementoCSP.cuentaFacturaSf.noCuenta
+            cuenta: "0290004104"
+        };
+        mostrarAgendamiento(paramsDetalleSitio);
     }
 
     angular.element(document).ready(function () {

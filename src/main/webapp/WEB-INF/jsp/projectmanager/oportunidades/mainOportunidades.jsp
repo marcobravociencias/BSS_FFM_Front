@@ -11,6 +11,7 @@
     <link rel="icon" type="image/png" sizes="96x96" href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-16x16.png">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/fullcalendar/main.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/dataTables.fontAwesome.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/dataTables.bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/css/mdb.min.css">
@@ -23,12 +24,13 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/magnific_popup/magnific-popup.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css" />
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/generic/busquedaSalesforce\styleMainBusqueda.css?v=${sessionScope.versionDepl}">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/generic/agendamiento\styleMainAgendamiento.css?v=${sessionScope.versionDepl}">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/projectmanager/oportunidades/styleOportunidad.css?v=${sessionScope.versionDepl}" />
 </head>
 
 <body id="idBody" ng-controller="oportunidadController" ng-init="initOportunidades()" class="body" style="display: none;">
     <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
-    <div class="container" ng-show="!detalleSalesforceView">
+    <div class="container" ng-show="!detalleSalesforceView && !vistaAgendamiento">
         <div class="content-fluid container-filtros-oportunidad contenedor-oportunidad" ng-show="showTable">
             <div class="row col-12" id="filtros_config">
                 <div class="col-2 columna-filtro-ind" style="width: 110px; padding-right: 0px !important;">
@@ -216,10 +218,20 @@
         </div>
     </div>
     <jsp:include page="/WEB-INF/jsp/generic/busquedaSalesforce/mainBusquedaSalesforce.jsp"></jsp:include>
+    <div class="container" ng-show="vistaAgendamiento">
+        <div class="content-fluid container-filtros-oportunidad contenedor-oportunidad">
+            <div class="col-12">
+                <jsp:include page="/WEB-INF/jsp/generic/agendamiento/mainAgendamiento.jsp"></jsp:include>
+            </div>
+        </div>
+    </div>
 </body>
 <!-- Scripts libraries -->
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=${googlkeyattrvar['gkeactok']}&libraries=geometry,places"></script>
 <script src="${pageContext.request.contextPath}/resources/libraries/angularjs/js/angular.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/moment.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/main.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/libraries/fullcalendar/locales-all.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-ui.js"></script>
 <script src="${pageContext.request.contextPath}/resources/libraries/popper\popper.min.js"></script>
@@ -242,6 +254,10 @@
 <script src="${pageContext.request.contextPath}/resources/js/projectmanager/oportunidades/oportunidadesService.js?v=${sessionScope.versionDepl}" charset="UTF-8"></script>
 <script src="${pageContext.request.contextPath}/resources/js/generic/busquedaSalesforce/busquedaSalesforceController.js?v=${sessionScope.versionDepl}"></script>
 <script src="${pageContext.request.contextPath}/resources/js/generic/busquedaSalesforce/busquedaSalesforceService.js?v=${sessionScope.versionDepl}"></script>
+<script src="${pageContext.request.contextPath}/resources/js/generic/agendamiento/agendamientoController.js?v=${sessionScope.versionDepl}"></script>
+<script src="${pageContext.request.contextPath}/resources/js/generic/agendamiento/agendamientoService.js?v=${sessionScope.versionDepl}"></script>
+<script src="${pageContext.request.contextPath}/resources/js/generic/agendamiento/calendarAgendamientoController.js?v=${sessionScope.versionDepl}"></script>
+<script src="${pageContext.request.contextPath}/resources/js/generic/agendamiento/mapAgendamientoController.js?v=${sessionScope.versionDepl}"></script>
 <script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js?v=${sessionScope.versionDepl}"></script>
 <script src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>
 <script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js?v=${sessionScope.versionDepl}"></script>
