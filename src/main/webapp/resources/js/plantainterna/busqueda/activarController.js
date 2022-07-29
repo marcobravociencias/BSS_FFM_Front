@@ -546,7 +546,7 @@ app.activacionController=function($scope, $q, busquedaService){
             angular.forEach($scope.listaCotizaciones, function(cotizacion, index) {
                 cotizacion.mostrarInfo = true;
                 cotizacion.tipoActiviacion = 'Bridge';
-                cotizacion.tipoCotizacion = cotizacion.nombre.split("-")[1];
+                cotizacion.tipoCotizacion = cotizacion.nombre.split("-")[1];//PENDIENTE
                 angular.forEach($scope.listaEquipos, function(equipo, index) {
                     if (cotizacion.id === equipo.idCotPlanServicio) {
                         angular.forEach(equipo.modelo, function(model, index) {
@@ -637,7 +637,7 @@ app.activacionController=function($scope, $q, busquedaService){
 
             //Se agrega bandera para validar los posibles servicios a configurar
             angular.forEach($scope.listaCotizaciones, function(servicio,index){
-                if(servicio.tipo && servicio.tipoCotizacion && servicio.tipoCotizacion.includes('Telefonia') ){
+                if(servicio.nombre && servicio.nombre.includes('Telefonia') ){
                     servicio.servicioTelefonia=true
                     servicio.servicioConfigurable=true
                 }else {
