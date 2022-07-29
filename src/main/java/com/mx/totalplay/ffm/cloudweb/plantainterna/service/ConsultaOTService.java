@@ -1,5 +1,7 @@
 package com.mx.totalplay.ffm.cloudweb.plantainterna.service;
 
+import java.io.ByteArrayInputStream;
+
 import com.mx.totalplay.ffm.cloudweb.plantainterna.model.consultaOTPI.ParamConsultaOTPI;
 import com.mx.totalplay.ffm.cloudweb.utilerias.model.DataTableResponse;
 import com.mx.totalplay.ffm.cloudweb.utilerias.model.ServiceResponseResult;
@@ -37,4 +39,6 @@ public interface ConsultaOTService {
     ServiceResponseResult consultaRecoleccionConsultaOt(String params);
     
     public ServiceResponseResult consultaOrdenesPlantaExternaOt(String params);
+    
+    public ByteArrayInputStream exportarExcelConsultaOT(String params);
 }

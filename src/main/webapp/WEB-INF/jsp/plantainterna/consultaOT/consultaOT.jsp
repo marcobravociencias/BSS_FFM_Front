@@ -120,7 +120,9 @@
                     </button>
                 </div>
                 <div id="" class="col-1 column-style-consulta" ng-if="configPermisoAccionDescargaReporteOrdenes" style="margin-top: 23px; width: 20px !important;">
-                    <img alt="excel" src="./resources/img/generic/group-10.png" style="cursor:pointer" ng-click="descargarReporteConsultaOt()">
+                    <a ng-click="consultarReporteGeneric()">
+                        <img alt="excel" src="./resources/img/generic/group-10.png" style="cursor:pointer">
+                    </a>
                 </div>
             </div>
             <div class="content-fluid">

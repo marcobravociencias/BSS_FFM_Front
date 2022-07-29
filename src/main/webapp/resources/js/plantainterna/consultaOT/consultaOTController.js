@@ -2607,9 +2607,107 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			});
 		}
 	}
-    
-    $scope.cerrarModalDetalleOt = function () {
-        $("#modal-detalle-ot").modal("hide");
-    }
-	
+
+	$scope.cerrarModalDetalleOt = function () {
+		$("#modal-detalle-ot").modal("hide");
+	}
+
+	$scope.consultarReporteGeneric = function () {
+		let isValido = true;
+		let errorMensaje = '';
+		let isValFecha = true;
+		let estatusOrdenes = []
+		estatusOrdenes = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.estatusdisponibles, $scope.nivelEstatusPendientes);
+
+		let subIntTemp = []
+		subIntTemp = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.tipoOrdenes, $scope.nivelIntervenciones);
+
+		//nivel geografia
+		let ultimonivel;
+		if ($scope.nivelGeografia) {
+			ultimonivel = $scope.nivelGeografia
+		} else {
+			ultimonivel = $scope.obtenerNivelUltimoJerarquia();
+		}
+		let clusters = $("#jstree-proton-3").jstree("get_selected", true)
+			.filter(e => e.original.nivel == ultimonivel)
+			.map(e => parseInt(e.id))
+
+
+
+		if ($.trim(document.getElementById('idot').value) !== '') {
+			if (!($.isNumeric($.trim(document.getElementById('idot').value)))) {
+				errorMensaje += '<li>Introduce un n&uacute;mero correcto de OT.</li>';
+				isValido = false;
+			}
+		}
+
+		if ($.trim(document.getElementById('cuenta').value) !== '') {
+			if (!($.isNumeric($.trim(document.getElementById('cuenta').value)))) {
+				errorMensaje += '<li>Introduce un n&uacute;mero correcto de cuenta.</li>';
+				isValido = false;
+			}
+		}
+
+		if (estatusOrdenes.length === 0) {
+			errorMensaje += '<li>Seleccione estatus.</li>';
+			isValido = false
+		}
+
+		if (subIntTemp.length === 0) {
+			errorMensaje += '<li>Seleccione intervenci&oacute;n.</li>';
+			isValido = false
+		}
+
+		if (document.getElementById('filtro_fecha_inicio_consultaOt').value == '') {
+			errorMensaje += '<li>Introduce Fecha Inicial</li>';
+			isValFecha = false;
+			isValido = false
+		}
+
+		if (document.getElementById('filtro_fecha_fin_consultaOt').value == '') {
+			errorMensaje += '<li>Introduce Fecha Final</li>';
+			isValFecha = false;
+			isValido = false
+		}
+
+		if (isValFecha) {
+			if (!validarFecha()) {
+				$('.datepicker').datepicker('update', new Date());
+				errorMensaje += '<li>La fecha inicial no tiene que ser mayor a la final.</li>';
+				isValido = false
+			}
+		}
+		if (isValido) {
+			swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
+			swal.showLoading();
+			let params = {
+				idOrden: $.trim(document.getElementById('idot').value) !== '' ? $.trim(document.getElementById('idot').value) : null,
+				folioSistema: $.trim(document.getElementById('idos').value) !== '' ? $.trim(document.getElementById('idos').value) : null,
+				claveCliente: $.trim(document.getElementById('cuenta').value) !== '' ? $.trim(document.getElementById('cuenta').value) : null,
+				idSubTipoOrdenes: subIntTemp,
+				idEstatus: estatusOrdenes,
+				idClusters: clusters,
+				fechaInicio: $scope.getFechaFormato(document.getElementById('filtro_fecha_inicio_consultaOt').value),
+				fechaFin: $scope.getFechaFormato(document.getElementById('filtro_fecha_fin_consultaOt').value),
+				elementosPorPagina: $scope.elementosRegistro,
+				pagina: 1,
+				tipoExcel: 'consultaot-consultarordenes-pi'
+			}
+			// console.log(params)
+			genericService.enviarParamsReporte(params).then(function success(response) {
+				// console.log(response);
+				if (response.data.respuesta) {
+					var link = document.createElement("a");
+					link.href = contex_project + '/req/exporteExcelGenericRequest/reporteConsultaOT.xls';
+					link.click();
+					swal.close();
+				}
+				swal.close();
+			});
+		} else {
+			mostrarMensajeWarningValidacion(errorMensaje);
+		}
+	}
+
 }])

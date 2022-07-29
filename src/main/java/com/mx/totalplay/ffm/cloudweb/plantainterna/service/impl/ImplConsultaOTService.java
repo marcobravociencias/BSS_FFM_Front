@@ -2,10 +2,27 @@ package com.mx.totalplay.ffm.cloudweb.plantainterna.service.impl;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.BorderStyle;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
@@ -537,5 +554,149 @@ public class ImplConsultaOTService implements ConsultaOTService {
 
         logger.info("### RESULT consultaOrdenesPlantaExternaOt(): " + gson.toJson(response));
         return response;
+	}
+
+
+	@Override
+	public ByteArrayInputStream exportarExcelConsultaOT(String params) {
+		logger.info("ImplConsultaOTService.class [metodo = exportarExcelConsultaOT() ] \n"+ gson.toJson(params));
+
+		String[] headers = new String[] { "OT", "OS", "CLIENTE", "CUENTA", "CIUDAD", "FECHA AGENDA", "TIPO", "SUBTIPO",
+				"ESTATUS", "ESTADO", "MOTIVO" };
+//		CREA EL LIBRO
+		HSSFWorkbook book = new HSSFWorkbook();
+
+//		CREA LA HOJA
+		HSSFSheet sheet = book.createSheet("Reporte Consulta OT");
+		HSSFFont thFontTitle = (HSSFFont) book.createFont();
+		thFontTitle.setFontName(HSSFFont.FONT_ARIAL);
+		thFontTitle.setFontHeightInPoints((short) 8);
+		thFontTitle.setBold(true);
+		thFontTitle.setColor(IndexedColors.WHITE.getIndex());
+
+//		FORMATO DEL TITULO DE LAS COLUMNAS
+		CellStyle thStyleTitle = book.createCellStyle();
+		thStyleTitle.setWrapText(true);
+		thStyleTitle.setFont(thFontTitle);
+		thStyleTitle.setBorderBottom(BorderStyle.MEDIUM);
+		thStyleTitle.setBottomBorderColor((short) 8);
+		thStyleTitle.setBorderTop(BorderStyle.MEDIUM);
+		thStyleTitle.setTopBorderColor((short) 8);
+		thStyleTitle.setWrapText(true);
+		thStyleTitle.setAlignment(HorizontalAlignment.CENTER);
+		thStyleTitle.setFillForegroundColor(IndexedColors.ROYAL_BLUE.getIndex());
+		thStyleTitle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+//		CREA FILA
+		HSSFRow row;
+
+//		CREA CELDA
+		HSSFCell cell = null;
+		int rowsCantidad = 0;
+		row = sheet.createRow(++rowsCantidad);
+		row.setHeightInPoints((2 * sheet.getDefaultRowHeightInPoints()));
+		int aux = 0;
+
+		for (String header : headers) {
+			cell = row.createCell(++aux);
+			cell.setCellValue(header);
+			cell.setCellStyle(thStyleTitle);
+			sheet.setColumnWidth(aux, 20 * 256);
+		}
+
+		aux = 0;
+		HSSFFont thFontContent = (HSSFFont) book.createFont();
+		thFontContent.setFontName(HSSFFont.FONT_ARIAL);
+		thFontContent.setFontHeightInPoints((short) 8);
+		thFontContent.setBold(false);
+
+//		FORMATO DE LAS CELDAS DE CONTENIDO
+		HSSFCellStyle thStyleContent = book.createCellStyle();
+		thStyleContent.setWrapText(true);
+		thStyleContent.setFont(thFontContent);
+		thStyleContent.setAlignment(HorizontalAlignment.CENTER);
+
+//		INVOCACION DE SERVICIO
+
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		String tokenAcces = principalDetail.getAccess_token();
+		logger.info("consultaInformacionDetalleOt ##+" + tokenAcces);
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constConsultaOT.getConsultaGeneralOt());
+		logger.info("URL ##+" + urlRequest);
+
+		ServiceResponseResult response = restCaller.callPostBearerTokenRequest(params, urlRequest,
+				ServiceResponseResult.class, tokenAcces);
+
+		logger.info("RESULT/n" + gson.toJson(response));
+
+//		LLENADO DE CELDAS DE CONTENIDO
+		if (response.getResult() == null || response.getResult() instanceof Integer) {
+		} else {
+			JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
+			logger.info("jsonObjectResponse****************/n" + response.getResult());
+			JsonArray ordenesArray = jsonObjectResponse.getAsJsonArray("ordenes");
+			if (ordenesArray.size() > 0) {
+				for (int i = 0; i < ordenesArray.size(); i++) {
+					JsonObject object = (JsonObject) ordenesArray.get(i);
+					row = sheet.createRow(++rowsCantidad);
+					row.setHeightInPoints((1 * sheet.getDefaultRowHeightInPoints()));
+
+					cell = row.createCell(++aux);
+					cell.setCellValue(object.get("idOrden").getAsInt() != 0 ? String.valueOf(object.get("idOrden").getAsInt()) : "");
+					cell.setCellStyle(thStyleContent);
+
+					cell = row.createCell(++aux);
+					cell.setCellValue((object.get("folioSistema") != null && object.get("folioSistema").getAsString().trim() != "") ? object.get("folioSistema").getAsString().trim() : "Sin dato");
+					cell.setCellStyle(thStyleContent);
+
+					cell = row.createCell(++aux);
+					cell.setCellValue((object.get("nombreCliente") != null && object.get("nombreCliente").getAsString().trim() != "") ? object.get("nombreCliente").getAsString().trim() : "Sin dato");
+					cell.setCellStyle(thStyleContent);
+
+					cell = row.createCell(++aux);
+					cell.setCellValue((object.get("claveCliente") != null && object.get("claveCliente").getAsString().trim() != "") ? object.get("claveCliente").getAsString().trim() : "Sin dato");
+					cell.setCellStyle(thStyleContent);
+
+					cell = row.createCell(++aux);
+					cell.setCellValue((object.get("ciudad") != null && object.get("ciudad").getAsString().trim() != "") ? object.get("ciudad").getAsString().trim() : "Sin dato");
+					cell.setCellStyle(thStyleContent);
+
+					cell = row.createCell(++aux);
+					cell.setCellValue((object.get("fechaAgenda") != null && object.get("fechaAgenda").getAsString().trim() != "") ? object.get("fechaAgenda").getAsString().trim() : "Sin dato");
+					cell.setCellStyle(thStyleContent);
+
+					cell = row.createCell(++aux);
+					cell.setCellValue((object.get("descTipo") != null && object.get("descTipo").getAsString().trim() != "") ? object.get("descTipo").getAsString().trim(): "Sin dato");
+					cell.setCellStyle(thStyleContent);
+
+					cell = row.createCell(++aux);
+					cell.setCellValue((object.get("descSubTipo") != null && object.get("descSubTipo").getAsString().trim() != "") ? object.get("descSubTipo").getAsString().trim() : "Sin dato");
+					cell.setCellStyle(thStyleContent);
+
+					cell = row.createCell(++aux);
+					cell.setCellValue((object.get("descripcionEstatus") != null && object.get("descripcionEstatus").getAsString().trim() != "") ? object.get("descripcionEstatus").getAsString().trim(): "Sin dato");
+					cell.setCellStyle(thStyleContent);
+
+					cell = row.createCell(++aux);
+					cell.setCellValue((object.get("descripcionEstado") != null && object.get("descripcionEstado").getAsString().trim() != "") ? object.get("descripcionEstado").getAsString().trim() : "Sin dato");
+					cell.setCellStyle(thStyleContent);
+
+					cell = row.createCell(++aux);
+					cell.setCellValue((object.get("descripcionMotivo") != null && object.get("descripcionMotivo").getAsString().trim() != "") ? object.get("descripcionMotivo").getAsString().trim() : "Sin dato");
+					cell.setCellStyle(thStyleContent);
+
+					aux = 0;
+
+				}
+			}
+		}
+		try {
+			ByteArrayOutputStream fileToDownload = new ByteArrayOutputStream();
+			book.write(fileToDownload);
+			return new ByteArrayInputStream(fileToDownload.toByteArray());
+		} catch (IOException e) {
+			logger.error(" Error ");
+			return null;
+		}
 	}
 }
