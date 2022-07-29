@@ -69,9 +69,9 @@
                                 class="datepicker input-filtro-inspectorincidencia form-control form-control-sm" />
                         </div>
                         <div class="col-2 column-style-inspectorincidencia columna-filtro-ind">
-                            <i class="icono-noseleccion fas fa-exclamation-circle me-2"
-                                title="No se encontraron cat&aacute;logo de fallas" ng-show="banderaErrorFallas"></i>
-                            <label for="filtro-fallas" class="label-filter">Falla</label>
+                           
+                            <label for="filtro-fallas" class="label-filter">Falla  <i class="icono-noseleccion fas fa-exclamation-circle me-2"
+                                title="No se encontr&oacute; cat&aacute;logo de fallas" ng-show="!respaldoFallaArray.length"></i></label>
                             <div class="dropdown">
                                 <input readonly data-mdb-toggle="dropdown" aria-expanded="false"
                                     placeholder="Seleccione..." type="text" id="txtFalla"
@@ -104,9 +104,9 @@
                             </div>
                         </div>
                         <div class="col-2 column-style-inspectorincidencia columna-filtro-ind">
-                            <i class="icono-noseleccion fas fa-exclamation-circle me-2"
-                                title="No se encontraron cat&aacute;logo de estatus" ng-show="banderaErrorEstatus"></i>
-                            <label for="filtro-estatus-substatus" class="label-filter">Estatus</label>
+                           
+                            <label for="filtro-estatus-substatus" class="label-filter">Estatus  <i class="icono-noseleccion fas fa-exclamation-circle me-2"
+                                title="No se encontr&oacute; cat&aacute;logo de estatus" ng-show="!listCatEstatus.length"></i></label>
                             <div class="dropdown">
                                 <input readonly data-mdb-toggle="dropdown" aria-expanded="false"
                                     placeholder="Seleccione..." type="text" id="txtEstatus"
@@ -134,9 +134,9 @@
                             </div>
                         </div>
                         <div class="col-2 column-style-inspectorincidencia columna-filtro-ind">
-                            <i class="icono-noseleccion fas fa-exclamation-circle me-2"
-                                title="No se encontraron catalogo de Geografia" ng-show="banderaErrorGeografia"></i>
-                            <label for="cluster" class="label-filter">Geograf&iacute;a</label>
+                            
+                            <label for="cluster" class="label-filter">Geograf&iacute;a <i class="icono-noseleccion fas fa-exclamation-circle me-2"
+                                title="No se encontr&oacute; catalogo de geograf&iacute;as" ng-show="!listadogeografiacopy.length"></i></label>
                             <input readonly placeholder="Seleccione..." type="text" id="txtGeografiasConsulta"
                                 class="input-filtro-inspectorincidencia form-control form-control-sm">
                         </div>

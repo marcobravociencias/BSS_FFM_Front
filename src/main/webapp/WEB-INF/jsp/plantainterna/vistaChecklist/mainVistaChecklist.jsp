@@ -63,9 +63,9 @@
                             ng-change="limpiarCamposFiltro(2)" class="form-control input-filtro form-control-sm">
                     </div>
                     <div class="col-1 columna-filtro input-filtro-content">
-                        <i class="icono-noseleccion fas fa-exclamation-circle"
-                            title="No se encontraron catalogo de estatus" ng-show="!arrayEstatus.length"></i>
-                        <label for="filtro-estatus-substatus" class="label-filter">Estatus</label>
+                        
+                        <label for="filtro-estatus-substatus" class="label-filter">Estatus <i class="icono-noseleccion fas fa-exclamation-circle"
+                            title="No se encontr&oacute; catalogo de estatus" ng-show="!arrayEstatus.length"></i></label>
                         <div class="dropdown">
                             <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Seleccione..."
                                 type="text" id="filtro-estatus-substatus"
@@ -99,10 +99,10 @@
                         </div>
                     </div>
                     <div class="col-1 columna-filtro input-filtro-content">
-                        <i class="icono-noseleccion fas fa-exclamation-circle"
-                            title="No se encontraron catalogo de intervenciones"
-                            ng-show="!arrayIntervenciones.length"></i>
-                        <label for="filtro-intervencion" class="label-filter">Intervenci&oacute;n</label>
+                        
+                        <label for="filtro-intervencion" class="label-filter">Intervenci&oacute;n <i class="icono-noseleccion fas fa-exclamation-circle"
+                            title="No se encontr&oacute; catalogo de intervenciones"
+                            ng-show="!arrayIntervenciones.length"></i></label>
                         <div class="dropdown">
                             <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Seleccione..."
                                 type="text" id="filtro-intervencion"
@@ -134,10 +134,10 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-1 columna-filtro input-filtro-content"> <i
-                            class="icono-noseleccion fas fa-exclamation-circle"
-                            title="No se encontraron catalogo de intervenciones" ng-show="!listaGeografia.length"></i>
-                        <label for="filtro_fecha_inicio" class="label-filter">Geograf&iacute;a</label>
+                    <div class="col-1 columna-filtro input-filtro-content"> 
+                        <label for="filtro_fecha_inicio" class="label-filter">Geograf&iacute;a 
+                            <i class="icono-noseleccion fas fa-exclamation-circle"
+                            title="No se encontr&oacute; catalogo de geograf&iacute;as" ng-show="!listaGeografia.length"></i></label>
                         <input readonly placeholder="Geograf&iacute;a" type="text" id="filtro_geografia"
                             class="input-filtro form-control form-control-sm" ng-click="abrirModalGeografia()">
                     </div>

@@ -69,9 +69,9 @@
                         class="datepicker input-filtro-inspectorCobertura form-control form-control-sm" />
                 </div>
                 <div class="col-2 column-style-inspectorcobertura columna-filtro-ind">
-                    <i class="icono-noseleccion fas fa-exclamation-circle me-2"
-                        title="No se encontraron cat&aacute;logo de fallas" ng-show="banderaErrorFallas"></i>
-                    <label for="filtro-fallas" class="label-filter">Falla</label>
+                    
+                    <label for="filtro-fallas" class="label-filter">Falla <i class="icono-noseleccion fas fa-exclamation-circle me-2"
+                        title="No se encontr&oacute; cat&aacute;logo de fallas" ng-show="banderaErrorFallas"></i></label>
                     <div class="dropdown">
                         <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Seleccione..."
                             type="text" id="txtFalla"

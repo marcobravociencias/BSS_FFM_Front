@@ -309,7 +309,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                         $scope.banderaErrorFallas = true;
                     }
                 } else {
-                    mostrarMensajeWarningValidacion('<li>' + results[2].data.resultDescripcion + '</i>');
+                    mostrarMensajeWarningValidacion('<li>' + results[1].data.resultDescripcion + '</i>');
                     $scope.banderaErrorFallas = true;
                 }
             } else {
@@ -365,7 +365,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
                         $scope.banderaErrorGeografia = true;
                     }
                 } else {
-                    mostrarMensajeWarningValidacion('<li>' + results[1].data.resultDescripcion + '</li>');
+                    mostrarMensajeWarningValidacion('<li>' + results[2].data.resultDescripcion + '</li>');
                     $scope.banderaErrorGeografia = true;
                 }
             } else {

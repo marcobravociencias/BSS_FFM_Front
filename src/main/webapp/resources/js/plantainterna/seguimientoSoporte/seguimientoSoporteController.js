@@ -113,18 +113,13 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
                         let resultConf = results[0].data.result
                         if (resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves) {
                             let llavesResult = results[0].data.result.MODULO_ACCIONES_USUARIO.llaves;
-                            if (llavesResult.N_FILTRO_GEOGRAFIA)
-                                $scope.nivelGeografia = parseInt(llavesResult.N_FILTRO_GEOGRAFIA)
-
-                            if (llavesResult.N_ESTATUS_PENDIENTES)
-                                $scope.nivelEstatus = parseInt(llavesResult.N_ESTATUS_PENDIENTES)
 
                             $scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
 
                             if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
                                 $scope.configPermisoAccionConsultaSeguimiento = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaSeguimiento" })[0] != undefined);
                             }
-                            $scope.configPermisoAccionConsultaSeguimiento = true
+                           
                             $("#idBody").removeAttr("style");
                             validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
                             validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
@@ -241,13 +236,13 @@ app.controller('seguimientoSoporteController', ['$scope', '$q', 'seguimientoSopo
                         $scope.catalogosSeguimientoGeografia = results[7].data.result.geografia;
 
                     } else {
-                        toastr.warning('No se encontr&oacute; el catalogo de fallas');
+                        toastr.warning('No se encontr&oacute; el catalogo de geograf&iacute;a');
                     }
                 } else {
                     toastr.warning(results[7].data.resultDescripcion);
                 }
             } else {
-                toastr.error('Ha ocurrido un error en la consulta del catalogo de fallas');
+                toastr.error('Ha ocurrido un error en la consulta del catalogo de geograf&iacute;a');
             }
         }).catch(err => handleError(err));
     }

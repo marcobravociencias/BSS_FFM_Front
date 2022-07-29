@@ -291,10 +291,8 @@ class GenericAccionRealizada {
 			}
 		});
 		$("#listAccionesRecientes").empty();
-		$("#ultimasAccionesContent").empty();
 		let contentAcciones = "";
 		if (listaUltimasAcciones.length > 0) {
-
 			$.each(listaUltimasAcciones, function (i, accion) {
 				if (accion.descripcionEstatusHttp == 'success') {
 					contentAcciones += '<li class="timeline-actions timeline-icon-success active">' +
@@ -323,7 +321,6 @@ class GenericAccionRealizada {
 				}
 			});
 			setTimeout(() => {
-				$("#ultimasAccionesContent").empty();
 				$("#loading-data").hide();
 				$("#listAccionesRecientes").append(contentAcciones);
 			}, 300);
@@ -334,7 +331,6 @@ class GenericAccionRealizada {
 				'	<b class="text-not-action">Sin movimientos para mostrar</b>' +
 				'</div>';
 			setTimeout(() => {
-				$("#ultimasAccionesContent").empty();
 				$("#loading-data").hide();
 				$("#ultimasAccionesContent").append(contentAcciones);
 			}, 300);
