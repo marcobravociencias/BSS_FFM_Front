@@ -291,6 +291,7 @@ class GenericAccionRealizada {
 			}
 		});
 		$("#listAccionesRecientes").empty();
+		$("#ultimasAccionesContent").empty();
 		let contentAcciones = "";
 		if (listaUltimasAcciones.length > 0) {
 
@@ -322,17 +323,18 @@ class GenericAccionRealizada {
 				}
 			});
 			setTimeout(() => {
+				$("#ultimasAccionesContent").empty();
 				$("#loading-data").hide();
 				$("#listAccionesRecientes").append(contentAcciones);
 			}, 300);
 
 		} else {
-			$("#ultimasAccionesContent").empty();
 			contentAcciones = '<div class="text-no-acciones">' +
 				'	<i class="icon-not-action fas fa-ban"></i>' +
 				'	<b class="text-not-action">Sin movimientos para mostrar</b>' +
 				'</div>';
 			setTimeout(() => {
+				$("#ultimasAccionesContent").empty();
 				$("#loading-data").hide();
 				$("#ultimasAccionesContent").append(contentAcciones);
 			}, 300);
@@ -758,26 +760,28 @@ cambiarFotoUsuarioLog = function (evento) {
 var monster = document.getElementById('monsterPlay');
 
 function showMonster() {
-	var min = 30, max = 180;
-	var rand = Math.floor(Math.random() * (max - min + 1) + min);
-	var monsterAnimation = Math.floor(Math.random() * (2 - 0 + 1));
-	switch (monsterAnimation) {
-		case 0:
-			monster.style.animation = 'monster-play 5s 1';
-			break;
-
-		case 1:
-			monster.style.animation = 'monster-show 10s 1';
-			break;
-
-		case 2:
-			monster.style.animation = 'monster-run 5s 1';
-			break;
-
-		default:
-			break;
+	if(monster){
+		var min = 30, max = 180;
+		var rand = Math.floor(Math.random() * (max - min + 1) + min);
+		var monsterAnimation = Math.floor(Math.random() * (2 - 0 + 1));
+		switch (monsterAnimation) {
+			case 0:
+				monster.style.animation = 'monster-play 5s 1';
+				break;
+	
+			case 1:
+				monster.style.animation = 'monster-show 10s 1';
+				break;
+	
+			case 2:
+				monster.style.animation = 'monster-run 5s 1';
+				break;
+	
+			default:
+				break;
+		}
+		setTimeout(showMonster, rand * 1000);
 	}
-	setTimeout(showMonster, rand * 1000);
 }
 
 showMonster();
