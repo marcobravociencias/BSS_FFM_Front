@@ -430,7 +430,7 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 		let tempList = [];
 
 		if ($scope.nivelEstatusTraspasoFiltro !== "") {
-			let statusList = $scope.nivelEstatusTraspasoFiltro.split(",");
+			let statusList = $scope.nivelEstatusTraspasoFiltro.toString().split(",");
 			angular.forEach(statusList, (idx, index) => {
 				let status = newList.find((t) => Number(t.id) == Number(idx))
 				if (status) {
@@ -445,9 +445,8 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 	$scope.filtraIntervencion = function (listaIntervencion) {
 		let newList = listaIntervencion;
 		let tempList = [];
-
 		if ($scope.nivelIntervencionTraspasoFiltro !== "") {
-			let interList = $scope.nivelIntervencionTraspasoFiltro.split(",");
+			let interList = $scope.nivelIntervencionTraspasoFiltro.toString().split(",");
 			angular.forEach(interList, (idx, index) => {
 				let status = newList.find((t) => Number(t.id) == Number(idx))
 				if (status) {

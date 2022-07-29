@@ -15,8 +15,8 @@
             ng-change="limpiarCamposFiltroTraspaso(3)" class="form-control input-filtro-traspasos form-control-sm">
     </div>
     <div class="col-1 columna-traspaso columna-filtro-ind">
-        <i class="icono-noseleccion fas fa-exclamation-circle me-2" title="No se encontraron catalogo de estatus"
-            ng-show="!filtrosGeneral.estatusdisponiblesTraspaso.length"></i><label for="filtro-estatus-substatus-tr" class="label-filter">Estatus</label>
+        <label for="filtro-estatus-substatus-tr" class="label-filter">Estatus <i class="icono-noseleccion fas fa-exclamation-circle me-2" title="No se encontraron catalogo de estatus"
+            ng-show="!filtrosGeneral.estatusdisponiblesTraspaso.length"></i></label>
         <div class="dropdown">
             <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Seleccione..." type="text"
                 id="filtro-estatus-substatus-tr" class="input-filtro-traspasos form-control form-control-sm" />
@@ -45,9 +45,9 @@
         </div>
     </div>
     <div class="col-2 columna-traspaso columna-filtro-ind">
-        <i class="icono-noseleccion fas fa-exclamation-circle me-2" title="No se encontraron catalogo de intervenciones"
-            ng-show="!filtrosGeneral.tipoOrdenesTraspaso.length"></i><label for="filtro-intervencion-tr"
-            class="label-filter">Intervenci&oacute;n</label>
+        <label for="filtro-intervencion-tr"
+            class="label-filter">Intervenci&oacute;n <i class="icono-noseleccion fas fa-exclamation-circle me-2" title="No se encontraron catalogo de intervenciones"
+            ng-show="!filtrosGeneral.tipoOrdenesTraspaso.length"></i></label>
         <div class="dropdown">
             <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Seleccione..." type="text"
                 id="filtro-intervencion-tr" class="input-filtro-traspasos form-control form-control-sm" />
@@ -75,8 +75,8 @@
         </div>
     </div>
     <div class="col-2 columna-traspaso columna-filtro-ind">
-        <i class="icono-noseleccion fas fa-exclamation-circle me-2" title="No se encontraron catalogo de Geografia"
-            ng-show="!listadogeografiacopy.length"></i><label for="cluster" class="label-filter">Geograf&iacute;a</label>
+        <label for="cluster" class="label-filter">Geograf&iacute;a <i class="icono-noseleccion fas fa-exclamation-circle me-2" title="No se encontraron catalogo de Geografia"
+            ng-show="!listadogeografiacopy.length"></i></label>
         <input readonly placeholder="Seleccione..." type="text" id="clusterTr" ng-click="abrirModalClusterTraspaso()"
             class="input-filtro-traspasos form-control form-control-sm">
     </div>
