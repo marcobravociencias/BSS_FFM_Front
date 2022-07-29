@@ -321,18 +321,20 @@ class GenericAccionRealizada {
 				}
 			});
 			setTimeout(() => {
+				$("#listAccionesRecientes").empty();
 				$("#loading-data").hide();
 				$("#listAccionesRecientes").append(contentAcciones);
 			}, 300);
 
 		} else {
-			contentAcciones = '<div class="text-no-acciones">' +
+			contentAcciones = '<div class="text-no-acciones pt-2" style="padding: 0 !important; font-size:11px !important; padding-top:2em !important">' +
 				'	<i class="icon-not-action fas fa-ban"></i>' +
 				'	<b class="text-not-action">Sin movimientos para mostrar</b>' +
 				'</div>';
 			setTimeout(() => {
+				$("#listAccionesRecientes").empty();
 				$("#loading-data").hide();
-				$("#ultimasAccionesContent").append(contentAcciones);
+				$("#listAccionesRecientes").append(contentAcciones);
 			}, 300);
 
 		}
@@ -366,11 +368,11 @@ class GenericAccionRealizada {
 			'				</div>' +
 			'			</div>' +
 			'		</div>' +
-			'		<div  id="loading-data" class="spinner-border spinner-cargando-info">' +
-			'			<span class="visually-hidden">Loading...</span>' +
-			'		</div>' +
 			'		<div id="ultimasAccionesContent">' +
 			'			<div class="activity">' +
+			'				<div  id="loading-data" class="spinner-border spinner-cargando-info">' +
+			'					<span class="visually-hidden">Loading...</span>' +
+			'				</div>' +
 			'				<ul id="listAccionesRecientes" class="styleAction action-timeline mb-0">' +
 			'				</ul>' +
 			'			</div>' +
