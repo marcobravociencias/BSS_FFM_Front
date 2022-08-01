@@ -35,7 +35,7 @@
 <body id="idBody" ng-controller="bandejasSalesforceController" style="display: none;">
     <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
     <br>
-    <div class="container" id="container_bandejas_salesforce">
+    <div class="container" id="container_bandejas_salesforce" ng-show="!detalleSalesforceView">
         <div class="content-fluid" ng-show="!isAgendamiento && !detalleSalesforceView">
             <div class="row" ng-show="!isPermisoConsultaPendientesAgendar && !isPermisoConsultaRescataventas && !isPermisoConsultaPendientesActivar" style="padding: 1em  0;">
                 <div class="text-accion-nopermiso">
