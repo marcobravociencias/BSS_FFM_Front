@@ -115,7 +115,6 @@
                             <i class="icon-mostrar-equipo" ng-class="cotizacion.mostrarInfo ? 'fas fa-angle-down' : 'fas fa-angle-up'" ></i>                                                      
                         </div>
                         <div class="col-content-card-equipo"  ng-show="cotizacion.mostrarInfo">
-                            <span class="text-activacion-warning ng-scope" ng-if="!cotizacion.isConfigurado">Este servicio aun no ha sido configurado</span>
                 
                             <table class="table table-equipo-config-ind">
                                 <thead>
@@ -155,7 +154,6 @@
                         <span class="badge-mensaje-equipo sin-configuracion" >Sin configuraci&oacute;n</span>
                     </div>
                     <div class="col-content-card-equipo"  ng-show="cotizacion.mostrarInfo">
-                        <span class="text-activacion-warning ng-scope" ng-if="!cotizacion.isConfigurado">Este servicio aun no ha sido configurado</span>
 
                         <div class="style_content_equipo_act_ord_serv">                   
                             <table class="table table-equipo-config-ind">
@@ -203,7 +201,6 @@
                         <span class="badge-mensaje-equipo sin-configuracion" >Sin configuraci&oacute;n</span>
                     </div>
                     <div class="col-content-card-equipo contenido-dns-config-parent" ng-show="cotizacion.mostrarInfo">
-                        <span class="text-activacion-warning ng-scope" ng-if="!cotizacion.isConfigurado">Este servicio aun no ha sido configurado</span>                                           
                         <div class="col-izquierda-dns">
                             <div class=" no-padding   style_select_act_serv">
                                 <span class="span-dns-config">Activacion del servicio</span>                                
@@ -261,7 +258,6 @@
                         <span class="badge-mensaje-equipo sin-configuracion" >Sin configuraci&oacute;n</span>
                     </div>
                     <div class="col-content-card-equipo"  ng-show="cotizacion.mostrarInfo">
-                        <span class="text-activacion-warning ng-scope" ng-if="!cotizacion.isConfigurado">Este servicio aun no ha sido configurado</span>
                         <div class="row " >                     
                             <div class="col-3 ">
                                 <span class="label-equipo-ont">Activacion del servicio</span>                                

@@ -1855,6 +1855,11 @@ span.text-activacion-warning {
 
 .span-dns-config {
     font-size: .8em;
+    color: #434343;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
 }
 
 

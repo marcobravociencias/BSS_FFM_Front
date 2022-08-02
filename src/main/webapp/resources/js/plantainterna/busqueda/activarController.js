@@ -1370,9 +1370,12 @@ app.activacionController=function($scope, $q, busquedaService){
                             if (response.data.result != undefined ) {   
                                 if(response.data.result.detalleAutofind != undefined ){
                                     let autofindres=response.data.result.detalleAutofind;
-                                   
-                                    servicio.config.numSerie=autofindres.serialNumber
                                     
+                                    servicio.config.numSerie=autofindres.serialNumber
+                                    if(servicio.config.red == undefined)
+                                        servicio.config.red={}
+
+                                        
                                     servicio.config.red.nombreOlt=autofindres.olt
                                     servicio.config.red.idOlt=autofindres.idOlt
                                     servicio.config.red.frame=autofindres.frame
