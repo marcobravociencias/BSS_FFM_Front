@@ -66,12 +66,13 @@
                                 role="tab" aria-controls="gestionCuadrilla" aria-selected="false">Gesti&oacute;n
                                 Cuadrillas</a>
                         </li> 
+                        -->
                         <li class="nav-item">
                             <a class="nav-link" id="confiGeografia-tab" data-toggle="tab" href="#confiGeografia"
-                                role="tab" aria-controls="confiGeografia" aria-selected="false">Configuraci&oacute;n
+                                ng-click="consultarCatalogoGeografia()" role="tab" aria-controls="confiGeografia" aria-selected="false">Configuraci&oacute;n
                                 Geograf&iacute;a</a>
                         </li>
-                        -->
+                        
                         <li class="nav-item" ng-if="configPermisoAccionConsultaTecnicosPagos">
                             <a class="nav-link" id="pagoTecnico-tab" data-toggle="tab" href="#pagoTecnico"
                                 ng-click="validaConsultarTecnicosPagos()" role="tab" aria-controls="pagoTecnico"
@@ -86,11 +87,11 @@
                         <!--div class="tab-pane fade" id="gestionCuadrilla" role="tabpanel"
                             aria-labelledby="gestionCuadrilla-tab">
                             <jsp:include page="./content/gestionCuadrilla.jsp"></jsp:include>
-                        </div>
+                        </div-->
                         <div class="tab-pane fade" id="confiGeografia" role="tabpanel"
                             aria-labelledby="confiGeografia-tab">
                             <jsp:include page="./content/configuracionGeografia.jsp"></jsp:include>
-                        </div-->
+                        </div>
                         <div class="tab-pane fade show active" id="cambiaContrasena" role="tabpanel"  ng-show="configPermisoAccionConsultaCambiaContrasena"
                             aria-labelledby="cambiaContrasena-tab">
                             <jsp:include page="./content/cambiaContrasena.jsp"></jsp:include>

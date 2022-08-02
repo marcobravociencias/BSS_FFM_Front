@@ -84,4 +84,26 @@ app.service("gestionUniversalService", function ($http) {
             }
         });
     };
+
+    this.consultaGeografias=function(){
+		return $http({
+			method: "post",
+			url: "req/consultaGeografias",
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
+
+    this.gestionGeocercas=function(params){
+		return $http({
+			method: "post",
+			url: "req/gestionGeocercas",
+            data: JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
+    
 });

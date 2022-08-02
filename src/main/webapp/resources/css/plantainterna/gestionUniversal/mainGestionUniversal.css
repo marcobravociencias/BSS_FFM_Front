@@ -174,11 +174,11 @@
 }
 
 #container_configura_geografia {
-    height: 23.5em;
+    height: 28em;
 }
 
 .content-geografia {
-    height: 20em;
+    height: 25em;
     overflow-y: auto;
     margin-top: 1em;
     margin-bottom: 1em;
@@ -186,10 +186,10 @@
 
 .vakata-context, .vakata-context ul {
     background: #fff !important;
-    width: 8em;
     box-shadow: 2px 2px 2px #99999991 !important;
     border: 1px solid #a8a0a038 !important;
     font-size: 0.9em;
+    font-family: 'Montserrat'!important;
 }
 
 .vakata-context li>a .vakata-contextmenu-sep {

@@ -21,6 +21,9 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
     $scope.configPermisoAccionConsultaTecnicosPagos = false;
     $scope.configPermisoAccionCambiaContrasena = false;
     $scope.configPermisoAccionConsultaPagos = false;
+    $scope.configPermisoAccionRegistrarNodoGeografia = false;
+    $scope.configPermisoAccionModificarNodoGeografia = false;
+    $scope.configPermisoAccionEliminarNodoGeografia = false;
 
 
     $('.drop-down-filters').on("click.bs.dropdown", function (e) {
@@ -303,6 +306,9 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                                 $scope.configPermisoAccionConsultaTecnicosPagos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaTecnicosPagosPlanning" })[0] != undefined);
                                 $scope.configPermisoAccionConsultaPagos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaPagosPlanning" })[0] != undefined);
                                 $scope.configPermisoAccionCambiaContrasena = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionCambiaContrasenaPlanning" })[0] != undefined);
+                                $scope.configPermisoAccionRegistrarNodoGeografia = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionRegistrarNodoGeografiaPlanning" })[0] != undefined);
+                                $scope.configPermisoAccionModificarNodoGeografia = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionModificarNodoGeografiaPlanning" })[0] != undefined);
+                                $scope.configPermisoAccionEliminarNodoGeografia = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionEliminarNodoGeografiaPlanning" })[0] != undefined);
                                 objectTempAccion = new GenericAccionRealizada("" + $scope.permisosConfigUser.id, 'TOP_RIGHT');
 				                objectTempAccion.inicializarBotonAccionesRecientes();
                             }
@@ -957,6 +963,255 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                 console.log(text);
             });
         }
+    }
+
+    $scope.listaGeografiaConfiguracion = [];
+    $scope.banderaConsultaGeografia = false;
+    $scope.consultarCatalogoGeografia = function() {
+        if (!$scope.banderaConsultaGeografia) {
+            swal({ text: 'Espera un momento...', allowOutsideClick: false });
+            swal.showLoading();
+            gestionUniversalService.consultaGeografias().then(function success(response) {
+                if (response.data !== undefined) {
+                    if (response.data.respuesta) {
+                        if (response.data.result) {
+                            $scope.listaGeografiaConfiguracion = response.data.result.geografia;
+                            
+                            $scope.listaGeografiaConfiguracion.map((e) => {
+                                e.parent = e.padre == null ? 0 : e.padre;
+                                e.text = e.nombre;
+                                e.icon = "fa fa-globe";
+                                e.state = {
+                                    opened: false,
+                                    selected: false
+                                }
+                                return e
+                            })
+                            $scope.listaGeografiaConfiguracion.push({ id: 0, text: "TOTALPLAY", nivel: 0, parent: "#", state: { opened: true, selected: true } });
+
+                            $scope.banderaConsultaGeografia = true;
+                            $scope.agregarOpcionesGeografiaConfiguracion($scope.listaGeografiaConfiguracion);
+                            swal.close();
+                        } else {
+                            toastr.warning('No se encontraron usuarios');
+                            swal.close();
+                        }
+                    } else {
+                        toastr.warning(response.data.resultDescripcion);
+                        swal.close();
+                    }
+                } else {
+                    toastr.error('Ha ocurrido un error al consultar los usuarios');
+                }
+                swal.close();
+            })
+        }
+    }
+
+    $scope.agregarOpcionesGeografiaConfiguracion = function(array) {
+        $('#jstreeConfig').jstree("destroy");
+        $('#jstreeConfig').bind('loaded.jstree', function (e, data) {
+            
+        }).jstree({
+            'plugins': ["wholerow", 'search', 'contextmenu'],
+            'search': {
+                "case_sensitive": false,
+                "show_only_matches": true
+            },
+            'core': {
+                "check_callback": true,
+                'data': array,
+                'themes': {
+                    'name': 'proton',
+                    'responsive': true,
+                    'icons': false
+                }
+            },
+            "contextmenu" : {
+                "items" :  function (o, cb){
+                    var opciones = {};
+                    if ($scope.configPermisoAccionRegistrarNodoGeografia) {
+                        opciones.create = {};
+                        opciones.create = 
+                        {
+                            "icon" : 'fa fa-plus',
+                            "label"	: "Nueva Rama",
+                            "_disabled" : false,
+                            "action": function (data) {
+                                var inst = $.jstree.reference(data.reference),
+                                obj = inst.get_node(data.reference);
+                               var  type = "";
+                                inst.create_node(obj, {
+                                   'text' : 'Nombre',
+                                   'type' : type
+                                }, "last", function (new_node) {
+                                   try {
+                                       inst.edit(new_node);
+                                   } catch (ex) {
+                                       setTimeout(function () { 
+                                           inst.edit(new_node);
+                                       },0);
+                                   }
+                                });
+                            }
+                        }
+                    }
+                    if ($scope.configPermisoAccionModificarNodoGeografia) {
+                        opciones.rename = {};
+                        opciones.rename = 
+                        {
+                            "separator_before"	: false,
+                            "separator_after"	: false,
+                            "_disabled"			: false,
+                            "label"				: "Cambiar Nombre",
+                            "shortcut_label"	: 'F2',
+                            "icon"				: "fa fa-pen-fancy",
+                            "action"			: function (data) { 
+                                inst = $.jstree.reference(data.reference);
+                                obj = inst.get_node(data.reference);
+                                inst.edit(obj)
+                            }
+                        }
+                    }
+                    if ($scope.configPermisoAccionEliminarNodoGeografia) {
+                        opciones.delete = {};
+                        opciones.delete = 
+                        {
+                            "icon" : 'fa fa-trash',
+                            "label" : "Borrar Rama",
+                            "action"	: function (data) { 
+                                var inst = $.jstree.reference(data.reference),
+                                obj = inst.get_node(data.reference)
+                                bajaElemento(obj);
+                            }
+                        }
+                    }
+                    return opciones;
+                }
+            }
+        });
+        console.log("termina");
+    }
+
+    addReanameNode = function(rama){
+        var isnum = /^\d+$/.test(rama.id);
+        if(isnum){
+            swal({
+                title: "Se actualizar\u00E1 la informaci\u00F3n del nodo",
+                text: "\u00BFDesea guardar la informaci\u00F3n?",
+                type: "info",
+                reverseButtons: true,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Aceptar',
+                cancelButtonText: "Cancelar",
+            }).then(function (isConfirm) {
+                if (isConfirm) {
+                    let params = {};
+                    params.geografia = [];
+                    params.geografia.push({
+                        id: rama.original.id,
+                        descripcion: rama.text,
+                        idPadre: rama.original.padre,
+                        nivel: rama.original.nivel
+                    });
+                    $scope.gestionarGeocerca(params);
+                }
+            }).catch(err => {
+                $scope.banderaConsultaGeografia = false;
+                $scope.consultarCatalogoGeografia();
+                toastr.warning('Operaci&oacute;n cancelada');
+                $("#searchGeo").val("");
+            });
+        }else{
+            swal({
+                title: "Se agregar\u00E1 la informaci\u00F3n del nodo",
+                text: "\u00BFDesea guardar la informaci\u00F3n?",
+                type: "info",
+                reverseButtons: true,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Aceptar',
+                cancelButtonText: "Cancelar",
+            }).then(function (isConfirm) {
+                if (isConfirm) {
+                    let padre = $scope.listaGeografiaConfiguracion.find((e) => e.id == rama.parent);
+                    let params = {};
+                    params.geografia = [];
+                    params.geografia.push({
+                        id: "",
+                        descripcion: rama.text,
+                        idPadre: rama.parent,
+                        nivel: (padre.nivel+1)
+                    });
+                    $scope.gestionarGeocerca(params);
+                }
+            }).catch(err => {
+                $scope.banderaConsultaGeografia = false;
+                $scope.consultarCatalogoGeografia();
+                toastr.warning('Operaci&oacute;n cancelada');
+                $("#searchGeo").val("");
+            });
+        }
+    }
+
+    function bajaElemento(rama){
+        console.log(rama);
+        swal({
+            title: "Se eliminar\u00E1 la informaci\u00F3n del nodo",
+            text: "\u00BFDesea eliminar la informaci\u00F3n?",
+            type: "info",
+            reverseButtons: true,
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Aceptar',
+            cancelButtonText: "Cancelar",
+        }).then(function (isConfirm) {
+            if (isConfirm) {
+                let params = {};
+                params.geografia = [];
+                params.geografia.push({
+                    id: rama.original.id,
+                    descripcion: rama.text,
+                    idPadre: rama.original.padre,
+                    nivel: rama.original.nivel
+                });
+                //$scope.gestionarGeocerca(params);
+            }
+        }).catch(err => {
+            $scope.banderaConsultaGeografia = false;
+            $scope.consultarCatalogoGeografia();
+            toastr.warning('Operaci&oacute;n cancelada');
+            $("#searchGeo").val("");
+        });
+    }
+
+    $scope.gestionarGeocerca = function(params) {
+        swal({ text: 'Espera un momento...', allowOutsideClick: false });
+        swal.showLoading();
+        gestionUniversalService.gestionGeocercas(params).then(function success(response) {
+            if (response.data !== undefined) {
+                if (response.data.respuesta) {
+                    if (response.data.result) {
+                        $scope.banderaConsultaGeografia = false;
+                        $scope.consultarCatalogoGeografia();
+                        toastr.success(response.data.result.mensaje);
+                    } else {
+                        toastr.warning('No se encontraron usuarios');
+                    }
+                    swal.close();
+                } else {
+                    toastr.warning(response.data.resultDescripcion);
+                }
+                swal.close();
+            } else {
+                toastr.error('Ha ocurrido un error al consultar los usuarios');
+            }
+            swal.close();
+        })
     }
 
     $scope.crearNodo = function () {
