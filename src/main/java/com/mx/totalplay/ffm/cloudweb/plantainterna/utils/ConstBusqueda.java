@@ -62,4 +62,16 @@ public class ConstBusqueda {
 
     @Value("${eliminarSubComentarioNoticiasSF}")
     private String eliminarSubComentarioNoticiasSF;
+        
+    @Value("${consultarSerieExistenteActivacion}")
+    private String consultarSerieExistenteActivacion;
+    
+    @Value("${consultarMacNumeroSerie}")
+    private String consultarMacNumeroSerie;
+    
+    @Value("${consultarAutofindActivacion}")
+    private String consultarAutofindActivacion;
+    
 }
+
+

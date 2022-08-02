@@ -1286,34 +1286,6 @@ app.activacionController=function($scope, $q, busquedaService){
         });
     }
 
-    $scope.getMacJsonBusqueda = function(servicio) {
-        swal({ text: 'Cargando informaci\u00f3n ...', allowOutsideClick: false });
-        swal.showLoading();
-        var params = new FormData();
-        //params.append("params.SerialNumber", 'M362028F829F8374E2');
-        params.append("params.SerialNumber", servicio.No_Serie);
-        busquedaService.getMacJson(params).then(function success(response) {
-            console.log(response);
-            if (response.data !== undefined) {
-                if (response.data.success) {
-                    if (response.data.result.mac) {
-                        servicio.MAC = response.data.result.mac;
-                       // mostrarMensajeExitoAlert(response.data.result.msg);
-                    } else {
-                        //mostrarMensajeWarning(response.data.result.msg);
-                    }
-                   swal.close()
-                } else {
-                    mostrarMensajeErrorAlertAjax("Error al consultar la informacion")
-                    swal.close()
-                }
-            } else {
-                mostrarMensajeErrorAlertAjax("Error en el servidor")
-                swal.close()
-            }
-        })
-    }
-   
 
 
     $scope.mostrarOcultarInfo = function(info) {
@@ -1345,5 +1317,190 @@ app.activacionController=function($scope, $q, busquedaService){
           }).then(function () {
         }).catch(swal.noop);
     }
+    /**
+    $scope.showSearch = true;
+
+    $scope.mostrarDetalleActivarOs({
+        canalVenta: null,
+        comentariosOs: null,
+        cp: "04020",
+        creadoPor: null,
+        cuentaActiva: "true",
+        detalleCotSitioPlan: null,
+        detalleCotizacion: null,
+        detalleCuentaFactura: null,
+        detalleOportunidad: null,
+        detalleSitio: null,
+        editadoPor: null,
+        estatus: "Agendado",
+        fechaAgendada: null,
+        id: "a153C0000015f9TQAQ",
+        idCsp: "a113C000000rdUNQAY",
+        idOt: "7986221",
+        keyObject: "OS",
+        motivoCancelacion: null,
+        nombre: "OS-6950914",
+        numeroCuentaFactura: "0190020272",
+        osConfirmada: null,
+        propietario: null,
+        propietarioOportunidad: null,
+        tipoOrden: null,
+        tscompletado: null,
+        tsconfirmado: null,
+        turnoAg: null,
+        unidadNegocio: "2"
+    })
+
+    $scope.showDetalleActivar=true;
+**/
+
+    $scope.consultarAutofindActivacion = function(servicio) {
+        if(servicio.config.numSerie){
+            if (!swal.isVisible()) {
+                swal({ text: 'Cargando informaci\u00f3n ...', allowOutsideClick: false });
+                swal.showLoading();
+            }
+            let params ={"numeroSerie" : servicio.config.numSerie }
+
+            busquedaService.consultarAutofindActivacion(params).then(function success(response) {
+                console.log(response);
+                if (response.data !== undefined) {
+                    if(response.data.codigoEstatusService < 300){
+                        if (response.data.respuesta) {
+                            if (response.data.result != undefined ) {   
+                                if(response.data.result.detalleAutofind != undefined ){
+                                    let autofindres=response.data.result.detalleAutofind;
+                                   
+                                    servicio.config.numSerie=autofindres.serialNumber
+                                    
+                                    servicio.config.red.nombreOlt=autofindres.olt
+                                    servicio.config.red.idOlt=autofindres.idOlt
+                                    servicio.config.red.frame=autofindres.frame
+                                    servicio.config.red.slot=autofindres.slot
+                                    servicio.config.red.puerto=autofindres.port
+                                    swal.close()
+                                    mostrarMensajeExitoAlert('Carga de datos correcta')
+
+                                    //  idModel: "112"
+                                    //  ipOlt: "10.180.210.139"
+                                    //  model: "HG8145V5"                                
+                                    //  version: "V5R019C00S100"
+                                }else{
+                                    mostrarMensajeWarningValidacion('No se encontraron datos para la serie capturada');
+                                    swal.close();  
+                                }                                                                                    
+                            }else{
+                                mostrarMensajeWarningValidacion(response.data.resultDescripcion);
+                                swal.close();
+                            }
+                        } else {
+                            mostrarMensajeWarningValidacion(response.data.resultDescripcion);
+                            swal.close();
+                        }
+                    }else{
+                        mostrarMensajeWarningValidacion('No se encontraron datos para la serie capturada');
+                        swal.close();
+                    }
+                } else {
+                    mostrarMensajeWarningValidacion("No se encontro informaci\u00f3n");
+                    swal.close();
+                }
+            }, function error(response) {
+                swal.close();
+            });
+        }else{
+            mostrarMensajeWarningValidacion("Captura el n\u00FAmero de serie");
+        }       
+    }
+
+
+
+
     
+    $scope.consultarSerieExistenteActivacion = function(servicio) {
+        if(servicio.config && servicio.config.numSerie){
+            if (!swal.isVisible()) {
+                swal({ text: 'Cargando informaci\u00f3n ...', allowOutsideClick: false });
+                swal.showLoading();
+            }
+            let  params ={"numeroSerie" : servicio.config.numSerie};
+           
+            busquedaService.consultarSerieExistenteActivacion(params).then(function success(response) {
+                console.log(response);
+                if (response.data !== undefined) {
+                    if (response.data.respuesta) {
+                        if (response.data.result != undefined ) {                            
+                            if(response.data.result.detalleNumeroSerie !=undefined){
+                                if(response.data.result.detalleNumeroSerie.result=='0'){
+                                    $scope.getMacBusquedaPorSerie(servicio)
+                                }else{                                    
+                                    mostrarMensajeWarningValidacion(response.data.result.detalleNumeroSerie.descripcion);
+                                }
+                            }else{
+                                mostrarMensajeWarningValidacion("Ha ocurrido un error al buscar la serie");
+                                swal.close();
+                            }
+                        }else{
+                            mostrarMensajeWarningValidacion(response.data.resultDescripcion);
+                            swal.close();
+                        }
+                    } else {
+                        mostrarMensajeWarningValidacion(response.data.resultDescripcion);
+                        swal.close();
+                    }
+                } else {
+                    mostrarMensajeWarningValidacion("No se encontro informaci\u00f3n");
+                    swal.close();
+                }
+            }, function error(response) {
+                swal.close();
+            });
+        }else{
+            mostrarMensajeWarning("Captura el n\u00FAmero de serie");
+        }       
+    }
+    
+    $scope.getMacBusquedaPorSerie = function(servicio) {
+        if (!swal.isVisible()) {
+            swal({ text: 'Cargando informaci\u00f3n ...', allowOutsideClick: false });
+            swal.showLoading();
+        }
+        let params ={"numeroSerie" : servicio.config.numSerie }
+        busquedaService.consultarMacNumeroSerie(params).then(function success(response) {
+            console.log(response);
+            if (response.data !== undefined) {
+                if (response.data.respuesta) {
+                    if (response.data.result !=undefined) {
+                        if(response.data.result.detalleMac != undefined && response.data.result.detalleMac.mac ){
+                           // servicio.MAC = response.data.result.detalleMac.mac;
+                            servicio.config.mac = response.data.result.detalleMac.mac;
+
+                            $scope.consultarAutofindActivacion( servicio )
+                        }else{
+                            mostrarMensajeErrorAlertAjax('No se encontraron datos de MAC' )
+                            swal.close()
+                        }
+                    } else {
+                        mostrarMensajeErrorAlertAjax('Ha ocurrido un error al consultar la MAC' )
+                        swal.close()
+                    }
+                } else {
+                    mostrarMensajeErrorAlertAjax(response.data.resultDescripcion)
+                    swal.close()
+                }
+            } else {
+                mostrarMensajeErrorAlertAjax( 'Ha ocurrido un error al consultar la MAC' )
+                swal.close()
+            }
+        })
+    }   
+
+    
+
+    $scope.blurSerieOnt=function(servicioConfig){
+        $scope.consultarSerieExistenteActivacion(servicioConfig)
+    }
+
+    //485754436EE8409F
+
 }

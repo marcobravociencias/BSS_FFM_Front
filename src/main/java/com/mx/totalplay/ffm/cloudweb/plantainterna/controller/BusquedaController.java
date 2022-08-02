@@ -189,4 +189,35 @@ public class BusquedaController {
         }
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
+     
+	@PostMapping("/consultarSerieExistenteActivacion")
+	public   ResponseEntity<?> consultarSerieExistenteActivacion(@RequestBody String params) {
+		logger.info("###### BusquedaController - consultarSerieExistenteActivacion  ### \n"+params);
+		ServiceResponseResult response = busquedaService.consultarSerieExistenteActivacion(params);
+        if (response.getResult() instanceof Integer){
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+	
+	@PostMapping("/consultarMacNumeroSerie")
+	public  ResponseEntity<?> consultarMacNumeroSerie(@RequestBody String params) {
+		logger.info("###### BusquedaController - consultarMacNumeroSerie  ### \n"+params);
+		ServiceResponseResult response = busquedaService.consultarMacNumeroSerie(params);
+		if(response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+
+	@PostMapping("/consultarAutofindActivacion")
+	public  ResponseEntity<?> consultarAutofindActivacion(@RequestBody String params) {        
+		logger.info("###### BusquedaController - consultarAutofindActivacion  ### \n"+params);
+		ServiceResponseResult response = busquedaService.consultarAutofindActivacion(params);
+		if(response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+	
 }

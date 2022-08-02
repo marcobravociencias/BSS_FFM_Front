@@ -103,15 +103,6 @@ app.service("busquedaService", function($http){
         })
     }
 
-    this.getMacJson = function(params) {
-        return $http({
-            method: "post",
-            url: "req/getMacJsonBsq",
-            data: JSON.stringify(params),
-            headers: { 'Content-Type': undefined },
-            transformRequest: angular.identity
-        })
-    }
 
     this.validarActivacion = function(params) {
         return $http({
@@ -237,6 +228,35 @@ app.service("busquedaService", function($http){
         return $http({
           method: "post",
           url: "req/eliminarNoticiaSF",
+          data: JSON.stringify(params),
+          headers: {'Content-Type': "application/json; charset=utf-8"},
+          transformRequest: angular.identity
+        });
+    };
+    this.consultarMacNumeroSerie = function(params) {
+        return $http({
+            method: "post",
+            url: "req/consultarMacNumeroSerie",
+            data: JSON.stringify(params),
+            headers: { 'Content-Type': undefined },
+            transformRequest: angular.identity
+        })
+    }
+
+    this.consultarAutofindActivacion = function (params) {
+        return $http({
+          method: "post",
+          url: "req/consultarAutofindActivacion",
+          data: JSON.stringify(params),
+          headers: {'Content-Type': "application/json; charset=utf-8"},
+          transformRequest: angular.identity
+        });
+    };
+
+    this.consultarSerieExistenteActivacion = function (params) {
+        return $http({
+          method: "post",
+          url: "req/consultarSerieExistenteActivacion",
           data: JSON.stringify(params),
           headers: {'Content-Type': "application/json; charset=utf-8"},
           transformRequest: angular.identity

@@ -359,11 +359,16 @@ public class ConsumeRest {
                     logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO" + httpErrorException.getMessage());
                     response = ServiceResponseResult.builder()
                             .result(httpErrorException.getRawStatusCode())
-                            .resultDescripcion(httpErrorException.getMessage()).build();
+                            .resultDescripcion(httpErrorException.getMessage())
+                            .codigoEstatusService(httpErrorException.getRawStatusCode())
+                            .build()           
+;
                     break;
                 default:
                     response = ServiceResponseResult.builder()
-                            .resultDescripcion(httpErrorException.getMessage()).build();
+                            .resultDescripcion(httpErrorException.getMessage())
+                            .codigoEstatusService(httpErrorException.getRawStatusCode())
+                            .build();
                     break;
             }
         } catch (Exception e) {

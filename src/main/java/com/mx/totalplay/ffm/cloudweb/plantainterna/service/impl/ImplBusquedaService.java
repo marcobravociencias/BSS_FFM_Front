@@ -39,6 +39,8 @@ public class ImplBusquedaService implements BusquedaService {
         this.constBusqueda = constBusqueda;
     }
 
+    
+    
     @Override
     public ServiceResponseResult busquedaGeneralSF(String params) {
         JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
@@ -363,5 +365,69 @@ public class ImplBusquedaService implements BusquedaService {
     	}
     	return response;
     }
+
+
+
+	@Override
+	public ServiceResponseResult consultarSerieExistenteActivacion(String params) {
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+        String tokenAcces = principalDetail.getAccess_token();
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constBusqueda.getConsultarSerieExistenteActivacion());
+        
+        Map<String, String> paramsRequest = new HashMap<>();
+        paramsRequest.put("numeroSerie", jsonObject.get("numeroSerie").getAsString());
+
+        logger.info("##### OBJECT: #####" + gson.toJson(paramsRequest));
+        logger.info("##### URL: #####" + urlRequest);
+        
+        response = restCaller.callGetBearerTokenRequest(paramsRequest,urlRequest, ServiceResponseResult.class, tokenAcces);
+        
+        logger.info("##### Consultar serie existente: \n" + gson.toJson(response));        
+        return response; 
+	}
+
+
+
+	@Override
+	public ServiceResponseResult consultarMacNumeroSerie(String params) {
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+        String tokenAcces = principalDetail.getAccess_token();
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constBusqueda.getConsultarMacNumeroSerie());
+        logger.info("##### OBJECT:jsonObject #####" + gson.toJson(jsonObject));
+
+        Map<String, String> paramsRequest = new HashMap<>();
+        paramsRequest.put("numeroSerie", jsonObject.get("numeroSerie").getAsString());
+
+        logger.info("##### OBJECT: #####" + gson.toJson(paramsRequest));
+        logger.info("##### URL: #####" + urlRequest);
+        
+        response = restCaller.callGetBearerTokenRequest(paramsRequest,urlRequest, ServiceResponseResult.class, tokenAcces);
+        
+        logger.info("##### Consultar mac numero serie: \n" + gson.toJson(response));        
+        return response; 
+	}
+
+
+
+	@Override
+	public ServiceResponseResult consultarAutofindActivacion(String params) {        
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+        String tokenAcces = principalDetail.getAccess_token();
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constBusqueda.getConsultarAutofindActivacion());
+        
+        Map<String, String> paramsRequest = new HashMap<>();
+        paramsRequest.put("numeroSerie", jsonObject.get("numeroSerie").getAsString());
+
+        logger.info("##### OBJECT: #####" + gson.toJson(paramsRequest));
+        logger.info("##### URL: #####" + urlRequest);
+        
+        response = restCaller.callGetBearerTokenRequest(paramsRequest,urlRequest, ServiceResponseResult.class, tokenAcces);
+        
+        logger.info("##### Consultar autofind: \n" + gson.toJson(response));        
+        return response; 
+	}
 
 }
