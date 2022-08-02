@@ -1,3 +1,4 @@
+
 .content-noseleccion {
     display: flex;
 }
@@ -14,36 +15,22 @@ b.text-no-seleccion-geografia {
 }
 
 .btnAgregarMultiseleccion {
-    background-color: white;
-    color: grey; 
+    background-color: var(--estandar-color);
     width: 20px;
     height: 20px;
     text-align: center;
     border-radius: 50%;
     font-size: 0.8em;
-    cursor: pointer;
-}
-
-.btnAgregarMultiseleccion:hover {
-    background-color: #959595;
-    color: white;
     cursor: pointer;
 }
 
 .btnEliminarMultiseleccion {
-    background-color: white;
-    color: grey; 
+    background-color: red;
     width: 20px;
     height: 20px;
     text-align: center;
     border-radius: 50%;
     font-size: 0.8em;
-    cursor: pointer;
-}
-
-.btnEliminarMultiseleccion:hover{
-    background-color: #959595;
-    color: white;
     cursor: pointer;
 }
 

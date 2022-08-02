@@ -636,10 +636,6 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
                             });
 
                             $("#arbolGeografiaMod").on('changed.jstree', function (e, data) {
-                            	$scope.geoSelectMod = [];
-                            	if($scope.detalleUsuario.geogragias.length < 1){
-                            		$scope.contadorCambioArbolGeografias = true;
-                            	}
                             	if($scope.contadorCambioArbolGeografias == true){
                             		$scope.listaCiudadesSelecionadasMod = [];
                                 	$scope.detalleUsuario.geografiasId = [];
@@ -647,6 +643,7 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
                                 	$scope.listaIdsGeografiaCiudadNatalMod = [];
                                 	$scope.listaTecnicosMod = [];
                                 	$scope.detalleUsuario.ciudadNatal = "";
+                                	$scope.geoSelectMod = [];
                                     var geografiaTreeMod = $('#arbolGeografiaMod').jstree("get_selected", true);
                                     geografiaTreeMod.forEach(geo =>{
                                     	if(geo.original.nivel == $scope.tabArbol_NV_GEOGRAFIA_mod){
@@ -2393,7 +2390,6 @@ app.editarUsuarioController=function($scope,usuarioPIService,$q){
 	    $scope.listaCouchsDespachosMod = [];
 	    $scope.listaSupervisoresMod = [];
 	    $scope.listaCiudadNatalMod = [];
-	    $scope.geoSelectMod = [];
 	    $scope.listaIdsGeografiaCiudadNatalMod = [];
 		$('#arbolIntervencionMod').jstree("destroy");
 		$('#arbolIntervencionPerfilMod').jstree("destroy");
