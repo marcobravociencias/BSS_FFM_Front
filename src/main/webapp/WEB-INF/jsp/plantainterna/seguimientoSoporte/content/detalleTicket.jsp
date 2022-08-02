@@ -427,7 +427,7 @@
                                         <td ng-bind="itemRegistro.modeloNuevo" title="{{itemRegistro.modeloNuevo}}"></td>
                                     </tr>
                                     <tr ng-show="listadoNuevoViejosEquipo.length <= 0">
-                                        <td class="col-listadoregistros" colspan="6">Sin registros</td>
+                                        <td class="col-listadoregistros" colspan="8">Sin registros</td>
                                     </tr>
                                 </tbody>
                             </table>

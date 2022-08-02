@@ -1460,7 +1460,7 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 					if (response.data.result) {
 						$scope.isTraspaso = false;
 						if (response.data.result.description) {
-							mensajeEnvio = 'Se ha traspasado la OT: ' + params.idOrden;
+							mensajeEnvio = response.data.result.description ? response.data.result.description : 'Se ha traspasado la OT: ' + params.idOrden;
 							objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
 							toastr.success('Traspaso de orden exitoso: "' + response.data.result.description + '"');
 						} else {
