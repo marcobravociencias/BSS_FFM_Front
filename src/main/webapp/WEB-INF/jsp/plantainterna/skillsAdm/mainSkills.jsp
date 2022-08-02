@@ -119,12 +119,16 @@
 										</div>
 										<div class="col-md-1" style="padding: 3px;">
 											<div class="btnAgregarMultiseleccion">
-												<i ng-click="mostrarContenedoresMultiseleccion('1')" class="fa fa-plus" style="color: white; font-size: 0.9em;"></i>
+												<i id="iconoAgregarMultiseleccion" ng-click="mostrarContenedoresMultiseleccion('1')" class="fa fa-plus" style="font-size: 0.9em;">
+													<span class="tooltipIconoAgregarMultiseleccion">Asignar m&uacute;ltiples skills</span>
+												</i>
 											</div>
 										</div>
 										<div class="col-md-1" style="padding: 3px;">
 											<div class="btnEliminarMultiseleccion">
-												<i ng-click="mostrarContenedoresMultiseleccion('0')" class="fa fa-minus" style="color: white; font-size: 0.9em;"></i>
+												<i id="iconoEliminarMultiseleccion" ng-click="mostrarContenedoresMultiseleccion('0')" class="fa fa-minus" style="font-size: 0.9em;">
+													<span class="tooltipIconoEliminarMultiseleccion">Desasignar m&uacute;ltiples skills</span>
+												</i>
 											</div>
 										</div>
 									</div>
