@@ -56,6 +56,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
     $scope.configPermisoAccionConsultaTicket = false;
     $scope.configPermisoAccionModificarTicket = false;
     $scope.filtroBusqueda.tipoFechaConsulta = 'creacion';
+    $scope.modelosList = [];
 
     let ingenieroTable = $('#ingenierosTable').DataTable({
         "paging": true,
@@ -560,6 +561,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
 
             if (results[10].data.respuesta) {
                 if (results[10].data.result) {
+                    $scope.modelosList = results[10].data.result.modelos;
                     let modelos = results[10].data.result.modelos;
                     let index = 0
                     modelos.map((e) => {

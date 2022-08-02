@@ -469,7 +469,7 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3 field-old inputTicket-select">
-                                        <label class="label-nuevo-equipo" for="modeloViejoEquipo">Modelo actual</label>
+                                        <label class="label-nuevo-equipo" for="modeloViejoEquipo">Modelo actual <i ng-if="!modelosList.length" class="icono-noseleccion fas fa-exclamation-circle ml-2" title="No se encontr&oacute; el catalogo de modelos"></i></label>
                                         <input
                                             ng-class="{'error-captura-input': !cambioEquipo.modeloViejo && isEvaluarNuevoEquipo}" readonly ng-click="abrirModalModelos(false)"
                                             maxlength="30" ng-model="cambioEquipo.modeloViejo" type="text"
@@ -496,7 +496,7 @@
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-3 inputTicket-select">
-                                        <label class="label-nuevo-equipo" for="modeloNuevoEquipo">Modelo nuevo</label>
+                                        <label class="label-nuevo-equipo" for="modeloNuevoEquipo">Modelo nuevo <i ng-if="!modelosList.length" class="icono-noseleccion fas fa-exclamation-circle ml-2" title="No se encontr&oacute; el catalogo de modelos"></i></label>
                                         <input
                                             ng-class="{'error-captura-input': !cambioEquipo.modeloNuevo && isEvaluarNuevoEquipo}" ng-click="abrirModalModelos(true)" readonly
                                             maxlength="30" ng-model="cambioEquipo.modeloNuevo" type="text"
@@ -561,7 +561,7 @@
                                         </td>
                                     </tr>
                                     <tr ng-show="listadoNuevoViejosEquipo.length <= 0">
-                                        <td class="col-listadoregistros" colspan="6">Sin registros</td>
+                                        <td class="col-listadoregistros" colspan="8">Sin registros</td>
                                     </tr>
                                 </tbody>
                             </table>
