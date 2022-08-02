@@ -155,8 +155,8 @@
   	opacity: 1;
 }
 
-#iconoAgregarMultiseleccion .tooltipIconoAgregarMultiseleccion,
-#iconoEliminarMultiseleccion .tooltipIconoEliminarMultiseleccion{
+.btnAgregarMultiseleccion .tooltipIconoAgregarMultiseleccion,
+.btnEliminarMultiseleccion .tooltipIconoEliminarMultiseleccion{
 	visibility: hidden;
   	width: 135px;
   	background-color: #555;
@@ -175,8 +175,8 @@
     font-size: .8em;
 }
 
-#iconoAgregarMultiseleccion:hover .tooltipIconoAgregarMultiseleccion,
-#iconoEliminarMultiseleccion:hover .tooltipIconoEliminarMultiseleccion {
+.btnAgregarMultiseleccion:hover .tooltipIconoAgregarMultiseleccion,
+.btnEliminarMultiseleccion:hover .tooltipIconoEliminarMultiseleccion {
 	visibility: visible;
   	opacity: 1;
 }
