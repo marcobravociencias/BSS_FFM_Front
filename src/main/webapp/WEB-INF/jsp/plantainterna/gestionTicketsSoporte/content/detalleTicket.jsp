@@ -449,14 +449,13 @@
                                             class="form-check-input dictamen-info" type="checkbox">
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                         <div class="col-7">
                             <form ng-show="agregarNuevoEquipoContent">
                                 <div class="form-row">
                                     <div class="form-group col-md-3 field-old inputTicket-select">
-                                        <label class="label-nuevo-equipo" for="selectTipoEquipoAdd">Tipo</label>
+                                        <label class="label-nuevo-equipo" for="selectTipoEquipoAdd">Tipo <i ng-if="!equiposList.length" class="icono-noseleccion fas fa-exclamation-circle ml-2" title="No se encontr&oacute; el catalogo de equipos"></i></label>
                                         <select
                                             ng-class="{'error-captura-input': !cambioEquipo.idTipoEquipo  && isEvaluarNuevoEquipo}"
                                             ng-model="cambioEquipo.idTipoEquipo"

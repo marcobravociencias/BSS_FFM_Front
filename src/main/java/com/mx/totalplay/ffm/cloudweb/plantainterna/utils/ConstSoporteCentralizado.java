@@ -14,12 +14,7 @@ public class ConstSoporteCentralizado {
 
     @Value("${consultaTicketSeguimiento}")
     private String consultaTicketSeguimiento;
-
-    @Value("${consultaDetalleSoporte}")
-    private String consultaDetalleSoporte;
     
-    @Value("${consultaEstatusSoporte}")
-    private String consultaEstatusSoporte;
     
     @Value("${consultaFallasTicketSoporte}")
     private String consultaFallasTicketSoporte;

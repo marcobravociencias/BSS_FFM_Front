@@ -9,10 +9,6 @@ public interface SoporteCentralizadoService {
     ServiceResponseResult consultaSeguimientoSoporte(String params);
 
     ServiceResponseResult consultaTicketSoporteSeguimiento(String params);
-
-    ServiceResponseResult consultaDetalleSoporte(String params);
-    
-    ServiceResponseResult consultaEstatusSoporte();
     
     public ServiceResponseResult consultaFallasTicketSoporte();
     

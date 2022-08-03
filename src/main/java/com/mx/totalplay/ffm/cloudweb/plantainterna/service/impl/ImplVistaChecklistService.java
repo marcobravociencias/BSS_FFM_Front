@@ -24,7 +24,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ImplVistaChecklistService implements VistaChecklistService{
-    private  final Logger logger = LogManager.getLogger(ImplDespachoPIService.class.getName());
+    private  final Logger logger = LogManager.getLogger(ImplVistaChecklistService.class.getName());
 	private final ConstantesGeneric constantesAmbiente;
 	private final ConstVistaChecklist constVistaChecklist;
 	private final ConsumeRest restCaller;

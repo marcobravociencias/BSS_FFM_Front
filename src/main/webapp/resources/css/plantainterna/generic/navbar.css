@@ -395,6 +395,7 @@ img.image-totalplayheader {
   margin-left: 1em;
   margin-right:1em;
   height: inherit;
+  object-fit: contain;
   width: -webkit-fill-available;
 }
 

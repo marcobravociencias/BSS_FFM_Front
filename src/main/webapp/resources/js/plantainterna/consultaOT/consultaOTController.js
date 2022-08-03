@@ -212,6 +212,25 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			}
 		}
 
+		let tituloAccion = "Consulta ordenes de trabajo";
+		let mensajeEnvio = "";
+		if($scope.camposFiltro.idot != undefined && $.trim(document.getElementById('idot').value) != ""){
+			mensajeEnvio = 'Se ha consultado por la OT: ' + $scope.camposFiltro.idot;
+		}
+
+		if($scope.camposFiltro.idos != undefined && $.trim(document.getElementById('idos').value) != ""){
+			mensajeEnvio = 'Se ha consultado por la OS: ' + $scope.camposFiltro.idos;
+		}
+
+		if($scope.camposFiltro.cuenta != undefined && $.trim(document.getElementById('cuenta').value) != ""){
+			mensajeEnvio = 'Se ha consultado por la CUENTA: ' + $scope.camposFiltro.cuenta;
+		}
+
+		if(mensajeEnvio != ""){
+			objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_INFO, tituloAccion);
+		}
+		console.log($scope.camposFiltro);
+
 		if (isValido) {
 			if (otTabla) {
 				otTabla.destroy();
@@ -1806,170 +1825,6 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 		});
 	}
 
-	$scope.descargarReporteConsultaOt = function () {
-		let isValido = true;
-		let errorMensaje = '';
-		let isValFecha = true;
-		/*
-		let tempNivelEstatus;
-		if($scope.nivelEstatusPendientes){
-			tempNivelEstatus=$scope.nivelEstatusPendientes
-		}else{
-			tempNivelEstatus=$scope.obtenerUltimoNivelEstatus()
-		}
-
-		let estatusOrdenes = []
-		angular.forEach($scope.filtrosGeneral.estatusdisponibles , (e, i) => {
-			e.children.map((k) => { 
-				if( k.checkedOpcion && tempNivelEstatus== k.nivel)
-					estatusOrdenes.push(k.id)		
-					
-				k.children.map((l) => { 
-					if( l.checkedOpcion && tempNivelEstatus== l.nivel)
-						estatusOrdenes.push(l.id)	
-					return l
-				})
-				  return k; 
-			})
-			if( e.checkedOpcion && tempNivelEstatus== e.nivel)
-				estatusOrdenes.push(e.id)				
-		})
-		*/
-		let estatusOrdenes = []
-		estatusOrdenes = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.estatusdisponibles, $scope.nivelEstatusPendientes);
-
-
-		//nivel intervencion
-		/*
-		let tempNivelInterven;
-		if($scope.nivelIntervenciones){
-			tempNivelInterven=$scope.nivelIntervenciones
-		}else{
-			tempNivelInterven=$scope.obtenerUltimoNivelIntervencion()
-		}
-		let subIntTemp = []
-		angular.forEach($scope.filtrosGeneral.tipoOrdenes, (e, i) => {
-			e.children.map((k) => { 
-				if( k.checkedOpcion && tempNivelInterven== k.nivel)
-					subIntTemp.push(k.id)		
-					
-				k.children.map((l) => { 
-					if( l.checkedOpcion && tempNivelInterven== l.nivel)
-						subIntTemp.push(l.id)	
-					return l
-				})
-				  return k; 
-			})
-			if( e.checkedOpcion && tempNivelInterven== e.nivel)
-				subIntTemp.push(e.id)				
-		})
-		*/
-		let subIntTemp = []
-		subIntTemp = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.tipoOrdenes, $scope.nivelIntervenciones);
-
-		//nivel geografia
-		let ultimonivel;
-		if ($scope.nivelGeografia) {
-			ultimonivel = $scope.nivelGeografia
-		} else {
-			ultimonivel = $scope.obtenerNivelUltimoJerarquia();
-		}
-		let clusters = $("#jstree-proton-3").jstree("get_selected", true)
-			.filter(e => e.original.nivel == ultimonivel)
-			.map(e => parseInt(e.id))
-
-
-
-		if ($.trim(document.getElementById('idot').value) !== '') {
-			if (!($.isNumeric($.trim(document.getElementById('idot').value)))) {
-				errorMensaje += '<li>Introduce un n&uacute;mero correcto de OT.</li>';
-				isValido = false;
-			}
-		}
-
-		if ($.trim(document.getElementById('cuenta').value) !== '') {
-			if (!($.isNumeric($.trim(document.getElementById('cuenta').value)))) {
-				errorMensaje += '<li>Introduce un n&uacute;mero correcto de cuenta.</li>';
-				isValido = false;
-			}
-		}
-
-		if (estatusOrdenes.length === 0) {
-			errorMensaje += '<li>Seleccione estatus.</li>';
-			isValido = false
-		}
-
-		if (subIntTemp.length === 0) {
-			errorMensaje += '<li>Seleccione intervenci&oacute;n.</li>';
-			isValido = false
-		}
-		/**
-		if (clusters.length === 0) {
-			errorMensaje += '<li>Seleccione geograf&iacute;a.</li>';
-			isValido = false
-		}**/
-
-		if (document.getElementById('filtro_fecha_inicio_consultaOt').value == '') {
-			errorMensaje += '<li>Introduce Fecha Inicial</li>';
-			isValFecha = false;
-			isValido = false
-		}
-
-		if (document.getElementById('filtro_fecha_fin_consultaOt').value == '') {
-			errorMensaje += '<li>Introduce Fecha Final</li>';
-			isValFecha = false;
-			isValido = false
-		}
-
-		if (isValFecha) {
-			if (!validarFecha()) {
-				$('.datepicker').datepicker('update', new Date());
-				errorMensaje += '<li>La fecha inicial no tiene que ser mayor a la final.</li>';
-				isValido = false
-			}
-		}
-
-
-		if (isValido) {
-			let params = {
-				idOrden: $.trim(document.getElementById('idot').value) !== '' ? $.trim(document.getElementById('idot').value) : null,
-				folioSistema: $.trim(document.getElementById('idos').value) !== '' ? $.trim(document.getElementById('idos').value) : null,
-				claveCliente: $.trim(document.getElementById('cuenta').value) !== '' ? $.trim(document.getElementById('cuenta').value) : null,
-				idSubTipoOrdenes: subIntTemp,
-				idEstatus: estatusOrdenes,
-				idClusters: clusters,
-				fechaInicio: $scope.getFechaFormato(document.getElementById('filtro_fecha_inicio_consultaOt').value),
-				fechaFin: $scope.getFechaFormato(document.getElementById('filtro_fecha_fin_consultaOt').value),
-				elementosPorPagina: $scope.elementosRegistro,
-				pagina: 1
-			}
-			let tituloAccion = "Descarga reporte ordenes de trabajo";
-			let mensajeEnvio = 'Ha ocurrido un error al descargar el reporte';
-			consultaOTService.consultaReporteConsultaOt(JSON.stringify(params)).then((result) => {
-				if (result.data.respuesta) {
-					if (result.data.result) {
-						const data = JSON.parse(result.data.result).ordenes
-						const fileName = 'Resporte Consulta Ot'
-						const exportType = 'xls'
-						mensajeEnvio = 'Se ha descargado el reporte';
-						objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
-						window.exportFromJSON({ data, fileName, exportType })
-					} else {
-						mensajeEnvio = 'No se encontraron resultados';
-						objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_WARNING, tituloAccion);
-						toastr.info('No se encontraron resultados');
-					}
-				} else {
-					objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
-					mostrarMensajeErrorAlert('Ocurrio un erro.')
-				}
-			}).catch(err => handleError(err))
-
-		} else {
-			mostrarMensajeWarningValidacion(errorMensaje);
-		}
-	}
-
 	desplazarDerechaTabs = function () {
 		$('#myTab').animate({ scrollLeft: '+=100' }, 150);
 	}
@@ -2697,11 +2552,17 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 			// console.log(params)
 			genericService.enviarParamsReporte(params).then(function success(response) {
 				// console.log(response);
+				let tituloAccion = "Descarga reporte ordenes de trabajo";
+				let mensajeEnvio = 'Ha ocurrido un error al descargar el reporte';
 				if (response.data.respuesta) {
+					mensajeEnvio = 'Se ha descargado el reporte';
+					objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
 					var link = document.createElement("a");
 					link.href = contex_project + '/req/exporteExcelGenericRequest/reporteConsultaOT.xls';
 					link.click();
 					swal.close();
+				}else{
+					objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
 				}
 				swal.close();
 			});

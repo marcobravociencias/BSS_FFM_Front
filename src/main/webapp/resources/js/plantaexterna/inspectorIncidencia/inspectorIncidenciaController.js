@@ -1334,10 +1334,10 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
         $("#container-declinarIncidencia").hide();
     })
 
-    //MÉTODO PARA BUSCAR GEOGRAFÍAS DE ACUERDO AL TEXTO INGRESADO EN EL INPUT DE BÚSQUEDA - CONSULTA GENERAL DE INCIDENCIAS
-    $scope.busquedaGeografiaConsultaIncidencias = function () {
-        $("#jstree-proton-3").jstree("search", $('#buscadorGeografiaConsultaIncidencias').val());
-    }
+
+    $('#buscadorGeografiaConsultaIncidencias').on('keyup', function () {
+        $("#jstree-proton-3").jstree("search", this.value);
+    })
 
     angular.element(document).ready(function () {
         $("#moduloInspectorIncidenciasPE").addClass('active');

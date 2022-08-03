@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/req")
 public class VistaChecklistController {
 
-    private final Logger logger = LogManager.getLogger(GestionPlanningController.class.getName());
+    private final Logger logger = LogManager.getLogger(VistaChecklistController.class.getName());
     private final VistaChecklistService vistaChecklistService;
 	private DataTableResponse dataTableResponse;
 

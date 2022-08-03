@@ -25,7 +25,7 @@ import com.mx.totalplay.ffm.cloudweb.utilerias.utils.UtileriaGeneral;
 @Service
 public class ImplTraspasoService implements TraspasoService {
 
-	private final Logger logger = LogManager.getLogger(ImplConsultaOTService.class.getName());
+	private final Logger logger = LogManager.getLogger(ImplTraspasoService.class.getName());
 	private final ConsumeRest restCaller;
 	private final ConstantesGeneric constantesGeneric;
 	private final Environment env;
