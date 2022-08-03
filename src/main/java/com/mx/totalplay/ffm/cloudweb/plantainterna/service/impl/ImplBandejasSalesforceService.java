@@ -242,7 +242,7 @@ public class ImplBandejasSalesforceService implements BandejasSalesforceService 
 		String url = principalDetail.getDireccionAmbiente().concat(constBandejasSalesforce.getAgendarPendienteBandejaSF());
 		ServiceResponseResult response=restCaller.callPostBearerTokenRequest(jsonObject.toString(), url, ServiceResponseResult.class, tokenAcces);
 		logger.info("URL " + url);
-		logger.info("RESULT guardarUsuario " + gson.toJson(response));
+		logger.info("RESULT agendarPendienteBandejaSF " + gson.toJson(response));
 		return response;
 	}
     

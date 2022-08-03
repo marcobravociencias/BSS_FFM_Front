@@ -191,7 +191,7 @@
                                                 <div class="container-text-content-detalle"><span
                                                         class="text-content-vehiculo"
                                                         title="{{infoOtDetalle.direccion.numeroExterior}}"
-                                                        ng-bind="infoOtDetalle.direccion.entreCalles || 'Sin dato'"></span>
+                                                        ng-bind="infoOtDetalle.direccion.numeroExterior || 'Sin dato'"></span>
                                                 </div>
                                             </div>
 

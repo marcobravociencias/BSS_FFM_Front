@@ -189,7 +189,7 @@
                                                     <span class="text-title-detalle-ot">Num. exterior</span>
                                                 </div>
                                                 <div class="container-text-content-detalle">
-                                                    <span class="text-content-detalle-ot" title="{{infoOtDetalle.direccion.numeroExterior}}" ng-bind="infoOtDetalle.direccion.entreCalles || 'Sin dato'"></span>
+                                                    <span class="text-content-detalle-ot" title="{{infoOtDetalle.direccion.numeroExterior}}" ng-bind="infoOtDetalle.direccion.numeroExterior || 'Sin dato'"></span>
                                                 </div>
                                             </div>
 
