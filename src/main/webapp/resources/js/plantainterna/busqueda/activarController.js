@@ -1,8 +1,8 @@
 
 app.activacionController=function($scope, $q, busquedaService){
   
-    $scope.listaCotizaciones = [];
-    $scope.listaEquipos = [];
+    $scope.listaServiciosCot = [];
+    $scope.listaTipoEquipos = [];
 
     $scope.tituloActivacion = '';
     $scope.iconActivacion = 0;
@@ -153,59 +153,20 @@ app.activacionController=function($scope, $q, busquedaService){
         swal({ text: 'Configurando  ...', allowOutsideClick: false });
         swal.showLoading();        
         
-        /*
-        $scope.params =  
-            [ {
-                "Id_OT"                 : $scope.idotActivacion,
-                "Id_Cot_SitioPlan"      : servicio.Info_Equipo.Id_Cot_PlanServicio,
-                "Id_Cot_PlanServicio"   : servicio.IdCotPlanServicio,
-                "Id_Cot_ModeloEquipo"   : servicio.Info_Equipo.Id_Cot_ModeloEquipo,
-                "Tipo_Equipo"           : servicio.Info_Equipo.Dispositivo,
-                "SRV_Mode"              : servicio.config.tipoEquipoSelect.nombre,
-                "Id_Modelo"             : servicio.config.modeloSelect.Id_Modelo,
-                "Modelo"                : servicio.config.modeloSelect.Descripcion_Modelo ,
-                "No_Serie"              : servicio.config.No_Serie,
-                "MAC"                   : servicio.config.MAC
 
-            }]
-        ;
-        */
 
         $scope.equipo = {};
         $scope.equipo.idOt = $scope.idotActivacion;
-        $scope.equipo.idCotSitioPlan = servicio.Info_Equipo.idCotPlanServicio;
+        $scope.equipo.idCotSitioPlan = servicio.infoEquipoServ.idCotPlanServicio;
         $scope.equipo.idCotPlanServicio = servicio.id;
-        $scope.equipo.idCotModeloEquipo = servicio.Info_Equipo.idCotModeloEquipo;
-        $scope.equipo.tipoEquipo = servicio.Info_Equipo.tipoDispositivo;
+        $scope.equipo.idCotModeloEquipo = servicio.infoEquipoServ.idCotModeloEquipo;
+        $scope.equipo.tipoEquipo = servicio.infoEquipoServ.tipoDispositivo;
         $scope.equipo.svrMode = servicio.config.tipoEquipoSelect.nombre;
         $scope.equipo.numeroSerie = servicio.config.numSerie;
         $scope.equipo.mac = servicio.config.mac;
         $scope.equipo.idModelo = servicio.config.modeloSelect.idModelo;
         $scope.equipo.modelo = servicio.config.modeloSelect.modelo;
-        //$scope.equipo.llevaAta = servicio.idOt;
-        
-        /*
-        $scope.detalleRed = {};
-        $scope.detalleRed.idOnt = servicio.idOt;
-        $scope.detalleRed.frame = servicio.idOt;
-        $scope.detalleRed.slot = servicio.idOt;
-        $scope.detalleRed.puerto = servicio.idOt;
-        $scope.detalleRed.idOlt = servicio.idOt;
-        $scope.detalleRed.olt = servicio.idOt;
-        $scope.detalleRed.ipOlt = servicio.idOt;
-        $scope.detalleRed.tipoRed = servicio.idOt;
-        $scope.equipo.detalleRed = $scope.detalleRed;
 
-        $scope.informacionSVMRouter = {};
-        $scope.informacionSVMRouter.gateWay = servicio.idOt;
-        $scope.informacionSVMRouter.segmentoGateway = servicio.idOt;
-        $scope.informacionSVMRouter.ip = servicio.idOt;
-        $scope.informacionSVMRouter.mask = servicio.idOt;
-        $scope.informacionSVMRouter.segmentoMask = servicio.idOt;
-        $scope.informacionSVMRouter.segmentoRed = servicio.idOt;
-        $scope.informacionSVMRouter.segmentoWildCard = servicio.idOt;
-        $scope.equipo.informacionSVMRouter = $scope.informacionSVMRouter;
-        */
         $scope.params = {};
         $scope.params.servicios = [];
         $scope.params.servicios.push($scope.equipo);
@@ -281,8 +242,8 @@ app.activacionController=function($scope, $q, busquedaService){
 
                 "Id_OT" : "Id_OT29",
                 "Id_Cot_PlanServ"       : servicio.IdCotPlanServicio,
-                "Id_Cot_ModeloEquipo"   : servicio.Info_Equipo.Id_Cot_ModeloEquipo,
-                "Tipo_Dispositivo"      : servicio.Info_Equipo.Dispositivo,
+                "Id_Cot_ModeloEquipo"   : servicio.infoEquipoServ.Id_Cot_ModeloEquipo,
+                "Tipo_Dispositivo"      : servicio.infoEquipoServ.Dispositivo,
                 "Id_Modelo"             : servicio.config.modeloSelect.Id_Modelo,
                 "Modelo"                : servicio.config.modeloSelect.Descripcion_Modelo ,
                 "No_Serie"              : servicio.config.No_Serie,
@@ -403,7 +364,7 @@ app.activacionController=function($scope, $q, busquedaService){
                 "Id_OT"               :$scope.idotActivacion,
                 "Id_Cot_SitioPlan"    :$scope.objectglobalactivacion.id_cotsitioplansf,
                 "Id_Cot_PlanServicio" :servicio.IdCotPlanServicio,
-                "Id_Cot_ModeloEquipo" :servicio.Info_Equipo.Id_Cot_ModeloEquipo,
+                "Id_Cot_ModeloEquipo" :servicio.infoEquipoServ.Id_Cot_ModeloEquipo,
                 "Frame"               :servicio.config.Frame,//
                 "MAC"                 :servicio.config.MAC,
                 "Id_Modelo"           :servicio.config.modeloSelect.Id_Modelo ,
@@ -413,7 +374,7 @@ app.activacionController=function($scope, $q, busquedaService){
                 "Id_OLT"              :servicio.config.Id_OLT,
                 "OLT"                 :servicio.config.OLT,//
                 "Slot"                :servicio.config.Slot,//
-                "Tipo_Equipo"         :servicio.Info_Equipo.Dispositivo,
+                "Tipo_Equipo"         :servicio.infoEquipoServ.Dispositivo,
                 "SRV_Mode"            :servicio.config.tipoEquipoSelect.nombre,
                 "Tipo_red"            :servicio.config.tipoRedSelect.Descripcion_Aprovisionamiento//
             }]
@@ -422,10 +383,10 @@ app.activacionController=function($scope, $q, busquedaService){
         
         $scope.ont = {};
         $scope.ont.idOt = $scope.idotActivacion;
-        $scope.ont.idCotSitioPlan = servicio.Info_Equipo.idCotPlanServicio;//
+        $scope.ont.idCotSitioPlan = servicio.infoEquipoServ.idCotPlanServicio;//
         $scope.ont.idCotPlanServicio = servicio.id;
-        $scope.ont.idCotModeloEquipo = servicio.Info_Equipo.idCotModeloEquipo;
-        $scope.ont.tipoEquipo = servicio.Info_Equipo.tipoDispositivo;
+        $scope.ont.idCotModeloEquipo = servicio.infoEquipoServ.idCotModeloEquipo;
+        $scope.ont.tipoEquipo = servicio.infoEquipoServ.tipoDispositivo;
         $scope.ont.svrMode = servicio.config.tipoEquipoSelect.nombre;
         $scope.ont.numeroSerie = servicio.config.numSerie;
         $scope.ont.mac = servicio.config.mac;
@@ -499,10 +460,9 @@ app.activacionController=function($scope, $q, busquedaService){
 
         $scope.infoDNConfigurados = {};
         $scope.listadoInfoEquiposConfigurados = [];
-        $scope.listaEquipos = [];
+        $scope.listaTipoEquipos = [];
         $scope.tipoAprovisionamiento = [];
-        $scope.listaCotizaciones = [];
-        $scope.objetoCotizacion = {};
+        $scope.listaServiciosCot = [];
 
         $q.all([
 			busquedaService.consultarEquiposConfigurados($scope.params),
@@ -525,10 +485,10 @@ app.activacionController=function($scope, $q, busquedaService){
                 }
             }
             
-            if (results[1].data !== undefined) {
+            if (results[1].data !== undefined) {//Consulta de equipos
                 if (results[1].data.respuesta) {
 					if (results[1].data.result) {
-                        $scope.listaEquipos = results[1].data.result.detalleEquipos;
+                        $scope.listaTipoEquipos = results[1].data.result.detalleEquipos;
                         $scope.tipoAprovisionamiento = results[1].data.result.tipoAprovisionamiento;
                     }
                 }
@@ -537,32 +497,34 @@ app.activacionController=function($scope, $q, busquedaService){
             if (results[2].data !== undefined) {
                 if (results[2].data.respuesta) {
 					if (results[2].data.result) {
-                        $scope.listaCotizaciones = results[2].data.result.detalleCotizacion.cotPlanServicios;
-                        $scope.objetoCotizacion = results[2].data.result.detalleCotizacion;
+                        $scope.listaServiciosCot = results[2].data.result.detalleCotizacion.cotPlanServicios;
+                        if($scope.listaServiciosCot !=undefined && $scope.listaServiciosCot.length >0){
+                            $scope.listaServiciosCot = $scope.listaServiciosCot.map(function(e){e.isConfigurado=false;  ;return e;})                        
+                        }
                     }
                 }
             }
-            
-            angular.forEach($scope.listaCotizaciones, function(cotizacion, index) {
-                cotizacion.mostrarInfo = true;
-                cotizacion.tipoActiviacion = 'Bridge';
-                cotizacion.tipoCotizacion = cotizacion.nombre.split("-")[1];//PENDIENTE
-                angular.forEach($scope.listaEquipos, function(equipo, index) {
-                    if (cotizacion.id === equipo.idCotPlanServicio) {
+                
+            angular.forEach($scope.listaServiciosCot, function(servicio, index) {
+                servicio.mostrarInfo = true;
+                servicio.tipoActiviacion = 'Bridge';
+                servicio.tipoCotizacion = servicio.nombre.split("-")[1];//PENDIENTE
+                angular.forEach($scope.listaTipoEquipos, function(equipo, index) {
+                    if (servicio.id === equipo.idCotPlanServicio) {
                         angular.forEach(equipo.modelo, function(model, index) {
                             if (equipo.nombreEquipo === model.modelo) {
                                 equipo.modeloSelect = model;
                             }
                         });
-                        cotizacion.Info_Equipo = equipo;
-                        cotizacion.tipoProvisionamiento = $scope.tipoAprovisionamiento;
+                        servicio.infoEquipoServ = equipo;
+                        servicio.tipoProvisionamiento = $scope.tipoAprovisionamiento;
                     }
                 });
             });
 
             if($scope.infoDNConfigurados !== undefined){
                
-                let tempServicio = $scope.listaCotizaciones.find(function(elem){return elem.id === $scope.infoDNConfigurados.idCotPlanServicio});
+                let tempServicio = $scope.listaServiciosCot.find(function(elem){return elem.id === $scope.infoDNConfigurados.idCotPlanServicio});
                 if (tempServicio !== undefined) {
                     tempServicio.mensajeConfig = true;
                     tempServicio.config = $scope.infoDNConfigurados;
@@ -573,7 +535,7 @@ app.activacionController=function($scope, $q, busquedaService){
 
             if($scope.listadoInfoEquiposConfigurados !== undefined && $scope.listadoInfoEquiposConfigurados.length>0){
                 angular.forEach($scope.listadoInfoEquiposConfigurados,function(elemento,index){
-                    let tempServicio= $scope.listaCotizaciones.find( function(servicio){ return servicio.id === elemento.idCotPlanServicio} ) ;
+                    let tempServicio= $scope.listaServiciosCot.find( function(servicio){ return servicio.id === elemento.idCotPlanServicio} ) ;
                     if(tempServicio !== undefined){
                         tempServicio.config=elemento;
                         tempServicio.isConfigurado=true;
@@ -581,49 +543,49 @@ app.activacionController=function($scope, $q, busquedaService){
                 });
             }
 
-            angular.forEach($scope.listaCotizaciones, function(cotizacion, index) { 
-                if( cotizacion.config !== undefined ){
-                    if( cotizacion.Info_Equipo !== undefined ){
-                        angular.forEach( cotizacion.Info_Equipo.modelo , function( modelo , index ) {
-                            if (cotizacion.config.idModelo === modelo.idModelo) {                                        
-                                cotizacion.config.modeloSelect = angular.copy(modelo);
+            angular.forEach($scope.listaServiciosCot, function(servicioInd, index) { 
+                if( servicioInd.config !== undefined ){
+                    if( servicioInd.infoEquipoServ !== undefined ){
+                        angular.forEach( servicioInd.infoEquipoServ.modelo , function( modelo , index ) {
+                            if (servicioInd.config.idEquipo === modelo.idModelo) {                                        
+                                servicioInd.config.modeloSelect = angular.copy(modelo);
                             }
                         });
 
-                        if( cotizacion.config.srvMode ){
-                            cotizacion.config.tipoEquipoSelect=$scope.listadoTipoEquipoActivacion.find( function (ele) {  return ele.nombre === cotizacion.config.srvMode}); 
+                        if( servicioInd.config.srvMode ){
+                            servicioInd.config.tipoEquipoSelect=$scope.listadoTipoEquipoActivacion.find( function (ele) {  return ele.nombre === servicioInd.config.srvMode}); 
                         }else{
-                            cotizacion.config.tipoEquipoSelect=$scope.listadoTipoEquipoActivacion[0];
+                            servicioInd.config.tipoEquipoSelect=$scope.listadoTipoEquipoActivacion[0];
                         }
 
-                        if( cotizacion.config.tipoAprovisionamiento ){
-                            if(cotizacion.tipoProvisionamiento !== undefined && cotizacion.tipoProvisionamiento.length>0){
-                                cotizacion.config.tipoRedSelect=cotizacion.tipoProvisionamiento.find( function (ele) {  return ele.descripcionAprovisionamiento === cotizacion.config.tipoAprovisionamiento });  
+                        if( servicioInd.config.tipoAprovisionamiento ){
+                            if(servicioInd.tipoProvisionamiento !== undefined && servicioInd.tipoProvisionamiento.length>0){
+                                servicioInd.config.tipoRedSelect=servicioInd.tipoProvisionamiento.find( function (ele) {  return ele.descripcionAprovisionamiento === servicioInd.config.tipoAprovisionamiento });  
                             }
                         } else {
-                            if(cotizacion.tipoProvisionamiento !== undefined && cotizacion.tipoProvisionamiento.length>0){
-                                cotizacion.config.tipoRedSelect=cotizacion.tipoProvisionamiento[0];
+                            if(servicioInd.tipoProvisionamiento !== undefined && servicioInd.tipoProvisionamiento.length>0){
+                                servicioInd.config.tipoRedSelect=servicioInd.tipoProvisionamiento[0];
                             }                                            
                         }
                     } else {
-                        if( cotizacion.config.srvMode ){
-                            cotizacion.config.tipoEquipoSelect=$scope.listadoTipoEquipoActivacion.find( function (ele) {  return ele.nombre === cotizacion.config.srvMode});
+                        if( servicioInd.config.srvMode ){
+                            servicioInd.config.tipoEquipoSelect=$scope.listadoTipoEquipoActivacion.find( function (ele) {  return ele.nombre === servicioInd.config.srvMode});
                         } else {
-                            cotizacion.config.tipoEquipoSelect=$scope.listadoTipoEquipoActivacion[0];
+                            servicioInd.config.tipoEquipoSelect=$scope.listadoTipoEquipoActivacion[0];
                         }
                     }
                 } else {
-                    cotizacion.config={}
-                    cotizacion.config.tipoEquipoSelect=$scope.listadoTipoEquipoActivacion[0];
+                    servicioInd.config={}
+                    servicioInd.config.tipoEquipoSelect=$scope.listadoTipoEquipoActivacion[0];
                 }
             });
 
             //Se agrega la ONT en la primer posicion 
             let indexDeleteService=-1;
             let objectFind={}
-            angular.forEach($scope.listaCotizaciones, function(element,index){
-                if (element.Info_Equipo) {
-                    if (element.Info_Equipo.esEquipo && element.Info_Equipo.tieneAutofind) {
+            angular.forEach($scope.listaServiciosCot, function(element,index){
+                if (element.infoEquipoServ) {
+                    if (element.infoEquipoServ.esEquipo && element.infoEquipoServ.tieneAutofind) {
                         indexDeleteService=index
                         objectFind=angular.copy(element)
                     }
@@ -631,24 +593,24 @@ app.activacionController=function($scope, $q, busquedaService){
             });
             //Se agrega la ONT en la primer posicion 
             if(indexDeleteService !== -1){
-                $scope.listaCotizaciones.splice(indexDeleteService,1);
-                $scope.listaCotizaciones.unshift(objectFind)
+                $scope.listaServiciosCot.splice(indexDeleteService,1);
+                $scope.listaServiciosCot.unshift(objectFind)
             }
 
             //Se agrega bandera para validar los posibles servicios a configurar
-            angular.forEach($scope.listaCotizaciones, function(servicio,index){
+            angular.forEach($scope.listaServiciosCot, function(servicio,index){
                 if(servicio.nombre && servicio.nombre.includes('Telefonia') ){
                     servicio.servicioTelefonia=true
                     servicio.servicioConfigurable=true
                 }else {
-                    if (servicio.Info_Equipo) {
-                        if( servicio.Info_Equipo.esEquipo && !servicio.Info_Equipo.tieneAutofind ){
+                    if (servicio.infoEquipoServ) {
+                        if( servicio.infoEquipoServ.esEquipo && !servicio.infoEquipoServ.tieneAutofind ){
                             servicio.servicioEquipo=true
                             servicio.servicioConfigurable=true
-                        } else if( !servicio.Info_Equipo.esEquipo && !servicio.Info_Equipo.tieneAutofind) {
+                        } else if( !servicio.infoEquipoServ.esEquipo && !servicio.infoEquipoServ.tieneAutofind) {
                             servicio.servicioDispositivo=true
                             servicio.servicioConfigurable=true
-                        }else if(  servicio.Info_Equipo.esEquipo && servicio.Info_Equipo.tieneAutofind){
+                        }else if(  servicio.infoEquipoServ.esEquipo && servicio.infoEquipoServ.tieneAutofind){
                             servicio.servicioONT=true
                             servicio.servicioConfigurable=true
                         }
@@ -657,7 +619,7 @@ app.activacionController=function($scope, $q, busquedaService){
             });
             $scope.validarServiciosConfigurados()
 
-            console.log($scope.listaCotizaciones);
+            console.log($scope.listaServiciosCot);
             $scope.showSearch = false;
             $scope.showOs = false;
             $scope.showSearch = false;
@@ -674,14 +636,7 @@ app.activacionController=function($scope, $q, busquedaService){
     $scope.consultarEquipos = function(csp) {
         console.log(csp);
         $scope.planactivaciontemp=angular.copy(csp)
-        /**swal({ text: 'Buscando datos ...', allowOutsideClick: false });
-        swal.showLoading();
-      
-        var params = new FormData();
-        params.append("params.Folio_OS", "OS-31919");
-        params.append("params.Accion", "0");
-        params.append("params.Id_Propietario", "1");
-        params.append("params.Id_Cot_SitioPlan", "a0K7e000009bpUnEAI");  **/
+
     
         var params = new FormData();
         params.append("params.Folio_OS", csp.Folio_OS);
@@ -690,127 +645,27 @@ app.activacionController=function($scope, $q, busquedaService){
         params.append("params.Id_Cot_SitioPlan", csp.id_cotsitioplansf);
          
         busquedaService.consultarEquipos(params).then(function success(response) {
-            //QUITAR
-            response.data = 
-            {
-                "success": true,
-                "result": {
-                    "cotizaciones": {
-                        "success": true,
-                        "result": {
-                            "result": "0",
-                            "resultDescription": "Operación Exitosa",
-                            "Version": "1.0",
-                            "Id_os_sf": "a153f000002m3SHAAY",
-                            "CotizacionName": "Inicial v6",
-                            "ProntoPago": "809.0",
-                            "DNsTotales": "1.0",
-                            "PrimeraRenta": "false",
-                            "Id_Cot_SitioPlan": "a113f000002EGsTAAW",
-                            "IpsTotales": "0",
-                            "CotPlanServicios": [{
-                                "IdCotPlanServicio": "a0z3f000002fB56AAE",
-                                "CotSitioName": "CS9797893",
-                                "CotSitioPlanName": "CSP11913068",
-                                "DpPlanName": "Inicial v6",
-                                "CotPlanServicoName": "CSER32533697",
-                                "CotPlanServicoNServicio": "INTERNET 20 - Telefonia TP",
-                                "DpPlanEtiquetaBRM": "BRM PLAN - Inicial",
-                                "Tipo": "Telefonia TP",
-                                "numeroDns": "1",
-                                "EsAdicional": "false"
-                            }, {
-                                "IdCotPlanServicio": "a0z3f000002fB57AAE",
-                                "CotSitioName": "CS9797893",
-                                "CotSitioPlanName": "CSP11913068",
-                                "DpPlanName": "Inicial v6",
-                                "CotPlanServicoName": "CSER32533698",
-                                "CotPlanServicoNServicio": "INTERNET 20 - Internet TP",
-                                "DpPlanEtiquetaBRM": "BRM PLAN - Inicial",
-                                "Tipo": "Internet TP",
-                                "numeroDns": "0",
-                                "EsAdicional": "false"
-                            }]
-                        }
-                    },
-                    "equipos": {
-                        "success": true,
-                        "result": {
-                            "result": "0",
-                            "resultDescription": "Operación Exitosa.",
-                            "Version": "1.0",
-                            "Info_Equipo": [{
-                                "Id_Cot_PlanServicio": "a0z3f000002fB57AAE",
-                                "Id_Cot_ModeloEquipo": "a0w3f000003KGSOAA4",
-                                "Id_Equipo": "a0W61000002BIusEAG",
-                                "Nombre_Equipo": "ONT 8245 H",
-                                "Dispositivo": "ONT",
-                                "Es_Equipo": "1",
-                                "Es_Microonda": "0",
-                                "Tiene_Autofind": "true",
-                                "Modelo": [{
-                                    "Id_Modelo": "a0i3f0000000ApWAAU",
-                                    "Descripcion_Modelo": "HH8245H Big Antenna B"
-                                }, {
-                                    "Id_Modelo": "a0i3f0000000ApXAAU",
-                                    "Descripcion_Modelo": "ZTEF660"
-                                }, {
-                                    "Id_Modelo": "a0i3f0000000ApYAAU",
-                                    "Descripcion_Modelo": "ONT 8245"
-                                }, {
-                                    "Id_Modelo": "a0i3f0000000ApZAAU",
-                                    "Descripcion_Modelo": "ONT 8245 H"
-                                }, {
-                                    "Id_Modelo": "a0i3f0000000ApaAAE",
-                                    "Descripcion_Modelo": "AN5506 TP"
-                                }, {
-                                    "Id_Modelo": "a0i3f0000000ApbAAE",
-                                    "Descripcion_Modelo": "HG8145V5 TP"
-                                }, {
-                                    "Id_Modelo": "a0i3f000000tsJFAAY",
-                                    "Descripcion_Modelo": "ZTEF670"
-                                }, {
-                                    "Id_Modelo": "a0i3f000000wkqhAAA",
-                                    "Descripcion_Modelo": "HG6145F"
-                                }]
-                            }],
-                            "Tipo_Aprovisionamiento": [{
-                                "Id_Aprovisionamiento": "1",
-                                "Descripcion_Aprovisionamiento": "NATIVO"
-                            }, {
-                                "Id_Aprovisionamiento": "2",
-                                "Descripcion_Aprovisionamiento": "SDN"
-                            }]
-                        }
-                    }
-                }
-            }
-            //
+           
             console.log(response);
             if (response.data !== undefined) {
                 if (response.data.success) {
                     if(response.data.result.cotizaciones.result.result==='0'){
-                        $scope.listaCotizaciones = response.data.result.cotizaciones.result.CotPlanServicios;
-                        $scope.objetoCotizacion=response.data.result.cotizaciones.result
-                        $scope.listaEquipos = response.data.result.equipos.result.Info_Equipo;
-                        
-                  
-
-
-
-                        angular.forEach($scope.listaCotizaciones, function(cotizacion, index) {
-                            cotizacion.mostrarInfo = true;
-                            cotizacion.tipoActiviacion = 'Bridge';
-                            angular.forEach($scope.listaEquipos, function(equipo, index) {
-                                if (cotizacion.IdCotPlanServicio === equipo.Id_Cot_PlanServicio) {
+                        $scope.listaServiciosCot = response.data.result.cotizaciones.result.CotPlanServicios;
+                        $scope.listaTipoEquipos = response.data.result.equipos.result.infoEquipoServ;
+                                        
+                        angular.forEach($scope.listaServiciosCot, function(servicioInd, index) {
+                            servicioInd.mostrarInfo = true;
+                            servicioInd.tipoActiviacion = 'Bridge';
+                            angular.forEach($scope.listaTipoEquipos, function(equipo, index) {
+                                if (servicioInd.IdCotPlanServicio === equipo.Id_Cot_PlanServicio) {
     
                                     angular.forEach(equipo.Modelo, function(model, index) {
                                         if (equipo.Nombre_Equipo === model.Descripcion_Modelo) {
-                                            equipo.modeloSelect = model;
+                                            equipo.modeloSelect = model;                                                                        
                                         }
                                     });
-                                    cotizacion.Info_Equipo = equipo;
-                                    cotizacion.tipoProvisionamiento=response.data.result.equipos.result.Tipo_Aprovisionamiento                                
+                                    servicioInd.infoEquipoServ = equipo;
+                                    servicioInd.tipoProvisionamiento=response.data.result.equipos.result.Tipo_Aprovisionamiento                                
                                 }
                             });
                         });
@@ -820,7 +675,7 @@ app.activacionController=function($scope, $q, busquedaService){
                        // $scope.listadoInfoEquiposConfigurados=undefined;
                         if($scope.listadoInfoDNConfigurados !== undefined && $scope.listadoInfoDNConfigurados.length>0){
                             angular.forEach($scope.listadoInfoDNConfigurados,function(elemento,index){
-                                let tempServicio= $scope.listaCotizaciones.find( function(elem){ return elem.IdCotPlanServicio === elemento.Id_Cot_PlanServicio} ) ;
+                                let tempServicio= $scope.listaServiciosCot.find( function(elem){ return elem.IdCotPlanServicio === elemento.Id_Cot_PlanServicio} ) ;
                                 if(tempServicio !== undefined){
                                     tempServicio.mensajeConfig = true;
                                     tempServicio.config=elemento
@@ -833,7 +688,7 @@ app.activacionController=function($scope, $q, busquedaService){
                          
                         if($scope.listadoInfoEquiposConfigurados !== undefined && $scope.listadoInfoEquiposConfigurados.length>0){
                             angular.forEach($scope.listadoInfoEquiposConfigurados,function(elemento,index){
-                                let tempServicio= $scope.listaCotizaciones.find( function(servicio){ return servicio.IdCotPlanServicio === elemento.Id_Cot_PlanServicio} ) ;
+                                let tempServicio= $scope.listaServiciosCot.find( function(servicio){ return servicio.IdCotPlanServicio === elemento.Id_Cot_PlanServicio} ) ;
                                 if(tempServicio !== undefined){
                                     tempServicio.config=elemento
                                     tempServicio.isConfigurado=true
@@ -841,40 +696,40 @@ app.activacionController=function($scope, $q, busquedaService){
                             })
                         }
                         
-                        angular.forEach($scope.listaCotizaciones, function(cotizacion, index) { 
-                            if( cotizacion.config !== undefined ){
-                                if( cotizacion.Info_Equipo !== undefined ){
-                                    angular.forEach( cotizacion.Info_Equipo.Modelo , function( modelo , index ) {
-                                        if (cotizacion.config.Id_Modelo === modelo.Id_Modelo) {                                        
-                                            cotizacion.config.modeloSelect = angular.copy(modelo);
+                        angular.forEach($scope.listaServiciosCot, function(servicioInd, index) { 
+                            if( servicioInd.config !== undefined ){
+                                if( servicioInd.infoEquipoServ !== undefined ){
+                                    angular.forEach( servicioInd.infoEquipoServ.Modelo , function( modelo , index ) {
+                                        if (servicioInd.config.Id_Modelo === modelo.Id_Modelo) {                                        
+                                            servicioInd.config.modeloSelect = angular.copy(modelo);
                                         }
                                     });
 
-                                    if( cotizacion.config.SRV_Mode ){
-                                        cotizacion.config.tipoEquipoSelect=$scope.listadoTipoEquipoActivacion.find( function (ele) {  return ele.nombre === cotizacion.config.SRV_Mode})  
+                                    if( servicioInd.config.SRV_Mode ){
+                                        servicioInd.config.tipoEquipoSelect=$scope.listadoTipoEquipoActivacion.find( function (ele) {  return ele.nombre === servicioInd.config.SRV_Mode})  
                                     }else{
-                                        cotizacion.config.tipoEquipoSelect=$scope.listadoTipoEquipoActivacion[0]
+                                        servicioInd.config.tipoEquipoSelect=$scope.listadoTipoEquipoActivacion[0]
                                     }  
                                     
-                                    if( cotizacion.config.Tipo_Aprovisionamiento ){
-                                        if(cotizacion.tipoProvisionamiento !== undefined && cotizacion.tipoProvisionamiento.length>0){
-                                            cotizacion.config.tipoRedSelect=cotizacion.tipoProvisionamiento.find( function (ele) {  return ele.Descripcion_Aprovisionamiento === cotizacion.config.Tipo_Aprovisionamiento })  
+                                    if( servicioInd.config.Tipo_Aprovisionamiento ){
+                                        if(servicioInd.tipoProvisionamiento !== undefined && servicioInd.tipoProvisionamiento.length>0){
+                                            servicioInd.config.tipoRedSelect=servicioInd.tipoProvisionamiento.find( function (ele) {  return ele.Descripcion_Aprovisionamiento === servicioInd.config.Tipo_Aprovisionamiento })  
                                         }
                                     }else{
-                                        if(cotizacion.tipoProvisionamiento !== undefined && cotizacion.tipoProvisionamiento.length>0){
-                                            cotizacion.config.tipoRedSelect=cotizacion.tipoProvisionamiento[0]
+                                        if(servicioInd.tipoProvisionamiento !== undefined && servicioInd.tipoProvisionamiento.length>0){
+                                            servicioInd.config.tipoRedSelect=servicioInd.tipoProvisionamiento[0]
                                         }                                            
                                     }
                                 }else{
-                                    if( cotizacion.config.SRV_Mode ){
-                                        cotizacion.config.tipoEquipoSelect=$scope.listadoTipoEquipoActivacion.find( function (ele) {  return ele.nombre === cotizacion.config.SRV_Mode})  
+                                    if( servicioInd.config.SRV_Mode ){
+                                        servicioInd.config.tipoEquipoSelect=$scope.listadoTipoEquipoActivacion.find( function (ele) {  return ele.nombre === servicioInd.config.SRV_Mode})  
                                     }else{
-                                        cotizacion.config.tipoEquipoSelect=$scope.listadoTipoEquipoActivacion[0]
+                                        servicioInd.config.tipoEquipoSelect=$scope.listadoTipoEquipoActivacion[0]
                                     }  
                                 }
                             }else{
-                                cotizacion.config={}
-                                cotizacion.config.tipoEquipoSelect=$scope.listadoTipoEquipoActivacion[0]
+                                servicioInd.config={}
+                                servicioInd.config.tipoEquipoSelect=$scope.listadoTipoEquipoActivacion[0]
                             }    
                                                 
                         });
@@ -882,9 +737,9 @@ app.activacionController=function($scope, $q, busquedaService){
                         //Se agrega la ONT en la primer posicion 
                         let indexDeleteService=-1;
                         let objectFind={}
-                        angular.forEach($scope.listaCotizaciones, function(element,index){
-                            if (element.Info_Equipo) {
-                                if (element.Info_Equipo.Es_Equipo === "1" && element.Info_Equipo.Tiene_Autofind === "true") {
+                        angular.forEach($scope.listaServiciosCot, function(element,index){
+                            if (element.infoEquipoServ) {
+                                if (element.infoEquipoServ.Es_Equipo === "1" && element.infoEquipoServ.Tiene_Autofind === "true") {
                                     indexDeleteService=index
                                     objectFind=angular.copy(element)
                                 }
@@ -892,25 +747,25 @@ app.activacionController=function($scope, $q, busquedaService){
                         });
                         //Se agrega la ONT en la primer posicion 
                         if(indexDeleteService !== -1){
-                            $scope.listaCotizaciones.splice(indexDeleteService,1);
-                            $scope.listaCotizaciones.unshift(objectFind)
+                            $scope.listaServiciosCot.splice(indexDeleteService,1);
+                            $scope.listaServiciosCot.unshift(objectFind)
                         }
 
 
                         //Se agrega bandera para validar los posibles servicios a configurar
-                        angular.forEach($scope.listaCotizaciones, function(servicio,index){
+                        angular.forEach($scope.listaServiciosCot, function(servicio,index){
                             if(servicio.Tipo && servicio.Tipo.includes('Telefonia') ){
                                 servicio.servicioTelefonia=true
                                 servicio.servicioConfigurable=true
                             }else {
-                                if (servicio.Info_Equipo) {
-                                    if( servicio.Info_Equipo.Es_Equipo ==='1' && servicio.Info_Equipo.tieneAutofind === 'false' ){
+                                if (servicio.infoEquipoServ) {
+                                    if( servicio.infoEquipoServ.Es_Equipo ==='1' && servicio.infoEquipoServ.tieneAutofind === 'false' ){
                                         servicio.servicioEquipo=true
                                         servicio.servicioConfigurable=true
-                                    } else if( servicio.Info_Equipo.Es_Equipo ==='0' && servicio.Info_Equipo.Tiene_Autofind === 'false'  ) {
+                                    } else if( servicio.infoEquipoServ.Es_Equipo ==='0' && servicio.infoEquipoServ.Tiene_Autofind === 'false'  ) {
                                         servicio.servicioDispositivo=true
                                         servicio.servicioConfigurable=true
-                                    }else if(  servicio.Info_Equipo.Es_Equipo ==='1' && servicio.Info_Equipo.Tiene_Autofind === 'true' ){
+                                    }else if(  servicio.infoEquipoServ.Es_Equipo ==='1' && servicio.infoEquipoServ.Tiene_Autofind === 'true' ){
                                         servicio.servicioONT=true
                                         servicio.servicioConfigurable=true
                                     }
@@ -920,7 +775,7 @@ app.activacionController=function($scope, $q, busquedaService){
                         $scope.validarServiciosConfigurados()
                       
 
-                        console.log($scope.listaCotizaciones);
+                        console.log($scope.listaServiciosCot);
                         $scope.showSearch = false;
                         $scope.showOs = false;
                         $scope.showSearch = false;
@@ -952,12 +807,12 @@ app.activacionController=function($scope, $q, busquedaService){
 
     $scope.isTodosConfigurado=false
     $scope.validarServiciosConfigurados=function(){    
-        let cantidadConfigurables=$scope.listaCotizaciones.filter((e)=> e.servicioConfigurable).length
-        let cantidadConfigurados= $scope.listaCotizaciones.filter((e)=> e.isConfigurado).length        
+        let cantidadConfigurables=$scope.listaServiciosCot.filter((e)=> e.servicioConfigurable).length
+        let cantidadConfigurados= $scope.listaServiciosCot.filter((e)=> e.isConfigurado).length        
         $scope.isTodosConfigurado=( cantidadConfigurables === cantidadConfigurados  ) ? true :false
     }
     $scope.listaDns = [];
-    $scope.consultarDns = function(cotizacion) {
+    $scope.consultarDns = function(servicio) {
         $scope.listaDns = [];
         swal({ text: 'Buscando datos ...', allowOutsideClick: false });
         swal.showLoading();
@@ -968,24 +823,24 @@ app.activacionController=function($scope, $q, busquedaService){
         params.append("params.CantidadDn", "5");
 ***/
         params.append("params.CodigoPostal", $scope.codigopostalplanactivacion);
-        params.append("params.CantidadDn", cotizacion.numeroDns === '1' ? '1.0' : cotizacion.numeroDns);
+        params.append("params.CantidadDn", servicio.numeroDns === '1' ? '1.0' : servicio.numeroDns);
         
         busquedaService.consultarDns(params).then(function success(response) {
             console.log(response);
             if (response.data !== undefined) {
                 if (response.data.success) {
                     if (response.data.result.Result === "0") {
-                        cotizacion.listaDns = response.data.result.ArrDn;
+                        servicio.listaDns = response.data.result.ArrDn;
                         
-                        if( cotizacion.listaDns !== undefined &&  cotizacion.listaDns.length > 0 ){
+                        if( servicio.listaDns !== undefined &&  servicio.listaDns.length > 0 ){
                             
-                            if(cotizacion.config === undefined)
-                                cotizacion.config={}
+                            if(servicio.config === undefined)
+                                servicio.config={}
                             
-                            cotizacion.config.DN_Conf=[]
+                            servicio.config.DN_Conf=[]
 
-                            angular.forEach(cotizacion.listaDns, function(dn, index) {
-                                cotizacion.config.DN_Conf.push({
+                            angular.forEach(servicio.listaDns, function(dn, index) {
+                                servicio.config.DN_Conf.push({
                                     "DN": dn.Dn,
                                     "Id_Cot_ElementoReservado": "",
                                     "valor": index== 0 ? '1':'0',
@@ -1065,9 +920,9 @@ app.activacionController=function($scope, $q, busquedaService){
         $scope.consultarValidacionCuentaAsync=false
         $scope.isProcesandoActivacion='error'
         let indexOnt=undefined;
-        angular.forEach($scope.listaCotizaciones, function(elemento,index){
-            if(elemento.Info_Equipo !== undefined){
-                if(elemento.Info_Equipo.esEquipo && elemento.Info_Equipo.tieneAutofind){
+        angular.forEach($scope.listaServiciosCot, function(elemento,index){
+            if(elemento.infoEquipoServ !== undefined){
+                if(elemento.infoEquipoServ.esEquipo && elemento.infoEquipoServ.tieneAutofind){
                     indexOnt=index
                 }
             }
@@ -1076,7 +931,7 @@ app.activacionController=function($scope, $q, busquedaService){
             mostrarMensajeErroActivacion('No se encontr\u00F3 ONT para la activaci\u00F3n')                               
             return false
         }
-        let ontRegistro= $scope.listaCotizaciones[indexOnt]
+        let ontRegistro= $scope.listaServiciosCot[indexOnt]
     
         swal({ text: 'Activando datos ...', allowOutsideClick: false });
         swal.showLoading();
@@ -1317,15 +1172,15 @@ app.activacionController=function($scope, $q, busquedaService){
           }).then(function () {
         }).catch(swal.noop);
     }
-    /**
+    /****/
     $scope.showSearch = true;
 
     $scope.mostrarDetalleActivarOs({
         canalVenta: null,
         comentariosOs: null,
-        cp: "04020",
+        cp: "04519",
         creadoPor: null,
-        cuentaActiva: "true",
+        cuentaActiva: "false",
         detalleCotSitioPlan: null,
         detalleCotizacion: null,
         detalleCuentaFactura: null,
@@ -1334,13 +1189,13 @@ app.activacionController=function($scope, $q, busquedaService){
         editadoPor: null,
         estatus: "Agendado",
         fechaAgendada: null,
-        id: "a153C0000015f9TQAQ",
-        idCsp: "a113C000000rdUNQAY",
-        idOt: "7986221",
+        id: "a153C0000015MgSQAU",
+        idCsp: "a113C0000008JhlQAE",
+        idOt: "368648",
         keyObject: "OS",
         motivoCancelacion: null,
-        nombre: "OS-6950914",
-        numeroCuentaFactura: "0190020272",
+        nombre: "OS-6949902",
+        numeroCuentaFactura: "0290003453",
         osConfirmada: null,
         propietario: null,
         propietarioOportunidad: null,
@@ -1352,7 +1207,7 @@ app.activacionController=function($scope, $q, busquedaService){
     })
 
     $scope.showDetalleActivar=true;
-**/
+
 
     $scope.consultarAutofindActivacion = function(servicio) {
         if(servicio.config.numSerie){
