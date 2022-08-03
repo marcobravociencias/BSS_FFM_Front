@@ -1543,4 +1543,203 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 		}
 	}
 
+	$scope.consultarReporteGenericSeguimientoDiario = function () {
+		let mensaje = '<ul>';
+		let isValid = true;
+		let numerosOnly = /^[0-9]*$/i;
+
+		let clustersparam = $("#jstree-proton-seguimiento").jstree("get_selected", true)
+			.filter(e => e.original.nivel == $scope.nfiltrogeografiaSeguimientoDiario)
+			.map(e => parseInt(e.id));
+
+		if (clustersparam.length === 0) {
+			mensaje += '<li>Seleccione geograf&iacute;a.</li>';
+			isValid = false
+		}
+
+		let statuscopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtroEstatusInt.reporteSeguimiento.estatusdisponibles, $scope.nfiltroestatuspendienteSeguimientoDiario);
+
+		let intervencioncopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtroEstatusInt.reporteSeguimiento.tipoOrdenes, $scope.nfiltrointervencionesSeguimientoDiario);
+
+		if (!statuscopy.length) {
+			mensaje += '<li>Introducir Estatus</li>';
+			isValid = false;
+		}
+
+		if (!intervencioncopy.length) {
+			mensaje += '<li>Introducir Intervenci\u00F3n</li>';
+			isValid = false;
+		}
+
+		if (!numerosOnly.test($("#idot-reporte").val())) {
+			mensaje += '<li>El campo OT debe ser n&uacute;merico</li>';
+			isValid = false;
+		}
+
+		if ($("#tipo_reporte").val() == "" || $("#tipo_reporte").val() == undefined) {
+			mensaje += '<li>Selecciona Tipo fecha</li>';
+			isValid = false;
+		} else {
+			$scope.repDiario.fechaSeleccionada = $("#tipo_reporte").val()
+		}
+
+		if (!validarFecha('filtro_fecha_inicio_reporte', 'filtro_fecha_fin_reporte')) {
+			mensaje += '<li>La fecha final debe ser mayor que la fecha inicio</li>';
+			isValid = false;
+		}
+
+		if (isValid) {
+			swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
+			swal.showLoading();
+			let params = {
+				fechaInicio: $scope.getFechaFormato($('#filtro_fecha_inicio_reporte').val()),
+				fechaFin: $scope.getFechaFormato($('#filtro_fecha_fin_reporte').val()),
+				tipoIntervencion: intervencioncopy,
+				estatusOt: statuscopy,
+				geografias: clustersparam,
+				fechaSeleccionada: $("#tipo_reporte").val(),
+				elementosPorPagina: $scope.resultReporteDiario,
+				pagina: 1,
+				tipoExcel: 'reportepi-seguimientodiario-pi'
+			}
+
+			if ($scope.repDiario.idOrden && $scope.repDiario.idOrden != "") {
+				params.idOrden = $.trim($scope.repDiario.idOrden);
+			}
+
+			if ($scope.repDiario.folio && $scope.repDiario.folio != "") {
+				params.folio = $.trim($scope.repDiario.folio);
+			}
+
+			if ($scope.repDiario.idCuenta && $scope.repDiario.idCuenta != "") {
+				params.idCuenta = $.trim($scope.repDiario.idCuenta);
+			}
+			let tituloAccion = "Descarga reporte seguimiento diario";
+			let mensajeEnvio = 'Ha ocurrido un error al descargar el reporte';
+
+			genericService.enviarParamsReporte(params).then(function success(response) {
+				// console.log(response);
+				if (response.data.respuesta) {
+					var link = document.createElement("a");
+					link.href = contex_project + '/req/exporteExcelGenericRequest/reporteSeguimientoDiario.xls';
+					link.click();
+					swal.close();
+
+					mensajeEnvio = 'Se ha descargado el reporte';
+					objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
+				} else {
+					objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
+					mostrarMensajeErrorAlert('Ocurrio un error al generar reporte.')
+				}
+				swal.close();
+			});
+		} else {
+			swal.close();
+			mensaje += '</ul>';
+			mostrarMensajeWarningValidacion(mensaje);
+			return false;
+		}
+
+	}
+
+	$scope.consultarReporteGenericCierreDiario = function () {
+		let mensaje = '<ul>';
+		let isValid = true;
+		let numerosOnly = /^[0-9]*$/i;
+
+		let clustersparam = $("#jstree-proton-cierre").jstree("get_selected", true)
+			.filter(e => e.original.nivel == $scope.nfiltrogeografiaAsignadas)
+			.map(e => parseInt(e.id));
+
+		if (clustersparam.length === 0) {
+			mensaje += '<li>Seleccione geograf&iacute;a.</li>';
+			isValid = false
+		}
+
+		let statuscopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtroEstatusInt.reporteCierre.estatusdisponibles, $scope.nfiltroestatuspendienteCierre);
+
+		let intervencioncopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtroEstatusInt.reporteCierre.tipoOrdenes, $scope.nfiltrointervencionesCierre);
+
+		if (!statuscopy.length) {
+			mensaje += '<li>Introducir Estatus</li>';
+			isValid = false;
+		}
+
+		if (!intervencioncopy.length) {
+			mensaje += '<li>Introducir Intervenci\u00F3n</li>';
+			isValid = false;
+		}
+
+		if (!numerosOnly.test($("#idot-reporte-cierre").val())) {
+			mensaje += '<li>El campo OT debe ser n&uacute;merico</li>';
+			isValid = false;
+		}
+
+		if ($("#tipo_reporte_cierre").val() == "" || $("#tipo_reporte_cierre").val() == undefined) {
+			mensaje += '<li>Selecciona Tipo fecha</li>';
+			isValid = false;
+		} else {
+			$scope.repCierreDiario.fechaSeleccionada = $("#tipo_reporte_cierre").val()
+		}
+
+		if (!validarFecha('filtro_fecha_inicio_reporte_cierre', 'filtro_fecha_fin_reporte_cierre')) {
+			mensaje += '<li>La fecha final debe ser mayor que la fecha inicio</li>';
+			isValid = false;
+		}
+
+		if (isValid) {
+			let params = {
+				fechaInicio: $scope.getFechaFormato($('#filtro_fecha_inicio_reporte_cierre').val()),
+				fechaFin: $scope.getFechaFormato($('#filtro_fecha_fin_reporte_cierre').val()),
+				tipoIntervencion: intervencioncopy,
+				estatusOt: statuscopy,
+				geografias: clustersparam,
+				fechaSeleccionada: $("#tipo_reporte_cierre").val(),
+				elementosPorPagina: $scope.resultReporteCierre,
+				pagina: 1,
+				tipoExcel: 'reportepi-cierrediario-pi'
+			}
+
+			if ($scope.repCierreDiario.idOrden && $scope.repCierreDiario.idOrden != "") {
+				params.idOrden = $.trim($scope.repCierreDiario.idOrden);
+			}
+
+			if ($scope.repCierreDiario.folio && $scope.repCierreDiario.folio != "") {
+				params.folio = $.trim($scope.repCierreDiario.folio);
+			}
+
+			if ($scope.repCierreDiario.idCuenta && $scope.repCierreDiario.idCuenta != "") {
+				params.idCuenta = $.trim($scope.repCierreDiario.idCuenta);
+			}
+
+			swal({ text: 'Cargando registros...', allowOutsideClick: false });
+			swal.showLoading();
+			let tituloAccion = "Descarga reporte cierre diario";
+			let mensajeEnvio = 'Ha ocurrido un error al descargar el reporte';
+			
+			genericService.enviarParamsReporte(params).then(function success(response) {
+				// console.log(response);
+				if (response.data.respuesta) {
+					var link = document.createElement("a");
+					link.href = contex_project + '/req/exporteExcelGenericRequest/reporteCierreDiario.xls';
+					link.click();
+					swal.close();
+
+					mensajeEnvio = 'Se ha descargado el reporte';
+					objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
+				} else {
+					objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
+					mostrarMensajeErrorAlert('Ocurrio un error al generar reporte.')
+				}
+				swal.close();
+			});
+		} else {
+			swal.close();
+			mensaje += '</ul>';
+			mostrarMensajeWarningValidacion(mensaje);
+			return false;
+		}
+
+	}
+
 }]);

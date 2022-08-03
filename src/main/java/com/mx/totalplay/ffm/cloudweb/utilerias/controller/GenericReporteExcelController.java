@@ -26,7 +26,7 @@ import com.mx.totalplay.ffm.cloudweb.utilerias.service.GenericService;
 @RestController
 @RequestMapping("/req")
 public class GenericReporteExcelController {
-	private final Logger logger = LogManager.getLogger(HelpReporteFfmController.class.getName());
+	private final Logger logger = LogManager.getLogger(GenericReporteExcelController.class.getName());
 	private final GenericService genericService;
 
 	@Autowired

@@ -112,7 +112,7 @@
             </div>
             <div class="col-1 download-file" ng-if="configPermisoAccionDescargaReporteCierre">
                 <img alt="excel" src="${pageContext.request.contextPath}/resources/img/generic/group-10.png"
-                    style="cursor:pointer; margin-top: 1.5em;" onclick="downloadExcelReportCierreFile()">
+                    style="cursor:pointer; margin-top: 1.5em;" ng-click="consultarReporteGenericCierreDiario()">
             </div>
         </div>
     </div>
