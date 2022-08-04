@@ -73,6 +73,11 @@ app.controller('busquedaController', ['$scope', '$q', 'busquedaService', 'generi
             }
             swal({ text: 'Buscando...', allowOutsideClick: false });
             swal.showLoading();
+
+            let tituloAccion = "Busqueda SF";
+            let mensajeEnvio = 'Se ha buscado por: ' + $scope.searchSF;
+            objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_INFO, tituloAccion);
+
             busquedaService.busquedaGeneralSF(params).then((result) => {
                 console.log(result)
                 swal.close();
@@ -94,7 +99,7 @@ app.controller('busquedaController', ['$scope', '$q', 'busquedaService', 'generi
     }
 
     $scope.idDetalleObject = '';
-    $scope.consultarDetalleObjectosSF = function (id, keyObjeto) {
+    $scope.consultarDetalleObjectosSF = function (id, keyObjeto, nombre) {
         console.log("id: " + id + " tipo del objeto: " + keyObjeto)
         $scope.idDetalleObject = id;
         $scope.isConsultaPrimeraVezNoticias = false;
@@ -105,40 +110,56 @@ app.controller('busquedaController', ['$scope', '$q', 'busquedaService', 'generi
             idObjectSF: id,
             typeObjectSF: keyObjeto
         }
+
         busquedaService.consultaDetalleObjectSF(params).then((result) => {
             console.log(result)
             swal.close()
             $scope.mostrarTintoreria = false;
             $scope.mostrarNotaCF = false;
+            let tipo = '';
+
             if (result.data.respuesta) {
                 switch (keyObjeto) {
                     case "CS":
+                        tipo = 'Cotizaci&oacute;n sitios'
                         $scope.mostrarDetalleCotSitio(result.data.result.detalleCotSitio, keyObjeto);
                         break;
                     case "CP":
+                        tipo = 'Cotizaci&oacute;n sitios plan'
                         $scope.mostrarDetalleCotSitioPlan(result.data.result.detalleCotSitioPlan, keyObjeto);
                         break;
                     case "CO":
+                        tipo = 'Cotizaci&oacute;n'
                         $scope.mostrarDetalleCotizacion(result.data.result.detalleCotizacion, keyObjeto);
                         break;
                     case "CF":
+                        tipo = 'Cuenta factura'
                         $scope.mostrarDetalleCuentaFactura(result.data.result.detalleCuentaFactura, keyObjeto);
                         break;
                     case "CU":
+                        tipo = 'Cuentas'
                         $scope.mostrarDetalleCuenta(result.data.result.detalleCuenta, keyObjeto);
                         break;
                     case "OP":
+                        tipo = 'Oportunidad';
                         $scope.mostrarDetalleOportunidad(result.data.result.detalleOportunidad, keyObjeto);
                         break;
                     case "OS":
+                        tipo = 'Orden de servicio'
                         $scope.mostrarDetalleOs(result.data.result.detalleOs, keyObjeto);
                         break;
                     case "TK":
+                        tipo = 'Ticket'
                         $scope.mostrarDetalleTicket(result.data.result.detalleTk, keyObjeto);
                         break;
                     default:
                         break;
                 }
+
+                let tituloAccion = "Consulta detalle de " +  tipo;
+                let mensajeEnvio = 'Se ha buscado por: ' + nombre;
+                objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_INFO, tituloAccion);
+
             } else {
                 mostrarMensajeErrorAlert(result.data.resultDescripcion)
             }

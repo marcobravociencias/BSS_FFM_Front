@@ -133,7 +133,7 @@
                 <div class="col-12 row style_detalle_todos">
                     <div class="col-6"><span class="content-first-title-head">Nombre:</span></div>
                     <div class="col-6 crop-text-col">
-                        <a href="" class="link-consultardetalle " ng-click="consultarDetalleObjectosSF(detalle.datosCuenta.id, detalle.datosCuenta.keyObject)">
+                        <a href="" class="link-consultardetalle " ng-click="consultarDetalleObjectosSF(detalle.datosCuenta.id, detalle.datosCuenta.keyObject, detalle.datosCuenta.nombre)">
                             <span class="content-first-title-head-answer" title="{{detalle.datosCuenta.nombre}}" ng-bind="detalle.datosCuenta.nombre"></span>
                         </a>
                     </div>

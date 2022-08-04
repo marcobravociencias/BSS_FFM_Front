@@ -1608,12 +1608,12 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
             }
         }
 
-        mostrarModalDetalleSf = function(os, idFolio) {
+        mostrarModalDetalleSf = function(os, idFolio, nombre) {
             if (os.substr(0,3) === "OS-") {
                 $scope.detalleSalesforceView = false;
                 $scope.respaldoHistorial = [];
                 $scope.historial = [];
-                $scope.consultarDetalleObjectosSF(idFolio, 'OS');
+                $scope.consultarDetalleObjectosSF(idFolio, 'OS', nombre);
                 //$("#modalDetalleSalesforce").modal('show');
             } else {
                 toastr.warning("No se cuenta con OS");

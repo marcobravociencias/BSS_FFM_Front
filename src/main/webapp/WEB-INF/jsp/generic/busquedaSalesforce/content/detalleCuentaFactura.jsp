@@ -218,7 +218,7 @@
                     <div class="col-6 "><span class="content-first-title-head">Nombre:</span></div>
                     <div class="col-6 crop-text-col">
                         <span class="content-first-title-head-answer" ng-if="!detalle.detalleCuenta.nombre">Sin informaci&oacute;n</span>
-                        <a href="" class="link-consultardetalle" ng-if="detalle.detalleCuenta.nombre" ng-click="consultarDetalleObjectosSF(detalle.detalleCuenta.id, detalle.detalleCuenta.keyObject)">
+                        <a href="" class="link-consultardetalle" ng-if="detalle.detalleCuenta.nombre" ng-click="consultarDetalleObjectosSF(detalle.detalleCuenta.id, detalle.detalleCuenta.keyObject, detalle.detalleCuenta.nombre)">
                             <span class="content-first-title-head-answer" title="{{detalle.detalleCuenta.nombre}}" ng-bind="detalle.detalleCuenta.nombre || 'Sin informaci&oacute;n'"></span>
                         </a>
                     </div>
@@ -373,7 +373,7 @@
                                 </div>
                                 <div class="row" ng-repeat="os in detalle.os | limitTo: limitOsCf" ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">
                                     <div class="col-3">
-                                        <a href="" class="link-consultardetalle" ng-click="consultarDetalleObjectosSF(os.id, os.keyObject)">
+                                        <a href="" class="link-consultardetalle" ng-click="consultarDetalleObjectosSF(os.id, os.keyObject, os.nombre)">
                                             <span class="text-table" ng-bind="os.nombre"></span>
                                         </a>
                                     </div>
@@ -444,7 +444,7 @@
                                 </div>
                                 <div class="row" ng-repeat="ticket in detalle.tickets | limitTo: limitTicketCf" ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">
                                     <div class="col-3">
-                                        <a href="" class="link-consultardetalle" ng-click="consultarDetalleObjectosSF(ticket.id, ticket.keyObject)">
+                                        <a href="" class="link-consultardetalle" ng-click="consultarDetalleObjectosSF(ticket.id, ticket.keyObject, ticket.caseNumber)">
                                             <span class="text-table" ng-bind="ticket.caseNumber"></span>
                                         </a>
 

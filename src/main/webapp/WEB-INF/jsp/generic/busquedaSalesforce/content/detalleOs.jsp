@@ -120,7 +120,7 @@
                     <div class="col-6 "><span class="content-first-title-head">Cot sitio plan:</span></div>
                     <div class="col-6 crop-text-col">
                         <span class="content-first-title-head-answer" ng-if="detalle.detalleCotSitioPlan.nombre === undefined">Sin informaci&oacute;n</span>
-                        <a href=""class="link-consultardetalle" ng-if="detalle.detalleCotSitioPlan.nombre !== undefined" ng-click="consultarDetalleObjectosSF(detalle.detalleCotSitioPlan.id, detalle.detalleCotSitioPlan.keyObject)">
+                        <a href=""class="link-consultardetalle" ng-if="detalle.detalleCotSitioPlan.nombre !== undefined" ng-click="consultarDetalleObjectosSF(detalle.detalleCotSitioPlan.id, detalle.detalleCotSitioPlan.keyObject, detalle.detalleCotSitioPlan.nombre)">
                             <span class="content-first-title-head-answer" title="{{detalle.detalleCotSitioPlan.nombre}}" ng-bind="detalle.detalleCotSitioPlan.nombre"></span>
                         </a>
                     </div>
@@ -133,7 +133,7 @@
                     <div class="col-6 "><span class="content-first-title-head">Cotizaci&oacute;n:</span></div>
                     <div class="col-6 crop-text-col">
                         <span class="content-first-title-head-answer" ng-if="detalle.detalleCotizacion.nombre === undefined">Sin informaci&oacute;n</span>
-                        <a href=""class="link-consultardetalle" ng-if="detalle.detalleCotizacion.nombre !== undefined" ng-click="consultarDetalleObjectosSF(detalle.detalleCotizacion.id, detalle.detalleCotizacion.keyObject)">
+                        <a href=""class="link-consultardetalle" ng-if="detalle.detalleCotizacion.nombre !== undefined" ng-click="consultarDetalleObjectosSF(detalle.detalleCotizacion.id, detalle.detalleCotizacion.keyObject, detalle.detalleCotizacion.nombre)">
                             <span class="content-first-title-head-answer" title="{{detalle.detalleCotizacion.nombre}}" ng-bind="detalle.detalleCotizacion.nombre"></span>
                         </a>
                     </div>
@@ -144,7 +144,7 @@
                     <div class="col-6 "><span class="content-first-title-head">Cuenta factura:</span></div>
                     <div class="col-6 crop-text-col">
                         <span class="content-first-title-head-answer" ng-if="detalle.detalleCuentaFactura.nombre === undefined">Sin informaci&oacute;n</span>
-                        <a href="" class="link-consultardetalle" ng-if="detalle.detalleCuentaFactura.nombre !== undefined" ng-click="consultarDetalleObjectosSF(detalle.detalleCuentaFactura.id, detalle.detalleCuentaFactura.keyObject)">
+                        <a href="" class="link-consultardetalle" ng-if="detalle.detalleCuentaFactura.nombre !== undefined" ng-click="consultarDetalleObjectosSF(detalle.detalleCuentaFactura.id, detalle.detalleCuentaFactura.keyObject, detalle.detalleCuentaFactura.nombre)">
                             <span class="content-first-title-head-answer" title="{{detalle.detalleCuentaFactura.nombre}}" ng-bind="detalle.detalleCuentaFactura.nombre"></span>
                         </a>
                     </div>
@@ -155,7 +155,7 @@
                     <div class="col-6 "><span class="content-first-title-head">Oporturnidad:</span></div>
                     <div class="col-6 crop-text-col" style="overflow: hidden;">
                         <span class="content-first-title-head-answer" ng-if="detalle.detalleOportunidad.nombre === undefined">Sin informaci&oacute;n</span>
-                        <a href="" class="link-consultardetalle" ng-if="detalle.detalleOportunidad.nombre !== undefined" ng-click="consultarDetalleObjectosSF(detalle.detalleOportunidad.id, detalle.detalleOportunidad.keyObject)">
+                        <a href="" class="link-consultardetalle" ng-if="detalle.detalleOportunidad.nombre !== undefined" ng-click="consultarDetalleObjectosSF(detalle.detalleOportunidad.id, detalle.detalleOportunidad.keyObject,detalle.detalleOportunidad.nombre)">
                             <span class="content-first-title-head-answer" title="{{detalle.detalleOportunidad.nombre}}" ng-bind="detalle.detalleOportunidad.nombre"></span>
                         </a>
                     </div>

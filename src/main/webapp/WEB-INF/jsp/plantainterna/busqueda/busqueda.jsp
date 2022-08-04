@@ -136,7 +136,7 @@
                         </div>
                         <div class="row" ng-repeat="oportunidad in resultBusqueda.oportunidades | limitTo: limitOportunidad  track by $index" ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">
                             <div class="col-3">
-                                <a href="" class="link-consultardetalle" ng-click="consultarDetalleObjectosSF(oportunidad.id, oportunidad.keyObject)">
+                                <a href="" class="link-consultardetalle" ng-click="consultarDetalleObjectosSF(oportunidad.id, oportunidad.keyObject, oportunidad.numeroOportunidad)">
                                     <span class="text-table" ng-bind="oportunidad.numeroOportunidad"></span>
                                 </a>
                             </div>
@@ -177,7 +177,7 @@
                         </div>
                         <div class="row" ng-repeat="cuenta in resultBusqueda.cuentas | limitTo: limitCuentas  track by $index" ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">
                             <div class="col-6">
-                                <a href="" class="link-consultardetalle" ng-click="consultarDetalleObjectosSF(cuenta.id, cuenta.keyObject)">
+                                <a href="" class="link-consultardetalle" ng-click="consultarDetalleObjectosSF(cuenta.id, cuenta.keyObject, cuenta.nombre)">
                                     <span class="text-table" ng-bind="cuenta.nombre"></span>
                                 </a>
                             </div>
@@ -219,7 +219,7 @@
                         </div>
                         <div class="row" ng-repeat="cuenta in resultBusqueda.cuentasFactura | limitTo: limitCuentaFactura  track by $index" ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">
                             <div class="col-3">
-                                <a href="" class="link-consultardetalle" ng-click="consultarDetalleObjectosSF(cuenta.id, cuenta.keyObject)">
+                                <a href="" class="link-consultardetalle" ng-click="consultarDetalleObjectosSF(cuenta.id, cuenta.keyObject, cuenta.numCuentaFactura)">
                                     <span class="text-table" ng-bind="cuenta.numCuentaFactura"></span>
                                 </a>
                             </div>
@@ -260,7 +260,7 @@
                         </div>
                         <div class="row" ng-repeat="cotizacion in resultBusqueda.cotizaciones | limitTo: limitCotizacion  track by $index" ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">
                             <div class="col-4">
-                                <a href="" class="link-consultardetalle" ng-click="consultarDetalleObjectosSF(cotizacion.id, cotizacion.keyObject)">
+                                <a href="" class="link-consultardetalle" ng-click="consultarDetalleObjectosSF(cotizacion.id, cotizacion.keyObject, cotizacion.nombre)">
                                     <span class="text-table" ng-bind="cotizacion.nombre"></span>
                                 </a>
                             </div>
@@ -301,7 +301,7 @@
                         </div>
                         <div class="row" ng-repeat="cotSitio in resultBusqueda.cotSitios | limitTo: limitCotSitio  track by $index" ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">
                             <div class="col-2">
-                                <a href="" class="link-consultardetalle" ng-click="consultarDetalleObjectosSF(cotSitio.id, cotSitio.keyObject)">
+                                <a href="" class="link-consultardetalle" ng-click="consultarDetalleObjectosSF(cotSitio.id, cotSitio.keyObject, cotSitio.nombre)">
                                     <span class="text-table" ng-bind="cotSitio.nombre"></span>
                                 </a>
                             </div>
@@ -349,7 +349,7 @@
                         </div>
                         <div class="row" ng-repeat="cotSitioPlan in resultBusqueda.cotSitiosPlan | limitTo: limitCotSitioPlan track by $index" ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">
                             <div class="col-3">
-                                <a href="" class="link-consultardetalle" ng-click="consultarDetalleObjectosSF(cotSitioPlan.id, cotSitioPlan.keyObject)">
+                                <a href="" class="link-consultardetalle" ng-click="consultarDetalleObjectosSF(cotSitioPlan.id, cotSitioPlan.keyObject, cotSitioPlan.nombre)">
                                     <span class="text-table" ng-bind="cotSitioPlan.nombre"></span>
                                 </a>
                             </div>
@@ -409,7 +409,7 @@
                         </div>
                         <div class="row" ng-repeat="os in resultBusqueda.ordenesServicio | limitTo: limitOs track by $index" ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">
                             <div class="col-3">
-                                <a href="" class="link-consultardetalle" ng-click="consultarDetalleObjectosSF(os.id, os.keyObject); respaldarObjectoOs(os)">
+                                <a href="" class="link-consultardetalle" ng-click="consultarDetalleObjectosSF(os.id, os.keyObject, os.nombre); respaldarObjectoOs(os)">
                                     <span class="text-table" ng-bind="os.nombre"></span>
                                 </a>
                             </div>
@@ -474,7 +474,7 @@
                         </div>
                         <div class="row" ng-repeat="ticket in resultBusqueda.tickets | limitTo: limitTickets  track by $index"  ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">
                             <div class="col-3">
-                                <a href="" class="link-consultardetalle" ng-click="consultarDetalleObjectosSF(ticket.id, ticket.keyObject)">
+                                <a href="" class="link-consultardetalle" ng-click="consultarDetalleObjectosSF(ticket.id, ticket.keyObject,ticket.caseNumber)">
                                     <span class="text-table" ng-bind="ticket.caseNumber"></span>
                                 </a>
                             </div>

@@ -240,7 +240,7 @@
                                 </div>
                                 <div class="row" ng-repeat="cf in detalle.cuentasFacturas | limitTo: limitCuentaFacturaCu" ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">                                  
                                     <div class="col-4">
-                                        <a href="" class="link-consultardetalle" ng-click="consultarDetalleObjectosSF(cf.id, cf.keyObject)">
+                                        <a href="" class="link-consultardetalle" ng-click="consultarDetalleObjectosSF(cf.id, cf.keyObject, cf.numCuentaFactura)">
                                             <span class="text-table" ng-bind="cf.numCuentaFactura"></span>
                                         </a>
                                     </div>
@@ -302,7 +302,7 @@
                                 </div>
                                 <div class="row" ng-repeat="oportunidad in detalle.oportinidades | limitTo: limitOportunidadCu" ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">
                                     <div class="col-4">
-                                        <a href="" class="link-consultardetalle " ng-click="consultarDetalleObjectosSF(oportunidad.id, oportunidad.keyObject)">
+                                        <a href="" class="link-consultardetalle " ng-click="consultarDetalleObjectosSF(oportunidad.id, oportunidad.keyObject, oportunidad.numeroOportunidad)">
                                             <span class="text-table" ng-bind="oportunidad.numeroOportunidad"></span>
                                         </a>
                                     </div>

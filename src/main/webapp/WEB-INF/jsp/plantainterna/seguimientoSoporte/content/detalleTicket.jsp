@@ -68,7 +68,7 @@
                                         ng-if="!ticketDetalle.detalleTicketSc.folioSistema">Sin dato</span>
                                     <span class="text-content-ticket text-external-link"
                                         ng-if="ticketDetalle.detalleTicketSc.folioSistema"
-                                        ng-click="consultarDetalleObjectosSF(ticketDetalle.detalleTicketSc.idfolioSf, 'OS')"
+                                        ng-click="consultarDetalleObjectosSF(ticketDetalle.detalleTicketSc.idfolioSf, 'OS', ticketDetalle.detalleTicketSc.folioSistema)"
                                         ng-bind="ticketDetalle.detalleTicketSc.folioSistema"></span>
                                 </div>
                             </div>
@@ -81,7 +81,7 @@
                                         ng-if="!ticketDetalle.detalleTicketSc.numTicket">Sin dato</span>
                                     <span class="text-content-ticket text-external-link"
                                         ng-if="ticketDetalle.detalleTicketSc.numTicket"
-                                        ng-click="consultarDetalleObjectosSF(ticketDetalle.detalleTicketSc.idTicketSf, 'TK')"
+                                        ng-click="consultarDetalleObjectosSF(ticketDetalle.detalleTicketSc.idTicketSf, 'TK', ticketDetalle.detalleTicketSc.numTicket)"
                                         ng-bind="ticketDetalle.detalleTicketSc.numTicket"></span>
                                 </div>
                             </div>

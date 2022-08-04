@@ -72,7 +72,7 @@
                     <div class="col-6 "><span class="content-first-title-head">Cotizaci&oacute;n:</span></div>
                     <div class="col-6 crop-text-col">
                         <span class="content-first-title-head-answer" ng-if="detalle.detalleCotizacion.nombre === undefined">Sin informaci&oacute;n</span>
-                        <a href="" class="link-consultardetalle" ng-if="detalle.detalleCotizacion.nombre !== undefined" ng-click="consultarDetalleObjectosSF(detalle.detalleCotizacion.id, detalle.detalleCotizacion.keyObject)">
+                        <a href="" class="link-consultardetalle" ng-if="detalle.detalleCotizacion.nombre !== undefined" ng-click="consultarDetalleObjectosSF(detalle.detalleCotizacion.id, detalle.detalleCotizacion.keyObject, detalle.detalleCotizacion.nombre)">
                             <span class="content-first-title-head-answer" title="{{detalle.detalleCotizacion.nombre}}" ng-bind="detalle.detalleCotizacion.nombre"></span>
                         </a>
                     </div>
@@ -242,7 +242,7 @@
                                 </div>
                                 <div class="row" ng-repeat="cotSitioPlan in detalle.cotSitioPlanes | limitTo: limitCotSitioPlanCs" ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">
                                     <div class="col-4">
-                                        <a href="" class="link-consultardetalle" ng-click="consultarDetalleObjectosSF(cotSitioPlan.id, cotSitioPlan.keyObject)">
+                                        <a href="" class="link-consultardetalle" ng-click="consultarDetalleObjectosSF(cotSitioPlan.id, cotSitioPlan.keyObject, cotSitioPlan.nombre)">
                                             <span class="text-table" ng-bind="cotSitioPlan.nombre"></span>
                                         </a>
                                     </div>

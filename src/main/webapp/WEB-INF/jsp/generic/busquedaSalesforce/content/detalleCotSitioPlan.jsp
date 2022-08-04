@@ -146,7 +146,7 @@
                     <div class="col-6 "><span class="content-first-title-head">COT SITIO:</span></div>
                     <div class="col-6 crop-text-col">
                         <span class="content-first-title-head-answer" ng-if="detalle.detalleCotSitio.nombre === undefined">Sin informaci&oacute;n</span>
-                        <a href="" class="link-consultardetalle" ng-if="detalle.detalleCotSitio.nombre !== undefined" ng-click="consultarDetalleObjectosSF(detalle.detalleCotSitio.id, detalle.detalleCotSitio.keyObject)">
+                        <a href="" class="link-consultardetalle" ng-if="detalle.detalleCotSitio.nombre !== undefined" ng-click="consultarDetalleObjectosSF(detalle.detalleCotSitio.id, detalle.detalleCotSitio.keyObject, detalle.detalleCotSitio.nombre)">
                             <span class="content-first-title-head-answer" title="{{detalle.detalleCotSitio.nombre}}" ng-bind="detalle.detalleCotSitio.nombre"></span>
                         </a>
                     </div>
@@ -157,7 +157,7 @@
                     <div class="col-6 "><span class="content-first-title-head">OS:</span></div>
                     <div class="col-6 crop-text-col">
                         <span class="content-first-title-head-answer" ng-if="!detalle.detalleOs.nombre">Sin informaci&oacute;n</span>
-                        <a href="" class="link-consultardetalle" ng-if="detalle.detalleOs.nombre" ng-click="consultarDetalleObjectosSF(detalle.detalleOs.id, detalle.detalleOs.keyObject)">
+                        <a href="" class="link-consultardetalle" ng-if="detalle.detalleOs.nombre" ng-click="consultarDetalleObjectosSF(detalle.detalleOs.id, detalle.detalleOs.keyObject, detalle.detalleOs.nombre)">
                             <span class="content-first-title-head-answer" title="{{detalle.detalleOs.nombre}}" ng-bind="detalle.detalleOs.nombre || 'Sin informaci&oacute;n'"></span>
                         </a>
                     </div>
@@ -170,7 +170,7 @@
                     <div class="col-6 "><span class="content-first-title-head">Cotizaci&oacute;n:</span></div>
                     <div class="col-6 crop-text-col">
                         <span class="content-first-title-head-answer" ng-if="detalle.detalleCotizacion.nombre === undefined">Sin informaci&oacute;n</span>
-                        <a href="" class="link-consultardetalle" ng-if="detalle.detalleCotizacion.nombre !== undefined" ng-click="consultarDetalleObjectosSF(detalle.detalleCotizacion.id, detalle.detalleCotizacion.keyObject)">
+                        <a href="" class="link-consultardetalle" ng-if="detalle.detalleCotizacion.nombre !== undefined" ng-click="consultarDetalleObjectosSF(detalle.detalleCotizacion.id, detalle.detalleCotizacion.keyObject, detalle.detalleCotizacion.nombre)">
                             <span class="content-first-title-head-answer" title="{{detalle.detalleCotizacion.nombre}}" ng-bind="detalle.detalleCotizacion.nombre"></span>
                         </a>
                     </div>
@@ -181,7 +181,7 @@
                     <div class="col-6 "><span class="content-first-title-head">Cuenta Factura:</span></div>
                     <div class="col-6 crop-text-col">
                         <span class="content-first-title-head-answer" ng-if="detalle.detalleCuentaFactura.nombre === undefined">Sin informaci&oacute;n</span>
-                        <a href="" class="link-consultardetalle"  ng-if="detalle.detalleCuentaFactura.nombre !== undefined" ng-click="consultarDetalleObjectosSF(detalle.detalleCuentaFactura.id, detalle.detalleCuentaFactura.keyObject)">
+                        <a href="" class="link-consultardetalle"  ng-if="detalle.detalleCuentaFactura.nombre !== undefined" ng-click="consultarDetalleObjectosSF(detalle.detalleCuentaFactura.id, detalle.detalleCuentaFactura.keyObject, detalle.detalleCuentaFactura.nombre)">
                             <span class="content-first-title-head-answer" title="{{detalle.detalleCuentaFactura.nombre}}" ng-bind="detalle.detalleCuentaFactura.nombre"></span>
                         </a>
                     </div>

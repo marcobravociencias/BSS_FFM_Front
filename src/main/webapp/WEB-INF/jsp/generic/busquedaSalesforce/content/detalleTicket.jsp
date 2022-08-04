@@ -133,7 +133,7 @@
                     <div class="col-6 "><span class="content-first-title-head">OS:</span></div>
                     <div class="col-6 crop-text-col">
                         <span class="content-first-title-head-answer" ng-if="!detalle.detalleOs.nombre">Sin informaci&oacute;n</span>
-                        <a href="" class="link-consultardetalle" ng-if="detalle.detalleOs.nombre" ng-click="consultarDetalleObjectosSF(detalle.detalleOs.id, detalle.detalleOs.keyObject)">
+                        <a href="" class="link-consultardetalle" ng-if="detalle.detalleOs.nombre" ng-click="consultarDetalleObjectosSF(detalle.detalleOs.id, detalle.detalleOs.keyObject, detalle.detalleOs.nombre)">
                             <span class="content-first-title-head-answer" title="{{detalle.detalleOs.nombre}}" ng-bind="detalle.detalleOs.nombre"></span>
                         </a>
                     </div>
@@ -144,7 +144,7 @@
                     <div class="col-6 "><span class="content-first-title-head">Cuenta factura:</span></div>
                     <div class="col-6 crop-text-col">
                         <span class="content-first-title-head-answer" ng-if="detalle.detalleCuentaFactura.nombre === undefined">Sin informaci&oacute;n</span>
-                        <a href="" class="link-consultardetalle"  ng-if="detalle.detalleCuentaFactura.nombre !== undefined" ng-click="consultarDetalleObjectosSF(detalle.detalleCuentaFactura.id, detalle.detalleCuentaFactura.keyObject)">
+                        <a href="" class="link-consultardetalle"  ng-if="detalle.detalleCuentaFactura.nombre !== undefined" ng-click="consultarDetalleObjectosSF(detalle.detalleCuentaFactura.id, detalle.detalleCuentaFactura.keyObject, detalle.detalleCuentaFactura.nombre)">
                             <span class="content-first-title-head-answer" title="{{detalle.detalleCuentaFactura.nombre}}" ng-bind="detalle.detalleCuentaFactura.nombre"></span>
                         </a>
                     </div>

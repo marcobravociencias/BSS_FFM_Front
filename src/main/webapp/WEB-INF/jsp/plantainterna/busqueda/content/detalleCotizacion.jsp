@@ -211,7 +211,7 @@
                                 </div>
                                 <div class="row" ng-repeat="cotSitio in detalle.listCotSitio | limitTo: limitCotSitioCot" ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">
                                     <div class="col-4">
-                                        <a href="" class="link-consultardetalle" ng-click="consultarDetalleObjectosSF(cotSitio.id, cotSitio.keyObject)">
+                                        <a href="" class="link-consultardetalle" ng-click="consultarDetalleObjectosSF(cotSitio.id, cotSitio.keyObject, cotSitio.nombre)">
                                             <span class="text-table" ng-bind="cotSitio.nombre"></span>
                                         </a>
                                     </div>
@@ -270,7 +270,7 @@
                                 </div>
                                 <div class="row" ng-repeat="cotSitioPlan in detalle.listCotSitioPlan | limitTo: limitCotSitioPlanCot" ng-class="$index % 2 == 0 ? 'is-even-table' : 'is-odd-table'">
                                     <div class="col-6">
-                                        <a href="" class="link-consultardetalle" ng-click="consultarDetalleObjectosSF(cotSitioPlan.id, cotSitioPlan.keyObject)">
+                                        <a href="" class="link-consultardetalle" ng-click="consultarDetalleObjectosSF(cotSitioPlan.id, cotSitioPlan.keyObject, cotSitioPlan.nombre)">
                                             <span class="text-table" ng-bind="cotSitioPlan.nombre"></span>
                                         </a>
                                     </div>

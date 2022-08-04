@@ -143,7 +143,7 @@ app.controller('oportunidadController', ['$scope', '$q', 'oportunidadesService',
 
         angular.forEach(array, function (elemento, index) {
             let row = [];
-            row[0] = elemento.numOportunidad ? '<span onclick="consultarDetalleObjectosSF(' + "'" + elemento.idOportunidad + "','OP'" + ')" class="link_table">' + elemento.numOportunidad + '</span>' : "";
+            row[0] = elemento.numOportunidad ? '<span onclick="consultarDetalleObjectosSF(' + "'" + elemento.idOportunidad + "','OP',"+elemento.numOportunidad + ')" class="link_table">' + elemento.numOportunidad + '</span>' : "";
             row[1] = elemento.nombreCliente ? elemento.nombreCliente : "NA";
             row[2] = elemento.eimAsignado ? elemento.eimAsignado : "NA";
             row[3] = elemento.fechaCierre ? elemento.fechaCierre : "NA";
@@ -247,10 +247,10 @@ app.controller('oportunidadController', ['$scope', '$q', 'oportunidadesService',
         angular.forEach(array, function (elemento, index) {
             let row = [];
             row[0] = '<input type="checkbox">';
-            row[1] = elemento.folioCsp ? '<span onclick="consultarDetalleObjectosSF(' + "'" + elemento.idCsp + "','CP'" + ')" class="link_table">' + elemento.folioCsp + '</span>' : "";
+            row[1] = elemento.folioCsp ? '<span onclick="consultarDetalleObjectosSF(' + "'" + elemento.idCsp + "','CP',"+elemento.folioCsp + ')" class="link_table">' + elemento.folioCsp + '</span>' : "";
             row[2] = "NA";
             row[3] = "NA";
-            row[4] = elemento.nombreCuentaFactura ? '<span onclick="consultarDetalleObjectosSF(' + "'" + elemento.idCuentaFactura + "','CF'" + ')" class="link_table">' + elemento.nombreCuentaFactura + '</span>' : "";
+            row[4] = elemento.nombreCuentaFactura ? '<span onclick="consultarDetalleObjectosSF(' + "'" + elemento.idCuentaFactura + "','CF',"+ elemento.nombreCuentaFactura + ')" class="link_table">' + elemento.nombreCuentaFactura + '</span>' : "";
             row[5] = elemento.estatusCsp ? elemento.estatusCsp : "NA";
             row[6] = elemento.estatusOs ? elemento.estatusOs : "NA";
             row[7] = elemento.folioOs ? elemento.folioOs : "NA";

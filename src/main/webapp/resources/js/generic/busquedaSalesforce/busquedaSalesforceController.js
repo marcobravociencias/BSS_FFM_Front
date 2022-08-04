@@ -62,37 +62,49 @@ app.busquedaSalesforce = function ($scope, busquedaSalesforceService) {
             swal.close()
             $scope.mostrarTintoreria = false;
             $scope.mostrarNotaCF = false;
+            let tipo = '';
             if (result.data.respuesta) {
                 if (result.data.result) {
                     $("#modalDetalleSalesforce").modal('show');
                     switch (keyObjeto) {
                         case "CS":
+                            tipo = 'Cotizaci&oacute;n sitios'
                             $scope.mostrarDetalleCotSitio(result.data.result.detalleCotSitio, keyObjeto);
                             break;
                         case "CP":
+                            tipo = 'Cotizaci&oacute;n sitios plan'
                             $scope.mostrarDetalleCotSitioPlan(result.data.result.detalleCotSitioPlan, keyObjeto);
                             break;
                         case "CO":
+                            tipo = 'Cotizaci&oacute;n'
                             $scope.mostrarDetalleCotizacion(result.data.result.detalleCotizacion, keyObjeto);
                             break;
                         case "CF":
+                            tipo = 'Cuenta factura'
                             $scope.mostrarDetalleCuentaFactura(result.data.result.detalleCuentaFactura, keyObjeto);
                             break;
                         case "CU":
+                            tipo = 'Cuentas'
                             $scope.mostrarDetalleCuenta(result.data.result.detalleCuenta, keyObjeto);
                             break;
                         case "OP":
+                            tipo = 'Oportunidad';
                             $scope.mostrarDetalleOportunidad(result.data.result.detalleOportunidad, keyObjeto);
                             break;
                         case "OS":
+                            tipo = 'Orden de servicio'
                             $scope.mostrarDetalleOs(result.data.result.detalleOs, keyObjeto);
                             break;
                         case "TK":
+                            tipo = 'Ticket'
                             $scope.mostrarDetalleTicket(result.data.result.detalleTk, keyObjeto);
                             break;
                         default:
                             break;
                     }
+                    let tituloAccion = "Consulta detalle de " +  tipo;
+                    let mensajeEnvio = 'Se ha buscado por: ' + nombre;
+                    objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_INFO, tituloAccion);
                 } else {
                     mostrarMensajeWarningValidacion('No se encontr\u00F3 informaci\u00F3n')
                 }
@@ -102,7 +114,7 @@ app.busquedaSalesforce = function ($scope, busquedaSalesforceService) {
         }).catch((err) => handleError(err));
     }
 
-    consultarDetalleObjectosSF = function (id, keyObjeto) {
+    consultarDetalleObjectosSF = function (id, keyObjeto, nombre) {
         console.log("id: " + id + " tipo del objeto: " + keyObjeto)
         $scope.isConsultaPrimeraVezNoticias = false;
         $scope.isAbiertoOSNoticias = false;
@@ -117,37 +129,49 @@ app.busquedaSalesforce = function ($scope, busquedaSalesforceService) {
             swal.close()
             $scope.mostrarTintoreria = false;
             $scope.mostrarNotaCF = false;
+            let tipo = '';
             if (result.data.respuesta) {
                 if (result.data.result) {
                     $("#modalDetalleSalesforce").modal('show');
                     switch (keyObjeto) {
                         case "CS":
+                            tipo = 'Cotizaci&oacute;n sitios'
                             $scope.mostrarDetalleCotSitio(result.data.result.detalleCotSitio, keyObjeto);
                             break;
                         case "CP":
+                            tipo = 'Cotizaci&oacute;n sitios plan'
                             $scope.mostrarDetalleCotSitioPlan(result.data.result.detalleCotSitioPlan, keyObjeto);
                             break;
                         case "CO":
+                            tipo = 'Cotizaci&oacute;n'
                             $scope.mostrarDetalleCotizacion(result.data.result.detalleCotizacion, keyObjeto);
                             break;
                         case "CF":
+                            tipo = 'Cuenta factura'
                             $scope.mostrarDetalleCuentaFactura(result.data.result.detalleCuentaFactura, keyObjeto);
                             break;
                         case "CU":
+                            tipo = 'Cuentas'
                             $scope.mostrarDetalleCuenta(result.data.result.detalleCuenta, keyObjeto);
                             break;
                         case "OP":
+                            tipo = 'Oportunidad';
                             $scope.mostrarDetalleOportunidad(result.data.result.detalleOportunidad, keyObjeto);
                             break;
                         case "OS":
+                            tipo = 'Orden de servicio'
                             $scope.mostrarDetalleOs(result.data.result.detalleOs, keyObjeto);
                             break;
                         case "TK":
+                            tipo = 'Ticket'
                             $scope.mostrarDetalleTicket(result.data.result.detalleTk, keyObjeto);
                             break;
                         default:
                             break;
                     }
+                    let tituloAccion = "Consulta detalle de " +  tipo;
+                    let mensajeEnvio = 'Se ha buscado por: ' + nombre;
+                    objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_INFO, tituloAccion);
                 } else {
                     mostrarMensajeWarningValidacion('No se encontr\u00F3 informaci\u00F3n')
                 }
