@@ -415,14 +415,18 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
 
         $scope.validate_geografia_intervencion = function (event, tecnico) {
 
+            if(event.objectevent){
+                event = event.objectevent;
+            }
+            
             let arrayIntervencion =  tecnico.tiposOrdenes ? tecnico.tiposOrdenes.split(',') : [];
             let arrayGeografias = tecnico.geografias  ? tecnico.geografias.split(',') : [];
             let arrayGeocerca = tecnico.idGeografia1 ? tecnico.idGeografia1.split(',') : [];
 
-            let isIntervencion = arrayIntervencion.find(e => e == event.objectevent.idtipoOrden);
-            let isSubIntervencion = tecnico.idSubIntervenciones ? tecnico.idSubIntervenciones.find(e => e == event.objectevent.idSubtipoOrden) : false;
-            let isGeoagrafia = arrayGeografias.find(e => e == event.objectevent.idGeografia);
-            let isGeocerca = tecnico.idClusters ? tecnico.idClusters.find(e => e == event.objectevent.idGeografia1) : false;
+            let isIntervencion = arrayIntervencion.find(e => e == event.idtipoOrden);
+            let isSubIntervencion = tecnico.idSubIntervenciones ? tecnico.idSubIntervenciones.find(e => e == event.idSubtipoOrden) : false;
+            let isGeoagrafia = arrayGeografias.find(e => e == event.idGeografia);
+            let isGeocerca = tecnico.idClusters ? tecnico.idClusters.find(e => e == event.idGeografia1) : false;
 
             if (isIntervencion || isSubIntervencion) {
                 if (isGeoagrafia || isGeocerca) {
