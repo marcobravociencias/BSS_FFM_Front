@@ -99,8 +99,9 @@ public class ImplAutentificacionService  implements AutentificacionService{
 			}
 		}
 		logger.info("RESULT" + gson.toJson(responseLog));
-
-		genericAccionesService.agregarMensajeAccionServiceLogin(dataLog.toString(),responseLog.getAccess_token());
+		if(responseLog.getAccess_token() != "" && responseLog.getAccess_token() != null) {
+			genericAccionesService.agregarMensajeAccionServiceLogin(dataLog.toString(),responseLog.getAccess_token());
+		}
 		return responseLog;
 	}
 	

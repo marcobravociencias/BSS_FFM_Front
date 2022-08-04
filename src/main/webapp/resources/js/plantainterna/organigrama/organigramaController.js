@@ -28,15 +28,15 @@ app.controller('organigramaController', ['$scope', '$q', '$filter', 'organigrama
                     if (response.data.result) {
                         switch (type) {
                             case 1:
-                                windowOrg = window.open('/FFMCLOUD/moduloDespacho', 'popup', 'width=1300,height=500');
+                                windowOrg = window.open('/FFM/moduloDespacho', 'popup', 'width=1300,height=500');
                                 break;
 
                             case 2:
-                                windowOrg = window.open('/FFMCLOUD/moduloUsuarios', 'popup', 'width=1300,height=500');
+                                windowOrg = window.open('/FFM/moduloUsuarios', 'popup', 'width=1300,height=500');
                                 break;
 
                             case 3:
-                                windowOrg = window.open('/FFMCLOUD/moduloGestionTecnicos', 'popup', 'width=1300,height=500');
+                                windowOrg = window.open('/FFM/moduloGestionTecnicos', 'popup', 'width=1300,height=500');
                                 break;
 
                             default:
