@@ -1,0 +1,200 @@
+.container {
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+    /* padding-top: 1em; */
+    background: white;
+    border-radius: .5em;
+    margin-top: 1em;
+    padding: 1em 0;
+    font-family: "Montserrat" !important;
+}
+
+#modulosTable tbody tr:nth-child(even) ,
+#accionesTable tbody tr:nth-child(even) {
+    background: #f5f5f5;
+}
+
+#modulosTable>tbody>tr>td ,
+#accionesTable>tbody>tr>td {
+    white-space: nowrap;
+    color: #39455b;
+    font-family: 'Montserrat';
+    font-size: .8em;
+    border-top: 0px solid #eceeef !important;
+    text-align: center;
+}
+
+#modulosTable thead th ,
+#accionesTable thead th {
+    position: relative;
+    background-color: #b1b1b1;
+    color: #fff;
+    font-size: 0.8em;
+    white-space: nowrap;
+    padding: 1em;
+    border: none;
+    font-weight: normal;
+    text-align: center;
+}
+
+#modulosTable tbody tr td ,
+#accionesTable tbody tr td {
+    padding: 0.5em;
+    border: none;
+}
+
+.page-link {
+    font-size: 0.7em !important;
+    font-family: "Montserrat" !important;
+}
+
+.dataTables_info {
+    font-size: 0.7em;
+    font-family: "Montserrat" !important;
+    text-align: left;
+    padding-left: 0.5em;
+}
+
+.dataTables_paginate.paging_simple_numbers {
+    float: right;
+}
+
+.dataTables_filter {
+    font-size: 0.7em !important;
+    font-family: 'Montserrat';
+}
+
+div.dataTables_wrapper div.dataTables_filter input {
+    width: 11.3em;
+    height: 2.05em;
+    margin-right: 1em;
+}
+
+/* CSS TABLE */
+
+.btn-nuevo {
+    border-radius: 50%;
+    padding: 0.6em 1em;
+    background-color: var(--estandar-color);
+    color: #fff;
+}
+
+.btn-nuevo:hover {
+    color: #fff;
+}
+
+.box-nuevo {
+    text-align: right;
+    padding-top: 1.5em;
+}
+
+.label-input {
+    margin-bottom: 0 !important;
+    font-size: .7em;
+}
+
+.input-modulos {
+    border: 1px solid #dbdbdb !important;
+    font-weight: 400;
+    color: #818181 !important;
+    transition: all 0.5s ease;
+    padding: 0.4em 0.5em;
+    background: white !important;
+    border-radius: 0.5em !important;
+    /* box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.07), 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important; */
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 7%), 0 1px 2px 0 rgb(0 0 0 / 5%) !important;
+    border-bottom: 0 1px 3px 0 rgb(0 0 0 / 7%), 0 1px 2px 0 rgb(0 0 0 / 5%) !important;
+}
+
+
+.input-select::after {
+    content: "";
+    position: absolute;
+    right: 6%;
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 7px solid #939db2;
+    clear: both;
+    z-index: 2;
+    font-size: 14px;
+    margin-top: -1.2em;
+}
+
+.btnGuardar{
+    background-color: var(--btn-color-liberar-pago-tabla) !important;
+    color: #fff !important;
+    -webkit-box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+    /* box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%); */
+    font-size: 0.7em;
+    text-align: center;
+}
+
+.container-fluid.permiso-text {
+    padding: 0;
+    display: flex;
+}
+
+.container-text-title-detalle {
+    width: 40%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.container-text-content-detalle {
+    width: 60%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+span.text-content-permiso {
+    /* font-weight: bold; */
+    font-size: 0.8em;
+    color: #9d9ea2;
+}
+
+span.text-tile-permiso {
+    font-size: 0.7em;
+    color: #000;
+    text-transform: uppercase;
+}
+
+.title-text{
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.content-color{
+    position: absolute;
+}
+
+.input-valid-error {
+    box-shadow: 0 1px 1px 0 red;
+}
+
+.acciones{
+    padding: 0.3em 1em !important;
+    border-radius: 0.2rem;
+    cursor: pointer;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+    font-size: 0.9em;
+    
+}
+
+.btn-default{
+    background-color: var(--btn-color-evidencia-tabla);
+}
+
+.btn-default:hover, .btn-default:active, .btn-default:focus{
+    background-color: var(--btn-color-evidencia-tabla) !important;
+}
+
+.btn-delete{
+    background-color: var(--btn-color-eliminar-tabla);
+}
+
+.btn-delete:hover, .btn-delete:active, .btn-delete:focus{
+    background-color: var(--btn-color-eliminar-tabla) !important;
+}

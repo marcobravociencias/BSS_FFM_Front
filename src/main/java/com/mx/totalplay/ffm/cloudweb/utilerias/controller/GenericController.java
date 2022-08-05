@@ -107,5 +107,10 @@ public class GenericController {
 	public String helpReportFFM(){
 		return "utilerias/help/helpReportFMM";
 	}
+	
+	@GetMapping("/gestionModulos")
+	public String gestionModulos() {		
+		return "generic/gestionModulos/mainGestionModulos";
+	}
 
 }
