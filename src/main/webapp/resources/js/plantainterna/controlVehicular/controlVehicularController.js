@@ -1223,14 +1223,14 @@ app.controller('controlVehicularController',
 			}
 
 			$scope.crearVehiculo = function (paramsTemp) {
-				let tituloAccion = "Crear veh&iacute;culo";
-				let mensajeEnvio = 'Ha ocurrido un error al crear el veh&iacute;culo con la placa ' + paramsTemp.placa;
+				let tituloAccion = "Crear vehículo";
+				let mensajeEnvio = 'Ha ocurrido un error al crear el vehículo con la placa ' + paramsTemp.placa;
 				controlVehicularService.crearVehiculo(paramsTemp).then(function success(response) {
 					if (response.data !== undefined) {
 						if (response.data.respuesta) {
 							if (response.data.result) {
 								$scope.isEdit = false;
-								mensajeEnvio = 'Se ha creado el veh&iacute;culo con la placa ' + paramsTemp.placa;
+								mensajeEnvio = 'Se ha creado el vehículo con la placa ' + paramsTemp.placa;
 								objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
 								toastr.success('Acci&oacute;n completada');
 								if ($scope.configPermisoAccionConsultaVehiculos) {
@@ -1268,14 +1268,14 @@ app.controller('controlVehicularController',
 			}
 
 			$scope.editarVehiculo = function (paramsTemp) {
-				let tituloAccion = "Editar veh&iacute;culo";
-				let mensajeEnvio = 'Ha ocurrido un error al editar el veh&iacute;culo con la placa ' + paramsTemp.placa;
+				let tituloAccion = "Editar vehí;culo";
+				let mensajeEnvio = 'Ha ocurrido un error al editar el vehículo con la placa ' + paramsTemp.placa;
 				controlVehicularService.editarVehiculo(paramsTemp).then(function success(response) {
 					if (response.data !== undefined) {
 						if (response.data.respuesta) {
 							if (response.data.result) {
 								$scope.isEdit = false;
-								mensajeEnvio = 'Se ha editado el veh&iacute;culo con la placa ' + paramsTemp.placa;
+								mensajeEnvio = 'Se ha editado el vehículo con la placa ' + paramsTemp.placa;
 								objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
 								toastr.success("Acci&oacute;n completada");
 								setTimeout(function () {
@@ -1590,8 +1590,8 @@ app.controller('controlVehicularController',
 								params.detalle.fotoTarjetaGasolina = actualObject;
 								params.idActivo = st;
 								let placaTemp = st == 1 ? $scope.listVehiculosInactivos.find((v) =>  v.idVehiculo == id ) : $scope.vehiculos.find((v) =>  v.idVehiculo == id );
-								let tituloAccion = st ? "Restaurar veh&iacute;culo" : "Eliminar veh&iacute;culo";
-								let mensajeEnvio = st ? 'Ha ocurrido un error al restaurar el veh&iacute;culo con la placa ' + placaTemp.placa : 'Ha ocurrido un error al eliminar el veh&iacute;culo con la placa ' + placaTemp.placa;
+								let tituloAccion = st ? "Restaurar vehículo" : "Eliminar vehículo";
+								let mensajeEnvio = st ? 'Ha ocurrido un error al restaurar el vehículo con la placa ' + placaTemp.placa : 'Ha ocurrido un error al eliminar el veh&iacute;culo con la placa ' + placaTemp.placa;
 								controlVehicularService.editarVehiculo(params).then(function success(response) {
 									if (response.data !== undefined) {
 										if (response.data.respuesta) {
@@ -1601,7 +1601,7 @@ app.controller('controlVehicularController',
 												} else {
 													$scope.getVehiculos(false);
 												}
-												mensajeEnvio = st ? 'Se restaur&oacute; el veh&iacute;culo con la placa ' + placaTemp.placa : 'Se elimin&oacute; el veh&iacute;culo con la placa ' + placaTemp.placa;
+												mensajeEnvio = st ? 'Se restauró; el vehículo con la placa ' + placaTemp.placa : 'Se elimin&oacute; el veh&iacute;culo con la placa ' + placaTemp.placa;
 												objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
 												toastr.success('Acci&oacute;n completada');
 											} else {
@@ -2062,39 +2062,28 @@ app.controller('controlVehicularController',
 
 			$scope.generarReporteControlVehicular = function () {
 				let params = {
-					fechaInicio: $scope.getFechaFormato($("#filtro_fecha_inicio").val())
+					fechaInicio: $scope.getFechaFormato($("#filtro_fecha_inicio").val()),
+					tipoExcel: 'vehiculos-consultarvehiculos-pi'
 				}
-				let tituloAccion = "Descarga reporte veh&iacute;culos";
+				let tituloAccion = "Descarga reporte vehículos";
 				let mensajeEnvio = 'Ha ocurrido un error al descargar el reporte';
-				controlVehicularService.generarReporteControlVehicular(params).then(function success(response) {
-					if (response.data !== undefined) {
-						if (response.data.respuesta) {
-							if (response.data.result) {
-								const data = JSON.parse(response.data.result).vehiculos;
-								const fileName = 'Resporte vehiculos';
-								const exportType = 'xls';
-								mensajeEnvio = 'Se ha descargado el reporte';
-								objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
-								window.exportFromJSON({ data, fileName, exportType })
-								$("#reporteModal").modal('hide');
-							} else {
-								swal.close();
-								toastr.info('No se encontraron resultados');
-								mensajeEnvio = 'No se encontraron resultados';
-								objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_WARNING, tituloAccion);
-							}
-						} else {
-							swal.close();
-							objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
-							mostrarMensajeErrorAlert(response.data.resultDescripcion);
-						}
-					} else {
-						swal.close();
-						objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
-						mostrarMensajeErrorAlert(response.data.resultDescripcion);
-					}
-				});
 
+				genericService.enviarParamsReporte(params).then(function success(response) {
+					// console.log(response);
+					if (response.data.respuesta) {
+						var link = document.createElement("a");
+						link.href = contex_project + '/req/exporteExcelGenericRequest/reportevehiculos.xls';
+						link.click();
+						swal.close();
+	
+						mensajeEnvio = 'Se ha descargado el reporte';
+						objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
+					} else {
+						objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
+						mostrarMensajeErrorAlert('Ocurrio un error al generar reporte.')
+					}
+					swal.close();
+				});
 			}
 
 		}

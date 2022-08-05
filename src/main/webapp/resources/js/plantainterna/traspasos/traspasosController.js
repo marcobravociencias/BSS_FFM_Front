@@ -1285,27 +1285,31 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 				fechaInicio: $scope.getFechaFormato(document.getElementById('filtro_fecha_inicio_otsTaspaso').value),
 				fechaFin: $scope.getFechaFormato(document.getElementById('filtro_fecha_fin_otsTaspaso').value),
 				elementosPorPagina: $scope.elementosRegistro,
-				pagina: 1
+				pagina: 1,
+				tipoExcel: 'traspasos-consultarots-pi'
 			}
 			swal({ text: 'Cargando registros...', allowOutsideClick: false });
 			swal.showLoading();
 			let tituloAccion = "Descarga reporte ordenes de trabajo";
 			let mensajeEnvio = 'Ha ocurrido un error al descargar el reporte';
-			traspasosService.consultaReporteTraspasosOts(params).then((result) => {
-				swal.close()
-				if (result.data.respuesta) {
-					const data = JSON.parse(result.data.result).ordenes
-					const fileName = 'Traspasos OTs'
-					const exportType = 'xls'
+
+
+			genericService.enviarParamsReporte(params).then(function success(response) {
+				// console.log(response);
+				if (response.data.respuesta) {
+					var link = document.createElement("a");
+					link.href = contex_project + '/req/exporteExcelGenericRequest/reporteOtsTraspaso.xls';
+					link.click();
+					swal.close();
+
 					mensajeEnvio = 'Se ha descargado el reporte';
 					objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
-					window.exportFromJSON({ data, fileName, exportType })
 				} else {
 					objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
 					mostrarMensajeErrorAlert('Ocurrio un error al generar reporte.')
 				}
-
-			}).catch(err => handleError(err));
+				swal.close();
+			});
 
 		} else {
 			mostrarMensajeWarningValidacion(errorMensaje);
@@ -1395,27 +1399,29 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 				fechaInicio: $scope.getFechaFormato(document.getElementById('filtro_fecha_inicio_traspaso').value),
 				fechaFin: $scope.getFechaFormato(document.getElementById('filtro_fecha_fin_traspaso').value),
 				elementosPorPagina: $scope.elementosRegistroTraspaso,
-				pagina: 1
+				pagina: 1,
+				tipoExcel: 'traspasos-consultartraspasos-pi'
 			}
 			swal({ text: 'Cargando registros...', allowOutsideClick: false });
 			swal.showLoading();
 			let tituloAccion = "Descarga reporte traspasos";
 			let mensajeEnvio = 'Ha ocurrido un error al descargar el reporte';
-			traspasosService.consultaReporteTraspasos(params).then((result) => {
-				swal.close()
-				if (result.data.respuesta) {
-					const data = JSON.parse(result.data.result).ordenes
-					const fileName = 'Traspasos'
-					const exportType = 'xls'
+			genericService.enviarParamsReporte(params).then(function success(response) {
+				// console.log(response);
+				if (response.data.respuesta) {
+					var link = document.createElement("a");
+					link.href = contex_project + '/req/exporteExcelGenericRequest/reporteOtTraspasadas.xls';
+					link.click();
+					swal.close();
+
 					mensajeEnvio = 'Se ha descargado el reporte';
 					objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
-					window.exportFromJSON({ data, fileName, exportType })
 				} else {
 					objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
 					mostrarMensajeErrorAlert('Ocurrio un error al generar reporte.')
 				}
-
-			}).catch(err => handleError(err));
+				swal.close();
+			});
 
 		} else {
 			mostrarMensajeWarningValidacion(errorMensaje);

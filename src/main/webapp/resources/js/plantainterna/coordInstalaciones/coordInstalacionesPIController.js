@@ -1207,7 +1207,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
             swal.close();
             
             if(result.data.respuesta){
-				mensajeEnvio = 'Se actualiz&oacute; el estatus a "' + text + '" de la OT: ' + params.ot;
+				mensajeEnvio = 'Se actualizó el estatus a "' + text + '" de la OT: ' + params.ot;
                 objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
                 toastr.success( result.data.result.mensaje );
 				if ($scope.vistaCoordinacion === 1) {

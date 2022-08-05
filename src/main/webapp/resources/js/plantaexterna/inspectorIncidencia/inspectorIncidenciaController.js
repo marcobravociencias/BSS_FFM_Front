@@ -1063,7 +1063,7 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                 // console.log(params);
                 inspectorIncidenciaService.generarOTIncidenciaInspectorPE(params).then(function success(response) {
                     console.log(response);
-                    let tituloAccion = "Generaci&oacute;n de OT";
+                    let tituloAccion = "Generación de OT";
                     let mensajeEnvio = 'Ha ocurrido un error al generar la OT con la incidencia: ' + $scope.incidenciaDetalle.idIncidencia;
                     if (response.data) {
                         if (response.data.respuesta) {

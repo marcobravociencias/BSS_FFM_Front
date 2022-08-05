@@ -714,7 +714,7 @@ app.controller('inspectorCoberturaController', ['$scope', '$q', 'inspectorCobert
         }
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
-        let tituloAccion = "Ligar incidencia a cl&uacute;ster";
+        let tituloAccion = "Ligar incidencia a cluster";
         let mensajeEnvio = 'Ha ocurrido un error al ligar las incidencias al cluster: ' + textCluster;
         inspectorCoberturaService.ligarIncidenciasCoberturaPE(params).then(function success(response) {
             if (response.data) {

@@ -151,6 +151,8 @@
         src="${pageContext.request.contextPath}/resources/libraries/datePicker/js/bootstrap-datepicker.es.min.js"></script>
         <script src="${pageContext.request.contextPath}/resources/libraries/exportExcel/index.min.js"></script>
     <!-- ARCHIVOS JS  -->
+    <script type="text/javascript">let contex_project = "${pageContext.request.contextPath}";</script>
+
     <script type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/plantainterna/controlVehicular/controlVehicularController.js?v=${sessionScope.versionDepl}"></script>
     <script

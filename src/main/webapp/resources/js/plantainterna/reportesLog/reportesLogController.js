@@ -1,6 +1,6 @@
 var app = angular.module('reportesLogApp', []);
 
-app.controller('reportesLogController', ['$scope', '$q', 'reportesLogService', '$filter', function ($scope, $q, reportesLogService, $filter) {
+app.controller('reportesLogController', ['$scope', '$q', 'reportesLogService', '$filter', 'genericService', function ($scope, $q, reportesLogService, $filter, genericService) {
     var regexUrl = /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/;
 
     var logsUsuarioTable;
@@ -381,30 +381,26 @@ app.controller('reportesLogController', ['$scope', '$q', 'reportesLogService', '
         let params = {
             fechaInicio: moment(new Date()).format("YYYY-MM-DD"),
             fechaFin: moment(new Date()).format("YYYY-MM-DD"),
-            idUsuario: $scope.idDetalle
+            idUsuario: $scope.idDetalle,
+            tipoExcel: 'reportelog-consultarlog-pi'
         };
 
-        reportesLogService.consultarReporteLogGeneral(params).then(function success(response) {
-            if (response.data !== undefined) {
-                if (response.data.respuesta) {
-                    if (response.data.result) {
-                        const data = JSON.parse(response.data.result).modulos;
-                        const fileName = 'Resporte log';
-                        const exportType = 'xls';
+        genericService.enviarParamsReporte(params).then(function success(response) {
+            // console.log(response);
+            if (response.data.respuesta) {
+                var link = document.createElement("a");
+                link.href = contex_project + '/req/exporteExcelGenericRequest/reporteLogUsuario.xls';
+                link.click();
+                swal.close();
 
-                        window.exportFromJSON({ data, fileName, exportType })
-
-                    } else {
-                        toastr.info('No se encontraron resultados');
-                    }
-                } else {
-                    toastr.warning(response.data.resultDescripcion);
-                }
+                //mensajeEnvio = 'Se ha descargado el reporte';
+                //objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
             } else {
-                toastr.error('Ha ocurrido un error al consultar el log');
+                //objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
+                mostrarMensajeErrorAlert('Ocurrio un error al generar reporte.')
             }
             swal.close();
-        })
+        });
 
     }
 
@@ -582,30 +578,27 @@ app.controller('reportesLogController', ['$scope', '$q', 'reportesLogService', '
         let params = {
             idGeografias: clusters,
             fechaInicio: $scope.getFechaFormato($("#filtro_fecha_inicio").val()),
-            fechaFin: $scope.getFechaFormato($("#filtro_fecha_fin").val())
+            fechaFin: $scope.getFechaFormato($("#filtro_fecha_fin").val()),
+            tipoExcel: 'reportelog-consultarloggeneral-pi'
         };
+        
 
-        reportesLogService.consultarReporteLogGeneral(params).then(function success(response) {
-            if (response.data !== undefined) {
-                if (response.data.respuesta) {
-                    if (response.data.result) {
-                        const data = JSON.parse(response.data.result).modulos;
-                        const fileName = 'Resporte log';
-                        const exportType = 'xls';
+        genericService.enviarParamsReporte(params).then(function success(response) {
+            // console.log(response);
+            if (response.data.respuesta) {
+                var link = document.createElement("a");
+                link.href = contex_project + '/req/exporteExcelGenericRequest/reporteLogGeneral.xls';
+                link.click();
+                swal.close();
 
-                        window.exportFromJSON({ data, fileName, exportType })
-
-                    } else {
-                        toastr.info('No se encontraron resultados');
-                    }
-                } else {
-                    toastr.warning(response.data.resultDescripcion);
-                }
+                //mensajeEnvio = 'Se ha descargado el reporte';
+                //objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
             } else {
-                toastr.error('Ha ocurrido un error al consultar el log');
+                //objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
+                mostrarMensajeErrorAlert('Ocurrio un error al generar reporte.')
             }
             swal.close();
-        })
+        });
     }
 
 
