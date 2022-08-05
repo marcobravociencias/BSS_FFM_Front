@@ -87,7 +87,7 @@
 										<div ng-repeat="tecnico in tecnicosMostradas | filter:buscarTecnico track by $index" class="user-section">
 											<div id="contenedorTecnicoConsulta{{tecnico.idUsuario}}" class="valign-wrapper tecnicosDiv">
 												<div class="col-2 media-image online pr-0">
-													<img src="{{tecnico.urlFotoPerfil !=undefined && tecnico.urlFotoPerfil ? tecnico.urlFotoPerfil :'./resources/img/plantainterna/despacho/tecnicootasignada.png'}}" class="circle z-depth-2 responsive-img">
+													<img src="{{tecnico.urlFoto !=undefined && tecnico.urlFoto ? tecnico.urlFoto :'./resources/img/plantainterna/despacho/tecnicootasignada.png'}}" class="circle z-depth-2 responsive-img">
 												</div>
 												<div id="{{tecnico.idUsuario}}" class="col-10 pl-0" ng-click="consultarSkillsAsignadasTecnico(tecnico.idUsuario, tecnico.nombre, tecnico.apellidoPaterno, tecnico.apellidoMaterno)">
 													<p class="text-tecnico-nombre">{{tecnico.nombre}} {{tecnico.apellidoPaterno}} {{tecnico.apellidoMaterno}}</p>
@@ -257,7 +257,7 @@
                                             <div ng-repeat="tecnico in tecnicosMostradas | filter:buscarTecnico track by $index" class="user-section">
                                                 <div id="{{tecnico.idUsuario}}" class="valign-wrapper tecnicosDiv" style="height: 60px;">
                                                     <div class="col-md-2 media-image online pr-0">
-                                                        <img src="{{tecnico.urlFotoPerfil !=undefined && tecnico.urlFotoPerfil ? tecnico.urlFotoPerfil :'./resources/img/plantainterna/despacho/tecnicootasignada.png'}}" class="circle z-depth-2 responsive-img">
+                                                        <img src="{{tecnico.urlFoto !=undefined && tecnico.urlFoto ? tecnico.urlFoto :'./resources/img/plantainterna/despacho/tecnicootasignada.png'}}" class="circle z-depth-2 responsive-img">
                                                     </div>
                                                     <div id="{{tecnico.idUsuario}}" class="col-md-10 pl-0" ng-click="seleccionarTecnicoMultiseleccion(tecnico.idUsuario)">
                                                     	<p class="text-tecnico-nombre-modal">{{tecnico.nombre}} {{tecnico.apellidoPaterno}} {{tecnico.apellidoMaterno}}</p>
