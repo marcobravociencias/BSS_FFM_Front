@@ -134,10 +134,10 @@ app.service("busquedaService", function($http){
         })
     }
 
-    this.consultarDns = function(params) {
+    this.generarDnsActivacion = function(params) {
         return $http({
             method: "post",
-            url: "req/consultarDns",
+            url: "req/generarDnsActivacion",
             data: JSON.stringify(params),
             headers: { 'Content-Type': undefined },
             transformRequest: angular.identity

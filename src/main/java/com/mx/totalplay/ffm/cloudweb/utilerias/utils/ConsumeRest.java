@@ -529,10 +529,12 @@ public class ConsumeRest {
                     logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO" + httpErrorException.getMessage());
                     response = ServiceResponseResult.builder()
                             .result(httpErrorException.getRawStatusCode())
+                            .codigoEstatusService(httpErrorException.getRawStatusCode())
                             .resultDescripcion(httpErrorException.getMessage()).build();
                     break;
                 default:
                     response = ServiceResponseResult.builder()
+                            .codigoEstatusService(httpErrorException.getRawStatusCode())
                             .resultDescripcion(httpErrorException.getMessage()).build();
                     break;
             }

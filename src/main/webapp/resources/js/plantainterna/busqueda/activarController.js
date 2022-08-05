@@ -15,7 +15,10 @@ app.activacionController=function($scope, $q, busquedaService){
     $scope.osglobalactivar;
 
     
-  
+    $scope.keyCodigoPostalDns=false
+    $scope.keyCantidadDns=false
+
+
     const maxLenMAC = 17; 
     $scope.setFormatMacValidacion = function(config) {
         let valoractual=angular.copy(config.MAC)
@@ -472,15 +475,7 @@ app.activacionController=function($scope, $q, busquedaService){
             if (results[0].data !== undefined) {
                 if (results[0].data.respuesta) {
 					if (results[0].data.result) {
-                        $scope.infoDNConfigurados = results[0].data.result.equiposConfifurados.dns ? results[0].data.result.equiposConfifurados.dns : [];
-                        $scope.listadoInfoEquiposConfigurados = results[0].data.result.equiposConfifurados.servicios ? results[0].data.result.equiposConfifurados.servicios : [];
-                        angular.forEach($scope.infoDNConfigurados.dns, function(el,indexj){
-                            if (el.dn === results[0].data.result.equiposConfifurados.dns.dnPrincipal) {
-                                el.valor = "1";
-                            } else {
-                                el.valor = "0";
-                            }
-                        });
+                        $scope.listadoInfoEquiposConfigurados = results[0].data.result.equiposConfifurados.servicios ? results[0].data.result.equiposConfifurados.servicios : [];                         
                     }
                 }
             }
@@ -522,16 +517,7 @@ app.activacionController=function($scope, $q, busquedaService){
                 });
             });
 
-            if($scope.infoDNConfigurados !== undefined){
-               
-                let tempServicio = $scope.listaServiciosCot.find(function(elem){return elem.id === $scope.infoDNConfigurados.idCotPlanServicio});
-                if (tempServicio !== undefined) {
-                    tempServicio.mensajeConfig = true;
-                    tempServicio.config = $scope.infoDNConfigurados;
-                    tempServicio.isConfigurado = true;
-                }
-
-            }
+     
 
             if($scope.listadoInfoEquiposConfigurados !== undefined && $scope.listadoInfoEquiposConfigurados.length>0){
                 angular.forEach($scope.listadoInfoEquiposConfigurados,function(elemento,index){
@@ -540,7 +526,28 @@ app.activacionController=function($scope, $q, busquedaService){
                         tempServicio.config=elemento;
                         tempServicio.isConfigurado=true;
                     }
+                });        
+            }
+
+          
+           $scope.infoDNConfigurados = results[0].data.result.equiposConfifurados.dns ? results[0].data.result.equiposConfifurados.dns : undefined;
+            if($scope.infoDNConfigurados !=undefined && $scope.infoDNConfigurados.dns !=undefined &&  $scope.infoDNConfigurados.dns.length>0){
+                angular.forEach($scope.infoDNConfigurados.dns, function(el,indexj){
+                    if (el.dn === $scope.infoDNConfigurados.dnPrincipal) {
+                        el.principalDn = "1";
+                    } else {
+                        el.principalDn = "0";
+                    }
                 });
+            }
+
+            if($scope.infoDNConfigurados !== undefined){               
+                let tempServicio = $scope.listaServiciosCot.find(function(elem){return elem.id === $scope.infoDNConfigurados.idCotPlanServicio});
+                if (tempServicio !== undefined) {
+                    tempServicio.mensajeConfig = true;
+                    tempServicio.config = $scope.infoDNConfigurados;
+                    tempServicio.isConfigurado = true;
+                }
             }
 
             angular.forEach($scope.listaServiciosCot, function(servicioInd, index) { 
@@ -652,7 +659,7 @@ app.activacionController=function($scope, $q, busquedaService){
                     if(response.data.result.cotizaciones.result.result==='0'){
                         $scope.listaServiciosCot = response.data.result.cotizaciones.result.CotPlanServicios;
                         $scope.listaTipoEquipos = response.data.result.equipos.result.infoEquipoServ;
-                                        
+                        $scope.objetoCotizacion =              
                         angular.forEach($scope.listaServiciosCot, function(servicioInd, index) {
                             servicioInd.mostrarInfo = true;
                             servicioInd.tipoActiviacion = 'Bridge';
@@ -811,61 +818,81 @@ app.activacionController=function($scope, $q, busquedaService){
         let cantidadConfigurados= $scope.listaServiciosCot.filter((e)=> e.isConfigurado).length        
         $scope.isTodosConfigurado=( cantidadConfigurables === cantidadConfigurados  ) ? true :false
     }
-    $scope.listaDns = [];
-    $scope.consultarDns = function(servicio) {
-        $scope.listaDns = [];
-        swal({ text: 'Buscando datos ...', allowOutsideClick: false });
-        swal.showLoading();
-
-        var params = new FormData();
-        /**
-        params.append("params.CodigoPostal", "04600");
-        params.append("params.CantidadDn", "5");
-***/
-        params.append("params.CodigoPostal", $scope.codigopostalplanactivacion);
-        params.append("params.CantidadDn", servicio.numeroDns === '1' ? '1.0' : servicio.numeroDns);
+    $scope.validarGenerarDns=function(servicio){
+        let isErrorDns=false
+        var mensaje = "VALIDA LOS SIGUIENTES CAMPOS: ";
         
-        busquedaService.consultarDns(params).then(function success(response) {
-            console.log(response);
-            if (response.data !== undefined) {
-                if (response.data.success) {
-                    if (response.data.result.Result === "0") {
-                        servicio.listaDns = response.data.result.ArrDn;
-                        
-                        if( servicio.listaDns !== undefined &&  servicio.listaDns.length > 0 ){
-                            
-                            if(servicio.config === undefined)
-                                servicio.config={}
-                            
-                            servicio.config.DN_Conf=[]
+        if( !servicio.codigopostalplanactivacion ){
+            isErrorDns=true
+            mensaje += "<br/> * C&oacute;digo postal";
+        }
 
-                            angular.forEach(servicio.listaDns, function(dn, index) {
-                                servicio.config.DN_Conf.push({
-                                    "DN": dn.Dn,
-                                    "Id_Cot_ElementoReservado": "",
-                                    "valor": index== 0 ? '1':'0',
-                                    "IdStatus": dn.IdStatus,
-                                    "IdTransaccion":dn.IdTransaccion
-                                })
-                            });
-                       
+        if( !servicio.numDNS){
+            isErrorDns=true
+            mensaje += "<br/> * Cantidad dns";
+        }
+
+        if( isErrorDns ) {
+            mostrarMensajeInformativo( mensaje )
+        }
+        return isErrorDns;
+    }
+    $scope.generarDnsActivacion = function(servicio) {
+        
+        let isValidateDns= $scope.validarGenerarDns(servicio)
+        if(!isValidateDns){
+            swal({ text: 'Buscando datos ...', allowOutsideClick: false });
+            swal.showLoading();
+            
+            let params={
+                'codigoPostal':servicio.codigopostalplanactivacion,
+                'cantidad':servicio.numDNS
+            }      
+            servicio.config.dns=[]  
+            busquedaService.generarDnsActivacion(params).then(function success(response) {
+                console.log(response);
+                if (response.data !== undefined) {
+                    if(response.data.codigoEstatusService < 300){
+                        if (response.data.respuesta) {
+                            if (response.data.result != undefined ) {   
+                                let dnsListado=response.data.result.detalleDns
+                                if(dnsListado != undefined && dnsListado.length > 0){
+                                    
+                                    angular.forEach( dnsListado ,function(elem,index){
+                                        servicio.config.dns.push({
+                                            'dn':elem.dn ,
+                                            'principalDn':'0' ,
+                                            'idTransaccion':elem.idTransaccion ,
+                                            'idStatus':elem.idStatus
+                                        })
+                                    })
+                                    swal.close()
+                                    mostrarMensajeExitoAlert('DNS generados correctamente')
+                                }else{
+                                    mostrarMensajeInformativo('No se encontraron DNS');
+                                }                                                                      
+                            }else{
+                                mostrarMensajeWarningValidacion(response.data.resultDescripcion);
+                                swal.close();
+                            }
+                        } else {
+                            mostrarMensajeWarningValidacion(response.data.resultDescripcion);
+                            swal.close();
                         }
-                       
                     }else{
-                        mostrarMensajeWarning(response.data.result.ResultDescription);
+                        mostrarMensajeInformativo('No se encontraron dns');
+                        swal.close();
                     }
-                    swal.close();
                 } else {
-                    mostrarMensajeWarning("No se encontro informaci\u00f3n");
+                    mostrarMensajeErrorAlert("Ha ocurrido un error en la consulta de datos");
                     swal.close();
                 }
-            } else {
-                mostrarMensajeWarning("No se encontro informaci\u00f3n");
+           
+            }, function error(response) {
                 swal.close();
-            }
-        }, function error(response) {
-            swal.close();
-        });
+            });
+        }
+    
 
     }
 
@@ -1070,75 +1097,106 @@ app.activacionController=function($scope, $q, busquedaService){
     }
 
     
-
-    $scope.configurarDns = function(servicio) {
-        console.log(servicio);
-        swal({ text: 'Configurando DNS ...', allowOutsideClick: false });
-        swal.showLoading();
-
-        /*
-        $scope.params = {};
-        $scope.listaDn = [];
-        angular.forEach(servicio.config.dns , function(element,index){
-            if(element.valor === "1") {
-                $scope.params.dnPrincipal = element.dn;
-            }
-            $scope.listaDn.push(element.dn);
-        });
-        $scope.params.SRV_Mode = servicio.config.tipoEquipoSelect.nombre;
-        $scope.params.Id_OT =  $scope.idotActivacion;
-        $scope.params.Id_Cot_PlanServicio = servicio.IdCotPlanServicio;
-        $scope.params.DN = $scope.listaDn;
-        */
+    $scope.validarConfiguracionDNS=function(servicio){
+        let isErrorDns=false
+        var mensaje = "VALIDA LOS SIGUIENTES CAMPOS: ";
         
-        $scope.params = {};
-        $scope.params.idOt = $scope.idotActivacion;
-        $scope.params.idPlanServicio = servicio.id;
-        $scope.params.dnPrincipal ;
-        $scope.params.srvMode = servicio.config.tipoEquipoSelect.nombre;
-        $scope.listaDn = [];
-        angular.forEach(servicio.config.dns , function(element,index){
-            if(element.valor === "1") {
-                $scope.params.dnPrincipal = element.dn;
+        if( !servicio.codigopostalplanactivacion ){
+            isErrorDns=true
+            mensaje += "<br/> * C&oacute;digo postal";
+        }
+
+        if( !servicio.numDNS){
+            isErrorDns=true
+            mensaje += "<br/> * Cantidad dns";
+        }
+        if( servicio.config.dns !=undefined && servicio.config.dns.length<=0 ){
+            isErrorDns=true
+            mensaje += "<br/> * Sin dns encontrados";
+        }else{
+                      
+            let principalObj= servicio.config.dns.find(function(e){  
+                return e.principalDn=='1'
+            })
+            
+            if( principalObj ==undefined  ){
+                isErrorDns=true
+                mensaje += "<br/> * Selecciona un dn principal";
             }
-            $scope.listaDn.push(element.dn);
-        });
-        $scope.params.dns = $scope.listaDn;
+        }
 
-        busquedaService.configurarDns($scope.params).then(function success(response) {
-            console.log(response);
-            if (response.data !== undefined) {
-                if (response.data.respuesta) {
-                   if(response.data.result.mensaje === 'OK'){
-                        swal.close();
-                        swal({
-                            text: 'Se configur\u00F3 correctamete ',
-                            type: 'success',
-                            showConfirmButton: true,
-                            showCancelButton: false,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText:"Cerrar",
-                        }).then(function () {
-                        }).catch(swal.noop);
 
-                        servicio.isConfigurado=true
-                        $scope.validarServiciosConfigurados()
-                   }else{
+        if( isErrorDns ) {
+            mostrarMensajeInformativo( mensaje )
+        }
+        return isErrorDns;
+    }
+    $scope.configurarDns = function(servicio) {
+
+        let isValidateDns= $scope.validarConfiguracionDNS(servicio)
+       
+        if( !isValidateDns ){
+            console.log(servicio);
+            swal({ text: 'Configurando DNS ...', allowOutsideClick: false });
+            swal.showLoading();
+    
+            let params={
+                "idOt":$scope.idotActivacion,
+                "idPlanServicio": servicio.id,
+                "dnPrincipal": '',
+                "srvMode": servicio.config.tipoEquipoSelect.nombre,
+                "dns": []
+            }
+    
+            angular.forEach(servicio.config.dns , function(element,index){
+                if(element.principalDn === "1") 
+                    params.dnPrincipal = element.dn;
+                
+                params.dns.push(element.dn);
+            });
+    
+            busquedaService.configurarDns( params ).then(function success(response) {
+                console.log(response);        
+                if (response.data !== undefined) {
+                    if(response.data.codigoEstatusService < 300){
+                        if (response.data.respuesta) {
+                            if (response.data.codigoEstatusService == 200 ) {   
+                                swal.close();
+                                swal({
+                                    text: 'Se configuraron correctamete los DNS ',
+                                    type: 'success',
+                                    showConfirmButton: true,
+                                    showCancelButton: false,
+                                    confirmButtonColor: '#3085d6',
+                                    cancelButtonColor: '#d33',
+                                    confirmButtonText:"Cerrar",
+                                }).then(function () {
+                                }).catch(swal.noop);
+        
+                                servicio.isConfigurado=true
+                                $scope.validarServiciosConfigurados()                                                                             
+                            }else{
+                                mostrarMensajeErrorAlert('Ha ocurrido un error al configurar los DNS');
+                                swal.close();
+                            }
+                        } else {
+                            mostrarMensajeErrorAlert('Ha ocurrido un error al configurar los DNS');
+                            swal.close();
+                        }
+                    }else{
+                        mostrarMensajeErrorAlert('Ha ocurrido un error al configurar los DNS');
                         swal.close();
-                        mostrarMensajeErroActivacion(response.data.result.resultDescription)    
-                   }
+                    }
                 } else {
+                    mostrarMensajeErrorAlert('Ha ocurrido un error al configurar los DNS');
                     swal.close();
-                    mostrarMensajeErroActivacion('No se pudo configurar los dns')                                    
                 }
-            } else {
+
+            }, function error(response) {
                 swal.close();
-                mostrarMensajeErroActivacion('No se pudo configurar los dns')                
-            }
-        }, function error(response) {
-            swal.close();
-        });
+            });
+        }
+    
     }
 
 
@@ -1151,11 +1209,9 @@ app.activacionController=function($scope, $q, busquedaService){
         }
     }
 
-    $scope.marcarPrincipal = function(arr, index) {
-        angular.forEach(arr, function(dns, i) {
-            dns.valor = '0';
-        });
-        arr[index].valor = '1';
+    $scope.marcarPrincipal = function(dnsListado, index) {
+        dnsListado=dnsListado.map((e)=>{e.principalDn='0'; return e;})
+        dnsListado[index].dnPrincipal = '1';
     }
 
 
@@ -1275,7 +1331,7 @@ app.activacionController=function($scope, $q, busquedaService){
 
 
     
-    $scope.consultarSerieExistenteActivacion = function(servicio) {
+    $scope.consultarSerieExistenteActivacion = function(servicio,banderaAutofind) {
         if(servicio.config && servicio.config.numSerie){
             if (!swal.isVisible()) {
                 swal({ text: 'Cargando informaci\u00f3n ...', allowOutsideClick: false });
@@ -1290,7 +1346,7 @@ app.activacionController=function($scope, $q, busquedaService){
                         if (response.data.result != undefined ) {                            
                             if(response.data.result.detalleNumeroSerie !=undefined){
                                 if(response.data.result.detalleNumeroSerie.result=='0'){
-                                    $scope.getMacBusquedaPorSerie(servicio)
+                                    $scope.getMacBusquedaPorSerie(servicio,banderaAutofind)
                                 }else{                                    
                                     mostrarMensajeWarningValidacion(response.data.result.detalleNumeroSerie.descripcion);
                                 }
@@ -1314,11 +1370,11 @@ app.activacionController=function($scope, $q, busquedaService){
                 swal.close();
             });
         }else{
-            mostrarMensajeWarning("Captura el n\u00FAmero de serie");
+            mostrarMensajeWarningValidacion("Captura el n\u00FAmero de serie");
         }       
     }
     
-    $scope.getMacBusquedaPorSerie = function(servicio) {
+    $scope.getMacBusquedaPorSerie = function(servicio,banderaAutofind) {
         if (!swal.isVisible()) {
             swal({ text: 'Cargando informaci\u00f3n ...', allowOutsideClick: false });
             swal.showLoading();
@@ -1330,10 +1386,13 @@ app.activacionController=function($scope, $q, busquedaService){
                 if (response.data.respuesta) {
                     if (response.data.result !=undefined) {
                         if(response.data.result.detalleMac != undefined && response.data.result.detalleMac.mac ){
-                           // servicio.MAC = response.data.result.detalleMac.mac;
                             servicio.config.mac = response.data.result.detalleMac.mac;
-
-                            $scope.consultarAutofindActivacion( servicio )
+                            if(banderaAutofind){
+                                $scope.consultarAutofindActivacion( servicio )
+                            }else{
+                                swal.close()
+                                mostrarMensajeExitoAlert('MAC encontrada')
+                            }
                         }else{
                             mostrarMensajeErrorAlertAjax('No se encontraron datos de MAC' )
                             swal.close()
@@ -1354,11 +1413,13 @@ app.activacionController=function($scope, $q, busquedaService){
     }   
 
     
-
     $scope.blurSerieOnt=function(servicioConfig){
-        $scope.consultarSerieExistenteActivacion(servicioConfig)
+        let banderaAutofind=true
+        $scope.consultarSerieExistenteActivacion(servicioConfig,banderaAutofind)
     }
-
-    //485754436EE8409F
+    $scope.blurSerieEquipoServicio=function(servicioConfig){
+        let banderaAutofind=false
+        $scope.consultarSerieExistenteActivacion(servicioConfig,banderaAutofind)
+    }
 
 }

@@ -47,6 +47,9 @@ app.controller('busquedaController', ['$scope', '$q', 'busquedaService', 'generi
                         let resultConf = result.data.result;
                         objectTempAccion = new GenericAccionRealizada(""+resultConf.MODULO_ACCIONES_USUARIO.id, 'TOP_RIGHT');
                         objectTempAccion.inicializarBotonAccionesRecientes();
+                        let llavesResult = result.data.result.MODULO_ACCIONES_USUARIO.llaves;
+                        $scope.keyCodigoPostalDns=llavesResult.KEY_HABILITA_CODIGO_POSTAL_DN ? llavesResult.KEY_HABILITA_CODIGO_POSTAL_DN : false ;
+                        $scope.keyCantidadDns=llavesResult.KEY_HABILITA_CANTIDAD_DN ? llavesResult.KEY_HABILITA_CANTIDAD_DN : false ;
 
                     } else {
                         toastr.warning('No se encontraron datos para la configuraci\u00F3n');

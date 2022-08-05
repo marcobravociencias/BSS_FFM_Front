@@ -430,4 +430,26 @@ public class ImplBusquedaService implements BusquedaService {
         return response; 
 	}
 
+	
+	@Override
+	public ServiceResponseResult generarDnsActivacion(String params) {
+    	JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+	    LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+	    String tokenAcces = principalDetail.getAccess_token();
+	    String urlRequest = principalDetail.getDireccionAmbiente().concat(constBusqueda.getGenerarDnsActivacion());
+	    
+	    Map<String, String> paramsRequest = new HashMap<>();
+	    paramsRequest.put("codigoPostal", jsonObject.get("codigoPostal").getAsString());
+	    paramsRequest.put("cantidad", jsonObject.get("cantidad").getAsString());
+
+	    logger.info("##### OBJECT: #####" + gson.toJson(paramsRequest));
+	    logger.info("##### URL: #####" + urlRequest);
+	    
+	    response = restCaller.callGetBearerTokenRequest(paramsRequest,urlRequest, ServiceResponseResult.class, tokenAcces);
+	    
+	    logger.info("##### Consultar autofind: \n" + gson.toJson(response));        
+    return response; 
+}
+
+
 }

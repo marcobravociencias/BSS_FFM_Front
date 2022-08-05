@@ -71,7 +71,9 @@ public class ConstBusqueda {
     
     @Value("${consultarAutofindActivacion}")
     private String consultarAutofindActivacion;
-    
+ 
+    @Value("${generarDnsActivacion}")
+    private String generarDnsActivacion;
 }
 
 

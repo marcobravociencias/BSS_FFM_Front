@@ -220,4 +220,15 @@ public class BusquedaController {
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 	
+	@PostMapping("/generarDnsActivacion")
+	public  ResponseEntity<?> generarDnsActivacion(@RequestBody String params) {        
+		logger.info("###### BusquedaController - generarDnsActivacion  ### \n"+params);
+		ServiceResponseResult response = busquedaService.generarDnsActivacion(params);
+		if(response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+	
+	
 }

@@ -686,6 +686,7 @@ thead.thead_table_promociones {
 .style_content_dn_act_ord_serv, .style_content_act_servicio_act_o_s {
   padding: 0;
   /* margin-top: 2em; */
+  position: relative;
 }
 
 .style_checkbox_dn {
@@ -1755,6 +1756,8 @@ span.text-activacion-warning {
 .col-content-card-equipo{
   padding:.5em;
   border-top: 1px solid #cacaca;
+  position: relative;
+  padding-bottom: 1.5em;
 }
 .col-title-header{
   padding: .5em 1em !important;
@@ -1777,8 +1780,11 @@ span.text-activacion-warning {
 .sin-configuracion{
     background-color: #ff6e40!important;
 }
+.cuenta-noactiva-badge{
+    background-color: #ff6e40 !important;
+}
 
-.badge-mensaje-equipo{
+.badge-mensaje-activacion{
     font-size: .8rem;
     padding: 2px 4px;
     border-radius: 2px;
@@ -1947,4 +1953,45 @@ span.text-content-ont {
     margin-right: 1em;
     font-size:1.2em;
 }
-  
+
+.mensaje-servicio-config-table{
+    color: #00bfa5;
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+    border-radius: 50%;
+    font-size: 1.2em;
+    border: none;
+    text-align: center !important;
+}
+.mensaje-servicio-noconfig-table{
+    color: #ff9c36;
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+   box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+    border-radius: 50%;
+    font-size: 1.2em;
+    border: none;
+    text-align: center !important;
+}
+
+.btn-configuracion-servicio{
+    position: absolute !important;
+    right: 0;
+    bottom: 0;
+    margin-right: .5em;
+    margin-bottom: .5em;
+    cursor: pointer !important;
+    background:
+    red !important;
+    z-index:2;
+    background-color: #ffffff !important;
+    color: var(--btn-color-buscar) !important;
+    /* border: solid 1px var(--btn-color-buscar) !important; */
+}
+
+.dns-no-contrados{
+  font-size: 1em;
+  font-weight:
+  bold;
+  font-style:
+  italic;
+  color: #767676;
+}

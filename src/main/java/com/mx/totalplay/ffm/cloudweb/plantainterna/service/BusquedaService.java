@@ -1,6 +1,5 @@
 package com.mx.totalplay.ffm.cloudweb.plantainterna.service;
 
-import org.springframework.beans.factory.annotation.Value;
 
 import com.mx.totalplay.ffm.cloudweb.utilerias.model.ServiceResponseResult;
 
@@ -45,4 +44,5 @@ public interface BusquedaService {
 	
     ServiceResponseResult consultarAutofindActivacion(String params);
     
+    ServiceResponseResult generarDnsActivacion(String params);
 }
