@@ -114,7 +114,7 @@
                         <div ng-click="mostrarOcultarInfo(servicioIndCot)" class="col-title-header">
                             <i ng-if="servicioIndCot.isConfigurado" class="fas fa-check-circle mensaje-servicio-config" ></i> 
                             <i ng-if="!servicioIndCot.isConfigurado" class="fas fa-exclamation-circle mensaje-servicio-noconfig" ></i>         
-                            <span class="style_seg_tex_act_ser" ng-bind="'Equipo *    '+servicioIndCot.folio+' - '+ servicioIndCot.nombre"></span>            
+                            <span class="style_seg_tex_act_ser" ng-bind="'Disp. *    '+servicioIndCot.folio+' - '+ servicioIndCot.nombre"></span>            
                             <!--span class="badge-mensaje-equipo sin-configuracion" >Sin configuraci&oacute;n</span-->
 
                             <i class="icon-mostrar-equipo" ng-class="servicioIndCot.mostrarInfo ? 'fas fa-angle-down' : 'fas fa-angle-up'" ></i>                                                      
@@ -131,6 +131,11 @@
                                 </thead>
                                 <tbody>
                                     <tr>
+                                        <!--td>                                                
+                                            <select class="form-control form-control-sm style_primer_select_act_ser" ng-model="servicioIndCot.config.tipoEquipoSelect"  
+                                                ng-options="tipo.nombre for tipo in listadoTipoEquipoActivacion track by tipo.id">
+                                            </select>                    
+                                        </td-->
                                         <td>
                                             <div>
                                                 <select class="form-control form-control-sm style_primer_select_act_ser" ng-model="servicioIndCot.config.modeloSelect" ng-options="model.modelo for model in servicioIndCot.infoEquipoServ.modelo track by model.idModelo">
@@ -138,11 +143,16 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <div><input type="text" placeholder="No Serie" ng-model="servicioIndCot.config.numSerie" ng-blur="blurSerieEquipoServicio(servicioIndCot)" class="input-equipo general-input form-control form-control-sm style_input_table_desc_equipo_act_serv"></div>
+                                           <div class="input-group input-group-sm mb-3">
+                                                <input ng-keypress="keyupEnterSerieDispositivoEquipo($event,servicioIndCot)" ng-model="servicioIndCot.config.numSerie" type="text" class="form-control" placeholder="No. serie" >
+                                                <button ng-click="buscarSerieDispositivoEquipo(servicioIndCot)" class="btn btn-outline-primary btn-search-serie" type="button"  data-mdb-ripple-color="dark" >
+                                                    <i class="fas fa-search"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                         <td>
                                             <div>
-                                                <input ng-disabled="true" type="text" placeholder="Mac" ng-model="servicioIndCot.config.mac" maxlength="17"  class="input-equipo general-input form-control form-control-sm style_input_table_desc_equipo_act_serv">
+                                                <input ng-disabled="true" type="text" placeholder="" ng-model="servicioIndCot.config.mac" maxlength="17"  class="input-equipo general-input form-control form-control-sm style_input_table_desc_equipo_act_serv">
                                             </div>
                                         </td>
                                     </tr>
@@ -152,7 +162,7 @@
                                 <!--button class="btn btn-sm boton-activacion"  ng-if="planActivo !=='true' && statusActivacion !=='proceso'"  ng-click="configurarDispositivosNuevo(servicioIndCot)">Configurar </button-->
                             </div>
                         </div>   
-                        <button ng-if="servicioIndCot.isConfigurado" title="configurar" type="button" class="btn btn-primary btn-floating btn-configuracion-servicio btn-sm" ng-click="configurarEquipos(servicioIndCot)" ><i class="fas fa-wrench"></i></button>                    
+                        <button ng-if="servicioIndCot.isConfigurado" title="configurar" type="button" class="btn btn-primary btn-floating btn-configuracion-servicio btn-sm" ng-click="configurarEquiposDispositivos(servicioIndCot)" ><i class="fas fa-wrench"></i></button>                    
                   
                 </div>
                 <div class="style_content_dn_act_ord_serv" ng-if="servicioIndCot.servicioEquipo">
@@ -170,7 +180,7 @@
                             <table class="table table-equipo-config-ind">
                                 <thead >
                                     <tr>
-                                        <th scope="col">Service Mode</th>
+                                        <!--th scope="col">Service Mode</th-->
                                         <th scope="col">Tipo Equipo</th>
                                         <th scope="col">No Serie</th>
                                         <th scope="col">MAC</th>
@@ -178,11 +188,11 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>                                                
+                                        <!--td>                                                
                                             <select class="form-control form-control-sm style_primer_select_act_ser" ng-model="servicioIndCot.config.tipoEquipoSelect"  
                                                 ng-options="tipo.nombre for tipo in listadoTipoEquipoActivacion track by tipo.id">
                                             </select>                    
-                                        </td>
+                                        </td-->
                                         <td>
                                             <div>
                                                 <select class="form-control form-control-sm style_primer_select_act_ser" ng-model="servicioIndCot.config.modeloSelect" ng-options="model.modelo for model in servicioIndCot.infoEquipoServ.modelo track by model.idModelo">
@@ -190,10 +200,15 @@
                                             </div>
                                         </td>
                                         <td>
-                                            <div><input type="text" ng-blur="blurSerieEquipoServicio(servicioIndCot)"  ng-model="servicioIndCot.config.numSerie" ng-blur="getMacJsonBusqueda(servicioIndCot.config)" class="input-equipo general-input form-control form-control-sm style_input_table_desc_equipo_act_serv" placeholder="No Serie"></div>
+                                            <div class="input-group input-group-sm mb-3">
+                                                <input ng-keypress="keyupEnterSerieDispositivoEquipo($event,servicioIndCot)" ng-model="servicioIndCot.config.numSerie" type="text" class="form-control" placeholder="No. serie" >
+                                                <button ng-click="buscarSerieDispositivoEquipo(servicioIndCot)" class="btn btn-outline-primary btn-search-serie" type="button"  data-mdb-ripple-color="dark" >
+                                                    <i class="fas fa-search"></i>
+                                                </button>
+                                            </div>                                    
                                         </td>
                                         <td> 
-                                            <div><input type="text" ng-disabled="true" ng-model="servicioIndCot.config.mac" maxlength="17" class="input-equipo general-input form-control form-control-sm style_input_table_desc_equipo_act_serv" placeholder="Mac" ></div>
+                                            <div><input type="text" ng-disabled="true" ng-model="servicioIndCot.config.mac" maxlength="17" class="input-equipo general-input form-control form-control-sm style_input_table_desc_equipo_act_serv" placeholder="" ></div>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -201,7 +216,7 @@
                         </div>
 
                     </div>
-                    <button ng-if="servicioIndCot.isConfigurado" title="configurar" type="button" class="btn btn-primary btn-floating btn-configuracion-servicio btn-sm" ng-click="configurarEquipos(servicioIndCot)" ><i class="fas fa-wrench"></i></button>                    
+                    <button ng-if="servicioIndCot.isConfigurado" title="configurar" type="button" class="btn btn-primary btn-floating btn-configuracion-servicio btn-sm" ng-click="configurarEquiposDispositivos(servicioIndCot)" ><i class="fas fa-wrench"></i></button>                    
                 </div>
 
                 <div class="style_content_dn_act_ord_serv " ng-if="servicioIndCot.servicioTelefonia">
@@ -297,88 +312,24 @@
                                 </select>
 
                             </div>
-                        </div>
-                        <table class="table table-ont-config" >
-                            <thead >
-                                <tr>
-                                    <th>Tipo Equipo *</th>
-                                    <th>No Serie</th>
-                                    <th>MAC</th>
-                                    <th>OLT</th>
-                                    <th>IdOLT</th>
-                                    <th>Frame</th>
-                                    <th>Slot</th>
-                                    <th>Puerto</th>
-                                    <th style="width: 9em;"></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div>
-                                            <select class="form-control form-control-sm select_reg_table" ng-model="servicioIndCot.config.modeloSelect" ng-options="model.modelo for model in servicioIndCot.infoEquipoServ.modelo track by model.idModelo">
-                                            </select>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div><input type="text" placeholder="No Serie" ng-model="servicioIndCot.config.numSerie"  ng-blur="blurSerieOnt(servicioIndCot)"   class="form-control form-control-sm input-ont-captura"></div>
-                                    </td>
-                                    <td>
-                                        <div><input type="text" placeholder="MAC" ng-model="servicioIndCot.config.mac" ng-keyup="setFormatMacValidacion(servicioIndCot.config)" maxlength="17" class="form-control form-control-sm input-ont-captura"></div>
-                                    </td>
-                                    <td>
-                                        <div><input type="text" placeholder="OLT" ng-model="servicioIndCot.config.red.nombreOlt" class="form-control form-control-sm input-ont-captura"></div>
-                                    </td>
-                                    <td>
-                                        <div><input type="text" placeholder="Id" ng-model="servicioIndCot.config.red.idOlt" class="form-control form-control-sm input-ont-captura"></div>
-                                    </td>
-                                    <td>
-                                        <div><input type="text" placeholder="Fr" ng-model="servicioIndCot.config.red.frame" class="form-control form-control-sm input-ont-captura"></div>
-                                    </td>
-                                    <td>
-                                        <div><input type="text" placeholder="SI" ng-model="servicioIndCot.config.red.slot" class="form-control form-control-sm input-ont-captura"></div>
-                                    </td>
-                                    <td>
-                                        <div><input type="text" placeholder="PI" ng-model="servicioIndCot.config.red.puerto" class="form-control form-control-sm input-ont-captura"></div>
-                                    </td>
-                                
-                                    <td>
-                                        <div><button class="btn btn-sm btn-buscar-equipo" ng-click="consultarEquipoEspecifico(servicioIndCot)">Buscar </button></div>
-                                    </td>
-
-                                
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="row row-detalle-equipo">
-                            <div class="col-4">
-
-                                <div class="container-fluid detalle-ont-content">
-                                    <div class="container-text-title-detalle-ont">
-                                        <span class="text-title-ont">TIPO EQUIPO</span>
-                                    </div>
-                                    <div class="container-text-detalle-ont">
-                                        <span class="text-content-ont" ng-bind="servicioIndCot.config.modeloSelect.modelo  || 'Sin info'" ></span>
-                                    </div>
-                                </div>
-                                <div class="container-fluid detalle-ont-content">
-                                    <div class="container-text-title-detalle-ont">
-                                        <span class="text-title-ont">NUM. SERIE</span>
-                                    </div>
-                                    <div class="container-text-detalle-ont">
-                                        <span class="text-content-ont" ng-bind="servicioIndCot.config.numSerie || 'Sin info'"></span>
-                                    </div>
-                                </div>
-                                <div class="container-fluid detalle-ont-content">
-                                    <div class="container-text-title-detalle-ont">
-                                        <span class="text-title-ont">MAC</span>
-                                    </div>
-                                    <div class="container-text-detalle-ont">
-                                        <span class="text-content-ont" ng-bind="servicioIndCot.config.mac || 'Sin info'"></span>
-                                    </div>
-                                </div>
-                          
+                            <div class="col-3  ">
+                                <span class="label-equipo-ont">Tipo equipo</span>                                
+                                <select class="form-control form-control-sm select_reg_table" ng-model="servicioIndCot.config.modeloSelect" ng-options="model.modelo for model in servicioIndCot.infoEquipoServ.modelo track by model.idModelo">
+                                </select>
                             </div>
+                            <div class="col-3  ">
+                                <span class="label-equipo-ont">Serie</span>                                
+                                <div class="input-group input-group-sm mb-3">
+                                    <input ng-keypress="keyupEnterSerieOnt($event,servicioIndCot)" ng-model="servicioIndCot.config.numSerie" type="text" class="form-control" placeholder="No. serie" >
+                                    <button ng-click="buscarSerieOnt(servicioIndCot)" class="btn btn-outline-primary btn-search-serie" type="button"  data-mdb-ripple-color="dark" >
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                     
+                        <div class="row mt-2 row-detalle-equipo">
+                         
                             <div class="col-4">
 
                                 <div class="container-fluid detalle-ont-content">
@@ -426,18 +377,46 @@
                                 </div>
                                 <div class="container-fluid detalle-ont-content">
                                     <div class="container-text-title-detalle-ont">
-                                        <span class="text-title-ont">IP ONT:</span>
+                                        <span class="text-title-ont">IP OLT:</span>
                                     </div>
                                     <div class="container-text-detalle-ont">
                                         <span class="text-content-ont"   ng-bind="servicioIndCot.config.red.ipOlt || 'Sin info'"></span>
                                     </div>
                                 </div>
-                                                
+      
+                            </div>
+                            <div class="col-4">
+                                <div class="container-fluid detalle-ont-content">
+                                    <div class="container-text-title-detalle-ont">
+                                        <span class="text-title-ont">MAC</span>
+                                    </div>
+                                    <div class="container-text-detalle-ont">
+                                        <span class="text-content-ont" ng-bind="servicioIndCot.config.mac || 'Sin info'"></span>
+                                    </div>
+                                </div>
+                                <div class="container-fluid detalle-ont-content">
+                                    <div class="container-text-title-detalle-ont">
+                                        <span class="text-title-ont">NUM. SERIE</span>
+                                    </div>
+                                    <div class="container-text-detalle-ont">
+                                        <span class="text-content-ont" ng-bind="servicioIndCot.config.numSerie || 'Sin info'"></span>
+                                    </div>
+                                </div>
+                                <div class="container-fluid detalle-ont-content">
+                                    <div class="container-text-title-detalle-ont">
+                                        <span class="text-title-ont">TIPO EQUIPO</span>
+                                    </div>
+                                    <div class="container-text-detalle-ont">
+                                        <span class="text-content-ont" ng-bind="servicioIndCot.config.modeloSelect.modelo  || 'Sin info'" ></span>
+                                    </div>
+                                </div>                                                      
                             </div>
                         
                         </div>
                         <!--button class="btn btn-sm boton-activacion"  ng-if="planActivo !== 'true' && statusActivacion !=='proceso'" >Configurar </button-->
-                       
+                        <!--pre>
+                            {{servicioIndCot|json}}
+                        </pre-->
                     </div>
                     <button title="configurar"   ng-if="servicioIndCot.isConfigurado" type="button" class="btn btn-primary btn-floating btn-configuracion-servicio btn-sm"  ng-click="configurarONT(servicioIndCot)" ><i class="fas fa-wrench"></i></button>
 

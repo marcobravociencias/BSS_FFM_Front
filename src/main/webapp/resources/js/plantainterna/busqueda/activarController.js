@@ -115,28 +115,29 @@ app.activacionController=function($scope, $q, busquedaService){
     $scope.infoDNConfigurados = {};
     $scope.listadoInfoEquiposConfigurados=undefined;
 
-    $scope.configurarEquipos = function(servicio) {
-        swal({ text: 'Configurando Equipos ...', allowOutsideClick: false });
-        swal.showLoading();
-        
-        console.log("configurarEquipo",servicio)
-
+    $scope.configurarEquiposDispositivos = function(servicio) {
+     
         let isError=false;
-        let mensajeError=""
+        var mensajeError = "VALIDA LOS SIGUIENTES CAMPOS: ";
 
         if(servicio.config.modeloSelect ==undefined){
-            mensajeError+='<li class="mensajeeerror">Seleccciona tipo de equipo</li>'
-            isError=true
-        }
-        if(!servicio.config.numSerie){
-            mensajeError+='<li class="mensajeeerror">N&uacute;mero de serie</li>'
+            mensajeError+='<br/> * Tipo de equipo'
             isError=true
         }
 
-        if(!servicio.config.mac){
-            mensajeError+='<li class="mensajeeerror">MAC</li>'
+        if(servicio.config.tipoRedSelect ==undefined){
+            mensajeError+='<br/> * Tipo de red'
             isError=true
         }
+       
+        if(!servicio.config.numSerie){
+            mensajeError+='<br/> * Numero serie'
+            isError=true
+        }        
+        if(!servicio.config.mac){
+            mensajeError+='<br/> * MAC'
+            isError=true
+        }      
 
         if(isError){
             swal({
@@ -200,246 +201,113 @@ app.activacionController=function($scope, $q, busquedaService){
         });
     }
 
-
-
-    $scope.configurarDispositivosNuevo=function(servicio){
-        console.log("configurarEquipo",servicio)
-
-        let isError=false;
-        let mensajeError=""
-
-        if(servicio.config.modeloSelect ==undefined){
-            mensajeError+='<li class="mensajeeerror">Seleccciona tipo de equipo</li>'
-            isError=true
-        }
-        if(!servicio.config.No_Serie){
-            mensajeError+='<li class="mensajeeerror">N&uacute;mero de serie</li>'
-            isError=true
-        }
-
-        if(!servicio.config.MAC){
-            mensajeError+='<li class="mensajeeerror">MAC</li>'
-            isError=true
-        }
-
-        if(isError){
-            swal({
-                title:"Captura los siguientes campos",
-                html: mensajeError,
-                type: 'error',
-                showConfirmButton: false,
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                cancelButtonText:"Cerrar",
-              }).then(function () {
-            }).catch(swal.noop);
-            return false
-        }
-    
-        swal({ text: 'Configurando  ...', allowOutsideClick: false });
-        swal.showLoading();
-        
-        $scope.params =  
-            [ {
-
-                "Id_OT" : "Id_OT29",
-                "Id_Cot_PlanServ"       : servicio.IdCotPlanServicio,
-                "Id_Cot_ModeloEquipo"   : servicio.infoEquipoServ.Id_Cot_ModeloEquipo,
-                "Tipo_Dispositivo"      : servicio.infoEquipoServ.Dispositivo,
-                "Id_Modelo"             : servicio.config.modeloSelect.Id_Modelo,
-                "Modelo"                : servicio.config.modeloSelect.Descripcion_Modelo ,
-                "No_Serie"              : servicio.config.No_Serie,
-                "MAC"                   : servicio.config.MAC
-            }]
-        ;
-
-        busquedaService.configurarDispositivos($scope.params).then(function success(response) {
-            console.log(response);
-            if (response.data !== undefined) {
-                if (response.data.success) {
-                   if(response.data.result.result === '0'){
-                    servicio.isConfigurado=true
-                    $scope.validarServiciosConfigurados()
-                    swal.close()
-                    swal({
-                        text: 'Se configur\u00F3 correctamete ',
-                        type: 'success',
-                        showConfirmButton: true,
-                        showCancelButton: false,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText:"Cerrar",
-                      }).then(function () {
-                    }).catch(swal.noop);
-                   }else{
-                        swal.close();
-                        mostrarMensajeErroActivacion(response.data.result.resultDescription)    
-                   }
-                } else {
-                    swal.close();
-                    mostrarMensajeErroActivacion('No se pudo configurar')                                    
-                }
-            } else {
-                swal.close();
-                mostrarMensajeErroActivacion('No se pudo configurar')                
-            }
-        }, function error(response) {
-            swal.close();
-        });
-
-        
-    }
-
-
-
     $scope.configurarONT=function(servicio){
         console.log("configurarONT",servicio)
         let isError=false;
-        let mensajeError=""
+        var mensajeError = "VALIDA LOS SIGUIENTES CAMPOS: ";
 
         if(servicio.config.modeloSelect ==undefined){
-            mensajeError+='<li class="mensajeeerror">Seleccciona tipo de equipo</li>'
+            mensajeError+='<br/> * Tipo de equipo'
             isError=true
         }
-
         if(servicio.config.tipoRedSelect ==undefined){
-            mensajeError+='<li class="mensajeeerror">Seleccciona tipo de red</li>'
+            mensajeError+='<br/> * Tipo de red'
             isError=true
-        }
-       
+        }       
         if(!servicio.config.numSerie){
-            mensajeError+='<li class="mensajeeerror">Numero serie</li>'
+            mensajeError+='<br/> * Numero serie'
             isError=true
-        }
-
-        
+        }        
         if(!servicio.config.mac){
-            mensajeError+='<li class="mensajeeerror">MAC</li>'
+            mensajeError+='<br/> * MAC'
             isError=true
-        }
-
-        
+        }        
         if(!servicio.config.red.nombreOlt){
-            mensajeError+='<li class="mensajeeerror">OLT</li>'
+            mensajeError+='<br/> * OLT'
             isError=true
         }
-
         if(!servicio.config.red.idOlt){
-            mensajeError+='<li class="mensajeeerror">Id OLT</li>'
+            mensajeError+='<br/> * Id OLT'
             isError=true
         }
-
         if(!servicio.config.red.frame){
-            mensajeError+='<li class="mensajeeerror">Frame</li>'
+            mensajeError+='<br/> * Frame'
             isError=true
         }
-
         if(!servicio.config.red.slot){
-            mensajeError+='<li class="mensajeeerror">Slot</li>'
+            mensajeError+='<br/> * Slot'
             isError=true
         }
         if(!servicio.config.red.puerto){
-            mensajeError+='<li class="mensajeeerror">Puerto</li>'
+            mensajeError+='<br/> * Puerto'
             isError=true
         }
-        if(isError){
-            swal({
-                title:"Captura los siguientes campos",
-                html: mensajeError,
-                type: 'error',
-                showConfirmButton: false,
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                cancelButtonText:"Cerrar",
-              }).then(function () {
-            }).catch(swal.noop);
+        if( isError ) {
+            mostrarMensajeInformativo( mensajeError )
             return false
         }
-    
         swal({ text: 'Configurando ONT ...', allowOutsideClick: false });
         swal.showLoading();
-
-        /*
-        $scope.params =  
-            [ {
-                "Id_OT"               :$scope.idotActivacion,
-                "Id_Cot_SitioPlan"    :$scope.objectglobalactivacion.id_cotsitioplansf,
-                "Id_Cot_PlanServicio" :servicio.IdCotPlanServicio,
-                "Id_Cot_ModeloEquipo" :servicio.infoEquipoServ.Id_Cot_ModeloEquipo,
-                "Frame"               :servicio.config.Frame,//
-                "MAC"                 :servicio.config.MAC,
-                "Id_Modelo"           :servicio.config.modeloSelect.Id_Modelo ,
-                "Modelo"              :servicio.config.modeloSelect.Descripcion_Modelo ,
-                "No_Serie"            :servicio.config.No_Serie,
-                "Puerto"              :servicio.config.Puerto,//
-                "Id_OLT"              :servicio.config.Id_OLT,
-                "OLT"                 :servicio.config.OLT,//
-                "Slot"                :servicio.config.Slot,//
-                "Tipo_Equipo"         :servicio.infoEquipoServ.Dispositivo,
-                "SRV_Mode"            :servicio.config.tipoEquipoSelect.nombre,
-                "Tipo_red"            :servicio.config.tipoRedSelect.Descripcion_Aprovisionamiento//
+        let params={
+            "servicios": [{
+                "idOt":                 $scope.idotActivacion,
+                "idCotPlanServicio":    servicio.id,
+                "idCotSitioPlan":       $scope.objetoCotizacion.idCotSitioPlan ,
+                "idCotModeloEquipo":    servicio.infoEquipoServ.idCotModeloEquipo ,
+                "tipoEquipo":           servicio.infoEquipoServ.tipoDispositivo ,
+                "llevaAta":             servicio.llevaATA,
+                "svrMode":              servicio.config.tipoEquipoSelect.nombre ,
+                "numeroSerie":          servicio.config.numSerie,
+                "mac":                  servicio.config.mac,
+                "idModelo":             servicio.config.modeloSelect.idModelo,
+                "modelo":               servicio.config.modeloSelect.modelo,
+                "detalleRed": {
+                    "idOnt":            servicio.config.modeloSelect.modelo,
+                    "tipoRed":          servicio.config.tipoRedSelect.descripcionAprovisionamiento,
+                    "frame":            servicio.config.red.frame,
+                    "slot":             servicio.config.red.slot,
+                    "puerto":           servicio.config.red.puerto,
+                    "idOlt":            servicio.config.red.idOlt,
+                    "olt":              servicio.config.red.nombreOlt,
+                    "ipOlt":            servicio.config.red.ipOlt,
+                }
             }]
-        ;
-        */
-        
-        $scope.ont = {};
-        $scope.ont.idOt = $scope.idotActivacion;
-        $scope.ont.idCotSitioPlan = servicio.infoEquipoServ.idCotPlanServicio;//
-        $scope.ont.idCotPlanServicio = servicio.id;
-        $scope.ont.idCotModeloEquipo = servicio.infoEquipoServ.idCotModeloEquipo;
-        $scope.ont.tipoEquipo = servicio.infoEquipoServ.tipoDispositivo;
-        $scope.ont.svrMode = servicio.config.tipoEquipoSelect.nombre;
-        $scope.ont.numeroSerie = servicio.config.numSerie;
-        $scope.ont.mac = servicio.config.mac;
-        $scope.ont.idModelo = servicio.config.modeloSelect.idModelo;
-        $scope.ont.modelo = servicio.config.modeloSelect.modelo;
-
-        $scope.detalleRed = {};
-        //$scope.detalleRed.idOnt = servicio.config.red.frame;//
-        $scope.detalleRed.frame = servicio.config.red.frame;
-        $scope.detalleRed.slot = servicio.config.red.slot;
-        $scope.detalleRed.puerto = servicio.config.red.puerto;
-        $scope.detalleRed.idOlt = servicio.config.red.idOlt;
-        $scope.detalleRed.olt = servicio.config.red.nombreOlt;
-        //$scope.detalleRed.ipOlt = servicio.config.red.frame;
-        $scope.detalleRed.tipoRed = servicio.config.tipoRedSelect.descripcionAprovisionamiento;
-        $scope.ont.detalleRed = $scope.detalleRed;
-        $scope.params = {};
-        $scope.params.servicios = [];
-        $scope.params.servicios.push($scope.ont);
-
-        busquedaService.configurarServicios($scope.params).then(function success(response) {
+        }
+        busquedaService.configurarServicios( params ).then(function success(response) {
             console.log(response);
+
             if (response.data !== undefined) {
-                if (response.data.respuesta) {
-                   if(response.data.result.mensaje === 'OK'){
-                    swal.close()
-                    swal({
-                        text: 'Se configur\u00F3 correctamete la ONT',
-                        type: 'success',
-                        showConfirmButton: true,
-                        showCancelButton: false,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText:"Cerrar",
-                      }).then(function () {
-                    }).catch(swal.noop);
-                    servicio.isConfigurado=true
-                    $scope.validarServiciosConfigurados()
-                    
-                   }else{
+                if(response.data.codigoEstatusService < 300){
+                    if (response.data.respuesta) {
+                        if (response.data.codigoEstatusService == 200 ) {   
+                            swal.close();
+                            swal({
+                                text: 'Se configur\u00F3 correctamente la ONT ',
+                                type: 'success',
+                                showConfirmButton: true,
+                                showCancelButton: false,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText:"Cerrar",
+                            }).then(function () {
+                            }).catch(swal.noop);    
+                            servicio.isConfigurado=true
+                            $scope.validarServiciosConfigurados()                                                                             
+                        }else{
+                            mostrarMensajeErrorAlert('Ha ocurrido un error al configurar la ONT');
+                            swal.close();
+                        }
+                    } else {
+                        mostrarMensajeErrorAlert('Ha ocurrido un error al configurar la ONT');
                         swal.close();
-                        mostrarMensajeErroActivacion(response.data.result.resultDescription)    
-                   }
-                } else {
+                    }
+                }else{
+                    mostrarMensajeErrorAlert('Ha ocurrido un error al configurar la ONT');
                     swal.close();
-                    mostrarMensajeErroActivacion('No se pudo configurar')                                    
                 }
             } else {
+                mostrarMensajeErrorAlert('Ha ocurrido un error al configurar la ONT');
                 swal.close();
-                mostrarMensajeErroActivacion('No se pudo configurar')                
             }
         }, function error(response) {
             swal.close();
@@ -493,6 +361,10 @@ app.activacionController=function($scope, $q, busquedaService){
                 if (results[2].data.respuesta) {
 					if (results[2].data.result) {
                         $scope.listaServiciosCot = results[2].data.result.detalleCotizacion.cotPlanServicios;
+                        $scope.objetoCotizacion =    results[2].data.result.detalleCotizacion  
+                        if( $scope.objetoCotizacion != undefined ){
+                            $scope.objetoCotizacion.idCotSitioPlan=csp.id_cotsitioplansf     
+                        }   
                         if($scope.listaServiciosCot !=undefined && $scope.listaServiciosCot.length >0){
                             $scope.listaServiciosCot = $scope.listaServiciosCot.map(function(e){e.isConfigurado=false;  ;return e;})                        
                         }
@@ -896,50 +768,6 @@ app.activacionController=function($scope, $q, busquedaService){
 
     }
 
-    $scope.consultarEquipoEspecifico = function(servicio) {
-        if(servicio.config.No_Serie){
-            swal({ text: 'Buscando datos ...', allowOutsideClick: false });
-            swal.showLoading();
-    
-            var params = new FormData();
-           // params.append("params.SerialNumber", "485754439B5081A0");
-            params.append("params.SerialNumber", servicio.config.No_Serie);
-           
-            busquedaService.consultarEquipoEspecifico(params).then(function success(response) {
-                console.log(response);
-                if (response.data !== undefined) {
-                    if (response.data.success) {
-                        if (response.data.result.Result === "0") {
-                            let res=response.data.result                       
-                                if(servicio.config === undefined)                            
-                                    servicio.config={}
-                                    
-                                servicio.config.No_Serie =  res.SerialNumber
-                                servicio.config.MAC =  ''
-                                servicio.config.OLT =  res.OLT
-                                servicio.config.Id_OLT =  res.IdOLT
-                                servicio.config.Frame = res.Frame 
-                                servicio.config.Slot =  res.Slot    
-                                servicio.config.Puerto =  res.Port
-
-                        }else{
-                            mostrarMensajeWarning(response.data.result.ResultDescription);
-                        }
-                    } else {
-                        mostrarMensajeWarning(response.data.result.ResultDescription);
-                    }
-                    swal.close();
-                } else {
-                    mostrarMensajeWarning("No se encontro informaci\u00f3n");
-                    swal.close();
-                }
-            }, function error(response) {
-                swal.close();
-            });
-        }else{
-            mostrarMensajeWarning("Captura el n\u00FAmero de serie");
-        }       
-    }
 
   
 
@@ -1228,30 +1056,32 @@ app.activacionController=function($scope, $q, busquedaService){
           }).then(function () {
         }).catch(swal.noop);
     }
-    /****/
+    /**
     $scope.showSearch = true;
 
     $scope.mostrarDetalleActivarOs({
+        Folio_OS: "OS-6950955",
         canalVenta: null,
         comentariosOs: null,
         cp: "04519",
         creadoPor: null,
-        cuentaActiva: "false",
+        cuentaActiva: "true",
         detalleCotSitioPlan: null,
         detalleCotizacion: null,
         detalleCuentaFactura: null,
         detalleOportunidad: null,
         detalleSitio: null,
         editadoPor: null,
-        estatus: "Agendado",
+        estatus: "Inicio",
         fechaAgendada: null,
-        id: "a153C0000015MgSQAU",
-        idCsp: "a113C0000008JhlQAE",
-        idOt: "368648",
+        id: "a153C0000015fzeQAA",
+        idCsp: "a113C000000pFAaQAM",
+        idOt: null,
+        id_cotsitioplansf: "a113C000000pFAaQAM",
         keyObject: "OS",
         motivoCancelacion: null,
-        nombre: "OS-6949902",
-        numeroCuentaFactura: "0290003453",
+        nombre: "OS-6950955",
+        numeroCuentaFactura: "0190003647",
         osConfirmada: null,
         propietario: null,
         propietarioOportunidad: null,
@@ -1259,10 +1089,10 @@ app.activacionController=function($scope, $q, busquedaService){
         tscompletado: null,
         tsconfirmado: null,
         turnoAg: null,
-        unidadNegocio: "2"
+        unidadNegocio: "2",
     })
 
-    $scope.showDetalleActivar=true;
+    $scope.showDetalleActivar=true;**/
 
 
     $scope.consultarAutofindActivacion = function(servicio) {
@@ -1285,20 +1115,15 @@ app.activacionController=function($scope, $q, busquedaService){
                                     servicio.config.numSerie=autofindres.serialNumber
                                     if(servicio.config.red == undefined)
                                         servicio.config.red={}
-
                                         
                                     servicio.config.red.nombreOlt=autofindres.olt
                                     servicio.config.red.idOlt=autofindres.idOlt
                                     servicio.config.red.frame=autofindres.frame
                                     servicio.config.red.slot=autofindres.slot
                                     servicio.config.red.puerto=autofindres.port
+                                    servicio.config.red.ipOlt= autofindres.ipOlt
                                     swal.close()
                                     mostrarMensajeExitoAlert('Carga de datos correcta')
-
-                                    //  idModel: "112"
-                                    //  ipOlt: "10.180.210.139"
-                                    //  model: "HG8145V5"                                
-                                    //  version: "V5R019C00S100"
                                 }else{
                                     mostrarMensajeWarningValidacion('No se encontraron datos para la serie capturada');
                                     swal.close();  
@@ -1333,6 +1158,7 @@ app.activacionController=function($scope, $q, busquedaService){
     
     $scope.consultarSerieExistenteActivacion = function(servicio,banderaAutofind) {
         if(servicio.config && servicio.config.numSerie){
+            servicio.config.mac=''
             if (!swal.isVisible()) {
                 swal({ text: 'Cargando informaci\u00f3n ...', allowOutsideClick: false });
                 swal.showLoading();
@@ -1394,32 +1220,50 @@ app.activacionController=function($scope, $q, busquedaService){
                                 mostrarMensajeExitoAlert('MAC encontrada')
                             }
                         }else{
-                            mostrarMensajeErrorAlertAjax('No se encontraron datos de MAC' )
+                            mostrarMensajeErrorAlert('No se encontraron datos de MAC' )
                             swal.close()
                         }
                     } else {
-                        mostrarMensajeErrorAlertAjax('Ha ocurrido un error al consultar la MAC' )
+                        mostrarMensajeErrorAlert('Ha ocurrido un error al consultar la MAC' )
                         swal.close()
                     }
                 } else {
-                    mostrarMensajeErrorAlertAjax(response.data.resultDescripcion)
+                    mostrarMensajeErrorAlert('Equipo no disponible en BRM')
                     swal.close()
                 }
             } else {
-                mostrarMensajeErrorAlertAjax( 'Ha ocurrido un error al consultar la MAC' )
+                mostrarMensajeErrorAlert( 'Ha ocurrido un error al consultar la MAC' )
                 swal.close()
             }
         })
     }   
 
     
-    $scope.blurSerieOnt=function(servicioConfig){
+    $scope.keyupEnterSerieOnt=function(keyEvent,servicioConfig){        
+        if (keyEvent.which === 13){
+            console.log("enter")
+            let banderaAutofind=true
+            $scope.consultarSerieExistenteActivacion(servicioConfig,banderaAutofind)
+        }                
+    }
+    $scope.buscarSerieOnt=function(servicioConfig){
         let banderaAutofind=true
         $scope.consultarSerieExistenteActivacion(servicioConfig,banderaAutofind)
     }
-    $scope.blurSerieEquipoServicio=function(servicioConfig){
+
+
+    $scope.keyupEnterSerieDispositivoEquipo=function(keyEvent,servicioConfig){        
+        if (keyEvent.which === 13){
+            console.log("enter")
+            let banderaAutofind=false
+            $scope.consultarSerieExistenteActivacion(servicioConfig,banderaAutofind)
+        }                
+    }
+    $scope.buscarSerieDispositivoEquipo=function(servicioConfig){
         let banderaAutofind=false
         $scope.consultarSerieExistenteActivacion(servicioConfig,banderaAutofind)
     }
+
+ 
 
 }

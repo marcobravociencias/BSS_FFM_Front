@@ -1995,3 +1995,9 @@ span.text-content-ont {
   italic;
   color: #767676;
 }
+
+.btn-search-serie{
+  border:1px solid #bdbdbd !important;
+  color: #999999 !important;
+}
+
