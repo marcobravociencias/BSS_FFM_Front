@@ -144,6 +144,11 @@ public class PlantaInternaViewsController {
 	public String reportesLogs() {		
 		return "plantainterna/reportesLog/mainReportesLog";
 	}
+	
+	@GetMapping("/moduloReporteSF")
+	public String reportesSF() {		
+		return "plantainterna/reportesSF/mainReporte";
+	}
 
 }
 

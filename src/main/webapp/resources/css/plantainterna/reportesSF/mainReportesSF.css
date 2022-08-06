@@ -1,0 +1,412 @@
+#container_reportes {
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+    background: white;
+    border-radius: .5em;
+    margin-top: 1em;
+    padding: 0;
+}
+
+
+#opciones-menu a>span, #opciones-menu-sf a>span {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.1s, opacity 0.7s linear;
+}
+
+#opciones-menu:hover a>span, #opciones-menu-sf:hover a>span {
+    visibility: visible;
+    opacity: 1;
+}
+
+.left-menu {
+    background-color: #FFFFFF;
+    padding: 0;
+    z-index: 1001;
+    position: absolute;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    display: block;
+    box-shadow:8px 0px 8px -6px #0000004b;
+    border-right: 1px solid #d2d2d2;
+    padding-top: 1em;
+}
+
+.small-menu {
+    width: 3.8%;
+    transition: width .5s;
+}
+
+.small-menu:hover {
+    width: 27%;
+}
+
+.left-menu.small-menu:hover {
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.small-sf:hover {
+    width: 22% !important;
+}
+
+.titulo-opcion-menu {
+    height: 5em;
+    line-height: 5em;
+}
+
+.opcion-menu {
+    cursor: pointer;
+    line-height: 2.5em;
+}
+
+.small-menu .opcion-menu:hover .icon-menu-left {
+    color: #7700ff;
+    font-weight: bold;
+}
+
+.small-menu .opcion-menu:hover .titulo-menu {
+    color: #7700ff;
+    font-weight: bold;
+}
+
+.nav-item a:hover {
+    text-decoration: none !important;
+}
+
+.small-menu .opcion-menu {
+    white-space: nowrap;
+    width: 100%;
+    text-align: center;
+    transition: width 1s ease;
+}
+
+.small-menu:hover>.opcion-menu {
+    width: 35%;
+}
+
+.small-menu .parent-monitor-menu {
+    white-space: nowrap;
+    width: 100%;
+    text-align: center;
+    padding-left: 1em;
+    transition: width 1s ease;
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+.small-menu:hover>.parent-monitor-menu {
+    width: 65%;
+}
+
+.small-menu .parent-monitor-menu {
+    white-space: nowrap;
+    width: 100%;
+    text-align: center;
+    padding-left: 1em;
+    transition: width 1s ease;
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+.small-menu:hover>.parent-monitor-menu {
+    width: 65%;
+}
+
+
+.right-content {
+    height: 100%;
+    width: 95%;
+    /* position: absolute; */
+    right: 0;
+    margin-left: 4%;
+    /* padding-left: 4em; */
+    /* min-height: 100%; */
+    height: 100%;
+    min-height: 80vh;
+    padding-top: 1em;
+}
+
+.right-content .tab-pane {
+    padding-right: 0;
+}
+
+
+.titulo-menu {
+    position: absolute;
+    color: #a2a2a2;
+    font-size: 1em;
+    font-family: 'Montserrat' !important;
+    margin-left: 1em;
+
+}
+
+#container_reportes .left-menu .active span {
+    color: var(--estandar-color) !important;
+    font-weight: bold;
+}
+
+#container_reportes .left-menu .active i {
+    color: #fff !important;
+    background: var(--estandar-color);
+    font-weight: bold;
+}
+
+#container_reportes .left-menu .opcion-menu:hover span {
+	color: var(--estandar-color) !important;
+}
+
+#container_reportes .left-menu .opcion-menu:hover i {
+	color: #fff !important;
+    background: var(--estandar-color) !important;
+    font-weight: bold;
+}
+
+.icon-menu-left {
+    color: #7e7e7e;
+    padding: 0.4em;
+    border-radius: 5px;
+}
+
+.parent-monitor-menu .icon-menu-left {
+    color: #7700ff;
+    font-size: 1.3em;
+}
+
+.parent-monitor-menu .titulo-menu {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+/* CSS TABLE */
+
+#reporteInstalacionesTable tbody tr:nth-child(even) ,
+#reporteAddonTable tbody tr:nth-child(even) ,
+#reporteRecoleccionesTable tbody tr:nth-child(even) ,
+#reporteSoportesTable tbody tr:nth-child(even) {
+  background: #f5f5f5;
+}
+
+#reporteInstalacionesTable>tbody>tr>td ,
+#reporteRecoleccionesTable>tbody>tr>td ,
+#reporteAddonTable>tbody>tr>td ,
+#reporteSoportesTable>tbody>tr>td {
+  white-space: nowrap;
+  color: #39455b;
+  font-family: 'Montserrat';
+  font-size: .8em;
+  border-top: 0px solid #eceeef !important;
+  text-align: center;
+}
+
+#reporteInstalacionesTable thead th ,
+#reporteAddonTable thead th ,
+#reporteRecoleccionesTable thead th ,
+#reporteSoportesTable thead th {
+  position: relative;
+  background-color: #b1b1b1;
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+  padding: 1em;
+  border: none;
+  font-weight: normal;
+  text-align: center;
+}
+
+#reporteSoportesTable tbody tr td ,
+#reporteRecoleccionesTable tbody tr td ,
+#reporteAddonTable tbody tr td ,
+#reporteInstalacionesTable tbody tr td {
+  padding: 0.5em;
+  border: none;
+}
+
+.page-link {
+  font-size: 0.7em !important;
+  font-family: "Montserrat" !important;
+}
+
+.dataTables_info {
+  font-size: 0.7em;
+  font-family: "Montserrat" !important;
+  text-align: left;
+  padding-left: 0.5em;
+}
+
+.dataTables_paginate.paging_simple_numbers {
+  float: right;
+}
+
+.dataTables_filter {
+  font-size: 0.7em !important;
+  font-family: 'Montserrat';
+}
+
+div.dataTables_wrapper div.dataTables_filter input {
+  width: 11.3em;
+  height: 2.05em;
+  margin-right: 1em;
+}
+
+/* CSS TABLE */
+
+
+.columna-filtro-indR::after {
+    content: "";
+    position: absolute;
+    right: 9%;
+    top: 65%;
+    width: 0;
+    height: 0;
+    border-left: 0.3em solid transparent;
+    border-right: 0.3em solid transparent;
+    border-top: 0.6em solid #939db2;
+    clear: both;
+    z-index: 2;
+    font-size: 14px;
+}
+
+.columna-filtro-indRR::after {
+    content: "";
+    position: absolute;
+    right: 9%;
+    top: 65%;
+    width: 0;
+    height: 0;
+    border-left: 0.3em solid transparent;
+    border-right: 0.3em solid transparent;
+    border-top: 0.6em solid #939db2;
+    clear: both;
+    z-index: 2;
+    font-size: 14px;
+}
+
+.label-filter{
+    margin: 0;
+    font-size: 0.7em;
+    font-weight: bold;
+}
+
+.input-filtro {
+    border: 1px solid #dbdbdb !important;
+    font-weight: 400;
+    font-size: 1em;
+    color: #818181 !important;
+    transition: all 0.5s ease;
+    border-bottom: 1px solid white;
+    background: white !important;
+    border-radius: 0.5em !important;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.07), 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+}
+
+.input-filtro::placeholder {
+    font-weight: 400;
+    font-size: 1em;
+    color: #818181 !important;
+}
+
+.input-filtro:focus {
+    -webkit-box-shadow: none;
+}
+
+.input-filtro:hover {
+    cursor: pointer;
+    border-bottom: 2px solid #a4b1ff !important;
+}
+
+.btn_consultar:active, .btn_consultar:focus .btn_consultar:hover {
+    background-color: white !important;
+    box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
+    color: var(--estandar-color);
+}
+
+.btn_consultar {
+    background-color: #ffffff !important;
+    color: var(--btn-color-buscar) !important;
+    border: solid 1px    var(--btn-color-buscar) !important;
+    padding: .5em 2em;
+    border-radius: 5px;
+    font-size: 0.6em;
+    position: relative;
+    display: block;
+    border-radius: .5em !important;
+    float: left;
+    margin-top: 2.5em;
+    height: 27px !important;
+}
+
+.container-tab {
+    margin-top: 0.7em;
+    padding: 0;
+}
+
+.jstree-proton .jstree-wholerow-clicked {
+    background: white;
+}
+
+.jstree-proton .jstree-clicked {
+    color: white;
+}
+
+.jstree-checkbox-selection .jstree-clicked {
+    color: #808080;
+}
+
+.jstree-proton .jstree-search {
+    font-style: italic;
+    color: #8b0000;
+    font-weight: bold;
+}
+
+.jstree-proton {
+    color: #808080;
+}
+
+.jstree-proton .jstree-clicked {
+    border-radius: 0;
+}
+
+.jstree-anchor {
+    font-family: 'Montserrat';
+    font-size: .8em;
+}
+
+.buscadorGenerico {
+    height: 2em !important;
+    min-height: 2em !important;
+    padding: 0 !important;
+    padding-left: 1em !important;
+    border-radius: 1em !important;
+    border: 1px solid #e2e2e2;
+    background: #fcfcfc;
+}
+
+.iconoBusqueda {
+    color: #888888;
+    position: absolute;
+    right: 0.8em;
+    top: 0.4em;
+    font-size: 0.8em;
+    z-index: 3;
+}
+
+
+.content-seach-group {
+    height: 1em;
+    display: inline-flex;
+    margin: 0em auto 1em;
+}
+
+
+#opciones-menu .title-nav-header {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.1s, opacity 0.7s linear;
+    display: none;
+}
+
+#opciones-menu:hover .title-nav-header {
+    visibility: visible;
+    opacity: 1;
+    display: block;
+}
