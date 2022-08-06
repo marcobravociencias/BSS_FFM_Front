@@ -107,7 +107,7 @@
         </div>
         <div class="col-8 style_content_activacion_ord_serv">
             <!--h5 class="style_primer_texto_act_ser">Plan Internet_50</h5-->
-            <div class="content-card-servicio" ng-if="servicioIndCot.servicioConfigurable"  ng-repeat="servicioIndCot in listaServiciosCot">
+            <div class="content-card-servicio" ng-if="servicioIndCot.servicioConfigurable"  ng-repeat="servicioIndCot in listaServiciosCot track by $index">
 
 
                 <div class="style_content_dn_act_ord_serv" ng-if="servicioIndCot.servicioDispositivo">
@@ -124,6 +124,7 @@
                             <table class="table table-equipo-config-ind">
                                 <thead>
                                     <tr>
+                                        <th  ng-show="servicioIndCot.mostrarSvm" scope="col">Service Mode</th>
                                         <th scope="col">Tipo Equipo</th>
                                         <th scope="col">No Serie</th>
                                         <th scope="col">MAC</th>
@@ -131,11 +132,11 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <!--td>                                                
+                                        <td ng-show="servicioIndCot.mostrarSvm" >                                                
                                             <select class="form-control form-control-sm style_primer_select_act_ser" ng-model="servicioIndCot.config.tipoEquipoSelect"  
                                                 ng-options="tipo.nombre for tipo in listadoTipoEquipoActivacion track by tipo.id">
                                             </select>                    
-                                        </td-->
+                                        </td>
                                         <td>
                                             <div>
                                                 <select class="form-control form-control-sm style_primer_select_act_ser" ng-model="servicioIndCot.config.modeloSelect" ng-options="model.modelo for model in servicioIndCot.infoEquipoServ.modelo track by model.idModelo">
@@ -162,8 +163,10 @@
                                 <!--button class="btn btn-sm boton-activacion"  ng-if="planActivo !=='true' && statusActivacion !=='proceso'"  ng-click="configurarDispositivosNuevo(servicioIndCot)">Configurar </button-->
                             </div>
                         </div>   
-                        <button ng-if="servicioIndCot.isConfigurado" title="configurar" type="button" class="btn btn-primary btn-floating btn-configuracion-servicio btn-sm" ng-click="configurarEquiposDispositivos(servicioIndCot)" ><i class="fas fa-wrench"></i></button>                    
-                  
+                        <button ng-if="planActivo !== 'true'"  title="configurar" type="button" class="btn btn-primary btn-floating btn-configuracion-servicio btn-sm" ng-click="configurarEquiposDispositivos(servicioIndCot)" ><i class="fas fa-wrench"></i></button>                    
+                        <button title="Cuenta activada"    ng-if="planActivo === 'true'"  type="button" class="btn btn-primary btn-floating btn-configuracion-servicio-bloqueo btn-sm" >
+                            <i class="fas fa-lock"></i>
+                        </button>
                 </div>
                 <div class="style_content_dn_act_ord_serv" ng-if="servicioIndCot.servicioEquipo">
                 <!--pre>    {{servicioIndCot.config | json}}           </pre-->                     
@@ -180,7 +183,7 @@
                             <table class="table table-equipo-config-ind">
                                 <thead >
                                     <tr>
-                                        <!--th scope="col">Service Mode</th-->
+                                        <th  ng-show="servicioIndCot.mostrarSvm" scope="col">Service Mode</th>
                                         <th scope="col">Tipo Equipo</th>
                                         <th scope="col">No Serie</th>
                                         <th scope="col">MAC</th>
@@ -188,11 +191,11 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <!--td>                                                
+                                        <td ng-show="servicioIndCot.mostrarSvm" >                                                
                                             <select class="form-control form-control-sm style_primer_select_act_ser" ng-model="servicioIndCot.config.tipoEquipoSelect"  
                                                 ng-options="tipo.nombre for tipo in listadoTipoEquipoActivacion track by tipo.id">
                                             </select>                    
-                                        </td-->
+                                        </td>
                                         <td>
                                             <div>
                                                 <select class="form-control form-control-sm style_primer_select_act_ser" ng-model="servicioIndCot.config.modeloSelect" ng-options="model.modelo for model in servicioIndCot.infoEquipoServ.modelo track by model.idModelo">
@@ -216,7 +219,10 @@
                         </div>
 
                     </div>
-                    <button ng-if="servicioIndCot.isConfigurado" title="configurar" type="button" class="btn btn-primary btn-floating btn-configuracion-servicio btn-sm" ng-click="configurarEquiposDispositivos(servicioIndCot)" ><i class="fas fa-wrench"></i></button>                    
+                    <button ng-if="planActivo !== 'true'" title="configurar" type="button" class="btn btn-primary btn-floating btn-configuracion-servicio btn-sm" ng-click="configurarEquiposDispositivos(servicioIndCot)" ><i class="fas fa-wrench"></i></button>                    
+                    <button title="Cuenta activada"    ng-if="planActivo === 'true'"  type="button" class="btn btn-primary btn-floating btn-configuracion-servicio-bloqueo btn-sm" >
+                        <i class="fas fa-lock"></i>
+                    </button>
                 </div>
 
                 <div class="style_content_dn_act_ord_serv " ng-if="servicioIndCot.servicioTelefonia">
@@ -283,8 +289,10 @@
                         </div>
 
                     </div>
-                    <button ng-if="!servicioIndCot.isConfigurado" title="configurar" type="button" class="btn btn-primary btn-floating btn-configuracion-servicio btn-sm"  ng-click="configurarDns(servicioIndCot)" ><i class="fas fa-wrench"></i></button>                    
-
+                    <button ng-if="!servicioIndCot.isConfigurado && planActivo !== 'true'" title="configurar" type="button" class="btn btn-primary btn-floating btn-configuracion-servicio btn-sm"  ng-click="configurarDns(servicioIndCot)" ><i class="fas fa-wrench"></i></button>                    
+                    <button title="Cuenta activada"    ng-if="planActivo === 'true'"  type="button" class="btn btn-primary btn-floating btn-configuracion-servicio-bloqueo btn-sm" >
+                        <i class="fas fa-lock"></i>
+                    </button>
                 </div>
 
                 <div class="style_content_act_servicio_act_o_s" ng-if="servicioIndCot.servicioONT">
@@ -300,7 +308,7 @@
                         <div class="row " >                     
                             <div class="col-3 ">
                                 <span class="label-equipo-ont">Activacion del servicio</span>                                
-                                <select class="form-control form-control-sm style_primer_select_act_ser" ng-model="servicioIndCot.config.tipoEquipoSelect" id="select_act_serv_modal" 
+                                <select ng-change="setServiceModeTodos(servicioIndCot.config.tipoEquipoSelect)" class="form-control form-control-sm style_primer_select_act_ser" ng-model="servicioIndCot.config.tipoEquipoSelect" id="select_act_serv_modal" 
                                     ng-options="tipo.nombre for tipo in listadoTipoEquipoActivacion track by tipo.id">
                                 </select>
 
@@ -418,7 +426,10 @@
                             {{servicioIndCot|json}}
                         </pre-->
                     </div>
-                    <button title="configurar"   ng-if="servicioIndCot.isConfigurado" type="button" class="btn btn-primary btn-floating btn-configuracion-servicio btn-sm"  ng-click="configurarONT(servicioIndCot)" ><i class="fas fa-wrench"></i></button>
+                    <button title="configurar"   ng-if="planActivo !== 'true'"  type="button" class="btn btn-primary btn-floating btn-configuracion-servicio btn-sm"  ng-click="configurarONT(servicioIndCot)" ><i class="fas fa-wrench"></i></button>
+                    <button title="Cuenta activada"    ng-if="planActivo === 'true'"  type="button" class="btn btn-primary btn-floating btn-configuracion-servicio-bloqueo btn-sm" >
+                        <i class="fas fa-lock"></i>
+                    </button>
 
                 </div>
 

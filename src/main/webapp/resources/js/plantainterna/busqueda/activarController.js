@@ -120,16 +120,16 @@ app.activacionController=function($scope, $q, busquedaService){
         let isError=false;
         var mensajeError = "VALIDA LOS SIGUIENTES CAMPOS: ";
 
+        if(servicio.config.tipoEquipoSelect ==undefined){
+            mensajeError+='<br/> * Service mode'
+            isError=true
+        }
+
         if(servicio.config.modeloSelect ==undefined){
             mensajeError+='<br/> * Tipo de equipo'
             isError=true
         }
 
-        if(servicio.config.tipoRedSelect ==undefined){
-            mensajeError+='<br/> * Tipo de red'
-            isError=true
-        }
-       
         if(!servicio.config.numSerie){
             mensajeError+='<br/> * Numero serie'
             isError=true
@@ -138,63 +138,64 @@ app.activacionController=function($scope, $q, busquedaService){
             mensajeError+='<br/> * MAC'
             isError=true
         }      
-
-        if(isError){
-            swal({
-                title:"Captura los siguientes campos",
-                html: mensajeError,
-                type: 'error',
-                showConfirmButton: false,
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                cancelButtonText:"Cerrar",
-              }).then(function () {
-            }).catch(swal.noop);
+   
+        if( isError ) {
+            mostrarMensajeInformativo( mensajeError )
             return false
         }
-    
         swal({ text: 'Configurando  ...', allowOutsideClick: false });
-        swal.showLoading();        
-        
+        swal.showLoading();
+        let params={
+            "servicios": [{
+                "idOt":                 $scope.idotActivacion,
+                "idCotPlanServicio":    servicio.id,
+                "idCotSitioPlan":       $scope.objetoCotizacion.idCotSitioPlan ,
+                "idCotModeloEquipo":    servicio.infoEquipoServ.idCotModeloEquipo ,
+                "tipoEquipo":           servicio.infoEquipoServ.tipoDispositivo ,
+                "llevaAta":             servicio.llevaATA,
+                "svrMode":              servicio.config.tipoEquipoSelect.nombre ,
+                "numeroSerie":          servicio.config.numSerie,
+                "mac":                  servicio.config.mac,
+                "idModelo":             servicio.config.modeloSelect.idModelo,
+                "modelo":               servicio.config.modeloSelect.modelo
+            }]
+        }
 
-
-        $scope.equipo = {};
-        $scope.equipo.idOt = $scope.idotActivacion;
-        $scope.equipo.idCotSitioPlan = servicio.infoEquipoServ.idCotPlanServicio;
-        $scope.equipo.idCotPlanServicio = servicio.id;
-        $scope.equipo.idCotModeloEquipo = servicio.infoEquipoServ.idCotModeloEquipo;
-        $scope.equipo.tipoEquipo = servicio.infoEquipoServ.tipoDispositivo;
-        $scope.equipo.svrMode = servicio.config.tipoEquipoSelect.nombre;
-        $scope.equipo.numeroSerie = servicio.config.numSerie;
-        $scope.equipo.mac = servicio.config.mac;
-        $scope.equipo.idModelo = servicio.config.modeloSelect.idModelo;
-        $scope.equipo.modelo = servicio.config.modeloSelect.modelo;
-
-        $scope.params = {};
-        $scope.params.servicios = [];
-        $scope.params.servicios.push($scope.equipo);
-
-        busquedaService.configurarServicios($scope.params).then(function success(response) {
-            console.log(response);
+        busquedaService.configurarServicios(params).then(function success(response) {
             if (response.data !== undefined) {
-                if (response.data.respuesta) {
-                   if(response.data.result.mensaje === 'OK'){
-                        servicio.isConfigurado=true
+                if(response.data.codigoEstatusService < 300){
+                    if (response.data.respuesta) {
+                        if (response.data.codigoEstatusService == 200 ) {   
+                            swal.close();
+                            swal({
+                                text: 'Se configur\u00F3 correctamente  ',
+                                type: 'success',
+                                showConfirmButton: true,
+                                showCancelButton: false,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText:"Cerrar",
+                            }).then(function () {
+                            }).catch(swal.noop);    
+                            servicio.isConfigurado=true
+                            $scope.validarServiciosConfigurados()                                                                             
                         $scope.validarServiciosConfigurados()
-                        mostrarMensajeExitoAlert(response.data.result.description);
+                            $scope.validarServiciosConfigurados()                                                                             
+                        }else{
+                            mostrarMensajeErrorAlert('Ha ocurrido un error al configurar');
+                            swal.close();
+                        }
+                    } else {
+                        mostrarMensajeErrorAlert('Ha ocurrido un error al configurar');
                         swal.close();
-                   }else{
-                        swal.close();
-                        mostrarMensajeErroActivacion(response.data.result.description)    
-                   }
-                } else {
+                    }
+                }else{
+                    mostrarMensajeErrorAlert('Ha ocurrido un error al configurar');
                     swal.close();
-                    mostrarMensajeErroActivacion('No se pudo activar el plan')                                    
                 }
             } else {
+                mostrarMensajeErrorAlert('Ha ocurrido un error al configurar');
                 swal.close();
-                mostrarMensajeErroActivacion('No se pudo activar el plan')                
             }
         }, function error(response) {
             swal.close();
@@ -470,10 +471,22 @@ app.activacionController=function($scope, $q, busquedaService){
                     }
                 }
             });
+
+            //se agrega bandera para no mostrar service mode en disp. y equipos
+            $scope.listaServiciosCot=$scope.listaServiciosCot.map( (servicio)=>{ servicio.mostrarSvm=false ;return servicio;} );
+           
             //Se agrega la ONT en la primer posicion 
             if(indexDeleteService !== -1){
                 $scope.listaServiciosCot.splice(indexDeleteService,1);
                 $scope.listaServiciosCot.unshift(objectFind)
+                
+                //Coloca en disp. y equipos el mismo service mode de la ONT
+                let serviceModeOnt=angular.copy($scope.listaServiciosCot[0].config.tipoEquipoSelect)
+                $scope.setServiceModeTodos(serviceModeOnt)
+            }else{
+                
+                //Si no existe ONT se muestra opcional el service mode en disp. y equipos 
+                $scope.listaServiciosCot=$scope.listaServiciosCot.map( (servicio)=>{ servicio.mostrarSvm=true ;return servicio;} );
             }
 
             //Se agrega bandera para validar los posibles servicios a configurar
@@ -1056,7 +1069,7 @@ app.activacionController=function($scope, $q, busquedaService){
           }).then(function () {
         }).catch(swal.noop);
     }
-    /**
+  
     $scope.showSearch = true;
 
     $scope.mostrarDetalleActivarOs({
@@ -1092,7 +1105,7 @@ app.activacionController=function($scope, $q, busquedaService){
         unidadNegocio: "2",
     })
 
-    $scope.showDetalleActivar=true;**/
+    $scope.showDetalleActivar=true;  /****/
 
 
     $scope.consultarAutofindActivacion = function(servicio) {
@@ -1264,6 +1277,16 @@ app.activacionController=function($scope, $q, busquedaService){
         $scope.consultarSerieExistenteActivacion(servicioConfig,banderaAutofind)
     }
 
- 
+    $scope.setServiceModeTodos=function(serviceModeSelected){
+        console.log(serviceModeSelected)
+        let copyServiceMode=angular.copy(serviceModeSelected)
+        angular.forEach( $scope.listaServiciosCot, function(servicio,index){
+            if(index>0){
+                if(servicio !=undefined && servicio.config != undefined && servicio.config.tipoEquipoSelect !=undefined)
+                    servicio.config.tipoEquipoSelect=copyServiceMode
+            }
+        })
+    
+    }
 
 }
