@@ -22,10 +22,20 @@
 					<input id="searchGeo-addon" type="text" autocomplete="off" class="form-control buscadorGenerico" placeholder="Buscar geograf&iacute;a">
 					<span class="fa fa-search iconoBusqueda"></span>
 				</div>
+				<div class="input-group input-group-sm content-seach-group" id="seach-jstree-empresarial" ng-show="tipoReporte == 'empresarial'">
+					<input id="searchGeo-addon" type="text" autocomplete="off" class="form-control buscadorGenerico" placeholder="Buscar geograf&iacute;a">
+					<span class="fa fa-search iconoBusqueda"></span>
+				</div>
+				<div class="input-group input-group-sm content-seach-group" id="seach-jstree-general" ng-show="tipoReporte == 'general'">
+					<input id="searchGeo-addon" type="text" autocomplete="off" class="form-control buscadorGenerico" placeholder="Buscar geograf&iacute;a">
+					<span class="fa fa-search iconoBusqueda"></span>
+				</div>
 				<div id="jstree-proton-instalaciones" class="proton-demo proton-reportes" ng-show="tipoReporte == 'instalaciones'"></div>
 				<div id="jstree-proton-soportes" class="proton-demo proton-reportes" ng-show="tipoReporte == 'soportes'"></div>
 				<div id="jstree-proton-recolecciones" class="proton-demo proton-reportes" ng-show="tipoReporte == 'recolecciones'"></div>
 				<div id="jstree-proton-addon" class="proton-demo proton-reportes" ng-show="tipoReporte == 'addon'"></div>
+				<div id="jstree-proton-empresarial" class="proton-demo proton-reportes" ng-show="tipoReporte == 'empresarial'"></div>
+				<div id="jstree-proton-general" class="proton-demo proton-reportes" ng-show="tipoReporte == 'general'"></div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-cerrar-modal btn-secondary" data-mdb-dismiss="modal">

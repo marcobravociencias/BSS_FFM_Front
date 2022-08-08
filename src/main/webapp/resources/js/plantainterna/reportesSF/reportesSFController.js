@@ -1,5 +1,5 @@
 var app = angular.module('reportesSFApp', []);
-var fecha_actual_hide_productividad ;
+var fecha_actual_hide_productividad;
 var updating = false;
 app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'genericService', function ($scope, $q, reportesSFService, genericService) {
     $scope.listaGeografiaReporte = {};
@@ -7,14 +7,19 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
     $scope.resultReporteSoportes = null;
     $scope.resultReporteAddon = null;
     $scope.resultReporteRecolecciones = null;
+    $scope.resultReporteEmpresarial = null;
+    $scope.resultReporteGeneral = null;
     $scope.tipoReporte = '';
     $scope.permisosConfigUser = {};
     $scope.listadogeografiacopy = [];
+    $scope.weekDateObjectReport = {};
     $scope.reporte = {
         addon: 'dia',
         soportes: 'dia',
         instalaciones: 'dia',
-        recolecciones: 'dia'
+        recolecciones: 'dia',
+        empresarial: 'dia',
+        general: 'dia'
     };
 
     angular.element(document).ready(function () {
@@ -34,6 +39,14 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
             $("#jstree-proton-addon").jstree("search", this.value);
         });
 
+        $('#searchGeo-empresarial').on('keyup', function () {
+            $("#jstree-proton-addon").jstree("search", this.value);
+        });
+
+        $('#searchGeo-general').on('keyup', function () {
+            $("#jstree-proton-addon").jstree("search", this.value);
+        });
+
         $("#modalCluster").on("hidden.bs.modal", function () {
             if ($scope.tipoReporte === 'instalaciones') {
                 $scope.getTextGeografia('jstree-proton-instalaciones', 'cluster-instalaciones');
@@ -50,8 +63,16 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
             if ($scope.tipoReporte === 'addon') {
                 $scope.getTextGeografia('jstree-proton-addon', 'cluster-addon');
             }
+
+            if ($scope.tipoReporte === 'empresarial') {
+                $scope.getTextGeografia('jstree-proton-empresarial', 'cluster-empresarial');
+            }
+
+            if ($scope.tipoReporte === 'general') {
+                $scope.getTextGeografia('jstree-proton-general', 'cluster-general');
+            }
         })
-        
+
 
         let reporteInstalacionesTable = $('#reporteInstalacionesTable').DataTable({
             "paging": true,
@@ -100,6 +121,30 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
             "language": idioma_espanol_not_font,
             "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
         });
+
+        let reporteEmpresarialTable = $('#reporteEmpresarialTable').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": false,
+            "pageLength": 10,
+            "info": true,
+            "autoWidth": true,
+            "language": idioma_espanol_not_font,
+            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+        });
+
+        let reporteGeneralTable = $('#reporteGeneralTable').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": false,
+            "pageLength": 10,
+            "info": true,
+            "autoWidth": true,
+            "language": idioma_espanol_not_font,
+            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+        });
     })
 
     $scope.getTextGeografia = function (idJsTree, idInput) {
@@ -111,7 +156,7 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
         $('#' + idInput).val(textoGeografias);
     }
 
-    $scope.loadDate = function(tipo){
+    $scope.loadDate = function (tipo) {
         console.log(tipo);
         $scope.initdateSemanal(tipo);
         $scope.initDateMensual(tipo);
@@ -129,8 +174,34 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 return;
             updating = true;
             var date_selected = e.date;
-            //var startOfWeek = moment(date_selected).day(1);
-            //var endOfWeek = moment(date_selected).day(7);
+            var startOfWeek = moment(date_selected).day(1);
+            var endOfWeek = moment(date_selected).day(7);
+            let date = {
+                inicio: startOfWeek,
+                fin: endOfWeek
+            }
+            switch (tipo) {
+                case 'instalaciones':
+                    $scope.weekDateObjectReport.instalaciones = date
+                    break;
+                case 'soportes':
+                    $scope.weekDateObjectReport.soportes = date
+                    break;
+                case 'recolecciones':
+                    $scope.weekDateObjectReport.recolecciones = date
+                    break;
+                case 'addon':
+                    $scope.weekDateObjectReport.addon = date
+                    break;
+                case 'empresarial':
+                    $scope.weekDateObjectReport.empresarial = date
+                    break;
+                case 'general':
+                    $scope.weekDateObjectReport.general = date
+                    break;
+                default:
+                    break;
+            }
             $(this).datepicker('clearDate');
             $(this).datepicker('setDates', [
                 moment(date_selected).day(1).toDate(),
@@ -216,6 +287,24 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                     return e
                 });
                 break;
+            case 'empresarial':
+                $scope.listaGeografiaReporte.empresarial.map((e) => {
+                    e.state = {
+                        opened: true,
+                        selected: arbolActual.find((t) => t == parseInt(e.id)) > 0 ? true : false,
+                    }
+                    return e
+                });
+                break;
+            case 'general':
+                $scope.listaGeografiaReporte.general.map((e) => {
+                    e.state = {
+                        opened: true,
+                        selected: arbolActual.find((t) => t == parseInt(e.id)) > 0 ? true : false,
+                    }
+                    return e
+                });
+                break;
         }
 
     }
@@ -259,6 +348,22 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                     swal.showLoading();
                 }
                 break;
+            case 'empresarial':
+                geografiaReporte = angular.copy($scope.listaGeografiaReporte.empresarial);
+                if ($scope.resultReporteEmpresarial == null && geografiaReporte) {
+                    $scope.loadDate('empresarial');
+                    swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                    swal.showLoading();
+                }
+                break;
+            case 'general':
+                geografiaReporte = angular.copy($scope.listaGeografiaReporte.general);
+                if ($scope.resultReporteGeneral == null && geografiaReporte) {
+                    $scope.loadDate('general');
+                    swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                    swal.showLoading();
+                }
+                break;
         }
 
         if (geografiaReporte) {
@@ -296,6 +401,18 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                         $scope.getTextGeografia('jstree-proton-addon', 'cluster-addon');
                         if ($scope.resultReporteAddon == null) {
                             $scope.consultarReporteAddon();
+                        }
+                        break;
+                    case 'empresarial':
+                        $scope.getTextGeografia('jstree-proton-empresarial', 'cluster-addon');
+                        if ($scope.resultReporteEmpresarial == null) {
+                            $scope.consultarReporteEmpresarial();
+                        }
+                        break;
+                    case 'general':
+                        $scope.getTextGeografia('jstree-proton-general', 'cluster-addon');
+                        if ($scope.resultReporteGeneral == null) {
+                            $scope.consultarReporteGeneral();
                         }
                         break;
                 }
@@ -447,6 +564,8 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                             $scope.nfiltrogeografiaSoportes = $scope.nfiltrogeografiaSoportes ? $scope.nfiltrogeografiaSoportes : $scope.obtenerNivelUltimoJerarquiaGeneric(results[0].data.result.geografia);
                             $scope.nfiltrogeografiaRecolecciones = $scope.nfiltrogeografiaRecolecciones ? $scope.nfiltrogeografiaRecolecciones : $scope.obtenerNivelUltimoJerarquiaGeneric(results[0].data.result.geografia);
                             $scope.nfiltrogeografiaAddon = $scope.nfiltrogeografiaAddon ? $scope.nfiltrogeografiaAddon : $scope.obtenerNivelUltimoJerarquiaGeneric(results[0].data.result.geografia);
+                            $scope.nfiltrogeografiaEmpresarial = $scope.nfiltrogeografiaEmpresarial ? $scope.nfiltrogeografiaEmpresarial : $scope.obtenerNivelUltimoJerarquiaGeneric(results[0].data.result.geografia);
+                            $scope.nfiltrogeografiaGeneral = $scope.nfiltrogeografiaGeneral ? $scope.nfiltrogeografiaGeneral : $scope.obtenerNivelUltimoJerarquiaGeneric(results[0].data.result.geografia);
 
                             //if ($scope.configPermisoAccionConsultaReporteSeguimiento) {
                             let geografia = $scope.ordenarGeografia(results[0].data.result.geografia, $scope.nfiltrogeografiaInstalaciones);
@@ -466,6 +585,11 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                             //if ($scope.configPermisoAccionConsultaTecnicosTiposOrdenes) {
                             let geografiaTec = $scope.ordenarGeografia(results[0].data.result.geografia, $scope.nfiltrogeografiaAddon);
                             $scope.listaGeografiaReporte.addon = angular.copy(geografiaTec);
+                            //}
+
+                            //if ($scope.configPermisoAccionConsultaTecnicosTiposOrdenes) {
+                            let geografia4 = $scope.ordenarGeografia(results[0].data.result.geografia, $scope.nfiltrogeografiaEmpresarial);
+                            $scope.listaGeografiaReporte.empresarial = angular.copy(geografia4);
                             //}
 
                         } else {
@@ -492,7 +616,7 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
     }
 
     $scope.changeCalendar = function (data, reporte) {
-        let tipo = data.reporte[reporte+""];
+        let tipo = data.reporte[reporte + ""];
         switch (tipo) {
             case 'dia':
                 $("#filtro_fecha_dia_" + reporte).show();
@@ -513,7 +637,7 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
             default:
                 break;
         }
-        
+
     }
 
     $scope.getFechaFormato = function (fecha) {
@@ -523,7 +647,7 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
         return { fechaInicio: startDate.format('YYYY-MM-DD'), fechaFin: endDate.format('YYYY-MM-DD') };
     }
 
-    $scope.getFecha = function(type){
+    $scope.getFecha = function (type) {
         let fechaInicio;
         let fechaFin;
         let tipo = $("#tipo_reporte_" + type).val();
@@ -533,12 +657,36 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 fechaFin = $scope.getFechaFormatoValid($("#filtro_fecha_dia_" + type).val())
                 break;
             case 'semana':
-                let dia = $("#filtro_fecha_semana_" + type).datepicker('getDate');
-                let inicio = moment(dia).day(1).toDate();
-                let fin = moment(dia).day(7).toDate();
-                fechaInicio = inicio.getFullYear() + "-" +("0" + (inicio.getMonth() + 1)).slice(-2) + "-" + ("0" + inicio.getDate()).slice(-2);
-                fechaFin = fin.getFullYear() + "-" + ("0" + (fin.getMonth() + 1)).slice(-2) + "-" + ("0" + fin.getDate()).slice(-2);
+                switch (type) {
+                    case 'instalaciones':
+                        fechaInicio = moment($scope.weekDateObjectReport.instalaciones['inicio']).format('YYYY-MM-DD');
+                        fechaFin = moment($scope.weekDateObjectReport.instalaciones['fin']).format('YYYY-MM-DD');
+                        break;
+                    case 'soportes':
+                        fechaInicio = moment($scope.weekDateObjectReport.soportes['inicio']).format('YYYY-MM-DD');
+                        fechaFin = moment($scope.weekDateObjectReport.soportes['fin']).format('YYYY-MM-DD');
+                        break;
+                    case 'recolecciones':
+                        fechaInicio = moment($scope.weekDateObjectReport.recolecciones['inicio']).format('YYYY-MM-DD');
+                        fechaFin = moment($scope.weekDateObjectReport.recolecciones['fin']).format('YYYY-MM-DD');
+                        break;
+                    case 'addon':
+                        fechaInicio = moment($scope.weekDateObjectReport.addon['inicio']).format('YYYY-MM-DD');
+                        fechaFin = moment($scope.weekDateObjectReport.addon['fin']).format('YYYY-MM-DD');
+                        break;
+                    case 'empresarial':
+                        fechaInicio = moment($scope.weekDateObjectReport.empresarial['inicio']).format('YYYY-MM-DD');
+                        fechaFin = moment($scope.weekDateObjectReport.empresarial['fin']).format('YYYY-MM-DD');
+                        break;
+                    case 'general':
+                        fechaInicio = moment($scope.weekDateObjectReport.general['inicio']).format('YYYY-MM-DD');
+                        fechaFin = moment($scope.weekDateObjectReport.general['fin']).format('YYYY-MM-DD');
+                        break;
+                    default:
+                        break;
+                }
                 break;
+
             case 'mes':
                 let fechas = $scope.getFechaFormato($("#filtro_fecha_mes_" + type).val());
                 fechaInicio = fechas.fechaInicio;
@@ -548,7 +696,7 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
             default:
                 break;
         }
-        return {fechaInicio: fechaInicio, fechaFin: fechaFin}
+        return { fechaInicio: fechaInicio, fechaFin: fechaFin }
     }
 
     $scope.consultarReporteInstalaciones = function () {
@@ -944,6 +1092,216 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 }
 
                 reporteAddonTable = $('#reporteAddonTable').DataTable({
+                    "paging": true,
+                    "lengthChange": false,
+                    "ordering": true,
+                    "pageLength": 10,
+                    "bDestroy": true,
+                    "info": true,
+                    "scrollX": false,
+                    "data": arraRow,
+                    "autoWidth": false,
+                    "language": idioma_espanol_not_font,
+                    "aoColumnDefs": [
+                        { "aTargets": [26], "bSortable": false }
+                    ]
+                });
+                swal.close();
+            })
+        }
+    }
+
+    $scope.consultarReporteEmpresarial = function () {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        let clustersparam = $("#jstree-proton-empresarial").jstree("get_selected", true)
+            .filter(e => e.original.nivel == $scope.nfiltrogeografiaEmpresarial)
+            .map(e => e.original.nombre);
+
+        if (clustersparam.length === 0) {
+            mensaje += '<li>Seleccione geograf&iacute;a.</li>';
+            isValid = false
+        }
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('empresarial');
+            let params = {
+                tiposOrden: [65, 130, 95, 136],
+                clusters: clustersparam,
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin
+            }
+            if (!swal.isVisible()) {
+                swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                swal.showLoading();
+            }
+            reportesSFService.consultarReporteBacklog(params).then(function success(response) {
+                swal.close();
+                let arraRow = [];
+                if (response.data !== undefined) {
+                    if (response.data.respuesta) {
+                        if (response.data.result) {
+                            if (response.data.result.data) {
+                                $scope.resultReporteEmpresarial = response.data.result.data.length;
+                                $.each(response.data.result.data, function (i, elemento) {
+                                    let row = [];
+
+                                    row[0] = elemento.idOt ? elemento.idOt : 'Sin informaci&oacute;n';
+                                    row[1] = elemento.ordenServicio ? elemento.ordenServicio : 'Sin informaci&oacute;n';
+                                    row[2] = elemento.numeroCuenta ? elemento.numeroCuenta : 'Sin informaci&oacute;n';
+                                    row[3] = elemento.ticket ? elemento.ticket : 'Sin informaci&oacute;n';
+                                    row[4] = elemento.regionInstalacion ? elemento.regionInstalacion : 'Sin informaci&oacute;n';
+                                    row[5] = elemento.plaza ? elemento.plaza : 'Sin informaci&oacute;n';
+                                    row[6] = elemento.zona ? elemento.zona : 'Sin informaci&oacute;n';
+                                    row[7] = elemento.clusterInstalacion ? elemento.clusterInstalacion : 'Sin informaci&oacute;n';
+                                    row[8] = elemento.colonia ? elemento.colonia : 'Sin informaci&oacute;n';
+                                    row[9] = elemento.plazaSitio ? elemento.plazaSitio : 'Sin informaci&oacute;n';
+                                    row[10] = elemento.distritoSitio ? elemento.distritoSitio : 'Sin informaci&oacute;n';
+                                    row[11] = elemento.fechaApertura ? elemento.fechaApertura : 'Sin informaci&oacute;n';
+                                    row[12] = elemento.primerFechaAgendamiento ? elemento.primerFechaAgendamiento : 'Sin informaci&oacute;n';
+                                    row[13] = elemento.fechaAgendamiento ? elemento.fechaAgendamiento : 'Sin informaci&oacute;n';
+                                    row[14] = elemento.turno ? elemento.turno : 'Sin informaci&oacute;n';
+                                    row[15] = elemento.fechaActivacion ? elemento.fechaActivacion : 'Sin informaci&oacute;n';
+                                    row[16] = elemento.estatus ? elemento.estatus : 'Sin informaci&oacute;n';
+                                    row[17] = elemento.estado ? elemento.estado : 'Sin informaci&oacute;n';
+                                    row[18] = elemento.propietario ? elemento.propietario : 'Sin informaci&oacute;n';
+                                    row[19] = elemento.grupoCodificador ? elemento.grupoCodificador : 'Sin informaci&oacute;n';
+                                    row[20] = elemento.nivel1 ? elemento.nivel1 : 'Sin informaci&oacute;n';
+                                    row[21] = elemento.nivel2 ? elemento.nivel2 : 'Sin informaci&oacute;n';
+                                    row[22] = elemento.nivel3 ? elemento.nivel3 : 'Sin informaci&oacute;n';
+                                    row[23] = elemento.repetido ? elemento.repetido : 'Sin informaci&oacute;n';
+                                    row[24] = elemento.tipoOrden ? elemento.tipoOrden : 'Sin informaci&oacute;n';
+                                    row[25] = elemento.subTipo ? elemento.subTipo : 'Sin informaci&oacute;n';
+                                    row[26] = elemento.nuevoSegmento ? elemento.nuevoSegmento : 'Sin informaci&oacute;n';
+
+                                    arraRow.push(row);
+                                })
+
+                            } else {
+                                toastr.info('No se encontraron datos');
+                            }
+                        } else {
+                            toastr.warning('No se encontraron datos');
+                        }
+                    } else {
+                        toastr.warning(response.data.resultDescripcion);
+                    }
+                } else {
+                    toastr.error('Ha ocurrido un error al consultar el reporte');
+                }
+
+                reporteEmpresarialTable = $('#reporteEmpresarialTable').DataTable({
+                    "paging": true,
+                    "lengthChange": false,
+                    "ordering": true,
+                    "pageLength": 10,
+                    "bDestroy": true,
+                    "info": true,
+                    "scrollX": false,
+                    "data": arraRow,
+                    "autoWidth": false,
+                    "language": idioma_espanol_not_font,
+                    "aoColumnDefs": [
+                        { "aTargets": [26], "bSortable": false }
+                    ]
+                });
+                swal.close();
+            })
+        }
+    }
+
+    $scope.consultarReporteGeneral = function () {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        let clustersparam = $("#jstree-proton-general").jstree("get_selected", true)
+            .filter(e => e.original.nivel == $scope.nfiltrogeografiaGeneral)
+            .map(e => e.original.nombre);
+
+        if (clustersparam.length === 0) {
+            mensaje += '<li>Seleccione geograf&iacute;a.</li>';
+            isValid = false
+        }
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('general');
+            let params = {
+                tiposOrden: [65, 130, 95, 136],
+                clusters: clustersparam,
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin
+            }
+            if (!swal.isVisible()) {
+                swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                swal.showLoading();
+            }
+            reportesSFService.consultarReporteBacklog(params).then(function success(response) {
+                swal.close();
+                let arraRow = [];
+                if (response.data !== undefined) {
+                    if (response.data.respuesta) {
+                        if (response.data.result) {
+                            if (response.data.result.data) {
+                                $scope.resultReporteGeneral = response.data.result.data.length;
+                                $.each(response.data.result.data, function (i, elemento) {
+                                    let row = [];
+
+                                    row[0] = elemento.idOt ? elemento.idOt : 'Sin informaci&oacute;n';
+                                    row[1] = elemento.ordenServicio ? elemento.ordenServicio : 'Sin informaci&oacute;n';
+                                    row[2] = elemento.numeroCuenta ? elemento.numeroCuenta : 'Sin informaci&oacute;n';
+                                    row[3] = elemento.ticket ? elemento.ticket : 'Sin informaci&oacute;n';
+                                    row[4] = elemento.regionInstalacion ? elemento.regionInstalacion : 'Sin informaci&oacute;n';
+                                    row[5] = elemento.plaza ? elemento.plaza : 'Sin informaci&oacute;n';
+                                    row[6] = elemento.zona ? elemento.zona : 'Sin informaci&oacute;n';
+                                    row[7] = elemento.clusterInstalacion ? elemento.clusterInstalacion : 'Sin informaci&oacute;n';
+                                    row[8] = elemento.colonia ? elemento.colonia : 'Sin informaci&oacute;n';
+                                    row[9] = elemento.plazaSitio ? elemento.plazaSitio : 'Sin informaci&oacute;n';
+                                    row[10] = elemento.distritoSitio ? elemento.distritoSitio : 'Sin informaci&oacute;n';
+                                    row[11] = elemento.fechaApertura ? elemento.fechaApertura : 'Sin informaci&oacute;n';
+                                    row[12] = elemento.primerFechaAgendamiento ? elemento.primerFechaAgendamiento : 'Sin informaci&oacute;n';
+                                    row[13] = elemento.fechaAgendamiento ? elemento.fechaAgendamiento : 'Sin informaci&oacute;n';
+                                    row[14] = elemento.turno ? elemento.turno : 'Sin informaci&oacute;n';
+                                    row[15] = elemento.fechaActivacion ? elemento.fechaActivacion : 'Sin informaci&oacute;n';
+                                    row[16] = elemento.estatus ? elemento.estatus : 'Sin informaci&oacute;n';
+                                    row[17] = elemento.estado ? elemento.estado : 'Sin informaci&oacute;n';
+                                    row[18] = elemento.propietario ? elemento.propietario : 'Sin informaci&oacute;n';
+                                    row[19] = elemento.grupoCodificador ? elemento.grupoCodificador : 'Sin informaci&oacute;n';
+                                    row[20] = elemento.nivel1 ? elemento.nivel1 : 'Sin informaci&oacute;n';
+                                    row[21] = elemento.nivel2 ? elemento.nivel2 : 'Sin informaci&oacute;n';
+                                    row[22] = elemento.nivel3 ? elemento.nivel3 : 'Sin informaci&oacute;n';
+                                    row[23] = elemento.repetido ? elemento.repetido : 'Sin informaci&oacute;n';
+                                    row[24] = elemento.tipoOrden ? elemento.tipoOrden : 'Sin informaci&oacute;n';
+                                    row[25] = elemento.subTipo ? elemento.subTipo : 'Sin informaci&oacute;n';
+                                    row[26] = elemento.nuevoSegmento ? elemento.nuevoSegmento : 'Sin informaci&oacute;n';
+
+                                    arraRow.push(row);
+                                })
+
+                            } else {
+                                toastr.info('No se encontraron datos');
+                            }
+                        } else {
+                            toastr.warning('No se encontraron datos');
+                        }
+                    } else {
+                        toastr.warning(response.data.resultDescripcion);
+                    }
+                } else {
+                    toastr.error('Ha ocurrido un error al consultar el reporte');
+                }
+
+                reporteGeneralTable = $('#reporteGeneralTable').DataTable({
                     "paging": true,
                     "lengthChange": false,
                     "ordering": true,

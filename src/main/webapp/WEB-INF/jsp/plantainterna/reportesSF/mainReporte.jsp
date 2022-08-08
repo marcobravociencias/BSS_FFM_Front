@@ -58,33 +58,52 @@
                     <ul class="nav nav-tabs left-menu small-menu flex-column" id="opciones-menu" role="tablist"
                         style="margin-left: 0; height: 100%;">
                         <span class="title-nav-header titulo-menu" style="position: initial;"><i
-                            class="icon-menu-left fas fa-circle" style="font-size: 0.8em;color: #ccc;"></i>&nbsp;BACKLOG</span>
+                                class="icon-menu-left fas fa-circle"
+                                style="font-size: 0.8em;color: #ccc;"></i>&nbsp;BACKLOG</span>
                         <li class="nav-item opcion-menu">
                             <a id="reporteInstalaciones-tab" data-toggle="tab"
-                                ng-click="cambiaReporte('instalaciones', true,'reporteInstalaciones')" href="reporteInstalaciones"
-                                role="tab" aria-controls="reporteInstalaciones" aria-selected="false"><i
-                                    class="icon-menu-left fas fa-toolbox"></i>&nbsp;<span
+                                ng-click="cambiaReporte('instalaciones', true,'reporteInstalaciones')"
+                                href="reporteInstalaciones" role="tab" aria-controls="reporteInstalaciones"
+                                aria-selected="false"><i class="icon-menu-left fas fa-toolbox"></i>&nbsp;<span
                                     class="titulo-menu">Instalaciones</span></a>
                         </li>
                         <li class="nav-item opcion-menu">
                             <a id="reporteSoportes-tab" data-toggle="tab"
-                                ng-click="cambiaReporte('soportes',true,'reporteSoportes')" href="reporteSoportes" role="tab"
-                                aria-controls="reporteSoportes" aria-selected="false"><i
+                                ng-click="cambiaReporte('soportes',true,'reporteSoportes')" href="reporteSoportes"
+                                role="tab" aria-controls="reporteSoportes" aria-selected="false"><i
                                     class="icon-menu-left fas fa-headset"></i>&nbsp;<span
                                     class="titulo-menu">Soportes</span></a>
                         </li>
                         <li class="nav-item opcion-menu">
                             <a id="reporteRecolecciones-tab" data-toggle="tab"
-                                ng-click="cambiaReporte('recolecciones',true,'reporteRecolecciones')" href="reporteRecolecciones"
-                                role="tab" aria-controls="reporteRecolecciones" aria-selected="false"><i
-                                    class="icon-menu-left fas fa-box"></i>&nbsp;<span class="titulo-menu">Recolecciones</span></a>
+                                ng-click="cambiaReporte('recolecciones',true,'reporteRecolecciones')"
+                                href="reporteRecolecciones" role="tab" aria-controls="reporteRecolecciones"
+                                aria-selected="false"><i class="icon-menu-left fas fa-box"></i>&nbsp;<span
+                                    class="titulo-menu">Recolecciones</span></a>
                         </li>
                         <li class="nav-item opcion-menu">
                             <a id="reporteAddon-tab" data-toggle="tab"
-                                ng-click="cambiaReporte('addon',true,'reporteAddon')" href="reporteAddon"
-                                role="tab" aria-controls="reporteAddon" aria-selected="false">
+                                ng-click="cambiaReporte('addon',true,'reporteAddon')" href="reporteAddon" role="tab"
+                                aria-controls="reporteAddon" aria-selected="false">
                                 <i class="icon-menu-left fas fa-folder-plus"></i>&nbsp;<span
                                     class="titulo-menu">Addon</span>
+                            </a>
+                        </li>
+                        <li class="nav-item opcion-menu">
+                            <a id="reporteEmpresarial-tab" data-toggle="tab"
+                                ng-click="cambiaReporte('empresarial',true,'reporteEmpresarial')"
+                                href="reporteEmpresarial" role="tab" aria-controls="reporteEmpresarial"
+                                aria-selected="false">
+                                <i class="icon-menu-left fas fa-building"></i>&nbsp;<span
+                                    class="titulo-menu">Empresarial</span>
+                            </a>
+                        </li>
+                        <li class="nav-item opcion-menu">
+                            <a id="reporteGeneral-tab" data-toggle="tab"
+                                ng-click="cambiaReporte('general',true,'reporteGeneral')" href="reporteGeneral"
+                                role="tab" aria-controls="reporteGeneral" aria-selected="false">
+                                <i class="icon-menu-left fas fa-file-alt"></i>&nbsp;<span
+                                    class="titulo-menu">General</span>
                             </a>
                         </li>
                         <hr style="margin: 0.5em 1em;">
@@ -111,6 +130,16 @@
                                 aria-labelledby="reporteAddon-tab">
                                 <h5 id="texto_header_reportes" class="text-center">Reporte addon</h5>
                                 <jsp:include page="./content/reporteAddon.jsp"></jsp:include>
+                            </div>
+                            <div class="tab-pane fade" id="reporteEmpresarial" role="tabpanel"
+                                aria-labelledby="reporteEmpresarial-tab">
+                                <h5 id="texto_header_reportes" class="text-center">Reporte empresarial</h5>
+                                <jsp:include page="./content/reporteEmpresarial.jsp"></jsp:include>
+                            </div>
+                            <div class="tab-pane fade" id="reporteGeneral" role="tabpanel"
+                                aria-labelledby="reporteGeneral-tab">
+                                <h5 id="texto_header_reportes" class="text-center">Reporte general</h5>
+                                <jsp:include page="./content/reporteGeneral.jsp"></jsp:include>
                             </div>
                         </div>
                     </div>
