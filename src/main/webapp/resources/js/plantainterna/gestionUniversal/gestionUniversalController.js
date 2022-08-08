@@ -1172,14 +1172,8 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
         }).then(function (isConfirm) {
             if (isConfirm) {
                 let params = {};
-                params.geografia = [];
-                params.geografia.push({
-                    id: rama.original.id,
-                    descripcion: rama.text,
-                    idPadre: rama.original.padre,
-                    nivel: rama.original.nivel
-                });
-                //$scope.gestionarGeocerca(params);
+                params.id = rama.original.id;
+                $scope.eliminarGeocerca(params);
             }
         }).catch(err => {
             $scope.banderaConsultaGeografia = false;
@@ -1193,6 +1187,31 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
         gestionUniversalService.gestionGeocercas(params).then(function success(response) {
+            if (response.data !== undefined) {
+                if (response.data.respuesta) {
+                    if (response.data.result) {
+                        $scope.banderaConsultaGeografia = false;
+                        $scope.consultarCatalogoGeografia();
+                        toastr.success(response.data.result.mensaje);
+                    } else {
+                        toastr.warning('No se encontraron usuarios');
+                    }
+                    swal.close();
+                } else {
+                    toastr.warning(response.data.resultDescripcion);
+                }
+                swal.close();
+            } else {
+                toastr.error('Ha ocurrido un error al consultar los usuarios');
+            }
+            swal.close();
+        })
+    }
+
+    $scope.eliminarGeocerca = function(params) {
+        swal({ text: 'Espera un momento...', allowOutsideClick: false });
+        swal.showLoading();
+        gestionUniversalService.eliminarGeocerca(params).then(function success(response) {
             if (response.data !== undefined) {
                 if (response.data.respuesta) {
                     if (response.data.result) {

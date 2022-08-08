@@ -18,4 +18,7 @@ public class ConstGestionPlanning {
 
     @Value("${gestionGeocercasPlanning}")
     private String gestionGeocercasPlanning;
+    
+    @Value("${eliminarGeocercaPlanning}")
+    private String eliminarGeocercaPlanning;
 }

@@ -11,4 +11,6 @@ public interface GestionPlanningService {
     ServiceResponseResult restaurarContraseniaUsuario(String params);
 
     ServiceResponseResult gestionGeocercasPlanning(String params);
+    
+    ServiceResponseResult eliminarGeocercaPlanning(String params);
 }

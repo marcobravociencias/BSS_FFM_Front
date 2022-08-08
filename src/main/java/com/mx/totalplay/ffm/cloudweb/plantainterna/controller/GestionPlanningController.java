@@ -61,6 +61,16 @@ public class GestionPlanningController {
         }
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
+    
+    @PostMapping("/eliminarGeocerca")
+    public ResponseEntity<?> eliminarGeocercaPlanning(@RequestBody String params) {
+        logger.info("####GESTION GEOCERCAS ***eliminarGeocercaPlanning: " + params);
+        ServiceResponseResult response = gestionPlanningService.eliminarGeocercaPlanning(params);
+        if (response.getResult() instanceof Integer){
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
 
 
 

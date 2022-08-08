@@ -136,4 +136,24 @@ public class ImplGestionPlanningService implements GestionPlanningService {
 		return response;
 	}
 
+	@Override
+	public ServiceResponseResult eliminarGeocercaPlanning(String params) {
+		logger.info("ImplGestionPlanningService.class [metodo = eliminarGeocercaPlanning() ]\n" + params);
+
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+
+		LoginResult principalDetail = utileriaGeneral.obtenerObjetoPrincipal();
+		String tokenAcces = principalDetail.getAccess_token();
+		logger.info("eliminarGeocercaPlanning ##+" + tokenAcces);
+		String urlRequest = principalDetail.getDireccionAmbiente()
+				.concat(constGestionPlanning.getEliminarGeocercaPlanning());
+		logger.info("***URL: " + urlRequest);
+		Map<String, String> param = new HashMap<String, String>();
+		param.put("idGeocerca", jsonObject.get("id").getAsString());
+		ServiceResponseResult response = consumeRest.callPatchBearerTokenRequestURL(param, gson.toJson(jsonObject),
+				urlRequest, ServiceResponseResult.class, tokenAcces);
+		logger.info("RESULT" + gson.toJson(response));
+		return response;
+	}
+
 }

@@ -105,5 +105,16 @@ app.service("gestionUniversalService", function ($http) {
             }
 		});
 	};
+
+    this.eliminarGeocerca=function(params){
+		return $http({
+			method: "post",
+			url: "req/eliminarGeocerca",
+            data: JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
     
 });
