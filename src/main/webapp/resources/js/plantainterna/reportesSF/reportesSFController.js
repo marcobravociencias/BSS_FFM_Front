@@ -40,11 +40,11 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
         });
 
         $('#searchGeo-empresarial').on('keyup', function () {
-            $("#jstree-proton-addon").jstree("search", this.value);
+            $("#jstree-proton-empresarial").jstree("search", this.value);
         });
 
         $('#searchGeo-general').on('keyup', function () {
-            $("#jstree-proton-addon").jstree("search", this.value);
+            $("#jstree-proton-general").jstree("search", this.value);
         });
 
         $("#modalCluster").on("hidden.bs.modal", function () {
@@ -404,13 +404,13 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                         }
                         break;
                     case 'empresarial':
-                        $scope.getTextGeografia('jstree-proton-empresarial', 'cluster-addon');
+                        $scope.getTextGeografia('jstree-proton-empresarial', 'cluster-empresarial');
                         if ($scope.resultReporteEmpresarial == null) {
                             $scope.consultarReporteEmpresarial();
                         }
                         break;
                     case 'general':
-                        $scope.getTextGeografia('jstree-proton-general', 'cluster-addon');
+                        $scope.getTextGeografia('jstree-proton-general', 'cluster-general');
                         if ($scope.resultReporteGeneral == null) {
                             $scope.consultarReporteGeneral();
                         }
@@ -590,6 +590,11 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                             //if ($scope.configPermisoAccionConsultaTecnicosTiposOrdenes) {
                             let geografia4 = $scope.ordenarGeografia(results[0].data.result.geografia, $scope.nfiltrogeografiaEmpresarial);
                             $scope.listaGeografiaReporte.empresarial = angular.copy(geografia4);
+                            //}
+
+                            //if ($scope.configPermisoAccionConsultaTecnicosTiposOrdenes) {
+                            let geografia5= $scope.ordenarGeografia(results[0].data.result.geografia, $scope.nfiltrogeografiaGeneral);
+                            $scope.listaGeografiaReporte.general = angular.copy(geografia5);
                             //}
 
                         } else {
