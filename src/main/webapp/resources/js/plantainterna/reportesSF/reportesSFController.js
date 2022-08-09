@@ -1143,7 +1143,8 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 clusters: clustersparam,
                 fechaInicial: fechas.fechaInicio,
                 fechaFinal: fechas.fechaFin,
-                tipoExcel: 'reportesf-backloggeneral-pi'
+                tipoExcel: 'reportesf-backlog-pi',
+                nombre: "soportes"
             }
             $scope.downloadReport(params, 'reporteBacklogSoportes', 'backlog soportes');
         }
@@ -1289,7 +1290,8 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 clusters: clustersparam,
                 fechaInicial: fechas.fechaInicio,
                 fechaFinal: fechas.fechaFin,
-                tipoExcel: 'reportesf-backloggeneral-pi'
+                tipoExcel: 'reportesf-backlog-pi',
+                nombre: "recolecciones"
             }
             $scope.downloadReport(params, 'reporteBacklogRecolecciones', 'backlog recolecciones');
         }
@@ -1435,7 +1437,8 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 clusters: clustersparam,
                 fechaInicial: fechas.fechaInicio,
                 fechaFinal: fechas.fechaFin,
-                tipoExcel: 'reportesf-backloggeneral-pi'
+                tipoExcel: 'reportesf-backlog-pi',
+                nombre: "addon"
 
             }
             $scope.downloadReport(params, 'reporteBacklogAddon', 'backlog addon');
@@ -1577,7 +1580,7 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 fechaFinal: fechas.fechaFin,
                 tipoExcel: 'reportesf-backlogempresarial-pi'
             }
-            $scope.downloadReport(params, 'reporteBacklogEmpresarial', 'backlog empresarial');
+            //$scope.downloadReport(params, 'reporteBacklogEmpresarial', 'backlog empresarial');
         }
     }
 
@@ -1735,7 +1738,7 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 fechaFinal: fechas.fechaFin,
                 tipoExcel: 'reportesf-backloggeneral-pi'
             }
-            $scope.downloadReport(params, 'reporteBacklogGeneral', 'backlog general');
+            //$scope.downloadReport(params, 'reporteBacklogGeneral', 'backlog general');
         }
     }
 
@@ -1746,7 +1749,7 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
         let tituloAccion = "Descarga reporte " + report;
         let mensajeEnvio = 'Ha ocurrido un error al descargar el reporte';
 
-        /*genericService.enviarParamsReporte(params).then(function success(response) {
+        genericService.enviarParamsReporte(params).then(function success(response) {
             if (response.data.respuesta) {
                 var link = document.createElement("a");
                 link.href = contex_project + '/req/exporteExcelGenericRequest/' + nameFile + '.xls';
@@ -1760,7 +1763,7 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 mostrarMensajeErrorAlert('Ocurrio un error al generar reporte.')
             }
             swal.close();
-        });*/
+        });
     }
 
 }]);

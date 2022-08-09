@@ -132,7 +132,7 @@
                             </div>
                             <div class="tab-pane fade" id="reporteRecolecciones" role="tabpanel"
                                 aria-labelledby="reporteRecolecciones-tab">
-                                <h5 id="texto_header_reportes" class="text-center">Reporte en proceso
+                                <h5 id="texto_header_reportes" class="text-center">Reporte recolecciones
                                 </h5>
                                 <jsp:include page="./content/reporteRecolecciones.jsp"></jsp:include>
                             </div>
