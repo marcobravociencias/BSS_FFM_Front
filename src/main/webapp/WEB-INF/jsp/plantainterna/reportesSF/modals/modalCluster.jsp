@@ -23,11 +23,11 @@
 					<span class="fa fa-search iconoBusqueda"></span>
 				</div>
 				<div class="input-group input-group-sm content-seach-group" id="seach-jstree-empresarial" ng-show="tipoReporte == 'empresarial'">
-					<input id="searchGeo-addon" type="text" autocomplete="off" class="form-control buscadorGenerico" placeholder="Buscar geograf&iacute;a">
+					<input id="searchGeo-empresarial" type="text" autocomplete="off" class="form-control buscadorGenerico" placeholder="Buscar geograf&iacute;a">
 					<span class="fa fa-search iconoBusqueda"></span>
 				</div>
 				<div class="input-group input-group-sm content-seach-group" id="seach-jstree-general" ng-show="tipoReporte == 'general'">
-					<input id="searchGeo-addon" type="text" autocomplete="off" class="form-control buscadorGenerico" placeholder="Buscar geograf&iacute;a">
+					<input id="searchGeo-general" type="text" autocomplete="off" class="form-control buscadorGenerico" placeholder="Buscar geograf&iacute;a">
 					<span class="fa fa-search iconoBusqueda"></span>
 				</div>
 				<div id="jstree-proton-instalaciones" class="proton-demo proton-reportes" ng-show="tipoReporte == 'instalaciones'"></div>

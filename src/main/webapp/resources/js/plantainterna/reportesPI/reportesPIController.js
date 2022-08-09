@@ -34,7 +34,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 	$scope.nfiltrointervencionesAsignadas = "";
 	$scope.nfiltroestatuspendienteAsignadas = "";
 
-	$scope.permisosConfigUser;
+	$scope.permisosConfigUser = {};
 	$scope.configPermisoAccionConsultaReporteSeguimiento = false;
 	$scope.configPermisoAccionDescargaReporteSeguimiento = false;
 	$scope.configPermisoAccionConsultaReporteCierre = false;

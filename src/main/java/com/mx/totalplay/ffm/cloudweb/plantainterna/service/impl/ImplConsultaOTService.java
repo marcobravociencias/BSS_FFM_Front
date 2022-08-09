@@ -132,7 +132,7 @@ public class ImplConsultaOTService implements ConsultaOTService {
                         dataArray[count][1] = ( object.get("folioSistema") != null && object.get("folioSistema").getAsString().trim() !="" )  ? object.get("folioSistema").getAsString().trim() : "Sin dato";
                         dataArray[count][2] = ( object.get("nombreCliente") != null && object.get("nombreCliente").getAsString().trim() !="" )  ? object.get("nombreCliente").getAsString().trim() : "Sin dato";
                         dataArray[count][3] = ( object.get("claveCliente") != null && object.get("claveCliente").getAsString().trim() !="" )  ? object.get("claveCliente").getAsString().trim() : "Sin dato";
-                        dataArray[count][4] = ( object.get("ciudad") != null && object.get("ciudad").getAsString().trim() !="" )  ? object.get("ciudad").getAsString().trim() : "Sin dato";
+                        dataArray[count][4] = ( object.get("cluster") != null && object.get("cluster").getAsString().trim() !="" )  ? object.get("cluster").getAsString().trim() : "Sin dato";
                         dataArray[count][5] = ( object.get("fechaAgenda") != null && object.get("fechaAgenda").getAsString().trim() !="" )  ? object.get("fechaAgenda").getAsString().trim() : "Sin dato";
                         dataArray[count][6] = ( object.get("descTipo") != null && object.get("descTipo").getAsString().trim() !="" )  ? object.get("descTipo").getAsString().trim() : "Sin dato";
                         dataArray[count][7] = ( object.get("descSubTipo") != null && object.get("descSubTipo").getAsString().trim() !="" )  ? object.get("descSubTipo").getAsString().trim() : "Sin dato";

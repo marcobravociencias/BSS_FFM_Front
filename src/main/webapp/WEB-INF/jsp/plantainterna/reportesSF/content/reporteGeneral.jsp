@@ -25,6 +25,35 @@
                 <input readonly placeholder="Fecha" type="text" id="filtro_fecha_mes_general" style="display: none;"
                     class="datepicker input-filtro form-control form-control-sm" />
             </div>
+            <div class="col-md-2 columna-filtro-indRR pl-0">
+                <label class="label-filter">Intervenci&oacute;n</label>
+                <div class="dropdown">
+                    <input readonly data-toggle="dropdown" aria-expanded="false" placeholder="INTERVENCI&Oacute;N"
+                        type="text" id="filtro-intervencion-general" class="input-filtro form-control form-control-sm" />
+                    <ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-intervencion">
+                        <li style="text-align: center;">
+                            <button ng-click="seleccionarTodosRecursivo(filtrosGeneral.tipoOrdenes)" id="todo_filtro"
+                                type="button" class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
+                            <button ng-click="deseleccionarTodosRecursivo(filtrosGeneral.tipoOrdenes)"
+                                id="ninguno_filtro" type="button"
+                                class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
+                        </li>
+                        <li class="elemento_menu dropdown-divider"></li>
+                        <li ng-repeat="filtro in filtrosGeneral.tipoOrdenes " class="element-menu-filter"
+                            class="element-menu-filter">
+                            <label class="dropdown-item form-check-inputfiltro">
+                                <input ng-click=setCheckFiltroGenericV2(filtro,filtrosGeneral.tipoOrdenes)
+                                    id="filtrotext-{{filtro.id}}" class="form-check-input" type="checkbox"
+                                    ng-model="filtro.checkedOpcion" ng-checked="filtro.checkedOpcion" />
+                                <span for="filtrotext-{{filtro.id}}" class="dropdown-item item-text-filtro" href="#"
+                                    ng-bind="filtro.nombre"></span>
+                            </label>
+                            <ul ng-if="filtro.children !== undefined &&  filtro.children.length > 0"
+                                ng-include="'filtroIntervencion.html'" class="dropdown-menu"></ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
             <div class="col-1 div-btn-busqueda pl-0">
                 <button id="btn_consultar" type="button"
                     class="btn btn-sm  btn-primary  waves-effect waves-light btn_consultar" style="margin-top: 2.7em;"
@@ -32,10 +61,10 @@
                     <i class="fa fa-search"></i>
                 </button>
             </div>
-            <!--div class="col-1 download-file">
+            <div class="col-1 download-file" ng-if="configPermisoAccionDescargaBackGeneral">
                 <img alt="excel" src="${pageContext.request.contextPath}/resources/img/generic/group-10.png"
-                    style="cursor:pointer; margin-top: 1.5em;" ng-click="consultarReporteGenericSeguimientoDiario()">
-            </div-->
+                    style="cursor:pointer; margin-top: 1.5em;" ng-click="descargarReporteGeneral()">
+            </div>
         </div>
     </div>
     <div class="content-fluid mt-2">

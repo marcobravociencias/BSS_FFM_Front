@@ -43,16 +43,16 @@
             rel="stylesheet" />
     </head>
 
-    <body id="idBody" ng-controller="reportesSFController">
+    <body id="idBody" ng-controller="reportesSFController" style="display: none;">
 
         <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
-        <!--div ng-show="!permisosConfigUser || permisosConfigUser.permisos.length === 0" class="container container-message">
+        <div ng-show="!permisosConfigUser.permisos || permisosConfigUser.permisos.length === 0" class="container container-message">
             <div class="text-accion-nopermiso">
                 <i class="icon-not-permiso fas fa-user-lock"></i>
                 <b class="text-not-permiso">No cuentas con el permiso de consulta.</b>
             </div>
-        </div-->
-        <div class="container" id="container_reportes">
+        </div>
+        <div class="container" id="container_reportes" ng-show="permisosConfigUser && permisosConfigUser.permisos.length">
             <div class="row">
                 <div class="col-md-12">
                     <ul class="nav nav-tabs left-menu small-menu flex-column" id="opciones-menu" role="tablist"
@@ -60,28 +60,28 @@
                         <span class="title-nav-header titulo-menu" style="position: initial;"><i
                                 class="icon-menu-left fas fa-circle"
                                 style="font-size: 0.8em;color: #ccc;"></i>&nbsp;BACKLOG</span>
-                        <li class="nav-item opcion-menu">
+                        <li class="nav-item opcion-menu" ng-if="configPermisoAccionConsultaBackInstalaciones">
                             <a id="reporteInstalaciones-tab" data-toggle="tab"
                                 ng-click="cambiaReporte('instalaciones', true,'reporteInstalaciones')"
                                 href="reporteInstalaciones" role="tab" aria-controls="reporteInstalaciones"
                                 aria-selected="false"><i class="icon-menu-left fas fa-toolbox"></i>&nbsp;<span
                                     class="titulo-menu">Instalaciones</span></a>
                         </li>
-                        <li class="nav-item opcion-menu">
+                        <li class="nav-item opcion-menu" ng-if="configPermisoAccionConsultaBackSoportes">
                             <a id="reporteSoportes-tab" data-toggle="tab"
                                 ng-click="cambiaReporte('soportes',true,'reporteSoportes')" href="reporteSoportes"
                                 role="tab" aria-controls="reporteSoportes" aria-selected="false"><i
                                     class="icon-menu-left fas fa-headset"></i>&nbsp;<span
                                     class="titulo-menu">Soportes</span></a>
                         </li>
-                        <li class="nav-item opcion-menu">
+                        <li class="nav-item opcion-menu" ng-if="configPermisoAccionConsultaBackRecolecciones">
                             <a id="reporteRecolecciones-tab" data-toggle="tab"
                                 ng-click="cambiaReporte('recolecciones',true,'reporteRecolecciones')"
                                 href="reporteRecolecciones" role="tab" aria-controls="reporteRecolecciones"
                                 aria-selected="false"><i class="icon-menu-left fas fa-box"></i>&nbsp;<span
                                     class="titulo-menu">Recolecciones</span></a>
                         </li>
-                        <li class="nav-item opcion-menu">
+                        <li class="nav-item opcion-menu" ng-if="configPermisoAccionConsultaBackAddon">
                             <a id="reporteAddon-tab" data-toggle="tab"
                                 ng-click="cambiaReporte('addon',true,'reporteAddon')" href="reporteAddon" role="tab"
                                 aria-controls="reporteAddon" aria-selected="false">
@@ -89,7 +89,7 @@
                                     class="titulo-menu">Addon</span>
                             </a>
                         </li>
-                        <li class="nav-item opcion-menu">
+                        <li class="nav-item opcion-menu" ng-if="configPermisoAccionConsultaBackEmpresarial">
                             <a id="reporteEmpresarial-tab" data-toggle="tab"
                                 ng-click="cambiaReporte('empresarial',true,'reporteEmpresarial')"
                                 href="reporteEmpresarial" role="tab" aria-controls="reporteEmpresarial"
@@ -98,7 +98,7 @@
                                     class="titulo-menu">Empresarial</span>
                             </a>
                         </li>
-                        <li class="nav-item opcion-menu">
+                        <li class="nav-item opcion-menu" ng-if="configPermisoAccionConsultaBackGeneral">
                             <a id="reporteGeneral-tab" data-toggle="tab"
                                 ng-click="cambiaReporte('general',true,'reporteGeneral')" href="reporteGeneral"
                                 role="tab" aria-controls="reporteGeneral" aria-selected="false">
@@ -107,6 +107,16 @@
                             </a>
                         </li>
                         <hr style="margin: 0.5em 1em;">
+                        <!--span class="title-nav-header titulo-menu" style="position: initial;"><i
+                                class="icon-menu-left fas fa-circle"
+                                style="font-size: 0.8em;color: #ccc;"></i>&nbsp;INGRESOS</span>
+                        <li class="nav-item opcion-menu">
+                            <a id="reporteSoportesInst-tab" data-toggle="tab"
+                                ng-click="cambiaReporte('instalaciones', true,'reporteSoportesInst')"
+                                href="reporteSoportesInst" role="tab" aria-controls="reporteISoportesInst"
+                                aria-selected="false"><i class="icon-menu-left fas fa-toolbox"></i>&nbsp;<span
+                                    class="titulo-menu">Soportes</span></a>
+                        </li-->
                     </ul>
                     <div class="right-content tab-content">
                         <div class="row tab-content">
@@ -141,12 +151,19 @@
                                 <h5 id="texto_header_reportes" class="text-center">Reporte general</h5>
                                 <jsp:include page="./content/reporteGeneral.jsp"></jsp:include>
                             </div>
+                            <!--div class="tab-pane fade" id="reporteSoportesInst" role="tabpanel"
+                                aria-labelledby="reporteSoportesInst-tab">
+                                <h5 id="texto_header_reportes" class="text-center">Reporte soporte</h5>
+                                <jsp:include page="./content/reporteGeneral.jsp"></jsp:include>
+                            </div-->
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <jsp:include page="./modals/modalCluster.jsp"></jsp:include>
+        <jsp:include page="filtros.jsp"></jsp:include>
+
     </body>
 
     <!-- LIBRERIAS -->
