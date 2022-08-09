@@ -1517,7 +1517,7 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
             let isValid = true;
             let numerosOnly = /^[0-9]*$/i;
 
-            let statuscopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.estatusdisponibles, $scope.nfiltroestatuspendiente);
+            let statuscopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.estatusConsultaTodos, $scope.nfiltroestatuspendiente);
             let intervencioncopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.tipoOrdenes, $scope.nfiltrointervenciones);
 
 
@@ -1573,42 +1573,34 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
                     geografias: clustersparam,
                     fechaSeleccionada: $("#tipo_reporte").val(),
                     elementosPorPagina: $scope.resultReporteDiario,
-                    pagina: 1
+                    pagina: 1,
+                    tipoExcel: 'despachopi-seguimientodiario-pi'
                 }
-
+    
                 if ($scope.repDiario.idOrden && $scope.repDiario.idOrden != "") {
-                    paramsR.idOrden = $scope.repDiario.idOrden;
+                    paramsR.idOrden = $.trim($scope.repDiario.idOrden);
                 }
-
+    
                 if ($scope.repDiario.folio && $scope.repDiario.folio != "") {
-                    paramsR.folio = $scope.repDiario.folio;
+                    paramsR.folio = $.trim($scope.repDiario.folio);
                 }
-
+    
                 if ($scope.repDiario.idCuenta && $scope.repDiario.idCuenta != "") {
-                    paramsR.idCuenta = $scope.repDiario.idCuenta;
+                    paramsR.idCuenta = $.trim($scope.repDiario.idCuenta);
                 }
+                console.log(paramsR);
 
-                swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                swal({ text: 'Espera un momento...', allowOutsideClick: false });
                 swal.showLoading();
-                let tituloAccion = "Descarga reporte seguimiento diario";
-                let mensajeEnvio = 'Ha ocurrido un error al descargar el reporte';
-                mainDespachoService.consultaReporteDiario(paramsR).then((result) => {
-                    console.log(result.data)
-                    swal.close()
-                    if (result.data.respuesta) {
-                        const data = JSON.parse(result.data.result).ordenes
-                        console.log(JSON.parse(result.data.result))
-                        const fileName = 'Resporte Seguimiento Diario';
-                        const exportType = 'xls';
-                        mensajeEnvio = 'Se ha descargado el reporte';
-                        objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
-                        window.exportFromJSON({ data, fileName, exportType })
-                    } else {
-                        objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
-                        mostrarMensajeErrorAlert('Ocurrio un error al generar reporte.')
+                genericService.enviarParamsReporte(paramsR).then(function success(response) {
+                    if (response.data.respuesta) {
+                        var link = document.createElement("a");
+                        link.href = contex_project + '/req/exporteExcelGenericRequest/reporteSeguimientoDiario.xls';
+                        link.click();
+                        swal.close();
                     }
-
-                }).catch(err => handleError(err));
+                    swal.close();
+                });
             }
         }
 

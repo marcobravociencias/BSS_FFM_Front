@@ -127,110 +127,121 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 			$("#searchGeo-" + type).focus();
 		}, 750);
 	}
-	
-	$scope.consultarTecnicosTiposOrdenes = function() {
-		
+
+	$scope.consultarTecnicosTiposOrdenes = function () {
+
 		$scope.isTablaTecnicos = false;
 		$scope.listaSkills = [];
 		$scope.listaTecnicos = [];
-		
-		if($scope.nfiltrogeografiaTecnicosTiposOrdenes === undefined || $scope.nfiltrogeografiaTecnicosTiposOrdenes === null || $scope.nfiltrogeografiaTecnicosTiposOrdenes === ""){
+		let isValid = true;
+		let mensajeError = '';
+
+		if ($scope.nfiltrogeografiaTecnicosTiposOrdenes === undefined || $scope.nfiltrogeografiaTecnicosTiposOrdenes === null || $scope.nfiltrogeografiaTecnicosTiposOrdenes === "") {
 			$scope.nfiltrogeografiaTecnicosTiposOrdenes = $scope.obtenerNivelUltimoJerarquia();
 		}
-		
-		let clustersparam = $("#jstree-proton-tecnicos").jstree("get_selected", true).filter(e => e.original.nivel == $scope.nfiltrogeografiaTecnicosTiposOrdenes).map(e => parseInt(e.id));
-		let params = {"idGeografias": clustersparam};
-		
-		swal({ text: 'Espera un momento...', allowOutsideClick: false });
-        swal.showLoading();
 
-		let tituloAccion = "Consulta reporte skills instaladores";
-		let mensajeEnvio = 'Se ha consultado el reporte';
-		objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_INFO, tituloAccion);
-        reportesPIService.consultarTecnicosTiposOrdenes(params).then(function success(response) {
-            if (response.data !== undefined) {
-            	if (response.data.respuesta) {
-                	if (response.data.result !== undefined) {
-                		if(response.data.result.tecnicos !== null){
-    	            		if(response.data.result.tecnicos.length > 0){
-    	            			$scope.listaSkills = response.data.result.encabezados;
-    	            			$scope.listaTecnicos = response.data.result.tecnicos;
-    	            			$scope.isTablaTecnicos = true;
-    	            			$scope.pintarDatosTablaTecnicos();
-    	            		}else{
-    	            			mostrarMensajeInformativo("¡Actualmente no existen técnicos!");
-    	            		}
-                		}else{
-                			mostrarMensajeInformativo("¡Actualmente no existen técnicos!");
-                		}
-                    }else{
-                    	mostrarMensajeInformativo("¡Actualmente no existen técnicos!");
-                    }                 
-                } else {
-                	mostrarMensajeWarningValidacion(response.data.resultDescripcion);
-                }
-            } else {
-                mostrarMensajeErrorAlert("Error interno en el servidor.");
-            }
-            swal.close();
-        });
+		let clustersparam = [];
+		clustersparam = $("#jstree-proton-tecnicos").jstree("get_selected", true).filter(e => e.original.nivel == $scope.nfiltrogeografiaTecnicosTiposOrdenes).map(e => parseInt(e.id));
+
+		if (clustersparam.length == 0) {
+			mensajeError += "<li>Selecciona geograf\u00EDa</li>";
+			isValid = false;
+		}
+
+		if (isValid) {
+			let params = { "idGeografias": clustersparam };
+			swal({ text: 'Espera un momento...', allowOutsideClick: false });
+			swal.showLoading();
+			let tituloAccion = "Consulta reporte skills instaladores";
+			let mensajeEnvio = 'Se ha consultado el reporte';
+			objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_INFO, tituloAccion);
+			reportesPIService.consultarTecnicosTiposOrdenes(params).then(function success(response) {
+				if (response.data !== undefined) {
+					if (response.data.respuesta) {
+						if (response.data.result !== undefined) {
+							if (response.data.result.tecnicos !== null) {
+								if (response.data.result.tecnicos.length > 0) {
+									$scope.listaSkills = response.data.result.encabezados;
+									$scope.listaTecnicos = response.data.result.tecnicos;
+									$scope.isTablaTecnicos = true;
+									$scope.pintarDatosTablaTecnicos();
+								} else {
+									mostrarMensajeInformativo("¡Actualmente no existen técnicos!");
+								}
+							} else {
+								mostrarMensajeInformativo("¡Actualmente no existen técnicos!");
+							}
+						} else {
+							mostrarMensajeInformativo("¡Actualmente no existen técnicos!");
+						}
+					} else {
+						mostrarMensajeWarningValidacion(response.data.resultDescripcion);
+					}
+				} else {
+					mostrarMensajeErrorAlert("Error interno en el servidor.");
+				}
+				swal.close();
+			});
+		} else {
+			mostrarMensajeWarningValidacion(mensajeError);
+		}
 	}
 	
-	$scope.pintarDatosTablaTecnicos = function() {
+	$scope.pintarDatosTablaTecnicos = function () {
 		if (tableTecnicosTiposOrdenes) {
 			tableTecnicosTiposOrdenes.destroy()
 		}
-		angular.forEach($scope.listaTecnicos,function(tec,index){
+		angular.forEach($scope.listaTecnicos, function (tec, index) {
 			var skillsRegistradas = [];
 			skillsRegistradas = tec.skills.replace(/ /g, "").split(",");
 			tec.listaSkills = angular.copy($scope.listaSkills);
-			angular.forEach(tec.listaSkills,function(skill,index){
+			angular.forEach(tec.listaSkills, function (skill, index) {
 				var isSkillRegistrada = skillsRegistradas.find((e) => e == skill.id) != undefined;
-				if(isSkillRegistrada){
+				if (isSkillRegistrada) {
 					skill.isRegistrada = true;
-				}else{
+				} else {
 					skill.isRegistrada = false;
 				}
 			});
 		});
-		
+
 		var dataTecnicos = [];
-		
-		angular.forEach($scope.listaTecnicos,function(tec,index){
+
+		angular.forEach($scope.listaTecnicos, function (tec, index) {
 			let rowTec = [];
 			rowTec[0] = tec.nombretecnico;
 			rowTec[1] = tec.usuario;
-			angular.forEach(tec.listaSkills,function(skills,index){
-				if(skills.isRegistrada){
+			angular.forEach(tec.listaSkills, function (skills, index) {
+				if (skills.isRegistrada) {
 					rowTec[index + 2] = "<i class='fa fa-check'></i>";
-				}else{
+				} else {
 					rowTec[index + 2] = "";
 				}
 			});
-            dataTecnicos.push(rowTec);
-        });
+			dataTecnicos.push(rowTec);
+		});
 
-		var titulos = [{ "title": "Cuadrilla", "sClass": "rowCuadrillaTecnico", "targets": 0 },{ "title": "Usuario FFM", "sClass": "rowUsuarioFFMTecnico", "targets": 1 }];
-		
-		angular.forEach($scope.listaSkills,function(skill,index){
+		var titulos = [{ "title": "Cuadrilla", "sClass": "rowCuadrillaTecnico", "targets": 0 }, { "title": "Usuario FFM", "sClass": "rowUsuarioFFMTecnico", "targets": 1 }];
+
+		angular.forEach($scope.listaSkills, function (skill, index) {
 			var pos = index + 2;
 			titulos.push({ "title": skill.descripcion, "sClass": "cuerpoTablaTecnicos", "targets": pos });
 		});
-		
+
 		tableTecnicosTiposOrdenes = $('#tableTecnicosTiposOrdenes').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "ordering": false,
-            "pageLength": 10,
-            "info": true,
-            "searching": true,
-//            "scrollX": true,
-            "columnDefs": titulos,
-            "data": dataTecnicos,
-            "autoWidth": false,
-            "language": idioma_espanol_not_font
-        });
-		
+			"paging": true,
+			"lengthChange": false,
+			"ordering": false,
+			"pageLength": 10,
+			"info": true,
+			"searching": true,
+			//            "scrollX": true,
+			"columnDefs": titulos,
+			"data": dataTecnicos,
+			"autoWidth": false,
+			"language": idioma_espanol_not_font
+		});
+
 	}
 
 
@@ -829,7 +840,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 			let tituloAccion = "Consulta reporte seguimiento diario";
 			let mensajeEnvio = 'Se ha consultado el reporte';
 			objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_INFO, tituloAccion);
-			
+
 			reporteSeguimientoTable = $('#reporteSeguimientoTable').DataTable({
 				"processing": false,
 				"ordering": false,
@@ -1188,9 +1199,9 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 		if (typeTable == 'seguimientoDiario') {
 			arraySort = angular.copy($scope.tempSeguimientoDiario);
 		} else if (typeTable == 'cierreDiario') {
-			arraySort = angular.copy($scope.tempReporteCierre); 
+			arraySort = angular.copy($scope.tempReporteCierre);
 		} else if (typeTable == 'asignadasCompensacion') {
-			arraySort = angular.copy($scope.tempReporteAsignadas); 
+			arraySort = angular.copy($scope.tempReporteAsignadas);
 		}
 
 		if (isNumber === 'true') {
@@ -1234,7 +1245,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 		} else if (typeTable == 'asignadasCompensacion') {
 			$.each(arraySort, function (index, elemento) {
 				reporteAsignadasTable.row(index).data(elemento);
-			}); 
+			});
 		}
 	}
 
@@ -1407,11 +1418,11 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 				params.idCuenta = $.trim($scope.repCierreDiario.idCuenta);
 			}
 
-			swal({ text: 'Cargando registros...', allowOutsideClick: false });
+			swal({ text: 'Espera un momento...', allowOutsideClick: false });
 			swal.showLoading();
 			let tituloAccion = "Descarga reporte cierre diario";
 			let mensajeEnvio = 'Ha ocurrido un error al descargar el reporte';
-			
+
 			genericService.enviarParamsReporte(params).then(function success(response) {
 				// console.log(response);
 				if (response.data.respuesta) {
@@ -1514,8 +1525,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 				paramsR.idCuenta = $.trim($scope.repAsignadas.idCuenta);
 			}
 
-
-			swal({ text: 'Cargando registros...', allowOutsideClick: false });
+			swal({ text: 'Espera un momento...', allowOutsideClick: false });
 			swal.showLoading();
 			let tituloAccion = "Descarga reporte asignadas compensaci&oacute;n";
 			let mensajeEnvio = 'Ha ocurrido un error al descargar el reporte';
@@ -1538,34 +1548,85 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 		}
 	}
 
-	$scope.generarReporteTecnicosTiposOrdenes = function() {
-		if($scope.listaTecnicos.length > 0){
-			let params = {
-					"tecnicos" : $scope.listaTecnicos
-			}
-			
-			swal({ text: 'Espera un momento...', allowOutsideClick: false });
-	        swal.showLoading();
-			let tituloAccion = "Descarga reporte skills instaladores";
-			let mensajeEnvio = 'Ha ocurrido un error al descargar el reporte';
-			
-	        reportesPIService.generarReporteTecnicosTiposOrdenes(params).then((result) => {
-				swal.close()
-				if (result.data.respuesta) {
-					const data = JSON.parse(result.data.result).tecnicos;
-					const fileName = 'Reporte skills instaladores';
-					const exportType = 'xls';
-					mensajeEnvio = 'Se ha descargado el reporte';
-					objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
-					window.exportFromJSON({ data, fileName, exportType });
-				} else {
-					objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
-					mostrarMensajeErrorAlert("Ocurrió un error al generar el reporte.");
-				}
+	$scope.enviarDatosReporteTecnicosTiposOrdenes = function () {
+		let tituloAccion = "Descarga reporte skills instaladores";
+		let mensajeEnvio = 'Ha ocurrido un error al descargar el reporte';
+		let params = {
+			listSkills: $scope.listaSkillsEx,
+			listTecnicos: $scope.listaTecnicosEx,
+			tipoExcel: 'reportepi-tecnicostiposordenes-pi'
+		}
+		console.log(params);
+		genericService.enviarParamsReporte(params).then(function success(response) {
+			if (response.data.respuesta) {
+				var link = document.createElement("a");
+				link.href = contex_project + '/req/exporteExcelGenericRequest/reporteSkillsInstaladores.xls';
+				link.click();
 				swal.close();
-			}).catch(err => handleError(err));
-		}else{
-			mostrarMensajeInformativo("¡Actualmente no existen técnicos para generar el reporte!");
+				mensajeEnvio = 'Se ha descargado el reporte';
+				objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
+			} else {
+				objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
+				mostrarMensajeErrorAlert('Ocurrio un error al generar reporte.')
+			}
+			swal.close();
+		});
+	}
+
+	$scope.generarReporteTecnicosTiposOrdenes = function () {
+		let isValid = true;
+		let mensajeError = '';
+		$scope.listaTecnicosEx = [];
+		$scope.listaSkillsEx = [];
+
+		if ($scope.nfiltrogeografiaTecnicosTiposOrdenes === undefined || $scope.nfiltrogeografiaTecnicosTiposOrdenes === null || $scope.nfiltrogeografiaTecnicosTiposOrdenes === "") {
+			$scope.nfiltrogeografiaTecnicosTiposOrdenes = $scope.obtenerNivelUltimoJerarquia();
+		}
+
+		let clustersparam = [];
+		clustersparam = $("#jstree-proton-tecnicos").jstree("get_selected", true).filter(e => e.original.nivel == $scope.nfiltrogeografiaTecnicosTiposOrdenes).map(e => parseInt(e.id));
+
+		if (clustersparam.length == 0) {
+			mensajeError += "<li>Selecciona geograf\u00EDa</li>";
+			isValid = false;
+		}
+
+		if (isValid) {
+			let params = {
+				idGeografias: clustersparam
+			};
+			swal({ text: 'Espera un momento...', allowOutsideClick: false });
+			swal.showLoading();
+			reportesPIService.consultarTecnicosTiposOrdenes(params).then(function success(response) {
+				if (response.data !== undefined) {
+					if (response.data.respuesta) {
+						if (response.data.result !== undefined) {
+							if (response.data.result.tecnicos !== null) {
+								if (response.data.result.tecnicos.length > 0) {
+									$scope.listaSkillsEx = angular.copy(response.data.result.encabezados);
+									$scope.listaTecnicosEx = angular.copy(response.data.result.tecnicos);
+									angular.forEach($scope.listaTecnicosEx, function (tec, index) {
+										var skillsRegistradas = [];
+										skillsRegistradas = tec.skills.replace(/ /g, "").split(",");
+										tec.listaSkills = angular.copy($scope.listaSkillsEx);
+										angular.forEach(tec.listaSkills, function (skill, index) {
+											var isSkillRegistrada = skillsRegistradas.find((e) => e == skill.id) != undefined;
+											if (isSkillRegistrada) {
+												skill.isRegistrada = true;
+											} else {
+												skill.isRegistrada = false;
+											}
+										});
+									});
+									if ($scope.listaTecnicosEx.length && $scope.listaSkillsEx.length) {
+										$scope.enviarDatosReporteTecnicosTiposOrdenes();
+									}
+								}
+							}
+						}
+					}
+				}
+			});
 		}
 	}
 }]);

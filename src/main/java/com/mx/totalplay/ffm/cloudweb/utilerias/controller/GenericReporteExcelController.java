@@ -37,6 +37,9 @@ public class GenericReporteExcelController {
 	@PostMapping("/enviarParamsReporte")
 	public ResponseEntity<?> enviarParamsReporte(@RequestBody String params, HttpSession session) {
 		logger.info("obtenerParamsReporte.class [metodo = obtenerParamsReporte() ] \n" + new Gson().toJson(params));
+		if(session.getAttribute("paramsReporteExcel") != null) {
+			session.removeAttribute("paramsReporteExcel");
+		}
 		session.setAttribute("paramsReporteExcel", params);
 		ServiceResponseResult result = ServiceResponseResult.builder().build();
 		result = ServiceResponseResult.builder().isRespuesta(true).build();

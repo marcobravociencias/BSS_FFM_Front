@@ -14,6 +14,7 @@
                                 <i ng-if="filtrosGeneral && !filtrosGeneral.estatusConsultaTodos.length"
                                     class="icono-noseleccion fas fa-exclamation-circle ml-2"
                                     title="No se encontr&oacute;o el catalogo de estatus"></i>
+                                    Estatus
                             </label>
                             <div class="dropdown">
                                 <input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Estatus"
@@ -52,6 +53,7 @@
                                 <i ng-if="banderaErrorIntervencion"
                                     class="icono-noseleccion fas fa-exclamation-circle ml-2"
                                     title="No se encontr&oacute;o el catalogo de intervenci&oacute;n"></i>
+                                    Intervenci&oacute;n
                             </label>
                             <div class="dropdown">
                                 <input readonly data-mdb-toggle="dropdown" aria-expanded="false"
