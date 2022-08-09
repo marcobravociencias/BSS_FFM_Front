@@ -532,7 +532,7 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
     $scope.consultarCatalagosPI = function () {
         $q.all([
             genericService.consulCatalogoGeografia(),
-            genericService.consultarConfiguracionDespachoDespacho({ "moduloAccionesUsuario": "moduloReportesSF" }),
+            genericService.consultarConfiguracionDespachoDespacho({ "moduloAccionesUsuario": "moduloReporteSF" }),
             genericService.consultarCatalogoIntervenciones()
         ]).then(function (results) {
             let resultConf = results[1].data.result
