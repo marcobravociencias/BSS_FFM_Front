@@ -62,27 +62,29 @@
 			                                </div>
 			                            </div>
 			                        </div>
-			                        <div style="margin-left: 2%;" ng-repeat="tecnico in listTecnicos | filter:searchTecnico">
-			                            <div id="us-{{tecnico.idTecnico}}" class="valign-wrapper tecnicosDiv" ng-click="consultarDisponibilidadTecnico(tecnico)">
-			                                <div class="col-12" style="margin-bottom: 0.1em;">
-			                                    <div class="row">
-			                                        <div class="col-md-1 media-image online pr-0" style="padding-left: 0;" ng-if="!tecnico.foto">
-			                                            <img src="./resources/img/plantainterna/despacho/tecnicootasignada.png" class="circle responsive-img-tecnico">
-			                                        </div>
-			                                        <div class="col-md-1 media-image online pr-0" style="padding-left: 0;" ng-if="tecnico.foto">
-			                                            <img src="{{tecnico.foto}}" class="circle responsive-img-tecnico">
-			                                        </div>
-			                                        <div id="" class="col-md-11" style="padding-left: 1.3em;">
-			                                            <p class="text-tecnico-nombre">{{tecnico.nombre}}</p>
-			                                            <p class="text-adds-teccnico">
-			                                                <i style="color:var(--estandar-color);" class="fa fa-user"></i> {{tecnico.usuarioFfm}} &nbsp
-			                                                <i style="color:var(--estandar-color);" class="fa fa-phone"></i> {{tecnico.telefono}}
-			                                            </p>
-			                                        </div>
-			                                    </div>
-			                                </div>
-			                            </div>
-			                        </div> 
+			                        <div class="container-tecnicos">
+				                        <div style="margin-left: 2%;" ng-repeat="tecnico in listTecnicos | filter:searchTecnico">
+				                            <div id="us-{{tecnico.idTecnico}}" class="valign-wrapper tecnicosDiv" ng-click="consultarDisponibilidadTecnico(tecnico)">
+				                                <div class="col-12" style="margin-bottom: 0.1em;">
+				                                    <div class="row">
+				                                        <div class="col-md-1 media-image online pr-0" style="padding-left: 0;" ng-if="!tecnico.foto">
+				                                            <img src="./resources/img/plantainterna/despacho/tecnicootasignada.png" class="circle responsive-img-tecnico">
+				                                        </div>
+				                                        <div class="col-md-1 media-image online pr-0" style="padding-left: 0;" ng-if="tecnico.foto">
+				                                            <img src="{{tecnico.foto}}" class="circle responsive-img-tecnico">
+				                                        </div>
+				                                        <div id="" class="col-md-11" style="padding-left: 1.3em;">
+				                                            <p class="text-tecnico-nombre">{{tecnico.nombre}}</p>
+				                                            <p class="text-adds-teccnico">
+				                                                <i style="color:var(--estandar-color);" class="fa fa-user"></i> {{tecnico.usuarioFfm}} &nbsp
+				                                                <i style="color:var(--estandar-color);" class="fa fa-phone"></i> {{tecnico.telefono}}
+				                                            </p>
+				                                        </div>
+				                                    </div>
+				                                </div>
+				                            </div>
+				                        </div>
+									</div> 
 	                        	</div>
 	                        	<div class="tab-pane fade" id="consulta-auxiliares" role="tabpanel" aria-labelledby="consulta-auxiliares-tab">
 	                        		<div class="col-12" style="margin-top: 1em; margin-bottom: 1em;">

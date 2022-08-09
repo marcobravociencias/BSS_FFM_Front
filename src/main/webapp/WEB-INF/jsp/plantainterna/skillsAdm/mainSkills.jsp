@@ -250,6 +250,7 @@
                                                 <div class="col-12 pl-0">
                                                     <p class="text-todos-nombre">Seleccionar todos</p>
                                                 </div>
+                                                
                                                 <div class="content-checkbox-operario">
                                                     <input class="form-check-input input-todos-checkbox" type="checkbox" id="checkTotdosTecnicos" value="option1" ng-click="seleccionarTodosTecnicos()" />
                                                 </div>
@@ -259,6 +260,7 @@
                                                     <div class="col-md-2 media-image online pr-0">
                                                         <img src="{{tecnico.urlFoto !=undefined && tecnico.urlFoto ? tecnico.urlFoto :'./resources/img/plantainterna/despacho/tecnicootasignada.png'}}" class="circle z-depth-2 responsive-img">
                                                     </div>
+                                                    
                                                     <div id="{{tecnico.idUsuario}}" class="col-md-10 pl-0" ng-click="seleccionarTecnicoMultiseleccion(tecnico.idUsuario)">
                                                     	<p class="text-tecnico-nombre-modal">{{tecnico.nombre}} {{tecnico.apellidoPaterno}} {{tecnico.apellidoMaterno}}</p>
 														<p class="text-adds-teccnico-modal">{{tecnico.no_empleado ? tecnico.no_empleado : 'Sin dato'}} - {{tecnico.geografia}}</p>
