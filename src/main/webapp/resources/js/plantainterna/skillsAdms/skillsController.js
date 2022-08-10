@@ -752,8 +752,8 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 	    				]
 	    		};
 				let tecnicoTemp = $scope.tecnicosMostradas.find((t) => t.idUsuario == params.skills[0].idUsuario)
-				let tituloAccion = "Actualizar skill técico";
-				let mensajeEnvio = 'Ha ocurrido un error al actualizar el skill del técnico ' + tecnicoTemp.nombreCompleto;
+				let tituloAccion = "Actualizar skill t\u00E9cico";
+				let mensajeEnvio = 'Ha ocurrido un error al actualizar el skill del t\u00E9cnico ' + tecnicoTemp.nombreCompleto;
 	    		$q.all([
 	    			skillsService.guardarInfoTecnico(params)
 	    		]).then(function(results) {
@@ -763,7 +763,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 								if (tecnico.idUsuario == $scope.idTecnicoSeleccionado) {
 									tecnico.skills = $scope.skillsSeleccionadasIndividual;
 									swal.close();
-									mensajeEnvio = 'Se ha actualizado el skill del técnico ' + tecnicoTemp.nombreCompleto;
+									mensajeEnvio = 'Se ha actualizado el skill del t\u00E9cnico ' + tecnicoTemp.nombreCompleto;
 									objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
 									swal("Correcto", "¡Registro actualizado con éxito!", "success");
 								}
@@ -821,7 +821,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 	    		};
 				let tecnicoTemp = $scope.tecnicosMostradas.find((t) => t.idUsuario == params.skills[0].idUsuario)
 				let tituloAccion = "Actualizar skill técico";
-				let mensajeEnvio = 'Ha ocurrido un error al actualizar el skill del técnico ' + tecnicoTemp.nombreCompleto;
+				let mensajeEnvio = 'Ha ocurrido un error al actualizar el skill del t\u00E9cnico ' + tecnicoTemp.nombreCompleto;
 	    		$q.all([
 	    			skillsService.guardarInfoTecnico(params)
 	    		]).then(function(results) {
@@ -831,7 +831,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 								if(tecnicoLista.idUsuario == tecnico.idUsuario){
 									tecnico.skills = skillsAsignar;
 									swal.close();
-									mensajeEnvio = 'Se ha actualizado el skill del técnico ' + tecnicoTemp.nombreCompleto;
+									mensajeEnvio = 'Se ha actualizado el skill del t\u00E9cnico ' + tecnicoTemp.nombreCompleto;
 									objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
 									swal("Correcto", "¡Registro actualizado con éxito!", "success");
 								}
@@ -900,14 +900,14 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 	    		});
 	    		
 				let tituloAccion = "Actualizar skill técicos";
-				let mensajeEnvio = 'Ha ocurrido un error al actualizar el skill de los técnicos: ' + strTempName;
+				let mensajeEnvio = 'Ha ocurrido un error al actualizar el skill de los t\u00E9cnicos: ' + strTempName;
 	    		$q.all([
 	    			skillsService.guardarInfoTecnico(params)
 	    		]).then(function(results) {
 					if (results[0].data !== undefined) {
 						if (results[0].data.respuesta) {
 							swal.close();
-							mensajeEnvio = 'Se ha actualizado el skill de los técnicos: ' + strTempName;
+							mensajeEnvio = 'Se ha actualizado el skill de los t\u00E9cnicos: ' + strTempName;
 							objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
 							swal("Correcto", "¡Registros actualizados con éxito!", "success");
 						} else {
@@ -977,7 +977,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 					}
 
 					let tituloAccion = "Actualizar skill multiple";
-					let mensajeEnvio = 'Ha ocurrido un error al actualizar los skill a los técnicos: ' + strTempName;
+					let mensajeEnvio = 'Ha ocurrido un error al actualizar los skill a los t\u00E9cnicos: ' + strTempName;
 					$q.all([
 						skillsService.guardarSkillsMultipleTecnicos(params)
 					]).then(function(results) {
@@ -986,7 +986,7 @@ app.controller('skillsController', ['$scope','$q','skillsService','genericServic
 								swal.close();
 								swal("Correcto", "¡Registros guardados con éxito!", "success");
 								$('#arbolSkillsMultiseleccion').jstree("deselect_all");
-								mensajeEnvio = 'Se ha actualizado los skill a los técnicos: ' + strTempName;
+								mensajeEnvio = 'Se ha actualizado los skill a los t\u00E9cnicos: ' + strTempName;
 								objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
 							} else {
 								swal.close();

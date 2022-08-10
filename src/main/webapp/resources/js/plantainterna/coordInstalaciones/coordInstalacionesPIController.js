@@ -1199,7 +1199,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
 	envioCambioStatus = function(params, text) {
         swal({ text: 'Cambiando estatus de la OT ...', allowOutsideClick: false });
         swal.showLoading();
-		let tituloAccion = "Actualización estatus orden";
+		let tituloAccion = "Actualizaci\u00F3n estatus orden";
         let mensajeEnvio = 'Ha ocurrido un error al cambiar el estatus a "' + text + '" de la OT: ' + params.ot;
         
         genericService.cambioStatusOts(params).then(result =>{
@@ -1207,7 +1207,7 @@ app.controller('coordInstPIController', ['$scope','$q','coordInstalacionesPIServ
             swal.close();
             
             if(result.data.respuesta){
-				mensajeEnvio = 'Se actualizó el estatus a "' + text + '" de la OT: ' + params.ot;
+				mensajeEnvio = 'Se actualiz\u00F3 el estatus a "' + text + '" de la OT: ' + params.ot;
                 objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
                 toastr.success( result.data.result.mensaje );
 				if ($scope.vistaCoordinacion === 1) {

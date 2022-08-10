@@ -1071,7 +1071,7 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                         $scope.isMensajeSuccessOt = false
                         $scope.isMensajeErrorOt = false
                         $scope.isGuardadoProcess = true
-                        let tituloAccion = 'Creaci&oacute;n de ticket'
+                        let tituloAccion = 'Creaci\u00F3n de ticket'
                         if (response.data !== undefined) {
                             if (response.data.respuesta) {
                                 $scope.tecnicoAsignado = {};
@@ -1081,8 +1081,8 @@ app.controller('ticketsSoporteController', ['$scope', '$q', 'gestionTicketSoport
                                     swal.close();
                                 }
                                 $scope.cleanForm();
-                                toastr.success('El ticket se cre&oacute; con la OT: ' + response.data.result.idTicketFFM);
-                                objectTempAccion.guardarAccionesRecientesModulo('El ticket se cre&oacute; con la OT: ' + response.data.result.idTicketFFM, MENSAJE_ACCION_EXITO, tituloAccion);
+                                toastr.success('El ticket se cre\u00F3 con la OT: ' + response.data.result.idTicketFFM);
+                                objectTempAccion.guardarAccionesRecientesModulo('El ticket se cre\u00F3 con la OT: ' + response.data.result.idTicketFFM, MENSAJE_ACCION_EXITO, tituloAccion);
                                 $scope.isMensajeSuccessOt = true
 
                             } else {

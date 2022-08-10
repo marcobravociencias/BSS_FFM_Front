@@ -631,7 +631,7 @@ cambiarContraseniaUserLogin = function () {
 
 	swal({ text: 'Espera un momento...', allowOutsideClick: false });
 	swal.showLoading();
-	let tituloAccion = "Cambiar constrase\u00F1a sesión";
+	let tituloAccion = "Cambiar constrase\u00F1a sesi\u00F3n";
 	let mensajeEnvio = 'Ha ocurrido un error al cambiar la constrase\u00F1a';
 	$.ajax({
 		url: "req/restaurarContrasena",

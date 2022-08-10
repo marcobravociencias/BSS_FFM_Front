@@ -967,15 +967,15 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
 
         swal({ text: 'Cambiando estatus ...', allowOutsideClick: false });
         swal.showLoading();
-        let tituloAccion = "Cambiar estatus técnico";
-        let mensajeEnvio = 'Ha ocurrido un error al cambiar el estatus del técnico ' + $scope.elementEstatusTecnico.tecnico.nombreCompleto + ' a ' + $scope.elementEstatusTecnico.status.descripcion;
+        let tituloAccion = "Cambiar estatus t\u00E9cnico";
+        let mensajeEnvio = 'Ha ocurrido un error al cambiar el estatus del t\u00E9cnico ' + $scope.elementEstatusTecnico.tecnico.nombreCompleto + ' a ' + $scope.elementEstatusTecnico.status.descripcion;
         mainDespachoService.cambiarEstatusTecnicoPI(params).then(function success(response) {
 
             $("#modalStatusOperario").modal('hide')
             if (response.data !== undefined) {
                 if (response.data.respuesta) {
                     if (response.data.codigoEstatusService == 201) {
-                        mensajeEnvio = 'Se cambio el estatus del técnico ' + $scope.elementEstatusTecnico.tecnico.nombreCompleto + ' a ' + $scope.elementEstatusTecnico.status.descripcion;
+                        mensajeEnvio = 'Se cambio el estatus del t\u00E9cnico ' + $scope.elementEstatusTecnico.tecnico.nombreCompleto + ' a ' + $scope.elementEstatusTecnico.status.descripcion;
                         objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
                         toastr.success(response.data.result.description);
                     } else {
@@ -1018,7 +1018,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                     swal.close()
                     toastr.success('Cambio de estatus correcto');
                     $scope.refrescarBusqueda()
-                    textTemp = $scope.objConfirmaDesc.isConfirmadoDesconfirmado ? "confirm&oacute;" : "desconfirm&oacute;" ;
+                    textTemp = $scope.objConfirmaDesc.isConfirmadoDesconfirmado ? "confirm\u00F3" : "desconfirm\u00F3;" ;
                     mensajeEnvio = 'Se ' + textTemp + ' la OT: ' + params.idOrden;
                     objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
                 } else {
@@ -1761,9 +1761,9 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     envioCambioStatus = function (params, text) {
         swal({ text: 'Cambiando estatus de la OT ...', allowOutsideClick: false });
         swal.showLoading();
-        let tituloAccion = "Actualización estatus orden";
+        let tituloAccion = "Actualizaci\u00F3n estatus orden";
         let tecnicoTemp = $scope.listadoTecnicosGeneral.find((e) => e.idTecnico == params.idUsuarioTecnico);
-        let mensajeEnvio = tecnicoTemp ? 'Ha ocurrido un error al cambiar el estatus a "' + text + '" de la OT: ' + params.ot + ' para el técnico ' + tecnicoTemp.nombre + ' ' + tecnicoTemp.apellidoPaterno + ' ' + tecnicoTemp.apellidoMaterno : 'Ha ocurrido un error al cambiar el estatus a "' + text + '" de la OT: ' + params.ot;
+        let mensajeEnvio = tecnicoTemp ? 'Ha ocurrido un error al cambiar el estatus a "' + text + '" de la OT: ' + params.ot + ' para el t\u00E9cnico ' + tecnicoTemp.nombre + ' ' + tecnicoTemp.apellidoPaterno + ' ' + tecnicoTemp.apellidoMaterno : 'Ha ocurrido un error al cambiar el estatus a "' + text + '" de la OT: ' + params.ot;
         
         genericService.cambioStatusOts(params).then(result => {
             $scope.procesandoAsignacion = false;
@@ -1777,7 +1777,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             if (result.data.respuesta) {
 
                 toastr.success(result.data.result.mensaje);
-                mensajeEnvio = tecnicoTemp ? 'Se actualizó el estatus a "' + text + '" de la OT: ' + params.ot + ' para el técnico ' + tecnicoTemp.nombre + ' ' + tecnicoTemp.apellidoPaterno + ' ' + tecnicoTemp.apellidoMaterno : 'Se actualizo el estatus a "' + text + '" de la OT: ' + params.ot;
+                mensajeEnvio = tecnicoTemp ? 'Se actualiz\u00F3 el estatus a "' + text + '" de la OT: ' + params.ot + ' para el t\u00E9cnico ' + tecnicoTemp.nombre + ' ' + tecnicoTemp.apellidoPaterno + ' ' + tecnicoTemp.apellidoMaterno : 'Se actualizo el estatus a "' + text + '" de la OT: ' + params.ot;
                 objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
                 switch ($scope.tipoaccioncambioestatus) {
                     case 'asigna':
@@ -1969,8 +1969,8 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 }
                 swal({ text: 'Cambiando estatus de la OT ...', allowOutsideClick: false });
                 swal.showLoading();
-                let tituloAccion = "Cambiar direcci&oacute;n de OT";
-                let mensajeEnvio = 'Ha ocurrido un error al cambiar la dirección de la OT: ' + params.idOrdenTrabajo;
+                let tituloAccion = "Cambiar direcci\u00F3n de OT";
+                let mensajeEnvio = 'Ha ocurrido un error al cambiar la direcci\u00F3n de la OT: ' + params.idOrdenTrabajo;
                 mainDespachoService.actualizarDireccionOt(params).then(function success(response) {
                     swal.close()
                     if (response.data !== undefined) {
@@ -1979,8 +1979,8 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                                 $scope.infoOtDetalle.direccion.longitud = $scope.longitudModDireccionOt;
                                 $scope.infoOtDetalle.direccion.latitud = $scope.latitudModDireccionOt;
                                 $scope.verMapaCambioDireccion($scope.infoOtDetalle.direccion.latitud, $scope.infoOtDetalle.direccion.longitud);
-                                toastr.success('Direcci&oacute;n actualizada');
-                                mensajeEnvio = 'Se cambio la dirección de la OT: ' + params.idOrdenTrabajo;
+                                toastr.success('Direcci\u00F3n actualizada');
+                                mensajeEnvio = 'Se cambio la direcci\u00F3n de la OT: ' + params.idOrdenTrabajo;
                                 objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
                                 $scope.regresarVistaCambioDireccion()
                             } else {

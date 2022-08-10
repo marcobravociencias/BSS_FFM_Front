@@ -1223,14 +1223,14 @@ app.controller('controlVehicularController',
 			}
 
 			$scope.crearVehiculo = function (paramsTemp) {
-				let tituloAccion = "Crear vehículo";
-				let mensajeEnvio = 'Ha ocurrido un error al crear el vehículo con la placa ' + paramsTemp.placa;
+				let tituloAccion = "Crear veh\u00EDculo";
+				let mensajeEnvio = 'Ha ocurrido un error al crear el veh\u00EDculo con la placa ' + paramsTemp.placa;
 				controlVehicularService.crearVehiculo(paramsTemp).then(function success(response) {
 					if (response.data !== undefined) {
 						if (response.data.respuesta) {
 							if (response.data.result) {
 								$scope.isEdit = false;
-								mensajeEnvio = 'Se ha creado el vehículo con la placa ' + paramsTemp.placa;
+								mensajeEnvio = 'Se ha creado el veh\u00EDculo con la placa ' + paramsTemp.placa;
 								objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
 								toastr.success('Acci&oacute;n completada');
 								if ($scope.configPermisoAccionConsultaVehiculos) {
@@ -1268,14 +1268,14 @@ app.controller('controlVehicularController',
 			}
 
 			$scope.editarVehiculo = function (paramsTemp) {
-				let tituloAccion = "Editar vehí;culo";
-				let mensajeEnvio = 'Ha ocurrido un error al editar el vehículo con la placa ' + paramsTemp.placa;
+				let tituloAccion = "Editar veh\u00EDculo";
+				let mensajeEnvio = 'Ha ocurrido un error al editar el veh\u00EDculo con la placa ' + paramsTemp.placa;
 				controlVehicularService.editarVehiculo(paramsTemp).then(function success(response) {
 					if (response.data !== undefined) {
 						if (response.data.respuesta) {
 							if (response.data.result) {
 								$scope.isEdit = false;
-								mensajeEnvio = 'Se ha editado el vehículo con la placa ' + paramsTemp.placa;
+								mensajeEnvio = 'Se ha editado el veh\u00EDculo con la placa ' + paramsTemp.placa;
 								objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
 								toastr.success("Acci&oacute;n completada");
 								setTimeout(function () {
@@ -1590,8 +1590,8 @@ app.controller('controlVehicularController',
 								params.detalle.fotoTarjetaGasolina = actualObject;
 								params.idActivo = st;
 								let placaTemp = st == 1 ? $scope.listVehiculosInactivos.find((v) =>  v.idVehiculo == id ) : $scope.vehiculos.find((v) =>  v.idVehiculo == id );
-								let tituloAccion = st ? "Restaurar vehículo" : "Eliminar vehículo";
-								let mensajeEnvio = st ? 'Ha ocurrido un error al restaurar el vehículo con la placa ' + placaTemp.placa : 'Ha ocurrido un error al eliminar el veh&iacute;culo con la placa ' + placaTemp.placa;
+								let tituloAccion = st ? "Restaurar veh\u00EDculo" : "Eliminar veh\u00EDculo";
+								let mensajeEnvio = st ? 'Ha ocurrido un error al restaurar el veh\u00EDculo con la placa ' + placaTemp.placa : 'Ha ocurrido un error al eliminar el veh&iacute;culo con la placa ' + placaTemp.placa;
 								controlVehicularService.editarVehiculo(params).then(function success(response) {
 									if (response.data !== undefined) {
 										if (response.data.respuesta) {
@@ -1601,7 +1601,7 @@ app.controller('controlVehicularController',
 												} else {
 													$scope.getVehiculos(false);
 												}
-												mensajeEnvio = st ? 'Se restauró; el vehículo con la placa ' + placaTemp.placa : 'Se elimin&oacute; el veh&iacute;culo con la placa ' + placaTemp.placa;
+												mensajeEnvio = st ? 'Se restaur\u00F3 el veh\u00EDculo con la placa ' + placaTemp.placa : 'Se elimin&oacute; el veh&iacute;culo con la placa ' + placaTemp.placa;
 												objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
 												toastr.success('Acci&oacute;n completada');
 											} else {
@@ -2065,7 +2065,7 @@ app.controller('controlVehicularController',
 					fechaInicio: $scope.getFechaFormato($("#filtro_fecha_inicio").val()),
 					tipoExcel: 'vehiculos-consultarvehiculos-pi'
 				}
-				let tituloAccion = "Descarga reporte vehículos";
+				let tituloAccion = "Descarga reporte veh\u00EDculos";
 				let mensajeEnvio = 'Ha ocurrido un error al descargar el reporte';
 
 				genericService.enviarParamsReporte(params).then(function success(response) {

@@ -1110,7 +1110,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 			if (reporteAsignadasTable) {
 				reporteAsignadasTable.destroy()
 			}
-			let tituloAccion = "Consulta reporte asignadas compensaci&oacute;n";
+			let tituloAccion = "Consulta reporte asignadas compensaci\u00F3n";
 			let mensajeEnvio = 'Se ha consultado el reporte';
 			objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_INFO, tituloAccion);
 
@@ -1527,7 +1527,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 
 			swal({ text: 'Espera un momento...', allowOutsideClick: false });
 			swal.showLoading();
-			let tituloAccion = "Descarga reporte asignadas compensaci&oacute;n";
+			let tituloAccion = "Descarga reporte asignadas compensaci\u00F3n";
 			let mensajeEnvio = 'Ha ocurrido un error al descargar el reporte';
 			genericService.enviarParamsReporte(paramsR).then(function success(response) {
 				// console.log(response);
