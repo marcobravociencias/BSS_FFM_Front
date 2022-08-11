@@ -124,15 +124,15 @@ app.controller('busquedaController', ['$scope', '$q', 'busquedaService', 'generi
             if (result.data.respuesta) {
                 switch (keyObjeto) {
                     case "CS":
-                        tipo = 'Cotizaci&oacute;n sitios'
+                        tipo = 'Cotizaci\u00F3n sitios'
                         $scope.mostrarDetalleCotSitio(result.data.result.detalleCotSitio, keyObjeto);
                         break;
                     case "CP":
-                        tipo = 'Cotizaci&oacute;n sitios plan'
+                        tipo = 'Cotizaci\u00F3n sitios plan'
                         $scope.mostrarDetalleCotSitioPlan(result.data.result.detalleCotSitioPlan, keyObjeto);
                         break;
                     case "CO":
-                        tipo = 'Cotizaci&oacute;n'
+                        tipo = 'Cotizaci\u00F3n'
                         $scope.mostrarDetalleCotizacion(result.data.result.detalleCotizacion, keyObjeto);
                         break;
                     case "CF":

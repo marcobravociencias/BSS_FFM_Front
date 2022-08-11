@@ -539,7 +539,10 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
             if (results[1].data !== undefined) {
                 if (results[1].data.respuesta) {
                     if (results[1].data.result) {
+
                         if (resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves) {
+                            $scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
+
                             let llavesResult = results[1].data.result.MODULO_ACCIONES_USUARIO.llaves;
                             $scope.nfiltrogeografiaInstalaciones = llavesResult.N_FILTRO_GEOGRAFIA_BACK_INST ? llavesResult.N_FILTRO_GEOGRAFIA_BACK_INST : llavesResult.N_FILTRO_GEOGRAFIA;
                             $scope.nfiltrogeografiaSoportes = llavesResult.N_FILTRO_GEOGRAFIA_BACK_SOPORTE ? llavesResult.N_FILTRO_GEOGRAFIA_BACK_SOPORTE : llavesResult.N_FILTRO_GEOGRAFIA;
@@ -566,7 +569,6 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                                 objectTempAccion = new GenericAccionRealizada("" + $scope.permisosConfigUser.id, 'TOP_RIGHT');
                                 objectTempAccion.inicializarBotonAccionesRecientes();
                             }
-                            $scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
 
                             validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
                             validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;

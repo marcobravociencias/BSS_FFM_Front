@@ -1591,7 +1591,7 @@ app.controller('controlVehicularController',
 								params.idActivo = st;
 								let placaTemp = st == 1 ? $scope.listVehiculosInactivos.find((v) =>  v.idVehiculo == id ) : $scope.vehiculos.find((v) =>  v.idVehiculo == id );
 								let tituloAccion = st ? "Restaurar veh\u00EDculo" : "Eliminar veh\u00EDculo";
-								let mensajeEnvio = st ? 'Ha ocurrido un error al restaurar el veh\u00EDculo con la placa ' + placaTemp.placa : 'Ha ocurrido un error al eliminar el veh&iacute;culo con la placa ' + placaTemp.placa;
+								let mensajeEnvio = st ? 'Ha ocurrido un error al restaurar el veh\u00EDculo con la placa ' + placaTemp.placa : 'Ha ocurrido un error al eliminar el veh\u00EDculo con la placa ' + placaTemp.placa;
 								controlVehicularService.editarVehiculo(params).then(function success(response) {
 									if (response.data !== undefined) {
 										if (response.data.respuesta) {
@@ -1601,7 +1601,7 @@ app.controller('controlVehicularController',
 												} else {
 													$scope.getVehiculos(false);
 												}
-												mensajeEnvio = st ? 'Se restaur\u00F3 el veh\u00EDculo con la placa ' + placaTemp.placa : 'Se elimin&oacute; el veh&iacute;culo con la placa ' + placaTemp.placa;
+												mensajeEnvio = st ? 'Se restaur\u00F3 el veh\u00EDculo con la placa ' + placaTemp.placa : 'Se elimin\u00F3 el veh\u00EDculo con la placa ' + placaTemp.placa;
 												objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
 												toastr.success('Acci&oacute;n completada');
 											} else {
