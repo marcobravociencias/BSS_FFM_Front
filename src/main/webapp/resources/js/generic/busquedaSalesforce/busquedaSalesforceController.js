@@ -66,7 +66,7 @@ app.busquedaSalesforce = function ($scope, busquedaSalesforceService) {
             if (result.data.respuesta) {
                 if (result.data.result) {
                     $("#modalDetalleSalesforce").modal('show');
-                    switch (keyObjeto) {
+                    switch (keyObjeto) { 
                         case "CS":
                             tipo = 'Cotizaci\u00F3n sitios'
                             $scope.mostrarDetalleCotSitio(result.data.result.detalleCotSitio, keyObjeto);
