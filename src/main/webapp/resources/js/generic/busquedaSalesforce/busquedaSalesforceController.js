@@ -47,7 +47,7 @@ app.busquedaSalesforce = function ($scope, busquedaSalesforceService) {
     $scope.banderaNoticiasOportunidad = false;
     $scope.banderaNoticiasOs = false;
 
-    $scope.consultarDetalleObjectosSF = function (id, keyObjeto) {
+    $scope.consultarDetalleObjectosSF = function (id, keyObjeto,nombre) {
         console.log("id: " + id + " tipo del objeto: " + keyObjeto)
         $scope.isConsultaPrimeraVezNoticias = false;
         $scope.isAbiertoOSNoticias = false;
