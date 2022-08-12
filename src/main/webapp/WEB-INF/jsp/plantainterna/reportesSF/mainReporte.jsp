@@ -46,18 +46,20 @@
     <body id="idBody" ng-controller="reportesSFController" style="display: none;">
 
         <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
-        <div ng-show="!permisosConfigUser.permisos || permisosConfigUser.permisos.length === 0" class="container container-message">
+        <div ng-show="!permisosConfigUser.permisos || permisosConfigUser.permisos.length === 0"
+            class="container container-message">
             <div class="text-accion-nopermiso">
                 <i class="icon-not-permiso fas fa-user-lock"></i>
                 <b class="text-not-permiso">No cuentas con el permiso de consulta.</b>
             </div>
         </div>
-        <div class="container" id="container_reportes" ng-show="permisosConfigUser && permisosConfigUser.permisos.length">
+        <div class="container" id="container_reportes"
+            ng-show="permisosConfigUser && permisosConfigUser.permisos.length">
             <div class="row">
                 <div class="col-md-12">
                     <ul class="nav nav-tabs left-menu small-menu flex-column" id="opciones-menu" role="tablist"
                         style="margin-left: 0; height: 100%;">
-                        <span class="title-nav-header titulo-menu" style="position: initial;"><i
+                        <span class="title-nav-header titulo-menu" style="position: initial;" ng-if="boxContentVisible.backlog"><i
                                 class="icon-menu-left fas fa-circle"
                                 style="font-size: 0.8em;color: #ccc;"></i>&nbsp;BACKLOG</span>
                         <li class="nav-item opcion-menu" ng-if="configPermisoAccionConsultaBackInstalaciones">
@@ -106,17 +108,64 @@
                                     class="titulo-menu">General</span>
                             </a>
                         </li>
-                        <hr style="margin: 0.5em 1em;">
-                        <!--span class="title-nav-header titulo-menu" style="position: initial;"><i
+                        <hr style="margin: 0.3em 1em;" ng-if="boxContentVisible.ingresos">
+                        <span class="title-nav-header titulo-menu" style="position: initial;" ng-if="boxContentVisible.ingresos"><i
                                 class="icon-menu-left fas fa-circle"
                                 style="font-size: 0.8em;color: #ccc;"></i>&nbsp;INGRESOS</span>
-                        <li class="nav-item opcion-menu">
+                        <li class="nav-item opcion-menu" ng-if="configPermisoAccionConsultaIngresoSoportes">
                             <a id="reporteSoportesInst-tab" data-toggle="tab"
-                                ng-click="cambiaReporte('instalaciones', true,'reporteSoportesInst')"
-                                href="reporteSoportesInst" role="tab" aria-controls="reporteISoportesInst"
-                                aria-selected="false"><i class="icon-menu-left fas fa-toolbox"></i>&nbsp;<span
+                                ng-click="cambiaReporte('soportesing', true,'reporteSoportesIng')"
+                                href="reporteSoportesIng" role="tab" aria-controls="reporteISoportesIng"
+                                aria-selected="false"><i class="icon-menu-left fas fa-headset"></i>&nbsp;<span
                                     class="titulo-menu">Soportes</span></a>
-                        </li-->
+                        </li>
+                        <li class="nav-item opcion-menu" ng-if="configPermisoAccionConsultaIngresosVentasRes">
+                            <a id="reporteVentasRes-tab" data-toggle="tab"
+                                ng-click="cambiaReporte('ventasres', true,'reporteVentasRes')" href="reporteVentasRes"
+                                role="tab" aria-controls="reporteVentasRes" aria-selected="false"><i
+                                    class="icon-menu-left fas fa-home"></i>&nbsp;<span class="titulo-menu">Ventas
+                                    residencial</span></a>
+                        </li>
+                        <li class="nav-item opcion-menu" ng-if="configPermisoAccionConsultaIngresosVentasEmp">
+                            <a id="reporteVentasEmp-tab" data-toggle="tab"
+                                ng-click="cambiaReporte('ventasemp', true,'reporteVentasEmp')" href="reporteVentasEmp"
+                                role="tab" aria-controls="reporteVentasEmp" aria-selected="false"><i
+                                    class="icon-menu-left fas fa-building"></i>&nbsp;<span class="titulo-menu">Ventas
+                                    empresarial</span></a>
+                        </li>
+                        <li class="nav-item opcion-menu" ng-if="configPermisoAccionConsultaIngresosVentasEmpSA">
+                            <a id="reporteVentasEmpSA-tab" data-toggle="tab"
+                                ng-click="cambiaReporte('ventasempsa', true,'reporteVentasEmpSA')"
+                                href="reporteVentasEmpSA" role="tab" aria-controls="reporteVentasEmpSA"
+                                aria-selected="false"><i class="icon-menu-left fas fa-book-open"></i>&nbsp;<span
+                                    class="titulo-menu">Ventas
+                                    empresarial sin agenda</span></a>
+                        </li>
+                        <hr style="margin: 0.3em 1em;" ng-if="boxContentVisible.completados">
+                        <span class="title-nav-header titulo-menu" style="position: initial;" ng-if="boxContentVisible.completados"><i
+                                class="icon-menu-left fas fa-circle"
+                                style="font-size: 0.8em;color: #ccc;"></i>&nbsp;COMPLETADOS</span>
+                        <li class="nav-item opcion-menu" ng-if="configPermisoAccionConsultaCompletadoSoportes">
+                            <a id="reporteSoportesComp-tab" data-toggle="tab"
+                                ng-click="cambiaReporte('soportescomp', true,'reporteSoportesComp')"
+                                href="reporteSoportesComp" role="tab" aria-controls="reporteSoportesComp"
+                                aria-selected="false"><i class="icon-menu-left fas fa-headset"></i>&nbsp;<span
+                                    class="titulo-menu">Soportes</span></a>
+                        </li>
+                        <li class="nav-item opcion-menu" ng-if="configPermisoAccionConsultaCompletadoRes">
+                            <a id="reporteInstRes-tab" data-toggle="tab"
+                                ng-click="cambiaReporte('instalacionres', true,'reporteInstRes')"
+                                href="reporteInstRes" role="tab" aria-controls="reporteInstRes"
+                                aria-selected="false"><i class="icon-menu-left fas fa-tools"></i>&nbsp;<span
+                                    class="titulo-menu">Instalaciones residencial</span></a>
+                        </li>
+                        <li class="nav-item opcion-menu" ng-if="configPermisoAccionConsultaCompletadoEmp">
+                            <a id="reporteInstEmp-tab" data-toggle="tab"
+                                ng-click="cambiaReporte('instalacionemp', true,'reporteInstEmp')"
+                                href="reporteInstEmp" role="tab" aria-controls="reporteInstEmp"
+                                aria-selected="false"><i class="icon-menu-left fas fa-toolbox"></i>&nbsp;<span
+                                    class="titulo-menu">Instalaciones empresarial</span></a>
+                        </li>
                     </ul>
                     <div class="right-content tab-content">
                         <div class="row tab-content">
@@ -127,7 +176,7 @@
                             </div>
                             <div class="tab-pane fade" id="reporteSoportes" role="tabpanel"
                                 aria-labelledby="reporteSoportes-tab">
-                                <h5 id="texto_header_reportes" class="text-center">Reporte soportes</h5>
+                                <h5 id="texto_header_reportes" class="text-center">Reporte soportes backlog</h5>
                                 <jsp:include page="./content/reporteSoportes.jsp"></jsp:include>
                             </div>
                             <div class="tab-pane fade" id="reporteRecolecciones" role="tabpanel"
@@ -151,11 +200,45 @@
                                 <h5 id="texto_header_reportes" class="text-center">Reporte general</h5>
                                 <jsp:include page="./content/reporteGeneral.jsp"></jsp:include>
                             </div>
-                            <!--div class="tab-pane fade" id="reporteSoportesInst" role="tabpanel"
-                                aria-labelledby="reporteSoportesInst-tab">
-                                <h5 id="texto_header_reportes" class="text-center">Reporte soporte</h5>
-                                <jsp:include page="./content/reporteGeneral.jsp"></jsp:include>
-                            </div-->
+                            <div class="tab-pane fade" id="reporteSoportesIng" role="tabpanel"
+                                aria-labelledby="reporteSoportesIng-tab">
+                                <h5 id="texto_header_reportes" class="text-center">Reporte soporte ingresos</h5>
+                                <jsp:include page="./content/reporteIngresoSoportes.jsp"></jsp:include>
+                            </div>
+                            <div class="tab-pane fade" id="reporteVentasRes" role="tabpanel"
+                                aria-labelledby="reporteVentasRes-tab">
+                                <h5 id="texto_header_reportes" class="text-center">Reporte ventas residencial</h5>
+                                <jsp:include page="./content/reporteVentasResidencial.jsp"></jsp:include>
+                            </div>
+                            <div class="tab-pane fade" id="reporteVentasEmp" role="tabpanel"
+                                aria-labelledby="reporteVentasEmp-tab">
+                                <h5 id="texto_header_reportes" class="text-center">Reporte ventas empresarial</h5>
+                                <jsp:include page="./content/reporteVentasEmpresarial.jsp"></jsp:include>
+                            </div>
+                            <div class="tab-pane fade" id="reporteVentasEmpSA" role="tabpanel"
+                                aria-labelledby="reporteVentasEmpSA-tab">
+                                <h5 id="texto_header_reportes" class="text-center">Reporte ventas empresarial sin agenda
+                                </h5>
+                                <jsp:include page="./content/reporteVentasEmpresarialSA.jsp"></jsp:include>
+                            </div>
+                            <div class="tab-pane fade" id="reporteSoportesComp" role="tabpanel"
+                                aria-labelledby="reporteSoportesComp-tab">
+                                <h5 id="texto_header_reportes" class="text-center">Reporte soportes completados
+                                </h5>
+                                <jsp:include page="./content/reporteCompletadoSoportes.jsp"></jsp:include>
+                            </div>
+                            <div class="tab-pane fade" id="reporteInstRes" role="tabpanel"
+                                aria-labelledby="reporteInstRes-tab">
+                                <h5 id="texto_header_reportes" class="text-center">Reporte soportes completados
+                                </h5>
+                                <jsp:include page="./content/reporteInstalacionRes.jsp"></jsp:include>
+                            </div>
+                            <div class="tab-pane fade" id="reporteInstEmp" role="tabpanel"
+                                aria-labelledby="reporteInstEmp-tab">
+                                <h5 id="texto_header_reportes" class="text-center">Reporte soportes completados
+                                </h5>
+                                <jsp:include page="./content/reporteInstalacionEmp.jsp"></jsp:include>
+                            </div>
                         </div>
                     </div>
                 </div>

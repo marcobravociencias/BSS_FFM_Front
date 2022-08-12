@@ -11,6 +11,18 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
     $scope.resultReporteRecolecciones = null;
     $scope.resultReporteEmpresarial = null;
     $scope.resultReporteGeneral = null;
+    $scope.resultReporteSoportesIng = null;
+    $scope.resultReporteVentasResidencial = null;
+    $scope.resultReporteVentasEmpresarial = null;
+    $scope.resultReporteVentasEmpresarialSA = null;
+    $scope.resultReporteSoportesComp = null;
+    $scope.resultReporteIntalacionRes = null;
+    $scope.resultReporteIntalacionEmp = null;
+    $scope.boxContentVisible = {
+        backlog: false,
+        ingresos: false,
+        completados: false
+    };
     $scope.tipoReporte = '';
     $scope.permisosConfigUser = {};
     $scope.listadogeografiacopy = [];
@@ -21,9 +33,16 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
         instalaciones: 'dia',
         recolecciones: 'dia',
         empresarial: 'dia',
-        general: 'dia'
+        general: 'dia',
+        soportesing: 'dia',
+        ventasres: 'dia',
+        ventasemp: 'dia',
+        ventasempsa: 'dia',
+        soportescomp: 'dia',
+        instalacionres: 'dia',
+        instalacionemp: 'dia'
     };
-    $scope.filtrosGeneral = [];
+    $scope.filtrosGeneral = {};
 
     $scope.configPermisoAccionConsultaBackGeneral = false;
     $scope.configPermisoAccionDescargaBackGeneral = false;
@@ -37,6 +56,20 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
     $scope.configPermisoAccionDescargaBackSoportes = false;
     $scope.configPermisoAccionConsultaBackInstalaciones = false;
     $scope.configPermisoAccionDescargaBackInstalaciones = false;
+    $scope.configPermisoAccionConsultaIngresoSoportes = false;
+    $scope.configPermisoAccionDescargaIngresoSoportes = false;
+    $scope.configPermisoAccionDescargaIngresosVentasRes = false;
+    $scope.configPermisoAccionConsultaIngresosVentasRes = false;
+    $scope.configPermisoAccionDescargaIngresosVentasEmp = false;
+    $scope.configPermisoAccionConsultaIngresosVentasEmp = false;
+    $scope.configPermisoAccionDescargaIngresosVentasEmpSA = false;
+    $scope.configPermisoAccionConsultaIngresosVentasEmpSA = false;
+    $scope.configPermisoAccionConsultaCompletadoSoportes = false;
+    $scope.configPermisoAccionDescargaCompletadoSoportes = false;
+    $scope.configPermisoAccionConsultaCompletadoRes = false;
+    $scope.configPermisoAccionDescargaCompletadoRes = false;
+    $scope.configPermisoAccionConsultaCompletadoEmp = false;
+    $scope.configPermisoAccionDescargaCompletadoEmp = false;
 
     angular.element(document).ready(function () {
         $('#searchGeo-instalaciones').on('keyup', function () {
@@ -63,30 +96,37 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
             $("#jstree-proton-general").jstree("search", this.value);
         });
 
+        $('#searchGeo-soportesing').on('keyup', function () {
+            $("#jstree-proton-soportesing").jstree("search", this.value);
+        });
+
+        $('#searchGeo-ventasres').on('keyup', function () {
+            $("#jstree-proton-ventasres").jstree("search", this.value);
+        });
+
+        $('#searchGeo-ventasemp').on('keyup', function () {
+            $("#jstree-proton-ventasemp").jstree("search", this.value);
+        });
+
+        $('#searchGeo-ventasempsa').on('keyup', function () {
+            $("#jstree-proton-ventasempsa").jstree("search", this.value);
+        });
+
+        $('#searchGeo-soportescomp').on('keyup', function () {
+            $("#jstree-proton-soportescomp").jstree("search", this.value);
+        });
+
+        $('#searchGeo-instalacionres').on('keyup', function () {
+            $("#jstree-proton-instalacionres").jstree("search", this.value);
+        });
+
+        $('#searchGeo-instalacionemp').on('keyup', function () {
+            $("#jstree-proton-instalacionemp").jstree("search", this.value);
+        });
+
+
         $("#modalCluster").on("hidden.bs.modal", function () {
-            if ($scope.tipoReporte === 'instalaciones') {
-                $scope.getTextGeografia('jstree-proton-instalaciones', 'cluster-instalaciones');
-            }
-
-            if ($scope.tipoReporte === 'soportes') {
-                $scope.getTextGeografia('jstree-proton-soportes', 'cluster-soportes');
-            }
-
-            if ($scope.tipoReporte === 'recolecciones') {
-                $scope.getTextGeografia('jstree-proton-recolecciones', 'cluster-recolecciones');
-            }
-
-            if ($scope.tipoReporte === 'addon') {
-                $scope.getTextGeografia('jstree-proton-addon', 'cluster-addon');
-            }
-
-            if ($scope.tipoReporte === 'empresarial') {
-                $scope.getTextGeografia('jstree-proton-empresarial', 'cluster-empresarial');
-            }
-
-            if ($scope.tipoReporte === 'general') {
-                $scope.getTextGeografia('jstree-proton-general', 'cluster-general');
-            }
+            $scope.getTextGeografia('jstree-proton-' + $scope.tipoReporte, 'cluster-' + $scope.tipoReporte);
         })
 
 
@@ -162,6 +202,90 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
             "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
         });
 
+        let reporteSoportesIngTable = $('#reporteSoportesIngTable').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": false,
+            "pageLength": 10,
+            "info": true,
+            "autoWidth": true,
+            "language": idioma_espanol_not_font,
+            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+        });
+
+        let reporteVentasResTable = $('#reporteVentasResTable').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": false,
+            "pageLength": 10,
+            "info": true,
+            "autoWidth": true,
+            "language": idioma_espanol_not_font,
+            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+        });
+
+        let reporteVentasEmpTable = $('#reporteVentasEmpTable').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": false,
+            "pageLength": 10,
+            "info": true,
+            "autoWidth": true,
+            "language": idioma_espanol_not_font,
+            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+        });
+
+        let reporteVentasEmpSATable = $('#reporteVentasEmpSATable').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": false,
+            "pageLength": 10,
+            "info": true,
+            "autoWidth": true,
+            "language": idioma_espanol_not_font,
+            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+        });
+
+        let reporteSoportesCompTable = $('#reporteSoportesCompTable').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": false,
+            "pageLength": 10,
+            "info": true,
+            "autoWidth": true,
+            "language": idioma_espanol_not_font,
+            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+        });
+
+        let reporteInstResTable = $('#reporteInstResTable').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": false,
+            "pageLength": 10,
+            "info": true,
+            "autoWidth": true,
+            "language": idioma_espanol_not_font,
+            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+        });
+
+        let reporteInstEmpTable = $('#reporteInstEmpTable').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": false,
+            "pageLength": 10,
+            "info": true,
+            "autoWidth": true,
+            "language": idioma_espanol_not_font,
+            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+        });
+
         $('.drop-down-filters').on("change.bs.dropdown", function (e) {
             $scope.setTextFiltro();
         });
@@ -199,28 +323,8 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 inicio: startOfWeek,
                 fin: endOfWeek
             }
-            switch (tipo) {
-                case 'instalaciones':
-                    $scope.weekDateObjectReport.instalaciones = date
-                    break;
-                case 'soportes':
-                    $scope.weekDateObjectReport.soportes = date
-                    break;
-                case 'recolecciones':
-                    $scope.weekDateObjectReport.recolecciones = date
-                    break;
-                case 'addon':
-                    $scope.weekDateObjectReport.addon = date
-                    break;
-                case 'empresarial':
-                    $scope.weekDateObjectReport.empresarial = date
-                    break;
-                case 'general':
-                    $scope.weekDateObjectReport.general = date
-                    break;
-                default:
-                    break;
-            }
+            $scope.weekDateObjectReport[tipo + ""] = date
+
             $(this).datepicker('clearDate');
             $(this).datepicker('setDates', [
                 moment(date_selected).day(1).toDate(),
@@ -269,63 +373,13 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
         let arbolActual = $("#jstree-proton-" + type).jstree("get_selected", true)
             .map(e => parseInt(e.id));
 
-        switch (type) {
-            case 'instalaciones':
-                $scope.listaGeografiaReporte.instalaciones.map((e) => {
-                    e.state = {
-                        opened: true,
-                        selected: arbolActual.find((t) => t == parseInt(e.id)) > 0 ? true : false,
-                    }
-                    return e
-                });
-                break;
-            case 'soportes':
-                $scope.listaGeografiaReporte.soportes.map((e) => {
-                    e.state = {
-                        opened: true,
-                        selected: arbolActual.find((t) => t == parseInt(e.id)) > 0 ? true : false,
-                    }
-                    return e
-                });
-                break;
-            case 'recolecciones':
-                $scope.listaGeografiaReporte.recolecciones.map((e) => {
-                    e.state = {
-                        opened: true,
-                        selected: arbolActual.find((t) => t == parseInt(e.id)) > 0 ? true : false,
-                    }
-                    return e
-                });
-                break;
-            case 'addon':
-                $scope.listaGeografiaReporte.addon.map((e) => {
-                    e.state = {
-                        opened: true,
-                        selected: arbolActual.find((t) => t == parseInt(e.id)) > 0 ? true : false,
-                    }
-                    return e
-                });
-                break;
-            case 'empresarial':
-                $scope.listaGeografiaReporte.empresarial.map((e) => {
-                    e.state = {
-                        opened: true,
-                        selected: arbolActual.find((t) => t == parseInt(e.id)) > 0 ? true : false,
-                    }
-                    return e
-                });
-                break;
-            case 'general':
-                $scope.listaGeografiaReporte.general.map((e) => {
-                    e.state = {
-                        opened: true,
-                        selected: arbolActual.find((t) => t == parseInt(e.id)) > 0 ? true : false,
-                    }
-                    return e
-                });
-                break;
-        }
-
+        $scope.listaGeografiaReporte[type + ""].map((e) => {
+            e.state = {
+                opened: true,
+                selected: arbolActual.find((t) => t == parseInt(e.id)) > 0 ? true : false,
+            }
+            return e
+        });
     }
 
     $scope.cambiaReporte = function (type, save, tab) {
@@ -383,6 +437,62 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                     swal.showLoading();
                 }
                 break;
+            case 'soportesing':
+                geografiaReporte = angular.copy($scope.listaGeografiaReporte.soportesing);
+                if ($scope.resultReporteSoportesIng == null && geografiaReporte) {
+                    $scope.loadDate('soportesing');
+                    swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                    swal.showLoading();
+                }
+                break;
+            case 'ventasres':
+                geografiaReporte = angular.copy($scope.listaGeografiaReporte.ventasres);
+                if ($scope.resultReporteVentasResidencial == null && geografiaReporte) {
+                    $scope.loadDate('ventasres');
+                    swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                    swal.showLoading();
+                }
+                break;
+            case 'ventasemp':
+                geografiaReporte = angular.copy($scope.listaGeografiaReporte.ventasemp);
+                if ($scope.resultReporteVentasEmpresarial == null && geografiaReporte) {
+                    $scope.loadDate('ventasemp');
+                    swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                    swal.showLoading();
+                }
+                break;
+            case 'ventasempsa':
+                geografiaReporte = angular.copy($scope.listaGeografiaReporte.ventasempsa);
+                if ($scope.resultReporteVentasEmpresarialSA == null && geografiaReporte) {
+                    $scope.loadDate('ventasempsa');
+                    swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                    swal.showLoading();
+                }
+                break;
+            case 'soportescomp':
+                geografiaReporte = angular.copy($scope.listaGeografiaReporte.soportescomp);
+                if ($scope.resultReporteSoportesComp == null && geografiaReporte) {
+                    $scope.loadDate('soportescomp');
+                    swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                    swal.showLoading();
+                }
+                break;
+            case 'instalacionres':
+                geografiaReporte = angular.copy($scope.listaGeografiaReporte.instalacionres);
+                if ($scope.resultReporteIntalacionRes == null && geografiaReporte) {
+                    $scope.loadDate('instalacionres');
+                    swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                    swal.showLoading();
+                }
+                break;
+            case 'instalacionemp':
+                geografiaReporte = angular.copy($scope.listaGeografiaReporte.instalacionemp);
+                if ($scope.resultReporteIntalacionEmp == null && geografiaReporte) {
+                    $scope.loadDate('instalacionemp');
+                    swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                    swal.showLoading();
+                }
+                break;
         }
 
         if (geografiaReporte) {
@@ -432,6 +542,48 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                         $scope.getTextGeografia('jstree-proton-general', 'cluster-general');
                         if ($scope.resultReporteGeneral == null) {
                             $scope.consultarReporteGeneral();
+                        }
+                        break;
+                    case 'soportesing':
+                        $scope.getTextGeografia('jstree-proton-soportesing', 'cluster-soportesing');
+                        if ($scope.resultReporteSoportesIng == null) {
+                            $scope.consultarReporteSoportesIng();
+                        }
+                        break;
+                    case 'ventasres':
+                        $scope.getTextGeografia('jstree-proton-ventasres', 'cluster-ventasres');
+                        if ($scope.resultReporteVentasResidencial == null) {
+                            $scope.consultarReporteVentasResidencial();
+                        }
+                        break;
+                    case 'ventasemp':
+                        $scope.getTextGeografia('jstree-proton-ventasemp', 'cluster-ventasemp');
+                        if ($scope.resultReporteVentasEmpresarial == null) {
+                            $scope.consultarReporteVentasEmpresarial();
+                        }
+                        break;
+                    case 'ventasempsa':
+                        $scope.getTextGeografia('jstree-proton-ventasempsa', 'cluster-ventasempsa');
+                        if ($scope.resultReporteVentasEmpresarialSA == null) {
+                            $scope.consultarReporteVentasEmpresarialSA();
+                        }
+                        break;
+                    case 'soportescomp':
+                        $scope.getTextGeografia('jstree-proton-soportescomp', 'cluster-soportescomp');
+                        if ($scope.resultReporteSoportesComp == null) {
+                            $scope.consultarReporteSoportesCompletado();
+                        }
+                        break;
+                    case 'instalacionres':
+                        $scope.getTextGeografia('jstree-proton-instalacionres', 'cluster-instalacionres');
+                        if ($scope.resultReporteIntalacionRes == null) {
+                            $scope.consultarReporteInstalacionResidencial();
+                        }
+                        break;
+                    case 'instalacionemp':
+                        $scope.getTextGeografia('jstree-proton-instalacionemp', 'cluster-instalacionemp');
+                        if ($scope.resultReporteIntalacionEmp == null) {
+                            $scope.consultarReporteInstalacionEmpresarial();
                         }
                         break;
                 }
@@ -550,6 +702,13 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                             $scope.nfiltrogeografiaAddon = llavesResult.N_FILTRO_GEOGRAFIA_BACK_ADDON ? llavesResult.N_FILTRO_GEOGRAFIA_BACK_ADDON : llavesResult.N_FILTRO_GEOGRAFIA;
                             $scope.nfiltrogeografiaEmpresarial = llavesResult.N_FILTRO_GEOGRAFIA_BACK_EMP ? llavesResult.N_FILTRO_GEOGRAFIA_BACK_EMP : llavesResult.N_FILTRO_GEOGRAFIA;
                             $scope.nfiltrogeografiaGeneral = llavesResult.N_FILTRO_GEOGRAFIA_BACK_GENERAL ? llavesResult.N_FILTRO_GEOGRAFIA_BACK_GENERAL : llavesResult.N_FILTRO_GEOGRAFIA;
+                            $scope.nfiltrogeografiaSoportesIng = llavesResult.N_FILTRO_GEOGRAFIA_INGR_SOPORTE ? llavesResult.N_FILTRO_INGR_SOPORTE : llavesResult.N_FILTRO_GEOGRAFIA;
+                            $scope.nfiltrogeografiaVentasRes = llavesResult.N_FILTRO_INGR_VENTAS_RES ? llavesResult.N_FILTRO_INGR_VENTAS_RES : llavesResult.N_FILTRO_GEOGRAFIA;
+                            $scope.nfiltrogeografiaVentasEmp = llavesResult.N_FILTRO_INGR_VENTAS_EMP ? llavesResult.N_FILTRO_INGR_VENTAS_EMP : llavesResult.N_FILTRO_GEOGRAFIA;
+                            $scope.nfiltrogeografiaVentasEmpSA = llavesResult.N_FILTRO_INGR_VENTAS_EMP_SA ? llavesResult.N_FILTRO_INGR_VENTAS_EMP_SA : llavesResult.N_FILTRO_GEOGRAFIA;
+                            $scope.nfiltrogeografiaVentasEmpSA = llavesResult.N_FILTRO_COMP_SOPORTE ? llavesResult.N_FILTRO_COMP_SOPORTE : llavesResult.N_FILTRO_GEOGRAFIA;
+                            $scope.nfiltrogeografiaInstRes = llavesResult.N_FILTRO_COMP_RESIDENCIAL ? llavesResult.N_FILTRO_COMP_RESIDENCIAL : llavesResult.N_FILTRO_GEOGRAFIA;
+                            $scope.nfiltrogeografiaInstEmp = llavesResult.N_FILTRO_COMP_EMPRESARIAL ? llavesResult.N_FILTRO_COMP_EMPRESARIAL : llavesResult.N_FILTRO_GEOGRAFIA;
 
                             $scope.nfiltrointervencionesGeneral = llavesResult.N_FILTRO_INTERVENCIONES_GENERAL ? $scope.nfiltrointervencionesGeneral : null;
 
@@ -566,8 +725,38 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                                 $scope.configPermisoAccionDescargaBackEmpresarial = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaBacklogEmpresarial" })[0] != undefined);
                                 $scope.configPermisoAccionConsultaBackGeneral = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaBacklogGeneral" })[0] != undefined);
                                 $scope.configPermisoAccionDescargaBackGeneral = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaBacklogGeneral" })[0] != undefined);
+                                $scope.configPermisoAccionConsultaIngresoSoportes = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaIngresoSoportes" })[0] != undefined);
+                                $scope.configPermisoAccionDescargaIngresoSoportes = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaIngresoSoportes" })[0] != undefined);
+                                $scope.configPermisoAccionConsultaIngresosVentasRes = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaVentasResidencial" })[0] != undefined);
+                                $scope.configPermisoAccionDescargaIngresosVentasRes = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaVentasResidencial" })[0] != undefined);
+                                $scope.configPermisoAccionConsultaIngresosVentasEmp = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaVentasEmpresarial" })[0] != undefined);
+                                $scope.configPermisoAccionDescargaIngresosVentasEmp = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaVentasEmpresarial" })[0] != undefined);
+                                $scope.configPermisoAccionConsultaIngresosVentasEmpSA = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaVentasEmpresarialSA" })[0] != undefined);
+                                $scope.configPermisoAccionDescargaIngresosVentasEmpSA = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaVentasEmpresarialSA" })[0] != undefined);
+                                $scope.configPermisoAccionConsultaCompletadoSoportes = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaCompletadoSoporte" })[0] != undefined);
+                                $scope.configPermisoAccionDescargaCompletadoSoportes = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaCompletadoSoporte" })[0] != undefined);
+                                $scope.configPermisoAccionConsultaCompletadoRes = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaCompletadoResidencial" })[0] != undefined);
+                                $scope.configPermisoAccionDescargaCompletadoRes = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaCompletadoResidencial" })[0] != undefined);
+                                $scope.configPermisoAccionConsultaCompletadoEmp = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaCompletadoEmpresarial" })[0] != undefined);
+                                $scope.configPermisoAccionDescargaCompletadoEmp = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaCompletadoEmpresarial" })[0] != undefined);
                                 objectTempAccion = new GenericAccionRealizada("" + $scope.permisosConfigUser.id, 'TOP_RIGHT');
                                 objectTempAccion.inicializarBotonAccionesRecientes();
+
+                                if ($scope.configPermisoAccionConsultaBackInstalaciones || $scope.configPermisoAccionConsultaBackSoportes
+                                    || $scope.configPermisoAccionConsultaBackRecolecciones || $scope.configPermisoAccionConsultaBackAddon
+                                    || $scope.configPermisoAccionConsultaBackEmpresarial || $scope.configPermisoAccionConsultaBackGeneral) {
+                                    $scope.boxContentVisible.backlog = true;
+                                }
+
+                                if ($scope.configPermisoAccionConsultaIngresoSoportes || $scope.configPermisoAccionConsultaIngresosVentasRes
+                                    || $scope.configPermisoAccionConsultaIngresosVentasEmp || $scope.configPermisoAccionConsultaIngresosVentasEmpSA) {
+                                    $scope.boxContentVisible.ingresos = true;
+                                }
+
+                                if ($scope.configPermisoAccionConsultaCompletadoSoportes || $scope.configPermisoAccionConsultaCompletadoRes
+                                    || $scope.configPermisoAccionConsultaCompletadoEmp) {
+                                    $scope.boxContentVisible.completados = true;
+                                }
                             }
 
                             validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
@@ -617,6 +806,55 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                                 }
                             }
 
+                            if ($scope.configPermisoAccionConsultaIngresoSoportes) {
+                                if (firstNav === '') {
+                                    firstNav = 'reporteSoportesIng-tab';
+                                    $scope.tipoReporte = 'soportesing';
+                                }
+                            }
+
+                            if ($scope.configPermisoAccionConsultaIngresosVentasRes) {
+                                if (firstNav === '') {
+                                    firstNav = 'reporteVentasRes-tab';
+                                    $scope.tipoReporte = 'ventasres';
+                                }
+                            }
+
+                            if ($scope.configPermisoAccionConsultaIngresosVentasEmp) {
+                                if (firstNav === '') {
+                                    firstNav = 'reporteVentasEmp-tab';
+                                    $scope.tipoReporte = 'ventasemp';
+                                }
+                            }
+
+                            if ($scope.configPermisoAccionConsultaIngresosVentasEmpSA) {
+                                if (firstNav === '') {
+                                    firstNav = 'reporteVentasEmpSA-tab';
+                                    $scope.tipoReporte = 'ventasempsa';
+                                }
+                            }
+                            if ($scope.configPermisoAccionConsultaCompletadoSoportes) {
+                                if (firstNav === '') {
+                                    firstNav = 'reporteSoportesComp-tab';
+                                    $scope.tipoReporte = 'soportescomp';
+                                }
+                            }
+
+                            if ($scope.configPermisoAccionConsultaCompletadoRes) {
+                                if (firstNav === '') {
+                                    firstNav = 'reporteInstRes-tab';
+                                    $scope.tipoReporte = 'instalacionres';
+                                }
+                            }
+
+                            if ($scope.configPermisoAccionConsultaCompletadoEmp) {
+                                if (firstNav === '') {
+                                    firstNav = 'reporteInstEmp-tab';
+                                    $scope.tipoReporte = 'instalacionemp';
+                                }
+                            }
+
+
                             if (firstNav === '') {
                                 $scope.permisosConfigUser.permisos = [];
                             }
@@ -648,6 +886,13 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                             $scope.nfiltrogeografiaAddon = $scope.nfiltrogeografiaAddon ? $scope.nfiltrogeografiaAddon : $scope.obtenerNivelUltimoJerarquiaGeneric(results[0].data.result.geografia);
                             $scope.nfiltrogeografiaEmpresarial = $scope.nfiltrogeografiaEmpresarial ? $scope.nfiltrogeografiaEmpresarial : $scope.obtenerNivelUltimoJerarquiaGeneric(results[0].data.result.geografia);
                             $scope.nfiltrogeografiaGeneral = $scope.nfiltrogeografiaGeneral ? $scope.nfiltrogeografiaGeneral : $scope.obtenerNivelUltimoJerarquiaGeneric(results[0].data.result.geografia);
+                            $scope.nfiltrogeografiaSoportesIng = $scope.nfiltrogeografiaSoportesIng ? $scope.nfiltrogeografiaSoportesIng : $scope.obtenerNivelUltimoJerarquiaGeneric(results[0].data.result.geografia);
+                            $scope.nfiltrogeografiaVentasRes = $scope.nfiltrogeografiaVentasRes ? $scope.nfiltrogeografiaVentasRes : $scope.obtenerNivelUltimoJerarquiaGeneric(results[0].data.result.geografia);
+                            $scope.nfiltrogeografiaVentasEmp = $scope.nfiltrogeografiaVentasEmp ? $scope.nfiltrogeografiaVentasEmp : $scope.obtenerNivelUltimoJerarquiaGeneric(results[0].data.result.geografia);
+                            $scope.nfiltrogeografiaVentasEmpSA = $scope.nfiltrogeografiaVentasEmpSA ? $scope.nfiltrogeografiaVentasEmpSA : $scope.obtenerNivelUltimoJerarquiaGeneric(results[0].data.result.geografia);
+                            $scope.nfiltrogeografiaSoportesComp = $scope.nfiltrogeografiaSoportesComp ? $scope.nfiltrogeografiaSoportesComp : $scope.obtenerNivelUltimoJerarquiaGeneric(results[0].data.result.geografia);
+                            $scope.nfiltrogeografiaInstRes = $scope.nfiltrogeografiaInstRes ? $scope.nfiltrogeografiaInstRes : $scope.obtenerNivelUltimoJerarquiaGeneric(results[0].data.result.geografia);
+                            $scope.nfiltrogeografiaInstEmp = $scope.nfiltrogeografiaInstEmp ? $scope.nfiltrogeografiaInstEmp : $scope.obtenerNivelUltimoJerarquiaGeneric(results[0].data.result.geografia);
 
 
                             if ($scope.configPermisoAccionConsultaBackInstalaciones) {
@@ -680,6 +925,41 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                                 $scope.listaGeografiaReporte.general = angular.copy(geografia);
                             }
 
+                            if ($scope.configPermisoAccionConsultaIngresoSoportes) {
+                                let geografia = $scope.ordenarGeografia(results[0].data.result.geografia, $scope.nfiltrogeografiaSoportesIng);
+                                $scope.listaGeografiaReporte.soportesing = angular.copy(geografia);
+                            }
+
+                            if ($scope.configPermisoAccionConsultaIngresosVentasRes) {
+                                let geografia = $scope.ordenarGeografia(results[0].data.result.geografia, $scope.nfiltrogeografiaVentasRes);
+                                $scope.listaGeografiaReporte.ventasres = angular.copy(geografia);
+                            }
+
+                            if ($scope.configPermisoAccionConsultaIngresosVentasEmp) {
+                                let geografia = $scope.ordenarGeografia(results[0].data.result.geografia, $scope.nfiltrogeografiaVentasEmp);
+                                $scope.listaGeografiaReporte.ventasemp = angular.copy(geografia);
+                            }
+
+                            if ($scope.configPermisoAccionConsultaIngresosVentasEmpSA) {
+                                let geografia = $scope.ordenarGeografia(results[0].data.result.geografia, $scope.nfiltrogeografiaVentasEmpSA);
+                                $scope.listaGeografiaReporte.ventasempsa = angular.copy(geografia);
+                            }
+
+                            if ($scope.configPermisoAccionConsultaCompletadoSoportes) {
+                                let geografia = $scope.ordenarGeografia(results[0].data.result.geografia, $scope.nfiltrogeografiaSoportesComp);
+                                $scope.listaGeografiaReporte.soportescomp = angular.copy(geografia);
+                            }
+
+                            if ($scope.configPermisoAccionConsultaCompletadoRes) {
+                                let geografia = $scope.ordenarGeografia(results[0].data.result.geografia, $scope.nfiltrogeografiaInstRes);
+                                $scope.listaGeografiaReporte.instalacionres = angular.copy(geografia);
+                            }
+
+                            if ($scope.configPermisoAccionConsultaCompletadoEmp) {
+                                let geografia = $scope.ordenarGeografia(results[0].data.result.geografia, $scope.nfiltrogeografiaInstEmp);
+                                $scope.listaGeografiaReporte.instalacionemp = angular.copy(geografia);
+                            }
+
                         } else {
                             toastr.info('No se encontraron datos para la geograf\u00EDa');
                         }
@@ -697,8 +977,13 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 if (results[2].data.respuesta) {
                     if (results[2].data.result) {
                         $scope.nfiltrointervencionesGeneral = $scope.nfiltrointervencionesGeneral ? $scope.nfiltrointervencionesGeneral : $scope.obtenerNivelUltimoJerarquiaGeneric(results[2].data.result);
-                        $scope.filtrosGeneral.tipoOrdenes = $scope.conversionAnidadaRecursiva(results[2].data.result, 1, $scope.nfiltrointervencionesGeneral)
-                        $('#filtro-intervencion-general').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.tipoOrdenes, $scope.nfiltrointervencionesGeneral))
+                        if ($scope.configPermisoAccionConsultaBackGeneral) {
+                            $scope.filtrosGeneral.general = {
+                                tipoOrdenes: $scope.conversionAnidadaRecursiva(results[2].data.result, 1, $scope.nfiltrointervencionesGeneral)
+                            }
+                            $('#filtro-intervencion-general').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.general.tipoOrdenes, $scope.nfiltrointervencionesGeneral))
+                        }
+
 
                     } else {
                         toastr.info('No se encontraron tipo ordenes');
@@ -763,34 +1048,9 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 fechaFin = $scope.getFechaFormatoValid($("#filtro_fecha_dia_" + type).val())
                 break;
             case 'semana':
-                switch (type) {
-                    case 'instalaciones':
-                        fechaInicio = moment($scope.weekDateObjectReport.instalaciones['inicio']).format('YYYY-MM-DD');
-                        fechaFin = moment($scope.weekDateObjectReport.instalaciones['fin']).format('YYYY-MM-DD');
-                        break;
-                    case 'soportes':
-                        fechaInicio = moment($scope.weekDateObjectReport.soportes['inicio']).format('YYYY-MM-DD');
-                        fechaFin = moment($scope.weekDateObjectReport.soportes['fin']).format('YYYY-MM-DD');
-                        break;
-                    case 'recolecciones':
-                        fechaInicio = moment($scope.weekDateObjectReport.recolecciones['inicio']).format('YYYY-MM-DD');
-                        fechaFin = moment($scope.weekDateObjectReport.recolecciones['fin']).format('YYYY-MM-DD');
-                        break;
-                    case 'addon':
-                        fechaInicio = moment($scope.weekDateObjectReport.addon['inicio']).format('YYYY-MM-DD');
-                        fechaFin = moment($scope.weekDateObjectReport.addon['fin']).format('YYYY-MM-DD');
-                        break;
-                    case 'empresarial':
-                        fechaInicio = moment($scope.weekDateObjectReport.empresarial['inicio']).format('YYYY-MM-DD');
-                        fechaFin = moment($scope.weekDateObjectReport.empresarial['fin']).format('YYYY-MM-DD');
-                        break;
-                    case 'general':
-                        fechaInicio = moment($scope.weekDateObjectReport.general['inicio']).format('YYYY-MM-DD');
-                        fechaFin = moment($scope.weekDateObjectReport.general['fin']).format('YYYY-MM-DD');
-                        break;
-                    default:
-                        break;
-                }
+                fechaInicio = moment($scope.weekDateObjectReport[type + ""].inicio).format('YYYY-MM-DD');
+                fechaFin = moment($scope.weekDateObjectReport[type + ""].fin).format('YYYY-MM-DD');
+
                 break;
 
             case 'mes':
@@ -849,7 +1109,7 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
     }
 
     $scope.setTextFiltro = function () {
-        $('#filtro-intervencion-general').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.tipoOrdenes, $scope.nfiltrointervencionesGeneral))
+        $('#filtro-intervencion-general').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.general.tipoOrdenes, $scope.nfiltrointervencionesGeneral))
     }
 
     $scope.obtenerElementosSeleccionadosFiltro = function (array, nivel) {
@@ -1073,7 +1333,7 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                                     row[20] = elemento.nivel1 ? elemento.nivel1 : 'Sin informaci&oacute;n';
                                     row[21] = elemento.nivel2 ? elemento.nivel2 : 'Sin informaci&oacute;n';
                                     row[22] = elemento.nivel3 ? elemento.nivel3 : 'Sin informaci&oacute;n';
-                                    row[23] = elemento.repetido ? elemento.repetido : 'Sin informaci&oacute;n';
+                                    row[23] = elemento.repetido ? 'Si' : 'No';
                                     row[24] = elemento.tipoOrden ? elemento.tipoOrden : 'Sin informaci&oacute;n';
                                     row[25] = elemento.subTipo ? elemento.subTipo : 'Sin informaci&oacute;n';
                                     row[26] = elemento.nuevoSegmento ? elemento.nuevoSegmento : 'Sin informaci&oacute;n';
@@ -1221,7 +1481,7 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                                     row[20] = elemento.nivel1 ? elemento.nivel1 : 'Sin informaci&oacute;n';
                                     row[21] = elemento.nivel2 ? elemento.nivel2 : 'Sin informaci&oacute;n';
                                     row[22] = elemento.nivel3 ? elemento.nivel3 : 'Sin informaci&oacute;n';
-                                    row[23] = elemento.repetido ? elemento.repetido : 'Sin informaci&oacute;n';
+                                    row[23] = elemento.repetido ? 'Si' : 'No';
                                     row[24] = elemento.tipoOrden ? elemento.tipoOrden : 'Sin informaci&oacute;n';
                                     row[25] = elemento.subTipo ? elemento.subTipo : 'Sin informaci&oacute;n';
                                     row[26] = elemento.nuevoSegmento ? elemento.nuevoSegmento : 'Sin informaci&oacute;n';
@@ -1368,7 +1628,7 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                                     row[20] = elemento.nivel1 ? elemento.nivel1 : 'Sin informaci&oacute;n';
                                     row[21] = elemento.nivel2 ? elemento.nivel2 : 'Sin informaci&oacute;n';
                                     row[22] = elemento.nivel3 ? elemento.nivel3 : 'Sin informaci&oacute;n';
-                                    row[23] = elemento.repetido ? elemento.repetido : 'Sin informaci&oacute;n';
+                                    row[23] = elemento.repetido ? 'Si' : 'No';
                                     row[24] = elemento.tipoOrden ? elemento.tipoOrden : 'Sin informaci&oacute;n';
                                     row[25] = elemento.subTipo ? elemento.subTipo : 'Sin informaci&oacute;n';
                                     row[26] = elemento.nuevoSegmento ? elemento.nuevoSegmento : 'Sin informaci&oacute;n';
@@ -1604,7 +1864,7 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
             isValid = false
         }
 
-        let intervencioncopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.tipoOrdenes, $scope.nfiltrointervencionesGeneral);
+        let intervencioncopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.general.tipoOrdenes, $scope.nfiltrointervencionesGeneral);
         if (!intervencioncopy.length) {
             mensaje += '<li>Introducir Intervenci\u00F3n</li>';
             isValid = false;
@@ -1661,7 +1921,7 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                                     row[20] = elemento.nivel1 ? elemento.nivel1 : 'Sin informaci&oacute;n';
                                     row[21] = elemento.nivel2 ? elemento.nivel2 : 'Sin informaci&oacute;n';
                                     row[22] = elemento.nivel3 ? elemento.nivel3 : 'Sin informaci&oacute;n';
-                                    row[23] = elemento.repetido ? elemento.repetido : 'Sin informaci&oacute;n';
+                                    row[23] = elemento.repetido ? 'Si' : 'No';
                                     row[24] = elemento.tipoOrden ? elemento.tipoOrden : 'Sin informaci&oacute;n';
                                     row[25] = elemento.subTipo ? elemento.subTipo : 'Sin informaci&oacute;n';
                                     row[26] = elemento.nuevoSegmento ? elemento.nuevoSegmento : 'Sin informaci&oacute;n';
@@ -1720,7 +1980,7 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
             isValid = false
         }
 
-        let intervencioncopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.tipoOrdenes, $scope.nfiltrointervencionesGeneral);
+        let intervencioncopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.general.tipoOrdenes, $scope.nfiltrointervencionesGeneral);
         if (!intervencioncopy.length) {
             mensaje += '<li>Introducir Intervenci\u00F3n</li>';
             isValid = false;
@@ -1743,6 +2003,968 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
             //$scope.downloadReport(params, 'reporteBacklogGeneral', 'backlog general');
         }
     }
+
+    $scope.consultarReporteSoportesIng = function () {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        let clustersparam = $("#jstree-proton-soportesing").jstree("get_selected", true)
+            .filter(e => e.original.nivel == $scope.nfiltrogeografiaSoportesIng)
+            .map(e => e.original.nombre);
+
+        if (clustersparam.length === 0) {
+            mensaje += '<li>Seleccione geograf&iacute;a.</li>';
+            isValid = false
+        }
+
+        if ($("#tipo_reporte_soportesing").val() == 'semana' && !$scope.weekDateObjectReport.soportesing) {
+            mensaje += '<li>Seleccione semana</li>';
+            isValid = false
+        }
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('soportesing');
+            let params = {
+                tiposOrden: [55, 91, 93],
+                clusters: clustersparam,
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin
+            }
+            if (!swal.isVisible()) {
+                swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                swal.showLoading();
+            }
+            reportesSFService.consultarReporteIngresoSoporte(params).then(function success(response) {
+                swal.close();
+                let arraRow = [];
+                if (response.data !== undefined) {
+                    if (response.data.respuesta) {
+                        if (response.data.result) {
+                            if (response.data.result.data) {
+                                $scope.resultReporteSoportesIng = response.data.result.data.length;
+                                $.each(response.data.result.data, function (i, elemento) {
+                                    let row = [];
+
+                                    row[0] = elemento.idOt ? elemento.idOt : 'Sin informaci&oacute;n';
+                                    row[1] = elemento.ordenServicio ? elemento.ordenServicio : 'Sin informaci&oacute;n';
+                                    row[2] = elemento.numeroCuenta ? elemento.numeroCuenta : 'Sin informaci&oacute;n';
+                                    row[3] = elemento.ticket ? elemento.ticket : 'Sin informaci&oacute;n';
+                                    row[4] = elemento.clusterInstalacion ? elemento.clusterInstalacion : 'Sin informaci&oacute;n';
+                                    row[5] = elemento.zona ? elemento.zona : 'Sin informaci&oacute;n';
+                                    row[6] = elemento.plaza ? elemento.plaza : 'Sin informaci&oacute;n';
+                                    row[7] = elemento.regionInstalacion ? elemento.regionInstalacion : 'Sin informaci&oacute;n';
+                                    row[8] = elemento.fechaCreacion ? elemento.fechaCreacion : 'Sin informaci&oacute;n';
+                                    row[9] = elemento.fechaApertura ? elemento.fechaApertura : 'Sin informaci&oacute;n';
+                                    row[10] = elemento.primerFechaAgendamiento ? elemento.primerFechaAgendamiento : 'Sin informaci&oacute;n';
+                                    row[11] = elemento.fechaAgendamiento ? elemento.fechaAgendamiento : 'Sin informaci&oacute;n';
+                                    row[12] = elemento.fechaActivacion ? elemento.fechaActivacion : 'Sin informaci&oacute;n';
+                                    row[13] = elemento.fechaCierre ? elemento.fechaCierre : 'Sin informaci&oacute;n';
+                                    row[14] = elemento.tsCompletado ? elemento.tsCompletado : 'Sin informaci&oacute;n';
+                                    row[15] = elemento.tsCancelado ? elemento.tsCancelado : 'Sin informaci&oacute;n';
+                                    row[16] = elemento.turnoAgendamiento ? elemento.turnoAgendamiento : 'Sin informaci&oacute;n';
+                                    row[17] = elemento.estatus ? elemento.estatus : 'Sin informaci&oacute;n';
+                                    row[18] = elemento.estado ? elemento.estado : 'Sin informaci&oacute;n';
+                                    row[19] = elemento.propietario ? elemento.propietario : 'Sin informaci&oacute;n';
+                                    row[20] = elemento.grupoCodificador ? elemento.grupoCodificador : 'Sin informaci&oacute;n';
+                                    row[21] = elemento.nivel1 ? elemento.nivel1 : 'Sin informaci&oacute;n';
+                                    row[22] = elemento.nivel2 ? elemento.nivel2 : 'Sin informaci&oacute;n';
+                                    row[23] = elemento.nivel3 ? elemento.nivel3 : 'Sin informaci&oacute;n';
+                                    row[24] = elemento.tipoOrden ? elemento.tipoOrden : 'Sin informaci&oacute;n';
+                                    row[25] = elemento.subTipo ? elemento.subTipo : 'Sin informaci&oacute;n';
+                                    row[26] = elemento.repetido ? 'Si' : 'No';
+                                    row[27] = elemento.repetido60 ? 'Si' : 'No';
+                                    row[28] = elemento.instalacionLatitude ? elemento.instalacionLatitude : 'Sin informaci&oacute;n';
+                                    row[29] = elemento.instalacionLongitude ? elemento.instalacionLongitude : 'Sin informaci&oacute;n';
+                                    row[30] = elemento.origenTicket ? elemento.origenTicket : 'Sin informaci&oacute;n';
+                                    row[31] = elemento.descripcion ? elemento.descripcion : 'Sin informaci&oacute;n';
+
+                                    arraRow.push(row);
+                                })
+
+                            } else {
+                                toastr.info('No se encontraron datos');
+                            }
+                        } else {
+                            toastr.warning('No se encontraron datos');
+                        }
+                    } else {
+                        toastr.warning(response.data.resultDescripcion);
+                    }
+                } else {
+                    toastr.error('Ha ocurrido un error al consultar el reporte');
+                }
+
+                reporteSoportesIngTable = $('#reporteSoportesIngTable').DataTable({
+                    "paging": true,
+                    "lengthChange": false,
+                    "ordering": true,
+                    "pageLength": 10,
+                    "bDestroy": true,
+                    "info": true,
+                    "scrollX": false,
+                    "data": arraRow,
+                    "autoWidth": false,
+                    "language": idioma_espanol_not_font,
+                    "aoColumnDefs": [
+                        { "aTargets": [31], "bSortable": false }
+                    ]
+                });
+                swal.close();
+            })
+        }
+    }
+
+    $scope.descargarReporteSoportesIng = function () {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        let clustersparam = $("#jstree-proton-soportesing").jstree("get_selected", true)
+            .filter(e => e.original.nivel == $scope.nfiltrogeografiaSoportesIng)
+            .map(e => e.original.nombre);
+
+        if (clustersparam.length === 0) {
+            mensaje += '<li>Seleccione geograf&iacute;a.</li>';
+            isValid = false
+        }
+
+        if ($("#tipo_reporte_soportesing").val() == 'semana' && !$scope.weekDateObjectReport.soportesing) {
+            mensaje += '<li>Seleccione semana</li>';
+            isValid = false
+        }
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('soportesing');
+            let params = {
+                tiposOrden: [55, 91, 93],
+                clusters: clustersparam,
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin,
+                tipoExcel: 'reportesf-backlogempresarial-pi'
+            }
+            //$scope.downloadReport(params, 'reporteBacklogEmpresarial', 'backlog empresarial');
+        }
+    }
+
+    $scope.consultarReporteVentasResidencial = function () {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        let clustersparam = $("#jstree-proton-ventasres").jstree("get_selected", true)
+            .filter(e => e.original.nivel == $scope.nfiltrogeografiaVentasRes)
+            .map(e => e.original.nombre);
+
+        if (clustersparam.length === 0) {
+            mensaje += '<li>Seleccione geograf&iacute;a.</li>';
+            isValid = false
+        }
+
+        if ($("#tipo_reporte_ventasres").val() == 'semana' && !$scope.weekDateObjectReport.ventasres) {
+            mensaje += '<li>Seleccione semana</li>';
+            isValid = false
+        }
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('ventasres');
+            let params = {
+                tiposOrden: [55, 91, 93],
+                clusters: clustersparam,
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin
+            }
+            if (!swal.isVisible()) {
+                swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                swal.showLoading();
+            }
+            reportesSFService.consultarReporteIngresoResidencial(params).then(function success(response) {
+                swal.close();
+                let arraRow = [];
+                if (response.data !== undefined) {
+                    if (response.data.respuesta) {
+                        if (response.data.result) {
+                            if (response.data.result.data) {
+                                $scope.resultReporteVentasResidencial = response.data.result.data.length;
+                                $.each(response.data.result.data, function (i, elemento) {
+                                    let row = [];
+
+                                    row[0] = elemento.numeroCuenta ? elemento.numeroCuenta : 'Sin informaci&oacute;n';
+                                    row[1] = elemento.clusterInstalacion ? elemento.clusterInstalacion : 'Sin informaci&oacute;n';
+                                    row[2] = elemento.estatus ? elemento.estatus : 'Sin informaci&oacute;n';
+                                    row[3] = elemento.fechaCreacion ? elemento.fechaCreacion : 'Sin informaci&oacute;n';
+                                    row[4] = elemento.fechaActivacion ? elemento.fechaActivacion : 'Sin informaci&oacute;n';
+                                    row[5] = elemento.motivoCancelacion ? elemento.motivoCancelacion : 'Sin informaci&oacute;n';
+                                    row[6] = elemento.fechaAgendamiento ? elemento.fechaAgendamiento : 'Sin informaci&oacute;n';
+                                    row[7] = elemento.origenProspecto ? elemento.origenProspecto : 'Sin informaci&oacute;n';
+                                    row[8] = elemento.fechaCierre ? elemento.fechaCierre : 'Sin informaci&oacute;n';
+                                    row[9] = elemento.tsGanada ? elemento.tsGanada : 'Sin informaci&oacute;n';
+                                    row[10] = elemento.etapa ? elemento.etapa : 'Sin informaci&oacute;n';
+                                    row[11] = elemento.tsConfirmado ? elemento.tsConfirmado : 'Sin informaci&oacute;n';
+                                    row[12] = elemento.tsCancelado ? elemento.tsCancelado : 'Sin informaci&oacute;n';
+
+                                    arraRow.push(row);
+                                })
+
+                            } else {
+                                toastr.info('No se encontraron datos');
+                            }
+                        } else {
+                            toastr.warning('No se encontraron datos');
+                        }
+                    } else {
+                        toastr.warning(response.data.resultDescripcion);
+                    }
+                } else {
+                    toastr.error('Ha ocurrido un error al consultar el reporte');
+                }
+
+                reporteVentasResTable = $('#reporteVentasResTable').DataTable({
+                    "paging": true,
+                    "lengthChange": false,
+                    "ordering": true,
+                    "pageLength": 10,
+                    "bDestroy": true,
+                    "info": true,
+                    "scrollX": false,
+                    "data": arraRow,
+                    "autoWidth": false,
+                    "language": idioma_espanol_not_font,
+                    "aoColumnDefs": [
+                        { "aTargets": [12], "bSortable": false }
+                    ]
+                });
+                swal.close();
+            })
+        }
+    }
+
+    $scope.descargarReporteVentasResidencial = function () {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        let clustersparam = $("#jstree-proton-ventasres").jstree("get_selected", true)
+            .filter(e => e.original.nivel == $scope.nfiltrogeografiaVentasRes)
+            .map(e => e.original.nombre);
+
+        if (clustersparam.length === 0) {
+            mensaje += '<li>Seleccione geograf&iacute;a.</li>';
+            isValid = false
+        }
+
+        if ($("#tipo_reporte_ventasres").val() == 'semana' && !$scope.weekDateObjectReport.ventasres) {
+            mensaje += '<li>Seleccione semana</li>';
+            isValid = false
+        }
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('ventasres');
+            let params = {
+                tiposOrden: [55, 91, 93],
+                clusters: clustersparam,
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin,
+                tipoExcel: 'reportesf-backlogempresarial-pi'
+            }
+            //$scope.downloadReport(params, 'reporteBacklogEmpresarial', 'backlog empresarial');
+        }
+    }
+
+    $scope.consultarReporteVentasEmpresarial = function () {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        let clustersparam = $("#jstree-proton-ventasemp").jstree("get_selected", true)
+            .filter(e => e.original.nivel == $scope.nfiltrogeografiaVentasEmp)
+            .map(e => e.original.nombre);
+
+        if (clustersparam.length === 0) {
+            mensaje += '<li>Seleccione geograf&iacute;a.</li>';
+            isValid = false
+        }
+
+        if ($("#tipo_reporte_ventasemp").val() == 'semana' && !$scope.weekDateObjectReport.ventasemp) {
+            mensaje += '<li>Seleccione semana</li>';
+            isValid = false
+        }
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('ventasemp');
+            let params = {
+                tiposOrden: [55, 91, 93],
+                clusters: clustersparam,
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin
+            }
+            if (!swal.isVisible()) {
+                swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                swal.showLoading();
+            }
+            reportesSFService.consultarReporteIngresoEmpresarial(params).then(function success(response) {
+                swal.close();
+                let arraRow = [];
+                if (response.data !== undefined) {
+                    if (response.data.respuesta) {
+                        if (response.data.result) {
+                            if (response.data.result.data) {
+                                $scope.resultReporteVentasEmpresarial = response.data.result.data.length;
+                                $.each(response.data.result.data, function (i, elemento) {
+                                    let row = [];
+                                    row[0] = elemento.numeroCuenta ? elemento.numeroCuenta : 'Sin informaci&oacute;n';
+                                    row[1] = elemento.clusterInstalacion ? elemento.clusterInstalacion : 'Sin informaci&oacute;n';
+                                    row[2] = elemento.cotizacion ? elemento.cotizacion : 'Sin informaci&oacute;n';
+                                    row[3] = elemento.csp ? elemento.csp : 'Sin informaci&oacute;n';
+                                    row[4] = elemento.fechaAgendamiento ? elemento.fechaAgendamiento : 'Sin informaci&oacute;n';
+                                    row[5] = elemento.nuevoSegmento ? elemento.nuevoSegmento : 'Sin informaci&oacute;n';
+                                    row[6] = elemento.plaza ? elemento.plaza : 'Sin informaci&oacute;n';
+                                    row[7] = elemento.tsGanada ? elemento.tsGanada : 'Sin informaci&oacute;n';
+                                    row[8] = elemento.tipoOrden ? elemento.tipoOrden : 'Sin informaci&oacute;n';
+
+                                    arraRow.push(row);
+                                })
+
+                            } else {
+                                toastr.info('No se encontraron datos');
+                            }
+                        } else {
+                            toastr.warning('No se encontraron datos');
+                        }
+                    } else {
+                        toastr.warning(response.data.resultDescripcion);
+                    }
+                } else {
+                    toastr.error('Ha ocurrido un error al consultar el reporte');
+                }
+
+                reporteVentasEmpTable = $('#reporteVentasEmpTable').DataTable({
+                    "paging": true,
+                    "lengthChange": false,
+                    "ordering": true,
+                    "pageLength": 10,
+                    "bDestroy": true,
+                    "info": true,
+                    "scrollX": false,
+                    "data": arraRow,
+                    "autoWidth": false,
+                    "language": idioma_espanol_not_font,
+                    "aoColumnDefs": [
+                        { "aTargets": [8], "bSortable": false }
+                    ]
+                });
+                swal.close();
+            })
+        }
+    }
+
+    $scope.descargarReporteVentasEmpresarial = function () {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        let clustersparam = $("#jstree-proton-ventasemp").jstree("get_selected", true)
+            .filter(e => e.original.nivel == $scope.nfiltrogeografiaVentasEmp)
+            .map(e => e.original.nombre);
+
+        if (clustersparam.length === 0) {
+            mensaje += '<li>Seleccione geograf&iacute;a.</li>';
+            isValid = false
+        }
+
+        if ($("#tipo_reporte_ventasemp").val() == 'semana' && !$scope.weekDateObjectReport.ventasemp) {
+            mensaje += '<li>Seleccione semana</li>';
+            isValid = false
+        }
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('ventasemp');
+            let params = {
+                tiposOrden: [55, 91, 93],
+                clusters: clustersparam,
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin,
+                tipoExcel: 'reportesf-backlogempresarial-pi'
+            }
+            //$scope.downloadReport(params, 'reporteBacklogEmpresarial', 'backlog empresarial');
+        }
+    }
+
+    $scope.consultarReporteVentasEmpresarialSA = function () {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        let clustersparam = $("#jstree-proton-ventasempsa").jstree("get_selected", true)
+            .filter(e => e.original.nivel == $scope.nfiltrogeografiaVentasEmpSA)
+            .map(e => e.original.nombre);
+
+        if (clustersparam.length === 0) {
+            mensaje += '<li>Seleccione geograf&iacute;a.</li>';
+            isValid = false
+        }
+
+        if ($("#tipo_reporte_ventasempsa").val() == 'semana' && !$scope.weekDateObjectReport.ventasempsa) {
+            mensaje += '<li>Seleccione semana</li>';
+            isValid = false
+        }
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('ventasempsa');
+            let params = {
+                tiposOrden: [55, 91, 93],
+                clusters: clustersparam,
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin
+            }
+            if (!swal.isVisible()) {
+                swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                swal.showLoading();
+            }
+            reportesSFService.consultarEmpresarialSinAgenda(params).then(function success(response) {
+                swal.close();
+                let arraRow = [];
+                if (response.data !== undefined) {
+                    if (response.data.respuesta) {
+                        if (response.data.result) {
+                            if (response.data.result.data) {
+                                $scope.resultReporteVentasEmpresarialSA = response.data.result.data.length;
+                                $.each(response.data.result.data, function (i, elemento) {
+                                    let row = [];
+
+                                    row[0] = elemento.numeroCuenta ? elemento.numeroCuenta : 'Sin informaci&oacute;n';
+                                    row[1] = elemento.clusterInstalacion ? elemento.clusterInstalacion : 'Sin informaci&oacute;n';
+                                    row[2] = elemento.estatus ? elemento.estatus : 'Sin informaci&oacute;n';
+                                    row[3] = elemento.fechaCreacion ? elemento.fechaCreacion : 'Sin informaci&oacute;n';
+                                    row[4] = elemento.fechaActivacion ? elemento.fechaActivacion : 'Sin informaci&oacute;n';
+                                    row[5] = elemento.motivoCancelacion ? elemento.motivoCancelacion : 'Sin informaci&oacute;n';
+                                    row[6] = elemento.fechaAgendamiento ? elemento.fechaAgendamiento : 'Sin informaci&oacute;n';
+                                    row[7] = elemento.origenProspecto ? elemento.origenProspecto : 'Sin informaci&oacute;n';
+                                    row[8] = elemento.fechaCierre ? elemento.fechaCierre : 'Sin informaci&oacute;n';
+                                    row[9] = elemento.tsGanada ? elemento.tsGanada : 'Sin informaci&oacute;n';
+                                    row[10] = elemento.etapa ? elemento.etapa : 'Sin informaci&oacute;n';
+                                    row[11] = elemento.tsConfirmado ? elemento.tsConfirmado : 'Sin informaci&oacute;n';
+                                    row[12] = elemento.tsCancelado ? elemento.tsCancelado : 'Sin informaci&oacute;n';
+
+                                    arraRow.push(row);
+                                })
+
+                            } else {
+                                toastr.info('No se encontraron datos');
+                            }
+                        } else {
+                            toastr.warning('No se encontraron datos');
+                        }
+                    } else {
+                        toastr.warning(response.data.resultDescripcion);
+                    }
+                } else {
+                    toastr.error('Ha ocurrido un error al consultar el reporte');
+                }
+
+                reporteVentasEmpSATable = $('#reporteVentasEmpSATable').DataTable({
+                    "paging": true,
+                    "lengthChange": false,
+                    "ordering": true,
+                    "pageLength": 10,
+                    "bDestroy": true,
+                    "info": true,
+                    "scrollX": false,
+                    "data": arraRow,
+                    "autoWidth": false,
+                    "language": idioma_espanol_not_font,
+                    "aoColumnDefs": [
+                        { "aTargets": [12], "bSortable": false }
+                    ]
+                });
+                swal.close();
+            })
+        }
+    }
+
+    $scope.descargarReporteVentasEmpresarialSA = function () {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        let clustersparam = $("#jstree-proton-ventasemp").jstree("get_selected", true)
+            .filter(e => e.original.nivel == $scope.nfiltrogeografiaVentasEmp)
+            .map(e => e.original.nombre);
+
+        if (clustersparam.length === 0) {
+            mensaje += '<li>Seleccione geograf&iacute;a.</li>';
+            isValid = false
+        }
+
+        if ($("#tipo_reporte_ventasempsa").val() == 'semana' && !$scope.weekDateObjectReport.ventasemp) {
+            mensaje += '<li>Seleccione semana</li>';
+            isValid = false
+        }
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('ventasemp');
+            let params = {
+                tiposOrden: [55, 91, 93],
+                clusters: clustersparam,
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin,
+                tipoExcel: 'reportesf-backlogempresarial-pi'
+            }
+            //$scope.downloadReport(params, 'reporteBacklogEmpresarial', 'backlog empresarial');
+        }
+    }
+
+    $scope.consultarReporteSoportesCompletado = function () {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        let clustersparam = $("#jstree-proton-soportescomp").jstree("get_selected", true)
+            .filter(e => e.original.nivel == $scope.nfiltrogeografiaSoportesComp)
+            .map(e => e.original.nombre);
+
+        if (clustersparam.length === 0) {
+            mensaje += '<li>Seleccione geograf&iacute;a.</li>';
+            isValid = false
+        }
+
+        if ($("#tipo_reporte_soportescomp").val() == 'semana' && !$scope.weekDateObjectReport.soportescomp) {
+            mensaje += '<li>Seleccione semana</li>';
+            isValid = false
+        }
+
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('soportescomp');
+            let params = {
+                tiposOrden: [55, 91, 93],
+                clusters: clustersparam,
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin
+            }
+            if (!swal.isVisible()) {
+                swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                swal.showLoading();
+            }
+            reportesSFService.consultarReporteCompletosSoporte(params).then(function success(response) {
+                swal.close();
+                let arraRow = [];
+                if (response.data !== undefined) {
+                    if (response.data.respuesta) {
+                        if (response.data.result) {
+                            if (response.data.result.data) {
+                                $scope.resultReporteSoportesComp = response.data.result.data.length;
+                                $.each(response.data.result.data, function (i, elemento) {
+                                    let row = [];
+
+                                    row[0] = elemento.idOt ? elemento.idOt : 'Sin informaci&oacute;n';
+                                    row[1] = elemento.ordenServicio ? elemento.ordenServicio : 'Sin informaci&oacute;n';
+                                    row[2] = elemento.numeroCuenta ? elemento.numeroCuenta : 'Sin informaci&oacute;n';
+                                    row[3] = elemento.ticket ? elemento.ticket : 'Sin informaci&oacute;n';
+                                    row[4] = elemento.regionInstalacion ? elemento.regionInstalacion : 'Sin informaci&oacute;n';
+                                    row[5] = elemento.plaza ? elemento.plaza : 'Sin informaci&oacute;n';
+                                    row[6] = elemento.zona ? elemento.zona : 'Sin informaci&oacute;n';
+                                    row[7] = elemento.clusterInstalacion ? elemento.clusterInstalacion : 'Sin informaci&oacute;n';
+                                    row[8] = elemento.colonia ? elemento.colonia : 'Sin informaci&oacute;n';
+                                    row[9] = elemento.plazaSitio ? elemento.plazaSitio : 'Sin informaci&oacute;n';
+                                    row[10] = elemento.distritoSitio ? elemento.distritoSitio : 'Sin informaci&oacute;n';
+                                    row[11] = elemento.fechaApertura ? elemento.fechaApertura : 'Sin informaci&oacute;n';
+                                    row[12] = elemento.primerFechaAgendamiento ? elemento.primerFechaAgendamiento : 'Sin informaci&oacute;n';
+                                    row[13] = elemento.fechaAgendamiento ? elemento.fechaAgendamiento : 'Sin informaci&oacute;n';
+                                    row[14] = elemento.turno ? elemento.turno : 'Sin informaci&oacute;n';
+                                    row[15] = elemento.fechaActivacion ? elemento.fechaActivacion : 'Sin informaci&oacute;n';
+                                    row[16] = elemento.estatus ? elemento.estatus : 'Sin informaci&oacute;n';
+                                    row[17] = elemento.estado ? elemento.estado : 'Sin informaci&oacute;n';
+                                    row[18] = elemento.propietario ? elemento.propietario : 'Sin informaci&oacute;n';
+                                    row[19] = elemento.grupoCodificador ? elemento.grupoCodificador : 'Sin informaci&oacute;n';
+                                    row[20] = elemento.nivel1 ? elemento.nivel1 : 'Sin informaci&oacute;n';
+                                    row[21] = elemento.nivel2 ? elemento.nivel2 : 'Sin informaci&oacute;n';
+                                    row[22] = elemento.nivel3 ? elemento.nivel3 : 'Sin informaci&oacute;n';
+                                    row[23] = elemento.repetido ? 'Si' : 'No';
+                                    row[24] = elemento.tipoOrden ? elemento.tipoOrden : 'Sin informaci&oacute;n';
+                                    row[25] = elemento.subTipo ? elemento.subTipo : 'Sin informaci&oacute;n';
+                                    row[26] = elemento.nuevoSegmento ? elemento.nuevoSegmento : 'Sin informaci&oacute;n';
+
+                                    arraRow.push(row);
+                                })
+
+                            } else {
+                                toastr.info('No se encontraron datos');
+                            }
+                        } else {
+                            toastr.warning('No se encontraron datos');
+                        }
+                    } else {
+                        toastr.warning(response.data.resultDescripcion);
+                    }
+                } else {
+                    toastr.error('Ha ocurrido un error al consultar el reporte');
+                }
+
+                reporteSoportesCompTable = $('#reporteSoportesCompTable').DataTable({
+                    "paging": true,
+                    "lengthChange": false,
+                    "ordering": true,
+                    "pageLength": 10,
+                    "bDestroy": true,
+                    "info": true,
+                    "scrollX": false,
+                    "data": arraRow,
+                    "autoWidth": false,
+                    "language": idioma_espanol_not_font,
+                    "aoColumnDefs": [
+                        { "aTargets": [26], "bSortable": false }
+                    ]
+                });
+                swal.close();
+            })
+        }
+    }
+
+    $scope.descargarReporteSoportesCompletado = function () {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        let clustersparam = $("#jstree-proton-soportescomp").jstree("get_selected", true)
+            .filter(e => e.original.nivel == $scope.nfiltrogeografiaSoportesComp)
+            .map(e => e.original.nombre);
+
+        if (clustersparam.length === 0) {
+            mensaje += '<li>Seleccione geograf&iacute;a.</li>';
+            isValid = false
+        }
+
+        if ($("#tipo_reporte_soportescomp").val() == 'semana' && !$scope.weekDateObjectReport.soportescomp) {
+            mensaje += '<li>Seleccione semana</li>';
+            isValid = false
+        }
+
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('soportescomp');
+            let params = {
+                tiposOrden: [55, 91, 93],
+                clusters: clustersparam,
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin,
+                tipoExcel: 'reportesf-backlog-pi',
+                nombre: "soportes"
+            }
+            //$scope.downloadReport(params, 'reporteBacklogSoportes', 'backlog soportes');
+        }
+    }
+
+    $scope.consultarReporteInstalacionResidencial = function () {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        let clustersparam = $("#jstree-proton-instalacionres").jstree("get_selected", true)
+            .filter(e => e.original.nivel == $scope.nfiltrogeografiaInstRes)
+            .map(e => e.original.nombre);
+
+        if (clustersparam.length === 0) {
+            mensaje += '<li>Seleccione geograf&iacute;a.</li>';
+            isValid = false
+        }
+
+        if ($("#tipo_reporte_instalacionres").val() == 'semana' && !$scope.weekDateObjectReport.instalacionres) {
+            mensaje += '<li>Seleccione semana</li>';
+            isValid = false
+        }
+
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('instalacionres');
+            let params = {
+                tiposOrden: [55, 91, 93],
+                clusters: clustersparam,
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin
+            }
+            if (!swal.isVisible()) {
+                swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                swal.showLoading();
+            }
+            reportesSFService.consultarReporteCompletosResidencial(params).then(function success(response) {
+                swal.close();
+                let arraRow = [];
+                if (response.data !== undefined) {
+                    if (response.data.respuesta) {
+                        if (response.data.result) {
+                            if (response.data.result.data) {
+                                $scope.resultReporteIntalacionRes = response.data.result.data.length;
+                                $.each(response.data.result.data, function (i, elemento) {
+                                    let row = [];
+
+                                    row[0] = elemento.ordenServicio ? elemento.ordenServicio : 'Sin informaci&oacute;n';
+                                    row[1] = elemento.numeroCuenta ? elemento.numeroCuenta : 'Sin informaci&oacute;n';
+                                    row[2] = elemento.nombrePlan ? elemento.nombrePlan : 'Sin informaci&oacute;n';
+                                    row[3] = elemento.nombreFamilia ? elemento.nombreFamilia : 'Sin informaci&oacute;n';
+                                    row[4] = elemento.subcanal ? elemento.subcanal : 'Sin informaci&oacute;n';
+                                    row[5] = elemento.aprobarVentaExpress ? elemento.aprobarVentaExpress : 'Sin informaci&oacute;n';
+                                    row[6] = elemento.fechaCreacion ? elemento.fechaCreacion : 'Sin informaci&oacute;n';
+                                    row[7] = elemento.ventaExpress ? elemento.ventaExpress : 'Sin informaci&oacute;n';
+                                    row[8] = elemento.fechaCierre ? elemento.fechaCierre : 'Sin informaci&oacute;n';
+                                    row[9] = elemento.origenProspecto ? elemento.origenProspecto : 'Sin informaci&oacute;n';
+                                    row[10] = elemento.clusterInstalacion ? elemento.clusterInstalacion : 'Sin informaci&oacute;n';
+                                    row[11] = elemento.fechaActivacion ? elemento.fechaActivacion : 'Sin informaci&oacute;n';
+                                    row[12] = elemento.subTipo ? elemento.subTipo : 'Sin informaci&oacute;n';
+                                    row[13] = elemento.numeroEmpleadoActiva ? elemento.numeroEmpleadoActiva : 'Sin informaci&oacute;n';
+                                    row[14] = elemento.nombreEmpleadoActiva ? elemento.nombreEmpleadoActiva : 'Sin informaci&oacute;n';
+                                    row[15] = elemento.sistemaActivacion ? elemento.sistemaActivacion : 'Sin informaci&oacute;n';
+                                    row[16] = elemento.activacionLatitude ? elemento.activacionLatitude : 'Sin informaci&oacute;n';
+                                    row[17] = elemento.eactivacionLongitudestado ? elemento.activacionLongitude : 'Sin informaci&oacute;n';
+
+                                    arraRow.push(row);
+                                })
+
+                            } else {
+                                toastr.info('No se encontraron datos');
+                            }
+                        } else {
+                            toastr.warning('No se encontraron datos');
+                        }
+                    } else {
+                        toastr.warning(response.data.resultDescripcion);
+                    }
+                } else {
+                    toastr.error('Ha ocurrido un error al consultar el reporte');
+                }
+
+                reporteInstResTable = $('#reporteInstResTable').DataTable({
+                    "paging": true,
+                    "lengthChange": false,
+                    "ordering": true,
+                    "pageLength": 10,
+                    "bDestroy": true,
+                    "info": true,
+                    "scrollX": false,
+                    "data": arraRow,
+                    "autoWidth": false,
+                    "language": idioma_espanol_not_font,
+                    "aoColumnDefs": [
+                        { "aTargets": [17], "bSortable": false }
+                    ]
+                });
+                swal.close();
+            })
+        }
+    }
+
+    $scope.descargarReporteInstalacionResidencial = function () {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        let clustersparam = $("#jstree-proton-instalacionres").jstree("get_selected", true)
+            .filter(e => e.original.nivel == $scope.nfiltrogeografiaInstRes)
+            .map(e => e.original.nombre);
+
+        if (clustersparam.length === 0) {
+            mensaje += '<li>Seleccione geograf&iacute;a.</li>';
+            isValid = false
+        }
+
+        if ($("#tipo_reporte_instalacionres").val() == 'semana' && !$scope.weekDateObjectReport.instalacionres) {
+            mensaje += '<li>Seleccione semana</li>';
+            isValid = false
+        }
+
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('instalacionres');
+            let params = {
+                tiposOrden: [55, 91, 93],
+                clusters: clustersparam,
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin,
+                tipoExcel: 'reportesf-backlog-pi',
+                nombre: "soportes"
+            }
+            //$scope.downloadReport(params, 'reporteBacklogSoportes', 'backlog soportes');
+        }
+    }
+
+    $scope.consultarReporteInstalacionEmpresarial = function () {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        let clustersparam = $("#jstree-proton-instalacionemp").jstree("get_selected", true)
+            .filter(e => e.original.nivel == $scope.nfiltrogeografiaInstEmp)
+            .map(e => e.original.nombre);
+
+        if (clustersparam.length === 0) {
+            mensaje += '<li>Seleccione geograf&iacute;a.</li>';
+            isValid = false
+        }
+
+        if ($("#tipo_reporte_instalacionemp").val() == 'semana' && !$scope.weekDateObjectReport.instalacionemp) {
+            mensaje += '<li>Seleccione semana</li>';
+            isValid = false
+        }
+
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('instalacionemp');
+            let params = {
+                tiposOrden: [55, 91, 93],
+                clusters: clustersparam,
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin
+            }
+            if (!swal.isVisible()) {
+                swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                swal.showLoading();
+            }
+            reportesSFService.consultarReporteCompletosEmpresarial(params).then(function success(response) {
+                swal.close();
+                let arraRow = [];
+                if (response.data !== undefined) {
+                    if (response.data.respuesta) {
+                        if (response.data.result) {
+                            if (response.data.result.data) {
+                                $scope.resultReporteIntalacionEmp = response.data.result.data.length;
+                                $.each(response.data.result.data, function (i, elemento) {
+                                    let row = [];
+
+                                    row[0] = elemento.ordenServicio ? elemento.ordenServicio : 'Sin informaci&oacute;n';
+                                    row[1] = elemento.numeroCuenta ? elemento.numeroCuenta : 'Sin informaci&oacute;n';
+                                    row[2] = elemento.cotizacion ? elemento.cotizacion : 'Sin informaci&oacute;n';
+                                    row[3] = elemento.csp ? elemento.csp : 'Sin informaci&oacute;n';
+                                    row[4] = elemento.plaza ? elemento.plaza : 'Sin informaci&oacute;n';
+                                    row[5] = elemento.clusterInstalacion ? elemento.clusterInstalacion : 'Sin informaci&oacute;n';
+                                    row[6] = elemento.fechaActivacion ? elemento.fechaActivacion : 'Sin informaci&oacute;n';
+                                    row[7] = elemento.tipoOrden ? elemento.tipoOrden : 'Sin informaci&oacute;n';
+
+                                    arraRow.push(row);
+                                })
+
+                            } else {
+                                toastr.info('No se encontraron datos');
+                            }
+                        } else {
+                            toastr.warning('No se encontraron datos');
+                        }
+                    } else {
+                        toastr.warning(response.data.resultDescripcion);
+                    }
+                } else {
+                    toastr.error('Ha ocurrido un error al consultar el reporte');
+                }
+
+                reporteInstEmpTable = $('#reporteInstEmpTable').DataTable({
+                    "paging": true,
+                    "lengthChange": false,
+                    "ordering": true,
+                    "pageLength": 10,
+                    "bDestroy": true,
+                    "info": true,
+                    "scrollX": false,
+                    "data": arraRow,
+                    "autoWidth": false,
+                    "language": idioma_espanol_not_font,
+                    "aoColumnDefs": [
+                        { "aTargets": [7], "bSortable": false }
+                    ]
+                });
+                swal.close();
+            })
+        }
+    }
+
+    $scope.descargarReporteInstalacionEmpresarial = function () {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        let clustersparam = $("#jstree-proton-instalacionemp").jstree("get_selected", true)
+            .filter(e => e.original.nivel == $scope.nfiltrogeografiaInstEmp)
+            .map(e => e.original.nombre);
+
+        if (clustersparam.length === 0) {
+            mensaje += '<li>Seleccione geograf&iacute;a.</li>';
+            isValid = false
+        }
+
+        if ($("#tipo_reporte_instalacionemp").val() == 'semana' && !$scope.weekDateObjectReport.instalacionemp) {
+            mensaje += '<li>Seleccione semana</li>';
+            isValid = false
+        }
+
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('instalacionemp');
+            let params = {
+                tiposOrden: [55, 91, 93],
+                clusters: clustersparam,
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin,
+                tipoExcel: 'reportesf-backlog-pi',
+                nombre: "soportes"
+            }
+            //$scope.downloadReport(params, 'reporteBacklogSoportes', 'backlog soportes');
+        }
+    }
+
 
     $scope.downloadReport = function (params, nameFile, report) {
         swal({ text: 'Cargando registros...', allowOutsideClick: false });

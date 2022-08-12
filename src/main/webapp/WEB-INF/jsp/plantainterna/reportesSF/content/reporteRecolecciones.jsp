@@ -40,7 +40,7 @@
     </div>
     <div class="content-fluid mt-2">
         <div class="table-responsive">
-            <table id="reporteRecoleccionesTable" class="display table" cellspacing="0" width="100%">
+            <table id="reporteRecoleccionesTable" class="display table  table-reportesf" cellspacing="0" width="100%">
                 <thead id="thead_reporteRecolecciones">
                     <tr>
                         <th data-idColumn="0" data-isNumber="true" class="orderColumnTable orderColumnAscTable">OT</th>
