@@ -78,9 +78,9 @@
                 <tbody>
                     <tr class="detail-trservicio" ng-if="servicio.servicioConfigurable" ng-repeat="servicio in listaServiciosCot track by $index">
                   
-                        <td class="tr-servicio-ind"><span class="text-serviciotable">{{servicio.folio}}</span></td>
-                        <td class="tr-servicio-ind"><span class="text-serviciotable">{{servicio.nombre}}</span></td>
-                        <td class="tr-servicio-ind"><span class="text-serviciotable">{{servicio.tipo}}</span></td>
+                        <td class="tr-servicio-ind">{{servicio.folio}}</td>
+                        <td class="tr-servicio-ind" title="{{servicio.nombre}}">{{servicio.nombre}}</td>
+                        <td class="tr-servicio-ind">{{servicio.tipo}}</td>
                         <td class="text-center">                           
                             <i ng-if="servicio.isConfigurado" class="fas fa-check-circle mensaje-servicio-config-table" ></i> 
                             <i ng-if="!servicio.isConfigurado" class="fas fa-exclamation-circle mensaje-servicio-noconfig-table" ></i>     

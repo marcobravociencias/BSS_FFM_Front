@@ -1748,6 +1748,7 @@ span.text-activacion-warning {
   white-space: nowrap;
   padding-top: .5em;
   padding-bottom: .5em;
+  max-width: 1px;
 }
 
 .statusactivacion-activa {
