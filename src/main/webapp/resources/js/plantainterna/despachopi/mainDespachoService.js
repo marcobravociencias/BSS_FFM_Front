@@ -119,41 +119,10 @@ app.service("mainDespachoService", function ($http) {
             }
 		});
 	}
-	this.cambiarEstatusOperarioPI=function(params){
-		return $http({
-			method: "post",
-			url: "req/cambiarEstatusOperarioPI",
-			data:JSON.stringify(params),
-            headers : {
-                'Content-Type' : 'application/json'
-            }
-		});
-	}
 	this.confirmaDesconfirmaOtDespacho=function(params){
 		return $http({
 			method: "post",
 			url: "req/confirmaDesconfirmaOtDespacho",
-			data:JSON.stringify(params),
-            headers : {
-                'Content-Type' : 'application/json'
-            }
-		});
-	}
-	this.consultarOtsTrabajadasDespacho=function(params){
-		return $http({
-			method: "post",
-			url: "req/consultarOtsTrabajadasDespacho",
-			data:JSON.stringify(params),
-            headers : {
-                'Content-Type' : 'application/json'
-            }
-		});
-	}
-	
-	this.consultarVehiculoOperario=function(params){
-		return $http({
-			method: "post",
-			url: "req/consultarVehiculoOperarioPI",
 			data:JSON.stringify(params),
             headers : {
                 'Content-Type' : 'application/json'

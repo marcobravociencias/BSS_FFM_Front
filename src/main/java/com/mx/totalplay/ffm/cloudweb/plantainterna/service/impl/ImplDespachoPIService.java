@@ -55,25 +55,6 @@ public class ImplDespachoPIService implements DespachoPIService {
         this.genericAccionesService = genericAccionesService;
     }
 
-    @Override
-    public ServiceResponseResult consultarCatalogosPI(String params) {
-        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-
-        JsonObject login = new JsonObject();
-        login.addProperty(env.getProperty("param.textus.pI"), constantesAmbiente.getTextIpUsuario());
-        login.addProperty(env.getProperty("param.textus.drowssaP"), constantesAmbiente.getTextCredPad());
-        login.addProperty(env.getProperty("param.textus.resU"), constantesAmbiente.getTextCredUs());
-
-        jsonObject.add("Login", login);
-
-        logger.info("json object params## " + jsonObject.toString());
-
-        String url = "http://10.216.47.89" + constDespachoPI.getFiltrosDespachoPI();
-        ServiceResponseResult response = restCaller.callPostParamString(url, jsonObject.toString());
-        logger.info("RESULT" + gson.toJson(response));
-        return response;
-    }
-
     public ServiceResponseResult consultarCotizacionOTSe(String params) {
         logger.info("ImplDespachoPIService.class [metodo = consultarCotizacionOTSe() ]\n" + params);
         JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
@@ -733,78 +714,6 @@ public class ImplDespachoPIService implements DespachoPIService {
         return response;
     }
 
-
-    @Override
-    public ServiceResponseResult cambiarEstatusTecnicoDespachoPI(String params) {
-        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-
-        JsonObject login = new JsonObject();
-        login.addProperty(env.getProperty("param.textus.pI"), constantesAmbiente.getTextIpUsuario());
-        login.addProperty(env.getProperty("param.textus.drowssaP"), constantesAmbiente.getTextCredPad());
-        login.addProperty(env.getProperty("param.textus.resU"), constantesAmbiente.getTextCredUs());
-
-        jsonObject.add("Login", login);
-        logger.info("json object params## " + jsonObject.toString());
-        String url = "http://10.216.47.89" + constDespachoPI.getCambiarEstatusOperarioPI();
-        ServiceResponseResult response = restCaller.callPostParamString(url, jsonObject.toString());
-
-        logger.info("RESULT" + gson.toJson(response));
-        return response;
-    }
-
-    @Override
-    public ServiceResponseResult consultarOtsTrabajadasDespachoPI(String params) {
-        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-
-        JsonObject login = new JsonObject();
-        login.addProperty(env.getProperty("param.textus.pI"), constantesAmbiente.getTextIpUsuario());
-        login.addProperty(env.getProperty("param.textus.drowssaP"), constantesAmbiente.getTextCredPad());
-        login.addProperty(env.getProperty("param.textus.resU"), constantesAmbiente.getTextCredUs());
-
-        jsonObject.add("Login", login);
-        logger.info("json object params## " + jsonObject.toString());
-        String url = "http://10.216.47.89" + constDespachoPI.getConsultaOtsTrabajadasDespachoPI();
-        ServiceResponseResult response = restCaller.callPostParamString(url, jsonObject.toString());
-
-        logger.info("RESULT" + gson.toJson(response));
-        return response;
-    }
-
-    @Override
-    public ServiceResponseResult consultarInformacionVehiculoOperario(String params) {
-        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-
-        JsonObject login = new JsonObject();
-        login.addProperty(env.getProperty("param.textus.pI"), constantesAmbiente.getTextIpUsuario());
-        login.addProperty(env.getProperty("param.textus.drowssaP"), constantesAmbiente.getTextCredPad());
-        login.addProperty(env.getProperty("param.textus.resU"), constantesAmbiente.getTextCredUs());
-
-        jsonObject.add("Login", login);
-        logger.info("json object params## " + jsonObject.toString());
-        String url = "http://10.216.47.89" + constDespachoPI.getConsultaInformacionVehiculoOper();
-        ServiceResponseResult response = restCaller.callPostParamString(url, jsonObject.toString());
-        logger.info("RESULT" + gson.toJson(response));
-        return response;
-    }
-
-    @Override
-    public ServiceResponseResult consultarMaterialesOperarioPI(String params) {
-        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-
-        JsonObject login = new JsonObject();
-        login.addProperty(env.getProperty("param.textus.pI"), constantesAmbiente.getTextIpUsuario());
-        login.addProperty(env.getProperty("param.textus.drowssaP"), constantesAmbiente.getTextCredPad());
-        login.addProperty(env.getProperty("param.textus.resU"), constantesAmbiente.getTextCredUs());
-
-        jsonObject.add("Login", login);
-        logger.info("json object params## " + jsonObject.toString());
-        String url = "http://10.216.47.89" + constDespachoPI.getConsultaInformacionMaterialesOperario();
-        ServiceResponseResult response = restCaller.callPostParamString(url, jsonObject.toString());
-        logger.info("RESULT" + gson.toJson(response));
-        return response;
-    }
-
-
     @Override
     public ServiceResponseResult getDetalleAlertas(String params) {
         logger.info("ImplDespachoPIService.class [metodo = getDetalleAlertas() ]\n" + params);
@@ -891,42 +800,6 @@ public class ImplDespachoPIService implements DespachoPIService {
         return response;
     }
 
-
-    @Override
-    public ServiceResponseResult cambiarEstatusIntegrador(String params) {
-        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-
-        JsonObject login = new JsonObject();
-        login.addProperty(env.getProperty("param.textus.pI"), constantesAmbiente.getTextIpUsuario());
-        login.addProperty(env.getProperty("param.textus.drowssaP"), constantesAmbiente.getTextCredPad());
-        login.addProperty(env.getProperty("param.textus.resU"), constantesAmbiente.getTextCredUs());
-
-        jsonObject.add("Login", login);
-        logger.info("json object params## " + jsonObject.toString());
-        String url = "http://10.216.47.89" + constDespachoPI.getCanalizarAlerta();
-        ServiceResponseResult response = restCaller.callPostParamString(url, jsonObject.toString());
-        logger.info("RESULT" + gson.toJson(response));
-        return response;
-    }
-
-    @Override
-    public ServiceResponseResult setComentariosIntegrador(String params) {
-        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-
-        JsonObject login = new JsonObject();
-
-        login.addProperty(env.getProperty("param.textus.pI"), constantesAmbiente.getTextIpUsuario());
-        login.addProperty(env.getProperty("param.textus.drowssaP"), constantesAmbiente.getTextCredPad());
-        login.addProperty(env.getProperty("param.textus.resU"), constantesAmbiente.getTextCredUs());
-
-        jsonObject.add("Login", login);
-        logger.info("json object params## " + jsonObject.toString());
-        String url = "http://10.216.47.89" + constDespachoPI.getAgregarComentarioAlerta();
-        ServiceResponseResult response = restCaller.callPostParamString(url, jsonObject.toString());
-        logger.info("RESULT" + gson.toJson(response));
-        return response;
-    }
-
     @Override
     public ServiceResponseResult consultarDetalleTecnicoOt(String params) {
         logger.info("ImplDespachoPIService.class [metodo = consultarDetalleTecnicoOt() ]\n" + params);
@@ -979,24 +852,6 @@ public class ImplDespachoPIService implements DespachoPIService {
         // TODO Auto-generated method stub
         return null;
     }
-
-    @Override
-    public ServiceResponseResult consultarComentariosAlertaPI(String params) {
-        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-
-        JsonObject login = new JsonObject();
-        login.addProperty(env.getProperty("param.textus.pI"), constantesAmbiente.getTextIpUsuario());
-        login.addProperty(env.getProperty("param.textus.drowssaP"), constantesAmbiente.getTextCredPad());
-        login.addProperty(env.getProperty("param.textus.resU"), constantesAmbiente.getTextCredUs());
-
-        jsonObject.add("Login", login);
-        logger.info("json object params## " + jsonObject.toString());
-        String url = "http://10.216.47.89" + constDespachoPI.getConsultarComentariosAlerta();
-        ServiceResponseResult response = restCaller.callPostParamString(url, jsonObject.toString());
-        logger.info("RESULT" + gson.toJson(response));
-        return response;
-    }
-
 
     @Override
     public DataTableResponse consultarReporteDiario(ParamConsultaOTPI params) {

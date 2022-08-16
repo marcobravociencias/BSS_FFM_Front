@@ -184,25 +184,25 @@ app.service("busquedaService", function($http){
         })
     }
 
-    this.consultarResumenAndServicios = function(params) {
-        return $http({
-            method: "post",
-            url: "req/consultarResumenServicios",
-            data: JSON.stringify(params),
-            headers: { 'Content-Type': undefined },
-            transformRequest: angular.identity
-        })
-    }
+    // this.consultarResumenAndServicios = function(params) {
+    //     return $http({
+    //         method: "post",
+    //         url: "req/consultarResumenServicios",
+    //         data: JSON.stringify(params),
+    //         headers: { 'Content-Type': undefined },
+    //         transformRequest: angular.identity
+    //     })
+    // }
 
-    this.consultarIps = function(params) {
-        return $http({
-            method: "post",
-            url: "req/consultarIps",
-            data: JSON.stringify(params),
-            headers: { 'Content-Type': undefined },
-            transformRequest: angular.identity
-        })
-    }
+    // this.consultarIps = function(params) {
+    //     return $http({
+    //         method: "post",
+    //         url: "req/consultarIps",
+    //         data: JSON.stringify(params),
+    //         headers: { 'Content-Type': undefined },
+    //         transformRequest: angular.identity
+    //     })
+    // }
 
     this.consultarEstatusOs = function(params) {
         return $http({

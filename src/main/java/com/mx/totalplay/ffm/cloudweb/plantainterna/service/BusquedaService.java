@@ -17,12 +17,6 @@ public interface BusquedaService {
     ServiceResponseResult consultarEquipos(String params);
     
     ServiceResponseResult consultarCotizacionesEquipos(String params);
-
-    ServiceResponseResult consultarResumenFactura(String params);
-
-    ServiceResponseResult consultarServicios(String params);
-
-    ServiceResponseResult consultarIps(String params);
     
     ServiceResponseResult configurarServicios(String params);
     

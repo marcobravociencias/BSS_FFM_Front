@@ -104,29 +104,29 @@ public class BusquedaController {
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
 
-    @PostMapping("/consultarResumenServicios")
-    public ResponseEntity<?> consultarResumenServicios(@RequestBody String params){
-        logger.info("#### CONSULTAR RESUMEN SERVICIOS ### \n" + params);
-        Map<Object, Object> result = new HashMap<>();
-        ServiceResponseResult response = busquedaService.consultarResumenFactura(params);
-        ServiceResponseResult res = busquedaService.consultarServicios(params);
-        result.put("resumen", response);
-        result.put("servicios", res);
-        if (response.getResult() instanceof Integer){
-            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-        }
-        return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
-    }
+//    @PostMapping("/consultarResumenServicios")
+//    public ResponseEntity<?> consultarResumenServicios(@RequestBody String params){
+//        logger.info("#### CONSULTAR RESUMEN SERVICIOS ### \n" + params);
+//        Map<Object, Object> result = new HashMap<>();
+//        ServiceResponseResult response = busquedaService.consultarResumenFactura(params);
+//        ServiceResponseResult res = busquedaService.consultarServicios(params);
+//        result.put("resumen", response);
+//        result.put("servicios", res);
+//        if (response.getResult() instanceof Integer){
+//            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+//        }
+//        return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
+//    }
 
-    @PostMapping("/consultarIps")
-    public ResponseEntity<?> consultarIps(@RequestBody String params){
-        logger.info("#### CONSULTAR IPS SF ### \n" + params);
-        ServiceResponseResult response = busquedaService.consultarIps(params);
-        if (response.getResult() instanceof Integer){
-            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-        }
-        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
-    }
+//    @PostMapping("/consultarIps")
+//    public ResponseEntity<?> consultarIps(@RequestBody String params){
+//        logger.info("#### CONSULTAR IPS SF ### \n" + params);
+//        ServiceResponseResult response = busquedaService.consultarIps(params);
+//        if (response.getResult() instanceof Integer){
+//            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+//        }
+//        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+//    }
     
     @PostMapping("/configurarServicios")
     public ResponseEntity<?> configurarServicios(@RequestBody String params){

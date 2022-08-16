@@ -444,102 +444,102 @@ app.controller('busquedaController', ['$scope', '$q', 'busquedaService', 'generi
     }
 
     $scope.mostrarNotaCF = false;
-    $scope.consultarResumenAndServicios = function (numCuentaFactura) {
-        if (!$scope.mostrarNotaCF) {
-            swal({ text: 'Buscando datos ...', allowOutsideClick: false });
-            swal.showLoading();
-            var params = new FormData();
-            params.append("params.numeroCuentaFactura", numCuentaFactura); //CAMBIAWR+++++
-            busquedaService.consultarResumenAndServicios(params).then(function success(response) {
-                console.log(response);
-                if (response.data !== undefined) {
-                    $scope.mostrarNotaCF = true;
-                    if (response.data.resumen.success) {
-                        if (response.data.resumen.result.result === '0') {
-                            $scope.resumenService = response.data.resumen.result;
+    // $scope.consultarResumenAndServicios = function (numCuentaFactura) {
+    //     if (!$scope.mostrarNotaCF) {
+    //         swal({ text: 'Buscando datos ...', allowOutsideClick: false });
+    //         swal.showLoading();
+    //         var params = new FormData();
+    //         params.append("params.numeroCuentaFactura", numCuentaFactura); //CAMBIAWR+++++
+    //         busquedaService.consultarResumenAndServicios(params).then(function success(response) {
+    //             console.log(response);
+    //             if (response.data !== undefined) {
+    //                 $scope.mostrarNotaCF = true;
+    //                 if (response.data.resumen.success) {
+    //                     if (response.data.resumen.result.result === '0') {
+    //                         $scope.resumenService = response.data.resumen.result;
 
-                            swal.close();
+    //                         swal.close();
 
-                        } else {
-                            mostrarMensajeWarningValidacion("No se encontro informaci\u00f3n del resumen")
-                            swal.close();
-                        }
-                    } else {
-                        mostrarMensajeWarningValidacion("No se encontro informaci\u00f3n del resumen");
-                        swal.close();
-                    }
+    //                     } else {
+    //                         mostrarMensajeWarningValidacion("No se encontro informaci\u00f3n del resumen")
+    //                         swal.close();
+    //                     }
+    //                 } else {
+    //                     mostrarMensajeWarningValidacion("No se encontro informaci\u00f3n del resumen");
+    //                     swal.close();
+    //                 }
 
 
-                    if (response.data.servicios.success) {
-                        if (response.data.servicios.result.result === '0') {
-                            $scope.serviciosFacturado = response.data.servicios.result;
-                        } else {
-                            mostrarMensajeWarningValidacion("No se encontro informaci\u00f3n de servcios");
-                            swal.close();
-                        }
-                    } else {
-                        mostrarMensajeWarningValidacion("No se encontro informaci\u00f3n de servcios");
-                        swal.close();
-                    }
-                } else {
-                    mostrarMensajeWarningValidacion("No se encontr\u00F3 informaci\u00F3n");
-                    swal.close();
-                }
+    //                 if (response.data.servicios.success) {
+    //                     if (response.data.servicios.result.result === '0') {
+    //                         $scope.serviciosFacturado = response.data.servicios.result;
+    //                     } else {
+    //                         mostrarMensajeWarningValidacion("No se encontro informaci\u00f3n de servcios");
+    //                         swal.close();
+    //                     }
+    //                 } else {
+    //                     mostrarMensajeWarningValidacion("No se encontro informaci\u00f3n de servcios");
+    //                     swal.close();
+    //                 }
+    //             } else {
+    //                 mostrarMensajeWarningValidacion("No se encontr\u00F3 informaci\u00F3n");
+    //                 swal.close();
+    //             }
 
-                swal.close();
-            });
-        } else {
-            $scope.mostrarNotaCF = false;
-        }
-    }
+    //             swal.close();
+    //         });
+    //     } else {
+    //         $scope.mostrarNotaCF = false;
+    //     }
+    // }
 
     $scope.mostrarIps = false;
     $scope.arregloIps = [];
-    $scope.consultarIps = function(numCuentaFactura) {
-        $scope.arregloIps = [];
-        if (!$scope.mostrarIps) {
-            swal({ text: 'Buscando datos ...', allowOutsideClick: false });
-            swal.showLoading();
-            let params = {
-                numeroCuenta: numCuentaFactura
-            }
-            busquedaService.consultarIps(params).then(function success(response) {
-                console.log(response);
-                if (response.data !== undefined) {
-                    if (response.data.success) {
-                        if (response.data.result.result === '0') {
-                            $scope.arregloIps = response.data.result.arregloIps;
-                            console.log($scope.arregloIps);
-                            angular.forEach($scope.arregloIps, function(elemento, index) {
-                                elemento.ip = elemento.ip ? apertura(elemento.ip) : '';
-                                elemento.gateway = elemento.gateway ? apertura(elemento.gateway) : '';
-                                elemento.mascara = elemento.mascara ? apertura(elemento.mascara) : '';
-                                elemento.dns1 = elemento.dns1 ? apertura(elemento.dns1) : '';
-                                elemento.dns2 = elemento.dns2 ? apertura(elemento.dns2) : '';
-                                elemento.subServicio = elemento.subServicio ? apertura(elemento.subServicio) : '';
-                            });
-                            $scope.mostrarIps = true;
-                        } else {
-                            alertify.set('notifier', 'position', 'top-right', { delay: 4000 });
-                            alertify.warning(response.data.result.resultDescripcion);
-                        }
-                    } else {
-                        alertify.set('notifier', 'position', 'top-right', { delay: 4000 });
-                        alertify.warning("No se encontr\u00F3 informaci\u00F3n");
-                    }
-                } else {
-                    alertify.set('notifier', 'position', 'top-right', { delay: 4000 });
-                    alertify.warning("No se encontr\u00F3 informaci\u00F3n");
-                    swal.close();
-                }
-                swal.close();
-            }, function error(response) {
-                swal.close();
-            });
-        } else {
-            $scope.mostrarIps = false;
-        }
-    }
+    // $scope.consultarIps = function(numCuentaFactura) {
+    //     $scope.arregloIps = [];
+    //     if (!$scope.mostrarIps) {
+    //         swal({ text: 'Buscando datos ...', allowOutsideClick: false });
+    //         swal.showLoading();
+    //         let params = {
+    //             numeroCuenta: numCuentaFactura
+    //         }
+    //         busquedaService.consultarIps(params).then(function success(response) {
+    //             console.log(response);
+    //             if (response.data !== undefined) {
+    //                 if (response.data.success) {
+    //                     if (response.data.result.result === '0') {
+    //                         $scope.arregloIps = response.data.result.arregloIps;
+    //                         console.log($scope.arregloIps);
+    //                         angular.forEach($scope.arregloIps, function(elemento, index) {
+    //                             elemento.ip = elemento.ip ? apertura(elemento.ip) : '';
+    //                             elemento.gateway = elemento.gateway ? apertura(elemento.gateway) : '';
+    //                             elemento.mascara = elemento.mascara ? apertura(elemento.mascara) : '';
+    //                             elemento.dns1 = elemento.dns1 ? apertura(elemento.dns1) : '';
+    //                             elemento.dns2 = elemento.dns2 ? apertura(elemento.dns2) : '';
+    //                             elemento.subServicio = elemento.subServicio ? apertura(elemento.subServicio) : '';
+    //                         });
+    //                         $scope.mostrarIps = true;
+    //                     } else {
+    //                         alertify.set('notifier', 'position', 'top-right', { delay: 4000 });
+    //                         alertify.warning(response.data.result.resultDescripcion);
+    //                     }
+    //                 } else {
+    //                     alertify.set('notifier', 'position', 'top-right', { delay: 4000 });
+    //                     alertify.warning("No se encontr\u00F3 informaci\u00F3n");
+    //                 }
+    //             } else {
+    //                 alertify.set('notifier', 'position', 'top-right', { delay: 4000 });
+    //                 alertify.warning("No se encontr\u00F3 informaci\u00F3n");
+    //                 swal.close();
+    //             }
+    //             swal.close();
+    //         }, function error(response) {
+    //             swal.close();
+    //         });
+    //     } else {
+    //         $scope.mostrarIps = false;
+    //     }
+    // }
 
     $scope.imagenValidar;
     $scope.imagenValidarLista = [];

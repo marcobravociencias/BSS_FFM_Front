@@ -40,16 +40,6 @@ public class ConsultaOTController {
 		return new ResponseEntity<DataTableResponse>(dataTableResponse, HttpStatus.ACCEPTED);
 	}
 	
-	@PostMapping("/consultaImagenesOt")
-	public ResponseEntity<?> consultaImagenesOt(@RequestBody String params) {
-		logger.info("*** Metodo consultaImagenesOt *** Objecto: " + params);
-		result = consultaOTService.consultaImagenesOt(params);
-		if (result.getResult() instanceof Integer){
-			return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
-		}
-		return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
-	}
-	
 	@PostMapping("/consultaInformacionDetalleOt")
 	public ResponseEntity<?> consultaInformacionDetalleOt(@RequestBody String params) {
 		logger.info("*** ConsultaOTController.class *** Metodo consultaInformacionDetalleOt *** Objecto: " + params);
@@ -69,16 +59,6 @@ public class ConsultaOTController {
 		}
 		return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
 	}
-
-	@PostMapping("/consultaActividadTecnico")
-	public ResponseEntity<?> consultaActividadTecnico(@RequestBody String params) {
-		logger.info("*** ConsultaOTController.class *** Metodo consultaActividadTecnico *** Objecto: " + params);
-		result = consultaOTService.consultaActividadTecnico(params);
-		if (result.getResult() instanceof Integer){
-			return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
-		}
-		return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
-	}
 	
 	@PostMapping("/consultaInfoTrayectoria")
 	public ResponseEntity<?> consultaInfoTrayectoria(@RequestBody String params) {
@@ -90,26 +70,6 @@ public class ConsultaOTController {
 		return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
 	}
 	
-	@PostMapping("/consultaInformacionRed")
-	public ResponseEntity<?> consultaInformacionRed(@RequestBody String params) {
-		logger.info("*** ConsultaOTController.class *** Metodo consultaInformacionRed *** Objecto: " + params);
-		result = consultaOTService.consultaInformacionRed(params);
-		if (result.getResult() instanceof Integer){
-			return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
-		}
-		return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
-	}
-	
-	@PostMapping("/consultaCambioEquipo")
-	public ResponseEntity<?> consultaCambioEquipo(@RequestBody String params) {
-		logger.info("*** ConsultaOTController.class *** Metodo consultaCambioEquipo *** Objecto: " + params);
-		result = consultaOTService.consultaCambioEquipo(params);
-		if (result.getResult() instanceof Integer){
-			return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
-		}
-		return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
-	}
-
 	@PostMapping("/consultaReporteConsultaOt")
 	public ResponseEntity<?> consultaReporteConsultaOt(@RequestBody String params) {
 		logger.info("*** ConsultaOTController.class *** Metodo consultaReporteConsultaOt *** Objecto: " + params);

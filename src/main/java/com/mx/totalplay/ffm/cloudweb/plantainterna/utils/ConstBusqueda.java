@@ -32,15 +32,6 @@ public class ConstBusqueda {
     
     @Value("${consultarCotizacionesEquipo}")
     private String consultarCotizacionesEquipo;
-
-    @Value("${consultaResumenFacturaSF}")
-    private String consultaResumenFacturaSF;
-
-    @Value("${consultarServiciosSF}")
-    private String consultarServiciosSF;
-
-    @Value("${consultarIpsSF}")
-    private String consultarIpsSF;
     
     @Value("${configurarServicios}")
     private String configurarServicios;

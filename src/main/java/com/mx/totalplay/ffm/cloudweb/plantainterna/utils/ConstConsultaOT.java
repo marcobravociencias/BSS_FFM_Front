@@ -11,29 +11,8 @@ public class ConstConsultaOT implements Serializable{
 
 private static final long serialVersionUID = 1L;
 	
-	@Value("${urlconstconsultaot}")
-	private String filtrosConsultaOT;
-	
-	@Value("${consultaImagenesOt}")
-	private String consultaImagenesOt;
-	
 	@Value("${consultaOtInfoGeneral}")
 	private String consultaOtInfoGeneral;
-	
-	@Value("${consultaComentariosOtOperario}")
-	private String consultaComentariosOtOperario;
-	
-	@Value("${consultaHistoricoOtOperario}")
-	private String consultaHistoricoOtOperario;
-	
-	@Value("${consultaActividad}")
-	private String consultaActividad;
-	
-	@Value("${consultaInformacionRed}")
-	private String consultaInformacionRed;
-	
-	@Value("${consultaCambioEquipo}")
-	private String consultaCambioEquipo;
 	
 	@Value("${consultaGeneralOt}")
 	private String consultaGeneralOt;

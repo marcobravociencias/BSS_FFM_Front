@@ -663,26 +663,6 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
         $scope.showAaccion = false;
     }
 
-    $scope.cambiarEstatusIntegrador = function () {
-        swal({ text: 'Guardando datos ...', allowOutsideClick: false });
-        swal.showLoading();
-        var params = {
-            "Id_estado": $scope.estatusAlerta.estado.ID,
-            "Id_motivo": $scope.estatusAlerta.motivo.ID
-        }
-        mainAlertasService.cambiarEstatusIntegrador(params).then(function success(response) {
-            response.data = catalogoEstatusAlerta;
-            if (response.data !== undefined) {
-                toastr.success(response.data.result.resultDescription);
-                $scope.vistaDespacho = true;
-                $scope.refrescarBusqueda();
-                swal.close();
-            } else {
-                swal.close();
-            }
-        }).catch(err => handleError(err));
-    }
-
     $scope.evidenciaAlertaConsultada = false;
     $scope.consultarEvidenciaAlerta = function () {
         if (!$scope.evidenciaAlertaConsultada) {

@@ -14,7 +14,6 @@ public interface DespachoPIService {
 
 	public ServiceResponseResult consultarCatalogoTipoOrdenGeneralDespacho();
 	public ServiceResponseResult consultarCatalogoTipoOrdenUsuarioDespacho(String params);
-	public ServiceResponseResult consultarCatalogosPI(String params);
 
 	public ServiceResponseResult consultarCotizacionOTSe(String params);
 	public ServiceResponseResult consultarCatalogoEstatusOrden(String params);
@@ -34,19 +33,12 @@ public interface DespachoPIService {
 
 
 	public ServiceResponseResult consultarConteoAlertasPI(String params);
-	public ServiceResponseResult cambiarEstatusTecnicoDespachoPI(String params);
-	public ServiceResponseResult consultarOtsTrabajadasDespachoPI(String params);
-	public ServiceResponseResult consultarInformacionVehiculoOperario(String params);
-	public ServiceResponseResult consultarMaterialesOperarioPI(String params);
 	public ServiceResponseResult cambiarEstatusOrdenTrabajo(String params);
 	
 	public ServiceResponseResult getDetalleAlertas(String params);
 	public ServiceResponseResult consultaAcciones(String params);
 	public ServiceResponseResult getCatalogoStatusEstadoMotivo(String params);
 	public ServiceResponseResult consultarEvidenciaAlertaPI(String params);
-	public ServiceResponseResult consultarComentariosAlertaPI(String params);
-	public ServiceResponseResult cambiarEstatusIntegrador(String params);
-	public ServiceResponseResult setComentariosIntegrador(String params);
 	public ServiceResponseResult cambiarEstatusTecnicoPI(String params);
 	public ServiceResponseResult confirmaDesconfirmaOtDespacho(String params);
 	public ServiceResponseResult confirmaDesconfirmaOtDespachoToken(String params, String token, String direccionAmbiente);

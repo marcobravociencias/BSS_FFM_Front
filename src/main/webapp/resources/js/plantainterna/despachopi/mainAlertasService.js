@@ -65,28 +65,7 @@ app.service("mainAlertasService", function ($http) {
             }
 		});
 	};
-
-	this.cambiarEstatusIntegrador=function(params){
-		return $http({
-			method: "post",
-			url: "req/cambiarEstatusIntegrador",
-			data:JSON.stringify(params),
-            headers : {
-                'Content-Type' : 'application/json'
-            }
-		});
-	};
-
-	this.setComentariosIntegrador=function(params){
-		return $http({
-			method: "post",
-			url: "req/setComentariosIntegrador",
-			data:JSON.stringify(params),
-            headers : {
-                'Content-Type' : 'application/json'
-            }
-		});
-	};
+	
 	this.consultarDetalleEvidencia = function (params) {
         return $http({
             method: "post",

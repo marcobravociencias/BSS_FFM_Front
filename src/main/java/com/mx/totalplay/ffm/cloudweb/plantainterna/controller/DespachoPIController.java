@@ -101,17 +101,7 @@ public class DespachoPIController {
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 
     }
-
-    @PostMapping("/consultarCatalogoDesphachoPI")
-    public ResponseEntity<?> consultarCatalogoDesphachoPI(@RequestBody String params) {
-        LOGGER.info("##### CONSULTANDO CATALGOS");
-        ServiceResponseResult response = despachoService.consultarCatalogosPI(params);
-        if (response.getResult() instanceof Integer) {
-            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-        }
-        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
-    }
-
+    
     @PostMapping("consulCatalogoGeografiaGeneralDespacho")
     public ResponseEntity<?> consulCatalogoGeografiaGeneralDespacho() {
         LOGGER.info("##### CONSULTANDO CATALOGO GEOGRAFIA GENERAL DESPACHO PI");
@@ -214,46 +204,6 @@ public class DespachoPIController {
         }
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
-
-    @PostMapping("consultandoMaterialesPI")
-    public ResponseEntity<?> consultarMaterialesDespachoOper(@RequestBody String params) {
-        LOGGER.info("##### CONSULTANDO MATERIALES PI OPERARIO");
-        ServiceResponseResult response = despachoService.consultarMaterialesOperarioPI(params);
-        if (response.getResult() instanceof Integer) {
-            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-        }
-        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
-    }
-
-    @PostMapping("consultarVehiculoOperarioPI")
-    public ResponseEntity<?> consultarVehiculoOperarioPI(@RequestBody String params) {
-        LOGGER.info("##### CONSULTANDO INFORMAICON VEHICULO");
-        ServiceResponseResult response = despachoService.cambiarEstatusTecnicoDespachoPI(params);
-        if (response.getResult() instanceof Integer) {
-            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-        }
-        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
-    }
-
-    @PostMapping("consultarOtsTrabajadasDespacho")
-    public ResponseEntity<?> consultarOtsTrabajadasDespacho(@RequestBody String params) {
-        LOGGER.info("##### CONSULTANDO OTS TRABAJADAS");
-        ServiceResponseResult response = despachoService.cambiarEstatusTecnicoDespachoPI(params);
-        if (response.getResult() instanceof Integer) {
-            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-        }
-        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
-    }
-
-    @PostMapping("cambiarEstatusOperarioPI")
-    public ResponseEntity<?> cambiarEstatusOperarioPI(@RequestBody String params) {
-        LOGGER.info("##### CAMBIANDO ESTATUS TECNICO PI");
-        ServiceResponseResult response = despachoService.cambiarEstatusTecnicoDespachoPI(params);
-        if (response.getResult() instanceof Integer) {
-            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-        }
-        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
-    }
     
     @PostMapping("cambiarEstatusTecnicoPI")
     public ResponseEntity<?> cambiarEstatusTecnicoPI(@RequestBody String params){
@@ -264,8 +214,6 @@ public class DespachoPIController {
     	}
     	return new ResponseEntity<>(response,HttpStatus.ACCEPTED);
     }
-    
- 
 
     @PostMapping("/consultarConteoAlertasPI")
     public ResponseEntity<?> consultarConteoAlertasPI(@RequestBody String params) {
@@ -365,40 +313,10 @@ public class DespachoPIController {
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
 
-    @PostMapping("/consultarComentariosAlertaPI")
-    public ResponseEntity<?> consultarComentariosAlertaPI(@RequestBody String params) {
-        LOGGER.info("##### CONSULTANDO consultarComentariosAlertaPI");
-        ServiceResponseResult response = despachoService.consultarComentariosAlertaPI(params);
-        if (response.getResult() instanceof Integer) {
-            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-        }
-        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
-    }
-
     @PostMapping("/consultarlocalizacionOtPIDespacho")
     public ResponseEntity<?> consultarlocalizacionOtPIDespachoController(@RequestBody String params) {
         LOGGER.info("##### CONSULTANDO consultarlocalizacionOtPIDespachoController");
         ServiceResponseResult response = despachoService.consultarlocalizacionOtPIDespacho(params);
-        if (response.getResult() instanceof Integer) {
-            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-        }
-        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
-    }
-
-    @PostMapping("/cambiarEstatusIntegrador")
-    public ResponseEntity<?> cambiarEstatusIntegrador(@RequestBody String params) {
-        LOGGER.info("##### CONSULTANDO cambiarEstatusIntegrador");
-        ServiceResponseResult response = despachoService.cambiarEstatusIntegrador(params);
-        if (response.getResult() instanceof Integer) {
-            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-        }
-        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
-    }
-
-    @PostMapping("/setComentariosIntegrador")
-    public ResponseEntity<?> setComentariosIntegrador(@RequestBody String params) {
-        LOGGER.info("##### CONSULTANDO setComentariosIntegrador");
-        ServiceResponseResult response = despachoService.setComentariosIntegrador(params);
         if (response.getResult() instanceof Integer) {
             return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
         }

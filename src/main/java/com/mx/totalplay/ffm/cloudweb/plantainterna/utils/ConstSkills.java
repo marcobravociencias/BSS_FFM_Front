@@ -14,14 +14,16 @@ public class ConstSkills implements Serializable{
 	
 	@Value("${consultausuariostiposordenes}")
 	private String usuariosTipoOrdenes;
+	
 	@Value("${guardarskillSimple}")
 	private String guardarSkillSimple;
-	@Value("${urlfiltrosskills}")
-	private String filtrosSkillsPI;
+	
 	@Value("${consultarcatalogogeografiageneral}")
 	private String consultarCatalogoGeografiaGeneralPI;
+	
 	@Value("${consultarcatalogogeografiausuario}")
 	private String consultarCatalogoGeografiaUsuarioPI;
+	
 	@Value("${guardarSkillsMultiple}")
 	private String guardarSkillsMultiple;
 

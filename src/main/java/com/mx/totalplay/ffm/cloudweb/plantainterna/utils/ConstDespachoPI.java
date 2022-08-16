@@ -57,25 +57,9 @@ public class ConstDespachoPI implements Serializable{
 	
 	@Value("${consultardetalleordenpi}")
 	private String consultaDetalleOrdenPI;
-			
-	@Value("${urlfiltrosdespacho}")
-	private String filtrosDespachoPI;
 	
 	@Value("${consultarconteoalertaspi}")
 	private String conteoAlertasDespachoPI;
-
-	
-	@Value("${cambiarestatusoperariopi}")
-	private String cambiarEstatusOperarioPI;
-	
-	@Value("${consultarotstrabajadaspi}")
-	private String consultaOtsTrabajadasDespachoPI;
-	
-	@Value("${consultarinformacionvehiculooper}")
-	private String consultaInformacionVehiculoOper;
-	
-	@Value("${consultarmaterialesoperariopi}")
-	private String consultaInformacionMaterialesOperario;
 	
 	@Value("${cambiarestatusordentrabajopi}")
 	private String cambiarEstatusOrdenTrabajoPI;
@@ -94,24 +78,6 @@ public class ConstDespachoPI implements Serializable{
 	
 	@Value("${consultaraccionesalerta}")
 	private String consultarAccionesAlerta;
-	
-	@Value("${consultarcatalogoalerta}")
-	private String consultarCatalogoAlerta;
-	
-	@Value("${canalizarAlerta}")
-	private String canalizarAlerta;
-	
-	@Value("${consultarevidenciaalerta}")
-	private String consultarEvidenciaAlerta;
-	
-	@Value("${consultarhistoricoalerta}")
-	private String consultarHistoricoAlerta;
-	
-	@Value("${consultarcomentariosalerta}")
-	private String consultarComentariosAlerta;
-	
-	@Value("${agregarcomentariosalerta}")
-	private String agregarComentarioAlerta;
 	
 	@Value("${consultardetalleordenpi}")
 	private String consultaDetalleOt;
