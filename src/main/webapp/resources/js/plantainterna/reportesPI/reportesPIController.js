@@ -1622,7 +1622,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 							if (response.data.result.tecnicos !== null) {
 								if (response.data.result.tecnicos.length > 0) {
 									$scope.listaSkillsEx = angular.copy(response.data.result.encabezados);
-									$scope.listaHeaders = ['Cuadrilla','Usuario FFM'];
+									$scope.listaHeaders = ['Cuadrilla', 'Usuario FFM'];
 									$.each($scope.listaSkillsEx, function (index, elemento) {
 										$scope.listaHeaders.push(elemento.descripcion);
 									});
@@ -1644,10 +1644,25 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 									if ($scope.listaTecnicosEx.length && $scope.listaSkillsEx.length) {
 										$scope.enviarDatosReporteTecnicosTiposOrdenes();
 									}
+								} else {
+									swal.close();
+									mostrarMensajeInformativo("¡Actualmente no existen técnicos!");
 								}
+							} else {
+								swal.close();
+								mostrarMensajeInformativo("¡Actualmente no existen técnicos!");
 							}
+						} else {
+							swal.close();
+							mostrarMensajeInformativo("¡Actualmente no existen técnicos!");
 						}
+					} else {
+						swal.close();
+						mostrarMensajeWarningValidacion(response.data.resultDescripcion);
 					}
+				} else {
+					swal.close();
+					mostrarMensajeErrorAlert("Error interno en el servidor.");
 				}
 			});
 		}
