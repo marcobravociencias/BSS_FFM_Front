@@ -2063,7 +2063,12 @@ app.controller('controlVehicularController',
 			$scope.generarReporteControlVehicular = function () {
 				let params = {
 					fechaInicio: $scope.getFechaFormato($("#filtro_fecha_inicio").val()),
-					tipoExcel: 'vehiculos-consultarvehiculos-pi'
+					tipoExcel: 'vehiculos-consultarvehiculos-pi',
+					headers: ["#EMPLEADO", "NOMBRE", "PLACA", "TIPO", "MARCA", "TARJETA CIRCULACION", "EXPEDIENTE", "TIPO CUADRILLA", "EMPRESA", "COSTO",
+						"UBICACION", "DISTRITO", "ESTATUS", "MOTIVO", "FECHA", "COMENTARIO"],
+					valores: ["numeroEmpleado", "nombreCompleto", "placa", "tipoVehiculo", "marca", "tarjetaCirculacion", "expediente", "tipoCuadrilla",
+						"empresa", "costo", "ubicacion", "distrito", "estatus", "motivo", "fecha", "comentario"],
+					sheet: "Reporte vehiculos"
 				}
 				let tituloAccion = "Descarga reporte veh\u00EDculos";
 				let mensajeEnvio = 'Ha ocurrido un error al descargar el reporte';

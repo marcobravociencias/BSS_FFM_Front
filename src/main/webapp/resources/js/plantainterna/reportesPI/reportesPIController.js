@@ -1306,7 +1306,12 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 				fechaSeleccionada: $("#tipo_reporte").val(),
 				elementosPorPagina: $scope.resultReporteDiario,
 				pagina: 1,
-				tipoExcel: 'reportepi-seguimientodiario-pi'
+				tipoExcel: 'reportepi-seguimientodiario-pi',
+				headers: ["OT", "OS", "CUENTA", "TIPO", "SUBTIPO", "ESTATUS", "ESTADO", "MOTIVO",
+				"CIUDAD", "GEOGRAFIA", "#EMPLEADO", "#USUARIO", "TECNICO", "FECHA AGENDADA", "FECHA FIN"],
+				valores: ["ot", "os", "cuenta", "tipo", "subTipo", "estatusOrden", "estadoOrden", "motivoOrden",
+				"ciudad", "geo1", "numEmpleadoDespacho", "numEmpleadoTecnico", "nombreTecnico", "fechaUltimaAgenda", "fechaFin"],
+				sheet: "Reporte Seguimiento Diario"
 			}
 
 			if ($scope.repDiario.idOrden && $scope.repDiario.idOrden != "") {
@@ -1403,7 +1408,12 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 				fechaSeleccionada: $("#tipo_reporte_cierre").val(),
 				elementosPorPagina: $scope.resultReporteCierre,
 				pagina: 1,
-				tipoExcel: 'reportepi-cierrediario-pi'
+				tipoExcel: 'reportepi-cierrediario-pi',
+				headers: ["OT", "OS", "CUENTA", "TIPO", "SUBTIPO", "ESTATUS", "ESTADO", "MOTIVO",
+					"CIUDAD", "GEOGRAFIA", "#EMPLEADO", "#USUARIO", "TECNICO", "FECHA CREACION", "FECHA INICIO", "FECHA AGENDADA", "FECHA FIN"],
+				valores: ["ot", "os", "cuenta", "intervencion", "subIntervencion", "estatus", "estado", "causa",
+					"ciudad", "geo1", "numEmpleadoInstalador", "usrInstalador", "instalador", "fechaCreacion", "fechaInicio", "fechaAgendamiento", "fechaCierre"],
+				sheet: "Reporte Cierre Diario"
 			}
 
 			if ($scope.repCierreDiario.idOrden && $scope.repCierreDiario.idOrden != "") {
@@ -1509,8 +1519,12 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 				fechaSeleccionada: $("#tipo_reporte_asignadas").val(),
 				elementosPorPagina: $scope.resultReporteAsignadas,
 				pagina: 1,
-				tipoExcel: 'reportepi-asignadascompensacion-pi'
-
+				tipoExcel: 'reportepi-asignadascompensacion-pi',
+				headers: ["OT", "OS", "CUENTA", "TIPO", "SUBTIPO", "PROVEEDOR", "GEOGRAFIA","GEOGRAFIA 2","DESPACHO", "#EMPLEADO",
+				"#USUARIO", "INSTALADOR", "FECHA CREACION", "FECHA AGENDA", "FECHA FIN"],
+				valores: ["ot", "os", "cuenta", "intervencion", "subIntervencion", "proveedor", "geo1", "geo2",
+				"nombreDespacho", "numEmpleadoInstalador", "usrInstalador", "instalador", "fechaCreacion", "fechaAgendamiento", "fechaCierre"],
+				sheet: "Reporte Asignadas Compensacion"
 			}
 
 			if ($scope.repAsignadas.idOrden && $scope.repAsignadas.idOrden != "") {
@@ -1554,7 +1568,10 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 		let params = {
 			listSkills: $scope.listaSkillsEx,
 			listTecnicos: $scope.listaTecnicosEx,
-			tipoExcel: 'reportepi-tecnicostiposordenes-pi'
+			tipoExcel: 'reportepi-tecnicostiposordenes-pi',
+			headers: $scope.listaHeaders,
+			valores: $scope.listaHeaders,
+			sheet: "Reporte Skills Instaladores"
 		}
 		console.log(params);
 		genericService.enviarParamsReporte(params).then(function success(response) {
@@ -1578,6 +1595,7 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 		let mensajeError = '';
 		$scope.listaTecnicosEx = [];
 		$scope.listaSkillsEx = [];
+		$scope.listaHeaders = [];
 
 		if ($scope.nfiltrogeografiaTecnicosTiposOrdenes === undefined || $scope.nfiltrogeografiaTecnicosTiposOrdenes === null || $scope.nfiltrogeografiaTecnicosTiposOrdenes === "") {
 			$scope.nfiltrogeografiaTecnicosTiposOrdenes = $scope.obtenerNivelUltimoJerarquia();
@@ -1604,6 +1622,11 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 							if (response.data.result.tecnicos !== null) {
 								if (response.data.result.tecnicos.length > 0) {
 									$scope.listaSkillsEx = angular.copy(response.data.result.encabezados);
+									$scope.listaHeaders = ['Cuadrilla','Usuario FFM'];
+									$.each($scope.listaSkillsEx, function (index, elemento) {
+										$scope.listaHeaders.push(elemento.descripcion);
+									});
+									console.log($scope.listaHeaders);
 									$scope.listaTecnicosEx = angular.copy(response.data.result.tecnicos);
 									angular.forEach($scope.listaTecnicosEx, function (tec, index) {
 										var skillsRegistradas = [];

@@ -382,7 +382,12 @@ app.controller('reportesLogController', ['$scope', '$q', 'reportesLogService', '
             fechaInicio: moment(new Date()).format("YYYY-MM-DD"),
             fechaFin: moment(new Date()).format("YYYY-MM-DD"),
             idUsuario: $scope.idDetalle,
-            tipoExcel: 'reportelog-consultarlog-pi'
+            tipoExcel: 'reportelog-consultarlog-pi',
+            headers: ["MODULO", "ACCION", "ESTATUS", "MENSAJE", "COMENTARIOS", "FECHA REGISTRO", "NOMBRE",
+                "#EMPLEADO", "USUARIO", "IP"],
+            valores: ["descripcionModulo", "descripcionAccion", "descripcionEstatusHttp", "descripcionMensajeHttp", "comentarios", "fechaRegistro", "nombreUsuario",
+                "numEmpleado", "usuarioFFM", "ip"],
+            sheet: "Reporte Log"
         };
 
         genericService.enviarParamsReporte(params).then(function success(response) {
@@ -579,7 +584,12 @@ app.controller('reportesLogController', ['$scope', '$q', 'reportesLogService', '
             idGeografias: clusters,
             fechaInicio: $scope.getFechaFormato($("#filtro_fecha_inicio").val()),
             fechaFin: $scope.getFechaFormato($("#filtro_fecha_fin").val()),
-            tipoExcel: 'reportelog-consultarloggeneral-pi'
+            tipoExcel: 'reportelog-consultarloggeneral-pi',
+            headers: ["MODULO", "ACCION", "ESTATUS", "MENSAJE", "COMENTARIOS", "FECHA REGISTRO", "NOMBRE",
+            "#EMPLEADO", "USUARIO", "IP"],
+            valores: ["descripcionModulo", "descripcionAccion", "descripcionEstatusHttp", "descripcionMensajeHttp", "comentarios", "fechaRegistro", "nombreUsuario",
+            "numEmpleado", "usuarioFFM", "ip"],
+            sheet: "Reporte Log"
         };
         
 

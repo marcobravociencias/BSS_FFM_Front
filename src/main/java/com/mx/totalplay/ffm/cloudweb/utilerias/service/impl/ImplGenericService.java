@@ -165,39 +165,32 @@ public class ImplGenericService  implements GenericService {
 		
 		ServiceResponseResult response = null;
 		JsonArray array = null;
-		String[] headers = {};
-		String[] valores = {};
 		
 		List<String> headersList = null;
 		List<String> valoresList = null;
 		
-		if(jsonObject.get("headers") != null) {
-			JsonArray headersArray = (JsonArray) jsonObject.get("headers");
-			headersList = new ArrayList<String>();
-	        for (int m = 0; m < headersArray.size(); m++) {
-	        	JsonElement hd = headersArray.get(m);
-	        	headersList.add(hd.getAsString());
-	        }
-	        
-	        JsonArray valoresArray = (JsonArray) jsonObject.get("valores");
-			valoresList = new ArrayList<String>();
-	        for (int m = 0; m < valoresArray.size(); m++) {
-	        	JsonElement val = valoresArray.get(m);
-	        	valoresList.add(val.getAsString());
-	        }
-		}
+		JsonArray headersArray = (JsonArray) jsonObject.get("headers");
+		headersList = new ArrayList<String>();
+        for (int m = 0; m < headersArray.size(); m++) {
+        	JsonElement hd = headersArray.get(m);
+        	headersList.add(hd.getAsString());
+        }
+        
+        JsonArray valoresArray = (JsonArray) jsonObject.get("valores");
+		valoresList = new ArrayList<String>();
+        for (int m = 0; m < valoresArray.size(); m++) {
+        	JsonElement val = valoresArray.get(m);
+        	valoresList.add(val.getAsString());
+        }
+	
+		sheet = book.createSheet(jsonObject.get("sheet").getAsString());
 		
         
-		List<String> headerTemp = headersList;
-		List<String> valoresTemp = valoresList;
+		List<String> headers = headersList;
+		List<String> valores = valoresList;
 		
 		switch (tipoExcel) {
 			case "consultaot-consultarordenes-pi":
-				sheet = book.createSheet("Reporte Consulta OT");
-				headers = new String[] { "OT", "OS", "CLIENTE", "CUENTA", "CIUDAD", "FECHA AGENDA", "TIPO", "SUBTIPO",
-						"ESTATUS", "ESTADO", "MOTIVO" };
-				valores = new String[] { "idOrden", "folioSistema", "nombreCliente", "claveCliente", "cluster", "fechaAgenda", "descTipo", "descSubTipo",
-						"descripcionEstatus", "descripcionEstado", "descripcionMotivo"};
 				response = consultarInformacionExcelGenericPost(params, constConsultaOT.getConsultaGeneralOt(), method);
 				if (response.getResult() == null || response.getResult() instanceof Integer) {
 				} else {
@@ -206,11 +199,6 @@ public class ImplGenericService  implements GenericService {
 				}
 				break;
 			case "reportepi-seguimientodiario-pi":
-				sheet = book.createSheet("Reporte Seguimiento Diario");
-	            headers = new String[] { "OT", "OS", "CUENTA", "TIPO", "SUBTIPO", "ESTATUS", "ESTADO", "MOTIVO",
-						"CIUDAD", "GEOGRAFIA", "#EMPLEADO", "#USUARIO", "TECNICO", "FECHA AGENDADA", "FECHA FIN" };
-				valores = new String[] { "ot", "os", "cuenta", "tipo", "subTipo", "estatusOrden", "estadoOrden", "motivoOrden",
-						"ciudad", "geo1", "numEmpleadoDespacho", "numEmpleadoTecnico", "nombreTecnico", "fechaUltimaAgenda", "fechaFin"};
 				response = consultarInformacionExcelGenericPost(params, constReportePI.getConsultarReporteDiario(), method);
 				if (response.getResult() == null || response.getResult() instanceof Integer) {
 				} else {
@@ -219,11 +207,6 @@ public class ImplGenericService  implements GenericService {
 				}
 				break;
 			case "reportepi-cierrediario-pi":
-				sheet = book.createSheet("Reporte Cierre Diario");
-				headers = new String[] { "OT", "OS", "CUENTA", "TIPO", "SUBTIPO", "ESTATUS", "ESTADO", "MOTIVO",
-						"CIUDAD", "GEOGRAFIA", "#EMPLEADO", "#USUARIO", "TECNICO", "FECHA CREACION", "FECHA INICIO", "FECHA AGENDADA", "FECHA FIN" };
-				valores = new String[] { "ot", "os", "cuenta", "intervencion", "subIntervencion", "estatus", "estado", "causa",
-						"ciudad", "geo1", "numEmpleadoInstalador", "usrInstalador", "instalador", "fechaCreacion", "fechaInicio", "fechaAgendamiento", "fechaCierre"};
 				response = consultarInformacionExcelGenericPost(params, constReportePI.getConsultarCierreDiario(), method);
 				if (response.getResult() == null || response.getResult() instanceof Integer) {
 				} else {
@@ -232,11 +215,6 @@ public class ImplGenericService  implements GenericService {
 				}
 				break;
 			case "reportepi-asignadascompensacion-pi":
-				sheet = book.createSheet("Reporte Asignadas Compensacion");
-				headers = new String[] { "OT", "OS", "CUENTA", "TIPO", "SUBTIPO", "PROVEEDOR", "GEOGRAFIA","GEOGRAFIA 2","DESPACHO", "#EMPLEADO",
-						"#USUARIO", "INSTALADOR", "FECHA CREACION", "FECHA AGENDA", "FECHA FIN"};
-				valores = new String[] { "ot", "os", "cuenta", "intervencion", "subIntervencion", "proveedor", "geo1", "geo2",
-						"nombreDespacho", "numEmpleadoInstalador", "usrInstalador", "instalador", "fechaCreacion", "fechaAgendamiento", "fechaCierre"};
 				response = consultarInformacionExcelGenericPost(params, constReportePI.getConsultarAsignadasCompensacion(), method);
 				if (response.getResult() == null || response.getResult() instanceof Integer) {
 				} else {
@@ -245,18 +223,7 @@ public class ImplGenericService  implements GenericService {
 				}
 				break;
 			case "reportepi-tecnicostiposordenes-pi":
-				sheet = book.createSheet("Reporte Skills Instaladores");
 				JsonObject jsonObjectTecnicos = gson.fromJson(params, JsonObject.class);
-				JsonArray skillsArray = jsonObjectTecnicos.getAsJsonArray("listSkills");
-				List<String> skillsList = new ArrayList<String>();
-				skillsList.add("Cuadrilla");
-				skillsList.add("Usuario FFM");
-		        for (int m = 0; m < skillsArray.size(); m++) {
-		        	JsonObject skill = (JsonObject) skillsArray.get(m);
-		        	skillsList.add(skill.get("descripcion").getAsString());
-		        }
-				headers = skillsList.toArray(new String[skillsList.size()]);
-				valores = skillsList.toArray(new String[skillsList.size()]);
 				JsonArray tecnicosArray = jsonObjectTecnicos.getAsJsonArray("listTecnicos");
 		        JsonArray tecnicosReporte = new JsonArray();
 		        JsonObject tecnicosR = new JsonObject();
@@ -279,11 +246,6 @@ public class ImplGenericService  implements GenericService {
 		        } 
 				break;
 			case "vehiculos-consultarvehiculos-pi":
-				sheet = book.createSheet("Reporte vehiculos");
-				headers = new String[] { "#EMPLEADO", "NOMBRE", "PLACA", "TIPO", "MARCA", "TARJETA CIRCULACION", "EXPEDIENTE","TIPO CUADRILLA","EMPRESA", "COSTO",
-						"UBICACION", "DISTRITO", "ESTATUS", "MOTIVO", "FECHA", "COMENTARIO"};
-				valores = new String[] { "numeroEmpleado", "nombreCompleto", "placa", "tipoVehiculo", "marca", "tarjetaCirculacion", "expediente", "tipoCuadrilla",
-						"empresa", "costo", "ubicacion", "distrito", "estatus", "motivo", "fecha", "comentario"};
 				response = consultarInformacionExcelGenericPost(params, constControlVehicular.getReporteControlVehicular(), method);
 				if (response.getResult() == null || response.getResult() instanceof Integer) {
 				} else {
@@ -292,11 +254,6 @@ public class ImplGenericService  implements GenericService {
 				}
 				break;
 			case "traspasos-consultarots-pi":
-				sheet = book.createSheet("Reporte Consulta OT");
-				headers = new String[] { "OT", "CLIENTE", "CUENTA", "CIUDAD", "FECHA AGENDA", "TIPO", "SUBTIPO",
-						"ESTATUS", "ESTADO", "MOTIVO" };
-				valores = new String[] { "idOrden", "nombreCliente", "claveCliente", "ciudad", "fechaAgenda", "descTipo", "descSubTipo",
-						"descripcionEstatus", "descripcionEstado", "descripcionMotivo"};
 				response = consultarInformacionExcelGenericPost(params, constTraspaso.getConsultaGeneralTraspasosOt(), method);
 				if (response.getResult() == null || response.getResult() instanceof Integer) {
 				} else {
@@ -305,11 +262,6 @@ public class ImplGenericService  implements GenericService {
 				}
 				break;
 			case "traspasos-consultartraspasos-pi":
-				sheet = book.createSheet("Reporte Traspasos OT");
-				headers = new String[] { "OT", "CLIENTE", "CUENTA", "CIUDAD", "FECHA AGENDA", "TIPO", "SUBTIPO",
-						"MOTIVO", "MOTIVO TRANSFERENCIA", "ESTATUS", "ESTADO" };
-				valores = new String[] { "idOrden", "nombreCliente", "claveCliente", "ciudad", "fechaAgenda", "descTipo", "descSubTipo",
-						"descripcionMotivo", "motivoTransferencia", "descripcionEstatus", "descripcionEstado"};
 				response = consultarInformacionExcelGenericPost(params, constTraspaso.getConsultaGeneralTraspasos(), method);
 				if (response.getResult() == null || response.getResult() instanceof Integer) {
 				} else {
@@ -318,11 +270,6 @@ public class ImplGenericService  implements GenericService {
 				}
 				break;
 			case "reportelog-consultarlog-pi":
-				sheet = book.createSheet("Reporte Log");
-				headers = new String[] { "MODULO", "ACCION", "ESTATUS", "MENSAJE", "COMENTARIOS", "FECHA REGISTRO", "NOMBRE",
-						"#EMPLEADO", "USUARIO", "IP" };
-				valores = new String[] { "descripcionModulo", "descripcionAccion", "descripcionEstatusHttp", "descripcionMensajeHttp", "comentarios", "fechaRegistro", "nombreUsuario",
-						"numEmpleado", "usuarioFFM", "ip"};
 				response = consultarInformacionExcelGenericPost(params, constantesAmbiente.getConsultarAccionesRealizadas(), method);
 				if (response.getResult() == null || response.getResult() instanceof Integer) {
 				} else {
@@ -365,11 +312,6 @@ public class ImplGenericService  implements GenericService {
 				}
 				break;
 			case "reportelog-consultarloggeneral-pi":
-				sheet = book.createSheet("Reporte Log");
-				headers = new String[] { "MODULO", "ACCION", "ESTATUS", "MENSAJE", "COMENTARIOS", "FECHA REGISTRO", "NOMBRE",
-						"#EMPLEADO", "USUARIO", "IP" };
-				valores = new String[] { "descripcionModulo", "descripcionAccion", "descripcionEstatusHttp", "descripcionMensajeHttp", "comentarios", "fechaRegistro", "nombreUsuario",
-						"numEmpleado", "usuarioFFM", "ip"};
 				response = consultarInformacionExcelGenericPost(params, constantesAmbiente.getConsultarReporteLogGeneral(), method);
 				if (response.getResult() == null || response.getResult() instanceof Integer) {
 				} else {
@@ -412,11 +354,6 @@ public class ImplGenericService  implements GenericService {
 				}
 				break;
 			case "despachopi-seguimientodiario-pi":
-				sheet = book.createSheet("Reporte Seguimiento Diario");
-				headers = new String[] { "OT", "OS", "CUENTA", "TIPO", "SUBTIPO", "ESTATUS", "ESTADO", "MOTIVO", "CIUDAD", "GEOGRAFIA", 
-						"#EMPLEADO", "#USUARIO", "TECNICO", "FECHA AGENDA", "FECHA FIN" };
-				valores = new String[] { "ot", "os", "cuenta", "tipo", "subTipo", "estatusOrden", "estadoOrden", "motivoOrden",
-						"ciudad", "geo1", "numEmpleadoDespacho", "numEmpleadoTecnico", "nombreTecnico", "fechaUltimaAgenda", "fechaFin"};
 				response = consultarInformacionExcelGenericPost(params, constReportePI.getConsultarReporteDiario(), method);
 				if (response.getResult() == null || response.getResult() instanceof Integer) {
 				} else {
@@ -425,13 +362,6 @@ public class ImplGenericService  implements GenericService {
 				}
 				break;
 			case "reportesf-backloginstalaciones-pi":
-				sheet = book.createSheet("Reporte instalaciones");
-				headers = new String[] { "OT", "OS", "CUENTA", "ESTATUS", "FAMILIA", "CONFIRMADA", "TURNO",
-						"PLAZA SITIO", "OPERACION", "CLUSTER", "DELEGACION", "DISTRITO", "FECHA CREACION", "FECHA AGENDA", "FECHA MODIFICACION",
-						"CANAL VENTA", "COMPANIA", "TIPO ORDEN", "SUBTIPO"};
-				valores = new String[] { "idOt", "ordenServicio", "numeroCuenta", "estatusOs", "nombreFamilia", "confirmada", "turno",
-						"plazaSitio", "plazaOperacion", "clusterComercial", "delegacionMunicipio", "distritoSitio", "fechaCreacion",
-						"fechaAgendada", "fechaModificacion", "canalVenta", "compania", "tipoOrden", "subTipoOrden"};
 				response = consultarInformacionExcelGenericPost(params, constReportesSF.getConsultaReporteBacklog(), method);
 				if (response.getResult() == null || response.getResult() instanceof Integer) {
 				} else {
@@ -454,16 +384,6 @@ public class ImplGenericService  implements GenericService {
 				}
 				break;
 			case "reportesf-backlog-pi":
-				JsonObject jsonReport= gson.fromJson(params, JsonObject.class);
-				sheet = book.createSheet("Reporte " + jsonReport.get("nombre").getAsString());
-				headers = new String[] { "OT", "OS", "CUENTA", "TICKET", "REGION INSTALACION", "PLAZA", "ZONA",
-						"CLUSTER INSTALACION", "COLONIA", "PLAZA SITIO", "DISTRITO SITIO", "PRIMER FECHA AGENDAMIENTO", "FECHA AGENDAMIENTO", "TURNO",
-						"FECHA ACTIVACION", "ESTATUS", "ESTADO", "FECHA APERTURA", "PROPIETARIO", "GRUPO", "NIVEL1", "NIVEL2", "NIVEL3", "REPETIDO",
-						"TIPO ORDEN", "SUBTIPO", "NUEVO SEGMENTO"};
-				valores = new String[] { "idOt", "ordenServicio", "numeroCuenta", "ticket", "regionInstalacion", "plaza", "zona",
-						"clusterInstalacion", "colonia", "plazaSitio", "distritoSitio", "distritoSitio", "fechaApertura",
-						"primerFechaAgendamiento", "fechaAgendamiento", "turno", "fechaActivacion", "estatus", "estado",
-						"propietario", "grupoCodificador","nivel1","nivel2", "nivel3", "repetido", "tipoOrden", "subTipo", "nuevoSegmento"};
 				response = consultarInformacionExcelGenericPost(params, constReportesSF.getConsultaReporteBacklog(), method);
 				if (response.getResult() == null || response.getResult() instanceof Integer) {
 				} else {
@@ -486,9 +406,6 @@ public class ImplGenericService  implements GenericService {
 				}
 				break;
 			case "reportesf-ingresosoportes-pi":
-				sheet = book.createSheet("Reporte ingresos soportes");
-				headers = null;
-				valores = null;
 				response = consultarInformacionExcelGenericPost(params, constReportesSF.getConsultaReporteIngresoSoporte(), method);
 				if (response.getResult() == null || response.getResult() instanceof Integer) {
 				} else {
@@ -497,9 +414,6 @@ public class ImplGenericService  implements GenericService {
 				}
 				break;
 			case "reportesf-ingresoresidencial-pi":
-				sheet = book.createSheet("Reporte ventas residencial");
-				headers = null;
-				valores = null;
 				response = consultarInformacionExcelGenericPost(params, constReportesSF.getConsultaReporteIngresoResidencial(), method);
 				if (response.getResult() == null || response.getResult() instanceof Integer) {
 				} else {
@@ -508,9 +422,6 @@ public class ImplGenericService  implements GenericService {
 				}
 				break;
 			case "reportesf-ingresoempresarial-pi":
-				sheet = book.createSheet("Reporte ventas empresarial");
-				headers = null;
-				valores = null;
 				response = consultarInformacionExcelGenericPost(params, constReportesSF.getConsultaReporteIngresoEmpresarial(), method);
 				if (response.getResult() == null || response.getResult() instanceof Integer) {
 				} else {
@@ -519,9 +430,6 @@ public class ImplGenericService  implements GenericService {
 				}
 				break;
 			case "reportesf-ingresoempresarialsa-pi":
-				sheet = book.createSheet("Reporte ventas empresarial sin agenda");
-				headers = null;
-				valores = null;
 				response = consultarInformacionExcelGenericPost(params, constReportesSF.getConsultaReporteIngresoEmpresarialSinAgenda(), method);
 				if (response.getResult() == null || response.getResult() instanceof Integer) {
 				} else {
@@ -530,9 +438,6 @@ public class ImplGenericService  implements GenericService {
 				}
 				break;
 			case "reportesf-completadosoportes-pi":
-				sheet = book.createSheet("Reporte completado soportes");
-				headers = null;
-				valores = null;
 				response = consultarInformacionExcelGenericPost(params, constReportesSF.getConsultaReporteCompletosSoporte(), method);
 				if (response.getResult() == null || response.getResult() instanceof Integer) {
 				} else {
@@ -541,9 +446,6 @@ public class ImplGenericService  implements GenericService {
 				}
 				break;
 			case "reportesf-completadoresidencial-pi":
-				sheet = book.createSheet("Reporte instalacion residencial");
-				headers = null;
-				valores = null;
 				response = consultarInformacionExcelGenericPost(params, constReportesSF.getConsultaReporteCompletosResidencial(), method);
 				if (response.getResult() == null || response.getResult() instanceof Integer) {
 				} else {
@@ -566,9 +468,6 @@ public class ImplGenericService  implements GenericService {
 				}
 				break;
 			case "reportesf-completadoempresarial-pi":
-				sheet = book.createSheet("Reporte instalacion empresarial");
-				headers = null;
-				valores = null;
 				response = consultarInformacionExcelGenericPost(params, constReportesSF.getConsultaReporteCompletosEmpresarial(), method);
 				if (response.getResult() == null || response.getResult() instanceof Integer) {
 				} else {
@@ -605,20 +504,11 @@ public class ImplGenericService  implements GenericService {
 		row = sheet.createRow(++rowsCantidad);
 		row.setHeightInPoints((2 * sheet.getDefaultRowHeightInPoints()));
 		int aux = 0;
-		if(headers != null) {
-			for (String header : headers) {
-				cell = row.createCell(++aux);
-				cell.setCellValue(header);
-				cell.setCellStyle(thStyleTitle);
-				sheet.setColumnWidth(aux, 20 * 256);
-			}
-		}else {
-			for (String header : headerTemp) {
-				cell = row.createCell(++aux);
-				cell.setCellValue(header);
-				cell.setCellStyle(thStyleTitle);
-				sheet.setColumnWidth(aux, 20 * 256);
-			}
+		for (String header : headers) {
+			cell = row.createCell(++aux);
+			cell.setCellValue(header);
+			cell.setCellStyle(thStyleTitle);
+			sheet.setColumnWidth(aux, 20 * 256);
 		}
 		
 
@@ -639,18 +529,11 @@ public class ImplGenericService  implements GenericService {
 				JsonObject object = (JsonObject) array.get(i);
 				row = sheet.createRow(++rowsCantidad);
 				row.setHeightInPoints((1 * sheet.getDefaultRowHeightInPoints()));
-				if(valores != null) {
-					for(String valor: valores) {
-						cell = row.createCell(++aux);
-						cell.setCellValue((object.get(valor) != null && object.get(valor).getAsString().trim() != "") ? object.get(valor).getAsString().trim() : "Sin dato");
-						cell.setCellStyle(thStyleContent);
-					}
-				}else {
-					for(String valor: valoresTemp) {
-						cell = row.createCell(++aux);
-						cell.setCellValue((object.get(valor) != null && object.get(valor).getAsString().trim() != "") ? object.get(valor).getAsString().trim() : "Sin dato");
-						cell.setCellStyle(thStyleContent);
-					}
+				
+				for(String valor: valores) {
+					cell = row.createCell(++aux);
+					cell.setCellValue((object.get(valor) != null && object.get(valor).getAsString().trim() != "") ? object.get(valor).getAsString().trim() : "Sin dato");
+					cell.setCellStyle(thStyleContent);
 				}
 				
 				aux = 0;
@@ -684,7 +567,9 @@ public class ImplGenericService  implements GenericService {
 
 			Map<String, String> paramsRequestGet = new HashMap<String, String>();
 			for (String hdr : headerJson) {
-				paramsRequestGet.put(hdr.toString(), jsonObject.get(hdr).getAsString());
+				if(!hdr.equals("headers") && !hdr.equals("valores")) {
+					paramsRequestGet.put(hdr.toString(), jsonObject.get(hdr).getAsString());
+				}
 			}
 			response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest, ServiceResponseResult.class,
 					tokenAcces);

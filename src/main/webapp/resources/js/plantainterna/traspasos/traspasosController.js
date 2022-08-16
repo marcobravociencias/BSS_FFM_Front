@@ -1286,7 +1286,12 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 				fechaFin: $scope.getFechaFormato(document.getElementById('filtro_fecha_fin_otsTaspaso').value),
 				elementosPorPagina: $scope.elementosRegistro,
 				pagina: 1,
-				tipoExcel: 'traspasos-consultarots-pi'
+				tipoExcel: 'traspasos-consultarots-pi',
+				headers: ["OT", "CLIENTE", "CUENTA", "CIUDAD", "FECHA AGENDA", "TIPO", "SUBTIPO",
+					"ESTATUS", "ESTADO", "MOTIVO"],
+				valores: ["idOrden", "nombreCliente", "claveCliente", "ciudad", "fechaAgenda", "descTipo", "descSubTipo",
+					"descripcionEstatus", "descripcionEstado", "descripcionMotivo"],
+				sheet: "Reporte Consulta OT"
 			}
 			swal({ text: 'Cargando registros...', allowOutsideClick: false });
 			swal.showLoading();
@@ -1400,7 +1405,12 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 				fechaFin: $scope.getFechaFormato(document.getElementById('filtro_fecha_fin_traspaso').value),
 				elementosPorPagina: $scope.elementosRegistroTraspaso,
 				pagina: 1,
-				tipoExcel: 'traspasos-consultartraspasos-pi'
+				tipoExcel: 'traspasos-consultartraspasos-pi',
+				headers: ["OT", "CLIENTE", "CUENTA", "CIUDAD", "FECHA AGENDA", "TIPO", "SUBTIPO",
+					"MOTIVO", "MOTIVO TRANSFERENCIA", "ESTATUS", "ESTADO"],
+				valores: ["idOrden", "nombreCliente", "claveCliente", "ciudad", "fechaAgenda", "descTipo", "descSubTipo",
+					"descripcionMotivo", "motivoTransferencia", "descripcionEstatus", "descripcionEstado"],
+				sheet: "Reporte Traspasos OT"
 			}
 			swal({ text: 'Cargando registros...', allowOutsideClick: false });
 			swal.showLoading();

@@ -2186,7 +2186,12 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 				fechaFin: $scope.getFechaFormato(document.getElementById('filtro_fecha_fin_consultaOt').value),
 				elementosPorPagina: $scope.elementosRegistro,
 				pagina: 1,
-				tipoExcel: 'consultaot-consultarordenes-pi'
+				tipoExcel: 'consultaot-consultarordenes-pi',
+				headers: ["OT", "OS", "CLIENTE", "CUENTA", "CIUDAD", "FECHA AGENDA", "TIPO", "SUBTIPO",
+					"ESTATUS", "ESTADO", "MOTIVO"],
+				valores: ["idOrden", "folioSistema", "nombreCliente", "claveCliente", "cluster", "fechaAgenda", "descTipo", "descSubTipo",
+					"descripcionEstatus", "descripcionEstado", "descripcionMotivo"],
+				sheet: 'Reporte Consulta OT'
 			}
 			// console.log(params)
 			genericService.enviarParamsReporte(params).then(function success(response) {

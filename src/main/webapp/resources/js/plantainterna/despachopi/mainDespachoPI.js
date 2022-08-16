@@ -1574,7 +1574,12 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
                     fechaSeleccionada: $("#tipo_reporte").val(),
                     elementosPorPagina: $scope.resultReporteDiario,
                     pagina: 1,
-                    tipoExcel: 'despachopi-seguimientodiario-pi'
+                    tipoExcel: 'despachopi-seguimientodiario-pi',
+                    headers: ["OT", "OS", "CUENTA", "TIPO", "SUBTIPO", "ESTATUS", "ESTADO", "MOTIVO", "CIUDAD", "GEOGRAFIA",
+                        "#EMPLEADO", "#USUARIO", "TECNICO", "FECHA AGENDA", "FECHA FIN"],
+                    valores: ["ot", "os", "cuenta", "tipo", "subTipo", "estatusOrden", "estadoOrden", "motivoOrden",
+                        "ciudad", "geo1", "numEmpleadoDespacho", "numEmpleadoTecnico", "nombreTecnico", "fechaUltimaAgenda", "fechaFin"],
+                    sheet: "Reporte Seguimiento Diario"
                 }
     
                 if ($scope.repDiario.idOrden && $scope.repDiario.idOrden != "") {
