@@ -43,28 +43,14 @@
             <table id="reporteVentasEmpSATable" class="display table  table-reportesf" cellspacing="0" width="100%">
                 <thead id="thead_reporteVentasEmp">
                     <tr>
-                        <th data-idColumn="0" data-isNumber="true" class="orderColumnTable orderColumnAscTable">Cuenta</th>
-                        <th data-idColumn="1" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Cluster</th>
-                        <th data-idColumn="2" data-isNumber="true" class="orderColumnTable orderColumnAscTable">Estatus
+                        <th data-idColumn="0" data-isNumber="true" class="orderColumnTable orderColumnAscTable">Cotizaci&oacute;n</th>
+                        <th data-idColumn="1" data-isNumber="false" class="orderColumnTable orderColumnAscTable">CSP</th>
+                        <th data-idColumn="2" data-isNumber="true" class="orderColumnTable orderColumnAscTable">Plaza
                         </th>
-                        <th data-idColumn="3" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Fecha creaci&oacute;n
+                        <th data-idColumn="3" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Tipo orden
                         </th>
-                        <th data-idColumn="4" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Fecha activaci&oacute;n
+                        <th data-idColumn="4" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Ganada
                         </th>
-                        <th data-idColumn="5" data-isNumber="false" class="orderColumnTable orderColumnAscTable">
-                            Motivo cancelaci&oacute;n</th>
-                        <th data-idColumn="6" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Fecha agendamiento
-                        </th>
-                        <th data-idColumn="7" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Origen</th>
-                        <th data-idColumn="8" data-isNumber="true" class="orderColumnTable orderColumnAscTable">
-                           Fecha cierre</th>
-                        <th data-idColumn="9" data-isNumber="true" class="orderColumnTable orderColumnAscTable">Ganada
-                        </th>
-                        <th data-idColumn="10" data-isNumber="false" class="orderColumnTable orderColumnAscTable">
-                           Etapa</th>
-                        <th data-idColumn="11" data-isNumber="false" class="orderColumnTable orderColumnAscTable">
-                            Confirmado</th>
-                        <th data-idColumn="12" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Cancelado</th>
                        
                     </tr>
                 </thead>

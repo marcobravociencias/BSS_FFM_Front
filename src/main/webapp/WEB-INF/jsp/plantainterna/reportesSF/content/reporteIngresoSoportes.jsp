@@ -55,9 +55,9 @@
                             Zona</th>
                         <th data-idColumn="6" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Plaza
                         </th>
-                        <th data-idColumn="7" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Regi&oacute; instalaci&oacute;n</th>
+                        <th data-idColumn="7" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Regi&oacute;N instalaci&oacute;n</th>
                         <th data-idColumn="8" data-isNumber="true" class="orderColumnTable orderColumnAscTable">
-                            Fecha creaci&oacute;</th>
+                            Fecha creaci&oacute;n</th>
                         <th data-idColumn="9" data-isNumber="true" class="orderColumnTable orderColumnAscTable">Fecha apertura
                         </th>
                         <th data-idColumn="10" data-isNumber="false" class="orderColumnTable orderColumnAscTable">

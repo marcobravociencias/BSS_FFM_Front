@@ -229,13 +229,13 @@
                             </div>
                             <div class="tab-pane fade" id="reporteInstRes" role="tabpanel"
                                 aria-labelledby="reporteInstRes-tab">
-                                <h5 id="texto_header_reportes" class="text-center">Reporte soportes completados
+                                <h5 id="texto_header_reportes" class="text-center">Reporte completado residencial
                                 </h5>
                                 <jsp:include page="./content/reporteInstalacionRes.jsp"></jsp:include>
                             </div>
                             <div class="tab-pane fade" id="reporteInstEmp" role="tabpanel"
                                 aria-labelledby="reporteInstEmp-tab">
-                                <h5 id="texto_header_reportes" class="text-center">Reporte soportes completados
+                                <h5 id="texto_header_reportes" class="text-center">Reporte completado empresarial
                                 </h5>
                                 <jsp:include page="./content/reporteInstalacionEmp.jsp"></jsp:include>
                             </div>

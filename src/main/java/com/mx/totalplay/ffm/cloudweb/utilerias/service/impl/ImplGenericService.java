@@ -3,6 +3,7 @@ package com.mx.totalplay.ffm.cloudweb.utilerias.service.impl;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mx.totalplay.ffm.cloudweb.plantainterna.service.ConsultaOTService;
 import com.mx.totalplay.ffm.cloudweb.plantainterna.utils.ConstConsultaOT;
@@ -134,6 +135,20 @@ public class ImplGenericService  implements GenericService {
 				return generarExcelGenericRequest(params, "POST");
 			case "reportesf-backlog-pi":
 				return generarExcelGenericRequest(params, "POST");
+			case "reportesf-ingresosoportes-pi":
+				return generarExcelGenericRequest(params, "POST");
+			case "reportesf-ingresoresidencial-pi":
+				return generarExcelGenericRequest(params, "POST");
+			case "reportesf-ingresoempresarial-pi":
+				return generarExcelGenericRequest(params, "POST");
+			case "reportesf-ingresoempresarialsa-pi":
+				return generarExcelGenericRequest(params, "POST");
+			case "reportesf-completadosoportes-pi":
+				return generarExcelGenericRequest(params, "POST");
+			case "reportesf-completadoresidencial-pi":
+				return generarExcelGenericRequest(params, "POST");
+			case "reportesf-completadoempresarial-pi":
+				return generarExcelGenericRequest(params, "POST");
 			default:
 				return null;
 		}
@@ -152,6 +167,29 @@ public class ImplGenericService  implements GenericService {
 		JsonArray array = null;
 		String[] headers = {};
 		String[] valores = {};
+		
+		List<String> headersList = null;
+		List<String> valoresList = null;
+		
+		if(jsonObject.get("headers") != null) {
+			JsonArray headersArray = (JsonArray) jsonObject.get("headers");
+			headersList = new ArrayList<String>();
+	        for (int m = 0; m < headersArray.size(); m++) {
+	        	JsonElement hd = headersArray.get(m);
+	        	headersList.add(hd.getAsString());
+	        }
+	        
+	        JsonArray valoresArray = (JsonArray) jsonObject.get("valores");
+			valoresList = new ArrayList<String>();
+	        for (int m = 0; m < valoresArray.size(); m++) {
+	        	JsonElement val = valoresArray.get(m);
+	        	valoresList.add(val.getAsString());
+	        }
+		}
+		
+        
+		List<String> headerTemp = headersList;
+		List<String> valoresTemp = valoresList;
 		
 		switch (tipoExcel) {
 			case "consultaot-consultarordenes-pi":
@@ -398,7 +436,21 @@ public class ImplGenericService  implements GenericService {
 				if (response.getResult() == null || response.getResult() instanceof Integer) {
 				} else {
 					JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
-		            array = jsonObjectResponse.getAsJsonArray("data");
+					JsonArray dataArray = jsonObjectResponse.getAsJsonArray("data");
+					JsonArray dataReporte = new JsonArray();
+					if (dataArray.size() > 0) {
+						for (int i = 0; i < dataArray.size(); i++) {
+							JsonObject object = (JsonObject) dataArray.get(i);
+							if (object.get("confirmada").getAsBoolean()) {
+								object.addProperty("confirmada", "Si");
+							}else {
+								object.addProperty("repetido", "No");
+							}
+							dataReporte.add(object);
+
+						}
+					}
+		            array = dataReporte;
 				}
 				break;
 			case "reportesf-backlog-pi":
@@ -413,6 +465,111 @@ public class ImplGenericService  implements GenericService {
 						"primerFechaAgendamiento", "fechaAgendamiento", "turno", "fechaActivacion", "estatus", "estado",
 						"propietario", "grupoCodificador","nivel1","nivel2", "nivel3", "repetido", "tipoOrden", "subTipo", "nuevoSegmento"};
 				response = consultarInformacionExcelGenericPost(params, constReportesSF.getConsultaReporteBacklog(), method);
+				if (response.getResult() == null || response.getResult() instanceof Integer) {
+				} else {
+					JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
+					JsonArray dataArray = jsonObjectResponse.getAsJsonArray("data");
+					JsonArray dataReporte = new JsonArray();
+					if (dataArray.size() > 0) {
+						for (int i = 0; i < dataArray.size(); i++) {
+							JsonObject object = (JsonObject) dataArray.get(i);
+							if (object.get("repetido").getAsBoolean()) {
+								object.addProperty("repetido", "Si");
+							}else {
+								object.addProperty("repetido", "No");
+							}
+							dataReporte.add(object);
+
+						}
+					}
+		            array = dataReporte;
+				}
+				break;
+			case "reportesf-ingresosoportes-pi":
+				sheet = book.createSheet("Reporte ingresos soportes");
+				headers = null;
+				valores = null;
+				response = consultarInformacionExcelGenericPost(params, constReportesSF.getConsultaReporteIngresoSoporte(), method);
+				if (response.getResult() == null || response.getResult() instanceof Integer) {
+				} else {
+					JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
+		            array = jsonObjectResponse.getAsJsonArray("data");
+				}
+				break;
+			case "reportesf-ingresoresidencial-pi":
+				sheet = book.createSheet("Reporte ventas residencial");
+				headers = null;
+				valores = null;
+				response = consultarInformacionExcelGenericPost(params, constReportesSF.getConsultaReporteIngresoResidencial(), method);
+				if (response.getResult() == null || response.getResult() instanceof Integer) {
+				} else {
+					JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
+		            array = jsonObjectResponse.getAsJsonArray("data");
+				}
+				break;
+			case "reportesf-ingresoempresarial-pi":
+				sheet = book.createSheet("Reporte ventas empresarial");
+				headers = null;
+				valores = null;
+				response = consultarInformacionExcelGenericPost(params, constReportesSF.getConsultaReporteIngresoEmpresarial(), method);
+				if (response.getResult() == null || response.getResult() instanceof Integer) {
+				} else {
+					JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
+		            array = jsonObjectResponse.getAsJsonArray("data");
+				}
+				break;
+			case "reportesf-ingresoempresarialsa-pi":
+				sheet = book.createSheet("Reporte ventas empresarial sin agenda");
+				headers = null;
+				valores = null;
+				response = consultarInformacionExcelGenericPost(params, constReportesSF.getConsultaReporteIngresoEmpresarialSinAgenda(), method);
+				if (response.getResult() == null || response.getResult() instanceof Integer) {
+				} else {
+					JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
+		            array = jsonObjectResponse.getAsJsonArray("data");
+				}
+				break;
+			case "reportesf-completadosoportes-pi":
+				sheet = book.createSheet("Reporte completado soportes");
+				headers = null;
+				valores = null;
+				response = consultarInformacionExcelGenericPost(params, constReportesSF.getConsultaReporteCompletosSoporte(), method);
+				if (response.getResult() == null || response.getResult() instanceof Integer) {
+				} else {
+					JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
+		            array = jsonObjectResponse.getAsJsonArray("data");
+				}
+				break;
+			case "reportesf-completadoresidencial-pi":
+				sheet = book.createSheet("Reporte instalacion residencial");
+				headers = null;
+				valores = null;
+				response = consultarInformacionExcelGenericPost(params, constReportesSF.getConsultaReporteCompletosResidencial(), method);
+				if (response.getResult() == null || response.getResult() instanceof Integer) {
+				} else {
+					JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
+					JsonArray dataArray = jsonObjectResponse.getAsJsonArray("data");
+					JsonArray dataReporte = new JsonArray();
+					if (dataArray.size() > 0) {
+						for (int i = 0; i < dataArray.size(); i++) {
+							JsonObject object = (JsonObject) dataArray.get(i);
+							if (object.get("ventaExpress").getAsBoolean()) {
+								object.addProperty("ventaExpress", "Si");
+							}else {
+								object.addProperty("ventaExpress", "No");
+							}
+							dataReporte.add(object);
+
+						}
+					}
+		            array = dataReporte;
+				}
+				break;
+			case "reportesf-completadoempresarial-pi":
+				sheet = book.createSheet("Reporte instalacion empresarial");
+				headers = null;
+				valores = null;
+				response = consultarInformacionExcelGenericPost(params, constReportesSF.getConsultaReporteCompletosEmpresarial(), method);
 				if (response.getResult() == null || response.getResult() instanceof Integer) {
 				} else {
 					JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
@@ -448,13 +605,22 @@ public class ImplGenericService  implements GenericService {
 		row = sheet.createRow(++rowsCantidad);
 		row.setHeightInPoints((2 * sheet.getDefaultRowHeightInPoints()));
 		int aux = 0;
-		
-		for (String header : headers) {
-			cell = row.createCell(++aux);
-			cell.setCellValue(header);
-			cell.setCellStyle(thStyleTitle);
-			sheet.setColumnWidth(aux, 20 * 256);
+		if(headers != null) {
+			for (String header : headers) {
+				cell = row.createCell(++aux);
+				cell.setCellValue(header);
+				cell.setCellStyle(thStyleTitle);
+				sheet.setColumnWidth(aux, 20 * 256);
+			}
+		}else {
+			for (String header : headerTemp) {
+				cell = row.createCell(++aux);
+				cell.setCellValue(header);
+				cell.setCellStyle(thStyleTitle);
+				sheet.setColumnWidth(aux, 20 * 256);
+			}
 		}
+		
 
 		aux = 0;
 		HSSFFont thFontContent = (HSSFFont) book.createFont();
@@ -473,11 +639,20 @@ public class ImplGenericService  implements GenericService {
 				JsonObject object = (JsonObject) array.get(i);
 				row = sheet.createRow(++rowsCantidad);
 				row.setHeightInPoints((1 * sheet.getDefaultRowHeightInPoints()));
-				for(String valor: valores) {
-					cell = row.createCell(++aux);
-					cell.setCellValue((object.get(valor) != null && object.get(valor).getAsString().trim() != "") ? object.get(valor).getAsString().trim() : "Sin dato");
-					cell.setCellStyle(thStyleContent);
+				if(valores != null) {
+					for(String valor: valores) {
+						cell = row.createCell(++aux);
+						cell.setCellValue((object.get(valor) != null && object.get(valor).getAsString().trim() != "") ? object.get(valor).getAsString().trim() : "Sin dato");
+						cell.setCellStyle(thStyleContent);
+					}
+				}else {
+					for(String valor: valoresTemp) {
+						cell = row.createCell(++aux);
+						cell.setCellValue((object.get(valor) != null && object.get(valor).getAsString().trim() != "") ? object.get(valor).getAsString().trim() : "Sin dato");
+						cell.setCellStyle(thStyleContent);
+					}
 				}
+				
 				aux = 0;
 			}
 		}
