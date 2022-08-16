@@ -37,27 +37,32 @@ public class GenericReporteExcelController {
 	@PostMapping("/enviarParamsReporte")
 	public ResponseEntity<?> enviarParamsReporte(@RequestBody String params, HttpSession session) {
 		logger.info("obtenerParamsReporte.class [metodo = obtenerParamsReporte() ] \n" + new Gson().toJson(params));
-		if(session.getAttribute("paramsReporteExcel") != null) {
-			session.removeAttribute("paramsReporteExcel");
+		if(session.getAttribute("stream") != null) {
+			session.removeAttribute("stream");
 		}
-		session.setAttribute("paramsReporteExcel", params);
 		ServiceResponseResult result = ServiceResponseResult.builder().build();
 		result = ServiceResponseResult.builder().isRespuesta(true).build();
+		ByteArrayInputStream stream = genericService.exporteExcelGenericRequest(params);
+		session.setAttribute("stream", stream);
+
+		if(stream == null) {
+			result = ServiceResponseResult.builder().isRespuesta(false).build();
+		}
 		return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
 	}
 
 	@GetMapping("/exporteExcelGenericRequest/{nombreArchivo:.+}")
 	public void exporteExcelGenericRequest(HttpServletResponse response,
 			@PathVariable("nombreArchivo") String nombreArchivo, HttpSession session) throws IOException {
-		String params = session.getAttribute("paramsReporteExcel").toString();
+		String dataStream = session.getAttribute("stream").toString();
 		response.setContentType("application/octet-stream");
 		response.setHeader("Content-Disposition", "attachment; filename=" + nombreArchivo);
-		ByteArrayInputStream stream = genericService.exporteExcelGenericRequest(params);
+		ByteArrayInputStream stream = (ByteArrayInputStream) session.getAttribute("stream");
 		IOUtils.copy(stream, response.getOutputStream());
 		response.getOutputStream().flush();
 
-		if (params != null) {
-			session.removeAttribute("paramsReporteExcel");
+		if (dataStream != null) {
+			session.removeAttribute("stream");
 		}
 	}
 }

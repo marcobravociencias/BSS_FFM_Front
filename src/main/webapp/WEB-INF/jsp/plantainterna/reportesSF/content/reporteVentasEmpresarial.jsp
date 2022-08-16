@@ -13,7 +13,6 @@
                     <option value="">Selecciona...</option>
                     <option value="dia" selected>D&iacute;a</option>
                     <option value="semana">Semana</option>
-                    <option value="mes">Mes</option>
                 </select>
             </div>
             <div class="col-md-2 columna-filtro-indR pl-0">
@@ -21,8 +20,6 @@
                 <input readonly placeholder="Fecha" type="text" id="filtro_fecha_dia_ventasemp" style="display: block;"
                     class="datepicker input-filtro form-control form-control-sm" />
                 <input readonly placeholder="Fecha" type="text" id="filtro_fecha_semana_ventasemp" style="display: none;"
-                    class="datepicker input-filtro form-control form-control-sm" />
-                <input readonly placeholder="Fecha" type="text" id="filtro_fecha_mes_ventasemp" style="display: none;"
                     class="datepicker input-filtro form-control form-control-sm" />
             </div>
             <div class="col-1 div-btn-busqueda pl-0">

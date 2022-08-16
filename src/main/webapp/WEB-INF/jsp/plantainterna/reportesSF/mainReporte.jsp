@@ -100,14 +100,6 @@
                                     class="titulo-menu">Empresarial</span>
                             </a>
                         </li>
-                        <li class="nav-item opcion-menu" ng-if="configPermisoAccionConsultaBackGeneral">
-                            <a id="reporteGeneral-tab" data-toggle="tab"
-                                ng-click="cambiaReporte('general',true,'reporteGeneral')" href="reporteGeneral"
-                                role="tab" aria-controls="reporteGeneral" aria-selected="false">
-                                <i class="icon-menu-left fas fa-file-alt"></i>&nbsp;<span
-                                    class="titulo-menu">General</span>
-                            </a>
-                        </li>
                         <hr style="margin: 0.3em 1em;" ng-if="boxContentVisible.ingresos">
                         <span class="title-nav-header titulo-menu" style="position: initial;" ng-if="boxContentVisible.ingresos"><i
                                 class="icon-menu-left fas fa-circle"
@@ -194,11 +186,6 @@
                                 aria-labelledby="reporteEmpresarial-tab">
                                 <h5 id="texto_header_reportes" class="text-center">Reporte empresarial</h5>
                                 <jsp:include page="./content/reporteEmpresarial.jsp"></jsp:include>
-                            </div>
-                            <div class="tab-pane fade" id="reporteGeneral" role="tabpanel"
-                                aria-labelledby="reporteGeneral-tab">
-                                <h5 id="texto_header_reportes" class="text-center">Reporte general</h5>
-                                <jsp:include page="./content/reporteGeneral.jsp"></jsp:include>
                             </div>
                             <div class="tab-pane fade" id="reporteSoportesIng" role="tabpanel"
                                 aria-labelledby="reporteSoportesIng-tab">

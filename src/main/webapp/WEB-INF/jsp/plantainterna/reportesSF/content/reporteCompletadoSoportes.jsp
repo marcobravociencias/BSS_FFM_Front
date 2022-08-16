@@ -13,7 +13,6 @@
                     <option value="">Selecciona...</option>
                     <option value="dia" selected>D&iacute;a</option>
                     <option value="semana">Semana</option>
-                    <option value="mes">Mes</option>
                 </select>
             </div>
             <div class="col-md-2 columna-filtro-indR pl-0">
@@ -21,8 +20,6 @@
                 <input readonly placeholder="Fecha" type="text" id="filtro_fecha_dia_soportescomp" style="display: block;"
                     class="datepicker input-filtro form-control form-control-sm" />
                 <input readonly placeholder="Fecha" type="text" id="filtro_fecha_semana_soportescomp" style="display: none;"
-                    class="datepicker input-filtro form-control form-control-sm" />
-                <input readonly placeholder="Fecha" type="text" id="filtro_fecha_mes_soportescomp" style="display: none;"
                     class="datepicker input-filtro form-control form-control-sm" />
             </div>
             <div class="col-1 div-btn-busqueda pl-0">
@@ -49,54 +46,44 @@
                         </th>
                         <th data-idColumn="3" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Ticket
                         </th>
-                        <th data-idColumn="4" data-isNumber="false" class="orderColumnTable orderColumnAscTable">
-                            Regi&oacute;n instalaci&oacute;n
+                        <th data-idColumn="4" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Cluster instalaci&oacute;n
                         </th>
                         <th data-idColumn="5" data-isNumber="false" class="orderColumnTable orderColumnAscTable">
-                            Plaza</th>
-                        <th data-idColumn="6" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Zona
+                            Zona</th>
+                        <th data-idColumn="6" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Plaza
                         </th>
-                        <th data-idColumn="7" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Cluster
-                            instalaci&oacute;n</th>
+                        <th data-idColumn="7" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Regi&oacute;n instalaci&oacute;n</th>
                         <th data-idColumn="8" data-isNumber="true" class="orderColumnTable orderColumnAscTable">
-                            Colonia</th>
-                        <th data-idColumn="9" data-isNumber="true" class="orderColumnTable orderColumnAscTable">Plaza
-                            sitio
+                            Fecha creaci&oacute;n</th>
+                        <th data-idColumn="9" data-isNumber="true" class="orderColumnTable orderColumnAscTable">Fecha apertura
                         </th>
                         <th data-idColumn="10" data-isNumber="false" class="orderColumnTable orderColumnAscTable">
-                            Distrito sitio</th>
-                        <th data-idColumn="11" data-isNumber="false" class="orderColumnTable orderColumnAscTable">
                             Primer fecha agendamiento</th>
-                        <th data-idColumn="12" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Fecha
-                            agendamiento</th>
-                        <th data-idColumn="13" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Turno
-                        </th>
-                        <th data-idColumn="14" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Fecha
-                            activaci&oacute;n</th>
+                        <th data-idColumn="11" data-isNumber="false" class="orderColumnTable orderColumnAscTable">
+                            Fecha agendamiento</th>
+                        <th data-idColumn="12" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Fecha activaci&oacute;n</th>
+                        <th data-idColumn="13" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Fecha cierre</th>
+                        <th data-idColumn="14" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Completado</th>
                         <th data-idColumn="15" data-isNumber="false" class="orderColumnTable orderColumnAscTable">
-                            Estatus</th>
+                            Cancelado</th>
                         <th data-idColumn="16" data-isNumber="false" class="orderColumnTable orderColumnAscTable">
-                            Estado</th>
-                        <th data-idColumn="17" data-isNumber="false" class="orderColumnTable orderColumnAscTable">
-                            Fecha apertura</th>
-                        <th data-idColumn="18" data-isNumber="false" class="orderColumnTable orderColumnAscTable">
-                            Propietario</th>
-                        <th data-idColumn="19" data-isNumber="false" class="orderColumnTable orderColumnAscTable">
-                            Grupo</th>
-                        <th data-idColumn="20" data-isNumber="false" class="orderColumnTable orderColumnAscTable">
-                            Nivel 1</th>
-                        <th data-idColumn="21" data-isNumber="false" class="orderColumnTable orderColumnAscTable">
-                            Nivel 2</th>
-                        <th data-idColumn="22" data-isNumber="false" class="orderColumnTable orderColumnAscTable">
-                            Nivel 3</th>
-                        <th data-idColumn="23" data-isNumber="false" class="orderColumnTable orderColumnAscTable">
-                            Repetido</th>
-                        <th data-idColumn="24" data-isNumber="false" class="orderColumnTable orderColumnAscTable">
-                            Tipo orden</th>
-                        <th data-idColumn="25" data-isNumber="false" class="orderColumnTable orderColumnAscTable">
-                            Subtipo</th>
-                        <th data-idColumn="26" data-isNumber="false" class="orderColumnTable orderColumnAscTable">
-                            Nuevo segmento</th>
+                            Turno agendamiento</th>
+                        <th data-idColumn="17" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Estatus
+                        </th>
+                        <th data-idColumn="18" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Estado</th>
+                        <th data-idColumn="19" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Propietario</th>
+                        <th data-idColumn="20" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Grupo codificador</th>
+                        <th data-idColumn="21" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Nivel1</th>
+                        <th data-idColumn="22" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Nivel2</th>
+                        <th data-idColumn="23" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Nivel3</th>
+                        <th data-idColumn="24" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Tipo orden</th>
+                        <th data-idColumn="25" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Subtipo</th>
+                        <th data-idColumn="26" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Repetido</th>
+                        <th data-idColumn="27" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Repetido60</th>
+                        <th data-idColumn="28" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Latitud</th>
+                        <th data-idColumn="29" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Longitud</th>
+                        <th data-idColumn="30" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Origen</th>
+                        <th data-idColumn="31" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Descripci&oacute;n</th>
                     </tr>
                 </thead>
                 <tbody>

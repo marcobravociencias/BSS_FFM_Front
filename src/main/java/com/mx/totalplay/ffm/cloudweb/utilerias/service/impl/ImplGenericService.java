@@ -371,10 +371,10 @@ public class ImplGenericService  implements GenericService {
 					if (dataArray.size() > 0) {
 						for (int i = 0; i < dataArray.size(); i++) {
 							JsonObject object = (JsonObject) dataArray.get(i);
-							if (object.get("confirmada").getAsBoolean()) {
+							if (object.get("confirmada").getAsString() == "true") {
 								object.addProperty("confirmada", "Si");
 							}else {
-								object.addProperty("repetido", "No");
+								object.addProperty("confirmada", "No");
 							}
 							dataReporte.add(object);
 
@@ -393,7 +393,7 @@ public class ImplGenericService  implements GenericService {
 					if (dataArray.size() > 0) {
 						for (int i = 0; i < dataArray.size(); i++) {
 							JsonObject object = (JsonObject) dataArray.get(i);
-							if (object.get("repetido").getAsBoolean()) {
+							if (object.get("repetido").getAsString() == "true") {
 								object.addProperty("repetido", "Si");
 							}else {
 								object.addProperty("repetido", "No");
@@ -455,7 +455,7 @@ public class ImplGenericService  implements GenericService {
 					if (dataArray.size() > 0) {
 						for (int i = 0; i < dataArray.size(); i++) {
 							JsonObject object = (JsonObject) dataArray.get(i);
-							if (object.get("ventaExpress").getAsBoolean()) {
+							if (object.get("ventaExpress").getAsString() == "true") {
 								object.addProperty("ventaExpress", "Si");
 							}else {
 								object.addProperty("ventaExpress", "No");
@@ -524,7 +524,7 @@ public class ImplGenericService  implements GenericService {
 		thStyleContent.setFont(thFontContent);
 		thStyleContent.setAlignment(HorizontalAlignment.CENTER);
 
-		if (array.size() > 0) {
+		if (array != null && array.size() > 0) {
 			for (int i = 0; i < array.size(); i++) {
 				JsonObject object = (JsonObject) array.get(i);
 				row = sheet.createRow(++rowsCantidad);
@@ -538,6 +538,8 @@ public class ImplGenericService  implements GenericService {
 				
 				aux = 0;
 			}
+		}else {
+			return null;
 		}
 		
 		try {

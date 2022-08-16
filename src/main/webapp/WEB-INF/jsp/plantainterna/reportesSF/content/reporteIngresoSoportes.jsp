@@ -13,7 +13,6 @@
                     <option value="">Selecciona...</option>
                     <option value="dia" selected>D&iacute;a</option>
                     <option value="semana">Semana</option>
-                    <option value="mes">Mes</option>
                 </select>
             </div>
             <div class="col-md-2 columna-filtro-indR pl-0">
@@ -21,8 +20,6 @@
                 <input readonly placeholder="Fecha" type="text" id="filtro_fecha_dia_soportesing" style="display: block;"
                     class="datepicker input-filtro form-control form-control-sm" />
                 <input readonly placeholder="Fecha" type="text" id="filtro_fecha_semana_soportesing" style="display: none;"
-                    class="datepicker input-filtro form-control form-control-sm" />
-                <input readonly placeholder="Fecha" type="text" id="filtro_fecha_mes_soportesing" style="display: none;"
                     class="datepicker input-filtro form-control form-control-sm" />
             </div>
             <div class="col-1 div-btn-busqueda pl-0">
@@ -55,7 +52,7 @@
                             Zona</th>
                         <th data-idColumn="6" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Plaza
                         </th>
-                        <th data-idColumn="7" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Regi&oacute;N instalaci&oacute;n</th>
+                        <th data-idColumn="7" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Regi&oacute;n instalaci&oacute;n</th>
                         <th data-idColumn="8" data-isNumber="true" class="orderColumnTable orderColumnAscTable">
                             Fecha creaci&oacute;n</th>
                         <th data-idColumn="9" data-isNumber="true" class="orderColumnTable orderColumnAscTable">Fecha apertura

@@ -6,25 +6,6 @@
                 <input readonly placeholder="GEOGRAF&Iacute;A" type="text" id="cluster-recolecciones"
                     class="input-filtro form-control form-control-sm" ng-click="abrirModalGeografiaRep('recolecciones')" />
             </div>
-            <div class="col-md-2 columna-filtro-indR pl-0">
-                <label class="label-filter">Tipo fecha</label>
-                <select class="input-filtro form-control form-control-sm" id="tipo_reporte_recolecciones"
-                    style="border: 1px solid #dbdbdb !important; background: white !important;"  ng-model="reporte.recolecciones" ng-change="changeCalendar(this, 'recolecciones')">
-                    <option value="">Selecciona...</option>
-                    <option value="dia" selected>D&iacute;a</option>
-                    <option value="semana">Semana</option>
-                    <option value="mes">Mes</option>
-                </select>
-            </div>
-            <div class="col-md-2 columna-filtro-indR pl-0">
-                <label class="label-filter">Fecha</label>
-                <input readonly placeholder="Fecha" type="text" id="filtro_fecha_dia_recolecciones" style="display: block;"
-                    class="datepicker input-filtro form-control form-control-sm" />
-                <input readonly placeholder="Fecha" type="text" id="filtro_fecha_semana_recolecciones" style="display: none;"
-                    class="datepicker input-filtro form-control form-control-sm" />
-                <input readonly placeholder="Fecha" type="text" id="filtro_fecha_mes_recolecciones" style="display: none;"
-                    class="datepicker input-filtro form-control form-control-sm" />
-            </div>
             <div class="col-1 div-btn-busqueda pl-0">
                 <button id="btn_consultar" type="button"
                     class="btn btn-sm  btn-primary  waves-effect waves-light btn_consultar" style="margin-top: 2.7em;"
