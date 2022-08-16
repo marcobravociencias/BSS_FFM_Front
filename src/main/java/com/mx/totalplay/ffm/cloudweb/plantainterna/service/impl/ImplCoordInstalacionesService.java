@@ -1063,7 +1063,7 @@ public class ImplCoordInstalacionesService implements CoordInstalacionesService{
                         	dataArray[count][8] = object.get("usuarioActualiza") != null ? object.get("usuarioActualiza").getAsString().trim() : "";
                         	//dataArray[count][9] = object.get("tipoOrden") != null ? object.get("tipoOrden").getAsString().trim() : "";
                         	//dataArray[count][10] = object.get("subTipoOrden") != null ? object.get("subTipoOrden").getAsString().trim() : "";
-                        	dataArray[count][9] = "<div class='tooltip-btn'> <span onclick='consultaDetalleOt(" + String.valueOf(i) + 
+                        	dataArray[count][9] = "<div class='tooltip-btn'> <span onclick='consultaDetalleOt(" + object.get("idOrden").getAsInt() + 
                         			")' class='btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones'><th><i class='icono_cons_bg fa fa-bars' aria-hidden='true'></i></th></span></div>";
                         	count++;
                         }
