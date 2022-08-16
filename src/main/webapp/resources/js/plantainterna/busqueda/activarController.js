@@ -1071,7 +1071,7 @@ app.activacionController=function($scope, $q, busquedaService){
     }
   
     $scope.showSearch = true;
-
+/**
     $scope.mostrarDetalleActivarOs({
         Folio_OS: "OS-6950955",
         canalVenta: null,
@@ -1105,7 +1105,7 @@ app.activacionController=function($scope, $q, busquedaService){
         unidadNegocio: "2",
     })
 
-    $scope.showDetalleActivar=true;  /****/
+    $scope.showDetalleActivar=true;  **/
 
 
     $scope.consultarAutofindActivacion = function(servicio) {

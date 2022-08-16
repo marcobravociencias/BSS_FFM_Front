@@ -45,7 +45,7 @@ public class ImplAutentificacionService  implements AutentificacionService{
 	@Override
 	public LoginResult getAutentificacion(String us, String crdospas) {		
 		logger.info("jgetAutentificacion## "+us+" -- "+crdospas);
-	    String urlService=env.getProperty("dep.envirom.web").concat(":8151").concat(env.getProperty("ws.url.validausrffm"));     
+	    String urlService=env.getProperty("dep.envirom.web").concat(env.getProperty("ws.url.validausrffm"));     
 
 		LoginResult responseLog = (LoginResult) restCaller.callPostReturnClassBasicAuthXwwwUrlFormed(
 				urlService ,  us, crdospas, LoginResult.class
@@ -59,7 +59,7 @@ public class ImplAutentificacionService  implements AutentificacionService{
 	     dataLog.addProperty("descripcionMensajeHttp", "Ha ocurrido un error al iniciar sesión con el usuario " + us);
 	     dataLog.addProperty("idOrigen", 1);
 		
-		String urlPermisos=env.getProperty("dep.envirom.web").concat(":8133").concat(env.getProperty("ws.url.validausrffmpermisos"));
+		String urlPermisos=env.getProperty("dep.envirom.web").concat(env.getProperty("ws.url.validausrffmpermisos"));
 		Map<String, String> paramsGet = new HashMap<String, String>();
 		paramsGet.put("idUsuario", ""+responseLog.getIdUsuario());
 		paramsGet.put("idOrigen", "1");
