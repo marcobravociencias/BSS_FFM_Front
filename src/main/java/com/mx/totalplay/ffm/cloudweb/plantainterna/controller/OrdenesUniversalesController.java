@@ -88,4 +88,14 @@ public class OrdenesUniversalesController {
 		}
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
+	
+	@PostMapping("/consultarInfoCliente")
+	public ResponseEntity<?> consultarInfoCliente(@RequestBody String params) {
+		logger.info("##### CONSULTANDO INFO DEL CLIENTE DE LA CUENTA-FACTURA ");
+		ServiceResponseResult response = ordenesUniversalesService.consultarInfoCliente(params);
+		if (response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
 }

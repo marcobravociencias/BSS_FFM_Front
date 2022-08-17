@@ -103,7 +103,6 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
         swal.showLoading();
         let params = {
             moduloAccionesUsuario: 'moduloOrdenesUniversales'
-            //moduloAccionesUsuario: 'moduloDisponibilidad'
         }
         $q.all([
             genericService.consultarConfiguracionDespachoDespacho(params),
@@ -113,13 +112,9 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
             ordenesUniversalesService.consultarCatalogoPaquete()
 
         ]).then(function (results) {
-            console.log(results);
             let resultConf = results[0].data.result
             if (resultConf != undefined && resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves) {
                 let llavesResult = resultConf.MODULO_ACCIONES_USUARIO.llaves;
-
-                // console.log("  ----     ################# ------")
-                // console.log(llavesResult)
                 let tempArrayInt = (results[2].data.result) ? results[2].data.result.tiposOrden : [];
                 let tempArrayGeog = results[1].data.result.geografia;
 
@@ -283,11 +278,9 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
                             mapaIntervenciones[interv.id] = interv;
                         })
                     })
-                    // console.log("mapa intervencionesmapaIntervenciones ", mapaIntervenciones);
                     for (const key in mapaIntervenciones) {
                         $scope.listadoTipoOrdenesPerfiles.push(mapaIntervenciones[key]);
                     }
-                    // console.log("array listadoTipoOrdenesPerfiles ", $scope.listadoTipoOrdenesPerfiles);
                 }
 
                 let arbolIntervenciones = [];
@@ -426,7 +419,6 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
     }
 
     $scope.filtrarSubIntervencion = function (intervencion) {
-        // console.log(intervencion);
         if (intervencion == undefined) {
             $scope.listaSubIntervencion = []
         } else {
@@ -464,37 +456,46 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
             if ($scope.validarFolio()) {
                 swal({ text: 'Espera un momento...', allowOutsideClick: false });
                 swal.showLoading();
-                $scope.params = {};
-                ordenesUniversalesService.consultarCuentaAsignadaGenerica(JSON.stringify($scope.params)).then(function success(response) {
-                    response.data = infoCuenta;
-                    console.log(response.data)
-                    if (response.data.success) {
-                        if (response.data.result) {
-                            $scope.infocuenta = {};
-                            $scope.infocuenta = response.data.result.Info_cuenta;
-                            $scope.informacionCliente.nombre = $scope.infocuenta.Nombre_Cliente;
-                            $scope.informacionCliente.nombreContacto = $scope.infocuenta.Nombre_Contacto;
-                            $scope.informacionCliente.calle = $scope.infocuenta.Calle;
-                            $scope.informacionCliente.numeroExt = $scope.infocuenta.No_Exterior;
-                            $scope.informacionCliente.numeroInt = $scope.infocuenta.No_Interior;
-                            $scope.informacionCliente.codigoPostal = $scope.infocuenta.Codigo_Postal;
-                            $scope.informacionCliente.estado = $scope.infocuenta.Estado;
-                            $scope.informacionCliente.municipio = $scope.infocuenta.Municipio;
-                            $scope.informacionCliente.entreCalles = $scope.infocuenta.Entre_Calles;
-                            $scope.informacionCliente.referencias = $scope.infocuenta.Referencias;
-                            $scope.informacionCliente.telefono = $scope.infocuenta.Telefono;
-                            $scope.informacionCliente.celular = $scope.infocuenta.Celular;
-                            $scope.informacionCliente.ciudad = $scope.infocuenta.Ciudad;
-                            $scope.informacionCliente.colonia = $scope.infocuenta.Colonia;
-                            $scope.informacionCliente.cuenta = $scope.infocuenta.cuenta;
-                            $scope.informacionCliente.os = $scope.infocuenta.os;
-                            swal.close();
+                let paramsConsultaInfoCliente = {
+                		"cuentaFactura": $.trim($scope.infoBasica.folio)
+                }
+
+                ordenesUniversalesService.consultarInfoCliente(paramsConsultaInfoCliente).then(function success(response) {
+                	if (response.data !== undefined) {
+                    	if(response.data.respuesta){
+                    		if(response.data.result !== null){
+	                            $scope.infocuenta = {};
+	                            $scope.infocuenta = response.data.result[0];
+	                            $scope.informacionCliente.nombre = $scope.infocuenta.nombre != undefined ? $scope.infocuenta.nombre : "";
+	                            $scope.informacionCliente.apaterno = $scope.infocuenta.apellidoPaterno != undefined ? $scope.infocuenta.apellidoPaterno : "";
+	                            $scope.informacionCliente.amaterno = $scope.infocuenta.apellidoMaterno != undefined ? $scope.infocuenta.apellidoMaterno : "";
+	                            $scope.informacionCliente.nombreContacto = $scope.infocuenta.cuenta.contactoPrincipal.nombreContacto != undefined ? $scope.infocuenta.cuenta.contactoPrincipal.nombreContacto : "";
+	                            $scope.informacionCliente.calle = $scope.infocuenta.calle != undefined ? $scope.infocuenta.calle : "";
+	                            $scope.informacionCliente.numeroExt = $scope.infocuenta.noExterior != undefined ? $scope.infocuenta.noExterior : "";
+	                            $scope.informacionCliente.numeroInt = $scope.infocuenta.noInterior != undefined ? $scope.infocuenta.noInterior : "";
+	                            $scope.informacionCliente.codigoPostal = $scope.infocuenta.codigoPostal != undefined ? $scope.infocuenta.codigoPostal : "";
+	                            $scope.informacionCliente.estado = $scope.infocuenta.estado != undefined ? $scope.infocuenta.estado : "";
+	                            $scope.informacionCliente.municipio = $scope.infocuenta.municipio != undefined ? $scope.infocuenta.municipio : "";
+	                            $scope.informacionCliente.telefono = $scope.infocuenta.telefono != undefined ? $scope.infocuenta.telefono : "";
+	                            $scope.informacionCliente.celular = $scope.infocuenta.celular != undefined ? $scope.infocuenta.celular : "";
+	                            $scope.informacionCliente.ciudad = $scope.infocuenta.ciudad != undefined ? $scope.infocuenta.ciudad : "";
+	                            $scope.informacionCliente.colonia = $scope.infocuenta.colonia != undefined ? $scope.infocuenta.colonia : "";
+	                            
+//	                            $scope.informacionCliente.entreCalles = $scope.infocuenta.Entre_Calles;
+//	                            $scope.informacionCliente.referencias = $scope.infocuenta.Referencias;
+//	                            $scope.informacionCliente.cuenta = $scope.infocuenta.cuenta;
+//	                            $scope.informacionCliente.os = $scope.infocuenta.os;
+	                            
+	                            swal.close();
+                    		} else {
+                                swal.close();
+                            }
                         } else {
-                            mostrarMensajeErrorAlert(response.data.result.mensaje)
+                            mostrarMensajeErrorAlert(response.data.mensajeException)
                             swal.close();
                         }
                     } else {
-                        mostrarMensajeErrorAlert(response.data.resultDescripcion)
+                        mostrarMensajeErrorAlert(response.data.mensajeException)
                         swal.close();
                     }
                 }).catch(err => handleError(err));
@@ -622,7 +623,6 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
         //$scope.params.IdCompany = "2";
         ordenesUniversalesService.getDisponibilidadServicioRest(JSON.stringify($scope.params)).then(function success(response) {
             //response.data = responseDisponibilidad;
-            console.log(response.data)
             // (response.data.success) {
             if (response.data.respuesta) {
                 if (response.data.result) {
@@ -1014,9 +1014,8 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
                 let minutos = dateInput.getMinutes() + ""
                 let horas = dateInput.getHours() + ""
                 $scope.infoBasica.horaEstimada = (horas.padStart(2, '0')) + ':' + (minutos.padStart(2, '0'));
-                $scope.$apply()
-                // console.log($scope.infoBasica.horaEstimada)
-                $scope.validarCamposBasicos()
+                $scope.$apply();
+                $scope.validarCamposBasicos();
             }
         })
         $("#moduloOrdenesUniversales").addClass("active");
@@ -1086,7 +1085,6 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
         let envioidTurno = angular.copy($scope.infoBasica.idTurnoSeleccion)
 
         if (!$scope.verAplicaDisponbilidad) {
-            // console.log("no aplica dispo")
             envioFechaAgenda = angular.copy($scope.infoBasica.fechaTurnoTextAplica)
             envioidTurno = angular.copy(parseInt($scope.infoBasica.idTurnoSeleccionAplica))
         }
@@ -1129,7 +1127,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
             "direccion": {
                 "calle": $scope.validarCampoNA($scope.informacionCliente.calle),   //esta
                 "numeroInterior": $scope.validarCampoNA($scope.informacionCliente.numeroInt),   //esta
-                "numeroExterior": $scope.validarCampoNA($scope.numeroExt),  //esta
+                "numeroExterior": $scope.validarCampoNA($scope.informacionCliente.numeroExt),  //esta
                 "colonia": $scope.validarCampoNA($scope.informacionCliente.colonia),   //esta
                 "municipio": $scope.validarCampoNA($scope.informacionCliente.municipio),
                 "ciudad": $scope.validarCampoNA($scope.informacionCliente.ciudad),
@@ -1152,14 +1150,12 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
                 }
             ]
         }
-        // console.log(jsonEnvio)
 
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
         swal.showLoading();
         let tituloAccion = "Crear orden de trabajo universal";
 		let mensajeEnvio = 'Ha ocurrido un error al crear la OT para el cliente: ' + jsonEnvio.cliente.nombre + ' ' +  jsonEnvio.cliente.apellidoPaterno + ' ' +  jsonEnvio.cliente.apellidoMaterno;
         ordenesUniversalesService.creacionOrdenTrabajoUniversal(JSON.stringify(jsonEnvio)).then(function success(response) {
-            console.log(response.data)
             $scope.isGuardadoProcess = true
             if (response.data.respuesta) {
                 if (response.data.result) {

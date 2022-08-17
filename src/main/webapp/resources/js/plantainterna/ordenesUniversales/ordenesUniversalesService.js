@@ -90,5 +90,16 @@ app.service("ordenesUniversalesService", function ($http) {
             transformRequest: angular.identity
         });
     };
+    
+    this.consultarInfoCliente=function(params){
+		return $http({
+			method: "post",
+			url: "req/consultarInfoCliente",
+			data:JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
 
 });

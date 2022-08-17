@@ -23,4 +23,7 @@ public class ConstOrdenesUniversales {
 
 	@Value("${consultarCanalVentaOredenesUniversales}")
 	private String consultarCanalVentaOredenesUniversales;
+	
+	@Value("${consultarInfoCliente}")
+	private String consultarInfoCliente;
 }

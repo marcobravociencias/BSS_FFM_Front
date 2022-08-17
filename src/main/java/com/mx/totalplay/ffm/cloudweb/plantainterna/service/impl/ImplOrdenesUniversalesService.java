@@ -137,4 +137,19 @@ public class ImplOrdenesUniversalesService implements OrdenesUniversalesService 
 		return response;
 	}
 
+	@Override
+	public ServiceResponseResult consultarInfoCliente(String params) {
+		logger.info("ImplOrdenesUniversalesService.class [metodo = consultarInfoCliente() ]\n");
+		LoginResult principalDetail = utileriaGeneral.obtenerObjetoPrincipal();
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		Map<String, String> paramsRequestGet = new HashMap<String, String>();
+		paramsRequestGet.put("cuentaFactura", jsonObject.get("cuentaFactura").getAsString());
+		logger.info("json object params## "+ params);
+		String tokenAcces=principalDetail.getAccess_token(); 
+		String url = principalDetail.getDireccionAmbiente().concat(constOrdenesUniversales.getConsultarInfoCliente());
+		ServiceResponseResult response= consumeRest.callGetBearerTokenRequest(paramsRequestGet, url, ServiceResponseResult.class, tokenAcces);
+		logger.info("RESULT consultaUsuarioPorId "+gson.toJson(response));
+		return response;
+	}
+	
 }

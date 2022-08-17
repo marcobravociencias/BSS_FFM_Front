@@ -9,6 +9,8 @@ public interface OrdenesUniversalesService {
 	
 	public ServiceResponseResult consultarPerfilesGeneralServ();
 	public ServiceResponseResult consultarPerfilesPorUsuarioServ();
+	
+	public ServiceResponseResult consultarInfoCliente(String params);
 
 	ServiceResponseResult consultaPaqueteOrdenesUniversales();
 
