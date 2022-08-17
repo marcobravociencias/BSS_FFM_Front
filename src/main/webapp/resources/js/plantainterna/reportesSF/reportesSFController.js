@@ -706,7 +706,7 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                             $scope.nfiltrogeografiaVentasRes = llavesResult.N_FILTRO_INGR_VENTAS_RES ? llavesResult.N_FILTRO_INGR_VENTAS_RES : llavesResult.N_FILTRO_GEOGRAFIA;
                             $scope.nfiltrogeografiaVentasEmp = llavesResult.N_FILTRO_INGR_VENTAS_EMP ? llavesResult.N_FILTRO_INGR_VENTAS_EMP : llavesResult.N_FILTRO_GEOGRAFIA;
                             $scope.nfiltrogeografiaVentasEmpSA = llavesResult.N_FILTRO_INGR_VENTAS_EMP_SA ? llavesResult.N_FILTRO_INGR_VENTAS_EMP_SA : llavesResult.N_FILTRO_GEOGRAFIA;
-                            $scope.nfiltrogeografiaVentasEmpSA = llavesResult.N_FILTRO_COMP_SOPORTE ? llavesResult.N_FILTRO_COMP_SOPORTE : llavesResult.N_FILTRO_GEOGRAFIA;
+                            $scope.nfiltrogeografiaSoportesComp = llavesResult.N_FILTRO_COMP_SOPORTE ? llavesResult.N_FILTRO_COMP_SOPORTE : llavesResult.N_FILTRO_GEOGRAFIA;
                             $scope.nfiltrogeografiaInstRes = llavesResult.N_FILTRO_COMP_RESIDENCIAL ? llavesResult.N_FILTRO_COMP_RESIDENCIAL : llavesResult.N_FILTRO_GEOGRAFIA;
                             $scope.nfiltrogeografiaInstEmp = llavesResult.N_FILTRO_COMP_EMPRESARIAL ? llavesResult.N_FILTRO_COMP_EMPRESARIAL : llavesResult.N_FILTRO_GEOGRAFIA;
 
@@ -1045,7 +1045,9 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
         switch (tipo) {
             case 'dia':
                 fechaInicio = $scope.getFechaFormatoValid($("#filtro_fecha_dia_" + type).val())
-                fechaFin = moment(new Date()).add(1, "days").format('YYYY-MM-DD');
+                let day = $scope.getFechaFormatoValid($("#filtro_fecha_dia_" + type).val())
+                let fin = new Date(day);
+                fechaFin = moment(fin).add(2, "days").format('YYYY-MM-DD');
                 break;
             case 'semana':
                 fechaInicio = moment($scope.weekDateObjectReport[type + ""].inicio).format('YYYY-MM-DD');
@@ -1524,7 +1526,6 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
             let params = {
                 tiposOrden: [85],
                 clusters: clustersparam,
-                nombre: "recolecciones",
                 tipoExcel: 'reportesf-backlog-pi',
                 sheet: "Reporte recolecciones",
                 headers: ["OT", "OS", "CUENTA", "TICKET", "REGION INSTALACION", "PLAZA", "ZONA",
@@ -1668,9 +1669,8 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
             let params = {
                 tiposOrden: [65, 130, 95, 136],
                 clusters: clustersparam,
-                nombre: "addon",
                 tipoExcel: 'reportesf-backlog-pi',
-                nombre: "Reporte addon",
+                sheet: "Reporte addon",
                 headers: ["OT", "OS", "CUENTA", "TICKET", "REGION INSTALACION", "PLAZA", "ZONA",
                     "CLUSTER INSTALACION", "COLONIA", "PLAZA SITIO", "DISTRITO SITIO", "PRIMER FECHA AGENDAMIENTO", "FECHA AGENDAMIENTO", "TURNO",
                     "FECHA ACTIVACION", "ESTATUS", "ESTADO", "FECHA APERTURA", "PROPIETARIO", "GRUPO", "NIVEL1", "NIVEL2", "NIVEL3", "REPETIDO",
@@ -1735,16 +1735,17 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                                     row[6] = elemento.turno ? elemento.turno : 'Sin informaci&oacute;n';
                                     row[7] = elemento.plazaSitio ? elemento.plazaSitio : 'Sin informaci&oacute;n';
                                     row[8] = elemento.plazaOperacion ? elemento.plazaOperacion : 'Sin informaci&oacute;n';
-                                    row[9] = elemento.clusterComercial ? elemento.clusterComercial : 'Sin informaci&oacute;n';
-                                    row[10] = elemento.delegacionMunicipio ? elemento.delegacionMunicipio : 'Sin informaci&oacute;n';
-                                    row[11] = elemento.distritoSitio ? elemento.distritoSitio : 'Sin informaci&oacute;n';
-                                    row[12] = elemento.fechaCreacion ? elemento.fechaCreacion : 'Sin informaci&oacute;n';
-                                    row[13] = elemento.fechaAgendada ? elemento.fechaAgendada : 'Sin informaci&oacute;n';
-                                    row[14] = elemento.fechaModificacion ? elemento.fechaModificacion : 'Sin informaci&oacute;n';
-                                    row[15] = elemento.canalVenta ? elemento.canalVenta : 'Sin informaci&oacute;n';
-                                    row[16] = elemento.compania ? elemento.compania : 'Sin informaci&oacute;n';
-                                    row[17] = elemento.tipoOrden ? elemento.tipoOrden : 'Sin informaci&oacute;n';
-                                    row[18] = elemento.subTipoOrden ? elemento.subTipoOrden : 'Sin informaci&oacute;n';
+                                    row[9] = elemento.cluster ? elemento.cluster : 'Sin informaci&oacute;n';
+                                    row[10] = elemento.clusterComercial ? elemento.clusterComercial : 'Sin informaci&oacute;n';
+                                    row[11] = elemento.delegacionMunicipio ? elemento.delegacionMunicipio : 'Sin informaci&oacute;n';
+                                    row[12] = elemento.distritoSitio ? elemento.distritoSitio : 'Sin informaci&oacute;n';
+                                    row[13] = elemento.fechaCreacion ? elemento.fechaCreacion : 'Sin informaci&oacute;n';
+                                    row[14] = elemento.fechaAgendada ? elemento.fechaAgendada : 'Sin informaci&oacute;n';
+                                    row[15] = elemento.fechaModificacion ? elemento.fechaModificacion : 'Sin informaci&oacute;n';
+                                    row[16] = elemento.canalVenta ? elemento.canalVenta : 'Sin informaci&oacute;n';
+                                    row[17] = elemento.compania ? elemento.compania : 'Sin informaci&oacute;n';
+                                    row[18] = elemento.tipoOrden ? elemento.tipoOrden : 'Sin informaci&oacute;n';
+                                    row[19] = elemento.subTipoOrden ? elemento.subTipoOrden : 'Sin informaci&oacute;n';
 
                                     arraRow.push(row);
                                 })
@@ -1805,14 +1806,13 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
             let params = {
                 tiposOrden: [200],
                 clusters: clustersparam,
-                nombre: "empresarial",
                 sheet: "Reporte empresarial",
-                tipoExcel: 'reportesf-backlogempresarial-pi',
+                tipoExcel: 'reportesf-backlog-pi',
                 headers: ["OT", "OS", "CUENTA", "ESTATUS", "FAMILIA", "CONFIRMADA", "TURNO",
-                    "PLAZA SITIO", "OPERACION", "CLUSTER", "DELEGACION", "DISTRITO", "FECHA CREACION", "FECHA AGENDA",
+                    "PLAZA SITIO", "OPERACION", "CLUSTER", "CLUSTER COMERCIAL", "DELEGACION", "DISTRITO", "FECHA CREACION", "FECHA AGENDA",
                     "FECHA MODIFICACION", "CANAL VENTA", "COMPANIA", "TIPO ORDEN", "SUBTIPO"],
                 valores: ["idOt", "ordenServicio", "numeroCuenta", "estatusOs", "nombreFamilia", "confirmada", "turno",
-                    "plazaSitio", "plazaOperacion", "clusterComercial", "delegacionMunicipio", "distritoSitio", "fechaCreacion", "fechaAgendada", "fechaActivacion", "estatus", "estado",
+                    "plazaSitio", "plazaOperacion","cluster", "clusterComercial", "delegacionMunicipio", "distritoSitio", "fechaCreacion", "fechaAgendada",
                     "fechaModificacion", "canalVenta", "compania", "tipoOrden", "subTipoOrden"]
             }
             $scope.downloadReport(params, 'reporteBacklogEmpresarial', 'backlog empresarial');
@@ -2997,7 +2997,6 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 fechaFinal: fechas.fechaFin,
                 sheet: "Reporte instalaciones empresarial",
                 tipoExcel: 'reportesf-completadoempresarial-pi',
-                nombre: "soportes",
                 headers: ["OS", "CUENTA", "COTIZACION", "CSP", "PLAZA", "CLUSTER INSTALACION", "FECHA ACTIVACION", "TIPO ORDEN"],
                 valores: ["ordenServicio", "numeroCuenta", "cotizacion", "csp", "plaza", "clusterInstalacion", "fechaActivacion", "tipoOrden"]
             }

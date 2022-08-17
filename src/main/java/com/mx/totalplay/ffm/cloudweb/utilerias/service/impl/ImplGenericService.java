@@ -371,7 +371,7 @@ public class ImplGenericService  implements GenericService {
 					if (dataArray.size() > 0) {
 						for (int i = 0; i < dataArray.size(); i++) {
 							JsonObject object = (JsonObject) dataArray.get(i);
-							if (object.get("confirmada").getAsString() == "true") {
+							if (object.get("confirmada").getAsBoolean()) {
 								object.addProperty("confirmada", "Si");
 							}else {
 								object.addProperty("confirmada", "No");
@@ -393,10 +393,15 @@ public class ImplGenericService  implements GenericService {
 					if (dataArray.size() > 0) {
 						for (int i = 0; i < dataArray.size(); i++) {
 							JsonObject object = (JsonObject) dataArray.get(i);
-							if (object.get("repetido").getAsString() == "true") {
+							if (object.get("repetido") != null && object.get("repetido").getAsBoolean()) {
 								object.addProperty("repetido", "Si");
 							}else {
 								object.addProperty("repetido", "No");
+							}
+							if (object.get("confirmada") != null && object.get("confirmada").getAsBoolean()) {
+								object.addProperty("confirmada", "Si");
+							}else {
+								object.addProperty("confirmada", "No");
 							}
 							dataReporte.add(object);
 
@@ -410,7 +415,31 @@ public class ImplGenericService  implements GenericService {
 				if (response.getResult() == null || response.getResult() instanceof Integer) {
 				} else {
 					JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
-		            array = jsonObjectResponse.getAsJsonArray("data");
+					JsonArray dataArray = jsonObjectResponse.getAsJsonArray("data");
+					JsonArray dataReporte = new JsonArray();
+					if (dataArray.size() > 0) {
+						for (int i = 0; i < dataArray.size(); i++) {
+							JsonObject object = (JsonObject) dataArray.get(i);
+							if (object.get("repetido").getAsBoolean()) {
+								object.addProperty("repetido", "Si");
+							}else {
+								object.addProperty("repetido", "No");
+							}
+							if (object.get("repetido60").getAsBoolean()) {
+								object.addProperty("repetido60", "Si");
+							}else {
+								object.addProperty("repetido60", "No");
+							}
+							if (object.get("tsCancelado").getAsBoolean()) {
+								object.addProperty("tsCancelado", "Si");
+							}else {
+								object.addProperty("tsCancelado", "No");
+							}
+							dataReporte.add(object);
+
+						}
+					}
+		            array = dataReporte;
 				}
 				break;
 			case "reportesf-ingresoresidencial-pi":
@@ -442,7 +471,32 @@ public class ImplGenericService  implements GenericService {
 				if (response.getResult() == null || response.getResult() instanceof Integer) {
 				} else {
 					JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
-		            array = jsonObjectResponse.getAsJsonArray("data");
+					JsonArray dataArray = jsonObjectResponse.getAsJsonArray("data");
+					JsonArray dataReporte = new JsonArray();
+					if (dataArray.size() > 0) {
+						for (int i = 0; i < dataArray.size(); i++) {
+							JsonObject object = (JsonObject) dataArray.get(i);
+							if (object.get("repetido").getAsBoolean()) {
+								object.addProperty("repetido", "Si");
+							}else {
+								object.addProperty("repetido", "No");
+							}
+							if (object.get("repetido60").getAsBoolean()) {
+								object.addProperty("repetido60", "Si");
+							}else {
+								object.addProperty("repetido60", "No");
+							}
+							dataReporte.add(object);
+							if (object.get("tsCancelado").getAsBoolean()) {
+								object.addProperty("tsCancelado", "Si");
+							}else {
+								object.addProperty("tsCancelado", "No");
+							}
+							dataReporte.add(object);
+
+						}
+					}
+		            array = dataReporte;
 				}
 				break;
 			case "reportesf-completadoresidencial-pi":
@@ -455,7 +509,7 @@ public class ImplGenericService  implements GenericService {
 					if (dataArray.size() > 0) {
 						for (int i = 0; i < dataArray.size(); i++) {
 							JsonObject object = (JsonObject) dataArray.get(i);
-							if (object.get("ventaExpress").getAsString() == "true") {
+							if (object.get("ventaExpress").getAsBoolean()) {
 								object.addProperty("ventaExpress", "Si");
 							}else {
 								object.addProperty("ventaExpress", "No");

@@ -42,24 +42,26 @@
                             Operaci&oacute;n</th>
                         <th data-idColumn="9" data-isNumber="true" class="orderColumnTable orderColumnAscTable">Cluster
                         </th>
-                        <th data-idColumn="10" data-isNumber="false" class="orderColumnTable orderColumnAscTable">
-                            Delegaci&oacute;n</th>
+                        <th data-idColumn="10" data-isNumber="true" class="orderColumnTable orderColumnAscTable">Cluster comercial
+                        </th>
                         <th data-idColumn="11" data-isNumber="false" class="orderColumnTable orderColumnAscTable">
+                            Delegaci&oacute;n</th>
+                        <th data-idColumn="12" data-isNumber="false" class="orderColumnTable orderColumnAscTable">
                             Distrito</th>
-                        <th data-idColumn="12" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Fecha
-                            creaci&oacute;n</th>
                         <th data-idColumn="13" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Fecha
-                            agenda</th>
+                            creaci&oacute;n</th>
                         <th data-idColumn="14" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Fecha
+                            agenda</th>
+                        <th data-idColumn="15" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Fecha
                             modificaci&oacute;n</th>
-                        <th data-idColumn="15" data-isNumber="false" class="orderColumnTable orderColumnAscTable">
-                            Canal venta</th>
                         <th data-idColumn="16" data-isNumber="false" class="orderColumnTable orderColumnAscTable">
+                            Canal venta</th>
+                        <th data-idColumn="17" data-isNumber="false" class="orderColumnTable orderColumnAscTable">
                             Compa&ntilde;ia</th>
-                        <th data-idColumn="17" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Tipo
+                        <th data-idColumn="18" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Tipo
                             orden
                         </th>
-                        <th data-idColumn="18" data-isNumber="false" class="orderColumnTable orderColumnAscTable">
+                        <th data-idColumn="19" data-isNumber="false" class="orderColumnTable orderColumnAscTable">
                             Subtipo
                         </th>
                     </tr>
