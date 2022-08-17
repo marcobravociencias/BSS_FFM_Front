@@ -90,20 +90,8 @@ div#calendar {
   position: relative;
 }
 
-@media screen and (min-width: 1366px) .numero_empleado_telefono {
-  font-size: 0.8em;
-}
-
-@media screen and (min-width: 1366px) .icono_operario_accion {
-  font-size: 0.8em;
-}
-
 .icono_operario_accion {
   font-size: 0.8em;
-}
-
-@media screen and (min-width: 1366px) .nombre_tecnico {
-  font-size: 0.8em !important;
 }
 
 .nombre_tecnico {
@@ -3395,8 +3383,8 @@ i.fas.fa-lock.iconoAsignacionOtPermiso {
 
 /* MODAL ASIGNAR TECNICOS GEOCERCA */
 .icon-semaforo-pendiente {
-  width: 1.5em;
-  height: 1.5em;
+  width: 1.5em !important;
+  height: 1.5em !important;
 }
 
 .content-icon-semaforo-pendiente {
@@ -3440,3 +3428,8 @@ i.fas.fa-lock.iconoAsignacionOtPermiso {
   font-size: 14px;
 }
 /* ORDER COLUMNS TABLE */
+
+.iconos-ot-pendiente {
+  height: 1em;
+  width: 1em;
+}

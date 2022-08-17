@@ -965,3 +965,17 @@ span.text-content-detallePaquete {
     }
     /* MODAL ASIGNAR TECNICOS GEOCERCA */
 }
+
+@media screen and (min-width: 1366px) {
+    .numero_empleado_telefono {
+        font-size: 0.8em;
+    }
+
+    .icono_operario_accion {
+        font-size: 0.8em;
+    }
+
+    .nombre_tecnico {
+        font-size: 0.8em !important;
+    }
+}
