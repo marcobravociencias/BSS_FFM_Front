@@ -59,6 +59,7 @@ public class MyFilterInvocationSecurityMeatadataSource implements org.springfram
         put("/","ROLE_ANONYMOUS");
 		put("/loginPage","ROLE_ANONYMOUS");
 		put("/**","ROLE_USER");
+		put("/gestionModulos","ROLE_ANONYMOUS");
 	}};
     
     

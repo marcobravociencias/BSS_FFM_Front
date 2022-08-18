@@ -108,13 +108,10 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
                 let fechaConsultarOrdenesDia = FechaJustMod[2] + '-' + FechaJustMod[1] + '-' + FechaJustMod[0];
                 if ($("#calendar_gestionTecnicos td[data-date=" + $scope.fechaDiaJust + "] div.actividades-contadorac-gris").length > 0) {
                     idJust = ($("#calendar_gestionTecnicos td[data-date=" + $scope.fechaDiaJust + "] div.actividades-contadorac-gris").data('value'))
-//                    console.log("No trabajado");
                     $scope.consultarDetalleJustificacion(idJust);
                 } else if ($("#calendar_gestionTecnicos td[data-date=" + $scope.fechaDiaJust + "] div.actividades-contadorac-verde").length > 0) {
                     $scope.consultarDetalleTrabajo(fechaConsultarOrdenesDia);
-//                    console.log("trabajado");
                 } else {
-//                    console.log("trabajado");
                     $scope.isJustificacion = false;
                     $scope.openModalAgregarJustificacion(info.date);
                     $scope.$apply();

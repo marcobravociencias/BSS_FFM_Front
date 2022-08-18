@@ -1,142 +1,256 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-    <!DOCTYPE html>
-    <html ng-app="gestionModulosApp">
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:authentication property="principal" var="userStore" />
+<!DOCTYPE html>
+<html ng-app="gestionModulosApp">
 
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>FFM Total play</title>
         <!-- LIBRERIAS CSS -->
-        <link rel="icon" type="image/png" sizes="192x192"
-            href="${pageContext.request.contextPath}/resources/img/iconsistema/android-icon-192x192.png">
-        <link rel="icon" type="image/png" sizes="32x32"
-            href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="96x96"
-            href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-96x96.png">
-        <link rel="icon" type="image/png" sizes="16x16"
-            href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-16x16.png">
-        <link href="${pageContext.request.contextPath}/resources/libraries/bootstrap/css/bootstrap.min.css"
-            rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/resources/libraries/bootstrap/css/bootstrap-select.min.css"
-            rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/font-awesome.css"
-            rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/dataTables.fontAwesome.css"
-            rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/dataTables.bootstrap.min.css"
-            rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/resources/libraries/selectPicker/css/bootstrap-select.min.css"
-            rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/resources/libraries/jstree/default/style.min.css"
-            rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/resources/libraries/sweetalert/css/sweetalert2.min.css"
-            rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/resources/libraries/jstree/themes/proton/style.css"
-            rel="stylesheet">
-        <link
-            href="${pageContext.request.contextPath}/resources/libraries/datePicker/css/bootstrap-datepicker3_1.9.0.min.css"
-            rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/css/mdb.min.css"
-            rel="stylesheet">
-        <link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css"
-            rel="stylesheet" />
+        <link rel="icon" type="image/png" sizes="192x192" href="${pageContext.request.contextPath}/resources/img/iconsistema/android-icon-192x192.png">
+		<link rel="icon" type="image/png" sizes="32x32" href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-32x32.png">
+		<link rel="icon" type="image/png" sizes="96x96" href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-96x96.png">
+		<link rel="icon" type="image/png" sizes="16x16"	href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-16x16.png">
+        <link href="${pageContext.request.contextPath}/resources/libraries/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/libraries/bootstrap/css/bootstrap-select.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/font-awesome.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/dataTables.fontAwesome.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/dataTables.bootstrap.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/libraries/selectPicker/css/bootstrap-select.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/libraries/jstree/default/style.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/libraries/sweetalert/css/sweetalert2.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/libraries/jstree/themes/proton/style.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/libraries/datePicker/css/bootstrap-datepicker3_1.9.0.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/css/mdb.min.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/resources/libraries/toastr/css/toastr.min.css" rel="stylesheet" />
         <!-- CSS INTERNAS -->
-        <link
-            href="${pageContext.request.contextPath}/resources/css/generic/gestionModulos/mainGestionModulos.css?v=${sessionScope.versionDepl}"
-            rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
+        <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+        <link href="${pageContext.request.contextPath}/resources/css/generic/gestionModulos/mainGestionModulos.css?v=${sessionScope.versionDepl}" rel="stylesheet" />
+        <link href="${pageContext.request.contextPath}/resources/css/plantainterna/generic/navbar.css?v=${sessionScope.versionDepl}" rel="stylesheet" />
     </head>
 
     <body id="idBody" ng-controller="gestionModulosController">
-        <jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
-        <header class="header-navbar-p">
-            <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-menu-generic"></nav>
-        </header>
+    	
+    	<sec:authorize access="isAuthenticated()">
+    		<jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
+			<input id="logPropietario" type="hidden" value="${userStore.idPropietario}" >
+			<input id="logUnidadNegocio" type="hidden" value="${userStore.idUnidadNegocio}" >
+		</sec:authorize>
+        
+<!--         <header class="header-navbar-p"> -->
+<!--             <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-menu-generic"></nav> -->
+<!--         </header> -->
+        
         <div class="container">
-            <div class="row col-12">
-                <div class="form-group col-md-3 input-select">
-                    <label class="label-input" for="selectTipoEquipoAdd">Propietario</label>
-                    <select ng-model="permiso.propietario" class="input-filtro form-control form-control-sm input-modulos"
-                        id="permisoPropietario">
-                        <option value="" disabled selected>Seleccione ...</option>
-                        <option value="1">M&oacute;dulo</option>
-                        <option value="2">Permiso</option>
-                    </select>
-                </div>
-                <div class="form-group col-md-3 input-select">
-                    <label class="label-input" for="selectTipoEquipoAdd">Unidad negocio</label>
-                    <select ng-model="permiso.negocio" class="input-filtro form-control form-control-sm input-modulos"
-                        id="permisoNegocio">
-                        <option value="" disabled selected>Seleccione ...</option>
-                        <option value="1">Test</option>
-                        <option value="2">Test2</option>
-                    </select>
-                </div>
-                <div class="box-nuevo col-md-6 form-group">
-                    <button class="btn btn-nuevo" ng-click="changeModulos()" ng-if="!isModulo"><i class="fa fa-arrow-left"></i></button>
-                    <button class="btn btn-nuevo" ng-click="abrirMdlNuevo()"><i class="fa fa-plus"></i></button>
+            
+        	<div class="container-title-header" style="padding: 0 !important;">
+                <div class="header-modulo">
+                	<div class="row">
+                		<div class="col-md-10">
+                			<h5 class="title-modulo">Gesti&oacute;n de m&oacute;dulos</h5>
+                		</div>
+                		<sec:authorize access="!isAuthenticated()">
+							<div class="col-md-2" style="text-align: right;">
+	                			<a href="javascript:document.getElementById('logout').submit()" class="btn btn-primary btnSalirSinLogin">
+			                        <i class="fas fa-sign-out-alt"></i>
+			                    </a>
+			                    <c:url value="/logout" var="logoutUrl" />
+			                    <form id="logout" action="${logoutUrl}" method="S">
+			                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+			
+			                    </form>
+	                		</div>
+						</sec:authorize>
+                	</div>
                 </div>
             </div>
-           
-            <div class="content-fluid" ng-if="isModulo">
+        
+            <div class="content-fluid" id="container_gestion_modulos" ng-show="isModulo">
+            	<div class="row col-12">
+	                <div class="form-group col-md-3 input-select">
+	                    <label class="label-input" for="selectTipoEquipoAdd">Propietario</label>
+	                    <select ng-model="permiso.propietario" class="input-filtro form-control form-control-sm input-modulos" id="moduloPropietario">
+	                        <option value="" disabled selected>Seleccione...</option>
+	                        <option ng-repeat="prop in listaPropietarios" value="{{prop.id}}">{{prop.nombre}}</option>
+	                    </select>
+	                </div>
+	                <div class="form-group col-md-3 input-select">
+	                    <label class="label-input" for="selectTipoEquipoAdd">Unidad de negocio</label>
+	                    <select ng-model="permiso.negocio" class="input-filtro form-control form-control-sm input-modulos" id="moduloUnidadNegocio">
+	                        <option value="" disabled selected>Seleccione...</option>
+	                        <option ng-repeat="unidad in listaUnidadesNegocio" value="{{unidad.id}}">{{unidad.nombre}}</option>
+	                    </select>
+	                </div>
+	                
+	                <div class="col-md-2">
+	                    <button id="btn-consultar-modulos" type="button" ng-click="consultarModulos()" class="btn btn-sm btn-primary" style="top: 35% !important;">
+							<i class="fa fa-search"></i>
+						</button>
+	                </div>
+	                
+	                <div class="box-buscador-tabla-modulos col-md-3">
+						<div class="input-group input-group-sm content-seach-table">
+							<input type="text" id="buscadorTablaModulos" class="form-control form-control-sm buscar-input-operario" ng-model="buscarModulo" placeholder="Buscar m&oacute;dulo">
+							<span class="fa fa-search"></span>
+						</div>
+					</div>
+	                
+	                <div class="box-nuevo col-md-1">
+	                    <div>
+	                    	<button id="btnNuevoModulo" class="btn btn-nuevo" ng-click="abrirMdlNuevo()">
+	                    		<i class="fa fa-plus"></i>
+		                    	<span class="tooltipBtnNuevoModulo">Registrar nuevo m&oacute;dulo</span>
+		                    </button>
+	                    </div>
+	                </div>
+	            </div>
                 <div class="table-responsive">
                     <table id="modulosTable" class="display table" cellspacing="0" width="100%">
                         <thead id="thead_table">
                             <tr>
                                 <th>Nombre</th>
                                 <th>Clave</th>
-                                <th>Propietario</th>
-                                <th>Unidad Negocio</th>
-                                <th>Fecha actualizaci&oacute;n</th>
-                                <th>Activo</th>
-                                <th style="text-align: center;">Editar</th>
-                                <th style="text-align: center;">Ver</th>
-                                <th style="text-align: center;">Eliminar</th>
+                                <th>Color</th>
+                                <th>Color hover</th>
+                                <th>Icono</th>
+                                <th ng-show="!isNuevoModulo && !isEditModulo" style="text-align: center;">Editar</th>
+                                <th ng-show="!isNuevoModulo && !isEditModulo" style="text-align: center;">Ver</th>
+                                <th ng-show="!isNuevoModulo && !isEditModulo" style="text-align: center;">Eliminar</th>
+                                
+                                <th ng-show="isNuevoModulo" style="text-align: center;">Cancelar</th>
+                                <th ng-show="isNuevoModulo" style="text-align: center;">Guardar</th>
+                                <th ng-show="isNuevoModulo" style="text-align: center;"></th>
+                                
+                                <th ng-show="isEditModulo" style="text-align: center;">Cancelar</th>
+                                <th ng-show="isEditModulo" style="text-align: center;">Editar</th>
+                                <th ng-show="isEditModulo" style="text-align: center;"></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>test</td>
-                                <td>test</td>
-                                <td>test</td>
-                                <td>test</td>
-                                <td>test</td>
-                                <td>test</td>
-                                <td><span class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btn-default"><i class="fa fa-edit" aria-hidden="true"></i></span></td>
-                                <td><span onclick="verDetalle()" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btn-default"><i class="fa fa-bars" aria-hidden="true"></i></span></td>
-                                <td><span class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btn-delete"><i class="fa fa-trash" aria-hidden="true"></i></span></td>
-                            </tr>
+                        	<tr ng-show="isNuevoModulo">
+                        		<td><input id="nombreModulo" type="text" class="form-control txtNuevoModulo valInputFormulario" /></td>
+                        		<td><input id="claveModulo" type="text" class="form-control txtNuevoModulo valInputFormulario" /></td>
+                        		<td><input id="colorModulo" type="text" class="form-control txtNuevoModulo valInputFormulario" /></td>
+                        		<td><input id="colorHoverModulo" type="text" class="form-control txtNuevoModulo valInputFormulario" /></td>
+                        		<td><input id="iconoModulo" type="text" class="form-control txtNuevoModulo valInputFormulario" /></td>
+                        		<td>
+                        			<span ng-click="cancelarRegistroModulo()" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light btnCancelarNuevoModulo">
+                        				<i class="fa fa-ban" aria-hidden="true"></i>
+                        			</span>
+                        		</td>
+                        		<td>
+                        			<span ng-click="guardarNuevoModulo()" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light btnAgregarNuevoModulo">
+                        				<i class="fa fa-check" aria-hidden="true"></i>
+                        			</span>
+                        		</td>
+                        		<td></td>
+                        	</tr>
+                        	<tr ng-repeat="modulo in listaModulos | filter:buscarModulo track by $index">
+                        		<td class="rowConsultaModulo{{modulo.id}}">{{modulo.nombre}}</td>
+                        		<td class="rowEditModulo{{modulo.id}}" style="display: none;"><input id="nombreModuloEdit{{modulo.id}}" type="text" class="form-control txtEditModulo valInputFormulario" value="{{modulo.nombre}}" /></td>
+                        		<td class="rowConsultaModulo{{modulo.id}}">{{modulo.clave}}</td>
+                        		<td class="rowEditModulo{{modulo.id}}" style="display: none;"><input id="claveModuloEdit{{modulo.id}}" type="text" class="form-control txtEditModulo valInputFormulario" value="{{modulo.clave}}" /></td>
+                        		<td class="rowConsultaModulo{{modulo.id}}">{{modulo.color}}</td>
+                        		<td class="rowEditModulo{{modulo.id}}" style="display: none;"><input id="colorModuloEdit{{modulo.id}}" type="text" class="form-control txtEditModulo valInputFormulario" value="{{modulo.color}}" /></td>
+                        		<td class="rowConsultaModulo{{modulo.id}}">{{modulo.colorHover}}</td>
+                        		<td class="rowEditModulo{{modulo.id}}" style="display: none;"><input id="colorHoverModuloEdit{{modulo.id}}" type="text" class="form-control txtEditModulo valInputFormulario" value="{{modulo.colorHover}}" /></td>
+                        		<td class="rowConsultaModulo{{modulo.id}}">{{modulo.icono}}</td>
+                        		<td class="rowEditModulo{{modulo.id}}" style="display: none;"><input id="iconoModuloEdit{{modulo.id}}" type="text" class="form-control txtEditModulo valInputFormulario" value="{{modulo.icono}}" /></td>
+                        		<td class="rowConsultaModulo{{modulo.id}}">
+                        			<span ng-click="abrirEditarModulo(modulo.id)" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnEditarModulo">
+                        				<i class="fa fa-edit" aria-hidden="true"></i>
+                        			</span>
+                        		</td>
+                        		<td class="rowConsultaModulo{{modulo.id}}">
+                        			<span ng-click="verDetalle(modulo.id)" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnDetalleModulo">
+                        				<i class="fa fa-bars" aria-hidden="true"></i>
+                        			</span>
+                        		</td>
+                        		<td class="rowConsultaModulo{{modulo.id}}">
+                        			<span ng-click="eliminarModulo(modulo.id)" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnEliminarModulo">
+                        				<i class="fa fa-trash" aria-hidden="true"></i>
+                        			</span>
+                        		</td>
+                        		
+                        		<td class="rowEditModulo{{modulo.id}}" style="display: none;">
+                        			<span ng-click="cancelarEditModulo(modulo.id)" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light btnCancelarEditModulo">
+                        				<i class="fa fa-ban" aria-hidden="true"></i>
+                        			</span>
+                        		</td>
+                        		<td class="rowEditModulo{{modulo.id}}" style="display: none;">
+                        			<span ng-click="modificarModulo(modulo.id)" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light btnEditModulo">
+                        				<i class="fa fa-check" aria-hidden="true"></i>
+                        			</span>
+                        		</td>
+                        		<td class="rowEditModulo{{modulo.id}}" style="display: none;"></td>
+                        		
+                        	</tr>
                         </tbody>
                     </table>
                 </div>
+                <div class="row" ng-show="!exisModulos">
+                	<div class="col-md-12" style="text-align: center;">
+                    	<span class="span-no-result">No se encontraron resultados</span>
+                    </div>
+				</div>
             </div>
-            <div class="content-fluid" ng-if="!isModulo">
-                <div class="table-responsive">
-                    <table id="accionesTable" class="display table" cellspacing="0" width="100%">
-                        <thead id="thead_table">
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Clave</th>
-                                <th>Propietario</th>
-                                <th>Unidad Negocio</th>
-                                <th>Fecha actualizaci&oacute;n</th>
-                                <th>Activo</th>
-                                <th style="text-align: center;">Editar</th>
-                                <th style="text-align: center;">Eliminar</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>test</td>
-                                <td>test</td>
-                                <td>test</td>
-                                <td>test</td>
-                                <td>test</td>
-                                <td>test</td>
-                                <td><span class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btn-default"><i class="fa fa-edit" aria-hidden="true"></i></span></td>
-                                <td><span class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btn-delete"><i class="fa fa-trash" aria-hidden="true"></i></span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+            <div class="content-fluid" id="container_gestion_modulos_permisos" ng-show="!isModulo">
+            	<div class="row" style="padding-left: 0.75rem; padding-right: 0.75rem;">
+            		<div class="col-md-6">
+            			<h6 class="title-modulo">M&oacute;dulo {{moduloSeleccionado.nombre}} > Permisos</h6>
+            		</div>
+            		<div class="col-md-6 form-group" style="text-align: right;">
+	                    <button class="btn btn-nuevo" ng-click="changeModulos()" ng-if="!isModulo"><i class="fa fa-arrow-left"></i></button>
+	                    <button class="btn btn-nuevo" ng-click="abrirMdlNuevo()"><i class="fa fa-plus"></i></button>
+	                </div>
+            	</div>
+            	<div class="row">
+            		<div ng-show="exisPermisosModulo" class="col-md-12">
+            			<div class="table-responsive">
+		                    <table id="accionesTable" class="display table" cellspacing="0" width="100%">
+		                        <thead id="thead_table">
+		                            <tr>
+		                                <th>Nombre</th>
+		                                <th>Clave</th>
+		                                <th>Color</th>
+		                                <th>Color hover</th>
+		                                <th>Icono</th>
+		                                <th style="text-align: center;">Editar</th>
+		                                <th style="text-align: center;">Eliminar</th>
+		                            </tr>
+		                        </thead>
+		                        <tbody>
+		                        	<tr ng-repeat="permiso in listaPermisosModulo">
+		                        		<td>{{permiso.nombre}}</td>
+		                        		<td>{{permiso.clave}}</td>
+		                        		<td>{{permiso.color}}</td>
+		                        		<td>{{permiso.colorHover}}</td>
+		                        		<td>{{permiso.icono}}</td>
+		                        		<td>
+		                        			<span ng-click="abrirMdlEditar()" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnEditarModulo">
+		                        				<i class="fa fa-edit" aria-hidden="true"></i>
+		                        			</span>
+		                        		</td>
+		                        		<td>
+		                        			<span ng-click="eliminarPermiso()" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnEliminarModulo">
+		                        				<i class="fa fa-trash" aria-hidden="true"></i>
+		                        			</span>
+		                        		</td>
+		                        	</tr>
+		                        </tbody>
+		                    </table>
+		                </div>
+            		</div>
+            		
+            		<div ng-show="!exisPermisosModulo" class="imagen-no-results">
+						<img src="${pageContext.request.contextPath}/resources/img/generic/no-results.png">
+						<br>
+						<span class="span-no-result">No se encontraron resultados</span>
+					</div>
+            		
+            	</div>
             </div>
             <jsp:include page="./modals/modalNuevo.jsp"></jsp:include>
             <jsp:include page="./modals/modalDetalle.jsp"></jsp:include>
@@ -175,5 +289,4 @@
     <script type="text/javascript"
         src="${pageContext.request.contextPath}/resources/js/generic/gestionModulos/gestionModulosService.js?v=${sessionScope.versionDepl}"
         charset="UTF-8"></script>
-
-    </html>
+</html>

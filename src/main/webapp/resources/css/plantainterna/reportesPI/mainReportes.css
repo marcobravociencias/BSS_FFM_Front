@@ -1848,4 +1848,9 @@ label.dropdown-item.form-check-inputfiltro {
     font-size: 14px;
     font-size: 14px;
 }
+
+#tableTecnicosTiposOrdenes_wrapper div:nth-child(2).row {
+	margin-bottom: 0.5em !important;
+}
+
 /* ORDER COLUMNS TABLE */

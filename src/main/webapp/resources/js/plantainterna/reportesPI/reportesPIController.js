@@ -48,6 +48,8 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 	$scope.resultReporteDiario = null;
 	$scope.resultReporteCierre = null;
 	$scope.resultReporteAsignadas = null;
+	//Bandera primer consulta de 
+	$scope.isConsultaTecnicosTiposOrdenes = null;
 
 	$scope.tempSeguimientoDiario = [];
 	$scope.tempReporteCierre = [];
@@ -129,7 +131,11 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 	}
 
 	$scope.consultarTecnicosTiposOrdenes = function () {
-
+		if (!swal.isVisible()) {
+			swal({ text: 'Cargando registros...', allowOutsideClick: false });
+			swal.showLoading();
+		}
+		$scope.isConsultaTecnicosTiposOrdenes = true;
 		$scope.isTablaTecnicos = false;
 		$scope.listaSkills = [];
 		$scope.listaTecnicos = [];
@@ -150,8 +156,6 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 
 		if (isValid) {
 			let params = { "idGeografias": clustersparam };
-			swal({ text: 'Espera un momento...', allowOutsideClick: false });
-			swal.showLoading();
 			let tituloAccion = "Consulta reporte skills instaladores";
 			let mensajeEnvio = 'Se ha consultado el reporte';
 			objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_INFO, tituloAccion);
@@ -275,7 +279,10 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 				break;
 			case 'tecnicos':
 				geografiaReporte = angular.copy($scope.listaGeografiaReporte.tecnicos);
-				//$scope.consultarTecnicosTiposOrdenes();
+				if ($scope.isConsultaTecnicosTiposOrdenes == null && geografiaReporte) {
+					swal({ text: 'Cargando registros...', allowOutsideClick: false });
+					swal.showLoading();
+				}
 				break;
 		}
 
@@ -312,9 +319,9 @@ app.controller('reportesController', ['$scope', '$q', 'reportesPIService', 'gene
 						break;
 					case 'tecnicos':
 						$scope.getTextGeografia('jstree-proton-tecnicos', 'cluster-tecnicos');
-//						if ($scope.resultReporteAsignadas == null) {
+						if ($scope.isConsultaTecnicosTiposOrdenes == null) {
 							$scope.consultarTecnicosTiposOrdenes();
-//						}
+						}
 						break;
 				}
 

@@ -1,11 +1,11 @@
-.container {
-    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
-    /* padding-top: 1em; */
-    background: white;
-    border-radius: .5em;
-    margin-top: 1em;
-    padding: 1em 0;
-    font-family: "Montserrat" !important;
+#container_gestion_modulos,
+#container_gestion_modulos_permisos {
+	box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+  	background: white;
+  	border-radius: .5em;
+  	margin-top: 1em;
+  	padding: 1em 0;
+  	font-family: "Montserrat" !important;
 }
 
 #modulosTable tbody tr:nth-child(even) ,
@@ -76,10 +76,20 @@ div.dataTables_wrapper div.dataTables_filter input {
     padding: 0.6em 1em;
     background-color: var(--estandar-color);
     color: #fff;
+    position: inherit;
+}
+
+.btn-ver-columnas {
+    border-radius: 50%;
+    padding: 0.6em 0.9em;
+    background-color: var(--estandar-color);
+    color: #fff;
 }
 
 .btn-nuevo:hover {
+	padding: 0.7em 1.1em;
     color: #fff;
+    outline: 0;
 }
 
 .box-nuevo {
@@ -171,7 +181,7 @@ span.text-tile-permiso {
 }
 
 .input-valid-error {
-    box-shadow: 0 1px 1px 0 red;
+    border-bottom: 2px solid rgb(245, 87, 86) !important;
 }
 
 .acciones{
@@ -198,3 +208,227 @@ span.text-tile-permiso {
 .btn-delete:hover, .btn-delete:active, .btn-delete:focus{
     background-color: var(--btn-color-eliminar-tabla) !important;
 }
+
+.btnEditarModulo,
+.btnEditarModulo:hover {
+	background-color: var(--btn-color-editar-tabla);
+}
+
+.btnDetalleModulo,
+.btnDetalleModulo:hover {
+	background-color: var(--btn-color-detalle-tabla);
+}
+
+.btnEliminarModulo,
+.btnEliminarModulo:hover {
+	background-color: var(--btn-color-eliminar-tabla);
+}
+
+.imagen-no-results {
+    text-align: center!important;
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+#btn-consultar-modulos {
+	background-color: #ffffff;
+    color: var(--btn-color-buscar);
+    border: solid 1px var(--btn-color-buscar) !important;
+    padding: 0.5em 1.5em;
+    border-radius: 5px;
+    font-size: 0.6em;
+    position: relative;
+    display: block;
+    border-radius: 0.5em !important;
+    margin-top: 0.1em;
+}
+
+.txtNuevoModulo {
+	width: 100%;
+	height: 23px;
+	font-family: 'Montserrat';
+	font-size: .9em;
+}
+
+.txtEditModulo {
+	text-align: center;
+	width: 100%;
+	height: 23px;
+	font-family: 'Montserrat';
+	font-size: .9em;
+}
+
+.btnAgregarNuevoModulo{
+    padding: 0.3em 1em !important;
+    border-radius: 0.2rem;
+    cursor: pointer;
+    font-size: 0.9em;
+    background-color: transparent;
+    color: green;
+}
+
+.btnCancelarNuevoModulo{
+    padding: 0.3em 1em !important;
+    border-radius: 0.2rem;
+    cursor: pointer;
+    font-size: 0.9em;
+    background-color: transparent;
+    color: var(--btn-color-eliminar-tabla);
+}
+
+.btnAgregarNuevoModulo:hover{
+	background-color: transparent;
+    color: green;
+	font-size: 1.3em;
+}
+
+.btnCancelarNuevoModulo:hover {
+	background-color: transparent;
+    color: var(--btn-color-eliminar-tabla);
+	font-size: 1.3em;
+}
+
+.btnAgregarNuevoModulo:active,
+.btnCancelarNuevoModulo:active {
+	background-color: transparent !important;
+}
+
+.btnsBloqueados {
+	opacity: 0.3 !important;
+    cursor: no-drop !important;
+}
+
+.btnEditModulo{
+    padding: 0.3em 1em !important;
+    border-radius: 0.2rem;
+    cursor: pointer;
+    font-size: 0.9em;
+    background-color: transparent;
+    color: green;
+}
+
+.btnCancelarEditModulo{
+    padding: 0.3em 1em !important;
+    border-radius: 0.2rem;
+    cursor: pointer;
+    font-size: 0.9em;
+    background-color: transparent;
+    color: var(--btn-color-eliminar-tabla);
+}
+
+.btnEditModulo:hover{
+	background-color: transparent;
+    color: green;
+	font-size: 1.3em;
+}
+
+.btnCancelarEditModulo:hover {
+	background-color: transparent;
+    color: var(--btn-color-eliminar-tabla);
+	font-size: 1.3em;
+}
+
+.btnEditModulo:active,
+.btnCancelarEditModulo:active {
+	background-color: transparent !important;
+}
+
+#btnNuevoModulo .tooltipBtnNuevoModulo {
+	visibility: hidden;
+	width: 140px;
+	height: 25px;
+	background-color: #555;
+	color: #fff;
+	text-align: center;
+	border-radius: 6px;
+	padding: 7px 0;
+	position: absolute;
+	z-index: 1;
+	bottom: 70%;
+	left: -12%;
+	opacity: 0;
+	transition: opacity 0.3s;
+	font-family: 'Montserrat';
+	font-size: .7em;
+}
+
+#btnNuevoModulo:hover .tooltipBtnNuevoModulo {
+	visibility: visible;
+  	opacity: 1;
+}
+
+.btnSalirSinLogin {
+	padding-top: .4em;
+	padding-bottom: .4em;
+  	padding-left: .5em;
+  	padding-right: .5em;
+  	box-shadow: none;
+  	font-size: .7em;
+  	font-weight: bold;
+  	background: white;
+  	color: var(--estandar-color);
+  	border: 1px solid #c3c3c3;
+  	transition: all .3s ease-in;
+}
+
+.btnSalirSinLogin:hover {
+	background: #3942d7;
+  	color: white;
+  	border: 1px solid #3942d7;
+  	box-shadow: 0 2px 5px 0 rgb(0 0 0 / 20%), 0 2px 10px 0 rgb(0 0 0 / 10%);
+}
+
+.buscar-input-operario {
+    height: 2em !important;
+    min-height: 2em !important;
+    padding: 0 !important;
+    padding-left: 1em !important;
+    border-radius: 1em !important;
+    border: 1px solid #e2e2e2;
+    background:#fcfcfc;
+}
+
+.buscar-input-operario::placeholder{
+    color:#a4a4a4;
+    font-size:1em;
+}
+
+.content-seach-table {
+    height: 1em;
+    display: inline-flex;
+}
+
+.content-seach-table span {
+    height: 1.5em !important;
+    min-height: 1.5em !important;
+    position:absolute;
+    right:0;
+    top:30%;
+    margin-right:.5em;
+    color: #9F9E9E;
+    font-size:.9em;
+    background: transparent;
+}
+
+.box-buscador-tabla-modulos {
+	text-align: right;
+    padding-top: 1.7em;
+    left: 4%;
+}
+
+/* tbody { */
+/*     display: block; */
+/*     height: 400px; */
+/*     overflow: auto; */
+/* } */
+/* thead, tbody tr { */
+/*     display: table; */
+/*     width: 100%; */
+/*     table-layout: fixed;even columns width , fix width of table too */
+/* } */
+/* thead { */
+/*     width: calc( 100% - 1em )scrollbar is average 1em/16px width, remove it from thead width */
+/* } */
+/* table { */
+/*     width: 400px; */
+/* } */

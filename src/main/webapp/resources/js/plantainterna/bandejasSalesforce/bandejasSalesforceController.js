@@ -38,7 +38,10 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
     $scope.GEOGRAFIA_DOS_AGENDA = null;
     $scope.GEOGRAFIA_UNO_AGENDA_NOMBRE = null;
     $scope.GEOGRAFIA_DOS_AGENDA_NOMBRE = null;
-    $scope.subtipoIntervencionDisponibilidad = null;
+    
+    $scope.llaveTipoIntervencion = null;
+    $scope.llaveSubtipoIntervencion = null;
+    
     $scope.isCspAgendado = false;
     $scope.mensajeCspAgendado = "";
     $scope.flagCargandoCalendar = true;
@@ -324,6 +327,14 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                 
                 if(llavesResult.GEOGRAFIA_DOS_AGENDA){
                 	$scope.GEOGRAFIA_DOS_AGENDA = llavesResult.GEOGRAFIA_DOS_AGENDA;
+                }
+                
+                if (llavesResult.KEY_TIPO_INTERVENCION_PENDIENTES) {
+                    $scope.llaveTipoIntervencion = llavesResult.KEY_TIPO_INTERVENCION_PENDIENTES;
+                }
+                
+                if (llavesResult.KEY_SUBTIPO_INTERVENCION_PENDIENTES) {
+                    $scope.llaveSubtipoIntervencion = llavesResult.KEY_SUBTIPO_INTERVENCION_PENDIENTES;
                 }
 
                 validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
@@ -782,7 +793,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
     	let dataDisp={
             	geografia1: $scope.GEOGRAFIA_UNO_AGENDA_NOMBRE != null ? $scope.GEOGRAFIA_UNO_AGENDA_NOMBRE : "CIUDAD DE MEXICO-CENTRO",
                 geografia2: $scope.GEOGRAFIA_DOS_AGENDA_NOMBRE != null ? $scope.GEOGRAFIA_DOS_AGENDA_NOMBRE : "NORESTE CENTRO G",
-                subtipoIntervencion: $scope.subtipoIntervencionDisponibilidad != undefined ? $scope.subtipoIntervencionDisponibilidad : 106,
+                subtipoIntervencion: $scope.llaveSubtipoIntervencion != undefined ? $scope.llaveSubtipoIntervencion : 106,
                 propietario: "1",
                 unidadNegocio: "1"
         };
@@ -833,8 +844,8 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         let params = {
         		"idFlujo": 1,
         		"turno":$scope.elementoCSP.turnoAgendamiento,
-        		"tipo":48,
-        		"subtipo": 106,
+        		"tipo": $scope.llaveTipoIntervencion != undefined ? $scope.llaveTipoIntervencion : 48,
+        		"subtipo": $scope.llaveSubtipoIntervencion != undefined ? $scope.llaveSubtipoIntervencion : 106,
         		"numeroCuenta": $scope.elementoCSP.infoSitio.numeroCuenta,
         		"cluster": $scope.elementoCSP.cluster,
         		"comentarios": comentarios,
@@ -944,8 +955,6 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
     
     $(".inputFormAgendamiento").keyup(function() {
 		var input = $(this).attr("id");
-		console.log(input);
-		console.log($(this).val());
 		if( $(this).val()  === "" || $(this).val() === undefined ){
 			$("#"+input).addClass("campoNoValido");
 		}else{
@@ -1315,7 +1324,6 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
     $scope.listFieldsValidacion = [];
     $scope.listFieldsCopy = [];
     $scope.consultarValidacionCSP = function (index) {
-    	$scope.subtipoIntervencionDisponibilidad = null;
         $scope.listFieldsValidacion = [];
         $scope.listFieldsCopy = [];
         
@@ -1326,8 +1334,6 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         let params = { 
             'idCotSitioPlan': $scope.listPendientesAgendar[index].idCSP
         }
-        
-        $scope.subtipoIntervencionDisponibilidad = $scope.listPendientesAgendar[index].idSubtipoIntervencion;
         
         bandejasSalesforceService.consultarValidacionCSPBandejasSF(params).then(function success(response) {
             if (response.data) { 
