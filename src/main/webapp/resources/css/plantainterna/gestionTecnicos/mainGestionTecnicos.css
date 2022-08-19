@@ -978,3 +978,16 @@ div.actividades-contadorac-gris {
 	color: var(--btn-color-cerrar-modal) !important;
     border: 0.09rem solid var(--btn-color-cerrar-modal) !important;
 }
+
+.title-cargando-calendario {
+  margin-left: 0em;
+  color: #444444;
+  font-weight: bolder;
+  text-align: left;
+}
+
+.spinner-border.spinner-cargando-info {
+  width: 1.5em;
+  height: 1.5em;
+  color: #8e50fc;
+}

@@ -1,4 +1,5 @@
 var app = angular.module('gestionTecnicosApp', []);
+var objectTempAccion;
 
 app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosService', 'genericService', function ($scope, $q, gestionTecnicosService, genericService) {
 
@@ -24,6 +25,7 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
     $scope.isTecnicoSelected = false;
     $scope.isDetalleMesTecnico = false;
     $scope.isCargaArchivos = false;
+    $scope.flagCargandoCalendar = true;
     $scope.tecnicoDisp = {};
     $scope.auxDisp = {};
     $scope.justificacionDetalle = {};
@@ -119,7 +121,7 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
             },
             datesSet: function () {
                 setTimeout(function () {
-                    $scope.calendarTec.render()
+                	verCalendario();
                 }, 1000)
             }
         });
@@ -139,8 +141,16 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
         }, 0500);
         $scope.calendarTec.render();
     }
+    
+    verCalendario = function() {
+    	$("#calendar_gestionTecnicos").css('visibility', 'visible');
+    	$scope.flagCargandoCalendar = false;
+    	$scope.$apply();
+	}
 
     $scope.consultarTecnicos = function () {
+    	$("#calendar_gestionTecnicos").css('visibility', 'hidden');
+    	$scope.flagCargandoCalendar = true;
     	$scope.limpiarDetalleJustificacion();
     	$scope.changeView();
     	$scope.isTecnicoSelected = false;
@@ -491,7 +501,8 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
     }
 
     $scope.consultarDisponibilidadTecnico = function (tecnico) {
-    	
+    	$("#calendar_gestionTecnicos").css('visibility', 'hidden');
+    	$scope.flagCargandoCalendar = true;
         swal({ text: 'Cargando datos ...', allowOutsideClick: false });
         swal.showLoading();
         

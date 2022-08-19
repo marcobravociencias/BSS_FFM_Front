@@ -144,6 +144,14 @@
 	                                        </div>
 	                                    </div>
 	                                </div>
+	                                <div ng-show="flagCargandoCalendar" style="margin-top: 1.3em;">
+	                                	<div  class="spinner-border spinner-cargando-info" role="status">
+											<span class="visually-hidden">Loading...</span>
+										</div>
+		                                <span class="title-cargando-calendario">
+											Cargando calendario...
+										</span>
+	                                </div>
 	                                <div style="margin-bottom: 1em; margin-top: 1em;" id="calendar_gestionTecnicos"></div>
 	                            </div>
 	                            <div class="col-4" id="container_detalleTecnico">

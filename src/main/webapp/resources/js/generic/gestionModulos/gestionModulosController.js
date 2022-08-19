@@ -54,6 +54,7 @@ app.controller('gestionModulosController', ['$scope', '$q', '$filter', 'gestionM
         		mostrarMensajeInformativo("Tienes un proceso pendiente.");
         	}else{
     	    	$scope.isNuevoModulo = true;
+    	    	$("#buscadorTablaModulos").prop("disabled",true);
     	    	$(".btnEditarModulo").addClass("btnsBloqueados");
     	    	$(".btnDetalleModulo").addClass("btnsBloqueados");
     	    	$(".btnEliminarModulo").addClass("btnsBloqueados");
@@ -139,6 +140,8 @@ app.controller('gestionModulosController', ['$scope', '$q', '$filter', 'gestionM
 
     $scope.consultarModulos = function () {
     	if($scope.validateFormConsulta()){
+    		
+    		$scope.listaModulos = [];
     		
     		let params = {
     				"idPropietario":$("#moduloPropietario").val(),
@@ -382,6 +385,7 @@ app.controller('gestionModulosController', ['$scope', '$q', '$filter', 'gestionM
 		$("#colorModulo").val("");
 		$("#colorHoverModulo").val("");
 		$("#iconoModulo").val("");
+		$("#buscadorTablaModulos").prop("disabled",false);
 		$("#nombreModulo").removeClass("input-valid-error");
 		$("#claveModulo").removeClass("input-valid-error");
 		$("#colorModulo").removeClass("input-valid-error");
@@ -398,6 +402,7 @@ app.controller('gestionModulosController', ['$scope', '$q', '$filter', 'gestionM
     		mostrarMensajeInformativo("Tienes un proceso pendiente.");
     	}else{
 	    	$scope.isEditModulo = true;
+	    	$("#buscadorTablaModulos").prop("disabled",true);
 	    	$(".btnEditarModulo").addClass("btnsBloqueados");
 	    	$(".btnDetalleModulo").addClass("btnsBloqueados");
 	    	$(".btnEliminarModulo").addClass("btnsBloqueados");
@@ -543,6 +548,7 @@ app.controller('gestionModulosController', ['$scope', '$q', '$filter', 'gestionM
 		$(".rowConsultaModulo"+id).show();
 		$(".rowEditModulo"+id).hide();
 		
+		$("#buscadorTablaModulos").prop("disabled",false);
 		$(".btnEditarModulo").removeClass("btnsBloqueados");
     	$(".btnDetalleModulo").removeClass("btnsBloqueados");
     	$(".btnEliminarModulo").removeClass("btnsBloqueados");
