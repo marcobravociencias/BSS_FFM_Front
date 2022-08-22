@@ -965,6 +965,7 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
         }
     }
 
+    $scope.idCambioNodo = 0;
     $scope.listaGeografiaConfiguracion = [];
     $scope.banderaConsultaGeografia = false;
     $scope.consultarCatalogoGeografia = function() {
@@ -981,10 +982,19 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                                 e.parent = e.padre == null ? 0 : e.padre;
                                 e.text = e.nombre;
                                 e.icon = "fa fa-globe";
-                                e.state = {
-                                    opened: false,
-                                    selected: false
+                                if ($scope.idCambioNodo !== 0 && e.id == $scope.idCambioNodo) {
+                                    e.state = {
+                                        opened: true,
+                                        selected: true
+                                    }
+                                    $scope.idCambioNodo = 0;
+                                } else {
+                                    e.state = {
+                                        opened: false,
+                                        selected: false
+                                    }
                                 }
+                                
                                 return e
                             })
                             $scope.listaGeografiaConfiguracion.push({ id: 0, text: "TOTALPLAY", nivel: 0, parent: "#", state: { opened: true, selected: true } });
@@ -1013,7 +1023,7 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
         $('#jstreeConfig').bind('loaded.jstree', function (e, data) {
             
         }).jstree({
-            'plugins': ["wholerow", 'search', 'contextmenu'],
+            'plugins': ["wholerow", 'search', 'contextmenu', 'types', 'dnd'],
             'search': {
                 "case_sensitive": false,
                 "show_only_matches": true
@@ -1089,41 +1099,49 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                     return opciones;
                 }
             }
+        }).bind("move_node.jstree", function (e, data) {
+            console.log(data);
+            $scope.cambiarGeocerca(data);
+        }).on('rename_node.jstree', function (e, data) {
+            addReanameNode(data);
         });
-        console.log("termina");
     }
 
     addReanameNode = function(rama){
-        var isnum = /^\d+$/.test(rama.id);
+        var isnum = /^\d+$/.test(rama.node.id);
         if(isnum){
-            swal({
-                title: "Se actualizar\u00E1 la informaci\u00F3n del nodo",
-                text: "\u00BFDesea guardar la informaci\u00F3n?",
-                type: "info",
-                reverseButtons: true,
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Aceptar',
-                cancelButtonText: "Cancelar",
-            }).then(function (isConfirm) {
-                if (isConfirm) {
-                    let params = {};
-                    params.geografia = [];
-                    params.geografia.push({
-                        id: rama.original.id,
-                        descripcion: rama.text,
-                        idPadre: rama.original.padre,
-                        nivel: rama.original.nivel
-                    });
-                    $scope.gestionarGeocerca(params);
-                }
-            }).catch(err => {
-                $scope.banderaConsultaGeografia = false;
-                $scope.consultarCatalogoGeografia();
-                toastr.warning('Operaci&oacute;n cancelada');
-                $("#searchGeo").val("");
-            });
+            if (rama.text != rama.old) {
+                swal({
+                    title: "Se actualizar\u00E1 la informaci\u00F3n del nodo",
+                    text: "\u00BFDesea guardar la informaci\u00F3n?",
+                    type: "info",
+                    reverseButtons: true,
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Aceptar',
+                    cancelButtonText: "Cancelar",
+                }).then(function (isConfirm) {
+                    if (isConfirm) {
+                        let params = {};
+                        params.geografia = [];
+                        params.geografia.push({
+                            id: rama.node.original.id,
+                            descripcion: rama.text,
+                            idPadre: rama.node.original.padre,
+                            nivel: rama.node.original.nivel
+                        });
+                        console.log("termina");
+                        $scope.idCambioNodo = rama.node.original.id;
+                        $scope.gestionarGeocerca(params);
+                    }
+                }).catch(err => {
+                    $scope.banderaConsultaGeografia = false;
+                    $scope.consultarCatalogoGeografia();
+                    toastr.warning('Operaci&oacute;n cancelada');
+                    $("#searchGeo").val("");
+                });
+            }
         }else{
             swal({
                 title: "Se agregar\u00E1 la informaci\u00F3n del nodo",
@@ -1137,15 +1155,16 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
                 cancelButtonText: "Cancelar",
             }).then(function (isConfirm) {
                 if (isConfirm) {
-                    let padre = $scope.listaGeografiaConfiguracion.find((e) => e.id == rama.parent);
+                    let padre = $scope.listaGeografiaConfiguracion.find((e) => e.id == rama.node.parent);
                     let params = {};
                     params.geografia = [];
                     params.geografia.push({
                         id: "",
                         descripcion: rama.text,
-                        idPadre: rama.parent,
+                        idPadre: rama.node.parent,
                         nivel: (padre.nivel+1)
                     });
+                    $scope.idCambioNodo = rama.node.parent;
                     $scope.gestionarGeocerca(params);
                 }
             }).catch(err => {
@@ -1158,7 +1177,6 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
     }
 
     function bajaElemento(rama){
-        console.log(rama);
         swal({
             title: "Se eliminar\u00E1 la informaci\u00F3n del nodo",
             text: "\u00BFDesea eliminar la informaci\u00F3n?",
@@ -1173,6 +1191,7 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
             if (isConfirm) {
                 let params = {};
                 params.id = rama.original.id;
+                $scope.idCambioNodo = rama.parent;
                 $scope.eliminarGeocerca(params);
             }
         }).catch(err => {
@@ -1181,6 +1200,40 @@ app.controller('gestionUniversalController', ['$scope', '$q', 'gestionUniversalS
             toastr.warning('Operaci&oacute;n cancelada');
             $("#searchGeo").val("");
         });
+    }
+
+    $scope.cambiarGeocerca = function(rama) {
+        console.log(rama);
+        swal({
+            title: "Se modificar\u00E1 la informaci\u00F3n del nodo",
+            text: "\u00BFDesea mover el nodo?",
+            type: "info",
+            reverseButtons: true,
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Aceptar',
+            cancelButtonText: "Cancelar",
+        }).then(function (isConfirm) {
+            if (isConfirm) {
+                let params = {};
+                params.geografia = [];
+                params.geografia.push({
+                    id: rama.node.id,
+                    descripcion: rama.node.text,
+                    idPadre: rama.parent,
+                    nivel: $scope.listaGeografiaConfiguracion.find((e) => e.id == rama.parent).nivel + 1
+                });
+                $scope.idCambioNodo = rama.node.id;
+                $scope.gestionarGeocerca(params);
+            }
+        }).catch(err => {
+            $scope.banderaConsultaGeografia = false;
+            $scope.consultarCatalogoGeografia();
+            toastr.warning('Operaci&oacute;n cancelada');
+            $("#searchGeo").val("");
+        });
+        console.log(rama);
     }
 
     $scope.gestionarGeocerca = function(params) {
