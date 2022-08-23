@@ -9,9 +9,8 @@
             <div class="modal-body">
                 <div class="container">
                     <div class="content-fluid" ng-show="!isCargaArchivos">
-                        <div class="col-12 form-group" style="margin-bottom: 0; padding-left: 0;">
+                        <div class="col-12 form-group" style="margin-bottom: 0; padding-left: 0;" ng-if="configPermisoAccionCreaEvidenciaJustificacion">
                             <i class="fas fa-plus-circle icon-back" ng-click="changeView()" title="Cargar Archivo"></i>
-                            <!-- <span style="margin-bottom: 0.1em;">Cargar Archivo</span> -->
                         </div>
                         <div class="table-responsive">
 	                        <table class="display table" cellspacing="0" width="100%" id="tableArchivosJustificacion">
@@ -20,7 +19,7 @@
 	                                    <th>Usuario</th>
 	                                    <th>Nombre</th>
 	                                    <th>Fecha de Registro</th>
-	                                    <th>Opciones</th>
+	                                    <th ng-show="configPermisoAccionEliminaEvidenciaJustificacion">Opciones</th>
 	                                </tr>
 	                            </thead>
 	                            <tbody>

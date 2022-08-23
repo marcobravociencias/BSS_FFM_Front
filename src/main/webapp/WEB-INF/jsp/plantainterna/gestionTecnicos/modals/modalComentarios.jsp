@@ -40,7 +40,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row float-right col-chat-fotter" style="margin-top: 2em; margin-right: 2em;">
+                            <div class="row float-right col-chat-fotter" style="margin-top: 2em; margin-right: 2em;" ng-if="configPermisoAccionCreaComentarioJustificacion">
                                 <div class="col-6">
                                     <input id="comentarioNuevoJustificacion" placeholder="Escribe el comentario aqu&iacute;..." type="text" class="input-mensaje-chat form-control form-control-sm ng-pristine ng-valid ng-empty ng-touched input-comentario" ng-model="comentario">
                                 </div>

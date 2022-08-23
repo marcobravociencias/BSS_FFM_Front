@@ -204,11 +204,11 @@
 	                                            	<span id="tooltipArchivosJustificacion" class="tooltipArchivosJustificacion">Evidencias</span>
 	                                            	<i class="fa fa-file"></i>
 	                                            </button>
-	                                            <button id="btnEditarJustificacion" class="btn btn-sm btnDetalleJustificacion" ng-click="openModalEditarJustificacion(justificacionDetalle)">
+	                                            <button id="btnEditarJustificacion" class="btn btn-sm btnDetalleJustificacion" ng-click="openModalEditarJustificacion(justificacionDetalle)" ng-if="configPermisoAccionEditaJustificacion">
 	                                            	<span id="tooltipEditarJustificacion" class="tooltipEditarJustificacion">Editar justificaci&oacute;n</span>
 	                                            	<i class="fa fa-pencil-square"></i>
 	                                            </button>
-	                                            <button id="btnEliminarJustificacion" class="btn btn-sm btnDetalleJustificacion" ng-click="eliminarJustificacionTecnico(justificacionDetalle)">
+	                                            <button id="btnEliminarJustificacion" class="btn btn-sm btnDetalleJustificacion" ng-click="eliminarJustificacionTecnico(justificacionDetalle)" ng-if="configPermisoAccionEliminaJustificacion">
 	                                            	<span id="tooltipEliminarJustificacion" class="tooltipEliminarJustificacion">Eliminar justificaci&oacute;n</span>
 	                                            	<i class="far fa-trash-alt"></i>
 	                                            </button>
