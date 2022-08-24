@@ -21,30 +21,31 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 import com.mx.totalplay.ffm.cloudweb.utilerias.model.ServiceResponseResult;
-import com.mx.totalplay.ffm.cloudweb.utilerias.service.GenericService;
+import com.mx.totalplay.ffm.cloudweb.utilerias.service.GenericReporteSFExcelService;
 
 @RestController
 @RequestMapping("/req")
-public class GenericReporteExcelController {
-	private final Logger logger = LogManager.getLogger(GenericReporteExcelController.class.getName());
-	private final GenericService genericService;
+public class GenericReporteSFExcelController {
+	private final Logger logger = LogManager.getLogger(GenericReporteSFExcelController.class.getName());
+	
+	private final GenericReporteSFExcelService genericServiceReporte;
 
 	@Autowired
-	public GenericReporteExcelController(GenericService genericService) {
-		this.genericService = genericService;
+	public GenericReporteSFExcelController(GenericReporteSFExcelService genericServiceReporte) {
+		this.genericServiceReporte = genericServiceReporte;
 	}
 
 	@PostMapping("/enviarParamsReporte")
 	public ResponseEntity<?> enviarParamsReporte(@RequestBody String params, HttpSession session) {
-		logger.info("obtenerParamsReporte.class [metodo = obtenerParamsReporte() ] \n" + new Gson().toJson(params));
+		logger.info("obtenerParamsReporte.class [metodo = obtenerParamsReporte() ] "+params );
 		if(session.getAttribute("stream") != null) {
 			session.removeAttribute("stream");
 		}
 		ServiceResponseResult result = ServiceResponseResult.builder().build();
 		result = ServiceResponseResult.builder().isRespuesta(true).build();
-		ByteArrayInputStream stream = genericService.exporteExcelGenericRequest(params);
+		ByteArrayInputStream stream = genericServiceReporte.generarExcelGenericRequest(params);
 		session.setAttribute("stream", stream);
-
+		
 		if(stream == null) {
 			result = ServiceResponseResult.builder().isRespuesta(false).build();
 		}

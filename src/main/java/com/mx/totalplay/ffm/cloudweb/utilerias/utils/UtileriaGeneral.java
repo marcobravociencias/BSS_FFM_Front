@@ -8,8 +8,12 @@ import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -202,4 +206,14 @@ public class UtileriaGeneral {
 			    return false;  
 			}  
 		}
+		
+		   public static String getCurrentTimeUsingCalendar() {
+		        Calendar cal = Calendar.getInstance();
+		        Date date=cal.getTime();
+		        DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+		        String formattedDate=dateFormat.format(date);
+
+		        return formattedDate;
+
+		    }
 }

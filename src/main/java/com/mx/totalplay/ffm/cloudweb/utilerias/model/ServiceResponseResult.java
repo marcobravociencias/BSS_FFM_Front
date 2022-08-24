@@ -22,6 +22,6 @@ public class ServiceResponseResult implements Serializable{
 	private String resultDescripcion;
 	private String mensajeException;
 	private int codigoEstatusService;
-	
+	private byte[] bytesFile;
 		
 }

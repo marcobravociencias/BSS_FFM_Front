@@ -2126,6 +2126,7 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
         } else {
             let fechas = $scope.getFecha('soportesing');
             let params = {
+				metodoConsumo:"POST",
                 tiposOrden: [55],
                 clusters: clustersparam,
                 fechaInicial: fechas.fechaInicio,

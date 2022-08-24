@@ -1,6 +1,10 @@
 package com.mx.totalplay.ffm.cloudweb.utilerias.utils;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Base64;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -401,7 +405,6 @@ public class ConsumeRest {
             responseEntity = restTemplate.postForEntity(urlRequest, request, String.class);
             String bodyResponse = responseEntity.getBody();
             logger.info("--- RESPONSE ---");
-            logger.info(bodyResponse);
             Object result = gson.fromJson(bodyResponse, Object.class);
             
             int valueEstatusCode=responseEntity.getStatusCode() == null  ? -1 : responseEntity.getStatusCode().value() ;
@@ -434,6 +437,71 @@ public class ConsumeRest {
         return response;
 
     }
+    
+
+    /**
+     * @param urlRequest
+     * @param params
+     * @param classConversion
+     * @return
+     */
+    public ServiceResponseResult callPostBytesFileBearerTokenRequest(String params, String urlRequest, Class<?> classConversion, String token) {
+    	logger.info("urlRequest ---"+urlRequest);
+        ServiceResponseResult response = ServiceResponseResult.builder()
+                .isRespuesta(false).resultDescripcion("Sin datos").build();
+
+        ResponseEntity<byte[]> responseEntity = null;
+
+        try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
+            headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+            headers.set(HttpHeaders.AUTHORIZATION, "Bearer " + token);
+
+            HttpEntity<String> request = new HttpEntity<>(params, headers);
+            
+            logger.info("ANTES REQUEST "+UtileriaGeneral.getCurrentTimeUsingCalendar() );
+            responseEntity = restTemplate
+                    .exchange(
+                    	   urlRequest,
+                 		   HttpMethod.POST,
+                 		   request,
+                 		   byte[].class);  
+            logger.info("DESPUES REQUEST "+UtileriaGeneral.getCurrentTimeUsingCalendar() );
+
+            byte[] contenidoFile=responseEntity.getBody();
+            
+            int valueEstatusCode=responseEntity.getStatusCode() == null  ? -1 : responseEntity.getStatusCode().value() ;
+            logger.info("--- RESPONSE ESTATUS ---"+valueEstatusCode);
+            response = ServiceResponseResult.builder()
+                    .isRespuesta(true)
+                    .resultDescripcion("Accion completada")
+                    .codigoEstatusService(valueEstatusCode)
+                    .bytesFile(contenidoFile)
+                    .build();
+                                    
+        } catch (HttpClientErrorException httpErrorException){
+            switch (httpErrorException.getRawStatusCode()){
+                case 403:
+                    logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO" + httpErrorException.getMessage());
+                    response = ServiceResponseResult.builder()
+                                                    .result(httpErrorException.getRawStatusCode())
+                                                    .resultDescripcion(httpErrorException.getMessage()).build();
+                    break;
+                default:
+                    response = ServiceResponseResult.builder()
+                                                    .resultDescripcion(httpErrorException.getMessage()).build();
+                    break;
+            }
+        } catch (Exception e) {
+        	logger.error("e" ,e);
+            logger.error("ERROR GENERAL EN CONSUMO DE SERVICIO" + e.getMessage());
+            response.setResultDescripcion(e.getMessage());
+        }
+        return response;
+
+    }
+    
 
     public ServiceResponseResult callPutBearerTokenRequest(String params, String urlRequest, Class<?> classConversion, String token) {
 
@@ -704,4 +772,6 @@ public class ConsumeRest {
         }
         return gson.fromJson(response, classConversion);
     }
+    
+ 
 }
