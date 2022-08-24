@@ -48,6 +48,13 @@
                                     <button class="btn btn-primary btn-enviar-comentario" ng-click="agregarComentarioJustificacion()">Enviar</button>
                                 </div>
                             </div>
+                            <div class="row float-right col-chat-fotter" ng-if="!configPermisoAccionCreaComentarioJustificacion">
+							    <div class="col-md-12">
+									<div class="txtMensajeAlertaValidaciones">
+										<span><i class="fas fa-warning"></i>&nbsp; No cuentas con el permiso para agregar comentarios.</span>
+									</div>
+								</div>
+							</div>
                         </div>
                     </div>
                 </div>

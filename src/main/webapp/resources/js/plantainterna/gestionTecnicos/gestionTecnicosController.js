@@ -26,6 +26,7 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
     $scope.isDetalleMesTecnico = false;
     $scope.isCargaArchivos = false;
     $scope.flagCargandoCalendar = true;
+    $scope.flagProcesoConsulta = false;
     $scope.tecnicoDisp = {};
     $scope.auxDisp = {};
     $scope.justificacionDetalle = {};
@@ -157,7 +158,9 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
     
     verCalendario = function() {
     	$("#calendar_gestionTecnicos").css('visibility', 'visible');
+    	$(".tecnicosDiv").removeClass("tecnicosBloqueados");
     	$scope.flagCargandoCalendar = false;
+    	$scope.flagProcesoConsulta = false;
     	$scope.calendarTec.render();
     	$scope.$apply();
 	}
@@ -568,197 +571,125 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
     }
 
     $scope.consultarDisponibilidadTecnico = function (tecnico) {
-    	$("#calendar_gestionTecnicos").css('visibility', 'hidden');
-    	$scope.flagCargandoCalendar = true;
-        
-    	if (!swal.isVisible()) {
-			swal({ text: 'Cargando datos ...', allowOutsideClick: false });
-            swal.showLoading();
-		}
-        
-        $scope.listJustificaciones = [];
-        $scope.limpiarDetalleJustificacion();
-        
-        if ($scope.isDetalleMesTecnico) {
-            $scope.isDetalleMesTecnico = false;
-        }
-        
-        $scope.tipoConsulta = 'TEC';
-
-        $.each($scope.listTecnicos, function (i, elemento) {
-            $("#us-"+elemento.idTecnico).css("background-color", "white");
-        });
-        $.each($scope.listAuxiliares, function (i, elemento) {
-            $("#us-"+elemento.idAuxiliar).css("background-color", "white");
-        });
-        
-        if (tecnico !== undefined) {
-        	$scope.tecnicoDisp = {};
-        	$scope.tecnicoDisp = tecnico;
-        	
-        	if($scope.tecnicoDisp.idTecnico !== undefined){
-        		$scope.idTecnico = tecnico.idTecnico;
+    	if(!$scope.flagProcesoConsulta){
+    		$("#calendar_gestionTecnicos").css('visibility', 'hidden');
+        	$(".tecnicosDiv").addClass("tecnicosBloqueados");
+        	$scope.flagCargandoCalendar = true;
+        	$scope.flagProcesoConsulta = true;
+            
+        	if (!swal.isVisible()) {
+    			swal({ text: 'Cargando datos ...', allowOutsideClick: false });
+                swal.showLoading();
+    		}
+            
+            $scope.listJustificaciones = [];
+            $scope.limpiarDetalleJustificacion();
+            
+            if ($scope.isDetalleMesTecnico) {
+                $scope.isDetalleMesTecnico = false;
             }
             
-            if($scope.tecnicoDisp.idAuxiliar !== undefined){
-            	$scope.idTecnico = tecnico.idAuxiliar;
+            $scope.tipoConsulta = 'TEC';
+
+            $.each($scope.listTecnicos, function (i, elemento) {
+                $("#us-"+elemento.idTecnico).css("background-color", "white");
+            });
+            $.each($scope.listAuxiliares, function (i, elemento) {
+                $("#us-"+elemento.idAuxiliar).css("background-color", "white");
+            });
+            
+            if (tecnico !== undefined) {
+            	$scope.tecnicoDisp = {};
+            	$scope.tecnicoDisp = tecnico;
+            	
+            	if($scope.tecnicoDisp.idTecnico !== undefined){
+            		$scope.idTecnico = tecnico.idTecnico;
+                }
+                
+                if($scope.tecnicoDisp.idAuxiliar !== undefined){
+                	$scope.idTecnico = tecnico.idAuxiliar;
+                }
             }
-        }
-        
-        $("#us-" + $scope.idTecnico).css("background-color", "#DCDEDC");
-        
-        const fechaActual = document.getElementsByClassName('fc-toolbar-title')[0].innerText;
-        const fechaArray = fechaActual.split(" ");
-        const mes = $scope.getMes(fechaArray[0].toUpperCase());
-        
-        $scope.fechaInicioMes = $scope.calendarTec.view.currentStart;
-        $scope.fechaFinMes = $scope.calendarTec.view.currentEnd;
-        $scope.fechaFinMes.setDate($scope.fechaFinMes.getDate()-1);
-        
-        $scope.fechaInicioMes = moment($scope.fechaInicioMes).format('DD-MM-YYYY');
-        $scope.fechaFinMes = moment($scope.fechaFinMes).format('DD-MM-YYYY');
+            
+            $("#us-" + $scope.idTecnico).removeClass("tecnicosBloqueados");
+            $("#us-" + $scope.idTecnico).css("background-color", "#DCDEDC");
+            
+            const fechaActual = document.getElementsByClassName('fc-toolbar-title')[0].innerText;
+            const fechaArray = fechaActual.split(" ");
+            const mes = $scope.getMes(fechaArray[0].toUpperCase());
+            
+            $scope.fechaInicioMes = $scope.calendarTec.view.currentStart;
+            $scope.fechaFinMes = $scope.calendarTec.view.currentEnd;
+            $scope.fechaFinMes.setDate($scope.fechaFinMes.getDate()-1);
+            
+            $scope.fechaInicioMes = moment($scope.fechaInicioMes).format('DD-MM-YYYY');
+            $scope.fechaFinMes = moment($scope.fechaFinMes).format('DD-MM-YYYY');
 
-        let paramsTc = {
-        		"idTecnico": $scope.idTecnico, 
-        		"fechaInicio": $scope.fechaInicioMes, 
-        		"fechaFin":$scope.fechaFinMes
-        };
-        let paramsJustificacionesTec = {
-        		"idUsuario": $scope.idTecnico,
-        		"fechaInicio": moment($scope.fechaInicioMes, "DD/MM/YYYY").format("YYYY-MM-DD"),
-        		"fechaFin": moment($scope.fechaFinMes, "DD/MM/YYYY").format("YYYY-MM-DD")
-        };
-        $scope.changeView();
-        
-    	$q.all([
-    		gestionTecnicosService.consultaDisponibilidadTecnico(paramsTc),
-    		gestionTecnicosService.consultaJustificacionesTecnico(paramsJustificacionesTec)
-    	]).then(function (results) {
-    		$scope.resultDisponibilidad.disponibilidad = [];
-    		$scope.resultDisponibilidad.totalOrdenes = [];
-    		if (results[0].data !== undefined) {
-    	        if(results[0].data.respuesta){
-    	            if(results[0].data.result !== null){
-    	                if(results[0].data.result.disponibilidad.length > 0){
-    	                	$scope.resultDisponibilidad = results[0].data.result;
-    	                }else{
-    	                    mostrarMensajeInformativo("¡Actualmente no existe disponibilidad en el mes!");
-    	                }
-    	            }else{
-    	                mostrarMensajeInformativo("¡Actualmente no existe disponibilidad en el mes!");
-    	            }
-    	        }else{
-    	            mostrarMensajeInformativo(results[0].data.resultDescripcion);
-    	        }
-    	    }else{
-    	        mostrarMensajeWarningValidacion("Error interno en el servidor.");
-    	    }
-    		
-    		if (results[1].data !== undefined) {
-    	        if(results[1].data.respuesta){
-    	            if(results[1].data.result !== null){
-    	                if(results[1].data.result.detalleJustificacion.length > 0){
-    	                	angular.forEach(results[1].data.result.detalleJustificacion,function(justificacion,index){
-                            	justificacion.fecha = justificacion.fechaInicio;
-                            	$scope.resultDisponibilidad.disponibilidad.push(justificacion);
-                            });
-                        	$scope.listJustificaciones = results[1].data.result.detalleJustificacion;
-    	                }else{
-    	                    mostrarMensajeInformativo("¡Actualmente no existen justificaciones en el mes!");
-    	                }
-    	            }else{
-    	                mostrarMensajeInformativo("¡Actualmente no existen justificaciones en el mes!");
-    	            }
-    	        }else{
-    	            mostrarMensajeInformativo(results[1].data.resultDescripcion);
-    	        }
-    	    }else{
-    	        mostrarMensajeWarningValidacion("Error interno en el servidor.");
-    	    }
-    		
-    		$scope.pintarDisponibilidad($scope.resultDisponibilidad.disponibilidad, $scope.resultDisponibilidad.totalOrdenes ? $scope.resultDisponibilidad.totalOrdenes : [], mes, fechaArray[2]);
-            $scope.isTecnicoSelected = true;
-    		
-    	});
-        swal.close();
+            let paramsTc = {
+            		"idTecnico": $scope.idTecnico, 
+            		"fechaInicio": $scope.fechaInicioMes, 
+            		"fechaFin":$scope.fechaFinMes
+            };
+            let paramsJustificacionesTec = {
+            		"idUsuario": $scope.idTecnico,
+            		"fechaInicio": moment($scope.fechaInicioMes, "DD/MM/YYYY").format("YYYY-MM-DD"),
+            		"fechaFin": moment($scope.fechaFinMes, "DD/MM/YYYY").format("YYYY-MM-DD")
+            };
+            $scope.changeView();
+            
+        	$q.all([
+        		gestionTecnicosService.consultaDisponibilidadTecnico(paramsTc),
+        		gestionTecnicosService.consultaJustificacionesTecnico(paramsJustificacionesTec)
+        	]).then(function (results) {
+        		$scope.resultDisponibilidad.disponibilidad = [];
+        		$scope.resultDisponibilidad.totalOrdenes = [];
+        		if (results[0].data !== undefined) {
+        	        if(results[0].data.respuesta){
+        	            if(results[0].data.result !== null){
+        	                if(results[0].data.result.disponibilidad.length > 0){
+        	                	$scope.resultDisponibilidad = results[0].data.result;
+        	                }else{
+        	                    mostrarMensajeInformativo("¡Actualmente no existe disponibilidad en el mes!");
+        	                }
+        	            }else{
+        	                mostrarMensajeInformativo("¡Actualmente no existe disponibilidad en el mes!");
+        	            }
+        	        }else{
+        	            mostrarMensajeInformativo(results[0].data.resultDescripcion);
+        	        }
+        	    }else{
+        	        mostrarMensajeWarningValidacion("Error interno en el servidor.");
+        	    }
+        		
+        		if (results[1].data !== undefined) {
+        	        if(results[1].data.respuesta){
+        	            if(results[1].data.result !== null){
+        	                if(results[1].data.result.detalleJustificacion.length > 0){
+        	                	angular.forEach(results[1].data.result.detalleJustificacion,function(justificacion,index){
+                                	justificacion.fecha = justificacion.fechaInicio;
+                                	$scope.resultDisponibilidad.disponibilidad.push(justificacion);
+                                });
+                            	$scope.listJustificaciones = results[1].data.result.detalleJustificacion;
+        	                }else{
+        	                    mostrarMensajeInformativo("¡Actualmente no existen justificaciones en el mes!");
+        	                }
+        	            }else{
+        	                mostrarMensajeInformativo("¡Actualmente no existen justificaciones en el mes!");
+        	            }
+        	        }else{
+        	            mostrarMensajeInformativo(results[1].data.resultDescripcion);
+        	        }
+        	    }else{
+        	        mostrarMensajeWarningValidacion("Error interno en el servidor.");
+        	    }
+        		
+        		$scope.pintarDisponibilidad($scope.resultDisponibilidad.disponibilidad, $scope.resultDisponibilidad.totalOrdenes ? $scope.resultDisponibilidad.totalOrdenes : [], mes, fechaArray[2]);
+                $scope.isTecnicoSelected = true;
+        		
+        	});
+            swal.close();
+    	}
     }
-
-// $scope.consultarDisponibilidadAux = function (tecnico) {
-// swal({ text: 'Cargando datos ...', allowOutsideClick: false });
-// swal.showLoading();
-// $scope.fechaActual = '';
-// if ($scope.isDetalleMesTecnico) {
-// $scope.isDetalleMesTecnico = false;
-// $scope.fechaActual =
-// document.getElementsByClassName('fc-toolbar-title')[0].innerText;
-// } else {
-// $scope.fechaActual =
-// document.getElementsByClassName('fc-toolbar-title')[0].innerText;
-// }
-// $scope.tecnicoDisp = {};
-// $scope.tipoConsulta = 'AUX';
-//
-// if (tecnico !== undefined) {
-// $scope.auxDisp = {};
-// $.each($scope.listTecnicos, function (i, elemento) {
-// document.getElementById('' + elemento.id).style.backgroundColor = "white";
-// document.getElementById('tec-' + elemento.id).style.color = "grey";
-// document.getElementById('aux-' + elemento.id).style.color = "grey";
-// });
-//
-// const fechaArray = $scope.fechaActual.split(" ");
-// const mes = $scope.getMes(fechaArray[0].toUpperCase());
-// $scope.auxDisp = tecnico;
-// $("#" + $scope.auxDisp.id).css("background-color", "#DCDEDC");
-// $("#aux-" + $scope.auxDisp.id).css("color", "#7716fa");
-// $scope.changeView();
-// let paramsAux = {};
-// gestionTecnicosService.consultaDisponibilidadAuxGestionTecnicos(paramsAux).then(function
-// success(response) {
-// if (response.data.respuesta) {
-// if (response.data.result) {
-// $scope.resultDisponibilidad = arrayDisponibilidadTec.data.result;
-// $scope.pintarDisponibilidad($scope.resultDisponibilidad.Disponibilidad,
-// $scope.resultDisponibilidad.totalOts ? $scope.resultDisponibilidad.totalOts :
-// [], mes, fechaArray[2]);
-// $scope.isTecnicoSelected = true;
-// } else {
-// swal.close();
-// }
-// } else {
-// swal.close();
-// mostrarMensajeWarningValidacion(response.data.resultDescripcion)
-// }
-// });
-// } else {
-// if ($scope.auxDisp !== undefined) {
-// const fechaArray = $scope.fechaActual.split(" ");
-// const mes = $scope.getMes(fechaArray[0].toUpperCase());
-// $("#" + $scope.auxDisp.id).css("background-color", "#DCDEDC");
-// $("#aux-" + $scope.auxDisp.id).css("color", "#7716fa");
-// $scope.changeView();
-// let paramsAux = {};
-// gestionTecnicosService.consultaDisponibilidadAuxGestionTecnicos(paramsAux).then(function
-// success(response) {
-// if (response.data.respuesta) {
-// if (response.data.result) {
-// $scope.resultDisponibilidad = arrayDisponibilidadTec.data.result;
-// $scope.pintarDisponibilidad($scope.resultDisponibilidad.Disponibilidad,
-// $scope.resultDisponibilidad.totalOts ? $scope.resultDisponibilidad.totalOts :
-// [], mes, fechaArray[2]);
-// $scope.isTecnicoSelected = true;
-// } else {
-// swal.close();
-// }
-// } else {
-// swal.close();
-// mostrarMensajeWarningValidacion(response.data.resultDescripcion)
-// }
-// });
-// }
-// }
-// swal.close();
-// }
 
     $scope.pintarTablaOtsTrabajadas = function () {
         let arrayOtsRow = [];
@@ -771,14 +702,11 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
             rowOT[1] = elemento.folio != null ? elemento.folio : "Sin dato";
             rowOT[2] = elemento.cuenta;
             rowOT[3] = elemento.tipo;
-// rowOT[4] = elemento.subtipo;
             rowOT[4] = elemento.fechaInicio != null ? elemento.fechaInicio.split(" ")[0] : "Sin dato";
             rowOT[5] = elemento.fechaFin != null ? elemento.fechaFin.split(" ")[0] : "Sin dato";
             rowOT[6] = elemento.usuarioffmAux != null ? elemento.usuarioffmAux : "Sin dato";
             rowOT[7] = elemento.nombreAux != null ? elemento.nombreAux : "Sin dato";
             rowOT[8] = elemento.puntualidad;
-// rowOT[10] = elemento.tiempoTotal != null ? elemento.tiempoTotal.split(".")[0]
-// : "Sin dato";
             rowOT[9] = '<span onclick="abrirModalDetalleOtTrabajada('+elemento.idOrden+')" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light btnDetalleOtTrabajada"><i class="fas fa-bars" aria-hidden="true"></i></span>';
             arrayOtsRow.push(rowOT);
         });
@@ -1070,7 +998,7 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
         $.each($scope.justificacionDetalle.evidencias, function (i, elemento) {
             let row = [];
             row[0] = $scope.justificacionDetalle.nombreDepacho;
-            row[1] = elemento.nombre + "." + elemento.extension;
+            row[1] = elemento.nombre + "" + elemento.extension;
             row[2] = elemento.fecha != null ? elemento.fecha : "Sin dato";
             if($scope.configPermisoAccionEliminaEvidenciaJustificacion){
             	row[3] = '<span hidden style="background-color: #58b3bf" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnTables" id="descargarArchivo' + elemento.idEvidencia + '" onclick="descargarArchivoJustificacion('+"'"+elemento.url+"'"+')">' +
@@ -1107,6 +1035,7 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
     
     eliminarArchivoJustificacion = function(idEvidencia) {
     	if(idEvidencia != undefined && idEvidencia > 0){
+    		let evidenciaSeleccionadaElim = $scope.justificacionDetalle.evidencias.find((e) => e.idEvidencia == idEvidencia);
     		let paramsEliminarArchivoJustificacion= {};
     		paramsEliminarArchivoJustificacion.idJustificacion = $scope.justificacionDetalle.idJustificacion;
     		paramsEliminarArchivoJustificacion.evidencias = [];
@@ -1124,17 +1053,23 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
                 cancelButtonText: 'No'
             }).then(function (isConfirm) {
                 if (isConfirm) {
+                	let tituloAccion = "Eliminar evidencia";
+                	let mensajeEnvio = "Ha ocurrido un error al eliminar la evidencia " + evidenciaSeleccionadaElim.nombre + "" + evidenciaSeleccionadaElim.extension + " de la justificación con fecha de inicio " + $scope.justificacionDetalle.fechaInicio + " del empleado " + $scope.tecnicoDisp.nombre + " - " + $scope.tecnicoDisp.numeroEmpleado;
                     swal({ text: 'Espera un momento...', allowOutsideClick: false });
                     swal.showLoading();
                     gestionTecnicosService.modificarJustificacionTecnico(paramsEliminarArchivoJustificacion).then(function success(response) {
                         if (response.data.respuesta) {
                             if (response.data.result) {
+                            	mensajeEnvio = "Se ha eliminado la evidencia " + evidenciaSeleccionadaElim.nombre + "" + evidenciaSeleccionadaElim.extension + " de la justificación con fecha de inicio " + $scope.justificacionDetalle.fechaInicio + " del empleado " + $scope.tecnicoDisp.nombre + " - " + $scope.tecnicoDisp.numeroEmpleado;
+                            	objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
                             	$("#modal-archivos-justificacion").modal('hide');
                                 toastr.success('¡Archivo eliminado con éxito!');
                                 $scope.consultarDisponibilidadTecnico();
                             } else {
+                            	objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                             }
                         } else {
+                        	objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                             mostrarMensajeWarningValidacion(response.data.resultDescripcion)
                         }
                         swal.close();
@@ -1254,7 +1189,6 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
     }
 
     $scope.agregarJustificacion = function () {
-// justificaciones/mx/2022/{idJustificaciones}/{idJustificaciones}_
         let mensajeError = '';
         let isValid = true;
 
@@ -1313,17 +1247,23 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
                 cancelButtonText: 'No'
             }).then(function (isConfirm) {
                 if (isConfirm) {
+                	let tituloAccion = "Crear justificación";
+					let mensajeEnvio = "Ha ocurrido un error al crear la justificación para: " + $scope.tecnicoDisp.nombre + " - " + $scope.tecnicoDisp.numeroEmpleado;
                     swal({ text: 'Espera un momento...', allowOutsideClick: false });
                     swal.showLoading();
                     gestionTecnicosService.guardarJustificacionTecnico(paramsRegistroJustificacion).then(function success(response) {
                         if (response.data.respuesta) {
                             if (response.data.result) {
-                                $("#modal-agregar-justificacion").modal('hide');
+                            	mensajeEnvio = "Se ha creado la justificación para: " + $scope.tecnicoDisp.nombre + " - " + $scope.tecnicoDisp.numeroEmpleado;
+                            	objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
+                            	$("#modal-agregar-justificacion").modal('hide');
                                 toastr.success('¡Justificación registrada con éxito!');
                                 $scope.consultarDisponibilidadTecnico();
                             } else {
+                            	objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                             }
                         } else {
+                        	objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                             mostrarMensajeWarningValidacion(response.data.resultDescripcion)
                         }
                         swal.close();
@@ -1404,11 +1344,15 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
                 cancelButtonText: 'No'
             }).then(function (isConfirm) {
                 if (isConfirm) {
+                	let tituloAccion = "Editar justificación";
+                	let mensajeEnvio = "Ha ocurrido un error al modificar la justificación con fecha de inicio " + $scope.justificacionDetalle.fechaInicio + " del empleado " + $scope.tecnicoDisp.nombre + " - " + $scope.tecnicoDisp.numeroEmpleado;
                     swal({ text: 'Espera un momento...', allowOutsideClick: false });
                     swal.showLoading();
                     gestionTecnicosService.modificarJustificacionTecnico(paramsModJustificacion).then(function success(response) {
                         if (response.data.respuesta) {
                             if (response.data.result) {
+                            	mensajeEnvio = "Se ha modificado la justificación con fecha de inicio " + $scope.justificacionDetalle.fechaInicio + " del empleado " + $scope.tecnicoDisp.nombre + " - " + $scope.tecnicoDisp.numeroEmpleado;
+                            	objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
                             	$("#modal-editar-justificacion").modal('hide');
                             	$(".text_select").text("Selecciona un archivo");
                             	$(".box__dragndrop").text("o arrastra aqu\u00ED");
@@ -1416,8 +1360,10 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
                                 toastr.success('¡Justificación modificada con éxito!');
                                 $scope.consultarDisponibilidadTecnico();
                             } else {
+                            	objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                             }
                         } else {
+                        	objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                             mostrarMensajeWarningValidacion(response.data.resultDescripcion)
                         }
                         swal.close();
@@ -1450,16 +1396,22 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
             cancelButtonText: 'No'
         }).then(function (isConfirm) {
             if (isConfirm) {
+            	let tituloAccion = "Eliminar justificación";
+            	let mensajeEnvio = "Ha ocurrido un error al eliminar la justificación con fecha de inicio " + $scope.justificacionDetalle.fechaInicio + " del empleado " + $scope.tecnicoDisp.nombre + " - " + $scope.tecnicoDisp.numeroEmpleado;
                 swal({ text: 'Espera un momento...', allowOutsideClick: false });
                 swal.showLoading();
                 gestionTecnicosService.eliminarJustificacionTecnico(paramsEliminarJustificacion).then(function success(response) {
                     if (response.data.respuesta) {
                         if (response.data.result) {
+                        	mensajeEnvio = "Se ha eliminado la justificación con fecha de inicio " + $scope.justificacionDetalle.fechaInicio + " del empleado " + $scope.tecnicoDisp.nombre + " - " + $scope.tecnicoDisp.numeroEmpleado;
+                        	objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
                         	toastr.success('¡Justificación eliminada con éxito!');
                         	$scope.consultarDisponibilidadTecnico();
                         } else {
+                        	objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                         }
                     } else {
+                    	objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                         mostrarMensajeWarningValidacion(response.data.resultDescripcion)
                     }
                     swal.close();
@@ -1512,11 +1464,15 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
                 cancelButtonText: 'No'
             }).then(function (isConfirm) {
                 if (isConfirm) {
+                	let tituloAccion = "Agregar evidencia";
+                	let mensajeEnvio = "Ha ocurrido un error al agregar la evidencia a la justificación con fecha de inicio " + $scope.justificacionDetalle.fechaInicio + " del empleado " + $scope.tecnicoDisp.nombre + " - " + $scope.tecnicoDisp.numeroEmpleado;
                     swal({ text: 'Espera un momento...', allowOutsideClick: false });
                     swal.showLoading();
                     gestionTecnicosService.modificarJustificacionTecnico(paramsAgregarArchivoJustificacion).then(function success(response) {
                         if (response.data.respuesta) {
                             if (response.data.result) {
+                            	mensajeEnvio = "Se ha agregado la evidencia a la justificación con fecha de inicio " + $scope.justificacionDetalle.fechaInicio + " del empleado " + $scope.tecnicoDisp.nombre + " - " + $scope.tecnicoDisp.numeroEmpleado;
+                            	objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
                             	$("#modal-archivos-justificacion").modal('hide');
                             	$(".text_select").text("Selecciona un archivo");
                                 $(".box__dragndrop").text("o arrastra aqu\u00ED");
@@ -1524,8 +1480,10 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
                                 toastr.success('¡Archivo registrado con éxito!');
                                 $scope.consultarDisponibilidadTecnico();
                             } else {
+                            	objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                             }
                         } else {
+                        	objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                             mostrarMensajeWarningValidacion(response.data.resultDescripcion)
                         }
                         swal.close();
@@ -1604,6 +1562,15 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
     
     // Método que realiza la consulta de auxiliares y valida si ya fueron consultados no hace la llamada a la petición.
     $scope.consultarAuxiliares = function () {
+    	
+    	$("#calendar_gestionTecnicos").css('visibility', 'hidden');
+    	eventosDisponibilidad = [];
+    	if ($scope.calendarTec) {
+            $scope.calendarTec.destroy();
+        }
+    	$scope.initCalendario();
+    	$scope.flagCargandoCalendar = true;
+    	
     	$scope.limpiarDetalleJustificacion();
     	$scope.changeView();
     	$scope.isTecnicoSelected = false;
@@ -1685,17 +1652,24 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
                 cancelButtonText: 'No'
             }).then(function (isConfirm) {
                 if (isConfirm) {
+                	let tituloAccion = "Agregar comentario";
+                	let mensajeEnvio = "Ha ocurrido un error al agregar el comentario a la justificación con fecha de inicio " + $scope.justificacionDetalle.fechaInicio + " del empleado " + $scope.tecnicoDisp.nombre + " - " + $scope.tecnicoDisp.numeroEmpleado;
                     swal({ text: 'Espera un momento...', allowOutsideClick: false });
                     swal.showLoading();
                     gestionTecnicosService.agregarComentarioJustificacion(paramsAgregarComentarioJust).then(function success(response) {
                         if (response.data.respuesta) {
                             if (response.data.result) {
+                            	mensajeEnvio = "Se ha agregado un comentario a la justificación con fecha de inicio " + $scope.justificacionDetalle.fechaInicio + " del empleado " + $scope.tecnicoDisp.nombre + " - " + $scope.tecnicoDisp.numeroEmpleado;
+                            	objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
                             	let agregarComentarioJustificacion = {idJutificacion: $scope.justificacionDetalle.idJustificacion, comentario: comentarioNuevo, idOrigen: "1", fecha: fechaActualComentario};
                             	$scope.comentariosJustificacion.push(agregarComentarioJustificacion);
                                 toastr.success('¡Comentario registrado con éxito!');
+                                $("#comentarioNuevoJustificacion").val("");
                             } else {
+                            	objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                             }
                         } else {
+                        	objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                             mostrarMensajeWarningValidacion(response.data.resultDescripcion)
                         }
                         swal.close();
@@ -1710,6 +1684,8 @@ app.controller('gestionTecnicosController', ['$scope', '$q', 'gestionTecnicosSer
 	}
 
     angular.element(document).ready(function () {
+    	$("#moduloGestionTecnicos").addClass('active');
+        $("#nav-bar-otros-options ul li.active").closest("#nav-bar-otros-options").addClass('active-otros-navbar');
         $scope.initGestionTecnicos();
         $("#idBody").removeAttr("style");
         angular.element(document).ready(function () {

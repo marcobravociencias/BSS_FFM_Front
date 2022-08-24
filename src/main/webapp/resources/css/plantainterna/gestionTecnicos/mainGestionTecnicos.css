@@ -838,7 +838,7 @@ div.actividades-contadorac-gris {
 }
 
 .tecnicosDiv:hover {
-	cursor: pointer !important;
+	cursor: pointer;
 	background-color:#dadada !important;   
 }
 
@@ -990,4 +990,15 @@ div.actividades-contadorac-gris {
   width: 1.5em;
   height: 1.5em;
   color: #8e50fc;
+}
+
+.txtMensajeAlertaValidaciones {
+    padding: 0 1.5em;
+    font-size: 0.8em;
+    color: orange;
+}
+
+.tecnicosBloqueados {
+	opacity: 0.3 !important;
+    cursor: no-drop !important;
 }
