@@ -1871,6 +1871,8 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     $scope.responseServicios = {}
     $scope.obtenerPaquete = function () {
         if (!$scope.flagPaquete) {
+            $scope.selectedEquipoPaquete={}
+            $scope.isConsultaEquiposModelos=false;
             $scope.listDetalleEquipos = [];
             let osOtSelected = '';
             if ($scope.estatusModals == 'PENDIENTE') {
@@ -2175,26 +2177,52 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             });
         }
     }
-
+    $scope.isConsultaEquiposModelos=false;
+    $scope.selectedEquipoPaquete={}
     $scope.consultarDetalleServicio = function (servicio, idCSP) {
-        swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
-        swal.showLoading();
-        $scope.responseServicios.productos = [];
-        $scope.listDetalleEquipos = [];
-        $scope.responseServicios.productos = servicio.productos;
-        let params = {
-            'idCotSitioPlan': idCSP
-        }
-        mainDespachoService.consultarDetalleEquiposServicios(params).then(function success(response) {
-            console.log(response)
-            if (response.data) {
-                if (response.data.respuesta) {
-                    if (response.data.result) {
-                        if (response.data.result.detalleEquipos.length) {
-                            $scope.listDetalleEquipos = angular.copy(response.data.result.detalleEquipos);
-                            swal.close();
+
+        if(!$scope.isConsultaEquiposModelos){
+            swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
+            swal.showLoading();
+            $scope.responseServicios.productos = [];
+            $scope.listDetalleEquipos = [];
+            $scope.responseServicios.productos = servicio.productos;
+            let params = {
+                'idCotSitioPlan': idCSP
+            }
+    
+            //$scope.responseServicios
+            mainDespachoService.consultarDetalleEquiposServicios(params).then(function success(response) {
+                console.log(response)
+                if (response.data) {
+                    if (response.data.respuesta) {
+                        if (response.data.result) {
+                            $scope.isConsultaEquiposModelos=true;
+                           
+                            if (response.data.result.detalleEquipos.length) {
+                                let listadoEquipos = angular.copy(response.data.result.detalleEquipos);
+                                if($scope.responseServicios!= undefined && 
+                                    $scope.responseServicios.resumenServicios!=undefined && $scope.responseServicios.resumenServicios.length >0){                                
+                                    $scope.responseServicios.resumenServicios=$scope.responseServicios.resumenServicios.map(function(e){
+                                        e.elementoEquipoModelos={}
+                                        e.isTieneEquipoModeos=false;
+                                        return e;
+                                    })
+                                    listadoEquipos.forEach(function(elem,index){
+                                        let servicioTemp= $scope.responseServicios.resumenServicios.find(function(e){ return e.id==elem.idCotPlanServicio })
+                                        if(servicioTemp!=undefined){
+                                            servicioTemp.elementoEquipoModelos=elem
+                                            servicioTemp.isTieneEquipoModeos=true;
+                                        }
+                                    });                                
+                                }
+                                swal.close();
+                            } else {
+                                mostrarMensajeInformativo("No se encontraron Equipos");
+                                swal.close();
+                            }
                         } else {
-                            mostrarMensajeInformativo("No se encontraron Equipos");
+                            mostrarMensajeErrorAlert(response.data.resultDescripcion);
                             swal.close();
                         }
                     } else {
@@ -2205,11 +2233,9 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                     mostrarMensajeErrorAlert(response.data.resultDescripcion);
                     swal.close();
                 }
-            } else {
-                mostrarMensajeErrorAlert(response.data.resultDescripcion);
-                swal.close();
-            }
-        });
+            });
+        }
+        $scope.selectedEquipoPaquete=servicio     
     }
 
     $scope.loadGeografiaTecnicosGeocerca = function () {
@@ -2350,34 +2376,49 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             'comentario': comentario
         }
         swal({ text: 'Espera un momento...', allowOutsideClick: false });
-        swal.showLoading();
+        swal.showLoading();        
+              
+        //Datos para insertar en el log
+        let listNumEmpleadoAsignados =   $scope.listaTecnicosAsignar.map(e => { return e.numeroEmpleado.toString(); })+''         
+        let geocercaTextAsignacion   =   $("#geografiaTecnicosGeocerca").jstree("get_selected", true)
+                                            .filter(e => e.original.nivel == $scope.nfiltroGeografiaGeocercaT)
+                                            .map(e => e.text)
+        let mensajeEnvioError = 'Ha ocurrido un error al asignar a los t\u00E9cnicos: [ ' + listNumEmpleadoAsignados + ' ] a la geocerca : ' + geocercaTextAsignacion;
+        let mensajeEnvioSuccess = 'Se ha asignado a los t\u00E9cnicos: [ ' + listNumEmpleadoAsignados + ' ] a la geocerca : ' + geocercaTextAsignacion;
+        let tituloAccion = "Asignaci\u00F3n de geocerca";
+
         mainDespachoService.asignarTecnicoGeocerca(params).then(function success(response) {
-            // console.log(response);
             if (response.data) {
                 if (response.data.respuesta) {
                     if (response.data.result) {
+                        objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvioSuccess, MENSAJE_ACCION_EXITO, tituloAccion);
                         mostrarMensajeExitoAlert("T&eacute;cnico(s) asignado(s) con &eacute;xito")
-                        $scope.closeAsignaTecnicosGeocerca();
                         $("#modalGeografiaTecnicosGeocerca").modal('hide');
                         swal.close();
+                        $scope.closeAsignaTecnicosGeocerca();
+                        $scope.refrescarBusqueda();                    
                     } else {
                         mostrarMensajeWarningValidacion(response.data.resultDescripcion);
+                        objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvioError, MENSAJE_ACCION_ERROR, tituloAccion);
                         swal.close();
                     }
                 } else {
                     mostrarMensajeWarningValidacion(response.data.resultDescripcion);
                     swal.close();
+                    objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvioError, MENSAJE_ACCION_ERROR, tituloAccion);
                 }
             } else {
-                mostrarMensajeWarningValidacion("Ha ocurrido un error al asignar los T&eacute;cnicos");
+                mostrarMensajeWarningValidacion("Ha ocurrido un error al asignar los t&eacute;cnicos");
                 swal.close();
+                objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvioError, MENSAJE_ACCION_ERROR, tituloAccion);
+
             }
-        });
+        }); 
     }
 
     $scope.asignarTecnicosGeocerca = function () {
         if (!$scope.listaTecnicosAsignar.length) {
-            mostrarMensajeWarningValidacion('Selecciona al menos un T&eacute;cnico');
+            mostrarMensajeWarningValidacion('Selecciona al menos un t&eacute;cnico');
             return false;
         }
         let clustersparam = $("#geografiaTecnicosGeocerca").jstree("get_selected", true)
@@ -2389,7 +2430,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         }
 
         swal({
-            title: "Asignar t&eacute;cnico(s) a Geocerca",
+            title: "Asignar t&eacute;cnico(s) a geocerca",
             text: "Comentarios:",
             type: "warning",
             input: "textarea",

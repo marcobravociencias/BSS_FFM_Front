@@ -359,7 +359,7 @@ div#calendar {
   font-size: 0.7em;
   margin-top: 0.7em;
   float: right;
-  margin-right: 1em;
+  margin-right: 2em;
   margin-top: 0.7em;
   margin-left: 1em;
 }
@@ -3432,4 +3432,8 @@ i.fas.fa-lock.iconoAsignacionOtPermiso {
 .iconos-ot-pendiente {
   height: 1em;
   width: 1em;
+}
+
+.active-selected-servicio-plan{
+  background: #efefef;
 }

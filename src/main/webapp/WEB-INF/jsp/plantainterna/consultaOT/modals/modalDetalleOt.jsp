@@ -76,7 +76,7 @@
                                                     <span class="text-tile-vehiculo">Fecha</span>
                                                 </div>
                                                 <div class="container-text-content-detalle">
-                                                    <span class="text-content-vehiculo" title="{{infoOtDetalle.fechaAgenda}}" ng-bind="infoOtDetalle.fechaAgenda || 'Sin dato'"></span>
+                                                    <span class="text-content-vehiculo" title="{{infoOtDetalle.fechaHoraProgramada}}" ng-bind="infoOtDetalle.fechaHoraProgramada || 'Sin dato'"></span>
                                                 </div>
                                             </div>
                                             <div class="container-fluid vehiculo-content">

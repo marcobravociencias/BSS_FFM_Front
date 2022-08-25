@@ -688,15 +688,13 @@ public class ImplDespachoPIService implements DespachoPIService {
 
     @Override
     public ServiceResponseResult consultarConteoAlertasPI(String params) {
-        logger.info("ImplDespachoPIService.class [metodo = consultarConteoAlertasPI() ]\n" + params);
+        logger.info("ImplDespachoPIService.class [metodo = consultarConteoAlertasPI() ]" + params);
 
         JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
 
         LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
 
         String tokenAcces = principalDetail.getAccess_token();
-        logger.info("consultarOperariosAsignadosDespacho ##+" + tokenAcces);
-        logger.info("json object params## " + jsonObject.toString());
         
         if(jsonObject.get("token") != null && jsonObject.get("token").getAsString().trim() != "") {
         	tokenAcces = jsonObject.get("token").getAsString();
