@@ -8,6 +8,13 @@
   	font-family: "Montserrat" !important;
 }
 
+.title-vista-modulos,
+.title-vista-permisos {
+	font-size: 15px;
+	font-family: 'Montserrat';
+	color: var(--estandar-color);
+}
+
 #modulosTable tbody tr:nth-child(even) ,
 #accionesTable tbody tr:nth-child(even) {
     background: #f5f5f5;
@@ -79,22 +86,33 @@ div.dataTables_wrapper div.dataTables_filter input {
     position: inherit;
 }
 
-.btn-ver-columnas {
-    border-radius: 50%;
-    padding: 0.6em 0.9em;
-    background-color: var(--estandar-color);
-    color: #fff;
-}
-
 .btn-nuevo:hover {
 	padding: 0.7em 1.1em;
     color: #fff;
     outline: 0;
 }
 
+.btn-nuevo-permiso {
+    border-radius: 50%;
+    padding: 0.6em 1em;
+    background-color: var(--estandar-color);
+    color: #fff;
+    position: inherit;
+}
+
+.btn-nuevo-permiso:hover {
+	padding: 0.7em 1.1em;
+    color: #fff;
+	outline: 0;
+}
+
 .box-nuevo {
     text-align: right;
     padding-top: 1.5em;
+}
+
+.box-nuevo-permiso {
+    text-align: right;
 }
 
 .label-input {
@@ -108,7 +126,7 @@ div.dataTables_wrapper div.dataTables_filter input {
     color: #818181 !important;
     transition: all 0.5s ease;
     padding: 0.4em 0.5em;
-    background: white !important;
+    background: white;
     border-radius: 0.5em !important;
     /* box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.07), 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important; */
     box-shadow: 0 1px 3px 0 rgb(0 0 0 / 7%), 0 1px 2px 0 rgb(0 0 0 / 5%) !important;
@@ -160,7 +178,6 @@ div.dataTables_wrapper div.dataTables_filter input {
 }
 
 span.text-content-permiso {
-    /* font-weight: bold; */
     font-size: 0.8em;
     color: #9d9ea2;
 }
@@ -214,6 +231,11 @@ span.text-tile-permiso {
 	background-color: var(--btn-color-editar-tabla);
 }
 
+.btnEditarPermiso,
+.btnEditarPermiso:hover {
+	background-color: var(--btn-color-editar-tabla);
+}
+
 .btnDetalleModulo,
 .btnDetalleModulo:hover {
 	background-color: var(--btn-color-detalle-tabla);
@@ -221,6 +243,11 @@ span.text-tile-permiso {
 
 .btnEliminarModulo,
 .btnEliminarModulo:hover {
+	background-color: var(--btn-color-eliminar-tabla);
+}
+
+.btnEliminarPermiso,
+.btnEliminarPermiso:hover {
 	background-color: var(--btn-color-eliminar-tabla);
 }
 
@@ -243,22 +270,28 @@ span.text-tile-permiso {
     margin-top: 0.1em;
 }
 
-.txtNuevoModulo {
-	width: 100%;
-	height: 23px;
-	font-family: 'Montserrat';
-	font-size: .9em;
-}
-
-.txtEditModulo {
+.txtNuevoModulo,
+.txtNuevoPermiso {
 	text-align: center;
 	width: 100%;
 	height: 23px;
 	font-family: 'Montserrat';
+	font-weight: bold;
 	font-size: .9em;
 }
 
-.btnAgregarNuevoModulo{
+.txtEditModulo,
+.txtEditPermiso {
+	text-align: center;
+	width: 100%;
+	height: 23px;
+	font-family: 'Montserrat';
+	font-weight: bold;
+	font-size: .9em;
+}
+
+.btnAgregarNuevoModulo,
+.btnAgregarNuevoPermiso {
     padding: 0.3em 1em !important;
     border-radius: 0.2rem;
     cursor: pointer;
@@ -267,7 +300,8 @@ span.text-tile-permiso {
     color: green;
 }
 
-.btnCancelarNuevoModulo{
+.btnCancelarNuevoModulo,
+.btnCancelarNuevoPermiso {
     padding: 0.3em 1em !important;
     border-radius: 0.2rem;
     cursor: pointer;
@@ -276,20 +310,24 @@ span.text-tile-permiso {
     color: var(--btn-color-eliminar-tabla);
 }
 
-.btnAgregarNuevoModulo:hover{
+.btnAgregarNuevoModulo:hover,
+.btnAgregarNuevoPermiso:hover {
 	background-color: transparent;
     color: green;
 	font-size: 1.3em;
 }
 
-.btnCancelarNuevoModulo:hover {
+.btnCancelarNuevoModulo:hover,
+.btnCancelarNuevoPermiso:hover {
 	background-color: transparent;
     color: var(--btn-color-eliminar-tabla);
 	font-size: 1.3em;
 }
 
 .btnAgregarNuevoModulo:active,
-.btnCancelarNuevoModulo:active {
+.btnCancelarNuevoModulo:active,
+.btnCancelarNuevoPermiso:active,
+.btnAgregarNuevoPermiso:active {
 	background-color: transparent !important;
 }
 
@@ -298,7 +336,24 @@ span.text-tile-permiso {
     cursor: no-drop !important;
 }
 
+.inputsBloqueados {
+    cursor: no-drop !important;
+}
+
+.rowsTablaModulosBloqueados {
+	opacity: 0.3 !important;
+}
+
 .btnEditModulo{
+    padding: 0.3em 1em !important;
+    border-radius: 0.2rem;
+    cursor: pointer;
+    font-size: 0.9em;
+    background-color: transparent;
+    color: green;
+}
+
+.btnEditPermiso{
     padding: 0.3em 1em !important;
     border-radius: 0.2rem;
     cursor: pointer;
@@ -316,20 +371,43 @@ span.text-tile-permiso {
     color: var(--btn-color-eliminar-tabla);
 }
 
-.btnEditModulo:hover{
-	background-color: transparent;
-    color: green;
-	font-size: 1.3em;
-}
-
 .btnCancelarEditModulo:hover {
 	background-color: transparent;
     color: var(--btn-color-eliminar-tabla);
 	font-size: 1.3em;
 }
 
+.btnCancelarEditPermiso{
+    padding: 0.3em 1em !important;
+    border-radius: 0.2rem;
+    cursor: pointer;
+    font-size: 0.9em;
+    background-color: transparent;
+    color: var(--btn-color-eliminar-tabla);
+}
+
+.btnCancelarEditPermiso:hover {
+	background-color: transparent;
+    color: var(--btn-color-eliminar-tabla);
+	font-size: 1.3em;
+}
+
+.btnEditModulo:hover{
+	background-color: transparent;
+    color: green;
+	font-size: 1.3em;
+}
+
+.btnEditPermiso:hover{
+	background-color: transparent;
+    color: green;
+	font-size: 1.3em;
+}
+
 .btnEditModulo:active,
-.btnCancelarEditModulo:active {
+.btnCancelarEditModulo:active,
+.btnEditPermiso:active,
+.btnCancelarEditPermiso:active {
 	background-color: transparent !important;
 }
 
@@ -353,6 +431,54 @@ span.text-tile-permiso {
 }
 
 #btnNuevoModulo:hover .tooltipBtnNuevoModulo {
+	visibility: visible;
+  	opacity: 1;
+}
+
+#btnNuevoPermiso .tooltipBtnNuevoPermiso {
+	visibility: hidden;
+	width: 140px;
+	height: 25px;
+	background-color: #555;
+	color: #fff;
+	text-align: center;
+	border-radius: 6px;
+	padding: 7px 0;
+	position: absolute;
+	z-index: 1;
+	bottom: 4.5em;
+	opacity: 0;
+	transition: opacity 0.3s;
+	font-family: 'Montserrat';
+	font-size: .7em;
+	left: -100%;
+}
+
+#btnNuevoPermiso:hover .tooltipBtnNuevoPermiso {
+	visibility: visible;
+  	opacity: 1;
+}
+
+#btnRegresarVistaModulos .tooltipBtnRegresarVistaModulos {
+	visibility: hidden;
+	width: 60px;
+	height: 25px;
+	background-color: #555;
+	color: #fff;
+	text-align: center;
+	border-radius: 6px;
+	padding: 7px 0;
+	position: absolute;
+	z-index: 1;
+	bottom: 4.5em;
+	opacity: 0;
+	transition: opacity 0.3s;
+	font-family: 'Montserrat';
+	font-size: .7em;
+	left: -4%;
+}
+
+#btnRegresarVistaModulos:hover .tooltipBtnRegresarVistaModulos {
 	visibility: visible;
   	opacity: 1;
 }
@@ -410,10 +536,36 @@ span.text-tile-permiso {
     background: transparent;
 }
 
+.content-seach-table-permisos {
+	margin-top: 5px;
+    height: 1em;
+    display: inline-flex;
+}
+
+.content-seach-table-permisos span {
+    height: 1.5em !important;
+    min-height: 1.5em !important;
+    position:absolute;
+    right:0;
+    top:30%;
+    margin-right:.5em;
+    color: #9F9E9E;
+    font-size:.9em;
+    background: transparent;
+}
+
 .box-buscador-tabla-modulos {
 	text-align: right;
     padding-top: 1.7em;
     left: 4%;
+}
+
+.bordeRowProcesoEnEjecucion {
+	border: 2px groove var(--estandar-color);
+}
+
+.encabezadosTablas {
+	font-weight: bold !important;
 }
 
 /* tbody { */

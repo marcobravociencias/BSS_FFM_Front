@@ -69,6 +69,11 @@
         
             <div class="content-fluid" id="container_gestion_modulos" ng-show="isModulo">
             	<div class="row col-12">
+            		<div id="containerTituloVistaModulos" class="col-md-12">
+            			<h6 class="title-vista-modulos"><b>Consulta de m&oacute;dulos</b></h6>
+            		</div>
+            	</div>
+            	<div class="row col-12">
 	                <div class="form-group col-md-3 input-select">
 	                    <label class="label-input" for="selectTipoEquipoAdd">Propietario</label>
 	                    <select ng-model="permiso.propietario" class="input-filtro form-control form-control-sm input-modulos" id="moduloPropietario">
@@ -110,26 +115,26 @@
                     <table id="modulosTable" class="display table" cellspacing="0" width="100%">
                         <thead id="thead_table">
                             <tr>
-                                <th>Nombre</th>
-                                <th>Clave</th>
-                                <th>Color</th>
-                                <th>Color hover</th>
-                                <th>Icono</th>
-                                <th ng-show="!isNuevoModulo && !isEditModulo" style="text-align: center;">Editar</th>
-                                <th ng-show="!isNuevoModulo && !isEditModulo" style="text-align: center;">Ver</th>
-                                <th ng-show="!isNuevoModulo && !isEditModulo" style="text-align: center;">Eliminar</th>
+                                <th class="encabezadosTablaModulos">Nombre</th>
+                                <th class="encabezadosTablaModulos">Clave</th>
+                                <th class="encabezadosTablaModulos">Color</th>
+                                <th class="encabezadosTablaModulos">Color hover</th>
+                                <th class="encabezadosTablaModulos">Icono</th>
+                                <th class="encabezadosTablaModulos" ng-show="!isNuevoModulo && !isEditModulo" style="text-align: center;">Editar</th>
+                                <th class="encabezadosTablaModulos" ng-show="!isNuevoModulo && !isEditModulo" style="text-align: center;">Ver</th>
+                                <th class="encabezadosTablaModulos" ng-show="!isNuevoModulo && !isEditModulo" style="text-align: center;">Eliminar</th>
                                 
-                                <th ng-show="isNuevoModulo" style="text-align: center;">Cancelar</th>
-                                <th ng-show="isNuevoModulo" style="text-align: center;">Guardar</th>
-                                <th ng-show="isNuevoModulo" style="text-align: center;"></th>
+                                <th class="encabezadosTablaModulos" ng-show="isNuevoModulo" style="text-align: center;">Cancelar</th>
+                                <th class="encabezadosTablaModulos" ng-show="isNuevoModulo" style="text-align: center;">Guardar</th>
+                                <th class="encabezadosTablaModulos" ng-show="isNuevoModulo" style="text-align: center;"></th>
                                 
-                                <th ng-show="isEditModulo" style="text-align: center;">Cancelar</th>
-                                <th ng-show="isEditModulo" style="text-align: center;">Editar</th>
-                                <th ng-show="isEditModulo" style="text-align: center;"></th>
+                                <th class="encabezadosTablaModulos" ng-show="isEditModulo" style="text-align: center;">Cancelar</th>
+                                <th class="encabezadosTablaModulos" ng-show="isEditModulo" style="text-align: center;">Editar</th>
+                                <th class="encabezadosTablaModulos" ng-show="isEditModulo" style="text-align: center;"></th>
                             </tr>
                         </thead>
                         <tbody>
-                        	<tr ng-show="isNuevoModulo">
+                        	<tr id="rowModuloNuevo" ng-show="isNuevoModulo">
                         		<td><input id="nombreModulo" type="text" class="form-control txtNuevoModulo valInputFormulario" /></td>
                         		<td><input id="claveModulo" type="text" class="form-control txtNuevoModulo valInputFormulario" /></td>
                         		<td><input id="colorModulo" type="text" class="form-control txtNuevoModulo valInputFormulario" /></td>
@@ -147,16 +152,16 @@
                         		</td>
                         		<td></td>
                         	</tr>
-                        	<tr ng-repeat="modulo in listaModulos | filter:buscarModulo track by $index">
-                        		<td class="rowConsultaModulo{{modulo.id}}">{{modulo.nombre}}</td>
+                        	<tr id="rowModuloConsulta{{modulo.id}}" ng-repeat="modulo in listaModulos | filter:buscarModulo track by $index">
+                        		<td class="rowConsultaModuloTxt rowConsultaModulo{{modulo.id}}">{{modulo.nombre}}</td>
                         		<td class="rowEditModulo{{modulo.id}}" style="display: none;"><input id="nombreModuloEdit{{modulo.id}}" type="text" class="form-control txtEditModulo valInputFormulario" value="{{modulo.nombre}}" /></td>
-                        		<td class="rowConsultaModulo{{modulo.id}}">{{modulo.clave}}</td>
+                        		<td class="rowConsultaModuloTxt rowConsultaModulo{{modulo.id}}">{{modulo.clave}}</td>
                         		<td class="rowEditModulo{{modulo.id}}" style="display: none;"><input id="claveModuloEdit{{modulo.id}}" type="text" class="form-control txtEditModulo valInputFormulario" value="{{modulo.clave}}" /></td>
-                        		<td class="rowConsultaModulo{{modulo.id}}">{{modulo.color}}</td>
+                        		<td class="rowConsultaModuloTxt rowConsultaModulo{{modulo.id}}">{{modulo.color}}</td>
                         		<td class="rowEditModulo{{modulo.id}}" style="display: none;"><input id="colorModuloEdit{{modulo.id}}" type="text" class="form-control txtEditModulo valInputFormulario" value="{{modulo.color}}" /></td>
-                        		<td class="rowConsultaModulo{{modulo.id}}">{{modulo.colorHover}}</td>
+                        		<td class="rowConsultaModuloTxt rowConsultaModulo{{modulo.id}}">{{modulo.colorHover}}</td>
                         		<td class="rowEditModulo{{modulo.id}}" style="display: none;"><input id="colorHoverModuloEdit{{modulo.id}}" type="text" class="form-control txtEditModulo valInputFormulario" value="{{modulo.colorHover}}" /></td>
-                        		<td class="rowConsultaModulo{{modulo.id}}">{{modulo.icono}}</td>
+                        		<td class="rowConsultaModuloTxt rowConsultaModulo{{modulo.id}}">{{modulo.icono}}</td>
                         		<td class="rowEditModulo{{modulo.id}}" style="display: none;"><input id="iconoModuloEdit{{modulo.id}}" type="text" class="form-control txtEditModulo valInputFormulario" value="{{modulo.icono}}" /></td>
                         		<td class="rowConsultaModulo{{modulo.id}}">
                         			<span ng-click="abrirEditarModulo(modulo.id)" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnEditarModulo">
@@ -197,47 +202,135 @@
 				</div>
             </div>
             <div class="content-fluid" id="container_gestion_modulos_permisos" ng-show="!isModulo">
-            	<div class="row" style="padding-left: 0.75rem; padding-right: 0.75rem;">
-            		<div class="col-md-6">
-            			<h6 class="title-modulo">M&oacute;dulo {{moduloSeleccionado.nombre}} > Permisos</h6>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            	<div class="row col-12">
+            	
+            		<div id="containerTituloVistaPermisos" class="col-md-8">
+            			<h6 class="title-vista-permisos">M&oacute;dulo {{moduloSeleccionado.nombre}} > <b>Permisos</b></h6>
             		</div>
-            		<div class="col-md-6 form-group" style="text-align: right;">
-	                    <button class="btn btn-nuevo" ng-click="changeModulos()" ng-if="!isModulo"><i class="fa fa-arrow-left"></i></button>
-	                    <button class="btn btn-nuevo" ng-click="abrirMdlNuevo()"><i class="fa fa-plus"></i></button>
+            	
+            		<div class="form-group col-md-3">
+	                    <div class="input-group input-group-sm content-seach-table-permisos">
+							<input type="text" id="buscadorTablaPermisos" class="form-control form-control-sm buscar-input-operario" ng-model="buscarPermiso" placeholder="Buscar permiso">
+							<span class="fa fa-search"></span>
+						</div>
 	                </div>
-            	</div>
-            	<div class="row">
+            	
+	                <div class="box-nuevo-permiso col-md-1">
+	                	<div class="row">
+		                	<div class="col-md-6">
+		                		<div>
+			                		<button id="btnRegresarVistaModulos" class="btn btn-nuevo-permiso" ng-click="changeVistaModulos()" ng-if="!isModulo">
+			                			<i class="fa fa-arrow-left"></i>
+			                			<span class="tooltipBtnRegresarVistaModulos">Regresar</span>
+			                		</button>
+			                	</div>
+		                	</div>
+		                    <div class="col-md-6">
+		                    	<div>
+			                    	<button id="btnNuevoPermiso" class="btn btn-nuevo-permiso" ng-click="abrirFormNuevoPermiso()">
+			                    		<i class="fa fa-plus"></i>
+				                    	<span class="tooltipBtnNuevoPermiso">Registrar nuevo permiso</span>
+				                    </button>
+			                    </div>
+		                    </div>
+	                    </div>
+	                </div>
+	                
+	            </div>
+	            
+	            <div class="row">
+	            
             		<div ng-show="exisPermisosModulo" class="col-md-12">
             			<div class="table-responsive">
 		                    <table id="accionesTable" class="display table" cellspacing="0" width="100%">
 		                        <thead id="thead_table">
 		                            <tr>
-		                                <th>Nombre</th>
-		                                <th>Clave</th>
-		                                <th>Color</th>
-		                                <th>Color hover</th>
-		                                <th>Icono</th>
-		                                <th style="text-align: center;">Editar</th>
-		                                <th style="text-align: center;">Eliminar</th>
+		                                <th class="encabezadosTablaPermisos">Nombre</th>
+		                                <th class="encabezadosTablaPermisos">Clave</th>
+		                                <th class="encabezadosTablaPermisos">Color</th>
+		                                <th class="encabezadosTablaPermisos">Color hover</th>
+		                                <th class="encabezadosTablaPermisos">Icono</th>
+		                                <th class="encabezadosTablaPermisos" ng-show="!isNuevoPermiso && !isEditPermiso" style="text-align: center;">Editar</th>
+		                                <th class="encabezadosTablaPermisos" ng-show="!isNuevoPermiso && !isEditPermiso" style="text-align: center;">Eliminar</th>
+		                                
+		                                <th class="encabezadosTablaPermisos" ng-show="isNuevoPermiso" style="text-align: center;">Cancelar</th>
+		                                <th class="encabezadosTablaPermisos" ng-show="isNuevoPermiso" style="text-align: center;">Guardar</th>
+		                                
+		                                <th class="encabezadosTablaPermisos" ng-show="isEditPermiso" style="text-align: center;">Cancelar</th>
+		                                <th class="encabezadosTablaPermisos" ng-show="isEditPermiso" style="text-align: center;">Editar</th>
 		                            </tr>
 		                        </thead>
 		                        <tbody>
-		                        	<tr ng-repeat="permiso in listaPermisosModulo">
-		                        		<td>{{permiso.nombre}}</td>
-		                        		<td>{{permiso.clave}}</td>
-		                        		<td>{{permiso.color}}</td>
-		                        		<td>{{permiso.colorHover}}</td>
-		                        		<td>{{permiso.icono}}</td>
+		                        	<tr id="rowPermisoNuevo" ng-show="isNuevoPermiso">
+		                        		<td><input id="nombrePermiso" type="text" class="form-control txtNuevoPermiso valInputFormulario" /></td>
+		                        		<td><input id="clavePermiso" type="text" class="form-control txtNuevoPermiso valInputFormulario" /></td>
+		                        		<td><input id="colorPermiso" type="text" class="form-control txtNuevoPermiso valInputFormulario" /></td>
+		                        		<td><input id="colorHoverPermiso" type="text" class="form-control txtNuevoPermiso valInputFormulario" /></td>
+		                        		<td><input id="iconoPermiso" type="text" class="form-control txtNuevoPermiso valInputFormulario" /></td>
 		                        		<td>
-		                        			<span ng-click="abrirMdlEditar()" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnEditarModulo">
+		                        			<span ng-click="cancelarRegistroPermiso()" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light btnCancelarNuevoPermiso">
+		                        				<i class="fa fa-ban" aria-hidden="true"></i>
+		                        			</span>
+		                        		</td>
+		                        		<td>
+		                        			<span ng-click="guardarNuevoPermiso()" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light btnAgregarNuevoPermiso">
+		                        				<i class="fa fa-check" aria-hidden="true"></i>
+		                        			</span>
+		                        		</td>
+		                        	</tr>
+		                        	<tr id="rowPermisoConsulta{{permiso.id}}" ng-repeat="permiso in listaPermisosModulo | filter:buscarPermiso track by $index">
+		                        		<td class="rowConsultaPermisoTxt rowConsultaPermiso{{permiso.id}}">{{permiso.nombre}}</td>
+		                        		<td class="rowEditPermiso{{permiso.id}}" style="display: none;"><input id="nombrePermisoEdit{{permiso.id}}" type="text" class="form-control txtEditPermiso valInputFormulario" value="{{permiso.nombre}}" /></td>
+		                        		<td class="rowConsultaPermisoTxt rowConsultaPermiso{{permiso.id}}">{{permiso.clave}}</td>
+		                        		<td class="rowEditPermiso{{permiso.id}}" style="display: none;"><input id="clavePermisoEdit{{permiso.id}}" type="text" class="form-control txtEditPermiso valInputFormulario" value="{{permiso.clave}}" /></td>
+		                        		<td class="rowConsultaPermisoTxt rowConsultaPermiso{{permiso.id}}">{{permiso.color}}</td>
+		                        		<td class="rowEditPermiso{{permiso.id}}" style="display: none;"><input id="colorPermisoEdit{{permiso.id}}" type="text" class="form-control txtEditPermiso valInputFormulario" value="{{permiso.color}}" /></td>
+		                        		<td class="rowConsultaPermisoTxt rowConsultaPermiso{{permiso.id}}">{{permiso.colorHover}}</td>
+		                        		<td class="rowEditPermiso{{permiso.id}}" style="display: none;"><input id="colorHoverPermisoEdit{{permiso.id}}" type="text" class="form-control txtEditPermiso valInputFormulario" value="{{permiso.colorHover}}" /></td>
+		                        		<td class="rowConsultaPermisoTxt rowConsultaPermiso{{permiso.id}}">{{permiso.icono}}</td>
+		                        		<td class="rowEditPermiso{{permiso.id}}" style="display: none;"><input id="iconoPermisoEdit{{permiso.id}}" type="text" class="form-control txtEditPermiso valInputFormulario" value="{{permiso.icono}}" /></td>
+                        				
+                        				
+                        				<td class="rowConsultaPermiso{{permiso.id}}">
+		                        			<span ng-click="abrirEditarPermiso(permiso.id)" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnEditarPermiso">
 		                        				<i class="fa fa-edit" aria-hidden="true"></i>
 		                        			</span>
 		                        		</td>
-		                        		<td>
-		                        			<span ng-click="eliminarPermiso()" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnEliminarModulo">
+		                        		<td class="rowConsultaPermiso{{permiso.id}}">
+		                        			<span ng-click="eliminarPermiso(permiso.id)" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnEliminarPermiso">
 		                        				<i class="fa fa-trash" aria-hidden="true"></i>
 		                        			</span>
 		                        		</td>
+		                        		
+		                        		<td class="rowEditPermiso{{permiso.id}}" style="display: none;">
+		                        			<span ng-click="cancelarEditPermiso(permiso.id)" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light btnCancelarEditPermiso">
+		                        				<i class="fa fa-ban" aria-hidden="true"></i>
+		                        			</span>
+		                        		</td>
+		                        		<td class="rowEditPermiso{{permiso.id}}" style="display: none;">
+		                        			<span ng-click="modificarPermiso(permiso.id)" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light btnEditPermiso">
+		                        				<i class="fa fa-check" aria-hidden="true"></i>
+		                        			</span>
+		                        		</td>
+                        				
+                        				
 		                        	</tr>
 		                        </tbody>
 		                    </table>
@@ -249,8 +342,31 @@
 						<br>
 						<span class="span-no-result">No se encontraron resultados</span>
 					</div>
-            		
-            	</div>
+					
+				</div>
+				
+				
+            	
+            	
+            	
+            	
+            	
+            	
+            	
+            	
+            	
+            	
+            	
+            	
+            	
+            	
+            	
+            	
+            	
+            	
+            	
+            
+
             </div>
             <jsp:include page="./modals/modalNuevo.jsp"></jsp:include>
             <jsp:include page="./modals/modalDetalle.jsp"></jsp:include>
