@@ -149,6 +149,11 @@ public class PlantaInternaViewsController {
 	public String reportesSF() {		
 		return "plantainterna/reportesSF/mainReporte";
 	}
+	
+	@GetMapping("/moduloDisponibilidadV2")
+	public String disponibilidadV2() {		
+		return "plantainterna/disponibilidadV2/disponibilidadV2";
+	}
 
 }
 
