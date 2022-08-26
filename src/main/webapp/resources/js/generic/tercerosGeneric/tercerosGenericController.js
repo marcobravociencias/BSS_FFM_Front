@@ -13,6 +13,7 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 	$scope.elementosConfigGeneral;
 	$scope.estatusModals = '';
 	$scope.otModalSelectedGeneric = {};
+	$scope.historialOrdenTrabajo = [];
 
 
 
@@ -278,10 +279,10 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 			},
 			"drawCallback": function (settings) {
 				$(".card-style").css("border-left", "none");
-				if($scope.detalleOtPendienteSelected){
+				if ($scope.detalleOtPendienteSelected) {
 					$("#idotpendiente" + $scope.detalleOtPendienteSelected.idOrden).css("border-left", "2px solid  #3942d7");
 				}
-            }
+			}
 		})
 
 	}
@@ -406,7 +407,10 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 			idClusters: clustersparam
 		}
 		let arrayRow = [];
+		swal({ text: 'Espera un momento...', allowOutsideClick: false });
+        swal.showLoading();
 		tercerosGenericService.consultarOrdenes(params).then(function success(response) {
+			swal.close();
 			if (response.data !== undefined) {
 				if (response.data.respuesta) {
 					if (response.data.result) {
@@ -509,8 +513,8 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 								</td>
 							</tr>	
 							`
-							row[0] = tableelemetn;
-							arrayRow.push(row);
+								row[0] = tableelemetn;
+								arrayRow.push(row);
 							})
 
 						} else {
@@ -555,7 +559,7 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 		if (event.which === 13) {
 			let text = $("#txtBuscadorOtsConsultaTabla").val()
 			tablaOtsConsultaGeneral.search(text).draw()
-			if($scope.detalleOtPendienteSelected){
+			if ($scope.detalleOtPendienteSelected) {
 				$("#idotpendiente" + $scope.detalleOtPendienteSelected.idOrden).css("border-left", "2px solid  #3942d7");
 			}
 		}
@@ -565,95 +569,94 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 		$(".card-style").css("border-left", "none");
 		$("#idotpendiente" + ot).css("border-left", "2px solid  #3942d7");
 		$scope.mostrarNavAccionesDetalleOtPendiente = true;
-		$scope.detalleOtPendienteSelected = $scope.listadoOts.find((e) => e.idOrden ==ot)
+		$scope.detalleOtPendienteSelected = $scope.listadoOts.find((e) => e.idOrden == ot)
 		$scope.listadoMotivosRescate = $scope.estatusCambio.filter(e => { return e.idPadre === 212 })
-        $scope.listadoMotivosCalendarizado = $scope.estatusCambio.filter(e => { return e.idPadre === 243 })
-        $scope.listadoMotivosReagenda = $scope.estatusCambio.filter(e => { return e.idPadre === 201 })
-        $scope.listadoEstadosTerminado = $scope.estatusCambio.filter(e => { return e.idPadre === 4 })
-        $scope.listadoEstadoGestoria = $scope.estatusCambio.filter(e => { return e.idPadre === 7 })
-        $scope.listadoTurnosAcciones = $scope.filtrosGeneral.turnosdisponibles;
-        $scope.permisosModal = $scope.elementosConfigGeneral.get("MODAL_FLUJO_" + $scope.detalleOtPendienteSelected.idFlujo).split(",")
-        $scope.estatusModals = 'PENDIENTE'
-        $scope.otModalSelectedGeneric = angular.copy($scope.detalleOtPendienteSelected);
-        $scope.requestModalInformacion(ot)
+		$scope.listadoMotivosCalendarizado = $scope.estatusCambio.filter(e => { return e.idPadre === 243 })
+		$scope.listadoMotivosReagenda = $scope.estatusCambio.filter(e => { return e.idPadre === 201 })
+		$scope.listadoEstadosTerminado = $scope.estatusCambio.filter(e => { return e.idPadre === 4 })
+		$scope.listadoEstadoGestoria = $scope.estatusCambio.filter(e => { return e.idPadre === 7 })
+		$scope.listadoTurnosAcciones = $scope.filtrosGeneral.turnosdisponibles;
+		$scope.permisosModal = $scope.elementosConfigGeneral.get("MODAL_FLUJO_" + $scope.detalleOtPendienteSelected.idFlujo).split(",")
+		$scope.estatusModals = 'PENDIENTE'
+		$scope.otModalSelectedGeneric = angular.copy($scope.detalleOtPendienteSelected);
+		$scope.requestModalInformacion(ot)
 
 		$scope.$apply();
 	}
 
 	$scope.requestModalInformacion = function (id) {
-        $scope.otconsultamodal =
-            document.getElementById('v-tabs-consulta-detalleot-tab').click()
-        $scope.idOtSelect = id;
-        $scope.flagComentarios = false;
-        $scope.flagHistorico = false;
-        $scope.flagPedido = false;
-        $scope.consultarDetalleOtPEFlag = false;
-        $scope.comentariosOrdenTrabajo = [];
-        $scope.historialOrdenTrabajo = [];
-        $scope.infoOtDetalle = {}
-        $scope.detalleCotizacion = {}
-        $scope.detalleTecnicoOt = {};
-        $scope.infoDetalleOtPe = {}
-        swal({ text: 'Consultando detalle de la OT ...', allowOutsideClick: false });
-        swal.showLoading();
+		$scope.otconsultamodal =
+			document.getElementById('v-tabs-consulta-detalleot-tab').click()
+		$scope.idOtSelect = id;
+		$scope.consultarDetalleOtPEFlag = false;
+		$scope.comentariosOrdenTrabajo = [];
+		$scope.historialOrdenTrabajo = [];
+		$scope.infoOtDetalle = {}
+		$scope.detalleCotizacion = {}
+		$scope.detalleTecnicoOt = {};
+		$scope.infoDetalleOtPe = {}
+		swal({ text: 'Consultando detalle de la OT ...', allowOutsideClick: false });
+		swal.showLoading();
 
-        let params = {
-            "idOt": id,
-            "idFlujo": $scope.otModalSelectedGeneric.idFlujo,
-        }
+		let params = {
+			"idOt": id,
+			"idFlujo": $scope.otModalSelectedGeneric.idFlujo,
+		}
 
-        $q.all([
-            tercerosGenericService.consultarDetalleOT(params),
-            tercerosGenericService.consultarDetalleTecnicoOt(params)
-        ]).then(function (results) {
-            swal.close()
-            if (results[0].data !== undefined) {
-                if (results[0].data.respuesta) {
-                    if (results[0].data.result) {
-                        if (results[0].data.result.orden) {
-                            $scope.infoOtDetalle = results[0].data.result.orden
-                            setTimeout(function () {
-                                document.getElementsByClassName('permiso-accion-modal')[0].click();
-                                /*
+		$q.all([
+			tercerosGenericService.consultarDetalleOT(params),
+			tercerosGenericService.consultarDetalleTecnicoOt(params)
+		]).then(function (results) {
+			swal.close()
+			if (results[0].data !== undefined) {
+				if (results[0].data.respuesta) {
+					if (results[0].data.result) {
+						if (results[0].data.result.orden) {
+							$scope.infoOtDetalle = results[0].data.result.orden
+							/*
+							setTimeout(function () {
+								document.getElementsByClassName('permiso-accion-modal')[0].click();
+								
 								let isBlock = $scope.keyBloqueoBtn.find((e) => e == $scope.infoOtDetalle.idEstatus)
-                                if(isBlock || $scope.dataWindow){
-                                    $(".disable-terminada").prop("disabled", true)
-                                }else{
-                                    $(".disable-terminada").prop("disabled", false)
-                                }
-								*/
-                            }, 500)
+								if(isBlock || $scope.dataWindow){
+									$(".disable-terminada").prop("disabled", true)
+								}else{
+									$(".disable-terminada").prop("disabled", false)
+								}
+								
+							}, 500)
+							*/
 
-                        } else {
-                            toastr.info(results[0].data.result.mensaje);
-                        }
-                    } else {
-                        toastr.warning('No se encontraron datos');
-                    }
-                } else {
-                    toastr.warning(results[0].data.resultDescripcion);
-                }
-            } else {
-                toastr.error('Ha ocurrido un error en la consulta de los datos');
-            }
-            if (results[1].data !== undefined) {
-                if (results[1].data.respuesta) {
-                    if (results[1].data.result) {
-                        $scope.detalleTecnicoOt = results[1].data.result;
-                    } else {
-                        toastr.warning('No se encontraron datos');
-                    }
-                } else {
-                    toastr.warning(results[0].data.resultDescripcion);
-                }
-            } else {
-                toastr.error('Ha ocurrido un error en la consulta de los datos');
-            }
+						} else {
+							toastr.info(results[0].data.result.mensaje);
+						}
+					} else {
+						toastr.warning('No se encontraron datos');
+					}
+				} else {
+					toastr.warning(results[0].data.resultDescripcion);
+				}
+			} else {
+				toastr.error('Ha ocurrido un error en la consulta de los datos');
+			}
+			if (results[1].data !== undefined) {
+				if (results[1].data.respuesta) {
+					if (results[1].data.result) {
+						$scope.detalleTecnicoOt = results[1].data.result;
+					} else {
+						toastr.warning('No se encontraron datos');
+					}
+				} else {
+					toastr.warning(results[0].data.resultDescripcion);
+				}
+			} else {
+				toastr.error('Ha ocurrido un error en la consulta de los datos');
+			}
 
 
-        }).catch(err => handleError(err));
+		}).catch(err => handleError(err));
 
-    }
+	}
 
 	$scope.seleccionarTodosRecursivo = function (array) {
 		array.map(function (e) {
@@ -697,6 +700,191 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 			}
 		});
 	}
+
+	$scope.consultarHistorial = function () {
+		if (!$scope.historialOrdenTrabajo.length) {
+			$scope.historialOrdenTrabajo = [];
+			$(".dot-dependencia").remove()
+			swal({ text: 'Consultando historial ...', allowOutsideClick: false });
+			swal.showLoading();
+			let params = {
+				"idOt": $scope.detalleOtPendienteSelected.idOrden
+			}
+			tercerosGenericService.consultarHistoricoOt(params).then(function success(response) {
+				swal.close()
+				if (response.data !== undefined) {
+					if (response.data.respuesta) {
+						if (response.data.result) {
+							if (response.data.result.detalle) {
+								$scope.historialOrdenTrabajo = response.data.result.detalle//.reverse();
+								setTimeout(function () {
+									$(".dot-dependencia").remove()
+									$scope.pintarDependenciasHistorico();
+								}, 500)
+							} else {
+								toastr.warning(response.data.result.mensaje);
+							}
+						} else {
+							toastr.warning('No se encontraron resultados');
+						}
+					} else {
+						toastr.warning(response.data.resultDescripcion);
+					}
+				} else {
+					toastr.warning(response.data.resultDescripcion);
+				}
+			}).catch(err => handleError(err))
+		}
+	}
+
+	$scope.pintarDependenciasHistorico = function () {
+		var couth = 0;
+		var contador = 0;
+		var height = 0;
+		angular.forEach($scope.historialOrdenTrabajo, function (element, index) {
+			couth++;
+			contador++;
+			if (contador !== $scope.historialOrdenTrabajo.length) {
+				if (couth === 1) {
+					height = $("#content-historial-" + index).height();
+					let posicionOriginal = $("#content-historial-" + index).position();
+					posicionOriginal.top += 70;
+					posicionOriginal.left += (2 + $("#content-historial-" + index).width());
+					if (index === 0) {
+						$("#content-principal-historial").append("<span class='direccionactividad dot-dependencia content-historial-" + index + " fa fa-arrow-left' style='left: " + posicionOriginal.left + "px;top: " + (posicionOriginal.top + 10) + "px'></span>");
+					} else {
+						$("#content-principal-historial").append("<b class='content-historial-" + index + " dot-dependencia' style='left:" + (posicionOriginal.left + 5) + "px;top:" + posicionOriginal.top + "px'>.</b>");
+					}
+					$scope.pintarPunto(posicionOriginal, index);
+				}
+				if (couth === 2) {
+					if ($("#content-historial-" + index).height() > height) {
+						height = $("#content-historial-" + index).height();
+					}
+					let posicionOriginal = $("#content-historial-" + index).position();
+					posicionOriginal.top += 70;
+					posicionOriginal.left += (2 + $("#content-historial-" + index).width());
+					$("#content-principal-historial").append("<b class='content-historial-" + index + " dot-dependencia' style='left:" + (posicionOriginal.left + 5) + "px;top:" + posicionOriginal.top + "px'>.</b>");
+					$scope.pintarPunto(posicionOriginal, index);
+				}
+				if (couth === 3) {
+					if ($("#content-historial-" + index).height() > height) {
+						height = $("#content-historial-" + index).height();
+					}
+					couth = 0;
+					let posicionOriginal = $("#content-historial-" + index).position();
+					height += posicionOriginal.top;
+					posicionOriginal.top += 70;
+					posicionOriginal.left += (2 + $("#content-historial-" + index).width());
+					$("#content-principal-historial").append("<b class='content-historial-" + index + " dot-dependencia' style='left:" + (posicionOriginal.left + 5) + "px;top:" + posicionOriginal.top + "px'>.</b>");
+					$scope.pintarPunto(posicionOriginal, index);
+					/*
+					for (let i = 0; i < 8; i++) {
+						posicionOriginal.top += 10;
+						$scope.pintarPunto(posicionOriginal, index);
+					}
+					*/
+
+					height -= 25;
+					do {
+						posicionOriginal.top += 10;
+						$scope.pintarPunto(posicionOriginal, index);
+					} while (height > posicionOriginal.top);
+
+					for (let i = 0; i < 95; i++) {
+						posicionOriginal.left -= 10;
+						$scope.pintarPunto(posicionOriginal, index);
+					}
+					for (let i = 0; i < 9; i++) {
+						posicionOriginal.top += 10;
+						$scope.pintarPunto(posicionOriginal, index);
+					}
+					for (let i = 0; i < 1; i++) {
+						posicionOriginal.left += 10;
+						$scope.pintarPunto(posicionOriginal, index);
+					}
+				}
+			}
+		});
+
+	}
+
+	$scope.pintarPunto = function (posicionOriginal, index) {
+		$("#content-principal-historial").append("<b class='content-historial-" + index + " dot-dependencia' style='left:" + (posicionOriginal.left + 15) + "px;top:" + posicionOriginal.top + "px'>.</b>");
+	}
+
+    $scope.consultarComentarios = function () {
+        if (!$scope.comentariosOrdenTrabajo.length) {
+            if (!swal.isVisible()) {
+                swal({ text: 'Consultando comentarios ...', allowOutsideClick: false });
+                swal.showLoading();
+            }
+
+            let params = {
+                "idOt": $scope.detalleOtPendienteSelected.idOrden
+            }
+            tercerosGenericService.consultarComentariosOt(params).then(function success(response) {
+                swal.close()
+                if (response.data !== undefined) {
+                    if (response.data.respuesta) {
+                        if (response.data.result) {
+                            if (response.data.result.detalle) {
+                                $scope.comentariosOrdenTrabajo = response.data.result.detalle;
+                                angular.forEach($scope.comentariosOrdenTrabajo, function (comentario, index) {
+                                    comentario.fechaComentario = moment(comentario.fecha + ' ' + comentario.hora).format("dddd, D [de] MMMM [de] YYYY hh:mm A");
+                                });
+                            } else {
+                                toastr.warning(response.data.result.mensaje);
+                            }
+                        } else {
+                            toastr.warning('No se encontraron comentarios');
+                        }
+                    } else {
+                        toastr.warning(response.data.resultDescripcion);
+                    }
+                } else {
+                    toastr.warning(response.data.resultDescripcion);
+                }
+            }).catch(err => handleError(err))
+        }
+    }
+
+	$scope.addComentariosOt = function () {
+        if ($scope.comentarios.trim() !== '' && !/^\s/.test($scope.comentarios)) {
+
+            let params = {
+                idOrden:  $scope.detalleOtPendienteSelected.idOrden,
+                comentario: $scope.comentarios,
+                origenSistema: 1
+            }
+
+            swal({ text: 'Espere un momento ...', allowOutsideClick: false });
+            swal.showLoading();
+
+            tercerosGenericService.agregarComentariosOt(params).then(function success(response) {
+                swal.close();
+                if (response.data !== undefined) {
+                    if (response.data.respuesta) {
+                        $scope.comentarios = '';
+                        $scope.comentariosOrdenTrabajo = [];
+                        $(".chat-area").scrollTop(0);
+                        $scope.consultarComentarios();
+                    } else {
+                        toastr.error(response.data.resultDescripcion);
+                    }
+                } else {
+                    toastr.error(response.data.resultDescripcion);
+                }
+            }).catch(err => handleError(err))
+
+        } else {
+            $scope.comentarios = '';
+            document.getElementById('comentarioOt').value = '';
+            toastr.warning('Intoducir un comentario.')
+        }
+    }
+
+	
 
 	$scope.iniciarFechasConsulta();
 	$scope.inicializarsTableOts()

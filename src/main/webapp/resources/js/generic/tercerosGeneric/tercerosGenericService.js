@@ -84,4 +84,37 @@ app.service("tercerosGenericService", function ($http) {
             }
 		});
 	};
+
+	this.consultarHistoricoOt=function(params){
+		return $http({
+			method: "post",
+			data:JSON.stringify(params),
+			url: "req/consultarHistoricoDespachoOT",
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	}
+
+	this.consultarComentariosOt=function(params){
+		return $http({
+			method: "post",
+			url: "req/consultarComentariosDespachoOT",
+			data:JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	}
+
+	this.agregarComentariosOt = function (params) {
+        return $http({
+            method: "post",
+            url: "req/agregarComentariosOt",
+            data: JSON.stringify(params),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    }
 })
