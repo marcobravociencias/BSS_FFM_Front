@@ -1,7 +1,5 @@
 var app = angular.module('tercerosGenericApp', []);
-app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercerosGenericService', function ($scope, $q, $filter, tercerosGenericService) {
-	$("#moduloTercerosGeneric").addClass('active');
-	$("#nav-bar-otros-options ul li.active").closest("#nav-bar-otros-options").addClass('active-otros-navbar');
+app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercerosGenericService', 'genericService', function ($scope, $q, $filter, tercerosGenericService, genericService) {
 
 	let tablaOtsConsultaGeneral;
 	$scope.mostrarNavAccionesDetalleOtPendiente = false;
@@ -14,7 +12,9 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 	$scope.estatusModals = '';
 	$scope.otModalSelectedGeneric = {};
 	$scope.historialOrdenTrabajo = [];
-
+	$scope.elementoPlazaComercial = {};
+	$scope.elementoRescate = {};
+	$scope.listadoTecnicosGeneral = [];
 
 
 	$('.drop-down-filters').on("click.bs.dropdown", function (e) {
@@ -162,6 +162,7 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 							})
 							$('#jstree-proton-3').bind('loaded.jstree', function (e, data) {
 								$scope.consultarOTsTercerosGeneric();
+								$scope.consultarTecnicosDisponibiles();
 							}).jstree({
 								'plugins': ["wholerow", "checkbox", "search"],
 								'core': {
@@ -193,6 +194,34 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 
 		}).catch(err => handleError(err));
 	}
+
+	$scope.consultarTecnicosDisponibiles = function () {
+		$scope.listadoTecnicosGeneral = []
+		$scope.isCargaTecnicosDisponibles = false;
+		tercerosGenericService.consultarTecnicosDisponibiles($scope.dataWindow).then(function success(response) {
+			if (response.data !== undefined) {
+				if (response.data.respuesta) {
+					if (response.data.result) {
+						if (response.data.result.detalleTecnicos) {
+							$scope.listadoTecnicosGeneral = response.data.result.detalleTecnicos
+						} else {
+							toastr.info('No se encontraron operarios disponibles');
+
+						}
+					} else {
+						toastr.info('No se encontraron tecnicos ');
+					}
+				} else {
+					toastr.warning(response.data.resultDescripcion);
+				}
+			} else {
+				toastr.error('Ha ocurrido un error en la consulta de tecnicos');
+			}
+			$scope.isCargaTecnicosDisponibles = true;
+			$scope.validarLoadTecnicosOtsAsignadas()
+		}).catch(err => handleError(err))
+	}
+
 
 	$scope.cargarFiltrosGeneric();
 
@@ -408,7 +437,7 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 		}
 		let arrayRow = [];
 		swal({ text: 'Espera un momento...', allowOutsideClick: false });
-        swal.showLoading();
+		swal.showLoading();
 		tercerosGenericService.consultarOrdenes(params).then(function success(response) {
 			swal.close();
 			if (response.data !== undefined) {
@@ -813,78 +842,645 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 		$("#content-principal-historial").append("<b class='content-historial-" + index + " dot-dependencia' style='left:" + (posicionOriginal.left + 15) + "px;top:" + posicionOriginal.top + "px'>.</b>");
 	}
 
-    $scope.consultarComentarios = function () {
-        if (!$scope.comentariosOrdenTrabajo.length) {
-            if (!swal.isVisible()) {
-                swal({ text: 'Consultando comentarios ...', allowOutsideClick: false });
-                swal.showLoading();
-            }
+	$scope.consultarComentarios = function () {
+		if (!$scope.comentariosOrdenTrabajo.length) {
+			if (!swal.isVisible()) {
+				swal({ text: 'Consultando comentarios ...', allowOutsideClick: false });
+				swal.showLoading();
+			}
 
-            let params = {
-                "idOt": $scope.detalleOtPendienteSelected.idOrden
-            }
-            tercerosGenericService.consultarComentariosOt(params).then(function success(response) {
-                swal.close()
-                if (response.data !== undefined) {
-                    if (response.data.respuesta) {
-                        if (response.data.result) {
-                            if (response.data.result.detalle) {
-                                $scope.comentariosOrdenTrabajo = response.data.result.detalle;
-                                angular.forEach($scope.comentariosOrdenTrabajo, function (comentario, index) {
-                                    comentario.fechaComentario = moment(comentario.fecha + ' ' + comentario.hora).format("dddd, D [de] MMMM [de] YYYY hh:mm A");
-                                });
-                            } else {
-                                toastr.warning(response.data.result.mensaje);
-                            }
-                        } else {
-                            toastr.warning('No se encontraron comentarios');
-                        }
-                    } else {
-                        toastr.warning(response.data.resultDescripcion);
-                    }
-                } else {
-                    toastr.warning(response.data.resultDescripcion);
-                }
-            }).catch(err => handleError(err))
-        }
-    }
+			let params = {
+				"idOt": $scope.detalleOtPendienteSelected.idOrden
+			}
+			tercerosGenericService.consultarComentariosOt(params).then(function success(response) {
+				swal.close()
+				if (response.data !== undefined) {
+					if (response.data.respuesta) {
+						if (response.data.result) {
+							if (response.data.result.detalle) {
+								$scope.comentariosOrdenTrabajo = response.data.result.detalle;
+								angular.forEach($scope.comentariosOrdenTrabajo, function (comentario, index) {
+									comentario.fechaComentario = moment(comentario.fecha + ' ' + comentario.hora).format("dddd, D [de] MMMM [de] YYYY hh:mm A");
+								});
+							} else {
+								toastr.warning(response.data.result.mensaje);
+							}
+						} else {
+							toastr.warning('No se encontraron comentarios');
+						}
+					} else {
+						toastr.warning(response.data.resultDescripcion);
+					}
+				} else {
+					toastr.warning(response.data.resultDescripcion);
+				}
+			}).catch(err => handleError(err))
+		}
+	}
 
 	$scope.addComentariosOt = function () {
-        if ($scope.comentarios.trim() !== '' && !/^\s/.test($scope.comentarios)) {
+		if ($scope.comentarios.trim() !== '' && !/^\s/.test($scope.comentarios)) {
 
-            let params = {
-                idOrden:  $scope.detalleOtPendienteSelected.idOrden,
-                comentario: $scope.comentarios,
-                origenSistema: 1
-            }
+			let params = {
+				idOrden: $scope.detalleOtPendienteSelected.idOrden,
+				comentario: $scope.comentarios,
+				origenSistema: 1
+			}
 
-            swal({ text: 'Espere un momento ...', allowOutsideClick: false });
-            swal.showLoading();
+			swal({ text: 'Espere un momento ...', allowOutsideClick: false });
+			swal.showLoading();
 
-            tercerosGenericService.agregarComentariosOt(params).then(function success(response) {
-                swal.close();
-                if (response.data !== undefined) {
-                    if (response.data.respuesta) {
-                        $scope.comentarios = '';
-                        $scope.comentariosOrdenTrabajo = [];
-                        $(".chat-area").scrollTop(0);
-                        $scope.consultarComentarios();
-                    } else {
-                        toastr.error(response.data.resultDescripcion);
-                    }
-                } else {
-                    toastr.error(response.data.resultDescripcion);
-                }
-            }).catch(err => handleError(err))
+			tercerosGenericService.agregarComentariosOt(params).then(function success(response) {
+				swal.close();
+				if (response.data !== undefined) {
+					if (response.data.respuesta) {
+						$scope.comentarios = '';
+						$scope.comentariosOrdenTrabajo = [];
+						$(".chat-area").scrollTop(0);
+						$scope.consultarComentarios();
+					} else {
+						toastr.error(response.data.resultDescripcion);
+					}
+				} else {
+					toastr.error(response.data.resultDescripcion);
+				}
+			}).catch(err => handleError(err))
 
-        } else {
-            $scope.comentarios = '';
-            document.getElementById('comentarioOt').value = '';
-            toastr.warning('Intoducir un comentario.')
-        }
-    }
+		} else {
+			$scope.comentarios = '';
+			document.getElementById('comentarioOt').value = '';
+			toastr.warning('Intoducir un comentario.')
+		}
+	}
 
-	
+	$scope.obtenerPaquete = function () {
+		if (!$scope.flagPaquete) {
+			$scope.selectedEquipoPaquete = {}
+			$scope.isConsultaEquiposModelos = false;
+			$scope.listDetalleEquipos = [];
+			let osOtSelected = '';
+			if ($scope.estatusModals == 'PENDIENTE') {
+				osOtSelected = $scope.detalleOtPendienteSelected.folioOrden
+			}
+
+			if ($scope.estatusModals == 'ASIGNADA')
+				osOtSelected = $scope.detalleOtAsignadaSelected.folioOrden
+
+			let params = {
+				folio: osOtSelected
+			}
+			swal({ text: 'Espere un momento ...', allowOutsideClick: false });
+			swal.showLoading();
+			$scope.responseServicios = {}
+			tercerosGenericService.consultarResumenPaquete(params).then(response => {
+				swal.close()
+				$scope.flagPaquete = true;
+				if (response.data.respuesta) {
+					if (response.data.result) {
+						if (response.data.result.resumenPaquete != undefined) {
+							$scope.responseServicios = response.data.result.resumenPaquete
+						} else {
+
+						}
+					}
+				} else {
+					mostrarMensajeErrorAlert(response.data.resultDescripcion)
+				}
+			}).catch(err => handleError(err));
+		}
+	}
+
+	$scope.mostrarVistaModificarDireccion = function (lat, long) {
+		$("#txtBuscadorDireccionMap").val("");
+		$scope.verModDireccionOT = true;
+		$scope.latitudModDireccionOt = lat;
+		$scope.longitudModDireccionOt = long;
+
+		if (!$scope.isMapaCambioDireccionOTMod) {
+			$scope.isMapaCambioDireccionOTMod = true;
+
+			mapaCambioDireccionOTMod = new google.maps.Map(document.getElementById("content-mapa-cambio-direccion-mod"), {
+				center: {
+					lat: parseFloat(lat),
+					lng: parseFloat(long)
+				},
+				mapTypeControlOptions: {
+					style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+					position: google.maps.ControlPosition.BOTTOM_LEFT,
+				},
+				zoomControlOptions: {
+					position: google.maps.ControlPosition.BOTTOM_LEFT,
+				},
+				streetViewControlOptions: {
+					position: google.maps.ControlPosition.RIGHT_CENTER,
+				},
+				mapTypeControl: false,
+				zoom: 15
+			});
+			mostrarMarkerBusquedaDireccion();
+		}
+
+		if (markerResMod !== undefined && markerResMod !== null) {
+			markerResMod.setMap(null);
+			markerResMod = null;
+		}
+
+		markerResMod = new google.maps.Marker({
+			map: mapaCambioDireccionOTMod,
+			draggable: true,
+			animation: google.maps.Animation.DROP,
+			title: "Dirección de la OT",
+			position: {
+				lat: parseFloat(lat),
+				lng: parseFloat(long)
+			}
+		});
+
+		var ubicacionCenter = new google.maps.LatLng(lat, long);
+		mapaCambioDireccionOTMod.setCenter(ubicacionCenter);
+		mapaCambioDireccionOTMod.setZoom(15);
+
+		google.maps.event.addListener(markerResMod, "dragend", function (event) {
+			$("#txtBuscadorDireccionMap").val(this.getPosition().lat() + ", " + this.getPosition().lng());
+			$scope.latitudModDireccionOt = this.getPosition().lat();
+			$scope.longitudModDireccionOt = this.getPosition().lng();
+			$scope.$apply();
+		});
+	}
+
+	function mostrarMarkerBusquedaDireccion() {
+		var input = document.getElementById("txtBuscadorDireccionMap");
+		var searchBox = new google.maps.places.SearchBox(input);
+
+		mapaCambioDireccionOTMod.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+		mapaCambioDireccionOTMod.addListener("bounds_changed", function () {
+			searchBox.setBounds(mapaCambioDireccionOTMod.getBounds());
+		});
+
+		searchBox.addListener("places_changed", function () {
+			var places = searchBox.getPlaces();
+
+			if (places.length == 0) {
+				return;
+			}
+
+			markerResMod.setMap(null);
+			markerResMod = null;
+
+			var bounds = new google.maps.LatLngBounds();
+
+			places.forEach(function (place) {
+				if (!place.geometry || !place.geometry.location) {
+					console.log("Returned place contains no geometry");
+					return;
+				}
+
+				markerResMod = new google.maps.Marker({
+					map: mapaCambioDireccionOTMod,
+					draggable: true,
+					animation: google.maps.Animation.DROP,
+					title: "Dirección de la OT",
+					position: place.geometry.location,
+				});
+
+				$scope.latitudModDireccionOt = place.geometry.location.lat();
+				$scope.longitudModDireccionOt = place.geometry.location.lng();
+				$scope.$apply();
+
+				google.maps.event.addListener(markerResMod, "dragend", function (event) {
+					$("#txtBuscadorDireccionMap").val(this.getPosition().lat() + ", " + this.getPosition().lng());
+					$scope.latitudModDireccionOt = this.getPosition().lat();
+					$scope.longitudModDireccionOt = this.getPosition().lng();
+					$scope.$apply();
+				});
+
+				if (place.geometry.viewport) {
+					bounds.union(place.geometry.viewport);
+				} else {
+					bounds.extend(place.geometry.location);
+				}
+			});
+			mapaCambioDireccionOTMod.fitBounds(bounds);
+		});
+	}
+
+	$scope.cambioStatus = function (tipo) {
+		let errorMensaje = '<ul>';
+		let isValido = true;
+		let params = {};
+		$scope.tipoaccioncambioestatus = tipo
+		let estatusTemp = '';
+		if (tipo === 'asigna') {
+			estatusTemp = "asignado"
+			let horaasignacionInicio = angular.copy($scope.asignacionObject.otInfo.fechahoraasignacion);
+			let horaasignacionFin = angular.copy($scope.asignacionObject.otInfo.fechahoraasignacion);
+			horaasignacionFin = moment(horaasignacionFin).add(3, 'hours').format();
+
+			let arrayHoraInicio = horaasignacionInicio.split("T")
+			arrayHoraInicio[1] = arrayHoraInicio[1].substr(0, 5)
+			let formatFechaHoraInicio = arrayHoraInicio[0] + " " + arrayHoraInicio[1]
+
+			let arrayHoraFin = horaasignacionFin.split("T")
+			arrayHoraFin[1] = arrayHoraFin[1].substr(0, 5)
+			let formatFechaHoraFin = arrayHoraFin[0] + " " + arrayHoraFin[1]
+
+			if ($scope.asignacionObject.comentario.trim() === '') {
+				errorMensaje += 'Completa campo comentario.'
+				isValido = false;
+			}
+
+			params = {
+				tipo: tipo,
+				ot: $scope.asignacionObject.otInfo.idOrden,
+				folioSistema: $scope.asignacionObject.otInfo.folioOrden,
+				idFlujo: $scope.asignacionObject.otInfo.idFlujo,
+				idTipoOrden: $scope.asignacionObject.otInfo.idtipoOrden,
+				idSubTipoOrden: $scope.asignacionObject.otInfo.idSubtipoOrden,
+				idOrigenSistema: 1,
+				idUsuarioTecnico: $scope.asignacionObject.tecnicoInfo.idTecnico,
+				latitud: $scope.asignacionObject.otInfo.latitud,
+				longitud: $scope.asignacionObject.otInfo.longitud,
+				comentarios: $scope.asignacionObject.comentario,
+				idMotivo: 500,
+				idTurno: $scope.asignacionObject.otInfo.idTurno,
+				fechaHoraAgenda: formatFechaHoraInicio,
+				fechaHoraInicio: formatFechaHoraInicio,
+				idtipoAsignacion: 2,
+				fechaHoraFin: formatFechaHoraFin
+			}
+		} else if (tipo === 'reasigna') {
+			estatusTemp = "reasignado"
+			let horaasignacionInicio = angular.copy($scope.reAsignacionObject.otInfo.fechahoraasignacion);
+			let horaasignacionFin = angular.copy($scope.reAsignacionObject.otInfo.fechahoraasignacion);
+			horaasignacionFin = moment(horaasignacionFin).add(3, 'hours').format();
+
+			let arrayHoraInicio = horaasignacionInicio.split("T")
+			arrayHoraInicio[1] = arrayHoraInicio[1].substr(0, 5)
+			let formatFechaHoraInicio = arrayHoraInicio[0] + " " + arrayHoraInicio[1]
+
+			let arrayHoraFin = horaasignacionFin.split("T")
+			arrayHoraFin[1] = arrayHoraFin[1].substr(0, 5)
+			let formatFechaHoraFin = arrayHoraFin[0] + " " + arrayHoraFin[1]
+
+			if ($scope.reAsignacionObject.comentario.trim() === '') {
+				errorMensaje += 'Completa campo comentario.'
+				isValido = false;
+			}
+
+			params = {
+				tipo: tipo,
+				ot: $scope.reAsignacionObject.otInfo.idOrden,
+				folioSistema: $scope.reAsignacionObject.otInfo.folioOrden,
+				idFlujo: $scope.reAsignacionObject.otInfo.idFlujo,
+				idTipoOrden: $scope.reAsignacionObject.otInfo.idtipoOrden,
+				idSubTipoOrden: $scope.reAsignacionObject.otInfo.idSubtipoOrden,
+				idOrigenSistema: 1,
+				idUsuarioTecnico: $scope.reAsignacionObject.tecnicoInfo.idTecnico,
+				latitud: $scope.reAsignacionObject.otInfo.latitud,
+				longitud: $scope.reAsignacionObject.otInfo.longitud,
+				comentarios: $scope.reAsignacionObject.comentario,
+				fechaHoraInicio: formatFechaHoraInicio,
+				fechaHoraFin: formatFechaHoraFin,
+				idtipoAsignacion: $scope.reAsignacionObject.otInfo.tipoAsignacion
+			}
+		} else if (tipo === 'desasigna') {
+			estatusTemp = "desasignado"
+			if (!$scope.elementoDesasigna || $scope.elementoDesasigna.comentario.trim() === '') {
+				errorMensaje += 'Completa campo comentario.'
+				isValido = false;
+			} else {
+				params = {
+					tipo: tipo,
+					ot: $scope.detalleOtAsignadaSelected.idOrden,
+					folioSistema: $scope.detalleOtAsignadaSelected.folioOrden,
+					idFlujo: $scope.detalleOtAsignadaSelected.idFlujo,
+					idTipoOrden: $scope.detalleOtAsignadaSelected.idtipoOrden,
+					idSubTipoOrden: $scope.detalleOtAsignadaSelected.idSubtipoOrden,
+					idOrigenSistema: 1,
+					idUsuarioDespacho: 12,
+					idUsuarioTecnico: $scope.detalleOtAsignadaSelected.idTecnico,
+					latitud: $scope.detalleOtAsignadaSelected.latitud,
+					longitud: $scope.detalleOtAsignadaSelected.longitud,
+					comentarios: $scope.elementoDesasigna.comentario,
+				}
+			}
+
+
+
+		} else if (tipo === 'calendariza') {
+			estatusTemp = "calendarizado"
+			if ($scope.elementCalendarizado.fechaCalendarizado.trim() === '') {
+				errorMensaje += '<li>Completa campo fecha</li>'
+				isValido = false;
+			}
+
+			if (!$scope.elementCalendarizado.turno) {
+				errorMensaje += '<li>Seleccione campo turno.</li>'
+				isValido = false;
+			}
+
+			if (!$scope.elementCalendarizado.motivo) {
+				errorMensaje += '<li>Seleccione campo motivo.</li>'
+				isValido = false;
+			}
+
+			if (!$scope.elementCalendarizado.comentario || $scope.elementCalendarizado.comentario.trim() === '') {
+				errorMensaje += '<li>Completa campo comnentario.</li>'
+				isValido = false;
+			}
+
+			if (isValido) {
+				let fechaCalendariza = $scope.elementCalendarizado.fechaCalendarizado.split('/')
+				if ($scope.estatusModals === 'PENDIENTE') {
+					params = {
+						tipo: tipo,
+						ot: $scope.detalleOtPendienteSelected.idOrden,
+						folioSistema: $scope.detalleOtPendienteSelected.folioOrden,
+						idFlujo: $scope.detalleOtPendienteSelected.idFlujo,
+						idTipoOrden: $scope.detalleOtPendienteSelected.idtipoOrden,
+						idSubTipoOrden: $scope.detalleOtPendienteSelected.idSubtipoOrden,
+						idOrigenSistema: 1,
+						idUsuarioDespacho: 12,
+						latitud: $scope.detalleOtPendienteSelected.latitud,
+						longitud: $scope.detalleOtPendienteSelected.longitud,
+						comentarios: $scope.elementCalendarizado.comentario,
+						idTurno: $scope.elementCalendarizado.turno.id,
+						idMotivo: $scope.elementCalendarizado.motivo.id,
+						fechaHoraAgenda: fechaCalendariza[2] + '-' + fechaCalendariza[1] + '-' + fechaCalendariza[0]
+					}
+				} else {
+					params = {
+						tipo: tipo,
+						ot: $scope.detalleOtAsignadaSelected.idOrden,
+						folioSistema: $scope.detalleOtAsignadaSelected.folioOrden,
+						idFlujo: $scope.detalleOtAsignadaSelected.idFlujo,
+						idTipoOrden: $scope.detalleOtAsignadaSelected.idtipoOrden,
+						idSubTipoOrden: $scope.detalleOtAsignadaSelected.idSubtipoOrden,
+						idOrigenSistema: 1,
+						idUsuarioDespacho: 12,
+						idUsuarioTecnico: $scope.detalleOtAsignadaSelected.idTecnico,
+						latitud: $scope.detalleOtAsignadaSelected.latitud,
+						longitud: $scope.detalleOtAsignadaSelected.longitud,
+						comentarios: $scope.elementCalendarizado.comentario,
+						idTurno: $scope.elementCalendarizado.turno.id,
+						idMotivo: $scope.elementCalendarizado.motivo.id,
+						fechaHoraAgenda: fechaCalendariza[2] + '-' + fechaCalendariza[1] + '-' + fechaCalendariza[0]
+					}
+				}
+			}
+		} else if (tipo === 'cancela') {
+			estatusTemp = "enviar a rescate";
+			console.log($scope.elementoRescate);
+			if (!$scope.elementoRescate || !$scope.elementoRescate.motivo) {
+				errorMensaje += '<li>Seleccione campo motivo.</li>'
+				isValido = false;
+			}
+
+			if (!$scope.elementoRescate || !$scope.elementoRescate.comentario || $scope.elementoRescate.comentario.trim() === '') {
+				errorMensaje += '<li>Completa campo comnentario.</li>'
+				isValido = false;
+			}
+
+			if (isValido) {
+				if ($scope.estatusModals === 'PENDIENTE') {
+					params = {
+						tipo: tipo,
+						ot: $scope.detalleOtPendienteSelected.idOrden,
+						folioSistema: $scope.detalleOtPendienteSelected.folioOrden,
+						idFlujo: $scope.detalleOtPendienteSelected.idFlujo,
+						idTipoOrden: $scope.detalleOtPendienteSelected.idtipoOrden,
+						idSubTipoOrden: $scope.detalleOtPendienteSelected.idSubtipoOrden,
+						idOrigenSistema: 1,
+						idUsuarioDespacho: 12,
+						latitud: $scope.detalleOtPendienteSelected.latitud,
+						longitud: $scope.detalleOtPendienteSelected.longitud,
+						comentarios: $scope.elementoRescate.comentario,
+						idMotivo: $scope.elementoRescate.motivo.id
+					}
+				} else {
+					params = {
+						tipo: tipo,
+						ot: $scope.detalleOtAsignadaSelected.idOrden,
+						folioSistema: $scope.detalleOtAsignadaSelected.folioOrden,
+						idFlujo: $scope.detalleOtAsignadaSelected.idFlujo,
+						idTipoOrden: $scope.detalleOtAsignadaSelected.idtipoOrden,
+						idSubTipoOrden: $scope.detalleOtAsignadaSelected.idSubtipoOrden,
+						idOrigenSistema: 1,
+						idUsuarioDespacho: 12,
+						idUsuarioTecnico: $scope.detalleOtAsignadaSelected.idTecnico,
+						latitud: $scope.detalleOtAsignadaSelected.latitud,
+						longitud: $scope.detalleOtAsignadaSelected.longitud,
+						comentarios: $scope.elementoRescate.comentario,
+						idMotivo: $scope.elementoRescate.motivo.id
+					}
+				}
+			}
+
+		} else if (tipo === 'reagendamiento') {
+			estatusTemp = "reagendado"
+			if (!$scope.elementReagendaOT || $scope.elementReagendaOT.fechaReagendamiento.trim() === '') {
+				errorMensaje += '<li>Completa campo fecha.</li>'
+				isValido = false;
+			}
+
+			if (!$scope.elementReagendaOT || !$scope.elementReagendaOT.turno) {
+				errorMensaje += '<li>Seleccione campo turno.</li>'
+				isValido = false;
+			}
+
+			if (!$scope.elementReagendaOT || !$scope.elementReagendaOT.motivo) {
+				errorMensaje += '<li>Seleccione campo motivo.</li>'
+				isValido = false;
+			}
+
+			if (!$scope.elementReagendaOT.comentario || $scope.elementReagendaOT.comentario.trim() === '') {
+				errorMensaje += '<li>Completa campo comentario.</li>'
+				isValido = false;
+			}
+
+
+			if (isValido) {
+				let fechaReagendamiento = $scope.elementReagendaOT.fechaReagendamiento.split('/')
+				if ($scope.estatusModals === 'PENDIENTE') {
+					params = {
+						tipo: tipo,
+						ot: $scope.detalleOtPendienteSelected.idOrden,
+						folioSistema: $scope.detalleOtPendienteSelected.folioOrden,
+						idFlujo: $scope.detalleOtPendienteSelected.idFlujo,
+						idTipoOrden: $scope.detalleOtPendienteSelected.idtipoOrden,
+						idSubTipoOrden: $scope.detalleOtPendienteSelected.idSubtipoOrden,
+						idOrigenSistema: 1,
+						idUsuarioDespacho: 12,
+						latitud: $scope.detalleOtPendienteSelected.latitud,
+						longitud: $scope.detalleOtPendienteSelected.longitud,
+						comentarios: $scope.elementReagendaOT.comentario,
+						idTurno: $scope.elementReagendaOT.turno.id,
+						idMotivo: $scope.elementReagendaOT.motivo.id,
+						fechaHoraAgenda: fechaReagendamiento[2] + '-' + fechaReagendamiento[1] + '-' + fechaReagendamiento[0]
+					}
+				} else {
+					params = {
+						tipo: tipo,
+						ot: $scope.detalleOtAsignadaSelected.idOrden,
+						folioSistema: $scope.detalleOtAsignadaSelected.folioOrden,
+						idFlujo: $scope.detalleOtAsignadaSelected.idFlujo,
+						idTipoOrden: $scope.detalleOtAsignadaSelected.idtipoOrden,
+						idSubTipoOrden: $scope.detalleOtAsignadaSelected.idSubtipoOrden,
+						idOrigenSistema: 1,
+						idUsuarioDespacho: 12,
+						idUsuarioTecnico: $scope.detalleOtAsignadaSelected.idTecnico,
+						latitud: $scope.detalleOtAsignadaSelected.latitud,
+						longitud: $scope.detalleOtAsignadaSelected.longitud,
+						comentarios: $scope.elementReagendaOT.comentario,
+						idTurno: $scope.elementReagendaOT.turno.id,
+						idMotivo: $scope.elementReagendaOT.motivo.id,
+						fechaHoraAgenda: fechaReagendamiento[2] + '-' + fechaReagendamiento[1] + '-' + fechaReagendamiento[0]
+					}
+				}
+			}
+		} else if (tipo === 'termina') {
+			estatusTemp = "terminado"
+			if (!$scope.elementTerminar || !$scope.elementTerminar.estado) {
+				errorMensaje += '<li>Seleccione campo motivo.</li>'
+				isValido = false;
+			}
+
+			if (!$scope.elementTerminar || !$scope.elementTerminar.comentario || $scope.elementTerminar.comentario.trim() === '') {
+				errorMensaje += '<li>Completa campo comentario.</li>'
+				isValido = false;
+			}
+
+			if (isValido) {
+				if ($scope.estatusModals === 'PENDIENTE') {
+					params = {
+						tipo: tipo,
+						ot: $scope.detalleOtPendienteSelected.idOrden,
+						folioSistema: $scope.detalleOtPendienteSelected.folioOrden,
+						idFlujo: $scope.detalleOtPendienteSelected.idFlujo,
+						idTipoOrden: $scope.detalleOtPendienteSelected.idtipoOrden,
+						idSubTipoOrden: $scope.detalleOtPendienteSelected.idSubtipoOrden,
+						idOrigenSistema: 1,
+						idUsuarioDespacho: 12,
+						latitud: $scope.detalleOtPendienteSelected.latitud,
+						longitud: $scope.detalleOtPendienteSelected.longitud,
+						comentarios: $scope.elementTerminar.comentario,
+						idMotivo: $scope.elementTerminar.estado.id,
+					}
+				} else {
+					params = {
+						tipo: tipo,
+						ot: $scope.detalleOtAsignadaSelected.idOrden,
+						folioSistema: $scope.detalleOtAsignadaSelected.folioOrden,
+						idFlujo: $scope.detalleOtAsignadaSelected.idFlujo,
+						idTipoOrden: $scope.detalleOtAsignadaSelected.idtipoOrden,
+						idSubTipoOrden: $scope.detalleOtAsignadaSelected.idSubtipoOrden,
+						idOrigenSistema: 1,
+						idUsuarioDespacho: 12,
+						idUsuarioTecnico: $scope.detalleOtAsignadaSelected.idTecnico,
+						latitud: $scope.detalleOtAsignadaSelected.latitud,
+						longitud: $scope.detalleOtAsignadaSelected.longitud,
+						comentarios: $scope.elementTerminar.comentario,
+						idMotivo: $scope.elementTerminar.estado.id,
+					}
+				}
+			}
+
+		} else if (tipo === 'gestoria') {
+			estatusTemp = "enviar a plaza"
+			if (!$scope.elementoPlazaComercial || !$scope.elementoPlazaComercial.estado) {
+				errorMensaje += '<li>Seleccione campo estado.</li>'
+				isValido = false;
+			}
+
+			if (!$scope.elementoPlazaComercial || !$scope.elementoPlazaComercial.motivo) {
+				errorMensaje += '<li>Seleccione campo motivo.</li>'
+				isValido = false;
+			}
+
+			if (!$scope.elementoPlazaComercial.comentario || $scope.elementoPlazaComercial.comentario.trim() === '') {
+				errorMensaje += '<li>Completa campo comentario.</li>'
+				isValido = false;
+			}
+
+			if (isValido) {
+				if ($scope.estatusModals === 'PENDIENTE') {
+					params = {
+						tipo: tipo,
+						ot: $scope.detalleOtPendienteSelected.idOrden,
+						folioSistema: $scope.detalleOtPendienteSelected.folioOrden,
+						idFlujo: $scope.detalleOtPendienteSelected.idFlujo,
+						idTipoOrden: $scope.detalleOtPendienteSelected.idtipoOrden,
+						idSubTipoOrden: $scope.detalleOtPendienteSelected.idSubtipoOrden,
+						idOrigenSistema: 1,
+						idUsuarioDespacho: 12,
+						latitud: $scope.detalleOtPendienteSelected.latitud,
+						longitud: $scope.detalleOtPendienteSelected.longitud,
+						comentarios: $scope.elementoPlazaComercial.comentario,
+						idMotivo: $scope.elementoPlazaComercial.motivo.id,
+					}
+				} else {
+					params = {
+						tipo: tipo,
+						ot: $scope.detalleOtAsignadaSelected.idOrden,
+						folioSistema: $scope.detalleOtAsignadaSelected.folioOrden,
+						idFlujo: $scope.detalleOtAsignadaSelected.idFlujo,
+						idTipoOrden: $scope.detalleOtAsignadaSelected.idtipoOrden,
+						idSubTipoOrden: $scope.detalleOtAsignadaSelected.idSubtipoOrden,
+						idOrigenSistema: 1,
+						idUsuarioDespacho: 12,
+						idUsuarioTecnico: $scope.detalleOtAsignadaSelected.idTecnico,
+						latitud: $scope.detalleOtAsignadaSelected.latitud,
+						longitud: $scope.detalleOtAsignadaSelected.longitud,
+						comentarios: $scope.elementoPlazaComercial.comentario,
+						idMotivo: $scope.elementoPlazaComercial.motivo.id,
+					}
+				}
+			}
+
+		}
+		if (isValido) {
+			envioCambioStatus(params, estatusTemp);
+		} else {
+			errorMensaje += '</ul>'
+			mostrarMensajeWarningValidacion(errorMensaje)
+		}
+
+	}
+
+	envioCambioStatus = function (params, text) {
+		swal({ text: 'Cambiando estatus de la OT ...', allowOutsideClick: false });
+		swal.showLoading();
+		let tituloAccion = "Actualizaci\u00F3n estatus orden";
+		let tecnicoTemp = $scope.listadoTecnicosGeneral.find((e) => e.idTecnico == params.idUsuarioTecnico);
+		let mensajeEnvio = tecnicoTemp ? 'Ha ocurrido un error al cambiar el estatus a "' + text + '" de la OT: ' + params.ot + ' para el t\u00E9cnico ' + tecnicoTemp.nombre + ' ' + tecnicoTemp.apellidoPaterno + ' ' + tecnicoTemp.apellidoMaterno : 'Ha ocurrido un error al cambiar el estatus a "' + text + '" de la OT: ' + params.ot;
+
+		genericService.cambioStatusOts(params).then(result => {
+			$scope.procesandoAsignacion = false;
+			$scope.procesandoReasignacion = false
+
+			swal.close();
+			$scope.elementTerminar = {};
+			$scope.elementReagendaOT = {};
+			$scope.elementoRescate = {};
+			$scope.elementoDesasigna = {};
+			if (result.data.respuesta) {
+
+				toastr.success(result.data.result.mensaje);
+				mensajeEnvio = tecnicoTemp ? 'Se actualiz\u00F3 el estatus a "' + text + '" de la OT: ' + params.ot + ' para el t\u00E9cnico ' + tecnicoTemp.nombre + ' ' + tecnicoTemp.apellidoPaterno + ' ' + tecnicoTemp.apellidoMaterno : 'Se actualizo el estatus a "' + text + '" de la OT: ' + params.ot;
+				//objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
+
+			} else {
+				toastr.warning(result.data.resultDescripcion);
+				//objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
+			}
+		}).catch(err => handleError(err));
+	}
+
+
+
+	angular.element(document).ready(function () {
+		$("#moduloTercerosGeneric").addClass('active');
+	});
 
 	$scope.iniciarFechasConsulta();
 	$scope.inicializarsTableOts()

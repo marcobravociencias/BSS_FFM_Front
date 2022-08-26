@@ -236,35 +236,6 @@
 											aria-controls="v-tabs-consulta-detalleot-tab"
 											aria-selected="true">Informaci&oacute;n</a>
 
-										<a ng-click="consultarDetalleOtPE();"
-											ng-show="permisosModal.indexOf('tabCorteMasivo') !== -1" class="nav-link"
-											id="v-tabs-consulta-detalle-corte-masivo-tab" data-mdb-toggle="tab"
-											href="#v-tabs-consulta-detalle-corte-masivo" role="tab"
-											aria-controls="v-tabs-consulta-detalle-corte-masivo-tab"
-											aria-selected="false">Detalle corte masivo</a>
-
-										<a ng-click="consultarDetalleOtPE();"
-											ng-show="permisosModal.indexOf('tabOperacionDiaria') !== -1"
-											class="nav-link" id="v-tabs-consulta-info-gral-ot-detalle-detencion-tab"
-											data-mdb-toggle="tab" href="#v-tabs-consulta-info-gral-ot-detalle-detencion"
-											role="tab"
-											aria-controls="v-tabs-consulta-info-gral-ot-detalle-detencion-tab"
-											aria-selected="false">Orden detenida</a>
-
-										<a ng-click="consultarDetalleOtPE();"
-											ng-show="permisosModal.indexOf('tabOperacionDiaria') !== -1"
-											class="nav-link" id="v-tabs-consulta-detalle-detencion-tab"
-											data-mdb-toggle="tab" href="#v-tabs-consulta-detalle-detencion" role="tab"
-											aria-controls="v-tabs-consulta-detalle-detencion-tab"
-											aria-selected="false">Detalle detenci&oacute;n</a>
-
-										<a ng-click="consultarDetalleOtPE();"
-											ng-show="permisosModal.indexOf('tabInspectorRed') !== -1" class="nav-link"
-											id="v-tabs-consulta-detalle-inspector-tab" data-mdb-toggle="tab"
-											href="#v-tabs-consulta-detalle-inspector" role="tab"
-											aria-controls="v-tabs-consulta-detalle-inspector-tab"
-											aria-selected="false">Detalle inspector</a>
-
 										<a ng-show="permisosModal.indexOf('tabHistoricoDespacho') !== -1"
 											class="nav-link " id="v-tabs-consulta-historico-tab" data-mdb-toggle="tab"
 											href="#v-tabs-consulta-historico" role="tab" ng-click="consultarHistorial()"
@@ -276,10 +247,7 @@
 											ng-click="consultarComentarios();"
 											aria-controls="v-tabs-consulta-mensajeria-tab"
 											aria-selected="false">Comentarios</a>
-										<a ng-show="permisosModal.indexOf('tabPedidoDespacho') !== -1" class="nav-link"
-											id="v-tabs-consulta-pedido-tab" data-mdb-toggle="tab"
-											href="#v-tabs-consulta-pedido" role="tab" ng-click="consultarPedido();"
-											aria-controls="v-tabs-consulta-pedido-tab" aria-selected="false">Pedido</a>
+									
 										<a ng-show="permisosModal.indexOf('tabAccionesOrdenDespacho') !== -1"
 											class="nav-link" id="v-tabs-consulta-acciones-tab" data-mdb-toggle="tab"
 											href="#v-tabs-consulta-acciones" role="tab"
@@ -296,12 +264,7 @@
 											ng-click="verMapaCambioDireccion(infoOtDetalle.direccion.latitud, infoOtDetalle.direccion.longitud)"
 											role="tab" aria-controls="v-tabs-consulta-cambio-direccion-tab"
 											aria-selected="false">Cambio direcci&oacute;n</a>
-										<a ng-show="infoOtDetalle.idEstado =='206' || infoOtDetalle.idEstado ==206"
-											class="nav-link" ng-click="consultarOrdenesPlantaExternaOTDetalle()"
-											data-mdb-toggle="tab" href="#v-tabs-consulta-ordenesPE"
-											aria-controls="v-tabs-consulta-ordenesPE-tab" aria-selected="false"
-											id="v-tabs-consulta-ordenesPE-tab">OT planta
-											externa</a>
+				
 									</div>
 								</div>
 								<div class="col-10">
@@ -553,7 +516,7 @@
 												</div>
 											</div>
 										</div>
-										<div ng-show="permisosModal.indexOf('tabHistoricoDespacho') !== -1"
+										<div ng-if="permisosModal.indexOf('tabHistoricoDespacho') !== -1"
 											class="tab-pane fade " id="v-tabs-consulta-historico" role="tabpanel"
 											aria-labelledby="v-tabs-consulta-historico-tab">
 											<div ng-if="!historialOrdenTrabajo.length"
@@ -568,8 +531,7 @@
 												</span>
 											</div>
 
-											<div class="row content-historico-ot"
-												style="overflow: auto;">
+											<div class="row content-historico-ot" style="overflow: auto;">
 												<div class="row" ng-repeat="elementHistorico in historialOrdenTrabajo"
 													style="height: fit-content;">
 													<div class="col-2 line-time-new">
@@ -643,7 +605,7 @@
 												</div>
 											</div>
 										</div>
-										<div ng-show="permisosModal.indexOf('tabComentariosDespacho') !== -1"
+										<div ng-if="permisosModal.indexOf('tabComentariosDespacho') !== -1"
 											class="tab-pane fade" id="v-tabs-consulta-mensajeria" role="tabpanel"
 											aria-labelledby="v-tabs-consulta-mensajeria-tab">
 											<div class="container-mensajes-parent">
@@ -718,6 +680,741 @@
 												</div>
 											</div>
 										</div>
+										<div ng-if="permisosModal.indexOf('tabAccionesOrdenDespacho') !== -1"
+											class="tab-pane fade" id="v-tabs-consulta-acciones" role="tabpanel"
+											aria-labelledby="v-tabs-consulta-acciones-tab">
+											<ul class="nav nav-tabs mb-3 nav-fill tabs-acciones-modal" id="ex1"
+												role="tablist">
+												<li ng-show="permisosModal.indexOf('tabCambioEstatusRescateModal') !== -1"
+													class="nav-item" role="presentation">
+													<a ng-class="{'permiso-accion-modal' : permisosModal.indexOf('tabCambioEstatusRescateModal') !== -1 }"
+														class="nav-link active" data-mdb-toggle="tab"
+														href="#accion-rescate-ot">Rescate</a>
+												</li>
+												<li ng-show="permisosModal.indexOf('tabCambioEstatusReagendaModal') !== -1"
+													class="nav-item" role="presentation">
+													<a ng-class="{'permiso-accion-modal' : permisosModal.indexOf('tabCambioEstatusReagendaModal') !== -1 }"
+														class="nav-link" data-mdb-toggle="tab"
+														href="#accion-reagendar-ot">Reagendar</a>
+												</li>
+												<li ng-show="permisosModal.indexOf('tabCambioEstatusGestoriaModal') !== -1"
+													class="nav-item" role="presentation">
+													<a ng-class="{'permiso-accion-modal' : permisosModal.indexOf('tabCambioEstatusGestoriaModal') !== -1 }"
+														class="nav-link" data-mdb-toggle="tab"
+														href="#accion-plaza-comercial-ot">Plaza comercial</a>
+												</li>
+												<li ng-show="permisosModal.indexOf('tabCambioEstatusCalendarizarModal') !== -1"
+													class="nav-item" role="presentation">
+													<a ng-class="{'permiso-accion-modal' : permisosModal.indexOf('tabCambioEstatusCalendarizarModal') !== -1 }"
+														class="nav-link" data-mdb-toggle="tab"
+														href="#accion-calendarizar-ot">Calendarizar</a>
+												</li>
+												<li ng-show="permisosModal.indexOf('tabCambioEstatusTerminarModal') !== -1"
+													class="nav-item" role="presentation">
+													<a ng-class="{'permiso-accion-modal' : permisosModal.indexOf('tabCambioEstatusTerminarModal') !== -1 }"
+														class="nav-link" data-mdb-toggle="tab"
+														href="#accion-terminar-ot">Terminar</a>
+												</li>
+												<li ng-show="permisosModal.indexOf('tabCambioEstatusDesasignarModal') !== -1"
+													class="nav-item" role="presentation">
+													<a ng-class="{'permiso-accion-modal' : permisosModal.indexOf('tabCambioEstatusDesasignarModal') !== -1 }"
+														class="nav-link" data-mdb-toggle="tab"
+														href="#accion-desasignar-ot">Desasignar</a>
+												</li>
+
+											</ul>
+											<div class="tab-content" id="ex1-content">
+												<div ng-show="permisosModal.indexOf('tabCambioEstatusRescateModal') !== -1"
+													class="tab-pane fade show active" id="accion-rescate-ot">
+													<div class="container container-accion">
+
+														<div class="row align-items-center">
+															<div class="col-12">
+																<div class="form-group">
+																	<i style="color: #34b5e5 !important;font-size: 1.5em;float: right;"
+																		id="icono_operario_status"
+																		class="fa fa-user-circle-o fa-2x"></i>
+																	<label class="label-acciones"
+																		for="id-status-tecnico">Motivo:</label>
+																	<select class="input-acciones form-control"
+																		ng-model="elementoRescate.motivo"
+																		ng-options="motivo.nombre for motivo in listadoMotivosRescate">
+																		<option value="">Seleccione ...</option>
+																	</select>
+																</div>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-12">
+																<div class="form-group">
+																	<label class="label-acciones"
+																		for="exampleTextarea">Comentario:</label>
+																	<textarea class="input-acciones form-control"
+																		style=" resize: none"
+																		ng-model="elementoRescate.comentario"
+																		placeholder="Se sugiere un m&aacute;ximo de 50 caracteres"
+																		rows="3"></textarea>
+																</div>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-12">
+																<button
+																	ng-show="accionesUserConfigText.indexOf('accionCancelaOT') !== -1"
+																	ng-click="cambioStatus('cancela')"
+																	class="btn btn-modalAcciones btn-primary disable-terminada">Rescate</button>
+																<span class="text-terminada"
+																	ng-if="keyBloqueoBtn.includes(infoOtDetalle.idEstatus)"><i
+																		class="fas fa-exclamation-circle"></i> La
+																	acci&oacute;n no esta disponible</span>
+																<div ng-show="accionesUserConfigText.indexOf('accionCancelaOT') === -1"
+																	class="text-accion-nopermiso">
+																	<i class="icon-not-permiso fas fa-user-lock"></i>
+																	<b class="text-not-permiso">No tienes permiso para
+																		enviar a
+																		rescate</b>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div ng-show="permisosModal.indexOf('tabCambioEstatusReagendaModal') !== -1"
+													class="tab-pane fade" id="accion-reagendar-ot">
+													<div class="container container-accion">
+														<div class="row align-items-center">
+															<div class="col-12">
+																<div class="form-group">
+																	<i style="color: #34b5e5 !important;font-size: 1.5em;float: right;"
+																		class="fa fa-user-circle-o fa-2x"></i>
+																	<label class="label-acciones"
+																		for="fecha-reagendamiento">Fecha
+																		reagendamiento:</label>
+																	<input type="text"
+																		ng-model="elementReagendaOT.fechaReagendamiento"
+																		id="fecha-reagendamiento"
+																		class="input-acciones form-control" readonly>
+																</div>
+															</div>
+														</div>
+														<div class="row align-items-center">
+															<div class="col-12">
+																<div class="form-group">
+																	<i style="color: #34b5e5 !important;font-size: 1.5em;float: right;"
+																		class="fa fa-user-circle-o fa-2x"></i>
+																	<label class="label-acciones"
+																		for="id-turno-reagenda">Turno:</label>
+																	<select class="input-acciones form-control"
+																		id="id-turno-reagenda"
+																		ng-model="elementReagendaOT.turno"
+																		ng-options="turno.nombre for turno in listadoTurnosAcciones">
+																		<option value="">Seleccione ...</option>
+																	</select>
+																</div>
+															</div>
+														</div>
+														<div class="row align-items-center">
+															<div class="col-12">
+																<div class="form-group">
+																	<i style="color: #34b5e5 !important;font-size: 1.5em;float: right;"
+																		class="fa fa-user-circle-o fa-2x"></i>
+																	<label class="label-acciones"
+																		for="id-motivo-reagenda">Motivo:</label>
+																	<select class="input-acciones form-control"
+																		id="id-motivo-reagenda"
+																		ng-model="elementReagendaOT.motivo"
+																		ng-options="motivo.nombre for motivo in listadoMotivosReagenda">
+																		<option value="">Seleccione ...</option>
+																	</select>
+																</div>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-12">
+																<div class="form-group">
+																	<label class="label-acciones"
+																		for="exampleTextarea">Comentario:</label>
+																	<textarea class="input-acciones form-control"
+																		style=" resize: none"
+																		ng-model="elementReagendaOT.comentario"
+																		placeholder="Se sugiere un m&aacute;ximo de 50 caracteres"
+																		rows="3"></textarea>
+																</div>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-12">
+																<button
+																	ng-show="accionesUserConfigText.indexOf('accionReagendaOT') !== -1"
+																	ng-click="cambioStatus('reagendamiento')"
+																	class="btn btn-modalAcciones btn-primary disable-terminada">Reagendar</button>
+																<span class="text-terminada"
+																	ng-if="keyBloqueoBtn.includes(infoOtDetalle.idEstatus)"><i
+																		class="fas fa-exclamation-circle"></i> La
+																	acci&oacute;n no esta disponible</span>
+																<div ng-show="accionesUserConfigText.indexOf('accionReagendaOT') === -1"
+																	class="text-accion-nopermiso">
+																	<i class="icon-not-permiso fas fa-user-lock"></i>
+																	<b class="text-not-permiso">No tienes permiso para
+																		reagendar
+																		ordenes</b>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div ng-show="permisosModal.indexOf('tabCambioEstatusCalendarizarModal') !== -1"
+													class="tab-pane fade" id="accion-calendarizar-ot">
+													<div class="container container-accion">
+														<div class="row align-items-center">
+															<div class="col-12">
+																<div class="form-group">
+																	<i style="color: #34b5e5 !important;font-size: 1.5em;float: right;"
+																		class="fa fa-user-circle-o fa-2x"></i>
+																	<label class="label-acciones"
+																		for="fecha-calendarizado">Fecha
+																		calendarizado:</label>
+																	<input type="text" id="fecha-calendarizado"
+																		ng-model="elementCalendarizado.fechaCalendarizado"
+																		class="input-acciones form-control " readonly>
+																</div>
+															</div>
+														</div>
+														<div class="row align-items-center">
+															<div class="col-12">
+																<div class="form-group">
+																	<i style="color: #34b5e5 !important;font-size: 1.5em;float: right;"
+																		class="fa fa-user-circle-o fa-2x"></i>
+																	<label class="label-acciones"
+																		for="id-turno-calendarizado">Turno:</label>
+																	<select class="input-acciones form-control"
+																		id="id-turno-calendarizado"
+																		ng-model="elementCalendarizado.turno"
+																		ng-options="turno.nombre for turno in listadoTurnosAcciones">
+																		<option value="">Seleccione ...</option>
+																	</select>
+																</div>
+															</div>
+														</div>
+														<div class="row align-items-center">
+															<div class="col-12">
+																<div class="form-group">
+																	<i style="color: #34b5e5 !important;font-size: 1.5em;float: right;"
+																		class="fa fa-user-circle-o fa-2x"></i>
+																	<label class="label-acciones"
+																		for="id-motivo-calendarizado">Motivo:</label>
+																	<select class="input-acciones form-control"
+																		id="id-motivo-calendarizado"
+																		ng-model="elementCalendarizado.motivo"
+																		ng-options="motivo.nombre for motivo in listadoMotivosCalendarizado">
+																		<option value="">Seleccione ...</option>
+																	</select>
+																</div>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-12">
+																<div class="form-group">
+																	<label class="label-acciones"
+																		for="exampleTextarea">Comentario:</label>
+																	<textarea class="input-acciones form-control"
+																		style=" resize: none"
+																		ng-model="elementCalendarizado.comentario"
+																		placeholder="Se sugiere un m&aacute;ximo de 50 caracteres"
+																		rows="3"></textarea>
+																</div>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-12">
+
+																<button
+																	ng-show="accionesUserConfigText.indexOf('accionCalendarizaOT') !== -1"
+																	ng-click="cambioStatus('calendariza')"
+																	class="btn btn-primary btn-modalAcciones disable-terminada">Calendarizar</button>
+																<span class="text-terminada"
+																	ng-if="keyBloqueoBtn.includes(infoOtDetalle.idEstatus)"><i
+																		class="fas fa-exclamation-circle"></i> La
+																	acci&oacute;n no esta disponible</span>
+																<div ng-show="accionesUserConfigText.indexOf('accionCalendarizaOT') === -1"
+																	class="text-accion-nopermiso">
+																	<i class="icon-not-permiso fas fa-user-lock"></i>
+																	<b class="text-not-permiso">No tienes permiso para
+																		calendarizar ordenes</b>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div ng-show="permisosModal.indexOf('tabCambioEstatusGestoriaModal') !== -1"
+													class="tab-pane fade" id="accion-plaza-comercial-ot">
+													<div class="container container-accion">
+														<div class="row align-items-center">
+															<div class="col-12">
+																<div class="form-group">
+																	<i style="color: #34b5e5 !important;font-size: 1.5em;float: right;"
+																		class="fa fa-user-circle-o fa-2x"></i>
+																	<label class="label-acciones"
+																		for="id-turno-calendarizado">Estado:</label>
+																	<select class="input-acciones form-control"
+																		id="id-estado-plaza-comercial"
+																		ng-model="elementoPlazaComercial.estado"
+																		ng-options="turno.nombre for turno in listadoEstadoGestoria">
+																		<option value="">Seleccione ...</option>
+																	</select>
+																</div>
+															</div>
+														</div>
+														<div class="row align-items-center">
+															<div class="col-12">
+																<div class="form-group">
+																	<i style="color: #34b5e5 !important;font-size: 1.5em;float: right;"
+																		class="fa fa-user-circle-o fa-2x"></i>
+																	<label class="label-acciones"
+																		for="id-motivo-calendarizado">Motivo:</label>
+																	<select class="input-acciones form-control"
+																		id="id-motivo-calendarizado"
+																		ng-model="elementoPlazaComercial.motivo"
+																		ng-options="motivo.nombre for motivo in listadoMotivosGestaria">
+																		<option value="">Seleccione ...</option>
+																	</select>
+																</div>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-12">
+																<div class="form-group">
+																	<label class="label-acciones"
+																		for="exampleTextarea">Comentario:</label>
+																	<textarea class="input-acciones form-control"
+																		style=" resize: none"
+																		ng-model="elementoPlazaComercial.comentario"
+																		placeholder="Se sugiere un m&aacute;ximo de 50 caracteres"
+																		rows="3"></textarea>
+																</div>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-12">
+																<button
+																	ng-show="accionesUserConfigText.indexOf('accionGestoriaOT') !== -1"
+																	ng-click="cambioStatus('gestoria')"
+																	class="btn btn-modalAcciones btn-primary disable-terminada">Plaza</button>
+																<span class="text-terminada"
+																	ng-if="keyBloqueoBtn.includes(infoOtDetalle.idEstatus)"><i
+																		class="fas fa-exclamation-circle"></i> La
+																	acci&oacute;n no esta disponible</span>
+																<div ng-show="accionesUserConfigText.indexOf('accionGestoriaOT') === -1"
+																	class="text-accion-nopermiso">
+																	<i class="icon-not-permiso fas fa-user-lock"></i>
+																	<b class="text-not-permiso">No tienes permiso para
+																		enviar a
+																		plaza</b>
+																</div>
+
+															</div>
+														</div>
+													</div>
+												</div>
+												<div ng-show="permisosModal.indexOf('tabCambioEstatusTerminarModal') !== -1"
+													class="tab-pane fade" id="accion-terminar-ot">
+													<div class="container container-accion">
+
+
+														<div class="row align-items-center">
+															<div class="col-12">
+																<div class="form-group">
+																	<i style="color: #34b5e5 !important;font-size: 1.5em;float: right;"
+																		class="fa fa-user-circle-o fa-2x"></i>
+																	<label class="label-acciones"
+																		for="id-estado-terminar">Estado:</label>
+																	<select class="input-acciones form-control"
+																		id="id-estado-terminar"
+																		ng-model="elementTerminar.estado"
+																		ng-options="estado.nombre for estado in listadoEstadosTerminado">
+																		<option value="">Seleccione ...</option>
+																	</select>
+																</div>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-12">
+																<div class="form-group">
+																	<label class="label-acciones"
+																		for="exampleTextarea">Comentario:</label>
+																	<textarea class="input-acciones form-control"
+																		style=" resize: none"
+																		ng-model="elementTerminar.comentario"
+																		placeholder="Se sugiere un m&aacute;ximo de 50 caracteres"
+																		rows="3"></textarea>
+																</div>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-12">
+																<button
+																	ng-show="accionesUserConfigText.indexOf('accionTerminaOT') !== -1"
+																	ng-click="cambioStatus('termina')"
+																	class="btn btn-modalAcciones btn-primary disable-terminada">Terminar</button>
+																<span class="text-terminada"
+																	ng-if="keyBloqueoBtn.includes(infoOtDetalle.idEstatus)"><i
+																		class="fas fa-exclamation-circle"></i> La
+																	acci&oacute;n no esta disponible</span>
+																<div ng-show="accionesUserConfigText.indexOf('accionTerminaOT') === -1"
+																	class="text-accion-nopermiso">
+																	<i class="icon-not-permiso fas fa-user-lock"></i>
+																	<b class="text-not-permiso">No tienes permiso para
+																		terminar
+																		ordenes</b>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div ng-show="permisosModal.indexOf('tabCambioEstatusDesasignarModal') !== -1"
+													class="tab-pane fade" id="accion-desasignar-ot">
+													<div class="container container-accion">
+														<div class="row">
+															<div class="col-12">
+																<div class="form-group">
+																	<label class="label-acciones"
+																		for="exampleTextarea">Comentario:</label>
+																	<textarea class="input-acciones form-control"
+																		style=" resize: none"
+																		ng-model="elementoDesasigna.comentario"
+																		placeholder="Se sugiere un m&aacute;ximo de 50 caracteres"
+																		rows="3"></textarea>
+																</div>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-12">
+																<button
+																	ng-show="accionesUserConfigText.indexOf('accionDesasignaOT') !== -1"
+																	ng-click="cambioStatus('desasigna')"
+																	class="btn btn-modalAcciones btn-primary disable-terminada">Desasigna</button>
+																<span class="text-terminada"
+																	ng-if="keyBloqueoBtn.includes(infoOtDetalle.idEstatus)"><i
+																		class="fas fa-exclamation-circle"></i> La
+																	acci&oacute;n no esta disponible</span>
+																<div ng-show="accionesUserConfigText.indexOf('accionDesasignaOT') === -1"
+																	class="text-accion-nopermiso">
+																	<i class="icon-not-permiso fas fa-user-lock"></i>
+																	<b class="text-not-permiso">No tienes permiso para
+																		desasignar ordenes</b>
+																</div>
+															</div>
+														</div>
+													</div>
+
+												</div>
+											</div>
+										</div>
+										<div ng-if="permisosModal.indexOf('tabInformacionPaqueteDespacho') !== -1"
+											class="tab-pane fade" id="v-tabs-consulta-paquete" role="tabpanel"
+											aria-labelledby="v-tabs-consulta-paquete-tab">
+											<div class="row parent-detallecotizacion">
+												<div class="col-12">
+													<div class="row ">
+														<div class="col-md-6">
+															<div class="container-fluid terceros-content">
+																<div class="container-text-title-detalle"><span
+																		class="text-tile-terceros">Paquete</span></div>
+																<div class="container-text-content-detalle"><span
+																		class="text-content-terceros"
+																		title="{{responseServicios.nombrePaquete}}"
+																		ng-bind="responseServicios.nombrePaquete || 'Sin dato'"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="row justify-content-center">
+														<div class="col-md-6">
+															<div class="container-fluid terceros-content">
+																<div class="container-text-title-detalle"><span
+																		class="text-tile-terceros">Cuenta factura</span>
+																</div>
+																<div class="container-text-content-detalle"><span
+																		class="text-content-terceros"
+																		title="{{responseServicios.folioCuentaFactura}}"
+																		ng-bind="responseServicios.folioCuentaFactura || 'Sin dato'"></span>
+																</div>
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="container-fluid terceros-content">
+																<div class="container-text-title-detalle"><span
+																		class="text-tile-terceros">Folio OS</span></div>
+																<div class="container-text-content-detalle"><span
+																		class="text-content-terceros"
+																		title="{{responseServicios.folioOs}}"
+																		ng-bind="responseServicios.folioOs || 'Sin dato'"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="row justify-content-center">
+														<div class="col-md-6">
+															<div class="container-fluid terceros-content">
+																<div class="container-text-title-detalle"><span
+																		class="text-tile-terceros">Folio CSP</span>
+																</div>
+																<div class="container-text-content-detalle"><span
+																		class="text-content-terceros"
+																		title="{{responseServicios.folioCotSitioPlan}}"
+																		ng-bind="responseServicios.folioCotSitioPlan || 'Sin dato'"></span>
+																</div>
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="container-fluid terceros-content">
+																<div class="container-text-title-detalle"><span
+																		class="text-tile-terceros">Folio Sitio</span>
+																</div>
+																<div class="container-text-content-detalle"><span
+																		class="text-content-terceros"
+																		title="{{responseServicios.folioSitio}}"
+																		ng-bind="responseServicios.folioSitio || 'Sin dato'"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="row justify-content-center">
+														<div class="col-md-6">
+															<div class="container-fluid terceros-content">
+																<div class="container-text-title-detalle"><span
+																		class="text-tile-terceros">Num. ips</span></div>
+																<div class="container-text-content-detalle"><span
+																		class="text-content-terceros"
+																		title="{{responseServicios.numIps}}"
+																		ng-bind="responseServicios.numIps || 'Sin dato'"></span>
+																</div>
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="container-fluid terceros-content">
+																<div class="container-text-title-detalle"><span
+																		class="text-tile-terceros">Num. dns</span></div>
+																<div class="container-text-content-detalle"><span
+																		class="text-content-terceros"
+																		title="{{responseServicios.numDns}}"
+																		ng-bind="responseServicios.numDns || 'Sin dato'"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+
+													<div class="row justify-content-center">
+														<div class="col-md-6">
+															<div class="container-fluid terceros-content">
+																<div class="container-text-title-detalle"><span
+																		class="text-tile-terceros">Monto primer
+																		pago</span>
+																</div>
+																<div class="container-text-content-detalle"><span
+																		class="text-content-terceros"
+																		title="{{responseServicios.precioProntoPago}}"
+																		ng-bind="responseServicios.precioProntoPago || 'Sin dato' | currency:MX$:2"></span>
+																</div>
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="container-fluid terceros-content">
+																<div class="container-text-title-detalle"><span
+																		class="text-tile-terceros">Pago
+																		instalaci&oacute;n</span></div>
+																<div class="container-text-content-detalle"><span
+																		class="text-content-terceros"
+																		title="{{responseServicios.pagoEnInstalacion}}"
+																		ng-bind="responseServicios.pagoEnInstalacion || 'Sin dato' | currency:MX$:2"></span>
+																</div>
+															</div>
+														</div>
+													</div>
+													<br />
+													<div class="row">
+														<div class="col-7">
+															<div class="row justify-content-center">
+																<div class="col-md-12">
+																	<h5 style="color:#767676"
+																		class="titlemodalproductos">
+																		Servicios a instalar</h5>
+																	<div class="parent_table_detalle">
+																		<table
+																			class="detalle-productos-table table table-sm">
+																			<thead class="thead_table_servicios">
+																				<tr>
+																					<th scope="col">Nombre del Servicio
+																					</th>
+																					<th scope="col">Tipo Servicio</th>
+																					<th class="text-center" scope="col">
+																						Detalle</th>
+																				</tr>
+																			</thead>
+																			<tbody>
+																				<tr ng-class="{'active-selected-servicio-plan': selectedEquipoPaquete == servicio }"
+																					ng-repeat="servicio in responseServicios.resumenServicios">
+																					<td ng-bind="servicio.descripcion">
+																					</td>
+																					<td ng-bind="servicio.tipo"></td>
+																					<td>
+																						<div class="text-center">
+																							<button
+																								ng-if="servicio.id !== undefined"
+																								type="button"
+																								ng-click="consultarDetalleServicio(servicio, responseServicios.idCotSitio)"
+																								class="btn_detalle_servicio btn btn-info btn-rounded btn-sm my-0 waves-effect waves-light">
+																								<i
+																									class="fa fa-eye"></i></button>
+																							<span
+																								ng-if="servicio.id === undefined">Sin
+																								detalle</span>
+																						</div>
+																					</td>
+																				</tr>
+																			</tbody>
+																			<tfoot>
+																				<tr
+																					ng-if="responseServicios.resumenServicios === undefined || responseServicios.resumenServicios.length <= 0">
+																					<td class="text-center" colspan="3">
+																						No se cuenta con servicios</td>
+																				</tr>
+																			</tfoot>
+																		</table>
+																	</div>
+																</div>
+															</div>
+															<div class="row">
+																<div class="col-md-12">
+																	<h5 style="color:#767676"
+																		class="titlemodalproductos"> Productos </h5>
+																	<div class="parent_table_detalle_productos">
+																		<table
+																			class="table detalle-productos-table table-sm">
+																			<thead
+																				class="thead_table_productos_servicio">
+																				<tr>
+																					<th scope="col">Nombre del producto
+																					</th>
+																					<th scope="col">Tipo producto</th>
+																				</tr>
+																			</thead>
+																			<tbody>
+																				<tr
+																					ng-repeat="producto in selectedEquipoPaquete.productos">
+																					<td ng-bind="producto.descripcion">
+																					</td>
+																					<td ng-bind="producto.tipo"></td>
+																				</tr>
+																			</tbody>
+																			<tfoot>
+																				<tr
+																					ng-if="selectedEquipoPaquete.productos === undefined || selectedEquipoPaquete.productos.length <= 0">
+																					<td class="text-center" colspan="2">
+																						No se cuenta con productos</td>
+																				</tr>
+																			</tfoot>
+																		</table>
+																	</div>
+																</div>
+															</div>
+															<div class="row ">
+																<div class="col-md-12">
+																	<h5 style="color:#767676"
+																		class="titlemodalproductos"> Promociones </h5>
+																	<div class="parent_table_detalle_promociones">
+																		<table
+																			class="detalle-productos-table table table-sm">
+																			<thead
+																				class="thead_table_promociones_servicio">
+																				<tr>
+																					<th scope="col">Folio
+																						promoci&oacute;n</th>
+																					<th scope="col">Nombre de la
+																						promoci&oacute;n</th>
+																				</tr>
+																			</thead>
+																			<tbody>
+																				<tr
+																					ng-repeat="promocion in responseServicios.promociones">
+																					<td ng-bind="promocion.id"></td>
+																					<td ng-bind="promocion.descripcion">
+																					</td>
+																				</tr>
+																			</tbody>
+																			<tfoot>
+																				<tr
+																					ng-if="responseServicios.promociones === undefined || responseServicios.promociones.length <= 0">
+																					<td class="text-center" colspan="2">
+																						No se cuenta con promociones
+																					</td>
+																				</tr>
+																			</tfoot>
+																		</table>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="col-5"
+															style="overflow-x: auto; max-height: calc(100vh - 225px);">
+															<div class="text-center">
+																<h5 style="color:#767676"
+																	class="text-center titlemodalproductos">Equipo y
+																	Modelos</h5>
+															</div>
+															<div>
+																<div ng-if="selectedEquipoPaquete.isTieneEquipoModeos">
+																	<div class="content_info_detalle">
+																		<h6 class="ml-3 mt-2 text-equipo-paquete"
+																			ng-bind="selectedEquipoPaquete.elementoEquipoModelos.nombreEquipo">
+																		</h6>
+																		<div class="ml-4">
+																			<!--div class="container-fluid detallePaquete-content">
+																			<div class="container-text-title-detalle">
+																				<span class="text-title-detallePaquete">Nombre Servicio</span>
+																			</div>
+																			<div class="container-text-content-detalle">
+																				<span class="text-content-detallePaquete" title="{{detServicio.nombreServicio}}" ng-bind="detServicio.nombreServicio || 'Sin dato'"></span>
+																			</div>
+																		</div-->
+																			<div
+																				class="container-fluid detallePaquete-content">
+																				<ul style="color: #797979"
+																					class="listado_modelos">
+																					<li ng-repeat="modelo in selectedEquipoPaquete.elementoEquipoModelos.modelo"
+																						class="li_item_modelo"
+																						ng-bind="modelo.modelo">
+																					</li>
+																				</ul>
+																			</div>
+																		</div>
+																		<!-- <i class="fa fa-satellite-dish"></i>
+																	<i class="fas fa-desktop"></i> -->
+																		<!-- <span ng-bind="detServicio.nombreServicio"></span>
+																	<span ng-bind="detServicio.flujo"></span>
+																	<span ng-bind="detServicio.tipoDispositivo"></span> -->
+																		<!-- <ul style="color: #797979" class="listado_modelos">
+																		<li ng-repeat="modelo in detServicio.modelo" class="li_item_modelo" ng-bind="modelo.nameModelo">
+																		</li>
+																	</ul> -->
+																	</div>
+																</div>
+																<div ng-if="!selectedEquipoPaquete.isTieneEquipoModeos"
+																	class="text-center not_info_detalle row h-100 justify-content-center">
+																	<h6 style="color:#abafae;" class="text-noSeleccion">
+																		Sin datos para mostrar</h6>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div ng-if="permisosModal.indexOf('tabCambioDireccion') !== -1"
+											class="tab-pane fade" id="v-tabs-consulta-cambio-direccion" role="tabpanel"
+											aria-labelledby="v-tabs-consulta-cambio-direccion-tab">
+											<jsp:include page="./content/div-cambio-direccion-ot.jsp"></jsp:include>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -780,6 +1477,6 @@
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/js/generic/tercerosGeneric/tercerosGenericService.js?v=${sessionScope.versionDepl}"
 		charset="UTF-8"></script>
-
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/genericService.js?v=${sessionScope.versionDepl}"></script>
 
 	</html>

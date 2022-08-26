@@ -256,6 +256,7 @@
 
 .btn-modalAcciones {
 	background-color: var(--btn-color-guardar-modal) !important;
+	margin-top: 1em;
 }
 
 .tooltipEtiqueta {
@@ -384,14 +385,14 @@ span.text-content-terceros {
 }
 
 .container-text-title-detalle {
-	width: 30%;
+	width: 50%;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
 
 .container-text-content-detalle {
-	width: 70%;
+	width: 50%;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -866,3 +867,14 @@ i.fa.fa-times-circle.cancel {
 	background-color: #ff4b4b !important;
   }
   
+  .input-acciones{
+	height: 2em;
+  }
+
+  .container-accion .form-group{
+	margin-bottom: 0.2em;
+  }
+
+  .label-acciones{
+	margin: 0;
+  }

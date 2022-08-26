@@ -117,4 +117,26 @@ app.service("tercerosGenericService", function ($http) {
             }
         });
     }
+
+	this.consultarResumenPaquete = function (params) {
+		return $http({
+			method: "post",
+			url: "req/obtenerResumenPaquete",
+			data: JSON.stringify(params),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+	};
+
+	this.consultarTecnicosDisponibiles=function(params){
+		return $http({
+			method: "post",
+			url: "req/consultarTecnicosDisponiblesDespachoPI",
+			data:JSON.stringify(params),
+			headers: {'Content-Type': "application/json; charset=utf-8"},
+            transformRequest: angular.identity
+		});
+	}
+
 })
