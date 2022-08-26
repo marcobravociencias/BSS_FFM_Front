@@ -3,7 +3,6 @@
 <sec:authentication property="principal" var="userStore" />
 <!DOCTYPE html>
 <html ng-app="gestionModulosApp">
-
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <title>FFM Total play</title>
@@ -32,19 +31,12 @@
     </head>
 
     <body id="idBody" ng-controller="gestionModulosController">
-    	
     	<sec:authorize access="isAuthenticated()">
     		<jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
 			<input id="logPropietario" type="hidden" value="${userStore.idPropietario}" >
 			<input id="logUnidadNegocio" type="hidden" value="${userStore.idUnidadNegocio}" >
 		</sec:authorize>
-        
-<!--         <header class="header-navbar-p"> -->
-<!--             <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-menu-generic"></nav> -->
-<!--         </header> -->
-        
         <div class="container">
-            
         	<div class="container-title-header" style="padding: 0 !important;">
                 <div class="header-modulo">
                 	<div class="row">
@@ -59,7 +51,6 @@
 			                    <c:url value="/logout" var="logoutUrl" />
 			                    <form id="logout" action="${logoutUrl}" method="S">
 			                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-			
 			                    </form>
 	                		</div>
 						</sec:authorize>
@@ -88,20 +79,17 @@
 	                        <option ng-repeat="unidad in listaUnidadesNegocio" value="{{unidad.id}}">{{unidad.nombre}}</option>
 	                    </select>
 	                </div>
-	                
 	                <div class="col-md-2">
 	                    <button id="btn-consultar-modulos" type="button" ng-click="consultarModulos()" class="btn btn-sm btn-primary" style="top: 35% !important;">
 							<i class="fa fa-search"></i>
 						</button>
 	                </div>
-	                
 	                <div class="box-buscador-tabla-modulos col-md-3">
 						<div class="input-group input-group-sm content-seach-table">
 							<input type="text" id="buscadorTablaModulos" class="form-control form-control-sm buscar-input-operario" ng-model="buscarModulo" placeholder="Buscar m&oacute;dulo">
 							<span class="fa fa-search"></span>
 						</div>
 					</div>
-	                
 	                <div class="box-nuevo col-md-1">
 	                    <div>
 	                    	<button id="btnNuevoModulo" class="btn btn-nuevo" ng-click="abrirMdlNuevo()">
@@ -123,11 +111,9 @@
                                 <th class="encabezadosTablaModulos" ng-show="!isNuevoModulo && !isEditModulo" style="text-align: center;">Editar</th>
                                 <th class="encabezadosTablaModulos" ng-show="!isNuevoModulo && !isEditModulo" style="text-align: center;">Ver</th>
                                 <th class="encabezadosTablaModulos" ng-show="!isNuevoModulo && !isEditModulo" style="text-align: center;">Eliminar</th>
-                                
                                 <th class="encabezadosTablaModulos" ng-show="isNuevoModulo" style="text-align: center;">Cancelar</th>
                                 <th class="encabezadosTablaModulos" ng-show="isNuevoModulo" style="text-align: center;">Guardar</th>
                                 <th class="encabezadosTablaModulos" ng-show="isNuevoModulo" style="text-align: center;"></th>
-                                
                                 <th class="encabezadosTablaModulos" ng-show="isEditModulo" style="text-align: center;">Cancelar</th>
                                 <th class="encabezadosTablaModulos" ng-show="isEditModulo" style="text-align: center;">Editar</th>
                                 <th class="encabezadosTablaModulos" ng-show="isEditModulo" style="text-align: center;"></th>
@@ -190,7 +176,6 @@
                         			</span>
                         		</td>
                         		<td class="rowEditModulo{{modulo.id}}" style="display: none;"></td>
-                        		
                         	</tr>
                         </tbody>
                     </table>
@@ -201,37 +186,18 @@
                     </div>
 				</div>
             </div>
+            
             <div class="content-fluid" id="container_gestion_modulos_permisos" ng-show="!isModulo">
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
             	<div class="row col-12">
-            	
             		<div id="containerTituloVistaPermisos" class="col-md-8">
             			<h6 class="title-vista-permisos">M&oacute;dulo {{moduloSeleccionado.nombre}} > <b>Permisos</b></h6>
             		</div>
-            	
             		<div class="form-group col-md-3">
 	                    <div class="input-group input-group-sm content-seach-table-permisos">
 							<input type="text" id="buscadorTablaPermisos" class="form-control form-control-sm buscar-input-operario" ng-model="buscarPermiso" placeholder="Buscar permiso">
 							<span class="fa fa-search"></span>
 						</div>
 	                </div>
-            	
 	                <div class="box-nuevo-permiso col-md-1">
 	                	<div class="row">
 		                	<div class="col-md-6">
@@ -252,11 +218,8 @@
 		                    </div>
 	                    </div>
 	                </div>
-	                
 	            </div>
-	            
 	            <div class="row">
-	            
             		<div ng-show="exisPermisosModulo" class="col-md-12">
             			<div class="table-responsive">
 		                    <table id="accionesTable" class="display table" cellspacing="0" width="100%">
@@ -269,10 +232,8 @@
 		                                <th class="encabezadosTablaPermisos">Icono</th>
 		                                <th class="encabezadosTablaPermisos" ng-show="!isNuevoPermiso && !isEditPermiso" style="text-align: center;">Editar</th>
 		                                <th class="encabezadosTablaPermisos" ng-show="!isNuevoPermiso && !isEditPermiso" style="text-align: center;">Eliminar</th>
-		                                
 		                                <th class="encabezadosTablaPermisos" ng-show="isNuevoPermiso" style="text-align: center;">Cancelar</th>
 		                                <th class="encabezadosTablaPermisos" ng-show="isNuevoPermiso" style="text-align: center;">Guardar</th>
-		                                
 		                                <th class="encabezadosTablaPermisos" ng-show="isEditPermiso" style="text-align: center;">Cancelar</th>
 		                                <th class="encabezadosTablaPermisos" ng-show="isEditPermiso" style="text-align: center;">Editar</th>
 		                            </tr>
@@ -306,8 +267,6 @@
 		                        		<td class="rowEditPermiso{{permiso.id}}" style="display: none;"><input id="colorHoverPermisoEdit{{permiso.id}}" type="text" class="form-control txtEditPermiso valInputFormulario" value="{{permiso.colorHover}}" /></td>
 		                        		<td class="rowConsultaPermisoTxt rowConsultaPermiso{{permiso.id}}">{{permiso.icono}}</td>
 		                        		<td class="rowEditPermiso{{permiso.id}}" style="display: none;"><input id="iconoPermisoEdit{{permiso.id}}" type="text" class="form-control txtEditPermiso valInputFormulario" value="{{permiso.icono}}" /></td>
-                        				
-                        				
                         				<td class="rowConsultaPermiso{{permiso.id}}">
 		                        			<span ng-click="abrirEditarPermiso(permiso.id)" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnEditarPermiso">
 		                        				<i class="fa fa-edit" aria-hidden="true"></i>
@@ -318,7 +277,6 @@
 		                        				<i class="fa fa-trash" aria-hidden="true"></i>
 		                        			</span>
 		                        		</td>
-		                        		
 		                        		<td class="rowEditPermiso{{permiso.id}}" style="display: none;">
 		                        			<span ng-click="cancelarEditPermiso(permiso.id)" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light btnCancelarEditPermiso">
 		                        				<i class="fa fa-ban" aria-hidden="true"></i>
@@ -329,44 +287,17 @@
 		                        				<i class="fa fa-check" aria-hidden="true"></i>
 		                        			</span>
 		                        		</td>
-                        				
-                        				
 		                        	</tr>
 		                        </tbody>
 		                    </table>
 		                </div>
             		</div>
-            		
             		<div ng-show="!exisPermisosModulo" class="imagen-no-results">
 						<img src="${pageContext.request.contextPath}/resources/img/generic/no-results.png">
 						<br>
 						<span class="span-no-result">No se encontraron resultados</span>
 					</div>
-					
 				</div>
-				
-				
-            	
-            	
-            	
-            	
-            	
-            	
-            	
-            	
-            	
-            	
-            	
-            	
-            	
-            	
-            	
-            	
-            	
-            	
-            	
-            
-
             </div>
             <jsp:include page="./modals/modalNuevo.jsp"></jsp:include>
             <jsp:include page="./modals/modalDetalle.jsp"></jsp:include>
@@ -375,34 +306,18 @@
     <!-- LIBRERIAS JS -->
     <script type="text/javascript">let contex_project = "${pageContext.request.contextPath}";</script>
     <script src="${pageContext.request.contextPath}/resources/libraries/angularjs/js/angular.min.js"></script>
-    <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.min.js"></script>
-    <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/libraries/selectPicker/js/popper.min.js"></script>
-    <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/libraries/bootstrap/js/bootstrap.min.js"></script>
-    <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/jquery.dataTables.js"></script>
-    <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/dataTables.bootstrap4.min.js"></script>
-    <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/libraries/sweetalert/js/sweetalert2.min.js"></script>
-    <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/libraries/jstree/jstree.min.js"></script>
-    <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/js/mdb.min.js"></script>
-    <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>
-    <script
-        src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>
-    <script
-        src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js?v=${sessionScope.versionDepl}"></script>
-    <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/generic/gestionModulos/gestionModulosController.js?v=${sessionScope.versionDepl}"
-        charset="UTF-8"></script>
-    <script type="text/javascript"
-        src="${pageContext.request.contextPath}/resources/js/generic/gestionModulos/gestionModulosService.js?v=${sessionScope.versionDepl}"
-        charset="UTF-8"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/selectPicker/js/popper.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/dataTable/js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/sweetalert/js/sweetalert2.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/jstree/jstree.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/mdbootstrap/js/mdb.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/libraries/toastr/js/toastr.min.js"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>
+    <script src="${pageContext.request.contextPath}/resources/js/generic/handlerError.js?v=${sessionScope.versionDepl}"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/gestionModulos/gestionModulosController.js?v=${sessionScope.versionDepl}" charset="UTF-8"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/gestionModulos/gestionModulosService.js?v=${sessionScope.versionDepl}" charset="UTF-8"></script>
 </html>
