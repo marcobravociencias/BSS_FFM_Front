@@ -62,5 +62,26 @@ app.service("tercerosGenericService", function ($http) {
             transformRequest: angular.identity
 		});
 	};
-	
+
+	this.consultarDetalleOT=function(params){
+		return $http({
+			method: "post",
+			url: "req/consultarDetalleDespachoOT",
+			data:JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	}
+
+	this.consultarDetalleTecnicoOt=function(params){
+		return $http({
+			method: "post",
+			url: "req/consultarDetalleTecnicoOt",
+			data:JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
 })

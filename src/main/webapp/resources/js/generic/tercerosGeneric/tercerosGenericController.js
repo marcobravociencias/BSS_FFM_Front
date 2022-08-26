@@ -3,16 +3,17 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 	$("#moduloTercerosGeneric").addClass('active');
 	$("#nav-bar-otros-options ul li.active").closest("#nav-bar-otros-options").addClass('active-otros-navbar');
 
-	let jsonIntervenciones = [{ "id": 65, "nombre": "ADDON", "nivel": 1, "idPadre": null, "asignacionAutomatica": null, "horasConfirmacion": null }, { "id": 48, "nombre": "INSTALACION", "nivel": 1, "idPadre": null, "asignacionAutomatica": null, "horasConfirmacion": null }, { "id": 68, "nombre": "RECOLECCION", "nivel": 1, "idPadre": null, "asignacionAutomatica": null, "horasConfirmacion": null }, { "id": 55, "nombre": "SOPORTE", "nivel": 1, "idPadre": null, "asignacionAutomatica": null, "horasConfirmacion": null }, { "id": 120, "nombre": "ADICIONAL", "nivel": 2, "idPadre": 65, "asignacionAutomatica": 0, "horasConfirmacion": 24 }, { "id": 121, "nombre": "CAMBIO DE DOMICILIO HUAWEI", "nivel": 2, "idPadre": 65, "asignacionAutomatica": 0, "horasConfirmacion": 24 }, { "id": 122, "nombre": "CAMBIO DE DOMICILIO ZTE", "nivel": 2, "idPadre": 65, "asignacionAutomatica": 0, "horasConfirmacion": 24 }, { "id": 123, "nombre": "CAMBIO DE EQUIPO VSB", "nivel": 2, "idPadre": 65, "asignacionAutomatica": 0, "horasConfirmacion": 24 }, { "id": 124, "nombre": "CAMBIO DE PLAN INS VSB", "nivel": 2, "idPadre": 65, "asignacionAutomatica": 0, "horasConfirmacion": 24 }, { "id": 125, "nombre": "CAMBIO DE PLAN REC VSB", "nivel": 2, "idPadre": 65, "asignacionAutomatica": 0, "horasConfirmacion": 24 }, { "id": 102, "nombre": "DISTRIBUIDOR", "nivel": 2, "idPadre": 48, "asignacionAutomatica": 0, "horasConfirmacion": 24 }, { "id": 104, "nombre": "HOGAR SEGURO", "nivel": 2, "idPadre": 48, "asignacionAutomatica": 0, "horasConfirmacion": 24 }, { "id": 106, "nombre": "INSTALACION HUAWEI", "nivel": 2, "idPadre": 48, "asignacionAutomatica": 0, "horasConfirmacion": 24 }, { "id": 105, "nombre": "INSTALACION NUEVA", "nivel": 2, "idPadre": 48, "asignacionAutomatica": 0, "horasConfirmacion": 24 }, { "id": 107, "nombre": "INSTALACION ZTE", "nivel": 2, "idPadre": 48, "asignacionAutomatica": 0, "horasConfirmacion": 24 }, { "id": 115, "nombre": "PROFECO", "nivel": 2, "idPadre": 55, "asignacionAutomatica": 0, "horasConfirmacion": 24 }, { "id": 101, "nombre": "RECOLECCION EQUIPOS", "nivel": 2, "idPadre": 68, "asignacionAutomatica": 0, "horasConfirmacion": 24 }, { "id": 116, "nombre": "SOPORTE CON POTENCIA HUAWEI", "nivel": 2, "idPadre": 55, "asignacionAutomatica": 0, "horasConfirmacion": 24 }];
-	let jsonOtsPendientes = [{ "ciudad": "VILLAHERMOSA", "clust": "SIN CLUSTER", "cluster": "SIN CLUSTER", "des_intervencion": "INFRAESTRUCTURA PMP", "des_sub_intervencion": "NO HAY LINEA DE VISTA FRANCA PMP", "des_subintervencion": "NO HAY LINEA DE VISTA FRANCA PMP", "distrito": "VILLAHERMOSA", "horas_incidencia": "#dc1c1c", "horas_retraso": "#dc1c1c", "id_intervencion": "165", "id_ot": "1085796", "id_sub_intervencion": "168", "latitud": "18.4270318", "longitud": "-93.1901305", "primerNivel": "INFRAESTRUCTURA PMP", "primer_nivel": "INFRAESTRUCTURA PMP", "region": "VILLAHERMOSA", "segundoNivel": "NO HAY LINEA DE VISTA FRANCA PMP", "segundonivel": "NO HAY LINEA DE VISTA FRANCA PMP", "zona": "SIN ZONA" }, { "ciudad": "ZACATECAS", "clust": "SIN CLUSTER", "cluster": "SIN CLUSTER", "des_intervencion": "INFRAESTRUCTURA PMP", "des_sub_intervencion": "ANCHO DE BANDA INSUFICIENTE PMP", "des_subintervencion": "ANCHO DE BANDA INSUFICIENTE PMP", "distrito": "ZACATECAS", "horas_incidencia": "#dc1c1c", "horas_retraso": "#dc1c1c", "id_intervencion": "165", "id_ot": "1098389", "id_sub_intervencion": "210", "latitud": "22.9541482", "longitud": "-102.702738", "primerNivel": "INFRAESTRUCTURA PMP", "primer_nivel": "INFRAESTRUCTURA PMP", "region": "BAJIO", "segundoNivel": "ANCHO DE BANDA INSUFICIENTE PMP", "segundonivel": "ANCHO DE BANDA INSUFICIENTE PMP", "zona": "SIN ZONA" }, { "ciudad": "ZACATECAS", "clust": "SIN CLUSTER", "cluster": "SIN CLUSTER", "des_intervencion": "INFRAESTRUCTURA PMP", "des_sub_intervencion": "ENVIADA DESDE IMPLEMENTACION", "des_subintervencion": "ENVIADA DESDE IMPLEMENTACION", "distrito": "ZACATECAS", "horas_incidencia": "#dc1c1c", "horas_retraso": "#dc1c1c", "id_intervencion": "165", "id_ot": "1142585", "id_sub_intervencion": "206", "latitud": "22.9535083", "longitud": "-102.7023933", "primerNivel": "INFRAESTRUCTURA PMP", "primer_nivel": "INFRAESTRUCTURA PMP", "region": "BAJIO", "segundoNivel": "ENVIADA DESDE IMPLEMENTACION", "segundonivel": "ENVIADA DESDE IMPLEMENTACION", "zona": "SIN ZONA" }, { "ciudad": "VILLAHERMOSA", "clust": "SIN CLUSTER", "cluster": "SIN CLUSTER", "des_intervencion": "INFRAESTRUCTURA PMP", "des_sub_intervencion": "NO HAY LINEA DE VISTA FRANCA PMP", "des_subintervencion": "NO HAY LINEA DE VISTA FRANCA PMP", "distrito": "VILLAHERMOSA", "horas_incidencia": "#dc1c1c", "horas_retraso": "#dc1c1c", "id_intervencion": "165", "id_ot": "1085800", "id_sub_intervencion": "168", "latitud": "18.4270318", "longitud": "-93.1901305", "primerNivel": "INFRAESTRUCTURA PMP", "primer_nivel": "INFRAESTRUCTURA PMP", "region": "VILLAHERMOSA", "segundoNivel": "NO HAY LINEA DE VISTA FRANCA PMP", "segundonivel": "NO HAY LINEA DE VISTA FRANCA PMP", "zona": "SIN ZONA" }, { "ciudad": "ZACATECAS", "clust": "SIN CLUSTER", "cluster": "SIN CLUSTER", "des_intervencion": "INFRAESTRUCTURA PMP", "des_sub_intervencion": "ANCHO DE BANDA INSUFICIENTE PMP", "des_subintervencion": "ANCHO DE BANDA INSUFICIENTE PMP", "distrito": "ZACATECAS", "horas_incidencia": "#dc1c1c", "horas_retraso": "#dc1c1c", "id_intervencion": "165", "id_ot": "1298455", "id_sub_intervencion": "210", "latitud": "22.9541482", "longitud": "-102.702738", "primerNivel": "INFRAESTRUCTURA PMP", "primer_nivel": "INFRAESTRUCTURA PMP", "region": "BAJIO", "segundoNivel": "ANCHO DE BANDA INSUFICIENTE PMP", "segundonivel": "ANCHO DE BANDA INSUFICIENTE PMP", "zona": "SIN ZONA" }, { "ciudad": "ZACATECAS", "clust": "SIN CLUSTER", "cluster": "SIN CLUSTER", "des_intervencion": "INFRAESTRUCTURA PMP", "des_sub_intervencion": "ENVIADA DESDE IMPLEMENTACION", "des_subintervencion": "ENVIADA DESDE IMPLEMENTACION", "distrito": "ZACATECAS", "horas_incidencia": "#dc1c1c", "horas_retraso": "#dc1c1c", "id_intervencion": "165", "id_ot": "1542015", "id_sub_intervencion": "206", "latitud": "22.9535083", "longitud": "-102.7023933", "primerNivel": "INFRAESTRUCTURA PMP", "primer_nivel": "INFRAESTRUCTURA PMP", "region": "BAJIO", "segundoNivel": "ENVIADA DESDE IMPLEMENTACION", "segundonivel": "ENVIADA DESDE IMPLEMENTACION", "zona": "SIN ZONA" }];
-	let jsonDetalleOtPendiente = { "OTInfo": { "Estado": "NO ASIGNADA", "Estatus": "PENDIENTE", "Fecha": "25/11/2021", "Hora": "10:40", "ID_OT_PE": 1210327, "Latitud": 19.604931851597136, "Longitud": -99.20645713806152, "Motivo": "OT NUEVA", "Subtipo": "ENVIADA DESDE IMPLEMENTACION", "Tipo": "INFRAESTRUCTURA PMP", "UnidadNegocio": "PLANTA EXTERNA" }, "OT_PI": { "Cliente": "SIEGFRIED RHEIN S.A DE C.V", "CoordinadorEnvia": "JUANA COLIN MENDEZ", "Cuenta": "NO APLICA", "FechaReporte": "25/11/2021", "HoraReporte": "10:40 HRS", "ID_OT_PI": 572982, "LatitudCliente": "19.604516", "LongitudCliente": "-99.2067399", "OS": "NO APLICA", "OperarioDetuvo": "CARLOS ALBERTO RIVERA RODRIGUEZ", "TelefonoCoordinador": "5518038673", "TelefonoTecnico": "5510536413", "UnidadNegocio": "TOTALPLAY EMPRESARIAL", "InfoRadiobase": { "AnchoBanda": "BAJADA: 100 Mbps - SUBIDA: 100 Mbps", "CMS": "85927", "Latitud": "19.604931851597136", "Longitud": "-99.20645713806152", "Paquete": "NO APLICA", "Radiobase": "bosques del lago", "Sector": "2", "Zona": "Norte" }, "OT_PI": { "NombreImagen": "photoThree2021_11_24.jpg", "UrlImagen": "https://thumbs.dreamstime.com/b/poste-de-tel%C3%A9fono-1682751.jpg" } }, "OperarioInfo": { "ID_Operario": 0, "Nombre": "" } };
-
 	let tablaOtsConsultaGeneral;
-	$scope.listaOtsPendientes = [];
-	$scope.listaOtsPendientesTabla = [];
-	$scope.otPendienteSeleccionada = {};
 	$scope.mostrarNavAccionesDetalleOtPendiente = false;
 	$scope.filtrosGeneral = {};
+	$scope.detalleTecnicoOt = {};
+	$scope.estatusCambio = [];
+	$scope.listadoOts = [];
+	$scope.detalleOtPendienteSelected = {};
+	$scope.elementosConfigGeneral;
+	$scope.estatusModals = '';
+	$scope.otModalSelectedGeneric = {};
+
 
 
 	$('.drop-down-filters').on("click.bs.dropdown", function (e) {
@@ -30,11 +31,6 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 		setTimeout(function () {
 			$("#searchGeo").focus();
 		}, 750);
-	}
-
-	$scope.iniciarModuloTercerosGeneric = function () {
-		$scope.iniciarFechasConsulta();
-		$scope.inicializarsTableOts();
 	}
 
 	$scope.conversionAnidadaRecursiva = function (array, nivelInit, maxNivel) {
@@ -76,13 +72,14 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 
 				validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
 				validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
+				$scope.elementosConfigGeneral = new Map(Object.entries(resultConf))
 			}
 			$("#idBody").removeAttr("style");
 
 			if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
 
 			}
-
+			$scope.estatusCambio = results[4].data.result;
 			if (results[4].data !== undefined) {
 				if (results[4].data.respuesta) {
 					if (results[4].data.result) {
@@ -227,7 +224,7 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 		return arrayReturn;
 	}
 
-	$scope.inicializarsTableOts = function () {
+	$scope.inicializarsTableOts = function (data) {
 
 		let window_height = $(window).height();
 		let elementsPagina;
@@ -238,10 +235,11 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 		} else {
 			elementsPagina = 4;
 		}
-
 		tablaOtsConsultaGeneral = $('#tablaOtsConsultaGeneral').DataTable({
 			info: false,
-			searching: false,
+			searching: true,
+			bDestroy: true,
+			data: data ? data : [],
 			pageLength: elementsPagina,
 			language: {
 				zeroRecords: "No se encontraron OT\u00B4s",
@@ -277,57 +275,15 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 					"sSortAscending": ": Activar para ordenar la columna de manera ascendente",
 					"sSortDescending": ": Activar para ordenar la columna de manera descendente"
 				}
-			}
-		})
-
-		let arrayBusqueda = [];
-		angular.forEach($scope.listadoOtsPendientes, function (e) {
-			arrayBusqueda.push(e.idOrden)
-			arrayBusqueda.push(e.claveCliente)
-			arrayBusqueda.push(e.folioOrden)
-		})
-	}
-
-	$scope.consultarOTsTercerosGeneric = function () {
-
-
-		var ventana_alto = $(window).height();
-		var cardsPorPagina = 3;
-		if (ventana_alto <= 670) {
-			cardsPorPagina = 3;
-		} else if (ventana_alto > 670 && ventana_alto <= 790) {
-			cardsPorPagina = 4;
-		} else if (ventana_alto > 790 && ventana_alto <= 980) {
-			cardsPorPagina = 5;
-		} else if (ventana_alto > 980) {
-			cardsPorPagina = 6;
-		}
-
-		if (tablaOtsConsultaGeneral) {
-			tablaOtsConsultaGeneral.destroy();
-		}
-
-		tablaOtsConsultaGeneral = $('#tablaOtsConsultaGeneral').DataTable({
-			"paging": true,
-			"lengthChange": false,
-			"ordering": false,
-			"scrollX": true,
-			"info": false,
-			"autoWidth": true,
-			"pageLength": cardsPorPagina,
-			"language": idioma_espanol_not_font,
-			"data": $scope.listaOtsPendientesTabla,
-			"sDom": '<"top"f>rt<"bottom"lp><"bottom"r><"clear">',
-			"columns": [
-				{
-					"title": ""
+			},
+			"drawCallback": function (settings) {
+				$(".card-style").css("border-left", "none");
+				if($scope.detalleOtPendienteSelected){
+					$("#idotpendiente" + $scope.detalleOtPendienteSelected.idOrden).css("border-left", "2px solid  #3942d7");
 				}
-			]
-		});
+            }
+		})
 
-		setTimeout(function () {
-			$("#txtBuscadorOtsConsultaTabla").focus();
-		}, 750);
 	}
 
 	$scope.getFechaFormato = function (fecha) {
@@ -335,7 +291,7 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 		return fechaPrueba[2] + '-' + fechaPrueba[1] + '-' + fechaPrueba[0];
 	}
 
-	$scope.randomIntFromInterval = function () { // min and max included 
+	$scope.randomIntFromInterval = function () {
 		return Math.floor(Math.random() * (8 - 0 + 1) + 0)
 	}
 
@@ -441,9 +397,6 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 
 		$scope.listadoOtsPendientes = [];
 
-		if (tablaOtsConsultaGeneral)
-			tablaOtsConsultaGeneral.destroy()
-
 		var params = {
 			fechaInicio: $scope.getFechaFormato(document.getElementById('txtFechaInicioConsulta').value),
 			fechaFin: $scope.getFechaFormato(document.getElementById('txtFechaFinConsulta').value),
@@ -452,10 +405,8 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 			idEstatus: estatusDisponiblesCheck,
 			idClusters: clustersparam
 		}
-
-
+		let arrayRow = [];
 		tercerosGenericService.consultarOrdenes(params).then(function success(response) {
-			$("#tablaOtsConsultaGeneral tbody").empty()
 			if (response.data !== undefined) {
 				if (response.data.respuesta) {
 					if (response.data.result) {
@@ -470,14 +421,12 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 							})
 							let tableelemetn = ''
 							let htmlImagenesIconos = ''
-							let htmlAsignacionPermiso = '';
-
 
 							angular.forEach($scope.listadoOts, function (otpendiente, index) {
 								htmlImagenesIconos = $scope.categoriaIconos(otpendiente)
 								let horas = (otpendiente.horasViva == undefined || otpendiente.horasViva == '') ? -1 : parseInt(otpendiente.horasViva)
 								let htmlSemaforoOrden = ''
-
+								let row = [];
 								if (horas >= 24 && horas < 48) {
 									htmlSemaforoOrden = `
 									<div class="content-icon-semaforo-pendiente">
@@ -502,11 +451,10 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 							<tr> 
 								<td>  
 									<div id="idotpendiente${otpendiente.idOrden}" 
-										   tag-id-ot="${otpendiente.idOrden}"  class="fullSizeCard card-style">
+										   tag-id-ot="${otpendiente.idOrden}"  class="fullSizeCard card-style" onclick="consultarAccionesOtPendiente(${otpendiente.idOrden})">
 										<div class="header-otpendeinte">
 											<div class="top-title-ot">
 												<div class="content-top-element bars-content">
-													<i onclick="abrirModalDetalleOtPendiente(${otpendiente.idOrden})" class="icono-ot-pendeinte fa fa-bars"></i>
 													<h5  class="title-otpendeinte" >#${otpendiente.claveCliente}</h5>
 												</div>
 											</div>
@@ -517,9 +465,9 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 											</div>
 											<div class="positiontres">
 												<div class="content-posiciontres">
-													<p class="text-otpendiente-tres-title">FOLIO: </p>`;
-								tableelemetn = tableelemetn + (($scope.accionDetalleSalesforce && otpendiente.folioOrden && otpendiente.folioOrden.substr(0, 3) === "OS-") ? `<p class="text-otpendiente-tres link-busqueda-salesforce" onclick="mostrarModalDetalleSf('${otpendiente.folioOrden}', '${otpendiente.idFolioOrden}')">${otpendiente.folioOrden}</p>` : `<p class="text-otpendiente-tres" >${otpendiente.folioOrden}</p>`);
-								tableelemetn = tableelemetn + `</div>
+													<p class="text-otpendiente-tres-title">FOLIO: </p>
+													<p class="text-otpendiente-tres" >${otpendiente.folioOrden}</p>
+												</div>
 												<div class="content-posiciontres">
 													<p class="text-otpendiente-tres-title">OT:</p>
 													<p class="text-otpendiente-tres" >${otpendiente.idOrden}</p>
@@ -551,24 +499,18 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 												</div>                                             
 											</div>
 										</div>
-										<div class="footer-otpendiente ${$scope.accionAsignacionOtPermiso ? "permiso-asignacion" : "not-permiso-asignacion"}">
+										<div class="footer-otpendiente not-permiso-asignacion">
 											<div style=" color:${otpendiente.colorOrden}"  class="content-top-element intervencino-elemn intervencion-title"> 
 												${otpendiente.descipcionTipoOrden}
 											</div>
-											<div class="content-iconos ${$scope.accionAsignacionOtPermiso ? "elem-asignacion" : "elem-not-asignacion"} ">  ${htmlSemaforoOrden}  ${htmlImagenesIconos}</div>   
-										   ${htmlAsignacionPermiso}                                       
-											${htmlAsignacionPermiso}                                       
-										   ${htmlAsignacionPermiso}                                       
-										</div>
-									  
-																		   
+											<div class="content-iconos elem-not-asignacion">  ${htmlSemaforoOrden}  ${htmlImagenesIconos}</div>                                      
+										</div>						   
 									</div>
 								</td>
 							</tr>	
 							`
-								//
-
-								$("#tablaOtsConsultaGeneral tbody").append(tableelemetn)
+							row[0] = tableelemetn;
+							arrayRow.push(row);
 							})
 
 						} else {
@@ -583,7 +525,7 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 			} else {
 				toastr.error('Ha ocurrido un error en la consulta de OTS pendientes');
 			}
-			$scope.inicializarsTableOts()
+			$scope.inicializarsTableOts(arrayRow)
 
 		}).catch(err => handleError(err))
 	}
@@ -606,37 +548,112 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 				respuesta = false;
 			}
 		}
-
 		return respuesta;
 	}
 
 	$scope.busquedaOtsConsultaTabla = function (event) {
 		if (event.which === 13) {
-			let textbusqeuda = $("#txtBuscadorOtsConsultaTabla").val()
-			tablaOtsConsultaGeneral.search(textbusqeuda).draw()
+			let text = $("#txtBuscadorOtsConsultaTabla").val()
+			tablaOtsConsultaGeneral.search(text).draw()
+			if($scope.detalleOtPendienteSelected){
+				$("#idotpendiente" + $scope.detalleOtPendienteSelected.idOrden).css("border-left", "2px solid  #3942d7");
+			}
 		}
 	}
 
 	consultarAccionesOtPendiente = function (ot) {
-
-		angular.forEach($scope.listaOtsPendientes, function (ots, index) {
-			$("#cardOtPendiente" + ots.id_ot).css("border-left", "1px solid #dddddd");
-			$("#cardOtPendiente" + ots.id_ot).css("box-shadow", "0 0 0 0 #ffffff");
-		});
-
-		$("#cardOtPendiente" + ot).css("border-left", "4px solid #31a7ee");
-		$("#cardOtPendiente" + ot).css("box-shadow", "0 2px 8px 0 rgb(0 0 0 / 16%), 0 2px 8px 0 rgb(0 0 0 / 16%)");
+		$(".card-style").css("border-left", "none");
+		$("#idotpendiente" + ot).css("border-left", "2px solid  #3942d7");
 		$scope.mostrarNavAccionesDetalleOtPendiente = true;
-		$scope.otPendienteSeleccionada = {};
-		//    	$scope.otPendienteSeleccionada = $scope.listaOtsPendientes.filter(e => {return e.id_ot == ot})[0];
-		$scope.otPendienteSeleccionada = jsonDetalleOtPendiente;
-		$scope.otPendienteSeleccionada.OTInfo.ID_OT_PE = ot;
+		$scope.detalleOtPendienteSelected = $scope.listadoOts.find((e) => e.idOrden ==ot)
+		$scope.listadoMotivosRescate = $scope.estatusCambio.filter(e => { return e.idPadre === 212 })
+        $scope.listadoMotivosCalendarizado = $scope.estatusCambio.filter(e => { return e.idPadre === 243 })
+        $scope.listadoMotivosReagenda = $scope.estatusCambio.filter(e => { return e.idPadre === 201 })
+        $scope.listadoEstadosTerminado = $scope.estatusCambio.filter(e => { return e.idPadre === 4 })
+        $scope.listadoEstadoGestoria = $scope.estatusCambio.filter(e => { return e.idPadre === 7 })
+        $scope.listadoTurnosAcciones = $scope.filtrosGeneral.turnosdisponibles;
+        $scope.permisosModal = $scope.elementosConfigGeneral.get("MODAL_FLUJO_" + $scope.detalleOtPendienteSelected.idFlujo).split(",")
+        $scope.estatusModals = 'PENDIENTE'
+        $scope.otModalSelectedGeneric = angular.copy($scope.detalleOtPendienteSelected);
+        $scope.requestModalInformacion(ot)
+
 		$scope.$apply();
 	}
 
-	abrirModalDetalleInformacionOtPendiente = function (ot) {
-		$("#modalDetalleInformacionOtPendiente").modal('show');
-	}
+	$scope.requestModalInformacion = function (id) {
+        $scope.otconsultamodal =
+            document.getElementById('v-tabs-consulta-detalleot-tab').click()
+        $scope.idOtSelect = id;
+        $scope.flagComentarios = false;
+        $scope.flagHistorico = false;
+        $scope.flagPedido = false;
+        $scope.consultarDetalleOtPEFlag = false;
+        $scope.comentariosOrdenTrabajo = [];
+        $scope.historialOrdenTrabajo = [];
+        $scope.infoOtDetalle = {}
+        $scope.detalleCotizacion = {}
+        $scope.detalleTecnicoOt = {};
+        $scope.infoDetalleOtPe = {}
+        swal({ text: 'Consultando detalle de la OT ...', allowOutsideClick: false });
+        swal.showLoading();
+
+        let params = {
+            "idOt": id,
+            "idFlujo": $scope.otModalSelectedGeneric.idFlujo,
+        }
+
+        $q.all([
+            tercerosGenericService.consultarDetalleOT(params),
+            tercerosGenericService.consultarDetalleTecnicoOt(params)
+        ]).then(function (results) {
+            swal.close()
+            if (results[0].data !== undefined) {
+                if (results[0].data.respuesta) {
+                    if (results[0].data.result) {
+                        if (results[0].data.result.orden) {
+                            $scope.infoOtDetalle = results[0].data.result.orden
+                            setTimeout(function () {
+                                document.getElementsByClassName('permiso-accion-modal')[0].click();
+                                /*
+								let isBlock = $scope.keyBloqueoBtn.find((e) => e == $scope.infoOtDetalle.idEstatus)
+                                if(isBlock || $scope.dataWindow){
+                                    $(".disable-terminada").prop("disabled", true)
+                                }else{
+                                    $(".disable-terminada").prop("disabled", false)
+                                }
+								*/
+                            }, 500)
+
+                        } else {
+                            toastr.info(results[0].data.result.mensaje);
+                        }
+                    } else {
+                        toastr.warning('No se encontraron datos');
+                    }
+                } else {
+                    toastr.warning(results[0].data.resultDescripcion);
+                }
+            } else {
+                toastr.error('Ha ocurrido un error en la consulta de los datos');
+            }
+            if (results[1].data !== undefined) {
+                if (results[1].data.respuesta) {
+                    if (results[1].data.result) {
+                        $scope.detalleTecnicoOt = results[1].data.result;
+                    } else {
+                        toastr.warning('No se encontraron datos');
+                    }
+                } else {
+                    toastr.warning(results[0].data.resultDescripcion);
+                }
+            } else {
+                toastr.error('Ha ocurrido un error en la consulta de los datos');
+            }
+
+
+        }).catch(err => handleError(err));
+
+    }
 
 	$scope.seleccionarTodosRecursivo = function (array) {
 		array.map(function (e) {
@@ -681,5 +698,6 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 		});
 	}
 
-	$scope.iniciarModuloTercerosGeneric();
+	$scope.iniciarFechasConsulta();
+	$scope.inicializarsTableOts()
 }]);

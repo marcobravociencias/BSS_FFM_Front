@@ -95,7 +95,7 @@
 .contenedorBuscadorGeneral {
     display: inline-flex;
     margin-bottom: 10px;
-    max-width: 96%;
+    width: 23em;
 }
 
 .iconoBusquedaGeneral {
@@ -492,6 +492,7 @@ h5.title-nombrecliente {
     border: 0px solid #dddddd;
     box-shadow: 0px 0px 5px #878ee04d;
     cursor: pointer;
+    width: 27em;
 }
 
 .title-content {
