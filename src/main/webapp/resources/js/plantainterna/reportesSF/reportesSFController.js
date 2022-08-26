@@ -2620,7 +2620,7 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                                     row[12] = elemento.fechaActivacion ? elemento.fechaActivacion : 'Sin informaci&oacute;n';
                                     row[13] = elemento.fechaCierre ? elemento.fechaCierre : 'Sin informaci&oacute;n';
                                     row[14] = elemento.tsCompletado ? elemento.tsCompletado : 'Sin informaci&oacute;n';
-                                    row[15] = elemento.tsCancelado == "true" ? "Si" : 'No';
+                                    row[15] = elemento.tsCancelado ? elemento.tsCancelado  : 'Sin informaci&oacute;n';
                                     row[16] = elemento.turnoAgendamiento ? elemento.turnoAgendamiento : 'Sin informaci&oacute;n';
                                     row[17] = elemento.estatus ? elemento.estatus : 'Sin informaci&oacute;n';
                                     row[18] = elemento.estado ? elemento.estado : 'Sin informaci&oacute;n';

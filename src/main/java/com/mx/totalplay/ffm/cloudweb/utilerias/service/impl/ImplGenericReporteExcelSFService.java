@@ -387,22 +387,20 @@ public class ImplGenericReporteExcelSFService implements GenericReporteSFExcelSe
 					if (dataArray.size() > 0) {
 						for (int i = 0; i < dataArray.size(); i++) {
 							JsonObject object = (JsonObject) dataArray.get(i);
-							if (object.get("repetido").getAsBoolean()) {
+							
+							if (object.get("repetido") !=null &&  Boolean.parseBoolean( object.get("repetido").getAsString()  ) ){
 								object.addProperty("repetido", "Si");
 							}else {
 								object.addProperty("repetido", "No");
 							}
-							if (object.get("repetido60").getAsBoolean()) {
+							
+							
+							if (object.get("repetido60") !=null &&  Boolean.parseBoolean( object.get("repetido60").getAsString()  ) ){
 								object.addProperty("repetido60", "Si");
 							}else {
 								object.addProperty("repetido60", "No");
 							}
-							dataReporte.add(object);
-							if (object.get("tsCancelado").getAsBoolean()) {
-								object.addProperty("tsCancelado", "Si");
-							}else {
-								object.addProperty("tsCancelado", "No");
-							}
+												
 							dataReporte.add(object);
 
 						}
@@ -712,11 +710,12 @@ public class ImplGenericReporteExcelSFService implements GenericReporteSFExcelSe
 		logger.info("ImplGenericService.class [metodo = consultarInformacionExcelGenericPost() ] \n" + gson.toJson(params) + "\n" + url);
 		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
 		String tokenAcces = principalDetail.getAccess_token();
+		logger.info("");
 		logger.info("consultarInformacionExcelGenericPost ##+" + tokenAcces);
 		ServiceResponseResult response = null;
 		String urlRequest = principalDetail.getDireccionAmbiente().concat(url);
-		logger.info("URL ##+" + urlRequest);
-		if (method == "POST") {
+		logger.info("METHOD --- "+method+" URL ## " + urlRequest);
+		if (method.equals("POST")) {
 			response = restCaller.callPostBearerTokenRequest(params, urlRequest, ServiceResponseResult.class, tokenAcces);
 		} else {
 			JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
@@ -731,8 +730,8 @@ public class ImplGenericReporteExcelSFService implements GenericReporteSFExcelSe
 			response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest, ServiceResponseResult.class,
 					tokenAcces);
 		}
-
-		logger.info("RESULT/n" + gson.toJson(response));
+		logger.info("### --- RESULLTADO DE JSON EXCEL ");
+		logger.info( gson.toJson(response) );
 		return response;
 	}
 	

@@ -196,7 +196,7 @@
 											</div>
 											<div class="container-text-content-detalle">
 												<span class="text-content-vehiculo" title="{{splitter.estatus}}" 
-												ng-bind="splitter.estatusPendiente || 'Sin dato'"></span>
+												ng-bind="splitter.estatus || 'Sin dato'"></span>
 											</div>
 										</div>
 									</div>

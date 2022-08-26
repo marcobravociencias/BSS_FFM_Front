@@ -2107,7 +2107,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
 		$.each($scope.listOrdenesPE, function (i, elemento) {
 			let rowPE = [];
 			rowPE[0] = elemento.idOrdenPe && elemento.idOrdenPe !== '' ? elemento.idOrdenPe : 'Sin informaci&oacute;n';
-			rowPE[1] = (elemento.nivelUno) + " / " + (elemento.nivelDos);
+			rowPE[1] = elemento.tipoOrden ? elemento.tipoOrden  : 'Sin informaci&oacute;n';
 			rowPE[2] = elemento.subTipoOrden && elemento.subTipoOrden !== '' ? elemento.subTipoOrden : 'Sin informaci&oacute;n';
 			rowPE[3] = elemento.nombreTecnico && elemento.nombreTecnico !== '' ? elemento.nombreTecnico : 'Sin informaci&oacute;n';
 			rowPE[4] = elemento.localizacion && elemento.localizacion !== '' ? elemento.localizacion : 'Sin informaci&oacute;n';
@@ -2156,7 +2156,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                                 swal.close();
                             } else {
                                 $scope.pintarTablaOTPEDetalle();                              
-                                mostrarMensajeWarningValidacion("No se encontr&oacute; Informaci&oacute;n");
+                                mostrarMensajeInformativo("No se encontr&oacute; informaci&oacute;n");
                                 swal.close();
                             }
                         } else {
