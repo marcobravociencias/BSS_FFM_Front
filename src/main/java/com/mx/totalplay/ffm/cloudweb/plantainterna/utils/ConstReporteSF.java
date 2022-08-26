@@ -18,6 +18,10 @@ public class ConstReporteSF implements Serializable{
   @Value("${consultaReporteIngresoSoporte}")
   private String consultaReporteIngresoSoporte;
   
+  @Value("${consultaReporteIngresoSoporteExporte}")
+  private String consultaReporteIngresoSoporteExporte;
+  
+  
   @Value("${consultaReporteIngresoResidencial}")
   private String consultaReporteIngresoResidencial;
   

@@ -443,7 +443,7 @@ public class ImplGenericReporteExcelSFService implements GenericReporteSFExcelSe
 				logger.info("----------- reportesf-ingresosoportes-pi");
 				
 				isRetornarBanderaBytes=true;
-				bytesJSONArchivo=consultarInformacionBytesArrayGeneric(params, constReportesSF.getConsultaReporteIngresoSoporte(), method );
+				bytesJSONArchivo=consultarInformacionBytesArrayGeneric(params, constReportesSF.getConsultaReporteIngresoSoporteExporte(), method );
 				logger.info("exporte excel desde aqui completadoempresarial");
 			/**	response = consultarInformacionExcelGenericPost(params, constReportesSF.getConsultaReporteIngresoSoporte(), method);
 				if (response.getResult() == null || response.getResult() instanceof Integer) {
