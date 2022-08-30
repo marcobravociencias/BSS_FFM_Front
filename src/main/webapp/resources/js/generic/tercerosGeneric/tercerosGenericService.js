@@ -170,4 +170,15 @@ app.service("tercerosGenericService", function ($http) {
 		});
 	};
 
+	this.consultarLocalizacionOtDespacho=function(params){
+		return $http({
+			method: "post",
+			url: "req/consultarlocalizacionOtPIDespacho",
+			data:JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
+
 })

@@ -19,6 +19,9 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 	$scope.listadoTecnicosGeneral = [];
 	$scope.detencionVistaModal = null;
 	$scope.listOrdenesPE = [];
+	$scope.listadoArrayOtsLocalizacion = [];
+	let tableRegistrosLocalizados;
+
 	var arrayColors = [
 		'#D32F2F',
 		'#7B1FA2',
@@ -266,6 +269,17 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 			language: 'es',
 			todayHighlight: true,
 			orientation: 'bottom'
+		});
+
+		tableRegistrosLocalizados = $('#table-registrosLocalizados').DataTable({
+			"paging": true,
+			"lengthChange": false,
+			"searching": true,
+			"ordering": false,
+			"pageLength": 10,
+			"info": true,
+			"autoWidth": true,
+			"language": idioma_espanol_not_font
 		});
 		setTimeout(() => {
 			$('#fecha-reagendamiento').datepicker('update', new Date());
@@ -595,7 +609,6 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 							</tr>	
 							`
 								row[0] = tableelemetn;
-								console.log(row)
 								arrayRow.push(row);
 							})
 
@@ -644,6 +657,13 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 			if ($scope.detalleOtPendienteSelected) {
 				$("#idotpendiente" + $scope.detalleOtPendienteSelected.idOrden).css("border-left", "2px solid  #3942d7");
 			}
+			if ($("#txtBuscadorOtsConsultaTabla").val().trim() !== '') {
+                setTimeout(function () {
+                    if (tablaOtsConsultaGeneral.page.info().recordsDisplay <= 0)
+                        $scope.consultarLocalizacionOtDespacho(text)
+
+                }, 300);
+            }
 		}
 	}
 
@@ -1163,7 +1183,6 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 			}
 		} else if (tipo === 'cancela') {
 			estatusTemp = "enviar a rescate";
-			console.log($scope.elementoRescate);
 			if (!$scope.elementoRescate || !$scope.elementoRescate.motivo) {
 				errorMensaje += '<li>Seleccione campo motivo.</li>'
 				isValido = false;
@@ -1422,7 +1441,6 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 
 			//$scope.responseServicios
 			tercerosGenericService.consultarDetalleEquiposServicios(params).then(function success(response) {
-				console.log(response)
 				if (response.data) {
 					if (response.data.respuesta) {
 						if (response.data.result) {
@@ -1636,7 +1654,6 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
             };
 
             tercerosGenericService.consultaOrdenesPlantaExternaOt(params).then(function success(response) {
-                console.log(response);
                 if (response.data) {
                     if (response.data.respuesta) {
                         if (response.data.result) {
@@ -1668,6 +1685,69 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
             });
         }
     }
+
+	$scope.listadoArrayOtsLocalizacion = []
+    $scope.consultarLocalizacionOtDespacho = function (valorbusqueda) {
+        $scope.listadoArrayOtsLocalizacion = [];
+        swal({ text: 'Consultando registros ...', allowOutsideClick: false });
+        swal.showLoading();
+        let params = {
+            "yekparam": valorbusqueda
+        }
+        tercerosGenericService.consultarLocalizacionOtDespacho(params).then(function success(response) {
+            swal.close()
+            if (response.data !== undefined) {
+                if (response.data.respuesta) {
+                    if (response.data.result) {
+                        if (response.data.result.ordenes && response.data.result.ordenes.length > 0) {
+                            let arrayRow = [];
+                            if (tableRegistrosLocalizados) {
+                                tableRegistrosLocalizados.destroy();
+                            }
+                            //$scope.listadoTecnicosGeneral=tecnicosAsignacion
+                            $scope.listadoArrayOtsLocalizacion = response.data.result.ordenes;
+
+                            $.each($scope.listadoArrayOtsLocalizacion, function (i, elemento) {
+                                let row = [];
+                                row[0] = elemento.idOrden && elemento.idOrden !== '' ? elemento.idOrden : 'Sin informaci&oacute;n';
+                                row[1] = elemento.folioSistema && elemento.folioSistema !== '' ? elemento.folioSistema : 'Sin informaci&oacute;n';
+                                row[2] = elemento.claveCliente && elemento.claveCliente !== '' ? elemento.claveCliente : 'Sin informaci&oacute;n';
+                                row[3] = elemento.nombreCliente && elemento.nombreCliente !== '' ? elemento.nombreCliente : 'Sin informaci&oacute;n';
+                                row[4] = elemento.ciudad && elemento.ciudad !== '' ? elemento.ciudad : 'Sin informaci&oacute;n';
+                                row[5] = elemento.cluster && elemento.cluster !== '' ? elemento.cluster : 'Sin informaci&oacute;n';
+                                row[6] = elemento.fechaAgenda && elemento.fechaAgenda !== '' ? elemento.fechaAgenda : 'Sin informaci&oacute;n';
+                                row[7] = elemento.descripcionEstado && elemento.descripcionEstado !== '' ? elemento.descripcionEstado : 'Sin informaci&oacute;n';
+                                row[8] = elemento.descripcionEstatus && elemento.descripcionEstatus !== '' ? elemento.descripcionEstatus : 'Sin informaci&oacute;n';
+                                row[9] = elemento.descripcionMotivo && elemento.descripcionMotivo !== '' ? elemento.descripcionMotivo : 'Sin informaci&oacute;n';
+                                arrayRow.push(row);
+                            });
+                            tableRegistrosLocalizados = $('#table-registrosLocalizados').DataTable({
+                                "paging": true,
+                                "lengthChange": false,
+                                "ordering": false,
+                                "pageLength": 10,
+                                "info": true,
+                                "data": arrayRow,
+                                "autoWidth": true,
+                                "language": idioma_espanol_not_font,
+                            });
+
+                            $("#modalRegistrosLocalizados").modal('show')
+                        } else {
+                            toastr.info(response.data.result.mensaje);
+                        }
+                    } else {
+                        toastr.info('No se encontraron datos');
+                    }
+                } else {
+                    toastr.warning(response.data.resultDescripcion);
+                }
+            } else {
+                toastr.error('Ha ocurrido un error en la consulta de los datos');
+            }
+        }).catch(err => handleError(err))
+    }
+
 
 	angular.element(document).ready(function () {
 

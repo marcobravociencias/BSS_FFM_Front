@@ -1949,6 +1949,7 @@
 		</div>
 		<jsp:include page="./modal/modalFiltroGeografia.jsp"></jsp:include>
 		<jsp:include page="./modal/modalDetalleInformacionOtPendiente.jsp"></jsp:include>
+		<jsp:include page="./modal/modalLocalizacionRegistros.jsp"></jsp:include>
 	</body>
 	<jsp:include page="../../generic/filtros/filtros.jsp"></jsp:include>
 
