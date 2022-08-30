@@ -84,6 +84,7 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
 
                     $("#buscador-alertas-ot").val('')
                     //swal.close();
+                    $("#menu-acciones").hide()
                 } else {
                     toastr.warning('No se encontraron resultados');
                     swal.close();
@@ -1125,6 +1126,21 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
 
 
     $scope.setMarkets = function (pos) {
+        delete pos.latitudTecnico
+        delete pos.longitudTecnico
+        // delete pos.latitudAlerta
+        // delete pos.longitudAlerta
+        // delete pos.latitudOrden
+        // delete pos.longitudOrden
+        console.log("latit tecnico ",pos.latitudTecnico)
+        console.log("longit tecnico ",pos.longitudTecnico)
+
+        console.log("latit alerta ",pos.latitudAlerta)
+        console.log("longit alerta ",pos.longitudAlerta)
+
+        console.log("latit orden ",pos.latitudOrden)
+        console.log("longit orden ",pos.longitudOrden)
+
         let isDataMarkerTecnico = $scope.validarLatitudLongitudMap(pos.latitudTecnico, pos.longitudTecnico);
         let isDataMarkerAlerta = $scope.validarLatitudLongitudMap(pos.latitudAlerta, pos.longitudAlerta);
         let isDataMarkerOrden = $scope.validarLatitudLongitudMap(pos.latitudOrden, pos.longitudOrden);
@@ -1213,6 +1229,20 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
             let pointB = new google.maps.LatLng(parseFloat(pos.latitudOrden), parseFloat(pos.longitudOrden))
             $scope.drawCurveExt(pointA, pointB, mapaAlerta);
         }
+        
+        if( !isDataMarkerTecnico ){
+            mapaAlerta.setCenter(new google.maps.LatLng( pos.latitudTecnico , pos.longitudTecnico ));            
+        }
+        if( !isDataMarkerOrden ){
+            mapaAlerta.setCenter(new google.maps.LatLng( pos.latitudOrden, pos.longitudOrden ));   
+        }
+        if( !isDataMarkerAlerta ){
+            mapaAlerta.setCenter(new google.maps.LatLng( pos.latitudAlerta , pos.longitudAlerta ));           
+        }        
+        if(isDataMarkerTecnico && isDataMarkerOrden && isDataMarkerAlerta){
+            $scope.setUbicacionDefault( undefined , undefined , mapaAlerta )
+        }   
+        setTimeout(function(){  mapaAlerta.setZoom(12); },1000)
     }
 
     clearMarkers = function () {
@@ -1244,6 +1274,7 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
         $scope.detalleEvidencia = {};
         $("#displayContent").css("display", "none");
         $scope.refrescarBusqueda();
+        $("#menu-acciones").show()
     }
 
     $scope.initTableOrdenesPendientes = function () {

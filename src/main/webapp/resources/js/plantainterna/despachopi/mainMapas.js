@@ -1,4 +1,7 @@
 app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
+    let latitudDefault=19.334740620168603
+    let longitudDefault=-99.19844584686723
+    
     let markerUbiacionOperario;
     let markerUbicacionRepartidor;
     let objectVistaGeneral;
@@ -10,7 +13,19 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
     $scope.isMapaCambioDireccionOTMod = false;
     var mapaCambioDireccionOTMod;
     var markerResMod;
+    
 
+
+
+    $scope.setUbicacionDefault=function(latitudSet,longitudSet ,mapSet){
+        if( $scope.isLatitude(latitudSet) && $scope.isLongitude(longitudSet)  ){
+            var pt = new google.maps.LatLng(latitudSet, longitudSet);
+            mapSet.setCenter(pt);
+        }else{
+            var pt = new google.maps.LatLng( latitudDefault, longitudDefault);
+            mapSet.setCenter(pt);
+        }
+    }
     $scope.consultarUbicacionOperario = function (id) {
         let tecnicoSelect = $scope.listadoTecnicosGeneral.find(e => { return e.idTecnico.toString() === id })
         let latitudRes = parseFloat(tecnicoSelect.latitud)
@@ -35,9 +50,9 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
             objectVistaUbicacion = new GenericMapa(mapubicacionoperario, 'vista_mapa_ubicacion', 'bottom-right');
             objectVistaUbicacion.inicializar_data()
         }
-        var pt = new google.maps.LatLng(latitudRes, longitudRes);
-        mapubicacionoperario.setCenter(pt);
-
+        //var pt = new google.maps.LatLng(latitudRes, longitudRes);
+        //mapubicacionoperario.setCenter(pt);
+        $scope.setUbicacionDefault(latitudRes,longitudRes,mapubicacionoperario)
         if (markerUbiacionOperario)
             markerUbiacionOperario.setMap(null)
 
