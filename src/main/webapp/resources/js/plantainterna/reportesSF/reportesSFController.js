@@ -811,9 +811,9 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                             $scope.nfiltrogeografiaSoportesComp = llavesResult.N_FILTRO_COMP_SOPORTE ? llavesResult.N_FILTRO_COMP_SOPORTE : llavesResult.N_FILTRO_GEOGRAFIA;
                             $scope.nfiltrogeografiaInstRes = llavesResult.N_FILTRO_COMP_RESIDENCIAL ? llavesResult.N_FILTRO_COMP_RESIDENCIAL : llavesResult.N_FILTRO_GEOGRAFIA;
                             $scope.nfiltrogeografiaInstEmp = llavesResult.N_FILTRO_COMP_EMPRESARIAL ? llavesResult.N_FILTRO_COMP_EMPRESARIAL : llavesResult.N_FILTRO_GEOGRAFIA;
-                            $scope.nfiltrogeografiaSitFibr = llavesResult.N_FILTRO_COMP_EMPRESARIAL ? llavesResult.N_FILTRO_COMP_EMPRESARIAL : llavesResult.N_FILTRO_GEOGRAFIA;//PENDIENTE
-                            $scope.nfiltrogeografiaRedSoc = llavesResult.N_FILTRO_COMP_EMPRESARIAL ? llavesResult.N_FILTRO_COMP_EMPRESARIAL : llavesResult.N_FILTRO_GEOGRAFIA;//PENDIENTE
-                            $scope.nfiltrogeografiaSitFibr = llavesResult.N_FILTRO_COMP_EMPRESARIAL ? llavesResult.N_FILTRO_COMP_EMPRESARIAL : llavesResult.N_FILTRO_GEOGRAFIA;//PENDIENTE
+                            $scope.nfiltrogeografiaSitFibr = llavesResult.N_FILTRO_GEOGRAFIA_SIT_FIBRADOS ? llavesResult.N_FILTRO_GEOGRAFIA_SIT_FIBRADOS : llavesResult.N_FILTRO_GEOGRAFIA_SIT_FIBRADOS;
+                            $scope.nfiltrogeografiaRedSoc = llavesResult.N_FILTRO_GEOGRAFIA_RED_SOCIALES ? llavesResult.N_FILTRO_GEOGRAFIA_RED_SOCIALES : llavesResult.N_FILTRO_GEOGRAFIA_RED_SOCIALES;
+                            $scope.nfiltrogeografiaGenerados = llavesResult.N_FILTRO_GEOGRAFIA_GENERADOS ? llavesResult.N_FILTRO_GEOGRAFIA_GENERADOS : llavesResult.N_FILTRO_GEOGRAFIA_GENERADOS;
 
                             $scope.nfiltrointervencionesGeneral = llavesResult.N_FILTRO_INTERVENCIONES_GENERAL ? $scope.nfiltrointervencionesGeneral : null;
 
@@ -844,12 +844,12 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                                 $scope.configPermisoAccionDescargaCompletadoRes = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaCompletadoResidencial" })[0] != undefined);
                                 $scope.configPermisoAccionConsultaCompletadoEmp = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaCompletadoEmpresarial" })[0] != undefined);
                                 $scope.configPermisoAccionDescargaCompletadoEmp = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaCompletadoEmpresarial" })[0] != undefined);
-                                $scope.configPermisoAccionConsultaSitiosFibrados = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaCompletadoEmpresarial" })[0] != undefined);//PENDIENTE
-                                $scope.configPermisoAccionDescargaSitiosFibrados = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaCompletadoEmpresarial" })[0] != undefined);//PENDIENTE
-                                $scope.configPermisoAccionConsultaRedesSociales = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaCompletadoEmpresarial" })[0] != undefined);//PENDIENTE
-                                $scope.configPermisoAccionDescargaRedesSociales = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaCompletadoEmpresarial" })[0] != undefined);//PENDIENTE
-                                $scope.configPermisoAccionConsultaGenerados = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaCompletadoEmpresarial" })[0] != undefined);//PENDIENTE
-                                $scope.configPermisoAccionDescargaGenerados = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaCompletadoEmpresarial" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionConsultaSitiosFibrados = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaSitiosFibrados" })[0] != undefined);
+                                $scope.configPermisoAccionDescargaSitiosFibrados = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaSitiosFibrados" })[0] != undefined);
+                                $scope.configPermisoAccionConsultaRedesSociales = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaRedesSociales" })[0] != undefined);
+                                $scope.configPermisoAccionDescargaRedesSociales = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaRedesSociales" })[0] != undefined);
+                                $scope.configPermisoAccionConsultaGenerados = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaGenerados" })[0] != undefined);
+                                $scope.configPermisoAccionDescargaGenerados = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaGenerados" })[0] != undefined);
                                 objectTempAccion = new GenericAccionRealizada("" + $scope.permisosConfigUser.id, 'TOP_RIGHT');
                                 objectTempAccion.inicializarBotonAccionesRecientes();
 
@@ -1408,11 +1408,12 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                     "plazaSitio", "plazaOperacion", "clusterComercial", "delegacionMunicipio", "distritoSitio", "fechaCreacion",
                     "fechaAgendada", "fechaModificacion", "canalVenta", "compania", "tipoOrden", "subTipoOrden"]
             }
-            if ($scope.resultReporteInstalaciones && $scope.resultReporteInstalaciones > 0) {
-                $scope.downloadReport(params, 'reporteBacklogInstalaciones', 'backlog instalaciones');
-            } else {
-                toastr.info('No se encontraron datos para la descarga');
-            }
+            $scope.downloadReport(params, 'reporteBacklogInstalaciones', 'backlog instalaciones');
+            // if ($scope.resultReporteInstalaciones && $scope.resultReporteInstalaciones > 0) {
+            //     $scope.downloadReport(params, 'reporteBacklogInstalaciones', 'backlog instalaciones');
+            // } else {
+            //     toastr.info('No se encontraron datos para la descarga');
+            // }
         }
     }
 
@@ -1552,11 +1553,12 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                     "clusterInstalacion", "colonia", "plazaSitio", "distritoSitio", "primerFechaAgendamiento", "fechaAgendamiento", "turno", "fechaActivacion", "estatus", "estado",
                     "fechaApertura", "propietario", "grupoCodificador", "nivel1", "nivel2", "nivel3", "repetido", "tipoOrden", "subTipo", "nuevoSegmento"]
             }
-            if ($scope.resultReporteSoportes && $scope.resultReporteSoportes > 0) {
-                $scope.downloadReport(params, 'reporteBacklogSoportes', 'backlog soportes');
-            } else {
-                toastr.info('No se encontraron datos para la descarga');
-            }
+            $scope.downloadReport(params, 'reporteBacklogSoportes', 'backlog soportes');
+            // if ($scope.resultReporteSoportes && $scope.resultReporteSoportes > 0) {
+            //     $scope.downloadReport(params, 'reporteBacklogSoportes', 'backlog soportes');
+            // } else {
+            //     toastr.info('No se encontraron datos para la descarga');
+            // }
         }
     }
 
@@ -1694,11 +1696,12 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                     "clusterInstalacion", "colonia", "plazaSitio", "distritoSitio", "primerFechaAgendamiento", "fechaAgendamiento", "turno", "fechaActivacion", "estatus", "estado",
                     "fechaApertura", "propietario", "grupoCodificador", "nivel1", "nivel2", "nivel3", "repetido", "tipoOrden", "subTipo", "nuevoSegmento"]
             }
-            if ($scope.resultReporteRecolecciones && $scope.resultReporteRecolecciones > 0) {
-                $scope.downloadReport(params, 'reporteBacklogRecolecciones', 'backlog recolecciones');
-            } else {
-                toastr.info('No se encontraron datos para la descarga');
-            }
+            $scope.downloadReport(params, 'reporteBacklogRecolecciones', 'backlog recolecciones');
+            // if ($scope.resultReporteRecolecciones && $scope.resultReporteRecolecciones > 0) {
+            //     $scope.downloadReport(params, 'reporteBacklogRecolecciones', 'backlog recolecciones');
+            // } else {
+            //     toastr.info('No se encontraron datos para la descarga');
+            // }
         }
     }
 
@@ -1838,11 +1841,12 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                     "fechaApertura", "propietario", "grupoCodificador", "nivel1", "nivel2", "nivel3", "repetido", "tipoOrden", "subTipo", "nuevoSegmento"]
 
             }
-            if ($scope.resultReporteAddon && $scope.resultReporteAddon > 0) {
-                $scope.downloadReport(params, 'reporteBacklogAddon', 'backlog addon');
-            } else {
-                toastr.info('No se encontraron datos para la descarga');
-            }
+            $scope.downloadReport(params, 'reporteBacklogAddon', 'backlog addon');
+            // if ($scope.resultReporteAddon && $scope.resultReporteAddon > 0) {
+            //     $scope.downloadReport(params, 'reporteBacklogAddon', 'backlog addon');
+            // } else {
+            //     toastr.info('No se encontraron datos para la descarga');
+            // }
         }
     }
 
@@ -2302,11 +2306,12 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                     "instalacionLatitude", "instalacionLongitude", "origenTicket", "descripcion"]
 
             }
-            if ($scope.resultReporteSoportesIng && $scope.resultReporteSoportesIng > 0) {
-                $scope.downloadReport(params, 'reporteIngresoSoportes', 'ingresos soportes');
-            } else {
-                toastr.info('No se encontraron datos para la descarga');
-            }
+            $scope.downloadReport(params, 'reporteIngresoSoportes', 'ingresos soportes');
+            // if ($scope.resultReporteSoportesIng && $scope.resultReporteSoportesIng > 0) {
+            //     $scope.downloadReport(params, 'reporteIngresoSoportes', 'ingresos soportes');
+            // } else {
+            //     toastr.info('No se encontraron datos para la descarga');
+            // }
         }
     }
 
@@ -2443,11 +2448,12 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 valores: ["numeroCuenta", "cluster", "estatus", "fechaCreacion", "fechaActivacion", "motivoCancelacion", "fechaAgendamiento",
                     "origenProspecto", "fechaCierre", "tsGanada", "etapa", "tsConfirmado", "tsCancelado"]
             }
-            if ($scope.resultReporteVentasResidencial && $scope.resultReporteVentasResidencial > 0) {
-                $scope.downloadReport(params, 'reporteVentasResidencial', 'ventas residencial');
-            } else {
-                toastr.info('No se encontraron datos para la descarga');
-            }
+            $scope.downloadReport(params, 'reporteVentasResidencial', 'ventas residencial');
+            // if ($scope.resultReporteVentasResidencial && $scope.resultReporteVentasResidencial > 0) {
+            //     $scope.downloadReport(params, 'reporteVentasResidencial', 'ventas residencial');
+            // } else {
+            //     toastr.info('No se encontraron datos para la descarga');
+            // }
         }
     }
 
@@ -2579,11 +2585,12 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 valores: ["numeroCuenta", "clusterInstalacion", "cotizacion", "csp", "fechaAgendamiento", "nuevoSegmento", "plaza",
                     "tsGanada", "tipoOrden"]
             }
-            if ($scope.resultReporteVentasEmpresarial && $scope.resultReporteVentasEmpresarial > 0) {
-                $scope.downloadReport(params, 'reporteVentasEmpresarial', 'ventas empresarial');
-            } else {
-                toastr.info('No se encontraron datos para la descarga');
-            }
+            $scope.downloadReport(params, 'reporteVentasEmpresarial', 'ventas empresarial');
+            // if ($scope.resultReporteVentasEmpresarial && $scope.resultReporteVentasEmpresarial > 0) {
+            //     $scope.downloadReport(params, 'reporteVentasEmpresarial', 'ventas empresarial');
+            // } else {
+            //     toastr.info('No se encontraron datos para la descarga');
+            // }
         }
     }
 
@@ -2875,11 +2882,12 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                     "propietario", "grupoCodificador", "nivel1", "nivel2", "nivel3", "tipoOrden", "subTipo", "repetido", "repetido60",
                     "instalacionLatitude", "instalacionLongitude", "origenTicket", "descripcion"]
             }
-            if ($scope.resultReporteSoportesComp && $scope.resultReporteSoportesComp > 0) {
-                $scope.downloadReport(params, 'reporteCompletadoSoportes', 'completado soportes');
-            } else {
-                toastr.info('No se encontraron datos para la descarga');
-            }
+            $scope.downloadReport(params, 'reporteCompletadoSoportes', 'completado soportes');
+            // if ($scope.resultReporteSoportesComp && $scope.resultReporteSoportesComp > 0) {
+            //     $scope.downloadReport(params, 'reporteCompletadoSoportes', 'completado soportes');
+            // } else {
+            //     toastr.info('No se encontraron datos para la descarga');
+            // }
         }
     }
 
@@ -3023,11 +3031,12 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 valores: ["ordenServicio", "numeroCuenta", "nombrePlan", "nombreFamilia", "subcanal", "aprobarVentaExpress", "fechaCreacion", "ventaExpress", "fechaCierre", "origenProspecto", "clusterInstalacion",
                     "fechaActivacion", "subTipo", "numeroEmpleadoActiva", "nombreEmpleadoActiva", "sistemaActivacion", "activacionLatitude", "activacionLongitude"]
             }
-            if ($scope.resultReporteIntalacionRes && $scope.resultReporteIntalacionRes > 0) {
-                $scope.downloadReport(params, 'reporteInstalacionResidencial', 'instalacion residencial');
-            } else {
-                toastr.info('No se encontraron datos para la descarga');
-            }
+            $scope.downloadReport(params, 'reporteInstalacionResidencial', 'instalacion residencial');
+            // if ($scope.resultReporteIntalacionRes && $scope.resultReporteIntalacionRes > 0) {
+            //     $scope.downloadReport(params, 'reporteInstalacionResidencial', 'instalacion residencial');
+            // } else {
+            //     toastr.info('No se encontraron datos para la descarga');
+            // }
         }
     }
 
@@ -3159,11 +3168,12 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 headers: ["OS", "CUENTA", "COTIZACION", "CSP", "PLAZA", "CLUSTER INSTALACION", "FECHA ACTIVACION", "TIPO ORDEN"],
                 valores: ["ordenServicio", "numeroCuenta", "cotizacion", "csp", "plaza", "clusterInstalacion", "fechaActivacion", "tipoOrden"]
             }
-            if ($scope.resultReporteIntalacionEmp && $scope.resultReporteIntalacionEmp > 0) {
-                $scope.downloadReport(params, 'reporteInstalacionEmpresarial', 'instalacion empresarial');
-            } else {
-                toastr.info('No se encontraron datos para la descarga');
-            }
+            $scope.downloadReport(params, 'reporteInstalacionEmpresarial', 'instalacion empresarial');
+            // if ($scope.resultReporteIntalacionEmp && $scope.resultReporteIntalacionEmp > 0) {
+            //     $scope.downloadReport(params, 'reporteInstalacionEmpresarial', 'instalacion empresarial');
+            // } else {
+            //     toastr.info('No se encontraron datos para la descarga');
+            // }
         }
     }
 
@@ -3293,11 +3303,12 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 headers: ["CUENTA", "TICKET", "FECHA APERTURA", "CLUSTER", "NIVEL 1", "NIVEL 2", "NIVEL 3"],
                 valores: ["idCuentaBrm", "numeroTicket", "fechaApertura", "clusterInstalacion", "nivel1", "nivel2", "nivel3"]
             }
-            if ($scope.resultReporteSitiosFibr && $scope.resultReporteSitiosFibr > 0) {
-                $scope.downloadReport(params, 'reporteSitiosFibrados', 'sitios fibrados');
-            } else {
-                toastr.info('No se encontraron datos para la descarga');
-            }
+            $scope.downloadReport(params, 'reporteSitiosFibrados', 'sitios fibrados');
+            // if ($scope.resultReporteSitiosFibr && $scope.resultReporteSitiosFibr > 0) {
+            //     $scope.downloadReport(params, 'reporteSitiosFibrados', 'sitios fibrados');
+            // } else {
+            //     toastr.info('No se encontraron datos para la descarga');
+            // }
         }
     }
 
@@ -3433,11 +3444,12 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 headers: ["CUENTA", "TICKET", "ORIGEN TICKET", "FECHA APERTURA", "FECHA CIERRE", "CLUSTER INSTALACION", "CREADOR", "NIVEL 1", "NIVEL 2", "NIVEL 3", "ASUNTO", "GRUPO", "DESCRIPCION"],
                 valores: ["cuentaFactura", "numeroTicket", "origenTicket", "fechaApertura", "fechaCierre", "clusterInstalacion", "creaOs", "nivel1", "nivel2", "nivel3", "asunto", "grupoCodificacion", "descripcion"]
             }
-            if ($scope.resultReporteRedesSoc && $scope.resultReporteRedesSoc > 0) {
-                $scope.downloadReport(params, 'reporteRedesSociales', 'redes sociales');
-            } else {
-                toastr.info('No se encontraron datos para la descarga');
-            }
+            $scope.downloadReport(params, 'reporteRedesSociales', 'redes sociales');
+            // if ($scope.resultReporteRedesSoc && $scope.resultReporteRedesSoc > 0) {
+            //     $scope.downloadReport(params, 'reporteRedesSociales', 'redes sociales');
+            // } else {
+            //     toastr.info('No se encontraron datos para la descarga');
+            // }
         }
     }
 
@@ -3552,7 +3564,7 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
         let isValid = true;
 
         let clustersparam = $("#jstree-proton-generados").jstree("get_selected", true)
-            .filter(e => e.original.nivel == $scope.nfiltrogeografiaInstEmp)
+            .filter(e => e.original.nivel == $scope.nfiltrogeografiaGenerados)
             .map(e => e.original.nombre);
 
         if (clustersparam.length === 0) {
@@ -3585,11 +3597,12 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 valores: ["numerocuenta", "numeroTicket", "folio", "primerFechaAgendamiento", "fechaAgendamiento", "tsCompletado", "fechaActivacion", "estatus", "estado", "grupoCodificacion", 
                 "nivel1", "nivel2", "nivel3", "clusterInstalacion", "regionInstalacion", "plaza", "repetido", "distritositio", "fechacierre", "subTipo", "clusterComercial", "plazaSitio", "fechaApertura", "plazaOperacion"]
             }
-            if ($scope.resultReporteGenerados && $scope.resultReporteGenerados > 0) {
-                $scope.downloadReport(params, 'reporteGenerados', 'generados');
-            } else {
-                toastr.info('No se encontraron datos para la descarga');
-            }
+            $scope.downloadReport(params, 'reporteGenerados', 'generados');
+            // if ($scope.resultReporteGenerados && $scope.resultReporteGenerados > 0) {
+            //     $scope.downloadReport(params, 'reporteGenerados', 'generados');
+            // } else {
+            //     toastr.info('No se encontraron datos para la descarga');
+            // }
         }
     }
 

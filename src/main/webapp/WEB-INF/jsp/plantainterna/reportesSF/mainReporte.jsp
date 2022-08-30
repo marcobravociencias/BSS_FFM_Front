@@ -167,14 +167,14 @@
                             <a id="reporteSitiosFibr-tab" data-toggle="tab"
                                 ng-click="cambiaReporte('sitiosfibr', true,'reporteSitiosFibr')"
                                 href="reporteSitiosFibr" role="tab" aria-controls="reporteSitiosFibr"
-                                aria-selected="false"><i class="icon-menu-left fas fa-headset"></i>&nbsp;<span
+                                aria-selected="false"><i class="icon-menu-left fas fa-signal"></i>&nbsp;<span
                                     class="titulo-menu">Sitios fibrados</span></a>
                         </li>
                         <li class="nav-item opcion-menu" ng-if="configPermisoAccionConsultaRedesSociales">
                             <a id="reporteRedesSoc-tab" data-toggle="tab"
                                 ng-click="cambiaReporte('redessoc', true,'reporteRedesSoc')"
                                 href="reporteRedesSoc" role="tab" aria-controls="reporteRedesSoc"
-                                aria-selected="false"><i class="icon-menu-left fas fa-headset"></i>&nbsp;<span
+                                aria-selected="false"><i class="icon-menu-left fas fa-thumbs-up"></i>&nbsp;<span
                                     class="titulo-menu">Redes sociales</span></a>
                         </li>
 
@@ -186,7 +186,7 @@
                             <a id="reporteGenerados-tab" data-toggle="tab"
                                 ng-click="cambiaReporte('generados', true,'reporteGenerados')"
                                 href="reporteGenerados" role="tab" aria-controls="reporteGenerados"
-                                aria-selected="false"><i class="icon-menu-left fas fa-toolbox"></i>&nbsp;<span
+                                aria-selected="false"><i class="icon-menu-left fas fa-folder-plus"></i>&nbsp;<span
                                     class="titulo-menu">Generados</span></a>
                         </li>
 
