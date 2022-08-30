@@ -15,8 +15,6 @@ app.mapasControllerDespachoPI = function ($scope, mainDespachoService) {
     var markerResMod;
     
 
-
-
     $scope.setUbicacionDefault=function(latitudSet,longitudSet ,mapSet){
         if( $scope.isLatitude(latitudSet) && $scope.isLongitude(longitudSet)  ){
             var pt = new google.maps.LatLng(latitudSet, longitudSet);

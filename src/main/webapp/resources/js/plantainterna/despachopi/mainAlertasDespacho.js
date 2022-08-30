@@ -1126,8 +1126,8 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
 
 
     $scope.setMarkets = function (pos) {
-        delete pos.latitudTecnico
-        delete pos.longitudTecnico
+        //delete pos.latitudTecnico
+        //delete pos.longitudTecnico
         // delete pos.latitudAlerta
         // delete pos.longitudAlerta
         // delete pos.latitudOrden
