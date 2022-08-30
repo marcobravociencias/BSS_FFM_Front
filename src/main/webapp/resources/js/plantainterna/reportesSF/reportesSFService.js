@@ -88,4 +88,37 @@ app.service("reportesSFService", function ($http) {
         });
     };
 
+    this.consultarReporteSitiosFibrados = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultarReporteSitiosFibrados",
+            data: JSON.stringify(params),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    };
+
+    this.consultarReporteRedesSociales = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultarReporteRedesSociales",
+            data: JSON.stringify(params),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    };
+
+    this.consultarReporteGenerados = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultarReporteGenerados",
+            data: JSON.stringify(params),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    };
+
 })

@@ -158,6 +158,38 @@
                                 aria-selected="false"><i class="icon-menu-left fas fa-toolbox"></i>&nbsp;<span
                                     class="titulo-menu">Instalaciones empresarial</span></a>
                         </li>
+
+                        <hr style="margin: 0.3em 1em;" ng-if="boxContentVisible.tickets">
+                        <span class="title-nav-header titulo-menu" style="position: initial;" ng-if="boxContentVisible.tickets"><i
+                                class="icon-menu-left fas fa-circle"
+                                style="font-size: 0.8em;color: #ccc;"></i>&nbsp;TICKETS</span>
+                        <li class="nav-item opcion-menu" ng-if="configPermisoAccionConsultaSitiosFibrados">
+                            <a id="reporteSitiosFibr-tab" data-toggle="tab"
+                                ng-click="cambiaReporte('sitiosfibr', true,'reporteSitiosFibr')"
+                                href="reporteSitiosFibr" role="tab" aria-controls="reporteSitiosFibr"
+                                aria-selected="false"><i class="icon-menu-left fas fa-headset"></i>&nbsp;<span
+                                    class="titulo-menu">Sitios fibrados</span></a>
+                        </li>
+                        <li class="nav-item opcion-menu" ng-if="configPermisoAccionConsultaRedesSociales">
+                            <a id="reporteRedesSoc-tab" data-toggle="tab"
+                                ng-click="cambiaReporte('redessoc', true,'reporteRedesSoc')"
+                                href="reporteRedesSoc" role="tab" aria-controls="reporteRedesSoc"
+                                aria-selected="false"><i class="icon-menu-left fas fa-headset"></i>&nbsp;<span
+                                    class="titulo-menu">Redes sociales</span></a>
+                        </li>
+
+                        <hr style="margin: 0.3em 1em;" ng-if="boxContentVisible.factibilidad">
+                        <span class="title-nav-header titulo-menu" style="position: initial;" ng-if="boxContentVisible.factibilidad"><i
+                                class="icon-menu-left fas fa-circle"
+                                style="font-size: 0.8em;color: #ccc;"></i>&nbsp;FACTIBILIDAD</span>
+                        <li class="nav-item opcion-menu" ng-if="configPermisoAccionConsultaGenerados">
+                            <a id="reporteGenerados-tab" data-toggle="tab"
+                                ng-click="cambiaReporte('generados', true,'reporteGenerados')"
+                                href="reporteGenerados" role="tab" aria-controls="reporteGenerados"
+                                aria-selected="false"><i class="icon-menu-left fas fa-toolbox"></i>&nbsp;<span
+                                    class="titulo-menu">Generados</span></a>
+                        </li>
+
                     </ul>
                     <div class="right-content tab-content">
                         <div class="row tab-content">
@@ -225,6 +257,25 @@
                                 <h5 id="texto_header_reportes" class="text-center">Reporte completado empresarial
                                 </h5>
                                 <jsp:include page="./content/reporteInstalacionEmp.jsp"></jsp:include>
+                            </div>
+
+                            <div class="tab-pane fade" id="reporteSitiosFibr" role="tabpanel"
+                                aria-labelledby="reporteSitiosFibr-tab">
+                                <h5 id="texto_header_reportes" class="text-center">Reporte sitios fibrados
+                                </h5>
+                                <jsp:include page="./content/reporteSitiosFibrados.jsp"></jsp:include>
+                            </div>
+                            <div class="tab-pane fade" id="reporteRedesSoc" role="tabpanel"
+                                aria-labelledby="reporteRedesSoc-tab">
+                                <h5 id="texto_header_reportes" class="text-center">Reporte redes sociales
+                                </h5>
+                                <jsp:include page="./content/reporteRedesSociales.jsp"></jsp:include>
+                            </div>
+                            <div class="tab-pane fade" id="reporteGenerados" role="tabpanel"
+                                aria-labelledby="reporteGenerados-tab">
+                                <h5 id="texto_header_reportes" class="text-center">Reporte Generados
+                                </h5>
+                                <jsp:include page="./content/reporteGenerados.jsp"></jsp:include>
                             </div>
                         </div>
                     </div>

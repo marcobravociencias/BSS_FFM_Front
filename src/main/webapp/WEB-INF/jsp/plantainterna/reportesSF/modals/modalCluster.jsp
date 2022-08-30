@@ -58,6 +58,18 @@
 					<input id="searchGeo-instalacionemp" type="text" autocomplete="off" class="form-control buscadorGenerico" placeholder="Buscar geograf&iacute;a">
 					<span class="fa fa-search iconoBusqueda"></span>
 				</div>
+				<div class="input-group input-group-sm content-seach-group" id="seach-jstree-sitiosfibr" ng-show="tipoReporte == 'sitiosfibr'">
+					<input id="searchGeo-sitiosfibr" type="text" autocomplete="off" class="form-control buscadorGenerico" placeholder="Buscar geograf&iacute;a">
+					<span class="fa fa-search iconoBusqueda"></span>
+				</div>
+				<div class="input-group input-group-sm content-seach-group" id="seach-jstree-redessoc" ng-show="tipoReporte == 'redessoc'">
+					<input id="searchGeo-redessoc" type="text" autocomplete="off" class="form-control buscadorGenerico" placeholder="Buscar geograf&iacute;a">
+					<span class="fa fa-search iconoBusqueda"></span>
+				</div>
+				<div class="input-group input-group-sm content-seach-group" id="seach-jstree-generados" ng-show="tipoReporte == 'generados'">
+					<input id="searchGeo-generados" type="text" autocomplete="off" class="form-control buscadorGenerico" placeholder="Buscar geograf&iacute;a">
+					<span class="fa fa-search iconoBusqueda"></span>
+				</div>
 				<div id="jstree-proton-instalaciones" class="proton-demo proton-reportes" ng-show="tipoReporte == 'instalaciones'"></div>
 				<div id="jstree-proton-soportes" class="proton-demo proton-reportes" ng-show="tipoReporte == 'soportes'"></div>
 				<div id="jstree-proton-recolecciones" class="proton-demo proton-reportes" ng-show="tipoReporte == 'recolecciones'"></div>
@@ -71,6 +83,9 @@
 				<div id="jstree-proton-soportescomp" class="proton-demo proton-soportescomp" ng-show="tipoReporte == 'soportescomp'"></div>
 				<div id="jstree-proton-instalacionres" class="proton-demo proton-instalacionres" ng-show="tipoReporte == 'instalacionres'"></div>
 				<div id="jstree-proton-instalacionemp" class="proton-demo proton-instalacionemp" ng-show="tipoReporte == 'instalacionemp'"></div>
+				<div id="jstree-proton-sitiosfibr" class="proton-demo proton-sitiosfibr" ng-show="tipoReporte == 'sitiosfibr'"></div>
+				<div id="jstree-proton-redessoc" class="proton-demo proton-redessoc" ng-show="tipoReporte == 'redessoc'"></div>
+				<div id="jstree-proton-generados" class="proton-demo proton-generados" ng-show="tipoReporte == 'generados'"></div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-cerrar-modal btn-secondary" data-mdb-dismiss="modal">

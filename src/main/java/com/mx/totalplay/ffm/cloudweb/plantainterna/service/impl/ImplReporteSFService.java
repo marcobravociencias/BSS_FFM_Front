@@ -175,6 +175,54 @@ public class ImplReporteSFService implements ReporteSFService {
 		return response;
 	}
 
+	@Override
+	public ServiceResponseResult consultarReporteSitiosFibrados(String params) {
+		logger.info("ImplReporteSFService.class [metodo = consultarReporteRedesSociales() ]\n" + params);
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		String tokenAcces = principalDetail.getAccess_token();
+		String urlRequest = principalDetail.getDireccionAmbiente()
+				.concat(constReporteSF.getConsultaReporteSitiosFibrados());
+		logger.info("URL ##+" + urlRequest);
+
+		ServiceResponseResult response = restCaller.callPostBearerTokenRequest(jsonObject.toString(), urlRequest,
+				ServiceResponseResult.class, tokenAcces);
+		return response;
+	}
+
+	@Override
+	public ServiceResponseResult consultarReporteRedesSociales(String params) {
+		logger.info("ImplReporteSFService.class [metodo = consultarReporteRedesSociales() ]\n" + params);
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		String tokenAcces = principalDetail.getAccess_token();
+		String urlRequest = principalDetail.getDireccionAmbiente()
+				.concat(constReporteSF.getConsultaReporteRedesSociales());
+		logger.info("URL ##+" + urlRequest);
+
+		ServiceResponseResult response = restCaller.callPostBearerTokenRequest(jsonObject.toString(), urlRequest,
+				ServiceResponseResult.class, tokenAcces);
+		return response;
+	}
+
+	@Override
+	public ServiceResponseResult consultarReporteGenerados(String params) {
+		logger.info("ImplReporteSFService.class [metodo = consultarReporteGenerados() ]\n" + params);
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		String tokenAcces = principalDetail.getAccess_token();
+		String urlRequest = principalDetail.getDireccionAmbiente()
+				.concat(constReporteSF.getConsultaReporteGenerados());
+		logger.info("URL ##+" + urlRequest);
+
+		ServiceResponseResult response = restCaller.callPostBearerTokenRequest(jsonObject.toString(), urlRequest,
+				ServiceResponseResult.class, tokenAcces);
+		return response;
+	}
+
 	
 	
 }

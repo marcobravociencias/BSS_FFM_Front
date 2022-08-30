@@ -476,6 +476,30 @@ public class ImplGenericReporteExcelSFService implements GenericReporteSFExcelSe
 		            array = dataReporte;
 				}*/
 				break;
+			case "reportesf-sitiosfibrados-pi":
+				response = consultarInformacionExcelGenericPost(params, constReportesSF.getExportaReporteSitiosFibrados(), method);
+				if (response.getResult() == null || response.getResult() instanceof Integer) {
+				} else {
+					JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
+		            array = jsonObjectResponse.getAsJsonArray("data");
+				}
+				break;
+			case "reportesf-redessociales-pi":
+				response = consultarInformacionExcelGenericPost(params, constReportesSF.getExportaReporteRedesSociales(), method);
+				if (response.getResult() == null || response.getResult() instanceof Integer) {
+				} else {
+					JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
+		            array = jsonObjectResponse.getAsJsonArray("data");
+				}
+				break;
+			case "reportesf-generados-pi":
+				response = consultarInformacionExcelGenericPost(params, constReportesSF.getExportaReporteGenerados(), method);
+				if (response.getResult() == null || response.getResult() instanceof Integer) {
+				} else {
+					JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
+		            array = jsonObjectResponse.getAsJsonArray("data");
+				}
+				break;
 	
 		}
 		if(isRetornarBanderaBytes) {

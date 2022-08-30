@@ -18,6 +18,9 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
     $scope.resultReporteSoportesComp = null;
     $scope.resultReporteIntalacionRes = null;
     $scope.resultReporteIntalacionEmp = null;
+    $scope.resultReporteSitiosFibr = null;
+    $scope.resultReporteRedesSoc = null;
+    $scope.resultReporteGenerados = null;
     $scope.boxContentVisible = {
         backlog: false,
         ingresos: false,
@@ -40,7 +43,10 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
         ventasempsa: 'dia',
         soportescomp: 'dia',
         instalacionres: 'dia',
-        instalacionemp: 'dia'
+        instalacionemp: 'dia',
+        sitiosfibr: 'dia',
+        redessoc: 'dia',
+        generados: 'dia'
     };
     $scope.filtrosGeneral = {};
 
@@ -70,6 +76,12 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
     $scope.configPermisoAccionDescargaCompletadoRes = false;
     $scope.configPermisoAccionConsultaCompletadoEmp = false;
     $scope.configPermisoAccionDescargaCompletadoEmp = false;
+    $scope.configPermisoAccionConsultaSitiosFibrados = false;
+    $scope.configPermisoAccionDescargaSitiosFibrados = false;
+    $scope.configPermisoAccionConsultaRedesSociales = false;
+    $scope.configPermisoAccionDescargaRedesSociales = false;
+    $scope.configPermisoAccionConsultaGenerados = false;
+    $scope.configPermisoAccionDescargaGenerados = false;
 
     angular.element(document).ready(function () {
         $('#searchGeo-instalaciones').on('keyup', function () {
@@ -122,6 +134,18 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
 
         $('#searchGeo-instalacionemp').on('keyup', function () {
             $("#jstree-proton-instalacionemp").jstree("search", this.value);
+        });
+
+        $('#searchGeo-sitiosfibr').on('keyup', function () {
+            $("#jstree-proton-sitiosfibr").jstree("search", this.value);
+        });
+
+        $('#searchGeo-redessoc').on('keyup', function () {
+            $("#jstree-proton-redessoc").jstree("search", this.value);
+        });
+
+        $('#searchGeo-generados').on('keyup', function () {
+            $("#jstree-proton-generados").jstree("search", this.value);
         });
 
 
@@ -285,7 +309,43 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
             "language": idioma_espanol_not_font,
             "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
         });
+        
+        let reporteSitiosFibrados = $('#reporteSitiosFibrados').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": false,
+            "pageLength": 10,
+            "info": true,
+            "autoWidth": true,
+            "language": idioma_espanol_not_font,
+            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+        });
 
+        let reporteRedesSociales = $('#reporteRedesSociales').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": false,
+            "pageLength": 10,
+            "info": true,
+            "autoWidth": true,
+            "language": idioma_espanol_not_font,
+            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+        });
+
+        let reporteGenerados = $('#reporteGeneradoss').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": false,
+            "pageLength": 10,
+            "info": true,
+            "autoWidth": true,
+            "language": idioma_espanol_not_font,
+            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+        });
+        
         $('.drop-down-filters').on("change.bs.dropdown", function (e) {
             $scope.setTextFiltro();
         });
@@ -493,6 +553,30 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                     swal.showLoading();
                 }
                 break;
+            case 'sitiosfibr':
+                geografiaReporte = angular.copy($scope.listaGeografiaReporte.sitiosfibr);
+                if ($scope.resultReporteSitiosFibr == null && geografiaReporte) {
+                    $scope.loadDate('sitiosfibr');
+                    swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                    swal.showLoading();
+                }
+                break;
+            case 'redessoc':
+                geografiaReporte = angular.copy($scope.listaGeografiaReporte.redessoc);
+                if ($scope.resultReporteRedesSoc == null && geografiaReporte) {
+                    $scope.loadDate('redessoc');
+                    swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                    swal.showLoading();
+                }
+                break;
+            case 'generados':
+                geografiaReporte = angular.copy($scope.listaGeografiaReporte.generados);
+                if ($scope.resultReporteGenerados == null && geografiaReporte) {
+                    $scope.loadDate('generados');
+                    swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                    swal.showLoading();
+                }
+                break;
         }
 
         if (geografiaReporte) {
@@ -584,6 +668,24 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                         $scope.getTextGeografia('jstree-proton-instalacionemp', 'cluster-instalacionemp');
                         if ($scope.resultReporteIntalacionEmp == null) {
                             $scope.consultarReporteInstalacionEmpresarial();
+                        }
+                        break;
+                    case 'sitiosfibr':
+                        $scope.getTextGeografia('jstree-proton-sitiosfibr', 'cluster-sitiosfibr');
+                        if ($scope.resultReporteSitiosFibr == null) {
+                            $scope.consultarReporteSitiosFibrados();
+                        }
+                        break;
+                    case 'redessoc':
+                        $scope.getTextGeografia('jstree-proton-redessoc', 'cluster-redessoc');
+                        if ($scope.resultReporteRedesSoc == null) {
+                            $scope.consultarReporteRedesSociales();
+                        }
+                        break;
+                    case 'generados':
+                        $scope.getTextGeografia('jstree-proton-generados', 'cluster-generados');
+                        if ($scope.resultReporteGenerados == null) {
+                            $scope.consultarReporteGenerados();
                         }
                         break;
                 }
@@ -709,6 +811,9 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                             $scope.nfiltrogeografiaSoportesComp = llavesResult.N_FILTRO_COMP_SOPORTE ? llavesResult.N_FILTRO_COMP_SOPORTE : llavesResult.N_FILTRO_GEOGRAFIA;
                             $scope.nfiltrogeografiaInstRes = llavesResult.N_FILTRO_COMP_RESIDENCIAL ? llavesResult.N_FILTRO_COMP_RESIDENCIAL : llavesResult.N_FILTRO_GEOGRAFIA;
                             $scope.nfiltrogeografiaInstEmp = llavesResult.N_FILTRO_COMP_EMPRESARIAL ? llavesResult.N_FILTRO_COMP_EMPRESARIAL : llavesResult.N_FILTRO_GEOGRAFIA;
+                            $scope.nfiltrogeografiaSitFibr = llavesResult.N_FILTRO_COMP_EMPRESARIAL ? llavesResult.N_FILTRO_COMP_EMPRESARIAL : llavesResult.N_FILTRO_GEOGRAFIA;//PENDIENTE
+                            $scope.nfiltrogeografiaRedSoc = llavesResult.N_FILTRO_COMP_EMPRESARIAL ? llavesResult.N_FILTRO_COMP_EMPRESARIAL : llavesResult.N_FILTRO_GEOGRAFIA;//PENDIENTE
+                            $scope.nfiltrogeografiaSitFibr = llavesResult.N_FILTRO_COMP_EMPRESARIAL ? llavesResult.N_FILTRO_COMP_EMPRESARIAL : llavesResult.N_FILTRO_GEOGRAFIA;//PENDIENTE
 
                             $scope.nfiltrointervencionesGeneral = llavesResult.N_FILTRO_INTERVENCIONES_GENERAL ? $scope.nfiltrointervencionesGeneral : null;
 
@@ -739,6 +844,12 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                                 $scope.configPermisoAccionDescargaCompletadoRes = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaCompletadoResidencial" })[0] != undefined);
                                 $scope.configPermisoAccionConsultaCompletadoEmp = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaCompletadoEmpresarial" })[0] != undefined);
                                 $scope.configPermisoAccionDescargaCompletadoEmp = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaCompletadoEmpresarial" })[0] != undefined);
+                                $scope.configPermisoAccionConsultaSitiosFibrados = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaCompletadoEmpresarial" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionDescargaSitiosFibrados = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaCompletadoEmpresarial" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionConsultaRedesSociales = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaCompletadoEmpresarial" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionDescargaRedesSociales = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaCompletadoEmpresarial" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionConsultaGenerados = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaCompletadoEmpresarial" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionDescargaGenerados = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaCompletadoEmpresarial" })[0] != undefined);//PENDIENTE
                                 objectTempAccion = new GenericAccionRealizada("" + $scope.permisosConfigUser.id, 'TOP_RIGHT');
                                 objectTempAccion.inicializarBotonAccionesRecientes();
 
@@ -756,6 +867,14 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                                 if ($scope.configPermisoAccionConsultaCompletadoSoportes || $scope.configPermisoAccionConsultaCompletadoRes
                                     || $scope.configPermisoAccionConsultaCompletadoEmp) {
                                     $scope.boxContentVisible.completados = true;
+                                }
+
+                                if ($scope.configPermisoAccionConsultaSitiosFibrados || $scope.configPermisoAccionConsultaRedesSociales) {
+                                    $scope.boxContentVisible.tickets = true;
+                                }
+
+                                if ($scope.configPermisoAccionConsultaGenerados) {
+                                    $scope.boxContentVisible.factibilidad = true;
                                 }
                             }
 
@@ -854,6 +973,27 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                                 }
                             }
 
+                            if ($scope.configPermisoAccionConsultaSitiosFibrados) {
+                                if (firstNav === '') {
+                                    firstNav = 'reporteSitiosFibr-tab';
+                                    $scope.tipoReporte = 'sitiosfibr';
+                                }
+                            }
+
+                            if ($scope.configPermisoAccionConsultaRedesSociales) {
+                                if (firstNav === '') {
+                                    firstNav = 'reporteRedesSoc-tab';
+                                    $scope.tipoReporte = 'redessoc';
+                                }
+                            }
+
+                            if ($scope.configPermisoAccionConsultaGenerados) {
+                                if (firstNav === '') {
+                                    firstNav = 'reporteGenerados-tab';
+                                    $scope.tipoReporte = 'generados';
+                                }
+                            }
+
 
                             if (firstNav === '') {
                                 $scope.permisosConfigUser.permisos = [];
@@ -893,6 +1033,9 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                             $scope.nfiltrogeografiaSoportesComp = $scope.nfiltrogeografiaSoportesComp ? $scope.nfiltrogeografiaSoportesComp : $scope.obtenerNivelUltimoJerarquiaGeneric(results[0].data.result.geografia);
                             $scope.nfiltrogeografiaInstRes = $scope.nfiltrogeografiaInstRes ? $scope.nfiltrogeografiaInstRes : $scope.obtenerNivelUltimoJerarquiaGeneric(results[0].data.result.geografia);
                             $scope.nfiltrogeografiaInstEmp = $scope.nfiltrogeografiaInstEmp ? $scope.nfiltrogeografiaInstEmp : $scope.obtenerNivelUltimoJerarquiaGeneric(results[0].data.result.geografia);
+                            $scope.nfiltrogeografiaSitFibr = $scope.nfiltrogeografiaSitFibr ? $scope.nfiltrogeografiaSitFibr : $scope.obtenerNivelUltimoJerarquiaGeneric(results[0].data.result.geografia);
+                            $scope.nfiltrogeografiaRedSoc = $scope.nfiltrogeografiaRedSoc ? $scope.nfiltrogeografiaRedSoc : $scope.obtenerNivelUltimoJerarquiaGeneric(results[0].data.result.geografia);
+                            $scope.nfiltrogeografiaGenerados = $scope.nfiltrogeografiaGenerados ? $scope.nfiltrogeografiaGenerados : $scope.obtenerNivelUltimoJerarquiaGeneric(results[0].data.result.geografia);
 
 
                             if ($scope.configPermisoAccionConsultaBackInstalaciones) {
@@ -958,6 +1101,21 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                             if ($scope.configPermisoAccionConsultaCompletadoEmp) {
                                 let geografia = $scope.ordenarGeografia(results[0].data.result.geografia, $scope.nfiltrogeografiaInstEmp);
                                 $scope.listaGeografiaReporte.instalacionemp = angular.copy(geografia);
+                            }
+
+                            if ($scope.configPermisoAccionConsultaSitiosFibrados) {
+                                let geografia = $scope.ordenarGeografia(results[0].data.result.geografia, $scope.nfiltrogeografiaSitFibr);
+                                $scope.listaGeografiaReporte.sitiosfibr = angular.copy(geografia);
+                            }
+
+                            if ($scope.configPermisoAccionConsultaRedesSociales) {
+                                let geografia = $scope.ordenarGeografia(results[0].data.result.geografia, $scope.nfiltrogeografiaRedSoc);
+                                $scope.listaGeografiaReporte.redessoc = angular.copy(geografia);
+                            }
+
+                            if ($scope.configPermisoAccionConsultaGenerados) {
+                                let geografia = $scope.ordenarGeografia(results[0].data.result.geografia, $scope.nfiltrogeografiaGenerados);
+                                $scope.listaGeografiaReporte.generados = angular.copy(geografia);
                             }
 
                         } else {
@@ -3003,6 +3161,432 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
             }
             if ($scope.resultReporteIntalacionEmp && $scope.resultReporteIntalacionEmp > 0) {
                 $scope.downloadReport(params, 'reporteInstalacionEmpresarial', 'instalacion empresarial');
+            } else {
+                toastr.info('No se encontraron datos para la descarga');
+            }
+        }
+    }
+
+    $scope.consultarReporteSitiosFibrados = function() {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        let clustersparam = $("#jstree-proton-sitiosfibr").jstree("get_selected", true)
+            .filter(e => e.original.nivel == $scope.nfiltrogeografiaSitFibr)
+            .map(e => e.original.nombre);
+
+        if (clustersparam.length === 0) {
+            mensaje += '<li>Seleccione geograf&iacute;a.</li>';
+            isValid = false
+        }
+
+        if ($("#tipo_reporte_sitiosfibr").val() == 'semana' && !$scope.weekDateObjectReport.sitiosfibr) {
+            mensaje += '<li>Seleccione semana</li>';
+            isValid = false
+        }
+
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('sitiosfibr');
+            let params = {
+                tiposOrden: [55, 91, 93],
+                clusters: clustersparam,
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin
+            }
+            if (!swal.isVisible()) {
+                swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                swal.showLoading();
+            }
+            reportesSFService.consultarReporteSitiosFibrados(params).then(function success(response) {
+                swal.close();
+                let arraRow = [];
+                if (response.data !== undefined) {
+                    if (response.data.respuesta) {
+                        if (response.data.result) {
+                            if (response.data.result.data) {
+                                $scope.resultReporteSitiosFibr = response.data.result.data.length;
+                                $.each(response.data.result.data, function (i, elemento) {
+                                    let row = [];
+
+                                    row[0] = elemento.idCuentaBrm ? elemento.idCuentaBrm : 'Sin informaci&oacute;n';
+                                    row[1] = elemento.numeroTicket ? elemento.numeroTicket : 'Sin informaci&oacute;n';
+                                    row[2] = elemento.fechaApertura ? elemento.fechaApertura : 'Sin informaci&oacute;n';
+                                    row[3] = elemento.clusterInstalacion ? elemento.clusterInstalacion : 'Sin informaci&oacute;n';
+                                    row[4] = elemento.nivel1 ? elemento.nivel1 : 'Sin informaci&oacute;n';
+                                    row[5] = elemento.nivel2 ? elemento.nivel2 : 'Sin informaci&oacute;n';
+                                    row[6] = elemento.nivel3 ? elemento.nivel3 : 'Sin informaci&oacute;n';
+                                    arraRow.push(row);
+                                })
+
+                            } else {
+                                toastr.info('No se encontraron datos');
+                            }
+                        } else {
+                            toastr.warning('No se encontraron datos');
+                        }
+                    } else {
+                        toastr.warning(response.data.resultDescripcion);
+                    }
+                } else {
+                    toastr.error('Ha ocurrido un error al consultar el reporte');
+                }
+
+                reporteSitiosFibrados = $('#reporteSitiosFibrados').DataTable({
+                    "paging": true,
+                    "lengthChange": false,
+                    "ordering": true,
+                    "pageLength": 10,
+                    "bDestroy": true,
+                    "info": true,
+                    "scrollX": false,
+                    "data": arraRow,
+                    "autoWidth": false,
+                    "language": idioma_espanol_not_font,
+                    "aoColumnDefs": [
+                        { "aTargets": [6], "bSortable": false }
+                    ]
+                });
+                swal.close();
+            })
+        }
+    }
+
+    $scope.descargarReporteSitiosFibrados = function() {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        let clustersparam = $("#jstree-proton-sitiosfibr").jstree("get_selected", true)
+            .filter(e => e.original.nivel == $scope.nfiltrogeografiaSitFibr)
+            .map(e => e.original.nombre);
+
+        if (clustersparam.length === 0) {
+            mensaje += '<li>Seleccione geograf&iacute;a.</li>';
+            isValid = false
+        }
+
+        if ($("#tipo_reporte_sitiosfibr").val() == 'semana' && !$scope.weekDateObjectReport.sitiosfibr) {
+            mensaje += '<li>Seleccione semana</li>';
+            isValid = false
+        }
+
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('sitiosfibr');
+            let params = {
+                tiposOrden: [55, 91, 93],
+                clusters: clustersparam,
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin,
+                sheet: "Reporte sitios fibrados",
+                tipoExcel: 'reportesf-sitiosfibrados-pi',
+                headers: ["CUENTA", "TICKET", "FECHA APERTURA", "CLUSTER", "NIVEL 1", "NIVEL 2", "NIVEL 3"],
+                valores: ["idCuentaBrm", "numeroTicket", "fechaApertura", "clusterInstalacion", "nivel1", "nivel2", "nivel3"]
+            }
+            if ($scope.resultReporteSitiosFibr && $scope.resultReporteSitiosFibr > 0) {
+                $scope.downloadReport(params, 'reporteSitiosFibrados', 'sitios fibrados');
+            } else {
+                toastr.info('No se encontraron datos para la descarga');
+            }
+        }
+    }
+
+    $scope.consultarReporteRedesSociales = function() {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        let clustersparam = $("#jstree-proton-redessoc").jstree("get_selected", true)
+            .filter(e => e.original.nivel == $scope.nfiltrogeografiaRedSoc)
+            .map(e => e.original.nombre);
+
+        if (clustersparam.length === 0) {
+            mensaje += '<li>Seleccione geograf&iacute;a.</li>';
+            isValid = false
+        }
+
+        if ($("#tipo_reporte_redessoc").val() == 'semana' && !$scope.weekDateObjectReport.redessoc) {
+            mensaje += '<li>Seleccione semana</li>';
+            isValid = false
+        }
+
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('redessoc');
+            let params = {
+                tiposOrden: [55, 91, 93],
+                clusters: clustersparam,
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin
+            }
+            if (!swal.isVisible()) {
+                swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                swal.showLoading();
+            }
+            reportesSFService.consultarReporteRedesSociales(params).then(function success(response) {
+                swal.close();
+                let arraRow = [];
+                if (response.data !== undefined) {
+                    if (response.data.respuesta) {
+                        if (response.data.result) {
+                            if (response.data.result.data) {
+                                $scope.resultReporteRedesSoc = response.data.result.data.length;
+                                $.each(response.data.result.data, function (i, elemento) {
+                                    let row = [];
+
+                                    row[0] = elemento.cuentaFactura ? elemento.cuentaFactura : 'Sin informaci&oacute;n';
+                                    row[1] = elemento.numeroTicket ? elemento.numeroTicket : 'Sin informaci&oacute;n';
+                                    row[2] = elemento.origenTicket ? elemento.origenTicket : 'Sin informaci&oacute;n';
+                                    row[3] = elemento.fechaApertura ? elemento.fechaApertura : 'Sin informaci&oacute;n';
+                                    row[4] = elemento.fechaCierre ? elemento.fechaCierre : 'Sin informaci&oacute;n';
+                                    row[5] = elemento.clusterInstalacion ? elemento.clusterInstalacion : 'Sin informaci&oacute;n';
+                                    row[6] = elemento.creaOs ? elemento.creaOs : 'Sin informaci&oacute;n';
+                                    row[7] = elemento.nivel1 ? elemento.nivel1 : 'Sin informaci&oacute;n';
+                                    row[8] = elemento.nivel2 ? elemento.nivel2 : 'Sin informaci&oacute;n';
+                                    row[9] = elemento.nivel3 ? elemento.nivel3 : 'Sin informaci&oacute;n';
+                                    row[10] = elemento.asunto ? elemento.asunto : 'Sin informaci&oacute;n';
+                                    row[11] = elemento.grupoCodificacion ? elemento.grupoCodificacion : 'Sin informaci&oacute;n';
+                                    row[12] = elemento.descripcion ? elemento.descripcion : 'Sin informaci&oacute;n';
+                                    arraRow.push(row);
+                                })
+
+                            } else {
+                                toastr.info('No se encontraron datos');
+                            }
+                        } else {
+                            toastr.warning('No se encontraron datos');
+                        }
+                    } else {
+                        toastr.warning(response.data.resultDescripcion);
+                    }
+                } else {
+                    toastr.error('Ha ocurrido un error al consultar el reporte');
+                }
+
+                reporteRedesSociales = $('#reporteRedesSociales').DataTable({
+                    "paging": true,
+                    "lengthChange": false,
+                    "ordering": true,
+                    "pageLength": 10,
+                    "bDestroy": true,
+                    "info": true,
+                    "scrollX": false,
+                    "data": arraRow,
+                    "autoWidth": false,
+                    "language": idioma_espanol_not_font,
+                    "aoColumnDefs": [
+                        { "aTargets": [12], "bSortable": false }
+                    ]
+                });
+                swal.close();
+            })
+        }
+    }
+
+    $scope.descargarReporteRedesSociales = function() {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        let clustersparam = $("#jstree-proton-redessoc").jstree("get_selected", true)
+            .filter(e => e.original.nivel == $scope.nfiltrogeografiaRedSoc)
+            .map(e => e.original.nombre);
+
+        if (clustersparam.length === 0) {
+            mensaje += '<li>Seleccione geograf&iacute;a.</li>';
+            isValid = false
+        }
+
+        if ($("#tipo_reporte_redessoc").val() == 'semana' && !$scope.weekDateObjectReport.redessoc) {
+            mensaje += '<li>Seleccione semana</li>';
+            isValid = false
+        }
+
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('redessoc');
+            let params = {
+                tiposOrden: [55, 91, 93],
+                clusters: clustersparam,
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin,
+                sheet: "Reporte redes sociales",
+                tipoExcel: 'reportesf-redessociales-pi',
+                headers: ["CUENTA", "TICKET", "ORIGEN TICKET", "FECHA APERTURA", "FECHA CIERRE", "CLUSTER INSTALACION", "CREADOR", "NIVEL 1", "NIVEL 2", "NIVEL 3", "ASUNTO", "GRUPO", "DESCRIPCION"],
+                valores: ["cuentaFactura", "numeroTicket", "origenTicket", "fechaApertura", "fechaCierre", "clusterInstalacion", "creaOs", "nivel1", "nivel2", "nivel3", "asunto", "grupoCodificacion", "descripcion"]
+            }
+            if ($scope.resultReporteRedesSoc && $scope.resultReporteRedesSoc > 0) {
+                $scope.downloadReport(params, 'reporteRedesSociales', 'redes sociales');
+            } else {
+                toastr.info('No se encontraron datos para la descarga');
+            }
+        }
+    }
+
+    $scope.consultarReporteGenerados = function() {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        let clustersparam = $("#jstree-proton-generados").jstree("get_selected", true)
+            .filter(e => e.original.nivel == $scope.nfiltrogeografiaGenerados)
+            .map(e => e.original.nombre);
+
+        if (clustersparam.length === 0) {
+            mensaje += '<li>Seleccione geograf&iacute;a.</li>';
+            isValid = false
+        }
+
+        if ($("#tipo_reporte_generados").val() == 'semana' && !$scope.weekDateObjectReport.generados) {
+            mensaje += '<li>Seleccione semana</li>';
+            isValid = false
+        }
+
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('generados');
+            let params = {
+                tiposOrden: [55, 91, 93],
+                clusters: clustersparam,
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin
+            }
+            if (!swal.isVisible()) {
+                swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                swal.showLoading();
+            }
+            reportesSFService.consultarReporteGenerados(params).then(function success(response) {
+                swal.close();
+                let arraRow = [];
+                if (response.data !== undefined) {
+                    if (response.data.respuesta) {
+                        if (response.data.result) {
+                            if (response.data.result.data) {
+                                $scope.resultReporteGenerados = response.data.result.data.length;
+                                $.each(response.data.result.data, function (i, elemento) {
+                                    let row = [];
+                                    row[0] = elemento.numerocuenta ? elemento.numerocuenta : 'Sin informaci&oacute;n';
+                                    row[1] = elemento.numeroTicket ? elemento.numeroTicket : 'Sin informaci&oacute;n';
+                                    row[2] = elemento.folio ? elemento.folio : 'Sin informaci&oacute;n';
+                                    row[3] = elemento.primerFechaAgendamiento ? elemento.primerFechaAgendamiento : 'Sin informaci&oacute;n';
+                                    row[4] = elemento.fechaAgendamiento ? elemento.fechaAgendamiento : 'Sin informaci&oacute;n';
+                                    row[5] = elemento.tsCompletado ? elemento.tsCompletado : 'Sin informaci&oacute;n';
+                                    row[6] = elemento.fechaActivacion ? elemento.fechaActivacion : 'Sin informaci&oacute;n';
+                                    row[7] = elemento.estatus ? elemento.estatus : 'Sin informaci&oacute;n';
+                                    row[8] = elemento.estado ? elemento.estado : 'Sin informaci&oacute;n';
+                                    row[9] = elemento.grupoCodificacion ? elemento.grupoCodificacion : 'Sin informaci&oacute;n';
+                                    row[10] = elemento.nivel1 ? elemento.nivel1 : 'Sin informaci&oacute;n';
+                                    row[11] = elemento.nivel2 ? elemento.nivel2 : 'Sin informaci&oacute;n';
+                                    row[12] = elemento.nivel3 ? elemento.nivel3 : 'Sin informaci&oacute;n';
+                                    row[13] = elemento.clusterInstalacion ? elemento.clusterInstalacion : 'Sin informaci&oacute;n';
+                                    row[14] = elemento.regionInstalacion ? elemento.regionInstalacion : 'Sin informaci&oacute;n';
+                                    row[15] = elemento.plaza ? elemento.plaza : 'Sin informaci&oacute;n';
+                                    row[16] = elemento.repetido ? elemento.repetido : 'Sin informaci&oacute;n';
+                                    row[17] = elemento.distritositio ? elemento.distritositio : 'Sin informaci&oacute;n';
+                                    row[18] = elemento.fechacierre ? elemento.fechacierre : 'Sin informaci&oacute;n';
+                                    row[19] = elemento.subTipo ? elemento.subTipo : 'Sin informaci&oacute;n';
+                                    row[20] = elemento.clusterComercial ? elemento.clusterComercial : 'Sin informaci&oacute;n';
+                                    row[21] = elemento.plazaSitio ? elemento.plazaSitio : 'Sin informaci&oacute;n';
+                                    row[22] = elemento.fechaApertura ? elemento.fechaApertura : 'Sin informaci&oacute;n';
+                                    row[23] = elemento.plazaOperacion ? elemento.plazaOperacion : 'Sin informaci&oacute;n';
+                                    arraRow.push(row);
+                                })
+
+                            } else {
+                                toastr.info('No se encontraron datos');
+                            }
+                        } else {
+                            toastr.warning('No se encontraron datos');
+                        }
+                    } else {
+                        toastr.warning(response.data.resultDescripcion);
+                    }
+                } else {
+                    toastr.error('Ha ocurrido un error al consultar el reporte');
+                }
+
+                reporteGenerados = $('#reporteGeneradoss').DataTable({
+                    "paging": true,
+                    "lengthChange": false,
+                    "ordering": true,
+                    "pageLength": 10,
+                    "bDestroy": true,
+                    "info": true,
+                    "scrollX": false,
+                    "data": arraRow,
+                    "autoWidth": false,
+                    "language": idioma_espanol_not_font,
+                    "aoColumnDefs": [
+                        { "aTargets": [23], "bSortable": false }
+                    ]
+                });
+                swal.close();
+            })
+        }
+    }
+
+    $scope.descargarReporteGenerados = function() {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        let clustersparam = $("#jstree-proton-generados").jstree("get_selected", true)
+            .filter(e => e.original.nivel == $scope.nfiltrogeografiaInstEmp)
+            .map(e => e.original.nombre);
+
+        if (clustersparam.length === 0) {
+            mensaje += '<li>Seleccione geograf&iacute;a.</li>';
+            isValid = false
+        }
+
+        if ($("#tipo_reporte_generados").val() == 'semana' && !$scope.weekDateObjectReport.generados) {
+            mensaje += '<li>Seleccione semana</li>';
+            isValid = false
+        }
+
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('generados');
+            let params = {
+                tiposOrden: [55, 91, 93],
+                clusters: clustersparam,
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin,
+                sheet: "Reporte generados",
+                tipoExcel: 'reportesf-generados-pi',
+                headers: ["CUENTA", "TICKET", "OS", "PRIMERA FECHA", "FECHA AGENDADA", "TS COMPLETADO", "FECHA ACTIVACION", "ESTATUS", "ESTADO", "GRUPO CODIFICACION", 
+                "NIVEL 1", "NIVEL 2", "NIVEL 3", "CLUSTER INSTALACION","REGION INSTALACION", "PLAZA", "REPETIDO", "DISTRITO SITIO", "FECHA CIERRE", "SUBTIPO", "CLUSTER COMERCIAL", "PLAZA SITIO", "FECHA APERTURA", "PLAZA OPERACION"],
+                valores: ["numerocuenta", "numeroTicket", "folio", "primerFechaAgendamiento", "fechaAgendamiento", "tsCompletado", "fechaActivacion", "estatus", "estado", "grupoCodificacion", 
+                "nivel1", "nivel2", "nivel3", "clusterInstalacion", "regionInstalacion", "plaza", "repetido", "distritositio", "fechacierre", "subTipo", "clusterComercial", "plazaSitio", "fechaApertura", "plazaOperacion"]
+            }
+            if ($scope.resultReporteGenerados && $scope.resultReporteGenerados > 0) {
+                $scope.downloadReport(params, 'reporteGenerados', 'generados');
             } else {
                 toastr.info('No se encontraron datos para la descarga');
             }

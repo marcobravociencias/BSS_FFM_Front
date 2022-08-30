@@ -19,6 +19,12 @@ public interface ReporteSFService {
   public ServiceResponseResult consultaReporteCompletosResidencial(String params);
   
   public ServiceResponseResult consultaReporteCompletosEmpresarial(String params);
+  
+  public ServiceResponseResult consultarReporteSitiosFibrados(String params);
+  
+  public ServiceResponseResult consultarReporteRedesSociales(String params);
+  
+  public ServiceResponseResult consultarReporteGenerados(String params);
 
   
 }

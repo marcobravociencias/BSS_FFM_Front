@@ -40,4 +40,22 @@ public class ConstReporteSF implements Serializable{
   @Value("${consultaReporteCompletosEmpresarial}")
   private String consultaReporteCompletosEmpresarial;
   
+  @Value("${consultaReporteSitiosFibrados}")
+  private String consultaReporteSitiosFibrados;
+  
+  @Value("${exportaReporteSitiosFibrados}")
+  private String exportaReporteSitiosFibrados;
+  
+  @Value("${consultaReporteRedesSociales}")
+  private String consultaReporteRedesSociales;
+  
+  @Value("${exportaReporteRedesSociales}")
+  private String exportaReporteRedesSociales;
+  
+  @Value("${consultaReporteGenerados}")
+  private String consultaReporteGenerados;
+  
+  @Value("${exportaReporteGenerados}")
+  private String exportaReporteGenerados;
+  
 }
