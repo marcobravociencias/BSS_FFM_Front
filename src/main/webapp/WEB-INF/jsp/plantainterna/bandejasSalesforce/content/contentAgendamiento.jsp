@@ -98,7 +98,7 @@
             </div>
         </div>
         <div class="">
-            <textarea class="form-control textarea-agendamiento inputFormAgendamiento" id="entreCallesAgendamiento" rows="2" id=""></textarea>
+            <textarea ng-model="elementoCSP.entrecalles" class="form-control textarea-agendamiento inputFormAgendamiento" id="entreCallesAgendamiento" rows="2" id=""></textarea>
         </div>
         <div class="container-fluid agendamiento-content">
             <div class="">
@@ -106,7 +106,7 @@
             </div>
         </div>
         <div class="">
-            <textarea class="form-control textarea-agendamiento inputFormAgendamiento" id="referenciasAgendamiento" rows="2" id=""></textarea>
+            <textarea ng-model="elementoCSP.referencias" class="form-control textarea-agendamiento inputFormAgendamiento" id="referenciasAgendamiento" rows="2" id=""></textarea>
         </div>
         <div class="col-12">
             <div class="row">

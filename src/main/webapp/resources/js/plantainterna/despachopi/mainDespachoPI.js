@@ -52,6 +52,7 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
         $scope.accionReAsignacionOtPermiso = false
         $scope.isConsultarConteoAlertas = false
         $scope.accionDetalleSalesforce = false;
+        $scope.keyValidateEstatusTecnico=undefined;
 
         $scope.filtrosGeneral = {}
         $scope.listadoOtsPendientes = []
@@ -253,7 +254,7 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
 
                     let data_tecnico = $scope.listadoTecnicosGeneral.find((e) => e.idTecnico == parseInt(event.resourceId))
                     if ($scope.validate_time_asignacion(fecha_asignacion)) {
-                        if ($scope.validate_status_tecnico(data_tecnico.idEstatusTecnico) && $scope.validate_geografia_intervencion(event, data_tecnico)) {
+                        if ($scope.validate_status_tecnico(data_tecnico.idEstatusTecnico,'asignar') && $scope.validate_geografia_intervencion(event, data_tecnico)) {
                             $scope.abrirModalAsignacion(otinfo, data_tecnico);
                         } else {
                             $scope.refrescarBusqueda();
@@ -268,7 +269,7 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
 
                     let data_tecnico = $scope.listadoTecnicosGeneral.find((e) => e.idTecnico == parseInt(event.resourceId))
                     if ($scope.validate_time_asignacion(event.start.format())) {
-                        if ($scope.validate_status_tecnico(data_tecnico.status) && $scope.validate_geografia_intervencion(event, data_tecnico)) {
+                        if ($scope.validate_status_tecnico(data_tecnico.idEstatusTecnico,'reasignar') && $scope.validate_geografia_intervencion(event, data_tecnico)) {
                             $scope.abrirModalReAsignacion(event, data_tecnico);
                         } else {
                             $scope.refrescarBusqueda();
@@ -381,36 +382,23 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
                 return true;
             }
         }
-        $scope.validate_status_tecnico = function (status) {
-            var result = true;
-            if (status == 3 || status == 5 || status == 6 || status == 7 || status == 8) {
-                let stringmensaje = ""
-                switch (status) {
-                    case 3:
-                        stringmensaje = "El t\u00E9cnico se encuentra en d\u00EDa libre."
-                        break;
-                    case 5:
-                        stringmensaje = "El t\u00E9cnico se encuentra de Vacaciones."
-                        break;
-                    case 6:
-                        stringmensaje = "El t\u00E9cnico se encuentra en Almacen."
-                        break;
-                    case 7:
-                        stringmensaje = "El t\u00E9cnico se encuentra Fuera de servicio."
-                        break;
-                    case 8:
-                        stringmensaje = "El t\u00E9cnico se encuentra como apoyo t\u00E9cnico."
-                        break;
-                    default:
-                        stringmensaje = "Error no previsto, por favor intentelo de nuevo."
-                        break;
+        $scope.validate_status_tecnico = function (status,accionEvento) {
+            console.log("accionEvento ", accionEvento )
+            let accionText=accionEvento;
+            let estatusTecnico=angular.copy($scope.listadoEstatusTecnico.find(function(e){return e.id == status }) )
+
+            var isValidateEstatusTecnico = true;
+            let estatusTecnicosValidate=$scope.keyValidateEstatusTecnico ? $scope.keyValidateEstatusTecnico : []
+            if( estatusTecnicosValidate == undefined ||  estatusTecnicosValidate.length<= 0 ){                
+                toastr.info("No tienes estatus de t\u00E9cnicos configurados");
+                isValidateEstatusTecnico=false
+            }else{
+                if( !estatusTecnicosValidate.includes(status+'') ){
+                    isValidateEstatusTecnico=false;
+                    toastr.info(`No puedes ${accionText} por el estatus del t\u00E9cnico <br/> *${estatusTecnico.nombre}`);
                 }
-                result = false;
-
-                toastr.info(stringmensaje);
-
             }
-            return result;
+            return isValidateEstatusTecnico;
         }
 
         $scope.validate_geografia_intervencion = function (event, tecnico) {
@@ -1089,6 +1077,8 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
                 let resultConf = results[3].data.result
                 if (resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves) {
                     let llavesResult = results[3].data.result.MODULO_ACCIONES_USUARIO.llaves;
+                    $scope.keyValidateEstatusTecnico=llavesResult.KEY_VALIDATE_ESTATUS_TECNICO ? llavesResult.KEY_VALIDATE_ESTATUS_TECNICO.split(",") : [] ;
+
 
                     $scope.nfiltrogeografia = llavesResult.N_FILTRO_GEOGRAFIA
                     $scope.nfiltrointervenciones = llavesResult.N_FILTRO_INTERVENCIONES

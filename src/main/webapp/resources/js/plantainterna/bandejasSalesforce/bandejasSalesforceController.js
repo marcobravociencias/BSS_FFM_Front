@@ -854,8 +854,11 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         		"confirmacion":"0", 
         		"distribuidor":"",
         		"idTicketSF": "",
-        		"posventa": false	
-        };
+        		"posventa": false,
+                "folioCsp":$scope.elementoCSP.name,
+                "entrecalles":$scope.elementoCSP.entrecalles,
+                "referencias":$scope.elementoCSP.referencias
+        };    
 
         if ($("#comentariosAgendamiento").val() == undefined || $("#comentariosAgendamiento").val() == '') {
 			$("#comentariosAgendamiento").addClass("campoNoValido");
@@ -936,13 +939,16 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                                 swal.close();
                             }else{
                                 objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
-                            	mostrarMensajeInformativo(response.data.resultDescripcion);
-                            	swal.close();
+                            	//mostrarMensajeInformativo(response.data.resultDescripcion);
+                                swal({type: "error", title:"Aviso", text:response.data.resultDescripcion});
+
                             }
                         }else{
                             objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
-                        	mostrarMensajeWarningValidacion("Error interno en el servidor.");
-                        	swal.close();
+                        	//mostrarMensajeWarningValidacion("Error interno en el servidor.");
+                            swal({type: "error", title:"Aviso", text:"Ha ocurrido un error al agendar"});
+
+
                         }
                 	});
                 }

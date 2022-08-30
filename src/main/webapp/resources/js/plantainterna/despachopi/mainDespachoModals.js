@@ -49,8 +49,8 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
     $scope.listOrdenesPE = [];
 
     $scope.listadoCatalogoAcciones = []
-    $('#modalAsignacionOrdenTrabajo,#modalReAsignacionOrdenTrabajo,#modalMaterialesOperario,#modalVehiculoOperario,#odalUbicacionOperario,#modalStatusOperario,#modalOtsTrabajadas')
-        .on("hidden.bs.modal", function () {
+    //$('#modalAsignacionOrdenTrabajo,#modalReAsignacionOrdenTrabajo,#modalMaterialesOperario,#modalVehiculoOperario,#odalUbicacionOperario,#modalStatusOperario,#modalOtsTrabajadas')
+    $('#lAsig').on("hidden.bs.modal", function () {
             $("#buscar-otsasignadas").trigger('click')
         });
 
@@ -507,41 +507,8 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         }
     }
 
-    $scope.isConsultaPrimeraVezEstatus = false;
 
     abrirCambioEstatusTecnico = function (idOperario) {
-
-        if (!$scope.isConsultaPrimeraVezEstatus) {
-            let params = {
-                "tipoRequest": "estatusTecnico"
-            }
-            mainDespachoService.consultarCatalogoEstatusTecnico(params).then(function success(response) {
-                if (response.data !== undefined) {
-                    if (response.data.respuesta) {
-                        if (response.data.result.detalleTiposOrden !== undefined && response.data.result.detalleTiposOrden.length > 0) {
-                            $scope.isConsultaPrimeraVezEstatus = true;
-                            //$scope.listadoOtsPendientes=otspendientes           
-                            $scope.listadoEstatusTecnico = response.data.result.detalleTiposOrden
-                            $scope.listadoEstatusTecnico = $scope.listadoEstatusTecnico.map(e => { e.descripcion = e.nombre; return e; });
-                            $scope.elementEstatusTecnico.status = null
-                            $scope.elementEstatusTecnico.comentario = ''
-
-                            $scope.elementEstatusTecnico.tecnico = angular.copy(
-                                $scope.listadoTecnicosGeneral.find((e) => e.idTecnico == idOperario)
-                            );
-
-                            if ($scope.listadoEstatusTecnico && $scope.listadoEstatusTecnico.length > 0) {
-                                $("#modalStatusOperario").modal('show')
-                                let optionTempSelected = $scope.listadoEstatusTecnico.find(function (e) {
-                                    return e.id == parseInt($scope.elementEstatusTecnico.tecnico.idEstatusTecnico);
-                                })
-                                $scope.elementEstatusTecnico.status = optionTempSelected
-                            }
-                        }
-                    }
-                }
-            }).catch(err => handleError(err))
-        } else {
             $scope.elementEstatusTecnico.status = null
             $scope.elementEstatusTecnico.comentario = ''
 
@@ -557,12 +524,21 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 $scope.elementEstatusTecnico.status = optionTempSelected;
             }
             $scope.$apply();
-        }
-
-
-
     }
 
+    $scope.consultaEstatusTecnicos=function(){
+        mainDespachoService.consultarCatalogoEstatusTecnico({"tipoRequest": "estatusTecnico" }).then(function success(response) {
+            if (response.data !== undefined) {
+                if (response.data.respuesta) {
+                    if (response.data.result.detalleTiposOrden !== undefined && response.data.result.detalleTiposOrden.length > 0) {
+                        $scope.listadoEstatusTecnico = response.data.result.detalleTiposOrden
+                        $scope.listadoEstatusTecnico = $scope.listadoEstatusTecnico.map(e => { e.descripcion = e.nombre; return e; });                      
+                    }
+                }
+            }
+        }).catch(err => handleError(err))
+    }
+    $scope.consultaEstatusTecnicos()
     let tableOtsTecnico;
     abrirOtsTrabajadas = function (idTecnico) {
         let tecnico = $scope.listadoTecnicosGeneral.find(e => { return e.idTecnico == idTecnico })
@@ -971,13 +947,15 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
         let mensajeEnvio = 'Ha ocurrido un error al cambiar el estatus del t\u00E9cnico ' + $scope.elementEstatusTecnico.tecnico.nombreCompleto + ' a ' + $scope.elementEstatusTecnico.status.descripcion;
         mainDespachoService.cambiarEstatusTecnicoPI(params).then(function success(response) {
 
-            $("#modalStatusOperario").modal('hide')
             if (response.data !== undefined) {
                 if (response.data.respuesta) {
                     if (response.data.codigoEstatusService == 201) {
                         mensajeEnvio = 'Se cambio el estatus del t\u00E9cnico ' + $scope.elementEstatusTecnico.tecnico.nombreCompleto + ' a ' + $scope.elementEstatusTecnico.status.descripcion;
                         objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
                         toastr.success(response.data.result.description);
+                        $("#modalStatusOperario").modal('hide')
+                        $("#buscar-otsasignadas").trigger('click')
+
                     } else {
                         objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
                         toastr.warning("No se pudo actualizar estatus ");
@@ -1782,9 +1760,11 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
                 switch ($scope.tipoaccioncambioestatus) {
                     case 'asigna':
                         $("#modalAsignacionOrdenTrabajo").modal('hide')
+                        $scope.refrescarBusqueda()
                         break;
                     case 'reasigna':
                         $("#modalReAsignacionOrdenTrabajo").modal('hide')
+                        $scope.refrescarBusqueda()
                         break;
                     default:
                         $("#modalDetalleOT").modal('hide')
