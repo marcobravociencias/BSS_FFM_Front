@@ -1,10 +1,7 @@
-#container_terceros_generic {
-    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
-    padding: 0.5em 0 1em 0 !important;
-    background: white;
-    border-radius: .5em;
-    margin-top: 1em;
-    height: 80vh;
+.container-filtros-generic {
+    border: none !important;
+    position: relative;
+
 }
 
 .jstree-anchor {
@@ -71,31 +68,24 @@
 .container_informacion_ot {
     /*     box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%); */
     background: white;
-    height: 67vh;
 }
 
 .container_sin_informacion_ot {
-    height: 67vh;
     text-align: center !important;
 }
 
-.containerInformacionDetalleOt {
-    /*     box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%); */
-    background: white;
-    height: 60vh;
-}
+
 
 .container_nav_informacion_ot {
     /*     box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%); */
     background: white;
-    height: 67vh;
     text-align: center !important;
 }
 
 .contenedorBuscadorGeneral {
     display: inline-flex;
-    margin-bottom: 10px;
-    width: 23em;
+    margin: 0.2em 0.8em;
+    width: 25%;
 }
 
 .iconoBusquedaGeneral {
@@ -104,7 +94,7 @@
     position: absolute;
     right: 0;
     top: 30%;
-    margin-right: .5em;
+    margin-right: 2em;
     color: #9d9d9d;
     font-size: .8em;
     background: transparent;
@@ -216,14 +206,6 @@ b.text-no-seleccion-geografia {
     background: #e4e6f2 !important;
     cursor: pointer;
     border-bottom: 2px solid #a4b1ff !important;
-}
-
-.container-filtros-generic {
-    border: none !important;
-    position: relative;
-    padding-right: 0;
-    padding-left: 2em;
-    box-shadow: 0 0.46875rem 2.1875rem rgb(4 9 20 / 1%), 0 0.9375rem 1.40625rem rgb(4 9 20 / 1%), 0 0.25rem 0.53125rem rgb(4 9 20 / 1%), 0 0.125rem 0.1875rem rgb(4 9 20 / 3%);
 }
 
 #todo_filtro,
@@ -492,7 +474,6 @@ h5.title-nombrecliente {
     border: 0px solid #dddddd;
     box-shadow: 0px 0px 5px #878ee04d;
     cursor: pointer;
-    width: 27em;
 }
 
 .title-content {
@@ -536,3 +517,43 @@ h5.title-nombrecliente {
     width: 1.5em !important;
     height: 1.5em !important;
   }
+
+  .detalle-productos-table tbody tr td{
+    font-size: 0.7em;
+    padding: 0.3em;
+    color: #303030;
+  }
+
+  .btn_detalle_servicio,   .btn_detalle_servicio:hover {
+    padding: 0.1em 1em;
+    background: #333e52  !important;
+  }
+
+  #v-tabs-consulta-paquete .table>thead{
+    font-size: 0.8em;
+  }
+
+  .titlemodalproductos{
+    font-size: 0.9em;
+    font-weight: 700;
+  }
+  .text-noSeleccion{
+    font-style: italic;
+    font-size: 0.8em;
+  }
+
+  .text-equipo-paquete{
+    font-size: 0.8em;
+    color: #797979;
+    font-weight: bold;
+  }
+
+  .li_item_modelo{
+    font-size: 0.7em;
+  }
+
+  .row-not-result-detalle-pe .not-result-detallepe {
+    font-style: italic;
+    color: #898989;
+  }
+  

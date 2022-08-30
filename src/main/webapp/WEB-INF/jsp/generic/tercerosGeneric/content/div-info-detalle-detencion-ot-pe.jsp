@@ -29,7 +29,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="container-fluid terceros-content">
-							<div class="container-text-title-detalle-pe etiquetaCampo">
+							<div class="container-text-title-detalle etiquetaCampo">
 								<span class="text-tile-terceros">ID orden</span>
 								<span ng-show="mostrarTooltipDetencion" class="tooltipEtiqueta">ID orden</span>
 							</div>
@@ -43,7 +43,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="container-fluid terceros-content">
-							<div class="container-text-title-detalle-pe etiquetaCampo">
+							<div class="container-text-title-detalle etiquetaCampo">
 								<span class="text-tile-terceros">Folio sistema</span>
 								<span ng-show="mostrarTooltipDetencion" class="tooltipEtiqueta">Folio sistema</span>
 							</div>
@@ -57,7 +57,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="container-fluid terceros-content">
-							<div class="container-text-title-detalle-pe etiquetaCampo">
+							<div class="container-text-title-detalle etiquetaCampo">
 								<span class="text-tile-terceros">Clave cliente</span>
 								<span ng-show="mostrarTooltipDetencion" class="tooltipEtiqueta">Clave cliente</span>
 							</div>
@@ -71,7 +71,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="container-fluid terceros-content">
-							<div class="container-text-title-detalle-pe etiquetaCampo">
+							<div class="container-text-title-detalle etiquetaCampo">
 								<span class="text-tile-terceros">Empleado que reporta</span>
 								<span ng-show="mostrarTooltipDetencion" class="tooltipEtiqueta">Empleado que reporta</span>
 							</div>
@@ -87,7 +87,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="container-fluid terceros-content">
-							<div class="container-text-title-detalle-pe etiquetaCampo">
+							<div class="container-text-title-detalle etiquetaCampo">
 								<span class="text-tile-terceros">Unidad de negocio</span>
 								<span ng-show="mostrarTooltipDetencion" class="tooltipEtiqueta">Unidad de negocio</span>
 							</div>
@@ -101,7 +101,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="container-fluid terceros-content">
-							<div class="container-text-title-detalle-pe etiquetaCampo">
+							<div class="container-text-title-detalle etiquetaCampo">
 								<span class="text-tile-terceros">Falla reportada</span>
 								<span ng-show="mostrarTooltipDetencion" class="tooltipEtiqueta">Falla reportada</span>
 							</div>
@@ -115,7 +115,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="container-fluid terceros-content">
-							<div class="container-text-title-detalle-pe etiquetaCampo">
+							<div class="container-text-title-detalle etiquetaCampo">
 								<span class="text-tile-terceros">Subfalla reportada</span>
 								<span ng-show="mostrarTooltipDetencion" class="tooltipEtiqueta">Subfalla reportada</span>
 							</div>
@@ -129,7 +129,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="container-fluid terceros-content">
-							<div class="container-text-title-detalle-pe etiquetaCampo">
+							<div class="container-text-title-detalle etiquetaCampo">
 								<span class="text-tile-terceros">Fecha reporte</span>
 								<span ng-show="mostrarTooltipDetencion" class="tooltipEtiqueta">Fecha reporte</span>
 							</div>
@@ -162,7 +162,7 @@
 								<div class="row">
 									<div class="col-md-12">
 										<div class="container-fluid terceros-content">
-											<div class="container-text-title-detalle-pe etiquetaCampoTabla">
+											<div class="container-text-title-detalle etiquetaCampoTabla">
 												<span class="text-tile-terceros">ID GSA</span>
 												<span ng-show="mostrarTooltipDetencion" class="tooltipEtiquetaTabla">ID GSA</span>
 											</div>
@@ -176,7 +176,7 @@
 								<div class="row">
 									<div class="col-md-12">
 										<div class="container-fluid terceros-content">
-											<div class="container-text-title-detalle-pe etiquetaCampoTabla">
+											<div class="container-text-title-detalle etiquetaCampoTabla">
 												<span class="text-tile-terceros">N&uacute;mero cuenta</span>
 												<span ng-show="mostrarTooltipDetencion" class="tooltipEtiquetaTabla">N&uacute;mero cuenta</span>
 											</div>
@@ -190,7 +190,7 @@
 								<div class="row">
 									<div class="col-md-12">
 										<div class="container-fluid terceros-content">
-											<div class="container-text-title-detalle-pe etiquetaCampoTabla">
+											<div class="container-text-title-detalle etiquetaCampoTabla">
 												<span class="text-tile-terceros">Estatus</span>
 												<span ng-show="mostrarTooltipDetencion" class="tooltipEtiquetaTabla">Estatus</span>
 											</div>
@@ -204,7 +204,7 @@
 								<div class="row">
 									<div class="col-md-12">
 										<div class="container-fluid terceros-content">
-											<div class="container-text-title-detalle-pe etiquetaCampoTabla">
+											<div class="container-text-title-detalle etiquetaCampoTabla">
 												<span class="text-tile-terceros">Candado</span>
 												<span ng-show="mostrarTooltipDetencion" class="tooltipEtiquetaTabla">Candado</span>
 											</div>
@@ -218,7 +218,7 @@
 								<div class="row">
 									<div class="col-md-12">
 										<div class="container-fluid terceros-content">
-											<div class="container-text-title-detalle-pe etiquetaCampoTabla">
+											<div class="container-text-title-detalle etiquetaCampoTabla">
 												<span class="text-tile-terceros">Puertos asiganados</span>
 												<span ng-show="mostrarTooltipDetencion" class="tooltipEtiquetaTabla">Puertos asiganados</span>
 											</div>
@@ -232,7 +232,7 @@
 								<div class="row">
 									<div class="col-md-12">
 										<div class="container-fluid terceros-content">
-											<div class="container-text-title-detalle-pe etiquetaCampoTabla">
+											<div class="container-text-title-detalle etiquetaCampoTabla">
 												<span class="text-tile-terceros">Puertos ocupados</span>
 												<span ng-show="mostrarTooltipDetencion" class="tooltipEtiquetaTabla">Puertos ocupados</span>
 											</div>
@@ -246,7 +246,7 @@
 								<div class="row">
 									<div class="col-md-12">
 										<div class="container-fluid terceros-content">
-											<div class="container-text-title-detalle-pe etiquetaCampoTabla">
+											<div class="container-text-title-detalle etiquetaCampoTabla">
 												<span class="text-tile-terceros">Puertos totales</span>
 												<span ng-show="mostrarTooltipDetencion" class="tooltipEtiquetaTabla">Puertos totales</span>
 											</div>

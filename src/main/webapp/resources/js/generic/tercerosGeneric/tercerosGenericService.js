@@ -96,28 +96,6 @@ app.service("tercerosGenericService", function ($http) {
 		});
 	}
 
-	this.consultarComentariosOt=function(params){
-		return $http({
-			method: "post",
-			url: "req/consultarComentariosDespachoOT",
-			data:JSON.stringify(params),
-            headers : {
-                'Content-Type' : 'application/json'
-            }
-		});
-	}
-
-	this.agregarComentariosOt = function (params) {
-        return $http({
-            method: "post",
-            url: "req/agregarComentariosOt",
-            data: JSON.stringify(params),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-    }
-
 	this.consultarResumenPaquete = function (params) {
 		return $http({
 			method: "post",
@@ -138,5 +116,48 @@ app.service("tercerosGenericService", function ($http) {
             transformRequest: angular.identity
 		});
 	}
+
+	this.consultarDetalleEquiposServicios = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultarDetalleEquiposBandejasSF",
+            data: JSON.stringify(params),
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
+            transformRequest: angular.identity
+        });
+    };
+
+	this.actualizarDireccionOt=function(params){
+		return $http({
+			method: "post",
+			url: "req/actualizaDireccionOt",
+			data:JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
+
+	this.consultaDetalleOtPe=function(params){
+		return $http({
+			method: "post",
+			url: "req/consultaDetalleOtPe",
+			data:JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
+	this.consultarCotizacionDespacho=function(params){
+		return $http({
+			method: "post",
+			url: "req/consultarCotizacionDespacho",
+			data:JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
+
 
 })

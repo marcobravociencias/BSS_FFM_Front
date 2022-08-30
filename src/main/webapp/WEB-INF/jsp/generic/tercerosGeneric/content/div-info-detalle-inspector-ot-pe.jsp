@@ -31,7 +31,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="container-fluid terceros-content">
-							<div class="container-text-title-detalle-pe">
+							<div class="container-text-title-detalle">
 								<span class="text-tile-terceros">Fecha reporte</span>
 							</div>
 							<div class="container-text-content-detalle">
@@ -44,7 +44,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="container-fluid terceros-content">
-							<div class="container-text-title-detalle-pe">
+							<div class="container-text-title-detalle">
 								<span class="text-tile-terceros">Empleado que reporta</span>
 							</div>
 							<div class="container-text-content-detalle">
@@ -57,7 +57,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="container-fluid terceros-content">
-							<div class="container-text-title-detalle-pe">
+							<div class="container-text-title-detalle">
 								<span class="text-tile-terceros">Descripci&oacute;n falla</span>
 							</div>
 							<div class="container-text-content-detalle">
@@ -69,7 +69,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="container-fluid terceros-content">
-							<div class="container-text-title-detalle-pe">
+							<div class="container-text-title-detalle">
 								<span class="text-tile-terceros">Descripci&oacute;n detalle falla</span>
 							</div>
 							<div class="container-text-content-detalle">
@@ -81,7 +81,7 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="container-fluid terceros-content">
-							<div class="container-text-title-detalle-pe">
+							<div class="container-text-title-detalle">
 								<span class="text-tile-terceros">Comentarios</span>
 							</div>
 							<div class="container-text-content-detalle">

@@ -8,7 +8,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="container-fluid terceros-content">
-					<div class="container-text-title-detalle-pe">
+					<div class="container-text-title-detalle">
 						<span class="text-tile-terceros">Ticket SD</span>
 					</div>
 					<div class="container-text-content-detalle">
@@ -22,7 +22,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="container-fluid terceros-content">
-					<div class="container-text-title-detalle-pe">
+					<div class="container-text-title-detalle">
 						<span class="text-tile-terceros">Ticket SF</span>
 					</div>
 					<div class="container-text-content-detalle">
@@ -36,7 +36,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="container-fluid terceros-content">
-					<div class="container-text-title-detalle-pe">
+					<div class="container-text-title-detalle">
 						<span class="text-tile-terceros">Clientes residencial</span>
 					</div>
 					<div class="container-text-content-detalle">
@@ -50,7 +50,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="container-fluid terceros-content">
-					<div class="container-text-title-detalle-pe">
+					<div class="container-text-title-detalle">
 						<span class="text-tile-terceros">Clientes TFE</span>
 					</div>
 					<div class="container-text-content-detalle">
@@ -64,7 +64,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="container-fluid terceros-content">
-					<div class="container-text-title-detalle-pe">
+					<div class="container-text-title-detalle">
 						<span class="text-tile-terceros">Clientes empresarial</span>
 					</div>
 					<div class="container-text-content-detalle">
@@ -78,7 +78,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="container-fluid terceros-content">
-					<div class="container-text-title-detalle-pe">
+					<div class="container-text-title-detalle">
 						<span class="text-tile-terceros">Total clientes afectados</span>
 					</div>
 					<div class="container-text-content-detalle">
@@ -94,7 +94,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="container-fluid terceros-content">
-					<div class="container-text-title-detalle-pe">
+					<div class="container-text-title-detalle">
 						<span class="text-tile-terceros">Fecha reporte</span>
 					</div>
 					<div class="container-text-content-detalle">
@@ -108,7 +108,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="container-fluid terceros-content">
-					<div class="container-text-title-detalle-pe">
+					<div class="container-text-title-detalle">
 						<span class="text-tile-terceros">Hora reporte</span>
 					</div>
 					<div class="container-text-content-detalle">
@@ -122,7 +122,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="container-fluid terceros-content">
-					<div class="container-text-title-detalle-pe">
+					<div class="container-text-title-detalle">
 						<span class="text-tile-terceros">Asunto</span>
 					</div>
 					<div class="container-text-content-detalle">
@@ -136,7 +136,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="container-fluid terceros-content">
-					<div class="container-text-title-detalle-pe">
+					<div class="container-text-title-detalle">
 						<span class="text-tile-terceros">Descripi&oacute;n</span>
 					</div>
 					<div class="container-text-content-detalle">

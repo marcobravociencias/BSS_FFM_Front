@@ -8,7 +8,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="container-fluid terceros-content">
-					<div class="container-text-title-detalle-pe">
+					<div class="container-text-title-detalle">
 						<span class="text-tile-terceros">OT</span>
 					</div>
 					<div class="container-text-content-detalle">
@@ -22,7 +22,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="container-fluid terceros-content">
-					<div class="container-text-title-detalle-pe">
+					<div class="container-text-title-detalle">
 						<span class="text-tile-terceros">Tipo orden</span>
 					</div>
 					<div class="container-text-content-detalle">
@@ -36,7 +36,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="container-fluid terceros-content">
-					<div class="container-text-title-detalle-pe">
+					<div class="container-text-title-detalle">
 						<span class="text-tile-terceros">Subtipo orden</span>
 					</div>
 					<div class="container-text-content-detalle">
@@ -50,7 +50,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="container-fluid terceros-content">
-					<div class="container-text-title-detalle-pe">
+					<div class="container-text-title-detalle">
 						<span class="text-tile-terceros">Estatus</span>
 					</div>
 					<div class="container-text-content-detalle">
@@ -64,7 +64,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="container-fluid terceros-content">
-					<div class="container-text-title-detalle-pe">
+					<div class="container-text-title-detalle">
 						<span class="text-tile-terceros">Estado</span>
 					</div>
 					<div class="container-text-content-detalle">
@@ -80,7 +80,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="container-fluid terceros-content">
-					<div class="container-text-title-detalle-pe">
+					<div class="container-text-title-detalle">
 						<span class="text-tile-terceros">Fecha agendamiento</span>
 					</div>
 					<div class="container-text-content-detalle">
@@ -94,7 +94,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="container-fluid terceros-content">
-					<div class="container-text-title-detalle-pe">
+					<div class="container-text-title-detalle">
 						<span class="text-tile-terceros">Nivel uno</span>
 					</div>
 					<div class="container-text-content-detalle">
@@ -108,7 +108,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="container-fluid terceros-content">
-					<div class="container-text-title-detalle-pe">
+					<div class="container-text-title-detalle">
 						<span class="text-tile-terceros">Nivel dos</span>
 					</div>
 					<div class="container-text-content-detalle">
@@ -122,7 +122,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="container-fluid terceros-content">
-					<div class="container-text-title-detalle-pe">
+					<div class="container-text-title-detalle">
 						<span class="text-tile-terceros">Nivel urgencia</span>
 					</div>
 					<div class="container-text-content-detalle">
@@ -136,7 +136,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="container-fluid terceros-content">
-					<div class="container-text-title-detalle-pe">
+					<div class="container-text-title-detalle">
 						<span class="text-tile-terceros">Localizaci&oacute;n</span>
 					</div>
 					<div class="container-text-content-detalle">

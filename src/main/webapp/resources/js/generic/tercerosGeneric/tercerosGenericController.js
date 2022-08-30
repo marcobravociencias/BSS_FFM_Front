@@ -1,5 +1,7 @@
 var app = angular.module('tercerosGenericApp', []);
 app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercerosGenericService', 'genericService', function ($scope, $q, $filter, tercerosGenericService, genericService) {
+	app.mapasTercerosController($scope, tercerosGenericService)
+	var objectTempAccion;
 
 	let tablaOtsConsultaGeneral;
 	$scope.mostrarNavAccionesDetalleOtPendiente = false;
@@ -15,6 +17,19 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 	$scope.elementoPlazaComercial = {};
 	$scope.elementoRescate = {};
 	$scope.listadoTecnicosGeneral = [];
+	$scope.detencionVistaModal = null;
+
+	var arrayColors = [
+		'#D32F2F',
+		'#7B1FA2',
+		'#303F9F',
+		'#00796B',
+		'#388E3C',
+		'#455A64',
+		'#795548',
+		'#616161',
+		'#0097A7'
+	]
 
 
 	$('.drop-down-filters').on("click.bs.dropdown", function (e) {
@@ -259,8 +274,6 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 		let window_height = $(window).height();
 		let elementsPagina;
 		if (window_height <= 670) {
-			elementsPagina = 2;
-		} else if (window_height <= 870) {
 			elementsPagina = 3;
 		} else {
 			elementsPagina = 4;
@@ -383,6 +396,9 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 	}
 
 	$scope.consultarOTsTercerosGeneric = function () {
+		$scope.mostrarNavAccionesDetalleOtPendiente = false;
+		$(".card-style").css("border-left", "none");
+		$scope.detalleOtPendienteSelected = {};
 		let message = '';
 		let turnosdisponiblescopy = $scope.filtrosGeneral.turnosdisponibles.filter(e => e.checkedOpcion).map(e => e.id)
 		let intervenciones = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.tipoOrdenes, $scope.nFiltroIntervenciones);
@@ -444,17 +460,15 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 				if (response.data.respuesta) {
 					if (response.data.result) {
 						if (response.data.result.detalleOrdenes) {
-
 							$scope.listadoOts = response.data.result.detalleOrdenes
 							let indexot = 0
 							$scope.listadoOts.map((e) => {
 								indexot++
-								e.colorOrden = e.colorOrden != undefined && e.colorOrden ? e.colorOrden : arrayColors[$scope.randomIntFromInterval()]
+								e.colorOrden = e.colorOrden && e.colorOrden != undefined ? e.colorOrden : arrayColors[$scope.randomIntFromInterval()]
 								return e
 							})
-							let tableelemetn = ''
-							let htmlImagenesIconos = ''
-
+							let tableelemetn = '';
+							let htmlImagenesIconos = '';
 							angular.forEach($scope.listadoOts, function (otpendiente, index) {
 								htmlImagenesIconos = $scope.categoriaIconos(otpendiente)
 								let horas = (otpendiente.horasViva == undefined || otpendiente.horasViva == '') ? -1 : parseInt(otpendiente.horasViva)
@@ -543,6 +557,7 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 							</tr>	
 							`
 								row[0] = tableelemetn;
+								console.log(row)
 								arrayRow.push(row);
 							})
 
@@ -598,6 +613,7 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 		$(".card-style").css("border-left", "none");
 		$("#idotpendiente" + ot).css("border-left", "2px solid  #3942d7");
 		$scope.mostrarNavAccionesDetalleOtPendiente = true;
+		$scope.detencionVistaModal = true;
 		$scope.detalleOtPendienteSelected = $scope.listadoOts.find((e) => e.idOrden == ot)
 		$scope.listadoMotivosRescate = $scope.estatusCambio.filter(e => { return e.idPadre === 212 })
 		$scope.listadoMotivosCalendarizado = $scope.estatusCambio.filter(e => { return e.idPadre === 243 })
@@ -621,7 +637,8 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 		$scope.comentariosOrdenTrabajo = [];
 		$scope.historialOrdenTrabajo = [];
 		$scope.infoOtDetalle = {}
-		$scope.detalleCotizacion = {}
+		$scope.responseServicios = null;
+		$scope.detalleCotizacion = null
 		$scope.detalleTecnicoOt = {};
 		$scope.infoDetalleOtPe = {}
 		swal({ text: 'Consultando detalle de la OT ...', allowOutsideClick: false });
@@ -852,7 +869,7 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 			let params = {
 				"idOt": $scope.detalleOtPendienteSelected.idOrden
 			}
-			tercerosGenericService.consultarComentariosOt(params).then(function success(response) {
+			genericService.consultarComentariosDespachoOT(params).then(function success(response) {
 				swal.close()
 				if (response.data !== undefined) {
 					if (response.data.respuesta) {
@@ -879,22 +896,23 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 	}
 
 	$scope.addComentariosOt = function () {
-		if ($scope.comentarios.trim() !== '' && !/^\s/.test($scope.comentarios)) {
+		let comentarios = $("#comentarioOt").val();
+		if (comentarios.trim() !== '' && !/^\s/.test(comentarios)) {
 
 			let params = {
 				idOrden: $scope.detalleOtPendienteSelected.idOrden,
-				comentario: $scope.comentarios,
+				comentario: comentarios,
 				origenSistema: 1
 			}
 
 			swal({ text: 'Espere un momento ...', allowOutsideClick: false });
 			swal.showLoading();
 
-			tercerosGenericService.agregarComentariosOt(params).then(function success(response) {
+			genericService.agregarComentariosOt(params).then(function success(response) {
 				swal.close();
 				if (response.data !== undefined) {
 					if (response.data.respuesta) {
-						$scope.comentarios = '';
+						$("#comentarioOt").val("");
 						$scope.comentariosOrdenTrabajo = [];
 						$(".chat-area").scrollTop(0);
 						$scope.consultarComentarios();
@@ -907,161 +925,38 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 			}).catch(err => handleError(err))
 
 		} else {
-			$scope.comentarios = '';
+			$("#comentarioOt").val("");
 			document.getElementById('comentarioOt').value = '';
 			toastr.warning('Intoducir un comentario.')
 		}
 	}
 
 	$scope.obtenerPaquete = function () {
-		if (!$scope.flagPaquete) {
-			$scope.selectedEquipoPaquete = {}
-			$scope.isConsultaEquiposModelos = false;
-			$scope.listDetalleEquipos = [];
-			let osOtSelected = '';
-			if ($scope.estatusModals == 'PENDIENTE') {
-				osOtSelected = $scope.detalleOtPendienteSelected.folioOrden
-			}
-
-			if ($scope.estatusModals == 'ASIGNADA')
-				osOtSelected = $scope.detalleOtAsignadaSelected.folioOrden
-
+		if (!$scope.responseServicios) {
+			$scope.selectedEquipoPaquete = null;
 			let params = {
-				folio: osOtSelected
+				folio: $scope.detalleOtPendienteSelected.folioOrden
 			}
 			swal({ text: 'Espere un momento ...', allowOutsideClick: false });
 			swal.showLoading();
 			$scope.responseServicios = {}
 			tercerosGenericService.consultarResumenPaquete(params).then(response => {
 				swal.close()
-				$scope.flagPaquete = true;
 				if (response.data.respuesta) {
 					if (response.data.result) {
 						if (response.data.result.resumenPaquete != undefined) {
 							$scope.responseServicios = response.data.result.resumenPaquete
 						} else {
-
+							toastr.warning('No se encontraron datos');
 						}
+					} else {
+						toastr.warning(response.data.resultDescripcion);
 					}
 				} else {
-					mostrarMensajeErrorAlert(response.data.resultDescripcion)
+					toastr.error('Ha ocurrido un error en la consulta de los datos');
 				}
 			}).catch(err => handleError(err));
 		}
-	}
-
-	$scope.mostrarVistaModificarDireccion = function (lat, long) {
-		$("#txtBuscadorDireccionMap").val("");
-		$scope.verModDireccionOT = true;
-		$scope.latitudModDireccionOt = lat;
-		$scope.longitudModDireccionOt = long;
-
-		if (!$scope.isMapaCambioDireccionOTMod) {
-			$scope.isMapaCambioDireccionOTMod = true;
-
-			mapaCambioDireccionOTMod = new google.maps.Map(document.getElementById("content-mapa-cambio-direccion-mod"), {
-				center: {
-					lat: parseFloat(lat),
-					lng: parseFloat(long)
-				},
-				mapTypeControlOptions: {
-					style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-					position: google.maps.ControlPosition.BOTTOM_LEFT,
-				},
-				zoomControlOptions: {
-					position: google.maps.ControlPosition.BOTTOM_LEFT,
-				},
-				streetViewControlOptions: {
-					position: google.maps.ControlPosition.RIGHT_CENTER,
-				},
-				mapTypeControl: false,
-				zoom: 15
-			});
-			mostrarMarkerBusquedaDireccion();
-		}
-
-		if (markerResMod !== undefined && markerResMod !== null) {
-			markerResMod.setMap(null);
-			markerResMod = null;
-		}
-
-		markerResMod = new google.maps.Marker({
-			map: mapaCambioDireccionOTMod,
-			draggable: true,
-			animation: google.maps.Animation.DROP,
-			title: "Dirección de la OT",
-			position: {
-				lat: parseFloat(lat),
-				lng: parseFloat(long)
-			}
-		});
-
-		var ubicacionCenter = new google.maps.LatLng(lat, long);
-		mapaCambioDireccionOTMod.setCenter(ubicacionCenter);
-		mapaCambioDireccionOTMod.setZoom(15);
-
-		google.maps.event.addListener(markerResMod, "dragend", function (event) {
-			$("#txtBuscadorDireccionMap").val(this.getPosition().lat() + ", " + this.getPosition().lng());
-			$scope.latitudModDireccionOt = this.getPosition().lat();
-			$scope.longitudModDireccionOt = this.getPosition().lng();
-			$scope.$apply();
-		});
-	}
-
-	function mostrarMarkerBusquedaDireccion() {
-		var input = document.getElementById("txtBuscadorDireccionMap");
-		var searchBox = new google.maps.places.SearchBox(input);
-
-		mapaCambioDireccionOTMod.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-		mapaCambioDireccionOTMod.addListener("bounds_changed", function () {
-			searchBox.setBounds(mapaCambioDireccionOTMod.getBounds());
-		});
-
-		searchBox.addListener("places_changed", function () {
-			var places = searchBox.getPlaces();
-
-			if (places.length == 0) {
-				return;
-			}
-
-			markerResMod.setMap(null);
-			markerResMod = null;
-
-			var bounds = new google.maps.LatLngBounds();
-
-			places.forEach(function (place) {
-				if (!place.geometry || !place.geometry.location) {
-					console.log("Returned place contains no geometry");
-					return;
-				}
-
-				markerResMod = new google.maps.Marker({
-					map: mapaCambioDireccionOTMod,
-					draggable: true,
-					animation: google.maps.Animation.DROP,
-					title: "Dirección de la OT",
-					position: place.geometry.location,
-				});
-
-				$scope.latitudModDireccionOt = place.geometry.location.lat();
-				$scope.longitudModDireccionOt = place.geometry.location.lng();
-				$scope.$apply();
-
-				google.maps.event.addListener(markerResMod, "dragend", function (event) {
-					$("#txtBuscadorDireccionMap").val(this.getPosition().lat() + ", " + this.getPosition().lng());
-					$scope.latitudModDireccionOt = this.getPosition().lat();
-					$scope.longitudModDireccionOt = this.getPosition().lng();
-					$scope.$apply();
-				});
-
-				if (place.geometry.viewport) {
-					bounds.union(place.geometry.viewport);
-				} else {
-					bounds.extend(place.geometry.location);
-				}
-			});
-			mapaCambioDireccionOTMod.fitBounds(bounds);
-		});
 	}
 
 	$scope.cambioStatus = function (tipo) {
@@ -1476,7 +1371,186 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 		}).catch(err => handleError(err));
 	}
 
+	$scope.consultarDetalleServicio = function (servicio, idCSP) {
+		if (!$scope.selectedEquipoPaquete) {
+			swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
+			swal.showLoading();
+			$scope.responseServicios.productos = [];
+			$scope.listDetalleEquipos = [];
+			$scope.responseServicios.productos = servicio.productos;
+			let params = {
+				'idCotSitioPlan': idCSP
+			}
 
+			//$scope.responseServicios
+			tercerosGenericService.consultarDetalleEquiposServicios(params).then(function success(response) {
+				console.log(response)
+				if (response.data) {
+					if (response.data.respuesta) {
+						if (response.data.result) {
+
+							if (response.data.result.detalleEquipos.length) {
+								let listadoEquipos = angular.copy(response.data.result.detalleEquipos);
+								if ($scope.responseServicios != undefined &&
+									$scope.responseServicios.resumenServicios != undefined && $scope.responseServicios.resumenServicios.length > 0) {
+									$scope.responseServicios.resumenServicios = $scope.responseServicios.resumenServicios.map(function (e) {
+										e.elementoEquipoModelos = {}
+										e.isTieneEquipoModeos = false;
+										return e;
+									})
+									listadoEquipos.forEach(function (elem, index) {
+										let servicioTemp = $scope.responseServicios.resumenServicios.find(function (e) { return e.id == elem.idCotPlanServicio })
+										if (servicioTemp != undefined) {
+											servicioTemp.elementoEquipoModelos = elem
+											servicioTemp.isTieneEquipoModeos = true;
+										}
+									});
+								}
+								swal.close();
+							} else {
+								mostrarMensajeInformativo("No se encontraron Equipos");
+								swal.close();
+							}
+						} else {
+							mostrarMensajeErrorAlert(response.data.resultDescripcion);
+							swal.close();
+						}
+					} else {
+						mostrarMensajeErrorAlert(response.data.resultDescripcion);
+						swal.close();
+					}
+				} else {
+					mostrarMensajeErrorAlert(response.data.resultDescripcion);
+					swal.close();
+				}
+			});
+		}
+		$scope.selectedEquipoPaquete = servicio
+	}
+
+	$scope.regresarVistaCambioDireccion = function () {
+		$scope.verModDireccionOT = false;
+	}
+
+	$scope.guardarCambioDireccion = function () {
+		let codigoRegex = /^[0-9]{5,6}$/;
+
+		if ($.trim($scope.infoOtDetalle.direccion.codigoPostal) == '' || !codigoRegex.test($scope.infoOtDetalle.direccion.codigoPostal)) {
+			toastr.warning('Ingresa un c&oacute;digo postal valido');
+			return false;
+		}
+
+		swal({
+			title: 'Comentarios',
+			input: 'textarea',
+			closeOnClickOutside: false,
+			inputAttributes: {
+				autocapitalize: 'off'
+			},
+			showCancelButton: true,
+			confirmButtonText: 'Guardar'
+		}).then((result) => {
+
+			if (result) {
+				let params = {
+					codigoPostal: $scope.infoOtDetalle.direccion.codigoPostal,
+					latitud: $scope.latitudModDireccionOt,
+					longitud: $scope.longitudModDireccionOt,
+					comentarios: result,
+					idOrdenTrabajo: $scope.infoOtDetalle.idOrden,
+				}
+				swal({ text: 'Cambiando estatus de la OT ...', allowOutsideClick: false });
+				swal.showLoading();
+				let tituloAccion = "Cambiar direcci\u00F3n de OT";
+				let mensajeEnvio = 'Ha ocurrido un error al cambiar la direcci\u00F3n de la OT: ' + params.idOrdenTrabajo;
+				tercerosGenericService.actualizarDireccionOt(params).then(function success(response) {
+					swal.close()
+					if (response.data !== undefined) {
+						if (response.data.respuesta) {
+							if (response.data.result) {
+								$scope.infoOtDetalle.direccion.longitud = $scope.longitudModDireccionOt;
+								$scope.infoOtDetalle.direccion.latitud = $scope.latitudModDireccionOt;
+								$scope.verMapaCambioDireccion($scope.infoOtDetalle.direccion.latitud, $scope.infoOtDetalle.direccion.longitud);
+								toastr.success('Direcci\u00F3n actualizada');
+								mensajeEnvio = 'Se cambio la direcci\u00F3n de la OT: ' + params.idOrdenTrabajo;
+								//objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
+								$scope.regresarVistaCambioDireccion()
+							} else {
+								toastr.warning('No se cambio la direcci&oacute;n');
+								//objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
+							}
+						} else {
+							toastr.warning(response.data.resultDescripcion);
+							//objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
+						}
+					} else {
+						toastr.error('Ha ocurrido un error en el cambio de direcci&oacute;n');
+						//objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
+					}
+				}).catch(err => handleError(err));
+			} else {
+				toastr.warning('Ingresa el comentario para cambiar la direcci&oacute;n');
+			}
+
+		}).catch((result) => {
+		})
+
+	}
+
+	$scope.consultarDetalleOtPE = function () {
+
+		$scope.mostrarTooltipDetencion = false;
+		var tamContenedorDetencionModal = $("#v-tabs-tabsContent").width();
+
+		if (tamContenedorDetencionModal > 0) {
+			if (tamContenedorDetencionModal < 700) {
+				$scope.mostrarTooltipDetencion = true;
+			}
+		}
+
+		if (!$scope.consultarDetalleOtPEFlag) {
+			swal({ text: 'Consultando detalle de la OT ...', allowOutsideClick: false });
+			swal.showLoading();
+
+			let params = {
+				"idFlujo": $scope.otModalSelectedGeneric.idFlujo,
+				"idOT": $scope.otModalSelectedGeneric.idOrden
+			}
+
+			tercerosGenericService.consultaDetalleOtPe(params).then(function success(response) {
+				if (response.data !== undefined) {
+					if (response.data.respuesta) {
+						if (response.data.result) {
+							if (response.data.result.orden) {
+								$scope.consultarDetalleOtPEFlag = true;
+								$scope.infoDetalleOtPe = response.data.result.orden;
+								$scope.infoDetalleOtPe.tipoOrden = $scope.respaldoTipoOrdenArray.find(e => { return e.id === $scope.infoDetalleOtPe.idTipoOrden });
+								$scope.infoDetalleOtPe.subTipoOrden = $scope.respaldoTipoOrdenArray.find(e => { return e.id === $scope.infoDetalleOtPe.idSubTipoOrden });
+								$scope.infoDetalleOtPe.estado = $scope.respaldoStatusArray.find(e => { return e.id === $scope.infoDetalleOtPe.idEstado });
+								$scope.infoDetalleOtPe.estatus = $scope.respaldoStatusArray.find(e => { return e.id === $scope.infoDetalleOtPe.idEstatus });
+							} else {
+								toastr.info(response.data.result.mensaje);
+							}
+						} else {
+							toastr.warning('No se encontraron datos en el detalle de la OT');
+						}
+					} else {
+						toastr.warning(response.data.resultDescripcion);
+					}
+				} else {
+					toastr.error('Ha ocurrido un error en la consulta del detalle de la OT');
+				}
+				swal.close()
+			}).catch(err => handleError(err))
+
+		}
+	}
+
+    $scope.consultarPedido = function () {
+        if (!$scope.detalleCotizacion) {
+            $scope.consultarDetalleCotizacion($scope.idOtSelect);
+        }
+    }
 
 	angular.element(document).ready(function () {
 		$("#moduloTercerosGeneric").addClass('active');

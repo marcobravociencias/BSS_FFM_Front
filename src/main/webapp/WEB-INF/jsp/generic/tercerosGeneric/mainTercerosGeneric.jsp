@@ -50,162 +50,153 @@
 
 	<body id="idBody" ng-controller="tercerosGenericController" style="display: none;">
 		<jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
-		<div class="container" id="container_terceros_generic">
-			<div class="container-fluid container-filtros-generic">
-				<div class="row">
-					<div style="width: 1em;" ng-if="!filtrosGeneral.tipoOrdenes || !filtrosGeneral.tipoOrdenes.length">
-						<i class="icono-noseleccion fas fa-exclamation-circle me-2"
-							style="margin-top: .8em;margin-left: -.5em;"
-							title="No se encontro el catalogo de Intervencion"></i>
-					</div>
-					<div class="col-1 columna-filtro-ind">
-						<div class="dropdown">
-							<input readonly data-mdb-toggle="dropdown" aria-expanded="false"
-								placeholder="Intervenci&oacute;n" type="text" id="filtro-intervencion"
-								class="input-filtro-generic form-control form-control-sm" />
-							<ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-intervencion">
-								<li style="text-align: center;">
-									<button ng-click="seleccionarTodosRecursivo(filtrosGeneral.tipoOrdenes)"
-										id="todo_filtro" type="button"
-										class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
-									<button ng-click="deseleccionarTodosRecursivo(filtrosGeneral.tipoOrdenes)"
-										id="ninguno_filtro" type="button"
-										class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
-								</li>
-								<li class="elemento_menu dropdown-divider"></li>
-								<li ng-repeat="filtro in filtrosGeneral.tipoOrdenes " class="element-menu-filter"
-									class="element-menu-filter">
-									<label class="dropdown-item form-check-inputfiltro">
-										<input ng-click=setCheckFiltroGenericV2(filtro,filtrosGeneral.tipoOrdenes)
-											id="filtrotext-{{filtro.id}}" class="form-check-input" type="checkbox"
-											ng-model="filtro.checkedOpcion" ng-checked="filtro.checkedOpcion" />
-										<span for="filtrotext-{{filtro.id}}" class="dropdown-item item-text-filtro"
-											href="#" ng-bind="filtro.nombre"></span>
-									</label>
-									<ul ng-if="filtro.children !== undefined &&  filtro.children.length > 0"
-										ng-include="'filtroIntervencion.html'" class="dropdown-menu"></ul>
-									<ul class="dropdown-menu">
-										<!--li  ng-repeat="subfiltro in filtro.children" class="element-menu-filter">
+		<div class="container-fluid container-filtros-generic" id="container_terceros_generic">
+			<div class="row">
+				<div style="width: 1em;" ng-if="!filtrosGeneral.tipoOrdenes || !filtrosGeneral.tipoOrdenes.length">
+					<i class="icono-noseleccion fas fa-exclamation-circle me-2"
+						style="margin-top: .8em;margin-left: -.5em;"
+						title="No se encontro el catalogo de Intervencion"></i>
+				</div>
+				<div class="col-1 columna-filtro-ind">
+					<div class="dropdown">
+						<input readonly data-mdb-toggle="dropdown" aria-expanded="false"
+							placeholder="Intervenci&oacute;n" type="text" id="filtro-intervencion"
+							class="input-filtro-generic form-control form-control-sm" />
+						<ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-intervencion">
+							<li style="text-align: center;">
+								<button ng-click="seleccionarTodosRecursivo(filtrosGeneral.tipoOrdenes)"
+									id="todo_filtro" type="button"
+									class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
+								<button ng-click="deseleccionarTodosRecursivo(filtrosGeneral.tipoOrdenes)"
+									id="ninguno_filtro" type="button"
+									class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
+							</li>
+							<li class="elemento_menu dropdown-divider"></li>
+							<li ng-repeat="filtro in filtrosGeneral.tipoOrdenes " class="element-menu-filter"
+								class="element-menu-filter">
+								<label class="dropdown-item form-check-inputfiltro">
+									<input ng-click=setCheckFiltroGenericV2(filtro,filtrosGeneral.tipoOrdenes)
+										id="filtrotext-{{filtro.id}}" class="form-check-input" type="checkbox"
+										ng-model="filtro.checkedOpcion" ng-checked="filtro.checkedOpcion" />
+									<span for="filtrotext-{{filtro.id}}" class="dropdown-item item-text-filtro" href="#"
+										ng-bind="filtro.nombre"></span>
+								</label>
+								<ul ng-if="filtro.children !== undefined &&  filtro.children.length > 0"
+									ng-include="'filtroIntervencion.html'" class="dropdown-menu"></ul>
+								<ul class="dropdown-menu">
+									<!--li  ng-repeat="subfiltro in filtro.children" class="element-menu-filter">
                                         <label  class="dropdown-item form-check-inputfiltro">
                                             <input ng-click=setCheckSubFiltroGeneric(subfiltro,filtro) id="subfiltrotext-{{subfiltro.id}}" class="form-check-input" type="checkbox" ng-model="subfiltro.checkedOpcion" ng-checked="subfiltro.checkedOpcion"    />
                                             <span  for="subfiltrotext-{{subfiltro.id}}" class="dropdown-item item-text-filtro" href="#" ng-bind="subfiltro.nombre"></span>
                                         </label>
                                     </li-->
-									</ul>
-								</li>
-							</ul>
-						</div>
+								</ul>
+							</li>
+						</ul>
 					</div>
-					<div style="width: 1em;"
-						ng-if="!filtrosGeneral.estatusdisponibles || !filtrosGeneral.estatusdisponibles.length">
-						<i class="icono-noseleccion fas fa-exclamation-circle me-2"
-							style="margin-top: .8em;margin-left: -.5em;"
-							title="No se encontro el catalogo de Estatus"></i>
+				</div>
+				<div style="width: 1em;"
+					ng-if="!filtrosGeneral.estatusdisponibles || !filtrosGeneral.estatusdisponibles.length">
+					<i class="icono-noseleccion fas fa-exclamation-circle me-2"
+						style="margin-top: .8em;margin-left: -.5em;" title="No se encontro el catalogo de Estatus"></i>
+				</div>
+				<div class="col-1 columna-filtro-ind">
+					<div class="dropdown">
+						<input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Estatus"
+							type="text" id="filtro-estatus" class="input-filtro-generic form-control form-control-sm" />
+						<ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-estatus">
+							<li style="text-align: center;">
+								<button ng-click="seleccionarTodosRecursivo(filtrosGeneral.estatusdisponibles)"
+									id="todo_filtro" type="button"
+									class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
+								<button ng-click="deseleccionarTodosRecursivo(filtrosGeneral.estatusdisponibles)"
+									id="ninguno_filtro" type="button"
+									class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
+							</li>
+							<li class="elemento_menu dropdown-divider"></li>
+							<li ng-repeat="filtro in filtrosGeneral.estatusdisponibles " class="element-menu-filter"
+								class="element-menu-filter">
+								<label class="dropdown-item form-check-inputfiltro">
+									<input ng-click=setCheckFiltroGenericV2(filtro,filtrosGeneral.estatusdisponibles)
+										id="filtrotext-{{filtro.id}}" class="form-check-input" type="checkbox"
+										ng-model="filtro.checkedOpcion" ng-checked="filtro.checkedOpcion" />
+									<span for="filtrotext-{{filtro.id}}" class="dropdown-item item-text-filtro" href="#"
+										ng-bind="filtro.nombre"></span>
+								</label>
+								<ul ng-if="filtro.children !== undefined &&  filtro.children.length > 0"
+									ng-include="'filtroEstatus.html'" class="dropdown-menu"></ul>
+							</li>
+						</ul>
 					</div>
-					<div class="col-1 columna-filtro-ind">
-						<div class="dropdown">
-							<input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Estatus"
-								type="text" id="filtro-estatus"
-								class="input-filtro-generic form-control form-control-sm" />
-							<ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-estatus">
-								<li style="text-align: center;">
-									<button ng-click="seleccionarTodosRecursivo(filtrosGeneral.estatusdisponibles)"
-										id="todo_filtro" type="button"
-										class="btn btn-indigo  btn-sm waves-effect waves-light">Todos</button>
-									<button ng-click="deseleccionarTodosRecursivo(filtrosGeneral.estatusdisponibles)"
-										id="ninguno_filtro" type="button"
-										class="btn btn-indigo  btn-sm waves-effect waves-light">Ninguno</button>
-								</li>
-								<li class="elemento_menu dropdown-divider"></li>
-								<li ng-repeat="filtro in filtrosGeneral.estatusdisponibles " class="element-menu-filter"
-									class="element-menu-filter">
-									<label class="dropdown-item form-check-inputfiltro">
-										<input
-											ng-click=setCheckFiltroGenericV2(filtro,filtrosGeneral.estatusdisponibles)
-											id="filtrotext-{{filtro.id}}" class="form-check-input" type="checkbox"
-											ng-model="filtro.checkedOpcion" ng-checked="filtro.checkedOpcion" />
-										<span for="filtrotext-{{filtro.id}}" class="dropdown-item item-text-filtro"
-											href="#" ng-bind="filtro.nombre"></span>
-									</label>
-									<ul ng-if="filtro.children !== undefined &&  filtro.children.length > 0"
-										ng-include="'filtroEstatus.html'" class="dropdown-menu"></ul>
-								</li>
-							</ul>
-						</div>
+				</div>
+				<div style="width: 1em;"
+					ng-if="!filtrosGeneral.turnosdisponibles || !filtrosGeneral.turnosdisponibles.length">
+					<i class="icono-noseleccion fas fa-exclamation-circle me-2"
+						style="margin-top: .8em;margin-left: -.5em;" title="No se encontro el catalogo de Turno"></i>
+				</div>
+				<div class="col-1 columna-filtro-ind">
+					<div class="dropdown">
+						<input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Turno" type="text"
+							id="filtro-turno" class="input-filtro-generic form-control form-control-sm" />
+						<ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-turno">
+							<li ng-repeat="turno in filtrosGeneral.turnosdisponibles " class="element-menu-filter"
+								class="element-menu-filter">
+								<label class="dropdown-item form-check-inputfiltro">
+									<input id="filtrotext-turno-{{turno.id}}" class="form-check-input" type="checkbox"
+										value="" ng-model="turno.checkedOpcion" ng-checked="turno.checkedOpcion" />
+									<span for="filtrotext-turno-{{turno.id}}" class="dropdown-item item-text-filtro"
+										href="#" ng-bind="turno.nombre"></span>
+								</label>
+							</li>
+						</ul>
 					</div>
-					<div style="width: 1em;"
-						ng-if="!filtrosGeneral.turnosdisponibles || !filtrosGeneral.turnosdisponibles.length">
-						<i class="icono-noseleccion fas fa-exclamation-circle me-2"
-							style="margin-top: .8em;margin-left: -.5em;"
-							title="No se encontro el catalogo de Turno"></i>
-					</div>
-					<div class="col-1 columna-filtro-ind">
-						<div class="dropdown">
-							<input readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Turno"
-								type="text" id="filtro-turno"
-								class="input-filtro-generic form-control form-control-sm" />
-							<ul class="dropdown-menu drop-down-filters" aria-labelledby="filtro-turno">
-								<li ng-repeat="turno in filtrosGeneral.turnosdisponibles " class="element-menu-filter"
-									class="element-menu-filter">
-									<label class="dropdown-item form-check-inputfiltro">
-										<input id="filtrotext-turno-{{turno.id}}" class="form-check-input"
-											type="checkbox" value="" ng-model="turno.checkedOpcion"
-											ng-checked="turno.checkedOpcion" />
-										<span for="filtrotext-turno-{{turno.id}}" class="dropdown-item item-text-filtro"
-											href="#" ng-bind="turno.nombre"></span>
-									</label>
-								</li>
-							</ul>
-						</div>
-					</div>
-					<div class="col-1 columna-filtro-ind">
-						<input readonly placeholder="Selecciona fecha" type="text" id="txtFechaInicioConsulta"
-							class="datepicker input-filtro-generic form-control form-control-sm" />
-					</div>
-					<div class="col-1 columna-filtro-ind">
-						<input readonly placeholder="Selecciona fecha" type="text" id="txtFechaFinConsulta"
-							class="datepicker input-filtro-generic form-control form-control-sm" />
-					</div>
-					<div style="width: 1em;" ng-if="!listadogeografiacopy || !listadogeografiacopy.length">
-						<i class="icono-noseleccion fas fa-exclamation-circle me-2"
-							style="margin-top: .8em;margin-left: -.5em;"
-							title="No se encontro el catalogo de Geografia"></i>
-					</div>
-					<div class="col-1 columna-filtro-ind">
-						<input ng-click="abrirModalGeografia()" readonly placeholder="Geograf&iacute;a" type="text"
-							id="filtro-geografia" class="input-filtro-generic form-control form-control-sm" />
-					</div>
-					<div class="col-1 ">
-						<button ng-click="consultarOTsTercerosGeneric()" id="buscar-ots" type="button"
-							class="btn btn-sm  btn-primary  waves-effect waves-light">
-							Buscar
-						</button>
-					</div>
+				</div>
+				<div class="col-1 columna-filtro-ind">
+					<input readonly placeholder="Selecciona fecha" type="text" id="txtFechaInicioConsulta"
+						class="datepicker input-filtro-generic form-control form-control-sm" />
+				</div>
+				<div class="col-1 columna-filtro-ind">
+					<input readonly placeholder="Selecciona fecha" type="text" id="txtFechaFinConsulta"
+						class="datepicker input-filtro-generic form-control form-control-sm" />
+				</div>
+				<div style="width: 1em;" ng-if="!listadogeografiacopy || !listadogeografiacopy.length">
+					<i class="icono-noseleccion fas fa-exclamation-circle me-2"
+						style="margin-top: .8em;margin-left: -.5em;"
+						title="No se encontro el catalogo de Geografia"></i>
+				</div>
+				<div class="col-1 columna-filtro-ind">
+					<input ng-click="abrirModalGeografia()" readonly placeholder="Geograf&iacute;a" type="text"
+						id="filtro-geografia" class="input-filtro-generic form-control form-control-sm" />
+				</div>
+				<div class="col-1 ">
+					<button ng-click="consultarOTsTercerosGeneric()" id="buscar-ots" type="button"
+						class="btn btn-sm  btn-primary  waves-effect waves-light">
+						Buscar
+					</button>
 				</div>
 			</div>
-			<div class="col-md-12 row contenedoresFila">
-				<div class="col-md-4">
-					<div class="row">
-						<div class="col-md-12 container_informacion_ot">
-							<div class="input-group input-group-sm contenedorBuscadorGeneral">
-								<input id="txtBuscadorOtsConsultaTabla" type="text"
-									class="form-control txtBusquedaGeneral" placeholder="Buscar OT"
-									ng-keyup="busquedaOtsConsultaTabla($event)">
-								<span class="fa fa-search iconoBusquedaGeneral"></span>
-							</div>
-							<div id="scrollTablaOtsPendientesConsulta" class="scrollTablaOtsPendientesConsulta">
-								<table id="tablaOtsConsultaGeneral">
-									<thead>
-										<tr>
-											<th></th>
-										</tr>
-									</thead>
-								</table>
-							</div>
+			<div class="row" style="background: #e4e6f2;">
+				<div class="col-md-3 offset-md-9 input-group input-group-sm contenedorBuscadorGeneral">
+					<input id="txtBuscadorOtsConsultaTabla" type="text" class="form-control txtBusquedaGeneral"
+						placeholder="Buscar OT" ng-keyup="busquedaOtsConsultaTabla($event)">
+					<span class="fa fa-search iconoBusquedaGeneral"></span>
+				</div>
+			</div>
+			<div class="row contenedoresFila">
+				<div class="col-md-3 p-0">
+					<div class="col-md-12 container_informacion_ot">
+						<div id="scrollTablaOtsPendientesConsulta" class="scrollTablaOtsPendientesConsulta">
+							<table id="tablaOtsConsultaGeneral" style="width: 100%;">
+								<thead>
+									<tr>
+										<th></th>
+									</tr>
+								</thead>
+							</table>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-8 p-0 pt-4">
+				<div class="col-md-9 mt-4">
 					<div ng-show="!mostrarNavAccionesDetalleOtPendiente" class="col-md-12 container_sin_informacion_ot">
 						<h5 id="tituloInformacionOt"><strong>SIN SELECCI&Oacute;N DE OT</strong></h5>
 						<hr>
@@ -226,16 +217,15 @@
 					</div>
 					<div ng-show="mostrarNavAccionesDetalleOtPendiente"
 						class="col-md-12 containerInformacionDetalleOt p-0">
-						<div class="container p-0">
+						<div class="container mr-0 ml-3">
 							<div class="row">
-								<div style="padding-left: 0;" class="col-2">
+								<div class="col-2 content-nav-menu">
 									<div class="nav flex-column nav-tabs text-center" id="v-tabs-tab-detalle-ot"
-										role="tablist" aria-orientation="vertical">
+										role="tablist">
 										<a class="nav-link active" id="v-tabs-consulta-detalleot-tab"
 											data-mdb-toggle="tab" href="#v-tabs-consulta-detalleot" role="tab"
 											aria-controls="v-tabs-consulta-detalleot-tab"
 											aria-selected="true">Informaci&oacute;n</a>
-
 										<a ng-show="permisosModal.indexOf('tabHistoricoDespacho') !== -1"
 											class="nav-link " id="v-tabs-consulta-historico-tab" data-mdb-toggle="tab"
 											href="#v-tabs-consulta-historico" role="tab" ng-click="consultarHistorial()"
@@ -247,7 +237,10 @@
 											ng-click="consultarComentarios();"
 											aria-controls="v-tabs-consulta-mensajeria-tab"
 											aria-selected="false">Comentarios</a>
-									
+										<a class="nav-link" ng-show="permisosModal.indexOf('tabPedidoDespacho') !== -1"
+											id="v-tabs-consulta-pedido-tab" data-mdb-toggle="tab"
+											href="#v-tabs-consulta-pedido" role="tab" ng-click="consultarPedido();"
+											aria-controls="v-tabs-consulta-pedido-tab" aria-selected="false">Pedido</a>
 										<a ng-show="permisosModal.indexOf('tabAccionesOrdenDespacho') !== -1"
 											class="nav-link" id="v-tabs-consulta-acciones-tab" data-mdb-toggle="tab"
 											href="#v-tabs-consulta-acciones" role="tab"
@@ -264,11 +257,10 @@
 											ng-click="verMapaCambioDireccion(infoOtDetalle.direccion.latitud, infoOtDetalle.direccion.longitud)"
 											role="tab" aria-controls="v-tabs-consulta-cambio-direccion-tab"
 											aria-selected="false">Cambio direcci&oacute;n</a>
-				
 									</div>
 								</div>
 								<div class="col-10">
-									<div class="tab-content" id="v-tabs-tabsContent" style="height: 60vh;">
+									<div class="tab-content" id="v-tabs-tabsContent" style="height: 80vh;">
 										<div class="tab-pane fade show active" id="v-tabs-consulta-detalleot"
 											role="tabpanel" aria-labelledby="v-tabs-consulta-detalleot-tab">
 											<div class="row">
@@ -516,7 +508,7 @@
 												</div>
 											</div>
 										</div>
-										<div ng-if="permisosModal.indexOf('tabHistoricoDespacho') !== -1"
+										<div ng-show="permisosModal.indexOf('tabHistoricoDespacho') !== -1"
 											class="tab-pane fade " id="v-tabs-consulta-historico" role="tabpanel"
 											aria-labelledby="v-tabs-consulta-historico-tab">
 											<div ng-if="!historialOrdenTrabajo.length"
@@ -605,7 +597,7 @@
 												</div>
 											</div>
 										</div>
-										<div ng-if="permisosModal.indexOf('tabComentariosDespacho') !== -1"
+										<div ng-show="permisosModal.indexOf('tabComentariosDespacho') !== -1"
 											class="tab-pane fade" id="v-tabs-consulta-mensajeria" role="tabpanel"
 											aria-labelledby="v-tabs-consulta-mensajeria-tab">
 											<div class="container-mensajes-parent">
@@ -680,7 +672,7 @@
 												</div>
 											</div>
 										</div>
-										<div ng-if="permisosModal.indexOf('tabAccionesOrdenDespacho') !== -1"
+										<div ng-show="permisosModal.indexOf('tabAccionesOrdenDespacho') !== -1"
 											class="tab-pane fade" id="v-tabs-consulta-acciones" role="tabpanel"
 											aria-labelledby="v-tabs-consulta-acciones-tab">
 											<ul class="nav nav-tabs mb-3 nav-fill tabs-acciones-modal" id="ex1"
@@ -1109,7 +1101,7 @@
 												</div>
 											</div>
 										</div>
-										<div ng-if="permisosModal.indexOf('tabInformacionPaqueteDespacho') !== -1"
+										<div ng-show="permisosModal.indexOf('tabInformacionPaqueteDespacho') !== -1"
 											class="tab-pane fade" id="v-tabs-consulta-paquete" role="tabpanel"
 											aria-labelledby="v-tabs-consulta-paquete-tab">
 											<div class="row parent-detallecotizacion">
@@ -1365,7 +1357,7 @@
 															<div>
 																<div ng-if="selectedEquipoPaquete.isTieneEquipoModeos">
 																	<div class="content_info_detalle">
-																		<h6 class="ml-3 mt-2 text-equipo-paquete"
+																		<h6 class="ml-5 mt-2 text-equipo-paquete"
 																			ng-bind="selectedEquipoPaquete.elementoEquipoModelos.nombreEquipo">
 																		</h6>
 																		<div class="ml-4">
@@ -1410,10 +1402,533 @@
 												</div>
 											</div>
 										</div>
-										<div ng-if="permisosModal.indexOf('tabCambioDireccion') !== -1"
+										<div ng-show="permisosModal.indexOf('tabCambioDireccion') !== -1"
 											class="tab-pane fade" id="v-tabs-consulta-cambio-direccion" role="tabpanel"
 											aria-labelledby="v-tabs-consulta-cambio-direccion-tab">
 											<jsp:include page="./content/div-cambio-direccion-ot.jsp"></jsp:include>
+										</div>
+										<div ng-show="permisosModal.indexOf('tabCorteMasivo') !== -1"
+											class="tab-pane fade" id="v-tabs-consulta-detalle-corte-masivo"
+											role="tabpanel" aria-labelledby="v-tabs-consulta-detalle-corte-masivo-tab">
+											<jsp:include page="./content/div-info-general-detalle-ot-pe.jsp"></jsp:include>
+											<hr />
+											<jsp:include page="./content/div-info-detalle-corte-masivo-ot-pe.jsp"></jsp:include>
+										</div>
+										<div ng-show="permisosModal.indexOf('tabPedidoDespacho') !== -1"
+											class="tab-pane fade" id="v-tabs-consulta-pedido" role="tabpanel"
+											aria-labelledby="v-tabs-consulta-pedido-tab">
+											<div class="row parent-detallecotizacion">
+												<div class="col-4">
+													<b class="text-repartidor-noencontrado"
+														ng-if="detalleTecnicoOt.latitud == undefined || detalleTecnicoOt.latitud == null">No
+														se encontr&oacute; ubicaci&oacute;n del repartidor</b>
+
+													<div class="detalle-cot-basico">
+														<div class="container-title-detallecot">
+															<b class="titulodetallecotbasico">Folio</b>
+														</div>
+														<div class="container-text-detallecot">
+															<h5 class="contentdetallecotbasico"
+																ng-bind="detalleCotizacion.folioPedido"></h5>
+														</div>
+													</div>
+													<div class="detalle-cot-basico">
+														<div class="container-title-detallecot">
+															<b class="titulodetallecotbasico">Tipo entrega</b>
+														</div>
+														<div class="container-text-detallecot">
+															<h5 class="contentdetallecotbasico"
+																ng-bind="detalleCotizacion.descripcionTipoEntrega"></h5>
+														</div>
+													</div>
+													<div class="detalle-cot-basico">
+														<div class="container-title-detallecot">
+															<b class="titulodetallecotbasico">Tipo </b>
+														</div>
+														<div class="container-text-detallecot">
+															<h5 class="contentdetallecotbasico"
+																ng-bind="detalleCotizacion.tipo"></h5>
+														</div>
+													</div>
+													<div class="detalle-cot-basico">
+														<div class="container-title-detallecot">
+															<b class="titulodetallecotbasico">Subtipo</b>
+														</div>
+														<div class="container-text-detallecot">
+															<h5 class="contentdetallecotbasico"
+																ng-bind="detalleCotizacion.subtipo"></h5>
+														</div>
+													</div>
+													<div class="detalle-cot-basico">
+														<div class="container-title-detallecot">
+															<b class="titulodetallecotbasico">Fecha programada</b>
+														</div>
+														<div class="container-text-detallecot">
+															<h5 class="contentdetallecotbasico"
+																ng-bind="detalleCotizacion.fechaHoraProgramada"></h5>
+														</div>
+													</div>
+													<div class="detalle-cot-basico">
+														<div class="container-title-detallecot">
+															<b class="titulodetallecotbasico">Fecha estimada</b>
+														</div>
+														<div class="container-text-detallecot">
+															<h5 class="contentdetallecotbasico"
+																ng-bind="detalleCotizacion.costos.fechaEstimadaFinal">
+															</h5>
+														</div>
+													</div>
+													<div class="detalle-cot-basico">
+														<div class="container-title-detallecot">
+															<b class="titulodetallecotbasico">Tiempo estimado</b>
+														</div>
+														<div class="container-text-detallecot">
+															<h5 class="contentdetallecotbasico"
+																ng-bind="detalleCotizacion.costos.tiempoEstimado"></h5>
+														</div>
+													</div>
+													<div class="detalle-cot-basico">
+														<div class="container-title-detallecot">
+															<b class="titulodetallecotbasico">Distancia estimada </b>
+														</div>
+														<div class="container-text-detallecot">
+															<h5 class="contentdetallecotbasico"
+																ng-bind="detalleCotizacion.costos.distanciaEstimada">
+															</h5>
+														</div>
+													</div>
+													<div class="detalle-cot-basico">
+														<div class="container-title-detallecot">
+															<b class="titulodetallecotbasico">Fecha
+																expiraci&oacute;n</b>
+														</div>
+														<div class="container-text-detallecot">
+															<h5 class="contentdetallecotbasico"
+																ng-bind="detalleCotizacion.costos.fechaExpiracion"></h5>
+														</div>
+													</div>
+													<div class="divide-cotizacion">
+
+													</div>
+													<h5 class="header-title-cotiz">
+														Costos
+													</h5>
+
+													<div class="detalle-cot-basico">
+														<div class="container-title-detallecot">
+															<b class="titulodetallecotbasico">Subtotal</b>
+														</div>
+														<div class="container-text-detallecot">
+															<h5 class="contentdetallecotbasico"
+																ng-bind="detalleCotizacion.costos.subTotal | currency:MX$:2">
+															</h5>
+														</div>
+													</div>
+													<div class="detalle-cot-basico">
+														<div class="container-title-detallecot">
+															<b class="titulodetallecotbasico">IVA</b>
+														</div>
+														<div class="container-text-detallecot">
+															<h5 class="contentdetallecotbasico"
+																ng-bind="detalleCotizacion.costos.iva | currency:MX$:2">
+															</h5>
+														</div>
+													</div>
+													<div class="detalle-cot-basico">
+														<div class="container-title-detallecot">
+															<b class="titulodetallecotbasico">Descuento</b>
+														</div>
+														<div class="container-text-detallecot">
+															<h5 class="contentdetallecotbasico"
+																ng-bind="detalleCotizacion.costos.descuento | currency:MX$:2">
+															</h5>
+														</div>
+													</div>
+													<div class="detalle-cot-basico">
+														<div class="container-title-detallecot">
+															<b class="titulodetallecotbasico total-title-prod">Total</b>
+														</div>
+														<div class="container-text-detallecot">
+															<h5 class="contentdetallecotbasico total-content-prod"
+																ng-bind="detalleCotizacion.costos.total | currency:MX$:2">
+															</h5>
+														</div>
+													</div>
+												</div>
+												<div class="col-8">
+
+													<div id="mapa-cotizacion-despacho" class="mapa-cotizacion-despacho"
+														style="width:100%;height:100%; border-radius: 10px;">
+													</div>
+												</div>
+											</div>
+											<div ng-show="isAbiertoDetalleDireccion"
+												class="container-direcciones-elemento">
+												<span class="cerrarnoticias far fa-times"
+													ng-click="isAbiertoDetalleDireccion=false"></span>
+												<div class="row">
+													<div class="col-12 col-cotizacion-tabs">
+														<div class="nav nav-tabs  nav-fill text-center"
+															id="v-tabs-tab-detalle-cotizacion" role="tablist"
+															aria-orientation="vertical">
+															<a class="nav-link active"
+																id="v-tabs-consultagen-cotizacion-tab"
+																data-mdb-toggle="tab"
+																href="#v-tabs-consultagen-detallecot" role="tab"
+																aria-controls="v-tabs-consultagen-cotizacion-tab"
+																aria-selected="true">General</a>
+															<a class="nav-link " id="v-tabs-consultadeta-coti-tab"
+																data-mdb-toggle="tab" href="#v-tabs-consultadeta-coti"
+																role="tab" aria-controls="v-tabs-consultadeta-coti-tab"
+																aria-selected="true">Direcci&oacute;n</a>
+															<a class="nav-link " id="v-tabs-productos-coti-tab"
+																data-mdb-toggle="tab" href="#v-tabs-productos-coti"
+																role="tab" aria-controls="v-tabs-productos-coti-tab"
+																aria-selected="true">Productos</a>
+														</div>
+														<div class="tab-content tab-content-direccion"
+															id="v-tabs-tabContent">
+															<div class="tab-pane fade show active"
+																id="v-tabs-consultagen-detallecot" role="tabpanel"
+																aria-labelledby="v-tabs-consultagen-cotizacion-tab">
+
+																<div class="detalle-text-parent-basico">
+																	<div class="container-title-generalcot">
+																		<b
+																			class="titulogeneralcotbasico">Acci&oacute;n</b>
+																	</div>
+																	<div class="container-text-generalcot">
+																		<h5 class="contentgeneralcotbasico"
+																			ng-bind="elementoDireccion.accionDescripcion">
+																		</h5>
+																	</div>
+																</div>
+																<div class="detalle-text-parent-basico">
+																	<div class="container-title-generalcot">
+																		<b class="titulogeneralcotbasico">Estatus</b>
+																	</div>
+																	<div class="container-text-generalcot">
+																		<h5 class="contentgeneralcotbasico"
+																			ng-bind="elementoDireccion.descripcionEstatus">
+																		</h5>
+																	</div>
+																</div>
+
+																<div class="detalle-text-parent-basico">
+																	<div class="container-title-generalcot">
+																		<b class="titulogeneralcotbasico">Nombre</b>
+																	</div>
+																	<div class="container-text-generalcot">
+																		<h5 class="contentgeneralcotbasico"
+																			ng-bind="elementoDireccion.nombre"></h5>
+																	</div>
+																</div>
+																<div class="detalle-text-parent-basico">
+																	<div class="container-title-generalcot">
+																		<b
+																			class="titulogeneralcotbasico">Tel&eacute;fono</b>
+																	</div>
+																	<div class="container-text-generalcot">
+																		<h5 class="contentgeneralcotbasico"
+																			ng-bind="elementoDireccion.numeroTelefono">
+																		</h5>
+																	</div>
+																</div>
+																<div class="detalle-text-parent-basico">
+																	<div class="container-title-generalcot">
+																		<b
+																			class="titulogeneralcotbasico">Direcci&oacute;n</b>
+																	</div>
+																	<div class="container-text-generalcot">
+																		<h5 class="contentgeneralcotbasico"
+																			ng-bind="elementoDireccion.direccion"></h5>
+																	</div>
+																</div>
+																<div class="detalle-text-parent-basico">
+																	<div class="container-title-generalcot">
+																		<b class="titulogeneralcotbasico">Notas</b>
+																	</div>
+																	<div class="container-text-generalcot">
+																		<h5 class="contentgeneralcotbasico"
+																			ng-bind="elementoDireccion.notas"></h5>
+																	</div>
+																</div>
+																<div class="detalle-text-parent-basico">
+																	<div class="container-title-generalcot">
+																		<b class="titulogeneralcotbasico">Distancia
+																			estimada</b>
+																	</div>
+																	<div class="container-text-generalcot">
+																		<h5 class="contentgeneralcotbasico"
+																			ng-bind="elementoDireccion.distanciaEstimada">
+																		</h5>
+																	</div>
+																</div>
+																<div class="detalle-text-parent-basico">
+																	<div class="container-title-generalcot">
+																		<b class="titulogeneralcotbasico">Tiempo
+																			estimado</b>
+																	</div>
+																	<div class="container-text-generalcot">
+																		<h5 class="contentgeneralcotbasico"
+																			ng-bind="elementoDireccion.tiempoEstimado">
+																		</h5>
+																	</div>
+																</div>
+																<div class="divide-cotizacion">
+
+																</div>
+																<div class="detalle-text-parent-basico">
+																	<div class="container-title-generalcot">
+																		<b class="titulogeneralcotbasico">Subtotal</b>
+																	</div>
+																	<div class="container-text-generalcot">
+																		<h5 class="contentgeneralcotbasico"
+																			ng-bind="elementoDireccion.subTotal | currency:MX$:2">
+																		</h5>
+																	</div>
+																</div>
+																<div class="detalle-text-parent-basico">
+																	<div class="container-title-generalcot">
+																		<b class="titulogeneralcotbasico">Descuento</b>
+																	</div>
+																	<div class="container-text-generalcot">
+																		<h5 class="contentgeneralcotbasico"
+																			ng-bind="elementoDireccion.descuento | currency:MX$:2">
+																		</h5>
+																	</div>
+																</div>
+																<div class="detalle-text-parent-basico">
+																	<div class="container-title-generalcot">
+																		<b class="titulogeneralcotbasico">IVA</b>
+																	</div>
+																	<div class="container-text-generalcot">
+																		<h5 class="contentgeneralcotbasico"
+																			ng-bind="elementoDireccion.iva | currency:MX$:2">
+																		</h5>
+																	</div>
+																</div>
+																<div class="detalle-text-parent-basico">
+																	<div class="container-title-generalcot">
+																		<b
+																			class="titulogeneralcotbasico  total-title-prod">Total</b>
+																	</div>
+																	<div class="container-text-generalcot">
+																		<h5 class="contentgeneralcotbasico  total-content-prod"
+																			ng-bind="elementoDireccion.total | currency:MX$:2">
+																		</h5>
+																	</div>
+																</div>
+
+															</div>
+															<div class="tab-pane fade " id="v-tabs-consultadeta-coti"
+																role="tabpanel"
+																aria-labelledby="v-tabs-consultadeta-coti-tab">
+
+																<div class="detalle-text-parent-basico">
+																	<div class="container-title-generalcot">
+																		<b
+																			class="titulogeneralcotbasico">Pa&iacute;s</b>
+																	</div>
+																	<div class="container-text-generalcot">
+																		<h5 class="contentgeneralcotbasico"
+																			ng-bind="elementoDireccion.direccionDetalle.pais">
+																		</h5>
+																	</div>
+																</div>
+																<div class="detalle-text-parent-basico">
+																	<div class="container-title-generalcot">
+																		<b class="titulogeneralcotbasico">Estado</b>
+																	</div>
+																	<div class="container-text-generalcot">
+																		<h5 class="contentgeneralcotbasico"
+																			ng-bind="elementoDireccion.direccionDetalle.estado">
+																		</h5>
+																	</div>
+																</div>
+																<div class="detalle-text-parent-basico">
+																	<div class="container-title-generalcot">
+																		<b class="titulogeneralcotbasico">Ciudad</b>
+																	</div>
+																	<div class="container-text-generalcot">
+																		<h5 class="contentgeneralcotbasico"
+																			ng-bind="elementoDireccion.direccionDetalle.ciudad">
+																		</h5>
+																	</div>
+																</div>
+																<div class="detalle-text-parent-basico">
+																	<div class="container-title-generalcot">
+																		<b
+																			class="titulogeneralcotbasico">Delegaci&oacute;n</b>
+																	</div>
+																	<div class="container-text-generalcot">
+																		<h5 class="contentgeneralcotbasico"
+																			ng-bind="elementoDireccion.direccionDetalle.delegacion">
+																		</h5>
+																	</div>
+																</div>
+																<div class="detalle-text-parent-basico">
+																	<div class="container-title-generalcot">
+																		<b class="titulogeneralcotbasico">C&oacute;digo
+																			postal</b>
+																	</div>
+																	<div class="container-text-generalcot">
+																		<h5 class="contentgeneralcotbasico"
+																			ng-bind="elementoDireccion.direccionDetalle.codigoPostal">
+																		</h5>
+																	</div>
+																</div>
+																<div class="detalle-text-parent-basico">
+																	<div class="container-title-generalcot">
+																		<b class="titulogeneralcotbasico">Colonia</b>
+																	</div>
+																	<div class="container-text-generalcot">
+																		<h5 class="contentgeneralcotbasico"
+																			ng-bind="elementoDireccion.direccionDetalle.colonia">
+																		</h5>
+																	</div>
+																</div>
+																<div class="detalle-text-parent-basico">
+																	<div class="container-title-generalcot">
+																		<b class="titulogeneralcotbasico">Calle</b>
+																	</div>
+																	<div class="container-text-generalcot">
+																		<h5 class="contentgeneralcotbasico"
+																			ng-bind="elementoDireccion.direccionDetalle.calle">
+																		</h5>
+																	</div>
+																</div>
+																<div class="detalle-text-parent-basico">
+																	<div class="container-title-generalcot">
+																		<b class="titulogeneralcotbasico">No.
+																			interior</b>
+																	</div>
+																	<div class="container-text-generalcot">
+																		<h5 class="contentgeneralcotbasico"
+																			ng-bind="elementoDireccion.direccionDetalle.noInterior">
+																		</h5>
+																	</div>
+																</div>
+																<div class="detalle-text-parent-basico">
+																	<div class="container-title-generalcot">
+																		<b class="titulogeneralcotbasico">No.
+																			exterior</b>
+																	</div>
+																	<div class="container-text-generalcot">
+																		<h5 class="contentgeneralcotbasico"
+																			ng-bind="elementoDireccion.direccionDetalle.noExterior">
+																		</h5>
+																	</div>
+																</div>
+
+																<div class="detalle-text-parent-basico">
+																	<div class="container-title-generalcot">
+																		<b class="titulogeneralcotbasico">Entre
+																			calles</b>
+																	</div>
+																	<div class="container-text-generalcot">
+																		<h5 class="contentgeneralcotbasico"
+																			ng-bind="elementoDireccion.direccionDetalle.entreCalles">
+																		</h5>
+																	</div>
+																</div>
+																<div class="detalle-text-parent-basico">
+																	<div class="container-title-generalcot">
+																		<b class="titulogeneralcotbasico">Latitud</b>
+																	</div>
+																	<div class="container-text-generalcot">
+																		<h5 class="contentgeneralcotbasico"
+																			ng-bind="elementoDireccion.direccionDetalle.latitud">
+																		</h5>
+																	</div>
+																</div>
+																<div class="detalle-text-parent-basico">
+																	<div class="container-title-generalcot">
+																		<b class="titulogeneralcotbasico">Longitud</b>
+																	</div>
+																	<div class="container-text-generalcot">
+																		<h5 class="contentgeneralcotbasico"
+																			ng-bind="elementoDireccion.direccionDetalle.longitud">
+																		</h5>
+																	</div>
+																</div>
+																<div class="detalle-text-parent-basico">
+																	<div class="container-title-generalcot">
+																		<b
+																			class="titulogeneralcotbasico">Referencias</b>
+																	</div>
+																	<div class="container-text-generalcot">
+																		<h5 class="contentgeneralcotbasico"
+																			ng-bind="elementoDireccion.referencias">
+																		</h5>
+																	</div>
+																</div>
+
+															</div>
+															<div class="tab-pane fade " id="v-tabs-productos-coti"
+																role="tabpanel"
+																aria-labelledby="v-tabs-productos-coti-tab">
+																<table
+																	class="table-productos-cotizacion table table-sm">
+																	<thead>
+																		<tr>
+																			<th scope="col">#</th>
+																			<th scope="col">Desc.</th>
+																			<th scope="col">Cant.</th>
+																			<th scope="col">Tam.</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		<tr
+																			ng-repeat="prod in elementoDireccion.productos track by $index">
+																			<th scope="row" ng-bind="$index+1"></th>
+																			<td><span class="text-producto"
+																					ng-bind="prod.nombre"> </span></td>
+																			<td><span class="text-producto"
+																					ng-bind="prod.cantidad"> </span>
+																			</td>
+																			<td><span class="text-producto"
+																					ng-bind="prod.tamano"> </span></td>
+																		</tr>
+																	</tbody>
+																</table>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div ng-show="permisosModal.indexOf('tabCorteMasivo') !== -1"
+											class="tab-pane fade" id="v-tabs-consulta-detalle-corte-masivo"
+											role="tabpanel" aria-labelledby="v-tabs-consulta-detalle-corte-masivo-tab">
+											<jsp:include page="./content/div-info-general-detalle-ot-pe.jsp"></jsp:include>
+											<hr />
+											<jsp:include page="./content/div-info-detalle-corte-masivo-ot-pe.jsp"></jsp:include>
+										</div>
+										<div ng-show="permisosModal.indexOf('tabOperacionDiaria') !== -1"
+											class="tab-pane fade" id="v-tabs-consulta-info-gral-ot-detalle-detencion"
+											role="tabpanel"
+											aria-labelledby="v-tabs-consulta-info-gral-ot-detalle-detencion-tab">
+											<jsp:include page="./content/div-info-general-detalle-ot-pe.jsp"></jsp:include>
+										</div>
+										<div ng-show="permisosModal.indexOf('tabOperacionDiaria') !== -1"
+											class="tab-pane fade" id="v-tabs-consulta-detalle-detencion" role="tabpanel"
+											aria-labelledby="v-tabs-consulta-detalle-detencion-tab">
+											<div ng-if="detencionVistaModal">
+												<jsp:include page="./content/div-info-detalle-detencion-ot-pe.jsp"></jsp:include>
+											</div>
+										</div>
+										<div ng-show="permisosModal.indexOf('tabInspectorRed') !== -1"
+											class="tab-pane fade" id="v-tabs-consulta-detalle-inspector" role="tabpanel"
+											aria-labelledby="v-tabs-consulta-detalle-inspector-tab">
+											<jsp:include page="./content/div-info-general-detalle-ot-pe.jsp"></jsp:include>
+											<hr />
+											<jsp:include page="./content/div-info-detalle-inspector-ot-pe.jsp"></jsp:include>
+										</div>
+										<div ng-show="infoOtDetalle.idEstado =='206' || infoOtDetalle.idEstado ==206"
+											class="tab-pane fade" id="v-tabs-consulta-ordenesPE" role="tabpanel"
+											aria-labelledby="v-tabs-consulta-ordenesPE-tab">
+											<jsp:include page="./content/ordenesPlantaExternaOt.jsp"></jsp:include>
 										</div>
 									</div>
 								</div>
@@ -1431,9 +1946,9 @@
 
 	<!-- LIBRERIAS JS -->
 	<script type="text/javascript"
-		src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.js"></script>
-	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.min.js"></script>
+	<script type="text/javascript"
+		src="https://maps.googleapis.com/maps/api/js?key=${googlkeyattrvar['gkeactok']}&libraries=geometry,places"></script>
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/libraries/selectPicker/js/popper.min.js"></script>
 	<script type="text/javascript"
@@ -1477,6 +1992,10 @@
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/js/generic/tercerosGeneric/tercerosGenericService.js?v=${sessionScope.versionDepl}"
 		charset="UTF-8"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/generic/genericService.js?v=${sessionScope.versionDepl}"></script>
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/js/generic/tercerosGeneric/mainMaps.js?v=${sessionScope.versionDepl}"
+		charset="UTF-8"></script>
+	<script type="text/javascript"
+		src="${pageContext.request.contextPath}/resources/js/generic/genericService.js?v=${sessionScope.versionDepl}"></script>
 
 	</html>
