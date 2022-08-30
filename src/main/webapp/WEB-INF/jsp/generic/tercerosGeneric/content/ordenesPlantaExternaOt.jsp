@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-12">
-        <table id="tableOrdenesPlantaExternaOt" class="table table-hover">
+        <table id="tableOrdenesPlantaExternaOt" class="table" style="width: 100%;">
             <thead>
                 <tr>
                     <th>Orden</th>

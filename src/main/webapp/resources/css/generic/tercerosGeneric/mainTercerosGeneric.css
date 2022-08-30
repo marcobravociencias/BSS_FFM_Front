@@ -121,7 +121,7 @@
 }
 
 #tituloInformacionOt {
-    color: #784085;
+    color: var(--estandar-color);
 }
 
 .parrafoSinInformacionOt {
@@ -358,6 +358,7 @@ h5.title-otpendeinte {
 #tablaOtsConsultaGeneral_wrapper::-webkit-scrollbar {
     width: 0.3em;
 }
+
 
 .footer-otpendiente {
     text-align: end;

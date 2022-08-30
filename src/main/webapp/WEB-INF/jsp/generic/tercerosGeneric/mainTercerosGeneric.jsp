@@ -21,8 +21,7 @@
 			rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/libraries/font-awesome/css/dataTables.fontAwesome.css"
 			rel="stylesheet">
-		<link href="${pageContext.request.contextPath}/resources/libraries/dataTable/css/dataTables.bootstrap.min.css"
-			rel="stylesheet">
+
 		<link href="${pageContext.request.contextPath}/resources/libraries/selectPicker/css/bootstrap-select.min.css"
 			rel="stylesheet">
 		<link href="${pageContext.request.contextPath}/resources/libraries/jstree/default/style.min.css"
@@ -219,7 +218,7 @@
 						class="col-md-12 containerInformacionDetalleOt p-0">
 						<div class="container mr-0 ml-3">
 							<div class="row">
-								<div class="col-2 content-nav-menu">
+								<div class="col-2 content-nav-menu p-0">
 									<div class="nav flex-column nav-tabs text-center" id="v-tabs-tab-detalle-ot"
 										role="tablist">
 										<a class="nav-link active" id="v-tabs-consulta-detalleot-tab"
@@ -257,6 +256,23 @@
 											ng-click="verMapaCambioDireccion(infoOtDetalle.direccion.latitud, infoOtDetalle.direccion.longitud)"
 											role="tab" aria-controls="v-tabs-consulta-cambio-direccion-tab"
 											aria-selected="false">Cambio direcci&oacute;n</a>
+										<a  ng-click="consultarDetalleOtPE();" ng-show="permisosModal.indexOf('tabInspectorRed') !== -1" class="nav-link" id="v-tabs-consulta-detalle-inspector-tab" data-mdb-toggle="tab" 
+											href="#v-tabs-consulta-detalle-inspector" role="tab" aria-controls="v-tabs-consulta-detalle-inspector-tab" 
+											aria-selected="false">Detalle inspector</a>
+										<a  ng-click="consultarDetalleOtPE();" ng-show="permisosModal.indexOf('tabOperacionDiaria') !== -1"  class="nav-link" id="v-tabs-consulta-info-gral-ot-detalle-detencion-tab" data-mdb-toggle="tab" 
+											href="#v-tabs-consulta-info-gral-ot-detalle-detencion" role="tab" aria-controls="v-tabs-consulta-info-gral-ot-detalle-detencion-tab" 
+											aria-selected="false">Orden detenida</a>
+										<a  ng-click="consultarDetalleOtPE();" ng-show="permisosModal.indexOf('tabCorteMasivo') !== -1" class="nav-link" id="v-tabs-consulta-detalle-corte-masivo-tab" data-mdb-toggle="tab" 
+											href="#v-tabs-consulta-detalle-corte-masivo" role="tab" aria-controls="v-tabs-consulta-detalle-corte-masivo-tab" 
+											aria-selected="false">Detalle corte masivo</a>
+										<a  ng-click="consultarDetalleOtPE();" ng-show="permisosModal.indexOf('tabOperacionDiaria') !== -1"  class="nav-link" id="v-tabs-consulta-detalle-detencion-tab" data-mdb-toggle="tab" 
+											href="#v-tabs-consulta-detalle-detencion" role="tab" aria-controls="v-tabs-consulta-detalle-detencion-tab" 
+											aria-selected="false">Detalle detenci&oacute;n</a>
+										<a  ng-show="infoOtDetalle.idEstado =='206' || infoOtDetalle.idEstado ==206" class="nav-link"
+											ng-click="consultarOrdenesPlantaExternaOTDetalle()" data-mdb-toggle="tab" href="#v-tabs-consulta-ordenesPE"
+											aria-controls="v-tabs-consulta-ordenesPE-tab" aria-selected="false" id="v-tabs-consulta-ordenesPE-tab">OT planta
+											externa</a>
+										
 									</div>
 								</div>
 								<div class="col-10">
@@ -867,7 +883,7 @@
 																		calendarizado:</label>
 																	<input type="text" id="fecha-calendarizado"
 																		ng-model="elementCalendarizado.fechaCalendarizado"
-																		class="input-acciones form-control " readonly>
+																		class="datepicker input-acciones form-control " readonly>
 																</div>
 															</div>
 														</div>
@@ -1897,13 +1913,6 @@
 													</div>
 												</div>
 											</div>
-										</div>
-										<div ng-show="permisosModal.indexOf('tabCorteMasivo') !== -1"
-											class="tab-pane fade" id="v-tabs-consulta-detalle-corte-masivo"
-											role="tabpanel" aria-labelledby="v-tabs-consulta-detalle-corte-masivo-tab">
-											<jsp:include page="./content/div-info-general-detalle-ot-pe.jsp"></jsp:include>
-											<hr />
-											<jsp:include page="./content/div-info-detalle-corte-masivo-ot-pe.jsp"></jsp:include>
 										</div>
 										<div ng-show="permisosModal.indexOf('tabOperacionDiaria') !== -1"
 											class="tab-pane fade" id="v-tabs-consulta-info-gral-ot-detalle-detencion"

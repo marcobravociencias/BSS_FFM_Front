@@ -351,10 +351,20 @@
 
 #v-tabs-tab-detalle-ot .nav-link {
 	padding: 27px 28px 26px 23px;
+	border: none;
 }
+
 
 #v-tabs-tab-detalle-ot .nav-link.active {
 	border: none;
+	font-weight: bold;
+	color: var(--estandar-color);
+}
+
+#v-tabs-tab-detalle-ot .nav-link:hover {
+	border: none;
+	font-weight: bold;
+	color: var(--estandar-color);
 }
 
 .content-nav-menu {
@@ -365,6 +375,27 @@
 }
 
 /*NAVBAR*/
+
+/*NAVBAR*/
+
+.tabs-acciones-modal .nav-link {
+	padding: 0.5em;
+	font-weight: 700;
+}
+
+.tabs-acciones-modal .nav-link.active {
+	border-bottom: 1px solid var(--estandar-color);
+	font-weight: bold;
+	color: var(--estandar-color);
+	background: #fafafa;
+}
+
+.tabs-acciones-modal .nav-link:hover {
+	
+}
+
+/*NAVBAR*/
+
 #v-tabs-tabsContent .tab-pane {
 	padding: 1em 0.5em;
 }
@@ -395,6 +426,7 @@ span.text-content-terceros {
 
 .container-fluid.terceros-content {
 	display: flex;
+	line-height: 1.8em;
 }
 
 .container-text-title-detalle {
@@ -409,10 +441,6 @@ span.text-content-terceros {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-}
-
-.tabs-acciones-modal .nav-link {
-	padding: 0.5em;
 }
 
 .warning-nodata {
@@ -1219,3 +1247,75 @@ span.cerrarnoticias {
 	margin-bottom: 0;
 	font-weight: bold;
 }
+
+
+  /* CSS TABLE */
+
+#tableOrdenesPlantaExternaOt tbody tr:nth-child(even) {
+  background: #f5f5f5;
+}
+
+#tableOrdenesPlantaExternaOt>tbody>tr>td {
+  white-space: nowrap;
+  color: #39455b;
+  font-family: 'Montserrat';
+  font-size: .8em;
+  border-top: 0px solid #eceeef !important;
+  text-align: center;
+}
+
+#tableOrdenesPlantaExternaOt thead th {
+  position: relative;
+  background-color: #b1b1b1;
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+  padding: 1em;
+  border: none;
+  font-weight: normal;
+  text-align: center;
+}
+
+#tableOrdenesPlantaExternaOt tbody tr td {
+  padding: 0.5em;
+  border: none;
+}
+
+.page-link {
+  font-size: 0.7em !important;
+  font-family: "Montserrat" !important;
+}
+
+.dataTables_info {
+  font-size: 0.7em;
+  font-family: "Montserrat" !important;
+  text-align: left;
+  padding-left: 0.5em;
+}
+
+.dataTables_paginate.paging_simple_numbers {
+  float: right;
+}
+
+.dataTables_filter {
+  font-size: 0.7em !important;
+  font-family: 'Montserrat';
+  float: right;
+}
+
+div.dataTables_wrapper div.dataTables_filter input {
+  width: 11.3em;
+  height: 2.05em;
+  margin-right: 1em;
+}
+
+.page-item.disabled .page-link{
+	background: #fff0 !important;
+}
+
+#tab-content-detencion tfoot{
+	background: #fff0 !important;
+}
+
+
+/* CSS TABLE */

@@ -2,7 +2,7 @@ var app = angular.module('tercerosGenericApp', []);
 app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercerosGenericService', 'genericService', function ($scope, $q, $filter, tercerosGenericService, genericService) {
 	app.mapasTercerosController($scope, tercerosGenericService)
 	var objectTempAccion;
-
+	let tableOrdenesPlantaExternaOt;
 	let tablaOtsConsultaGeneral;
 	$scope.mostrarNavAccionesDetalleOtPendiente = false;
 	$scope.filtrosGeneral = {};
@@ -18,7 +18,7 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 	$scope.elementoRescate = {};
 	$scope.listadoTecnicosGeneral = [];
 	$scope.detencionVistaModal = null;
-
+	$scope.listOrdenesPE = [];
 	var arrayColors = [
 		'#D32F2F',
 		'#7B1FA2',
@@ -258,11 +258,42 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 			autoclose: true,
 			language: 'es',
 			todayHighlight: true,
+			orientation: 'bottom'
 		});
-		$('#fecha-reagendamiento').datepicker('update', new Date());
+		$('#fecha-calendarizado').datepicker({
+			format: 'dd/mm/yyyy',
+			autoclose: true,
+			language: 'es',
+			todayHighlight: true,
+			orientation: 'bottom'
+		});
+		setTimeout(() => {
+			$('#fecha-reagendamiento').datepicker('update', new Date());
+			$('#fecha-calendarizado').datepicker('update', new Date());
+			tableOrdenesPlantaExternaOt = $('#tableOrdenesPlantaExternaOt').DataTable({
+				"paging": true,
+				"lengthChange": false,
+				"searching": false,
+				"ordering": false,
+				"pageLength": 10,
+				"info": false,
+				"autoWidth": true,
+				"language": idioma_espanol_not_font
+			});
+			$scope.listOrdenesPE = [];
+		}, 300);
 		$('#txtFechaInicioConsulta').datepicker('update', new Date());
 		$('#txtFechaFinConsulta').datepicker('update', new Date());
 	}
+
+	$scope.cambiarPagTablaSpliters = function (falla, splitter) {
+    	$(".spliters" + falla).addClass("ocultarFilaTablaSplitersFallaDetalleDetencion");
+        $("#detencion" + falla + splitter).removeClass("ocultarFilaTablaSplitersFallaDetalleDetencion");
+        $(".btnPaginadorTablaSpliters" + falla).removeClass("btnPaginadorTablaSplitersActive");
+        $(".btnPaginadorTablaSpliters" + falla).addClass("btnPaginadorTablaSplitersNoActive");
+        $("#btnPaginador" + falla + splitter).removeClass("btnPaginadorTablaSplitersNoActive");
+        $("#btnPaginador" + falla + splitter).addClass("btnPaginadorTablaSplitersActive");
+    }
 
 	$scope.obtenerElementosSeleccionadosFiltro = function (array, nivel) {
 		let arrayReturn = [];
@@ -1556,6 +1587,85 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
     $scope.consultarPedido = function () {
         if (!$scope.detalleCotizacion) {
             $scope.consultarDetalleCotizacion($scope.idOtSelect);
+        }
+    }
+
+	$scope.pintarTablaOTPEDetalle = function () {
+		let arrayRowPE = [];
+		if (tableOrdenesPlantaExternaOt) {
+			tableOrdenesPlantaExternaOt.destroy();
+		}
+		$.each($scope.listOrdenesPE, function (i, elemento) {
+			let rowPE = [];
+			rowPE[0] = elemento.idOrdenPe && elemento.idOrdenPe !== '' ? elemento.idOrdenPe : 'Sin informaci&oacute;n';
+			rowPE[1] = elemento.tipoOrden ? elemento.tipoOrden  : 'Sin informaci&oacute;n';
+			rowPE[2] = elemento.subTipoOrden && elemento.subTipoOrden !== '' ? elemento.subTipoOrden : 'Sin informaci&oacute;n';
+			rowPE[3] = elemento.nombreTecnico && elemento.nombreTecnico !== '' ? elemento.nombreTecnico : 'Sin informaci&oacute;n';
+			rowPE[4] = elemento.localizacion && elemento.localizacion !== '' ? elemento.localizacion : 'Sin informaci&oacute;n';
+			rowPE[5] = elemento.estatus && elemento.estatus !== '' ? elemento.estatus : 'Sin informaci&oacute;n';
+			rowPE[6] = elemento.estado && elemento.estado !== '' ? elemento.estado : 'Sin informaci&oacute;n';
+			rowPE[7] = elemento.nivelUrgencia && elemento.nivelUrgencia !== '' ? elemento.nivelUrgencia : 'Sin informaci&oacute;n';
+			rowPE[8] = elemento.fechaAgendamiento && elemento.fechaAgendamiento !== '' ? elemento.fechaAgendamiento : 'Sin informaci&oacute;n';
+			arrayRowPE.push(rowPE);
+		});
+		tableOrdenesPlantaExternaOt = $('#tableOrdenesPlantaExternaOt').DataTable({
+			"paging": true,
+			"lengthChange": false,
+			"ordering": false,
+			"pageLength": 10,
+			"info": true,
+			"scrollX": false,
+			"data": arrayRowPE,
+			"autoWidth": false,
+			"language": idioma_espanol_not_font,
+			'createdRow': function (row, data, rowIndex) {
+				$.each($('td', row), function () {
+					$(this).attr('title', $(this).text());
+				});
+			},
+		});
+	}
+
+    $scope.consultarOrdenesPlantaExternaOTDetalle = function () {
+        if (!$scope.tabOTPlantaExterna) {
+            swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
+            swal.showLoading();
+            $scope.listOrdenesPE = [];
+            let params = {
+                "idOrden": $scope.idOtSelect
+            };
+
+            tercerosGenericService.consultaOrdenesPlantaExternaOt(params).then(function success(response) {
+                console.log(response);
+                if (response.data) {
+                    if (response.data.respuesta) {
+                        if (response.data.result) {
+                            if (response.data.result.detalleOrdenPe.length) {
+                                $scope.listOrdenesPE = angular.copy(response.data.result.detalleOrdenPe);
+                                $scope.tabOTPlantaExterna = true;
+                                $scope.pintarTablaOTPEDetalle();                              
+                                swal.close();
+                            } else {
+                                $scope.pintarTablaOTPEDetalle();                              
+                                mostrarMensajeInformativo("No se encontr&oacute; informaci&oacute;n");
+                                swal.close();
+                            }
+                        } else {
+                            $scope.pintarTablaOTPEDetalle();                              
+                            mostrarMensajeWarningValidacion("No se encontr&oacute; Informaci&oacute;n");
+                            swal.close();
+                        }
+                    } else {
+                        $scope.pintarTablaOTPEDetalle();                              
+                        mostrarMensajeWarningValidacion(response.data.result.resultDescripcion);
+                        swal.close();
+                    }
+                } else {
+                    $scope.pintarTablaOTPEDetalle();                              
+                    mostrarMensajeWarningValidacion(response.data.result.resultDescripcion);
+                    swal.close();
+                }
+            });
         }
     }
 
