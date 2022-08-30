@@ -784,7 +784,7 @@
 																	<input type="text"
 																		ng-model="elementReagendaOT.fechaReagendamiento"
 																		id="fecha-reagendamiento"
-																		class="input-acciones form-control" readonly>
+																		class="datepicker input-acciones form-control" readonly>
 																</div>
 															</div>
 														</div>

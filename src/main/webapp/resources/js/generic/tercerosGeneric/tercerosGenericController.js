@@ -253,6 +253,13 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 			language: 'es',
 			todayHighlight: true,
 		});
+		$('#fecha-reagendamiento').datepicker({
+			format: 'dd/mm/yyyy',
+			autoclose: true,
+			language: 'es',
+			todayHighlight: true,
+		});
+		$('#fecha-reagendamiento').datepicker('update', new Date());
 		$('#txtFechaInicioConsulta').datepicker('update', new Date());
 		$('#txtFechaFinConsulta').datepicker('update', new Date());
 	}
@@ -1553,6 +1560,7 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
     }
 
 	angular.element(document).ready(function () {
+
 		$("#moduloTercerosGeneric").addClass('active');
 	});
 
