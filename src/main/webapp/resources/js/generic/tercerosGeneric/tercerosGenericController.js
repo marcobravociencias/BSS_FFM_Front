@@ -21,6 +21,7 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 	$scope.listOrdenesPE = [];
 	$scope.listadoArrayOtsLocalizacion = [];
 	let tableRegistrosLocalizados;
+	$scope.listadoIconosConfig = []
 
 	var arrayColors = [
 		'#D32F2F',
@@ -82,6 +83,7 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 			let resultConf = results[3].data.result
 			if (resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves) {
 				let llavesResult = results[3].data.result.MODULO_ACCIONES_USUARIO.llaves;
+                let elementosMapa = angular.copy(results[3].data.result);
 
 				$scope.nFiltroGeografia = 5//llavesResult.N_FILTRO_GEOGRAFIA
 				$scope.nFiltroIntervenciones = llavesResult.N_FILTRO_INTERVENCIONES
@@ -92,6 +94,15 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 				validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
 				validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
 				$scope.elementosConfigGeneral = new Map(Object.entries(resultConf))
+
+				for (const elm in resultConf) {
+					if (elm.toUpperCase().includes("ICONO_")) {
+						$scope.listadoIconosConfig.push({
+							icon: elm.substring(elm.indexOf("_") + 1, elm.length),
+							value: elementosMapa[elm]
+						})
+					}
+				}
 			}
 			$("#idBody").removeAttr("style");
 

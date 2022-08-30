@@ -1132,14 +1132,14 @@ app.alertasDespachoPrincipal = function ($scope, mainAlertasService, genericServ
         // delete pos.longitudAlerta
         // delete pos.latitudOrden
         // delete pos.longitudOrden
-        console.log("latit tecnico ",pos.latitudTecnico)
-        console.log("longit tecnico ",pos.longitudTecnico)
+        // console.log("latit tecnico ",pos.latitudTecnico)
+        // console.log("longit tecnico ",pos.longitudTecnico)
 
-        console.log("latit alerta ",pos.latitudAlerta)
-        console.log("longit alerta ",pos.longitudAlerta)
+        // console.log("latit alerta ",pos.latitudAlerta)
+        // console.log("longit alerta ",pos.longitudAlerta)
 
-        console.log("latit orden ",pos.latitudOrden)
-        console.log("longit orden ",pos.longitudOrden)
+        // console.log("latit orden ",pos.latitudOrden)
+        // console.log("longit orden ",pos.longitudOrden)
 
         let isDataMarkerTecnico = $scope.validarLatitudLongitudMap(pos.latitudTecnico, pos.longitudTecnico);
         let isDataMarkerAlerta = $scope.validarLatitudLongitudMap(pos.latitudAlerta, pos.longitudAlerta);
