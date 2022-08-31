@@ -681,7 +681,7 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
             iconosText = '';
 
             if (ordenTrabajo.informacionAdicional != undefined && ordenTrabajo.informacionAdicional.length > 0) {
-                    debugger
+                    
                 $scope.listadoIconosConfig
                 let tipoDato = '';
 

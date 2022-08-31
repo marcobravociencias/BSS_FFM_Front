@@ -4,7 +4,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" >Reasignaci&oacute;n de orden  </h5>
-                <button
+                <button ng-click="refrescarBusqueda()" 
                     type="button"
                     class="btn-close"
                     data-mdb-dismiss="modal"
@@ -45,7 +45,7 @@
                     <b ng-if="!procesandoReasignacion">Reasignar orden</b>
                     <b ng-if="procesandoReasignacion">Reasignando ...</b>
                 </button>
-                <button type="button" class="btn cerrar-modal-btn btn-ligh" data-mdb-dismiss="modal">
+                <button ng-click="refrescarBusqueda()" type="button" class="btn btn-cerrar-modal cerrar-modal-btn btn-ligh" data-mdb-dismiss="modal">
                     Cancelar
                 </button>
            </div>

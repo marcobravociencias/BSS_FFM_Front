@@ -1098,6 +1098,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             'comentario': ''
         }
         $scope.$digest()
+        $("#modalReAsignacionOrdenTrabajo").modal({ backdrop: 'static', keyboard: false });
         $("#modalReAsignacionOrdenTrabajo").modal('show')
 
     }
@@ -1108,6 +1109,7 @@ app.modalDespachoPrincipal = function ($scope, mainDespachoService, $q, genericS
             'comentario': ''
         }
         $scope.$digest()
+        $("#modalAsignacionOrdenTrabajo").modal({ backdrop: 'static', keyboard: false });
         $('#modalAsignacionOrdenTrabajo').modal('show');
     }
     $scope.asignarOrdenTrabajo = function () {
