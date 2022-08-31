@@ -3,8 +3,101 @@ app.mapasTercerosController = function ($scope, tercerosGenericService) {
     $scope.isMapaCambioDireccionOTMod = false;
     var mapaCambioDireccionOTMod;
     var mapaucotizaciondetalle;
+    var mapaDictamen;
     var markerResMod;
+    var markerRes;
+    var markerDictamen;
     listadoLinesCurves = []
+
+    $scope.verMapaDictamen = function () {
+
+        mapaDictamen = new google.maps.Map(document.getElementById('content-mapa-dictamen'), {
+            center: {
+                lat: parseFloat(0),
+                lng: parseFloat(0)
+            },
+            mapTypeControlOptions: {
+                position: google.maps.ControlPosition.BOTTOM_CENTER
+            }, zoomControlOptions: {
+                position: google.maps.ControlPosition.BOTTOM_CENTER
+            }, streetViewControlOptions: {
+                position: google.maps.ControlPosition.RIGHT_CENTER
+            },
+            zoom: 10,
+            disableDoubleClickZoom: true
+        });
+
+        mapaDictamen.setZoom(17);    
+        mapaDictamen.setCenter(new google.maps.LatLng(19.33517924674462, -99.19857880597777));
+
+        markerDictamen = new google.maps.Marker({
+            map: mapaDictamen,
+            draggable: true,
+            animation: google.maps.Animation.DROP,
+            position: {
+                lat: 0,
+                lng: 0
+            }
+        });
+
+        google.maps.event.addListener(markerDictamen, 'dragend', function (event) {
+            markerDictamen.setMap(mapaDictamen)
+            $scope.objectDictamen.latitud = this.getPosition().lat();
+            $scope.objectDictamen.longitud = this.getPosition().lng();
+            $scope.$apply();
+            $("#search-input-place").val(this.getPosition().lat() + ', ' + this.getPosition().lng());           
+        });
+        google.maps.event.addListener(mapaDictamen, 'dblclick', function (e) {
+            markerDictamen.setMap(mapaDictamen)
+            let positionDoubleclick = e.latLng;
+            markerDictamen.setPosition(positionDoubleclick);
+            mapaDictamen.setCenter(positionDoubleclick);
+            $scope.objectDictamen.latitud = markerDictamen.getPosition().lat();
+            $scope.objectDictamen.longitud = markerDictamen.getPosition().lng();
+            $scope.$apply();
+            $("#search-input-place").val($scope.objectDictamen.latitud + ', ' +  $scope.objectDictamen.longitud);
+        });
+        geocoder = new google.maps.Geocoder;
+        $scope.addSearchInput()
+    }
+
+    $scope.addSearchInput = function () {
+        let input = document.getElementById('search-input-place');
+        let searchBox = new google.maps.places.SearchBox(input);
+        mapaDictamen.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+        mapaDictamen.addListener('bounds_changed', function () {
+            searchBox.setBounds(mapaDictamen.getBounds());
+        });
+        searchBox.addListener('places_changed', function () {
+            let places = searchBox.getPlaces();
+            if (places.length == 0 || places.length > 1) {
+                return;
+            }
+            let bounds = new google.maps.LatLngBounds();
+            markerDictamen.setMap(mapaDictamen)
+            places.forEach(function (place) {
+                if (!place.geometry) {
+                    console.log("Returned place contains no geometry");
+                    return;
+                }
+                $scope.objectDictamen.latitud = place.geometry.location.lat();
+                $scope.objectDictamen.longitud = place.geometry.location.lng();
+                $scope.$apply()
+
+                markerDictamen.setPosition(new google.maps.LatLng($scope.objectDictamen.latitud,  $scope.objectDictamen.longitud));
+                mapaDictamen.setZoom(17);
+                mapaDictamen.setCenter(new google.maps.LatLng($scope.objectDictamen.latitud,  $scope.objectDictamen.longitud));
+
+                if (place.geometry.viewport) {
+                    bounds.union(place.geometry.viewport);
+                } else {
+                    bounds.extend(place.geometry.location);
+                }
+            });
+            mapaDictamen.fitBounds(bounds);
+
+        });
+    }
 
     $scope.verMapaCambioDireccion = function (lat, long) {
         $scope.verModDireccionOT = false;

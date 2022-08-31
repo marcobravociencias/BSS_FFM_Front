@@ -240,11 +240,6 @@
 											id="v-tabs-consulta-pedido-tab" data-mdb-toggle="tab"
 											href="#v-tabs-consulta-pedido" role="tab" ng-click="consultarPedido();"
 											aria-controls="v-tabs-consulta-pedido-tab" aria-selected="false">Pedido</a>
-										<a ng-show="permisosModal.indexOf('tabAccionesOrdenDespacho') !== -1"
-											class="nav-link" id="v-tabs-consulta-acciones-tab" data-mdb-toggle="tab"
-											href="#v-tabs-consulta-acciones" role="tab"
-											aria-controls="v-tabs-consulta-acciones-tab"
-											aria-selected="false">Acciones</a>
 										<a ng-show="permisosModal.indexOf('tabInformacionPaqueteDespacho') !== -1"
 											class="nav-link" id="v-tabs-consulta-paquete-tab" data-mdb-toggle="tab"
 											href="#v-tabs-consulta-paquete" ng-click="obtenerPaquete()" role="tab"
@@ -272,6 +267,14 @@
 											ng-click="consultarOrdenesPlantaExternaOTDetalle()" data-mdb-toggle="tab" href="#v-tabs-consulta-ordenesPE"
 											aria-controls="v-tabs-consulta-ordenesPE-tab" aria-selected="false" id="v-tabs-consulta-ordenesPE-tab">OT planta
 											externa</a>
+										<a  class="nav-link"
+											ng-click="consultarDictamen()" data-mdb-toggle="tab" href="#v-tabs-consulta-dictamen"
+											aria-controls="v-tabs-consulta-dictamen-tab" aria-selected="false" id="v-tabs-consulta-dictamen-tab">Dictamen</a>
+										<a ng-show="permisosModal.indexOf('tabAccionesOrdenDespacho') !== -1"
+											class="nav-link" id="v-tabs-consulta-acciones-tab" data-mdb-toggle="tab"
+											href="#v-tabs-consulta-acciones" role="tab"
+											aria-controls="v-tabs-consulta-acciones-tab"
+											aria-selected="false">Acciones</a>
 										
 									</div>
 								</div>
@@ -738,13 +741,13 @@
 
 														<div class="row align-items-center">
 															<div class="col-12">
-																<div class="form-group">
+																<div class="form-group input-acciones-select">
 																	<i style="color: #34b5e5 !important;font-size: 1.5em;float: right;"
 																		id="icono_operario_status"
 																		class="fa fa-user-circle-o fa-2x"></i>
 																	<label class="label-acciones"
 																		for="id-status-tecnico">Motivo:</label>
-																	<select class="input-acciones form-control"
+																	<select class="input-acciones form-control-sm form-control"
 																		ng-model="elementoRescate.motivo"
 																		ng-options="motivo.nombre for motivo in listadoMotivosRescate">
 																		<option value="">Seleccione ...</option>
@@ -757,7 +760,7 @@
 																<div class="form-group">
 																	<label class="label-acciones"
 																		for="exampleTextarea">Comentario:</label>
-																	<textarea class="input-acciones form-control"
+																	<textarea class="input-acciones form-control-sm form-control"
 																		style=" resize: none"
 																		ng-model="elementoRescate.comentario"
 																		placeholder="Se sugiere un m&aacute;ximo de 50 caracteres"
@@ -791,7 +794,7 @@
 													<div class="container container-accion">
 														<div class="row align-items-center">
 															<div class="col-12">
-																<div class="form-group">
+																<div class="form-group input-acciones-select">
 																	<i style="color: #34b5e5 !important;font-size: 1.5em;float: right;"
 																		class="fa fa-user-circle-o fa-2x"></i>
 																	<label class="label-acciones"
@@ -800,18 +803,18 @@
 																	<input type="text"
 																		ng-model="elementReagendaOT.fechaReagendamiento"
 																		id="fecha-reagendamiento"
-																		class="datepicker input-acciones form-control" readonly>
+																		class="datepicker input-acciones form-control-sm form-control" readonly>
 																</div>
 															</div>
 														</div>
 														<div class="row align-items-center">
 															<div class="col-12">
-																<div class="form-group">
+																<div class="form-group input-acciones-select">
 																	<i style="color: #34b5e5 !important;font-size: 1.5em;float: right;"
 																		class="fa fa-user-circle-o fa-2x"></i>
 																	<label class="label-acciones"
 																		for="id-turno-reagenda">Turno:</label>
-																	<select class="input-acciones form-control"
+																	<select class="input-acciones form-control-sm form-control"
 																		id="id-turno-reagenda"
 																		ng-model="elementReagendaOT.turno"
 																		ng-options="turno.nombre for turno in listadoTurnosAcciones">
@@ -822,12 +825,12 @@
 														</div>
 														<div class="row align-items-center">
 															<div class="col-12">
-																<div class="form-group">
+																<div class="form-group input-acciones-select">
 																	<i style="color: #34b5e5 !important;font-size: 1.5em;float: right;"
 																		class="fa fa-user-circle-o fa-2x"></i>
 																	<label class="label-acciones"
 																		for="id-motivo-reagenda">Motivo:</label>
-																	<select class="input-acciones form-control"
+																	<select class="input-acciones form-control-sm form-control"
 																		id="id-motivo-reagenda"
 																		ng-model="elementReagendaOT.motivo"
 																		ng-options="motivo.nombre for motivo in listadoMotivosReagenda">
@@ -841,7 +844,7 @@
 																<div class="form-group">
 																	<label class="label-acciones"
 																		for="exampleTextarea">Comentario:</label>
-																	<textarea class="input-acciones form-control"
+																	<textarea class="input-acciones form-control-sm form-control"
 																		style=" resize: none"
 																		ng-model="elementReagendaOT.comentario"
 																		placeholder="Se sugiere un m&aacute;ximo de 50 caracteres"
@@ -875,7 +878,7 @@
 													<div class="container container-accion">
 														<div class="row align-items-center">
 															<div class="col-12">
-																<div class="form-group">
+																<div class="form-group input-acciones-select">
 																	<i style="color: #34b5e5 !important;font-size: 1.5em;float: right;"
 																		class="fa fa-user-circle-o fa-2x"></i>
 																	<label class="label-acciones"
@@ -883,18 +886,18 @@
 																		calendarizado:</label>
 																	<input type="text" id="fecha-calendarizado"
 																		ng-model="elementCalendarizado.fechaCalendarizado"
-																		class="datepicker input-acciones form-control " readonly>
+																		class="datepicker input-acciones form-control-sm form-control " readonly>
 																</div>
 															</div>
 														</div>
 														<div class="row align-items-center">
 															<div class="col-12">
-																<div class="form-group">
+																<div class="form-group input-acciones-select">
 																	<i style="color: #34b5e5 !important;font-size: 1.5em;float: right;"
 																		class="fa fa-user-circle-o fa-2x"></i>
 																	<label class="label-acciones"
 																		for="id-turno-calendarizado">Turno:</label>
-																	<select class="input-acciones form-control"
+																	<select class="input-acciones form-control-sm form-control"
 																		id="id-turno-calendarizado"
 																		ng-model="elementCalendarizado.turno"
 																		ng-options="turno.nombre for turno in listadoTurnosAcciones">
@@ -905,12 +908,12 @@
 														</div>
 														<div class="row align-items-center">
 															<div class="col-12">
-																<div class="form-group">
+																<div class="form-group input-acciones-select">
 																	<i style="color: #34b5e5 !important;font-size: 1.5em;float: right;"
 																		class="fa fa-user-circle-o fa-2x"></i>
 																	<label class="label-acciones"
 																		for="id-motivo-calendarizado">Motivo:</label>
-																	<select class="input-acciones form-control"
+																	<select class="input-acciones form-control-sm form-control"
 																		id="id-motivo-calendarizado"
 																		ng-model="elementCalendarizado.motivo"
 																		ng-options="motivo.nombre for motivo in listadoMotivosCalendarizado">
@@ -924,7 +927,7 @@
 																<div class="form-group">
 																	<label class="label-acciones"
 																		for="exampleTextarea">Comentario:</label>
-																	<textarea class="input-acciones form-control"
+																	<textarea class="input-acciones form-control-sm form-control"
 																		style=" resize: none"
 																		ng-model="elementCalendarizado.comentario"
 																		placeholder="Se sugiere un m&aacute;ximo de 50 caracteres"
@@ -958,12 +961,12 @@
 													<div class="container container-accion">
 														<div class="row align-items-center">
 															<div class="col-12">
-																<div class="form-group">
+																<div class="form-group input-acciones-select">
 																	<i style="color: #34b5e5 !important;font-size: 1.5em;float: right;"
 																		class="fa fa-user-circle-o fa-2x"></i>
 																	<label class="label-acciones"
 																		for="id-turno-calendarizado">Estado:</label>
-																	<select class="input-acciones form-control"
+																	<select class="input-acciones form-control-sm form-control"
 																		id="id-estado-plaza-comercial"
 																		ng-model="elementoPlazaComercial.estado"
 																		ng-options="turno.nombre for turno in listadoEstadoGestoria">
@@ -974,12 +977,12 @@
 														</div>
 														<div class="row align-items-center">
 															<div class="col-12">
-																<div class="form-group">
+																<div class="form-group input-acciones-select">
 																	<i style="color: #34b5e5 !important;font-size: 1.5em;float: right;"
 																		class="fa fa-user-circle-o fa-2x"></i>
 																	<label class="label-acciones"
 																		for="id-motivo-calendarizado">Motivo:</label>
-																	<select class="input-acciones form-control"
+																	<select class="input-acciones form-control-sm form-control"
 																		id="id-motivo-calendarizado"
 																		ng-model="elementoPlazaComercial.motivo"
 																		ng-options="motivo.nombre for motivo in listadoMotivosGestaria">
@@ -993,7 +996,7 @@
 																<div class="form-group">
 																	<label class="label-acciones"
 																		for="exampleTextarea">Comentario:</label>
-																	<textarea class="input-acciones form-control"
+																	<textarea class="input-acciones form-control-sm form-control"
 																		style=" resize: none"
 																		ng-model="elementoPlazaComercial.comentario"
 																		placeholder="Se sugiere un m&aacute;ximo de 50 caracteres"
@@ -1030,12 +1033,12 @@
 
 														<div class="row align-items-center">
 															<div class="col-12">
-																<div class="form-group">
+																<div class="form-group input-acciones-select">
 																	<i style="color: #34b5e5 !important;font-size: 1.5em;float: right;"
 																		class="fa fa-user-circle-o fa-2x"></i>
 																	<label class="label-acciones"
 																		for="id-estado-terminar">Estado:</label>
-																	<select class="input-acciones form-control"
+																	<select class="input-acciones form-control-sm form-control"
 																		id="id-estado-terminar"
 																		ng-model="elementTerminar.estado"
 																		ng-options="estado.nombre for estado in listadoEstadosTerminado">
@@ -1049,7 +1052,7 @@
 																<div class="form-group">
 																	<label class="label-acciones"
 																		for="exampleTextarea">Comentario:</label>
-																	<textarea class="input-acciones form-control"
+																	<textarea class="input-acciones form-control-sm form-control"
 																		style=" resize: none"
 																		ng-model="elementTerminar.comentario"
 																		placeholder="Se sugiere un m&aacute;ximo de 50 caracteres"
@@ -1086,7 +1089,7 @@
 																<div class="form-group">
 																	<label class="label-acciones"
 																		for="exampleTextarea">Comentario:</label>
-																	<textarea class="input-acciones form-control"
+																	<textarea class="input-acciones form-control-sm form-control"
 																		style=" resize: none"
 																		ng-model="elementoDesasigna.comentario"
 																		placeholder="Se sugiere un m&aacute;ximo de 50 caracteres"
@@ -1938,6 +1941,11 @@
 											class="tab-pane fade" id="v-tabs-consulta-ordenesPE" role="tabpanel"
 											aria-labelledby="v-tabs-consulta-ordenesPE-tab">
 											<jsp:include page="./content/ordenesPlantaExternaOt.jsp"></jsp:include>
+										</div>
+										<div 
+											class="tab-pane fade" id="v-tabs-consulta-dictamen" role="tabpanel"
+											aria-labelledby="v-tabs-consulta-dictamen-tab">
+											<jsp:include page="./content/div-info-dictamen.jsp"></jsp:include>
 										</div>
 									</div>
 								</div>

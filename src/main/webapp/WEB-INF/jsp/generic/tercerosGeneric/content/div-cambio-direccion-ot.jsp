@@ -157,7 +157,7 @@
 			<div class="col-md-12">
 				<label class="etiquetaCambioDireccion">C&oacute;digo postal</label>
 				<div class="input-group">
-					<input type="text" class="form-control form-control-sm txtCambioDireccion" maxlength="6"
+					<input type="text" class="form-control form-control-sm txtCambioDireccion input-acciones" maxlength="6"
 						ng-model="infoOtDetalle.direccion.codigoPostal" id="codigoPostalNum" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
 				</div>
 			</div>

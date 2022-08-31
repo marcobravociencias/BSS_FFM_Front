@@ -22,6 +22,8 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 	$scope.listadoArrayOtsLocalizacion = [];
 	let tableRegistrosLocalizados;
 	$scope.listadoIconosConfig = []
+	$scope.listadoDictamen = {};
+	$scope.objectDictamen = {};
 
 	var arrayColors = [
 		'#D32F2F',
@@ -175,15 +177,13 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 							$scope.listadogeografiacopy = results[2].data.result.geografia;
 							$scope.nFiltroGeografia = $scope.nFiltroGeografia ? $scope.nFiltroGeografia : $scope.obtenerUltimoNivelFiltros($scope.listadogeografiacopy);
 
-							geografia = results[2].data.result.geografia
-
+							let geografia = results[2].data.result.geografia.filter(e => e.nivel <= parseInt($scope.nFiltroGeografia));
 							geografia.push({ id: 0, nombre: "TOTALPLAY", nivel: 0, padre: "#", state: { opened: true } });
 							geografia.map((e) => {
 								e.parent = e.padre == null ? 0 : e.padre;
 								e.text = e.nombre;
 								e.icon = "fa fa-globe";
-
-								e.state = { //Este objeto tu no lo necesitas karen! e.state
+								e.state = { 
 									opened: false,
 									selected: true,
 								}
@@ -708,6 +708,7 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 		$scope.infoOtDetalle = {}
 		$scope.responseServicios = null;
 		$scope.detalleCotizacion = null
+		$scope.objectDictamen = {};
 		$scope.detalleTecnicoOt = {};
 		$scope.infoDetalleOtPe = {}
 		swal({ text: 'Consultando detalle de la OT ...', allowOutsideClick: false });
@@ -1759,12 +1760,16 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
         }).catch(err => handleError(err))
     }
 
+	$scope.consultarDictamen = function(){		
+		
+	}
+
 
 	angular.element(document).ready(function () {
 
 		$("#moduloTercerosGeneric").addClass('active');
 	});
-
+	$scope.verMapaDictamen();
 	$scope.iniciarFechasConsulta();
 	$scope.inicializarsTableOts()
 }]);
