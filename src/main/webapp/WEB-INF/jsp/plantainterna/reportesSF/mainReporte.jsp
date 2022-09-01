@@ -100,6 +100,14 @@
                                     class="titulo-menu">Empresarial</span>
                             </a>
                         </li>
+                        <li class="nav-item opcion-menu" ng-if="configPermisoAccionConsultaBackProactivo">
+                            <a id="reporteBackLogProact-tab" data-toggle="tab"
+                                ng-click="cambiaReporte('backlogproact',true,'reporteBackLogProact')" href="reporteBackLogProact" role="tab"
+                                aria-controls="reporteBackLogProact" aria-selected="false">
+                                <i class="icon-menu-left fas fa-folder-plus"></i>&nbsp;<span
+                                    class="titulo-menu">Proactivos</span>
+                            </a>
+                        </li>
                         <hr style="margin: 0.3em 1em;" ng-if="boxContentVisible.ingresos">
                         <span class="title-nav-header titulo-menu" style="position: initial;" ng-if="boxContentVisible.ingresos"><i
                                 class="icon-menu-left fas fa-circle"
@@ -158,6 +166,27 @@
                                 aria-selected="false"><i class="icon-menu-left fas fa-toolbox"></i>&nbsp;<span
                                     class="titulo-menu">Instalaciones empresarial</span></a>
                         </li>
+                        <li class="nav-item opcion-menu" ng-if="configPermisoAccionConsultaCompletadoProactivo">
+                            <a id="reporteCompleProact-tab" data-toggle="tab"
+                                ng-click="cambiaReporte('compleproact', true,'reporteCompleProact')"
+                                href="reporteCompleProact" role="tab" aria-controls="reporteCompleProact"
+                                aria-selected="false"><i class="icon-menu-left fas fa-gears"></i>&nbsp;<span
+                                    class="titulo-menu">Proactivos</span></a>
+                        </li>
+                        <li class="nav-item opcion-menu" ng-if="configPermisoAccionConsultaCompletadoCambioDomicilio">
+                            <a id="reporteCompleCambDomic-tab" data-toggle="tab"
+                                ng-click="cambiaReporte('complecambdomic', true,'reporteCompleCambDomic')"
+                                href="reporteCompleCambDomic" role="tab" aria-controls="reporteCompleCambDomic"
+                                aria-selected="false"><i class="icon-menu-left fas fa-home"></i>&nbsp;<span
+                                    class="titulo-menu">Cambio Domicilio</span></a>
+                        </li>
+                        <li class="nav-item opcion-menu" ng-if="configPermisoAccionConsultaCompletadoSoporteEmpresarial">
+                            <a id="reporteCompleSoportEmpr-tab" data-toggle="tab"
+                                ng-click="cambiaReporte('complesoportempr', true,'reporteCompleSoportEmpr')"
+                                href="reporteCompleSoportEmpr" role="tab" aria-controls="reporteCompleSoportEmpr"
+                                aria-selected="false"><i class="icon-menu-left fas fa-home"></i>&nbsp;<span
+                                    class="titulo-menu">Soporte Empresarial</span></a>
+                        </li>
 
                         <hr style="margin: 0.3em 1em;" ng-if="boxContentVisible.tickets">
                         <span class="title-nav-header titulo-menu" style="position: initial;" ng-if="boxContentVisible.tickets"><i
@@ -177,7 +206,6 @@
                                 aria-selected="false"><i class="icon-menu-left fas fa-thumbs-up"></i>&nbsp;<span
                                     class="titulo-menu">Redes sociales</span></a>
                         </li>
-
                         <hr style="margin: 0.3em 1em;" ng-if="boxContentVisible.factibilidad">
                         <span class="title-nav-header titulo-menu" style="position: initial;" ng-if="boxContentVisible.factibilidad"><i
                                 class="icon-menu-left fas fa-circle"
@@ -186,8 +214,27 @@
                             <a id="reporteGenerados-tab" data-toggle="tab"
                                 ng-click="cambiaReporte('generados', true,'reporteGenerados')"
                                 href="reporteGenerados" role="tab" aria-controls="reporteGenerados"
-                                aria-selected="false"><i class="icon-menu-left fas fa-folder-plus"></i>&nbsp;<span
+                                aria-selected="false"><i class="icon-menu-left fas fa-plus"></i>&nbsp;<span
                                     class="titulo-menu">Generados</span></a>
+                        </li>
+
+                        <hr style="margin: 0.3em 1em;" ng-if="boxContentVisible.planning">
+                        <span class="title-nav-header titulo-menu" style="position: initial;" ng-if="boxContentVisible.planning"><i
+                                class="icon-menu-left fas fa-circle"
+                                style="font-size: 0.8em;color: #ccc;"></i>&nbsp;PLANNING</span>
+                        <li class="nav-item opcion-menu" ng-if="configPermisoAccionConsultaPlanningAgendas">
+                            <a id="reportePlanningAgenda-tab" data-toggle="tab"
+                                ng-click="cambiaReporte('planningagenda', true,'reportePlanningAgenda')"
+                                href="reportePlanningAgenda" role="tab" aria-controls="reportePlanningAgenda"
+                                aria-selected="false"><i class="icon-menu-left fas fa-book"></i>&nbsp;<span
+                                    class="titulo-menu">Agendas</span></a>
+                        </li>
+                        <li class="nav-item opcion-menu" ng-if="configPermisoAccionConsultaPlanningAddon">
+                            <a id="reportePlanningAddon-tab" data-toggle="tab"
+                                ng-click="cambiaReporte('planningaddon', true,'reportePlanningAddon')"
+                                href="reportePlanningAddon" role="tab" aria-controls="reportePlanningAddon"
+                                aria-selected="false"><i class="icon-menu-left fas fa-folder-plus"></i>&nbsp;<span
+                                    class="titulo-menu">Addon</span></a>
                         </li>
 
                     </ul>
@@ -218,6 +265,11 @@
                                 aria-labelledby="reporteEmpresarial-tab">
                                 <h5 id="texto_header_reportes" class="text-center">Reporte empresarial</h5>
                                 <jsp:include page="./content/reporteEmpresarial.jsp"></jsp:include>
+                            </div>
+                            <div class="tab-pane fade" id="reporteBackLogProact" role="tabpanel"
+                                aria-labelledby="reporteBackLogProact-tab">
+                                <h5 id="texto_header_reportes" class="text-center">Reporte backlog Proactivos</h5>
+                                <jsp:include page="./content/reporteBackLogProactivo.jsp"></jsp:include>
                             </div>
                             <div class="tab-pane fade" id="reporteSoportesIng" role="tabpanel"
                                 aria-labelledby="reporteSoportesIng-tab">
@@ -258,7 +310,25 @@
                                 </h5>
                                 <jsp:include page="./content/reporteInstalacionEmp.jsp"></jsp:include>
                             </div>
-
+                            <div class="tab-pane fade" id="reporteCompleProact" role="tabpanel"
+                                aria-labelledby="reporteCompleProact-tab">
+                                <h5 id="texto_header_reportes" class="text-center">Reporte completado proactivos
+                                </h5>
+                                <jsp:include page="./content/reporteCompletadoProactivo.jsp"></jsp:include>
+                            </div>
+                            <div class="tab-pane fade" id="reporteCompleCambDomic" role="tabpanel"
+                                aria-labelledby="reporteCompleCambDomic-tab">
+                                <h5 id="texto_header_reportes" class="text-center">Reporte completado cambio domicilio
+                                </h5>
+                                <jsp:include page="./content/reporteCompletadoCambioDomicilio.jsp"></jsp:include>
+                            </div>
+                            <div class="tab-pane fade" id="reporteCompleSoportEmpr" role="tabpanel"
+                                aria-labelledby="reporteCompleSoportEmpr-tab">
+                                <h5 id="texto_header_reportes" class="text-center">Reporte completado soporte empresarial
+                                </h5>
+                                <jsp:include page="./content/reporteCompletadoSoporteEmpresarial.jsp"></jsp:include>
+                            </div>
+                            
                             <div class="tab-pane fade" id="reporteSitiosFibr" role="tabpanel"
                                 aria-labelledby="reporteSitiosFibr-tab">
                                 <h5 id="texto_header_reportes" class="text-center">Reporte sitios fibrados
@@ -276,6 +346,19 @@
                                 <h5 id="texto_header_reportes" class="text-center">Reporte Generados
                                 </h5>
                                 <jsp:include page="./content/reporteGenerados.jsp"></jsp:include>
+                            </div>
+
+                            <div class="tab-pane fade" id="reportePlanningAgenda" role="tabpanel"
+                                aria-labelledby="reportePlanningAgenda-tab">
+                                <h5 id="texto_header_reportes" class="text-center">Reporte planning agendas
+                                </h5>
+                                <jsp:include page="./content/reportePlanningAgenda.jsp"></jsp:include>
+                            </div>
+                            <div class="tab-pane fade" id="reportePlanningAddon" role="tabpanel"
+                                aria-labelledby="reportePlanningAddon-tab">
+                                <h5 id="texto_header_reportes" class="text-center">Reporte planning addon
+                                </h5>
+                                <jsp:include page="./content/reportePlanningAddon.jsp"></jsp:include>
                             </div>
                         </div>
                     </div>

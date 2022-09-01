@@ -25,6 +25,18 @@ public interface ReporteSFService {
   public ServiceResponseResult consultarReporteRedesSociales(String params);
   
   public ServiceResponseResult consultarReporteGenerados(String params);
+  
+  public ServiceResponseResult consultarReportePlanningAgendas(String params);
+  
+  public ServiceResponseResult consultarReportePlanningAddon(String params);
+  
+  public ServiceResponseResult consultarReporteCompletosProactivo(String params);
+  
+  public ServiceResponseResult consultarReporteCompletosDomicilio(String params);
+  
+  public ServiceResponseResult consultarReporteCompletosSoporteEmpresarial(String params);
+  
+  public ServiceResponseResult consultarReporteBackLogProactivo(String params);
 
   
 }

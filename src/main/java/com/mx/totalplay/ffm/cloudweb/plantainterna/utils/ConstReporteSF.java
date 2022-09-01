@@ -58,4 +58,40 @@ public class ConstReporteSF implements Serializable{
   @Value("${exportaReporteGenerados}")
   private String exportaReporteGenerados;
   
+  @Value("${consultaReportePlanningAgenda}")
+  private String consultaReportePlanningAgenda;
+  
+  @Value("${exportaReportePlanningAgenda}")
+  private String exportaReportePlanningAgenda;
+  
+  @Value("${consultaReportePlanningAddon}")
+  private String consultaReportePlanningAddon;
+  
+  @Value("${exportaReportePlanningAddon}")
+  private String exportaReportePlanningAddon;
+  
+  @Value("${consultaReporteCompletosProactivos}")
+  private String consultaReporteCompletosProactivos;
+  
+  @Value("${exportaReporteCompletosProactivos}")
+  private String exportaReporteCompletosProactivos;
+  
+  @Value("${consultaReporteCompletosCambioDomicilio}")
+  private String consultaReporteCompletosCambioDomicilio;
+  
+  @Value("${exportaReporteCompletosCambioDomicilio}")
+  private String exportaReporteCompletosCambioDomicilio;
+  
+  @Value("${consultaReporteCompletosSoporteEmpresarial}")
+  private String consultaReporteCompletosSoporteEmpresarial;
+  
+  @Value("${exportaReporteCompletosSoporteEmpresarial}")
+  private String exportaReporteCompletosSoporteEmpresarial;
+  
+  @Value("${consultaReporteBacklogProactivos}")
+  private String consultaReporteBacklogProactivos;
+  
+  @Value("${exportaReporteBacklogProactivos}")
+  private String exportaReporteBacklogProactivos;
+  
 }

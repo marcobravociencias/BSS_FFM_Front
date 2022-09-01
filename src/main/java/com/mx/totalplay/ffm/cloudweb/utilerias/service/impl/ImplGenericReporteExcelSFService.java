@@ -508,6 +508,54 @@ public class ImplGenericReporteExcelSFService implements GenericReporteSFExcelSe
 		            array = jsonObjectResponse.getAsJsonArray("data");
 				}
 				break;
+			case "reportesf-planningagenda-pi":
+				response = consultarInformacionExcelGenericPost(params, constReportesSF.getExportaReportePlanningAgenda(), method);
+				if (response.getResult() == null || response.getResult() instanceof Integer) {
+				} else {
+					JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
+		            array = jsonObjectResponse.getAsJsonArray("resultado");
+				}
+				break;
+			case "reportesf-planningaddon-pi":
+				response = consultarInformacionExcelGenericPost(params, constReportesSF.getExportaReportePlanningAddon(), method);
+				if (response.getResult() == null || response.getResult() instanceof Integer) {
+				} else {
+					JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
+		            array = jsonObjectResponse.getAsJsonArray("resultado");
+				}
+				break;
+			case "reportesf-compleproact-pi":
+				response = consultarInformacionExcelGenericPost(params, constReportesSF.getExportaReporteCompletosProactivos(), method);
+				if (response.getResult() == null || response.getResult() instanceof Integer) {
+				} else {
+					JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
+		            array = jsonObjectResponse.getAsJsonArray("resultado");
+				}
+				break;
+			case "reportesf-complecambdomic-pi":
+				response = consultarInformacionExcelGenericPost(params, constReportesSF.getExportaReporteCompletosCambioDomicilio(), method);
+				if (response.getResult() == null || response.getResult() instanceof Integer) {
+				} else {
+					JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
+		            array = jsonObjectResponse.getAsJsonArray("resultado");
+				}
+				break;
+			case "reportesf-complesoportempr-pi":
+				response = consultarInformacionExcelGenericPost(params, constReportesSF.getExportaReporteCompletosSoporteEmpresarial(), method);
+				if (response.getResult() == null || response.getResult() instanceof Integer) {
+				} else {
+					JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
+		            array = jsonObjectResponse.getAsJsonArray("resultado");
+				}
+				break;
+			case "reportesf-backlogproact-pi":
+				response = consultarInformacionExcelGenericPost(params, constReportesSF.getExportaReporteBacklogProactivos(), method);
+				if (response.getResult() == null || response.getResult() instanceof Integer) {
+				} else {
+					JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
+		            array = jsonObjectResponse.getAsJsonArray("resultado");
+				}
+				break;
 	
 		}
 		if(isRetornarBanderaBytes) {

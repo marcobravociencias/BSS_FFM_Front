@@ -223,6 +223,102 @@ public class ImplReporteSFService implements ReporteSFService {
 		return response;
 	}
 
+	@Override
+	public ServiceResponseResult consultarReportePlanningAgendas(String params) {
+		logger.info("ImplReporteSFService.class [metodo = consultarReportePlanningAgendas() ]\n" + params);
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		String tokenAcces = principalDetail.getAccess_token();
+		String urlRequest = principalDetail.getDireccionAmbiente()
+				.concat(constReporteSF.getConsultaReportePlanningAgenda());
+		logger.info("URL ##+" + urlRequest);
+
+		ServiceResponseResult response = restCaller.callPostBearerTokenRequest(jsonObject.toString(), urlRequest,
+				ServiceResponseResult.class, tokenAcces);
+		return response;
+	}
+
+	@Override
+	public ServiceResponseResult consultarReportePlanningAddon(String params) {
+		logger.info("ImplReporteSFService.class [metodo = consultarReportePlanningAddon() ]\n" + params);
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		String tokenAcces = principalDetail.getAccess_token();
+		String urlRequest = principalDetail.getDireccionAmbiente()
+				.concat(constReporteSF.getConsultaReportePlanningAddon());
+		logger.info("URL ##+" + urlRequest);
+
+		ServiceResponseResult response = restCaller.callPostBearerTokenRequest(jsonObject.toString(), urlRequest,
+				ServiceResponseResult.class, tokenAcces);
+		return response;
+	}
+
+	@Override
+	public ServiceResponseResult consultarReporteCompletosProactivo(String params) {
+		logger.info("ImplReporteSFService.class [metodo = consultarReporteCompletosProactivo() ]\n" + params);
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		String tokenAcces = principalDetail.getAccess_token();
+		String urlRequest = principalDetail.getDireccionAmbiente()
+				.concat(constReporteSF.getConsultaReporteCompletosProactivos());
+		logger.info("URL ##+" + urlRequest);
+
+		ServiceResponseResult response = restCaller.callPostBearerTokenRequest(jsonObject.toString(), urlRequest,
+				ServiceResponseResult.class, tokenAcces);
+		return response;
+	}
+
+	@Override
+	public ServiceResponseResult consultarReporteCompletosDomicilio(String params) {
+		logger.info("ImplReporteSFService.class [metodo = consultarReporteCompletosDomicilio() ]\n" + params);
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		String tokenAcces = principalDetail.getAccess_token();
+		String urlRequest = principalDetail.getDireccionAmbiente()
+				.concat(constReporteSF.getConsultaReporteCompletosCambioDomicilio());
+		logger.info("URL ##+" + urlRequest);
+
+		ServiceResponseResult response = restCaller.callPostBearerTokenRequest(jsonObject.toString(), urlRequest,
+				ServiceResponseResult.class, tokenAcces);
+		return response;
+	}
+	
+	@Override
+	public ServiceResponseResult consultarReporteCompletosSoporteEmpresarial(String params) {
+		logger.info("ImplReporteSFService.class [metodo = consultarReporteCompletosSoporteEmpresarial() ]\n" + params);
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		String tokenAcces = principalDetail.getAccess_token();
+		String urlRequest = principalDetail.getDireccionAmbiente()
+				.concat(constReporteSF.getConsultaReporteCompletosSoporteEmpresarial());
+		logger.info("URL ##+" + urlRequest);
+
+		ServiceResponseResult response = restCaller.callPostBearerTokenRequest(jsonObject.toString(), urlRequest,
+				ServiceResponseResult.class, tokenAcces);
+		return response;
+	}
+
+	@Override
+	public ServiceResponseResult consultarReporteBackLogProactivo(String params) {
+		logger.info("ImplReporteSFService.class [metodo = consultarReporteBackLogProactivo() ]\n" + params);
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		String tokenAcces = principalDetail.getAccess_token();
+		String urlRequest = principalDetail.getDireccionAmbiente()
+				.concat(constReporteSF.getConsultaReporteBacklogProactivos());
+		logger.info("URL ##+" + urlRequest);
+
+		ServiceResponseResult response = restCaller.callPostBearerTokenRequest(jsonObject.toString(), urlRequest,
+				ServiceResponseResult.class, tokenAcces);
+		return response;
+	}
+
 	
 	
 }

@@ -121,4 +121,70 @@ app.service("reportesSFService", function ($http) {
         });
     };
 
+    this.consultarReportePlanningAgendas = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultarReportePlanningAgendas",
+            data: JSON.stringify(params),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    };
+
+    this.consultarReportePlanningAddon = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultarReportePlanningAddon",
+            data: JSON.stringify(params),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    };
+
+    this.consultarReporteCompletosProactivo = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultarReporteCompletosProactivo",
+            data: JSON.stringify(params),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    };
+
+    this.consultarReporteCompletosCambioDomicilio = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultarReporteCompletosCambioDomicilio",
+            data: JSON.stringify(params),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    };
+
+    this.consultarReporteCompletosSoporteEmpresarial = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultarReporteCompletosSoporteEmpresarial",
+            data: JSON.stringify(params),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    };
+
+    this.consultarReporteBackLogProactivo = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultarReporteBackLogProactivo",
+            data: JSON.stringify(params),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    };
+
 })
