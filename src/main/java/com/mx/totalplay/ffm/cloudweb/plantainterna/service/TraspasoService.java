@@ -14,11 +14,7 @@ public interface TraspasoService {
 	public ServiceResponseResult consultaInformacionDetalleTraspaso(String params);
 	
 	public DataTableResponse consultaTraspasos(ParamConsultaOTPI paramsOT);
-	
-	public ServiceResponseResult consultarReporteOts(String params);
-	
-	public ServiceResponseResult consultarReporteTraspasos(String params);
-			
+				
 	public ServiceResponseResult consultarFactibilidad(String params);
 	
 	public ServiceResponseResult agendarTraspasoOt(String params);
@@ -27,4 +23,6 @@ public interface TraspasoService {
 	
 	public ServiceResponseResult consultarCrmDisponibilidad(String params);
 	
+	public DataTableResponse consultarHistorico(ParamConsultaOTPI paramsOT);
+		
 }

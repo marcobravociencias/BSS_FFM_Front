@@ -17,6 +17,10 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 	$scope.nivelIntervenciones;
 	$scope.nivelGeografia;
 	$scope.nivelEstatusPendientes;
+	$scope.nivelIntervencionesBuzon;
+	$scope.nivelGeografiaBuzon;
+	$scope.nivelEstatusPendientesBuzon;
+	$scope.nivelGeografiaHist;
 	$scope.nivelEstatusTraspasoFiltro = "";
 	$scope.nivelIntervencionTraspasoFiltro = "";
 	$scope.filtrosGeneral = {};
@@ -32,6 +36,8 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 	$scope.configPermisoAccionTraspaso = false;
 	$scope.configPermisoAccionConsultaTraspasos = false;
 	$scope.configPermisoAccionDescargaTraspasosRep = false;
+	$scope.configPermisoAccionDescargaHist = false;
+	$scope.configPermisoAccionConsultaHist = false;
 	$scope.isFactibilidad = false;
 	$scope.tempArrayOTS = [];
 	$scope.tempArrayTraspasos = [];
@@ -50,6 +56,10 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 
 	$('#searchGeografiaTraspaso').on('keyup', function () {
 		$("#jstree-proton-tr").jstree("search", this.value);
+	})
+
+	$('#searchGeografiaHistorico').on('keyup', function () {
+		$("#jstree-proton-ht").jstree("search", this.value);
 	})
 
 	$('#horaestimada-form').timepicker({
@@ -79,6 +89,16 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 		$('#modalCluster').modal('show');
 		setTimeout(function () {
 			$("#searchGeografiaTraspaso").focus();
+		}, 750);
+	}
+
+	$scope.abrirModalClusterHistorico = function () {
+		$scope.tipoArbol = 'historico';
+		$("#jstree-proton-ht").jstree("search", '');
+		$("#searchGeografiaHistorico").val('');
+		$('#modalCluster').modal('show');
+		setTimeout(function () {
+			$("#searchGeografiaHistorico").focus();
 		}, 750);
 	}
 
@@ -162,14 +182,8 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 		let subIntTemp = []
 		subIntTemp = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.tipoOrdenes, $scope.nivelIntervenciones);
 
-		let ultimonivel;
-		if ($scope.nivelGeografia) {
-			ultimonivel = $scope.nivelGeografia
-		} else {
-			ultimonivel = $scope.obtenerNivelUltimoJerarquia();
-		}
 		let clusters = $("#jstree-proton-3").jstree("get_selected", true)
-			.filter(e => e.original.nivel == ultimonivel)
+			.filter(e => e.original.nivel == $scope.nivelGeografia)
 			.map(e => parseInt(e.id))
 
 		if ($.trim(document.getElementById('idot').value) !== '') {
@@ -223,9 +237,7 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 
 
 		if (isValido) {
-			if (otsTable) {
-				otsTable.destroy();
-			}
+
 			let params = {
 				idOrden: $.trim(document.getElementById('idot').value),
 				folioSistema: $.trim(document.getElementById('idos').value),
@@ -244,6 +256,7 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 				"serverSide": true,
 				"scrollX": false,
 				"paging": true,
+				"bDestroy": true,
 				"info": true,
 				"lengthChange": false,
 				"searching": false,
@@ -261,12 +274,6 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 					},
 					"dataSrc": function (json) {
 						$scope.elementosRegistro = json.registrosTotales
-						$scope.listadoConsultaOtsDisponibles = [];
-						if (json.result != undefined && json.result.ordenes != undefined) {
-							$scope.listadoConsultaOtsDisponibles = json.result.ordenes;
-							$scope.tempArrayOTS = json.data;
-						}
-
 						return json.data;
 					},
 					"error": function (xhr, error, thrown) {
@@ -304,14 +311,8 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 		let subIntTemp = []
 		subIntTemp = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.tipoOrdenesTraspaso, $scope.nivelIntervenciones);
 
-		let ultimonivel;
-		if ($scope.nivelGeografia) {
-			ultimonivel = $scope.nivelGeografia
-		} else {
-			ultimonivel = $scope.obtenerNivelUltimoJerarquia();
-		}
 		let clusters = $("#jstree-proton-tr").jstree("get_selected", true)
-			.filter(e => e.original.nivel == ultimonivel)
+			.filter(e => e.original.nivel == $scope.nivelGeografiaBuzon)
 			.map(e => parseInt(e.id))
 
 		if ($.trim(document.getElementById('idot-tr').value) !== '') {
@@ -365,9 +366,7 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 
 
 		if (isValido) {
-			if (traspasosTable) {
-				traspasosTable.destroy();
-			}
+
 			let params = {
 				idOrden: $.trim(document.getElementById('idot-tr').value),
 				folioSistema: $.trim(document.getElementById('idos-tr').value),
@@ -385,6 +384,7 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 				"ordering": false,
 				"serverSide": true,
 				"scrollX": false,
+				"bDestroy": true,
 				"paging": true,
 				"info": true,
 				"lengthChange": false,
@@ -403,10 +403,6 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 					},
 					"dataSrc": function (json) {
 						$scope.elementosRegistroTraspaso = json.registrosTotales
-						$scope.listadoConsultaTraspasosDisponibles = [];
-						if (json.result != undefined && json.result.ordenes != undefined)
-							$scope.listadoConsultaTraspasosDisponibles = json.result.ordenes;
-							$scope.tempArrayTraspasos = json.data;
 						return json.data;
 					},
 					"error": function (xhr, error, thrown) {
@@ -416,7 +412,110 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 						swal.close()
 					}
 				},
-				"columns": [null, null, null, null, null, null, null, null, null, null, null, null, null],
+				"columns": [null, null, null, null, null, null, null, null, null, null, null, null, null,null,null],
+				"language": idioma_espanol_not_font
+			});
+
+		} else {
+			mostrarMensajeWarningValidacion(errorMensaje);
+		}
+	}
+
+	$scope.consultaHistorico = function () {
+		let isValido = true;
+		let errorMensaje = '';
+		let isValFecha = true;
+		$scope.elementosRegistroHistorico = 0;
+
+		let clusters = $("#jstree-proton-ht").jstree("get_selected", true)
+			.filter(e => e.original.nivel == $scope.nivelGeografiaHist)
+			.map(e => parseInt(e.id))
+
+		if ($.trim(document.getElementById('idot-ht').value) !== '') {
+			if (!($.isNumeric($.trim(document.getElementById('idot-ht').value)))) {
+				errorMensaje += '<li>Introduce un n&uacute;mero correcto de OT.</li>';
+				isValido = false;
+			}
+		}
+
+		if ($.trim(document.getElementById('cuenta-ht').value) !== '') {
+			if (!($.isNumeric($.trim(document.getElementById('cuenta-ht').value)))) {
+				errorMensaje += '<li>Introduce un n&uacute;mero correcto de cuenta.</li>';
+				isValido = false;
+			}
+		}
+
+		if (clusters.length === 0) {
+			errorMensaje += '<li>Seleccione geograf&iacute;a.</li>';
+			isValido = false
+		}
+
+		if (document.getElementById('filtro_fecha_inicio_historico').value == '') {
+			errorMensaje += '<li>Introduce Fecha Inicial</li>';
+			isValFecha = false;
+			isValido = false
+		}
+
+		if (document.getElementById('filtro_fecha_fin_historico').value == '') {
+			errorMensaje += '<li>Introduce Fecha Final</li>';
+			isValFecha = false;
+			isValido = false
+		}
+
+		if (isValFecha) {
+			if (!validarFecha('filtro_fecha_inicio_historico', 'filtro_fecha_fin_historico')) {
+				$('.datepicker').datepicker('update', new Date());
+				errorMensaje += '<li>La fecha inicial no tiene que ser mayor a la final.</li>';
+				isValido = false
+			}
+		}
+
+		if (isValido) {
+	
+			let params = {
+				idOrden: $.trim(document.getElementById('idot-ht').value),
+				folioSistema: $.trim(document.getElementById('idos-ht').value),
+				claveCliente: $.trim(document.getElementById('cuenta-ht').value),
+				idClusters: clusters,
+				fechaInicio: $scope.getFechaFormato(document.getElementById('filtro_fecha_inicio_historico').value),
+				fechaFin: $scope.getFechaFormato(document.getElementById('filtro_fecha_fin_historico').value),
+				elementosPorPagina: 10
+			}
+
+			historicoTable = $('#historicoTable').DataTable({
+				"processing": false,
+				"ordering": false,
+				"serverSide": true,
+				"scrollX": false,
+				"paging": true,
+				"bDestroy": true,
+				"info": true,
+				"lengthChange": false,
+				"searching": false,
+				"pageLength": 10,
+				"ajax": {
+					"url": "req/consultaHistorico",
+					"type": "POST",
+					"data": params,
+					"beforeSend": function () {
+						if (!swal.isVisible()) {
+							swal({ text: 'Cargando registros...', allowOutsideClick: false });
+							swal.showLoading();
+						}
+
+					},
+					"dataSrc": function (json) {
+						$scope.elementosRegistroHistorico = json.registrosTotales
+						return json.data;
+					},
+					"error": function (xhr, error, thrown) {
+						handleError(xhr);
+					},
+					"complete": function () {
+						swal.close()
+					}
+				},
+				"columns": [null, null, null, null, null, null, null, null, null, null, null, null, null,null,null],
 				"language": idioma_espanol_not_font
 			});
 
@@ -483,6 +582,18 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 							if (llavesResult.N_ESTATUS_PENDIENTES)
 								$scope.nivelEstatusPendientes = parseInt(llavesResult.N_ESTATUS_PENDIENTES)
 
+							if (llavesResult.N_FILTRO_GEOGRAFIA_BUZON)
+								$scope.nivelGeografiaBuzon = parseInt(llavesResult.N_FILTRO_GEOGRAFIA_BUZON)
+
+							if (llavesResult.N_FILTRO_INTERVENCIONES_BUZON)
+								$scope.nivelIntervencionesBuzon = parseInt(llavesResult.N_FILTRO_INTERVENCIONES_BUZON)
+
+							if (llavesResult.N_ESTATUS_PENDIENTES_BUZON)
+								$scope.nivelEstatusPendientesBuzon = parseInt(llavesResult.N_ESTATUS_PENDIENTES_BUZON)
+
+							if (llavesResult.N_FILTRO_GEOGRAFIA_HIST)
+								$scope.nivelGeografiaHist = parseInt(llavesResult.N_FILTRO_GEOGRAFIA_HIST)
+
 							if (llavesResult.N_ESTATUS_TRASPASO_FILTRO)
 								$scope.nivelEstatusTraspasoFiltro = parseInt(llavesResult.N_ESTATUS_TRASPASO_FILTRO)
 
@@ -497,22 +608,33 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 								$scope.configPermisoAccionTraspaso = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionTraspaso" })[0] != undefined);
 								$scope.configPermisoAccionConsultaTraspasos = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaTraspasos" })[0] != undefined);
 								$scope.configPermisoAccionDescargaTraspasosRep = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaTraspasosReporte" })[0] != undefined);
+								$scope.configPermisoAccionConsultaHist = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaHistorico" })[0] != undefined);
+								$scope.configPermisoAccionDescargaHist = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaHistoricoReporte" })[0] != undefined);
 								objectTempAccion = new GenericAccionRealizada("" + $scope.permisosConfigUser.id, 'TOP_RIGHT');
 								objectTempAccion.inicializarBotonAccionesRecientes();
 							}
 							validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
 							validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
 
-							let arrayDefaultKmzElemts=llavesResult.KEY_DEFAULT_KMZ ? llavesResult.KEY_DEFAULT_KMZ.split(",") : null;
-							GenericMapa.prototype.callPrototypeMapa(results[3].data.result,arrayDefaultKmzElemts);
+							let arrayDefaultKmzElemts = llavesResult.KEY_DEFAULT_KMZ ? llavesResult.KEY_DEFAULT_KMZ.split(",") : null;
+							GenericMapa.prototype.callPrototypeMapa(results[3].data.result, arrayDefaultKmzElemts);
 							$scope.initializeMap();
-							if (!$scope.configPermisoAccionConsultaOts && $scope.configPermisoAccionConsultaTraspasos) {
+		
+							if (!$scope.configPermisoAccionConsultaOts 
+								&& $scope.configPermisoAccionConsultaTraspasos
+								&& !$scope.configPermisoAccionConsultaHist) {
 								setTimeout(function () {
 									$("#traspasos-tab").click();
-									$scope.cambiaTab('traspasos');
 								}, 300)
 							}
 
+							if (!$scope.configPermisoAccionConsultaOts 
+								&& !$scope.configPermisoAccionConsultaTraspasos
+								&& $scope.configPermisoAccionConsultaHist) {
+								setTimeout(function () {
+									$("#historico-tab").click();
+								}, 300)
+							}
 						}
 
 					} else {
@@ -532,9 +654,10 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 						let respaldoTipoOrdenArray = [];
 						respaldoTipoOrdenArray = angular.copy(results[0].data.result);
 						$scope.nivelIntervenciones = $scope.nivelIntervenciones ? $scope.nivelIntervenciones : $scope.obtenerUltimoNivelFiltros(respaldoTipoOrdenArray);
+						$scope.nivelIntervencionesBuzon = $scope.nivelIntervencionesBuzon ? $scope.nivelIntervencionesBuzon : $scope.obtenerUltimoNivelFiltros(respaldoTipoOrdenArray);
+						$scope.filtrosGeneral.tipoOrdenesTraspaso = $scope.conversionAnidadaRecursiva(respaldoTipoOrdenArray, 1, $scope.nivelIntervencionesBuzon);
 						let tipoOrdenesTemp = $scope.conversionAnidadaRecursiva(respaldoTipoOrdenArray, 1, $scope.nivelIntervenciones);
-						$scope.filtrosGeneral.tipoOrdenes = angular.copy(tipoOrdenesTemp);
-						$scope.filtrosGeneral.tipoOrdenesTraspaso = $scope.filtraIntervencion(angular.copy(tipoOrdenesTemp));
+						$scope.filtrosGeneral.tipoOrdenes = $scope.filtraIntervencion(angular.copy(tipoOrdenesTemp));
 
 						$('#filtro-intervencion-tr').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.tipoOrdenesTraspaso, $scope.nivelIntervenciones));
 						$('#filtro-intervencion').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.tipoOrdenes, $scope.nivelIntervenciones));
@@ -550,13 +673,13 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 			if (results[2].data !== undefined) {
 				if (results[2].data.respuesta) {
 					if (results[2].data.result) {
-						//$scope.filtrosGeneral.estatusdisponibles = $scope.realizarConversionAnidado(results[2].data.result)
 						let respaldoStatusArray = [];
 						respaldoStatusArray = angular.copy(results[2].data.result);
 						$scope.nivelEstatusPendientes = $scope.nivelEstatusPendientes ? $scope.nivelEstatusPendientes : $scope.obtenerUltimoNivelFiltros(respaldoStatusArray);
+						$scope.nivelEstatusPendientesBuzon = $scope.nivelEstatusPendientesBuzon ? $scope.nivelEstatusPendientesBuzon : $scope.obtenerUltimoNivelFiltros(respaldoStatusArray);
 						let estatusDisponiblesTemp = $scope.conversionAnidadaRecursiva(results[2].data.result, 1, $scope.nivelEstatusPendientes);
-						$scope.filtrosGeneral.estatusdisponibles = angular.copy(estatusDisponiblesTemp);
-						$scope.filtrosGeneral.estatusdisponiblesTraspaso = $scope.filtraEstatus(angular.copy(estatusDisponiblesTemp));
+						$scope.filtrosGeneral.estatusdisponiblesTraspaso = $scope.conversionAnidadaRecursiva(results[2].data.result, 1, $scope.nivelEstatusPendientesBuzon);
+						$scope.filtrosGeneral.estatusdisponibles = $scope.filtraEstatus(angular.copy(estatusDisponiblesTemp));
 						$('#filtro-estatus-substatus').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.estatusdisponibles, $scope.nivelEstatusPendientes));
 						$('#filtro-estatus-substatus-tr').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.estatusdisponiblesTraspaso, $scope.nivelEstatusPendientes));
 
@@ -574,20 +697,26 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 					if (results[1].data.result) {
 						if (results[1].data.result.geografia) {
 							$scope.listadogeografiacopy = results[1].data.result.geografia
-							geografia = results[1].data.result.geografia
+							let geografiaTemp = results[1].data.result.geografia
 							$scope.nivelGeografia = $scope.nivelGeografia ? $scope.nivelGeografia : $scope.obtenerUltimoNivelFiltros(results[1].data.result.geografia);
-							geografia = geografia.filter((e) => e.nivel <= $scope.nivelGeografia)
-							geografia.map((e) => {
-								e.parent = e.padre == undefined ? "#" : e.padre;
-								e.text = e.nombre;
-								e.state = {
-									selected: true,
-									opened: true
-								}
-								return e
-							})
+							$scope.nivelGeografiaBuzon = $scope.nivelGeografiaBuzon ? $scope.nivelGeografiaBuzon : $scope.obtenerUltimoNivelFiltros(results[1].data.result.geografia);
+							$scope.nivelGeografiaHist = $scope.nivelGeografiaHist ? $scope.nivelGeografiaHist : $scope.obtenerUltimoNivelFiltros(results[1].data.result.geografia);
+							let geografia = angular.copy(geografiaTemp).filter((e) => e.nivel <= $scope.nivelGeografia)
+							let geografiaBuzon = angular.copy(geografiaTemp).filter((e) => e.nivel <= $scope.nivelGeografiaBuzon)
+							let geografiaHistorico = angular.copy(geografiaTemp).filter((e) => e.nivel <= $scope.nivelGeografiaHist)
+							
 
 							if ($scope.configPermisoAccionConsultaOts) {
+								geografia.push({ id: 0, nombre: "TOTALPLAY", nivel: 0, padre: "#", state: { opened: true } });
+								geografia.map((e) => {
+									e.parent = e.padre == null ? 0 : e.padre;
+									e.text = e.nombre;
+									e.state = {
+										selected: true,
+										opened: true
+									}
+									return e
+								})
 								$('#jstree-proton-3').bind('loaded.jstree', function (e, data) {
 									var geografiasOt = $('#jstree-proton-3').jstree("get_selected", true);
 									let textoGeografias = [];
@@ -614,6 +743,16 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 							}
 
 							if ($scope.configPermisoAccionConsultaTraspasos) {
+								geografiaBuzon.push({ id: 0, nombre: "TOTALPLAY", nivel: 0, padre: "#", state: { opened: true } });
+								geografiaBuzon.map((e) => {
+									e.parent = e.padre == null ? 0 : e.padre;
+									e.text = e.nombre;
+									e.state = {
+										selected: true,
+										opened: true
+									}
+									return e
+								})
 								$('#jstree-proton-tr').bind('loaded.jstree', function (e, data) {
 									var geografiasTas = $('#jstree-proton-tr').jstree("get_selected", true);
 									let textoGeografias = [];
@@ -629,7 +768,43 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 										"show_only_matches": true
 									},
 									'core': {
-										'data': geografia,
+										'data': geografiaBuzon,
+										'themes': {
+											'name': 'proton',
+											'responsive': true,
+											'icons': false
+										}
+									}
+								});
+							}
+
+							if ($scope.configPermisoAccionConsultaHist) {
+								geografiaHistorico.push({ id: 0, nombre: "TOTALPLAY", nivel: 0, padre: "#", state: { opened: true } });
+								geografiaHistorico.map((e) => {
+									e.parent = e.padre == null ? 0 : e.padre;
+									e.text = e.nombre;
+									e.state = {
+										selected: true,
+										opened: true
+									}
+									return e
+								})
+								$('#jstree-proton-ht').bind('loaded.jstree', function (e, data) {
+									var geografiasTas = $('#jstree-proton-ht').jstree("get_selected", true);
+									let textoGeografias = [];
+									angular.forEach(geografiasTas, (geografia, index) => {
+										textoGeografias.push(geografia.text);
+									});
+									$('#clusterHt').val(textoGeografias);
+									$scope.consultaHistorico()
+								}).jstree({
+									'plugins': ["wholerow", "checkbox", 'search'],
+									'search': {
+										"case_sensitive": false,
+										"show_only_matches": true
+									},
+									'core': {
+										'data': geografiaHistorico,
 										'themes': {
 											'name': 'proton',
 											'responsive': true,
@@ -666,7 +841,7 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 				mostrarMensajeErrorAlert('Ha ocurrido un error al consultar los motivos');
 			}
 
-		
+
 
 
 
@@ -715,6 +890,18 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 		});
 
 		traspasosTable = $('#traspasosTable').DataTable({
+			"paging": true,
+			"lengthChange": false,
+			"ordering": false,
+			"pageLength": 10,
+			"info": true,
+			"searching": false,
+			"scrollX": false,
+			"autoWidth": false,
+			"language": idioma_espanol_not_font
+		});
+
+		historicoTable = $('#historicoTable').DataTable({
 			"paging": true,
 			"lengthChange": false,
 			"ordering": false,
@@ -892,20 +1079,6 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 		});
 	}
 
-	consultaDetalleOtsTraspasos = function (indexOtConsulta) {
-		$scope.infoOtDetalle = {};
-		let otConsultaTemp = $scope.listadoConsultaOtsDisponibles[indexOtConsulta]
-		$scope.datoOt = otConsultaTemp.idOrden
-		$scope.consultaDetalleOtGeneric(otConsultaTemp);
-	}
-
-	consultaDetalleTraspasos = function (indexOtConsulta) {
-		$scope.infoOtDetalle = {};
-		let otConsultaTempTras = $scope.listadoConsultaTraspasosDisponibles[indexOtConsulta]
-		$scope.datoOt = otConsultaTempTras.idOrden;
-		$scope.consultaDetalleOtGeneric(otConsultaTempTras);
-	}
-
 	$scope.limpiarFactibilidad = function () {
 		$scope.isFactibilidad = false;
 		$("#search-input-place").val("");
@@ -918,23 +1091,23 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 	}
 
 
-	consultaTraspaso = function (index) {
+	consultaTraspaso = function (id) {
 		if ($scope.configPermisoAccionTraspaso) {
 			$scope.informacionClienteDetalle = {};
 			$scope.infoFactibilidad = {};
 			$("#info-factibilidad").css("display", "none");
 			$("#search-input-place").val('');
 			$scope.isFactibilidad = false;
-			let traspasoTemp = $scope.listadoConsultaOtsDisponibles[index];
 			$("#wizzard-1").click();
-			$scope.consultaDetalleTraspasoGen(traspasoTemp);
+			$scope.consultaDetalleTraspasoGen(id);
 		}
 
 	}
 
-	$scope.consultaDetalleOtGeneric = function (ordenObject) {
+	consultaDetalleOtGeneric = function (id, flujo) {
+		$scope.datoOt = id;
 		let params = {
-			id_ot: ordenObject.idOrden
+			id_ot: id
 		}
 		swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 		swal.showLoading();
@@ -944,7 +1117,7 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 					if (response.data.result.orden) {
 						$scope.infoOtDetalle = response.data.result.orden;
 						is_consulta_info_ot = true;
-						$scope.permisosModal = $scope.elementosConfigGeneral.get("MODAL_CO_FLUJO_" + ordenObject.idFlujo).split(",")
+						$scope.permisosModal = $scope.elementosConfigGeneral.get("MODAL_CO_FLUJO_" + flujo).split(",")
 						$('#modal-detalle-ot').modal('show');
 						swal.close();
 					} else {
@@ -962,9 +1135,9 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 		}).catch(err => handleError(err));
 	}
 
-	$scope.consultaDetalleTraspasoGen = function (ordenObject) {
+	$scope.consultaDetalleTraspasoGen = function (id) {
 		let params = {
-			id_ot: ordenObject.idOrden
+			id_ot: id
 		}
 		swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 		swal.showLoading();
@@ -1203,6 +1376,25 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 		}
 	}
 
+	$scope.limpiarCamposFiltroHistorico = function (opcion) {
+		switch (opcion) {
+			case 1:
+				$scope.camposFiltroHistorico.idos = "";
+				$scope.camposFiltroHistorico.cuenta = "";
+				break;
+			case 2:
+				$scope.camposFiltroHistorico.idot = "";
+				$scope.camposFiltroHistorico.cuenta = "";
+				break;
+			case 3:
+				$scope.camposFiltroHistorico.idot = "";
+				$scope.camposFiltroHistorico.idos = "";
+				break;
+			default:
+				break;
+		}
+	}
+
 	$scope.descargarReporteOts = function () {
 		let isValido = true;
 		let errorMensaje = '';
@@ -1214,14 +1406,8 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 		let subIntTemp = []
 		subIntTemp = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.tipoOrdenes, $scope.nivelIntervenciones);
 
-		let ultimonivel;
-		if ($scope.nivelGeografia) {
-			ultimonivel = $scope.nivelGeografia
-		} else {
-			ultimonivel = $scope.obtenerNivelUltimoJerarquia();
-		}
 		let clusters = $("#jstree-proton-3").jstree("get_selected", true)
-			.filter(e => e.original.nivel == ultimonivel)
+			.filter(e => e.original.nivel == $scope.nivelGeografia)
 			.map(e => parseInt(e.id))
 
 		if ($.trim(document.getElementById('idot').value) !== '') {
@@ -1332,14 +1518,8 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 		let subIntTemp = []
 		subIntTemp = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.tipoOrdenesTraspaso, $scope.nivelIntervenciones);
 
-		let ultimonivel;
-		if ($scope.nivelGeografia) {
-			ultimonivel = $scope.nivelGeografia
-		} else {
-			ultimonivel = $scope.obtenerNivelUltimoJerarquia();
-		}
 		let clusters = $("#jstree-proton-tr").jstree("get_selected", true)
-			.filter(e => e.original.nivel == ultimonivel)
+			.filter(e => e.original.nivel == $scope.nivelGeografiaBuzon)
 			.map(e => parseInt(e.id))
 
 		if ($.trim(document.getElementById('idot-tr').value) !== '') {
@@ -1406,9 +1586,9 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 				elementosPorPagina: $scope.elementosRegistroTraspaso,
 				pagina: 1,
 				tipoExcel: 'traspasos-consultartraspasos-pi',
-				headers: ["OT", "CLIENTE", "CUENTA", "CIUDAD", "FECHA AGENDA", "TIPO", "SUBTIPO",
+				headers: ["OT", "OT ORIGINAL", "OS", "CLIENTE", "CUENTA", "GEOGRAFIA", "FECHA AGENDA", "TIPO", "SUBTIPO",
 					"MOTIVO", "MOTIVO TRANSFERENCIA", "ESTATUS", "ESTADO"],
-				valores: ["idOrden", "nombreCliente", "claveCliente", "ciudad", "fechaAgenda", "descTipo", "descSubTipo",
+				valores: ["idOrdenNueva", "idOrdenOriginal","folioSistema", "nombreCliente", "claveCliente", "geografia", "fechaAgenda", "descTipo", "descSubTipo",
 					"descripcionMotivo", "motivoTransferencia", "descripcionEstatus", "descripcionEstado"],
 				sheet: "Reporte Traspasos OT"
 			}
@@ -1417,10 +1597,10 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 			let tituloAccion = "Descarga reporte traspasos";
 			let mensajeEnvio = 'Ha ocurrido un error al descargar el reporte';
 			genericService.enviarParamsReporte(params).then(function success(response) {
-				// console.log(response);
+				 console.log(response);
 				if (response.data.respuesta) {
 					var link = document.createElement("a");
-					link.href = contex_project + '/req/exporteExcelGenericRequest/reporteOtTraspasadas.xls';
+					link.href = contex_project + '/req/exporteExcelGenericRequest/reporteOtBuzon.xls';
 					link.click();
 					swal.close();
 
@@ -1438,10 +1618,99 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 		}
 	}
 
-	$scope.cambiaTab = function (type) {
-		$(".menu-pane").removeClass("active show");
-		$("#" + type).addClass("active show");
+	$scope.descargarReporteHistorico = function () {
+		let isValido = true;
+		let errorMensaje = '';
+		let isValFecha = true;
+
+		let clusters = $("#jstree-proton-ht").jstree("get_selected", true)
+			.filter(e => e.original.nivel == $scope.nivelGeografiaHist)
+			.map(e => parseInt(e.id))
+
+		if ($.trim(document.getElementById('idot-ht').value) !== '') {
+			if (!($.isNumeric($.trim(document.getElementById('idot-ht').value)))) {
+				errorMensaje += '<li>Introduce un n&uacute;mero correcto de OT.</li>';
+				isValido = false;
+			}
+		}
+
+		if ($.trim(document.getElementById('cuenta-ht').value) !== '') {
+			if (!($.isNumeric($.trim(document.getElementById('cuenta-ht').value)))) {
+				errorMensaje += '<li>Introduce un n&uacute;mero correcto de cuenta.</li>';
+				isValido = false;
+			}
+		}
+
+		if (clusters.length === 0) {
+			errorMensaje += '<li>Seleccione geograf&iacute;a.</li>';
+			isValido = false
+		}
+
+		if (document.getElementById('filtro_fecha_inicio_historico').value == '') {
+			errorMensaje += '<li>Introduce Fecha Inicial</li>';
+			isValFecha = false;
+			isValido = false
+		}
+
+		if (document.getElementById('filtro_fecha_fin_historico').value == '') {
+			errorMensaje += '<li>Introduce Fecha Final</li>';
+			isValFecha = false;
+			isValido = false
+		}
+
+		if (isValFecha) {
+			if (!validarFecha('filtro_fecha_inicio_historico', 'filtro_fecha_fin_historico')) {
+				$('.datepicker').datepicker('update', new Date());
+				errorMensaje += '<li>La fecha inicial no tiene que ser mayor a la final.</li>';
+				isValido = false
+			}
+		}
+
+
+		if (isValido) {
+
+			let params = {
+				idOrden: $.trim(document.getElementById('idot-ht').value),
+				folioSistema: $.trim(document.getElementById('idos-ht').value),
+				claveCliente: $.trim(document.getElementById('cuenta-ht').value),
+				idClusters: clusters,
+				fechaInicio: $scope.getFechaFormato(document.getElementById('filtro_fecha_inicio_historico').value),
+				fechaFin: $scope.getFechaFormato(document.getElementById('filtro_fecha_fin_historico').value),
+				elementosPorPagina: $scope.elementosRegistroHistorico,
+				pagina: 1,
+				tipoExcel: 'traspasos-consultarhistorico-pi',
+				headers: ["OT", "OT ORIGINAL", "OS", "CLIENTE", "CUENTA", "GEOGRAFIA", "FECHA AGENDA", "TIPO", "SUBTIPO",
+					"MOTIVO", "MOTIVO TRANSFERENCIA", "ESTATUS", "ESTADO"],
+				valores: ["idOrdenNueva", "idOrdenOriginal","folioSistema", "nombreCliente", "claveCliente", "geografia", "fechaAgenda", "descTipo", "descSubTipo",
+					"descripcionMotivo", "motivoTransferencia", "descripcionEstatus", "descripcionEstado"],
+				sheet: "Reporte Buzon OT"
+			}
+			swal({ text: 'Cargando registros...', allowOutsideClick: false });
+			swal.showLoading();
+			let tituloAccion = "Descarga reporte historico";
+			let mensajeEnvio = 'Ha ocurrido un error al descargar el reporte';
+			genericService.enviarParamsReporte(params).then(function success(response) {
+				// console.log(response);
+				if (response.data.respuesta) {
+					var link = document.createElement("a");
+					link.href = contex_project + '/req/exporteExcelGenericRequest/reporteOtHistorico.xls';
+					link.click();
+					swal.close();
+
+					mensajeEnvio = 'Se ha descargado el reporte';
+					objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
+				} else {
+					objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
+					mostrarMensajeErrorAlert('Ocurrio un error al generar reporte.')
+				}
+				swal.close();
+			});
+
+		} else {
+			mostrarMensajeWarningValidacion(errorMensaje);
+		}
 	}
+
 
 	$scope.agendarOt = function () {
 		let data = $scope.listMotivos.find((e) => Number(e.id) == Number($scope.informacionClienteDetalle.motivo))
@@ -1734,6 +2003,13 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 				textoGeografiasTr.push(geografia.text);
 			});
 			$('#clusterTr').val(textoGeografiasTr);
+
+			var geografiasHt = $('#jstree-proton-ht').jstree("get_selected", true);
+			let textoGeografiasHt = [];
+			angular.forEach(geografiasHt, (geografia, index) => {
+				textoGeografiasHt.push(geografia.text);
+			});
+			$('#clusterHt').val(textoGeografiasHt);
 		})
 
 		$("#moduloTraspasos").addClass('active');
@@ -1761,9 +2037,9 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 		if (typeTable == 'otTable') {
 			arraySort = angular.copy($scope.tempArrayOTS);
 		} else if (typeTable == 'traspasoTable') {
-			arraySort = angular.copy($scope.tempArrayTraspasos); 
+			arraySort = angular.copy($scope.tempArrayTraspasos);
 		}
-		
+
 		if (isNumber === 'true') {
 			arraySort.sort(function (a, b) {
 				if (a[colNumber] == '' || a[colNumber] == undefined) {
@@ -1801,6 +2077,10 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 		} else if (typeTable == 'traspasoTable') {
 			$.each(arraySort, function (index, elemento) {
 				traspasosTable.row(index).data(elemento);
+			});
+		} else if(typeTable == 'historicoTable'){
+			$.each(arraySort, function (index, elemento) {
+				historicoTable.row(index).data(elemento);
 			});
 		}
 	}

@@ -32,5 +32,9 @@ private static final long serialVersionUID = 1L;
 	
 	@Value("${agendarTraspasoOt}")
 	private String agendarTraspasoOt;
+	
+	@Value("${consultaGeneralHistorico}")
+	private String consultaGeneralHistorico;
+	
 
 }

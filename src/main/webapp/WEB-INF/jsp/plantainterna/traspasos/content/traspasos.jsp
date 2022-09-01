@@ -107,16 +107,18 @@
             <thead>
                 <tr>
                     <th data-idColumn="0" data-isNumber="true" data-typeTable="traspasoTable" class="orderColumnTable orderColumnAscTable">OT</th>
-                    <th data-idColumn="1" data-isNumber="false" data-typeTable="traspasoTable" class="orderColumnTable orderColumnAscTable">Cliente</th>
-                    <th data-idColumn="2" data-isNumber="true" data-typeTable="traspasoTable" class="orderColumnTable orderColumnAscTable">Cuenta</th>
-                    <th data-idColumn="3" data-isNumber="false" data-typeTable="traspasoTable" class="orderColumnTable orderColumnAscTable">Ciudad</th>
-                    <th data-idColumn="4" data-isNumber="false" data-typeTable="traspasoTable" class="orderColumnTable orderColumnAscTable">Fecha agenda</th>
-                    <th data-idColumn="5" data-isNumber="false" data-typeTable="traspasoTable" class="orderColumnTable orderColumnAscTable">Tipo</th>
-                    <th data-idColumn="6" data-isNumber="false" data-typeTable="traspasoTable" class="orderColumnTable orderColumnAscTable">Subtipo</th>
-                    <th data-idColumn="7" data-isNumber="false" data-typeTable="traspasoTable" class="orderColumnTable orderColumnAscTable">Estatus</th>
-                    <th data-idColumn="8" data-isNumber="false" data-typeTable="traspasoTable" class="orderColumnTable orderColumnAscTable">Estado</th>
-                    <th data-idColumn="9" data-isNumber="false" data-typeTable="traspasoTable" class="orderColumnTable orderColumnAscTable">Motivo</th>
-                    <th data-idColumn="10" data-isNumber="false" data-typeTable="traspasoTable" class="orderColumnTable orderColumnAscTable">Motivo transferencia</th>
+                    <th data-idColumn="1" data-isNumber="true" data-typeTable="traspasoTable" class="orderColumnTable orderColumnAscTable">OT original</th>
+                    <th data-idColumn="2" data-isNumber="true" data-typeTable="traspasoTable" class="orderColumnTable orderColumnAscTable">OS</th>
+                    <th data-idColumn="3" data-isNumber="false" data-typeTable="traspasoTable" class="orderColumnTable orderColumnAscTable">Cliente</th>
+                    <th data-idColumn="4" data-isNumber="true" data-typeTable="traspasoTable" class="orderColumnTable orderColumnAscTable">Cuenta</th>
+                    <th data-idColumn="5" data-isNumber="false" data-typeTable="traspasoTable" class="orderColumnTable orderColumnAscTable">Geograf&iacute;a</th>
+                    <th data-idColumn="6" data-isNumber="false" data-typeTable="traspasoTable" class="orderColumnTable orderColumnAscTable">Fecha agenda</th>
+                    <th data-idColumn="7" data-isNumber="false" data-typeTable="traspasoTable" class="orderColumnTable orderColumnAscTable">Tipo</th>
+                    <th data-idColumn="8" data-isNumber="false" data-typeTable="traspasoTable" class="orderColumnTable orderColumnAscTable">Subtipo</th>
+                    <th data-idColumn="9" data-isNumber="false" data-typeTable="traspasoTable" class="orderColumnTable orderColumnAscTable">Estatus</th>
+                    <th data-idColumn="10" data-isNumber="false" data-typeTable="traspasoTable" class="orderColumnTable orderColumnAscTable">Estado</th>
+                    <th data-idColumn="11" data-isNumber="false" data-typeTable="traspasoTable" class="orderColumnTable orderColumnAscTable">Motivo</th>
+                    <th data-idColumn="12" data-isNumber="false" data-typeTable="traspasoTable" class="orderColumnTable orderColumnAscTable">Motivo transferencia</th>
                     <th style="text-align: center;">Evidencia</th>
                     <th style="text-align: center;">Detalle</th>
                 </tr>

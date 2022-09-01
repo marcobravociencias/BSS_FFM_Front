@@ -60,12 +60,16 @@
                 <div class="container-fluid" style="padding: 0;" ng-show="(configPermisoAccionConsultaOts || configPermisoAccionConsultaTraspasos) && !isTraspaso">
                     <ul class="nav nav-tabs" id="myTabTraspasos" role="tablist">
                         <li class="nav-item" ng-if="configPermisoAccionConsultaOts">
-                            <a class="nav-link active" id="ots-tab" data-toggle="tab" href="ots" ng-click="cambiaTab('ots')" role="tab"
+                            <a class="nav-link active" id="ots-tab" data-toggle="tab" data-target="#ots"  role="tab"
                                 aria-controls="ots" aria-selected="false">OTs</a>
                         </li>
                         <li class="nav-item" ng-if="configPermisoAccionConsultaTraspasos">
-                            <a class="nav-link" id="traspasos-tab" data-toggle="tab" href="traspasos" role="tab" ng-click="cambiaTab('traspasos')"
-                                aria-controls="traspasos" aria-selected="true">Traspasos</a>
+                            <a class="nav-link" id="traspasos-tab" data-toggle="tab" data-target="#traspasos" role="tab"
+                                aria-controls="traspasos" aria-selected="true">Buz&oacute;n</a>
+                        </li>
+                        <li class="nav-item" ng-if="configPermisoAccionConsultaHist">
+                            <a class="nav-link" id="historico-tab" data-toggle="tab" data-target="#historico" role="tab" 
+                                aria-controls="historico" aria-selected="true">Historico</a>
                         </li>
                     </ul>
                     <div class="tab-content">
@@ -75,6 +79,10 @@
                         <div class="tab-pane menu-pane fade" id="traspasos" role="tabpanel" ng-show="configPermisoAccionConsultaTraspasos"
                             aria-labelledby="traspasos-tab">
                             <jsp:include page="./content/traspasos.jsp"></jsp:include>
+                        </div>
+                        <div class="tab-pane menu-pane fade" id="historico" role="tabpanel" ng-show="configPermisoAccionConsultaHist"
+                            aria-labelledby="historico-tab">
+                            <jsp:include page="./content/historico.jsp"></jsp:include>
                         </div>
                     </div>
                 </div>

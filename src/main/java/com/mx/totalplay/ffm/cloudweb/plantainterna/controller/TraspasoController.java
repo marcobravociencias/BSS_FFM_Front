@@ -133,4 +133,25 @@ public class TraspasoController {
 		return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
 	}
 	
+	@PostMapping("/consultaHistorico")
+	public ResponseEntity<DataTableResponse> consultaHistorico(@ModelAttribute ParamConsultaOTPI params) {
+		logger.info("*** Objeto: " + gson.toJson(params));
+		dataTableResponse = traspasoService.consultarHistorico(params);
+		if (dataTableResponse.getResult() instanceof Integer){
+			return new ResponseEntity<DataTableResponse>(dataTableResponse, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<DataTableResponse>(dataTableResponse, HttpStatus.ACCEPTED);
+	}
+	
+	@PostMapping("/consultaReporteHistorico")
+	public ResponseEntity<?> consultaReporteHistorico(@RequestBody String params) {
+		logger.info("*** TraspasoController.class *** Metodo consultaReporteHistorico *** Objecto: " + params);
+		result = traspasoService.consultarReporteHistorico(params);
+		if (result.getResult() instanceof Integer){
+			return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
+	}
+	
+	
 }

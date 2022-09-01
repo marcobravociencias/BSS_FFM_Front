@@ -43,14 +43,6 @@
     max-height: 15em;
 }
 
-.col-conteiner-arbol {
-    padding: 4px;
-    height: 350px;
-    overflow-x: auto;
-    overflow-y: auto;
-    text-align: justify;
-}
-
 
 #myTabTraspasos {
     padding: 1em;
@@ -233,11 +225,13 @@ label.dropdown-item.form-check-inputfiltro {
 /* CSS TABLE */
 
 #traspasosTable tbody tr:nth-child(even),
+#historicoTable tbody tr:nth-child(even),
 #otsTable tbody tr:nth-child(even) {
     background: #f5f5f5;
 }
 
 #traspasosTable>tbody>tr>td,
+#historicoTable>tbody>tr>td,
 #otsTable>tbody>tr>td {
     color: #39455b;
     font-family: 'Montserrat';
@@ -247,6 +241,7 @@ label.dropdown-item.form-check-inputfiltro {
 }
 
 #traspasosTable thead th,
+#historicoTable thead th,
 #otsTable thead th {
     position: relative;
     background-color: #b1b1b1;
@@ -259,6 +254,7 @@ label.dropdown-item.form-check-inputfiltro {
 }
 
 #traspasosTable tbody tr td,
+#historicoTable tbody tr td,
 #otsTable tbody tr td {
     padding: 0.5em;
     border: none;
@@ -331,11 +327,12 @@ i.icono-noseleccion {
     border-radius: 0.2rem !important;
     cursor: pointer;
     font-size: 0.9em !important;
-    background: var(--estandar-color);box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+    background: var(--estandar-color);
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
 }
 
 .btn-detalle:hover, .btn-detalle:active {
-    background: #b23cfd !important;
+    background: var(--estandar-color) !important;
 }
 
 .btn-traspaso, .btn-traspaso:hover, .btn-traspaso:active {
@@ -380,13 +377,6 @@ i.icono-noseleccion {
     max-height: 15em;
 }
 
-.col-conteiner-arbol {
-    padding: 4px;
-    height: 350px;
-    overflow-x: auto;
-    overflow-y: auto;
-    text-align: justify;
-}
 
 .mfp-container {
     text-align: center;

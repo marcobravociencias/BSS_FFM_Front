@@ -211,6 +211,14 @@ public class ImplGenericReporteExcelSFService implements GenericReporteSFExcelSe
 		            array = jsonObjectResponse.getAsJsonArray("ordenes");
 				}
 				break;
+			case "traspasos-consultarhistorico-pi":
+				response = consultarInformacionExcelGenericPost(params, constTraspaso.getConsultaGeneralHistorico(), method);
+				if (response.getResult() == null || response.getResult() instanceof Integer) {
+				} else {
+					JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
+		            array = jsonObjectResponse.getAsJsonArray("ordenes");
+				}
+				break;
 			case "reportelog-consultarlog-pi":
 				response = consultarInformacionExcelGenericPost(params, constantesAmbiente.getConsultarAccionesRealizadas(), method);
 				if (response.getResult() == null || response.getResult() instanceof Integer) {

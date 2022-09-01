@@ -93,9 +93,9 @@ public class ImplTraspasoService implements TraspasoService {
 								&& object.get("claveCliente").getAsString().trim() != "")
 										? object.get("claveCliente").getAsString().trim()
 										: "Sin dato";
-						dataArray[count][3] = (object.get("ciudad") != null
-								&& object.get("ciudad").getAsString().trim() != "")
-										? object.get("ciudad").getAsString().trim()
+						dataArray[count][3] = (object.get("cluster") != null
+								&& object.get("cluster").getAsString().trim() != "")
+										? object.get("cluster").getAsString().trim()
 										: "Sin dato";
 						dataArray[count][4] = (object.get("fechaAgenda") != null
 								&& object.get("fechaAgenda").getAsString().trim() != "")
@@ -126,10 +126,12 @@ public class ImplTraspasoService implements TraspasoService {
 								+ String.valueOf(object.get("idOrden").getAsInt()) + ", "
 								+ String.valueOf(object.get("claveCliente"))
 								+ ")' class='btn-option btn-floating btn-evidencia btn-sm btn-secondary waves-effect waves-light'><th><i class='icono_cons_bg fa fa-picture-o' aria-hidden='true'></i></th></span></div>";
-						dataArray[count][11] = "<div class='tooltip-btn'> <span onclick='consultaDetalleOtsTraspasos("
-								+ i
+						dataArray[count][11] = "<div class='tooltip-btn'> <span onclick='consultaDetalleOtGeneric("
+								+ String.valueOf(object.get("idOrden").getAsInt()) + ", "
+								+ String.valueOf(object.get("idFlujo"))
 								+ ")' class='btn-floating btn-option btn-sm btn-detalle btn-secondary waves-effect waves-light acciones'><th><i class='icono_cons_bg fa fa-bars' aria-hidden='true'></i></th></span></div>";
-						dataArray[count][12] = "<div class='tooltip-btn'> <span onclick='consultaTraspaso(" + i
+						dataArray[count][12] = "<div class='tooltip-btn'> <span onclick='consultaTraspaso("
+								+ String.valueOf(object.get("idOrden").getAsInt())
 								+ ")' class='btn-floating btn-option btn-sm btn-traspaso btn-secondary waves-effect waves-light acciones'><th><i class='icono_cons_bg fa fa-exchange-alt' aria-hidden='true'></i></th></span></div>";
 						count++;
 
@@ -234,54 +236,64 @@ public class ImplTraspasoService implements TraspasoService {
 					for (int i = 0; i < ordenesArray.size(); i++) {
 						JsonObject object = (JsonObject) ordenesArray.get(i);
 
-						dataArray[count][0] = object.get("idOrden").getAsInt() != 0
-								? String.valueOf(object.get("idOrden").getAsInt())
-								: "";
-						dataArray[count][1] = (object.get("nombreCliente") != null
+
+						dataArray[count][0] = object.get("idOrdenNueva").getAsInt() != 0
+								? String.valueOf(object.get("idOrdenNueva").getAsInt())
+								: "Sin dato";
+						dataArray[count][1] = object.get("idOrdenOriginal").getAsInt() != 0
+								? String.valueOf(object.get("idOrdenOriginal").getAsInt())
+								: "Sin dato";
+						dataArray[count][2] = (object.get("folioSistema") != null
+								&& object.get("folioSistema").getAsString().trim() != "")
+										? object.get("folioSistema").getAsString().trim()
+										: "Sin dato";
+						dataArray[count][3] = (object.get("nombreCliente") != null
 								&& object.get("nombreCliente").getAsString().trim() != "")
 										? object.get("nombreCliente").getAsString().trim()
 										: "Sin dato";
-						dataArray[count][2] = (object.get("claveCliente") != null
+						dataArray[count][4] = (object.get("claveCliente") != null
 								&& object.get("claveCliente").getAsString().trim() != "")
 										? object.get("claveCliente").getAsString().trim()
 										: "Sin dato";
-						dataArray[count][3] = (object.get("ciudad") != null
-								&& object.get("ciudad").getAsString().trim() != "")
-										? object.get("ciudad").getAsString().trim()
+						dataArray[count][5] = (object.get("geografia") != null
+								&& object.get("geografia").getAsString().trim() != "")
+										? object.get("geografia").getAsString().trim()
 										: "Sin dato";
-						dataArray[count][4] = (object.get("fechaAgenda") != null
+						dataArray[count][6] = (object.get("fechaAgenda") != null
 								&& object.get("fechaAgenda").getAsString().trim() != "")
 										? object.get("fechaAgenda").getAsString().trim()
 										: "Sin dato";
-						dataArray[count][5] = (object.get("descTipo") != null
+						dataArray[count][7] = (object.get("descTipo") != null
 								&& object.get("descTipo").getAsString().trim() != "")
 										? object.get("descTipo").getAsString().trim()
 										: "Sin dato";
-						dataArray[count][6] = (object.get("descSubTipo") != null
+						dataArray[count][8] = (object.get("descSubTipo") != null
 								&& object.get("descSubTipo").getAsString().trim() != "")
 										? object.get("descSubTipo").getAsString().trim()
 										: "Sin dato";
-						dataArray[count][7] = (object.get("descripcionEstatus") != null
+						dataArray[count][9] = (object.get("descripcionEstatus") != null
 								&& object.get("descripcionEstatus").getAsString().trim() != "")
 										? object.get("descripcionEstatus").getAsString().trim()
 										: "Sin dato";
-						dataArray[count][8] = (object.get("descripcionEstado") != null
+						dataArray[count][10] = (object.get("descripcionEstado") != null
 								&& object.get("descripcionEstado").getAsString().trim() != "")
 										? object.get("descripcionEstado").getAsString().trim()
 										: "Sin dato";
-						dataArray[count][9] = (object.get("descripcionMotivo") != null
+						dataArray[count][11] = (object.get("descripcionMotivo") != null
 								&& object.get("descripcionMotivo").getAsString().trim() != "")
 										? object.get("descripcionMotivo").getAsString().trim()
 										: "Sin dato";
-						dataArray[count][10] = (object.get("motivoTransferencia") != null
+						dataArray[count][12] = (object.get("motivoTransferencia") != null
 								&& object.get("motivoTransferencia").getAsString().trim() != "")
 										? object.get("motivoTransferencia").getAsString().trim()
 										: "Sin dato";
-						dataArray[count][11] = "<div class='tooltip-btn'> <span onclick='consultaImagenesOTsTraspasos("
-								+ String.valueOf(object.get("idOrden").getAsInt()) + ", "
+						dataArray[count][13] = "<div class='tooltip-btn'> <span onclick='consultaImagenesOTsTraspasos("
+								+ String.valueOf(object.get("idOrdenNueva").getAsInt()) + ", "
 								+ String.valueOf(object.get("claveCliente"))
 								+ ")' class='btn-option btn-floating btn-evidencia btn-sm btn-secondary waves-effect waves-light'><th><i class='icono_cons_bg fa fa-picture-o' aria-hidden='true'></i></th></span></div>";
-						dataArray[count][12] = "<div class='tooltip-btn'> <span onclick='consultaDetalleTraspasos(" + i
+						dataArray[count][14] = "<div class='tooltip-btn'> <span onclick='consultaDetalleOtGeneric("
+								+ String.valueOf(object.get("idOrdenNueva").getAsInt()) + ", "
+								+ String.valueOf(object.get("idFlujo"))
 								+ ")' class='btn-floating btn-option btn-sm btn-detalle btn-secondary waves-effect waves-light acciones'><th><i class='icono_cons_bg fa fa-bars' aria-hidden='true'></i></th></span></div>";
 						count++;
 
@@ -308,153 +320,6 @@ public class ImplTraspasoService implements TraspasoService {
 		return dataResponse;
 	}
 
-	@Override
-	public ServiceResponseResult consultarReporteOts(String params) {
-		logger.info("ImplTraspasoService.class [metodo consultarReporteOts() ]\n" + params);
-		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
-		String tokenAcces = principalDetail.getAccess_token();
-		logger.info("consultarReporteOts ##+" + tokenAcces);
-		String urlRequest = principalDetail.getDireccionAmbiente()
-				.concat(constTraspaso.getConsultaGeneralTraspasosOt());
-		logger.info("URL ##+" + urlRequest);
-
-		ServiceResponseResult response = restCaller.callPostBearerTokenRequest(params, urlRequest,
-				ServiceResponseResult.class, tokenAcces);
-		if (response.getResult() != null) {
-			JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
-			JsonArray ordenesArray = jsonObjectResponse.getAsJsonArray("ordenes");
-			JsonArray ordenesReporte = new JsonArray();
-			JsonObject ordenesR = new JsonObject();
-			if (ordenesArray.size() > 0) {
-				if (jsonObjectResponse.get("registrosTotales").getAsInt() > 0) {
-					for (int i = 0; i < ordenesArray.size(); i++) {
-						JsonObject object = (JsonObject) ordenesArray.get(i);
-						JsonObject result = new JsonObject();
-						logger.info("objeto: " + object);
-						result.addProperty("OT",
-								object.get("idOrden").getAsInt() != 0 ? String.valueOf(object.get("idOrden").getAsInt())
-										: "Sin dato");
-						result.addProperty("CLIENTE",
-								object.get("nombreCliente") != null ? object.get("nombreCliente").getAsString().trim()
-										: "Sin dato");
-						result.addProperty("CUENTA",
-								object.get("claveCliente") != null ? object.get("claveCliente").getAsString().trim()
-										: "Sin dato");
-						result.addProperty("CIUDAD",
-								object.get("ciudad") != null ? object.get("ciudad").getAsString().trim() : "Sin dato");
-						result.addProperty("FECHA AGENDA",
-								object.get("fechaAgenda") != null ? object.get("fechaAgenda").getAsString().trim()
-										: "Sin dato");
-						result.addProperty("TIPO",
-								object.get("descTipo") != null ? object.get("descTipo").getAsString().trim()
-										: "Sin dato");
-						result.addProperty("SUBTIPO",
-								object.get("descSubTipo") != null ? object.get("descSubTipo").getAsString().trim()
-										: "Sin dato");
-						result.addProperty("MOTIVO",
-								object.get("descripcionMotivo") != null
-										? object.get("descripcionMotivo").getAsString().trim()
-										: "Sin dato");
-						result.addProperty("ESTATUS",
-								object.get("descripcionEstatus") != null
-										? object.get("descripcionEstatus").getAsString().trim()
-										: "Sin dato");
-						result.addProperty("ESTADO",
-								object.get("descripcionEstado") != null
-										? object.get("descripcionEstado").getAsString().trim()
-										: "Sin dato");
-						ordenesReporte.add(result);
-					}
-					ordenesR.add("ordenes", ordenesReporte);
-					response = ServiceResponseResult.builder().isRespuesta(true).result(gson.toJson(ordenesR)).build();
-				} else {
-					response = ServiceResponseResult.builder().isRespuesta(true).result(null).build();
-				}
-			} else {
-				response = ServiceResponseResult.builder().isRespuesta(true).result(null).build();
-			}
-		}
-
-		logger.info("*** Objeto Response: " + gson.toJson(response));
-
-		return response;
-	}
-
-	@Override
-	public ServiceResponseResult consultarReporteTraspasos(String params) {
-		logger.info("ImplTraspasoService.class [metodo consultarReporteTraspasos() ]\n" + params);
-		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
-		String tokenAcces = principalDetail.getAccess_token();
-		logger.info("consultarReporteTraspasos ##+" + tokenAcces);
-		String urlRequest = principalDetail.getDireccionAmbiente().concat(constTraspaso.getConsultaGeneralTraspasos());
-		logger.info("URL ##+" + urlRequest);
-
-		ServiceResponseResult response = restCaller.callPostBearerTokenRequest(params, urlRequest,
-				ServiceResponseResult.class, tokenAcces);
-		if (response.getResult() != null) {
-
-			JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
-			JsonArray ordenesArray = jsonObjectResponse.getAsJsonArray("ordenes");
-			JsonArray ordenesReporte = new JsonArray();
-			JsonObject ordenesR = new JsonObject();
-			if (ordenesArray.size() > 0) {
-				if (jsonObjectResponse.get("registrosTotales").getAsInt() > 0) {
-					for (int i = 0; i < ordenesArray.size(); i++) {
-						JsonObject object = (JsonObject) ordenesArray.get(i);
-						JsonObject result = new JsonObject();
-						logger.info("objeto: " + object);
-						result.addProperty("OT",
-								object.get("idOrden").getAsInt() != 0 ? String.valueOf(object.get("idOrden").getAsInt())
-										: "Sin dato");
-						result.addProperty("CLIENTE",
-								object.get("nombreCliente") != null ? object.get("nombreCliente").getAsString().trim()
-										: "Sin dato");
-						result.addProperty("CUENTA",
-								object.get("claveCliente") != null ? object.get("claveCliente").getAsString().trim()
-										: "Sin dato");
-						result.addProperty("CIUDAD",
-								object.get("ciudad") != null ? object.get("ciudad").getAsString().trim() : "Sin dato");
-						result.addProperty("FECHA AGENDA",
-								object.get("fechaAgenda") != null ? object.get("fechaAgenda").getAsString().trim()
-										: "Sin dato");
-						result.addProperty("TIPO",
-								object.get("descTipo") != null ? object.get("descTipo").getAsString().trim()
-										: "Sin dato");
-						result.addProperty("SUBTIPO",
-								object.get("descSubTipo") != null ? object.get("descSubTipo").getAsString().trim()
-										: "Sin dato");
-						result.addProperty("MOTIVO",
-								object.get("descripcionMotivo") != null
-										? object.get("descripcionMotivo").getAsString().trim()
-										: "Sin dato");
-						result.addProperty("MOTIVO TRANSFERENCIA",
-								object.get("motivoTransferencia") != null
-										? object.get("motivoTransferencia").getAsString().trim()
-										: "Sin dato");
-						result.addProperty("ESTATUS",
-								object.get("descripcionEstatus") != null
-										? object.get("descripcionEstatus").getAsString().trim()
-										: "Sin dato");
-						result.addProperty("ESTADO",
-								object.get("descripcionEstado") != null
-										? object.get("descripcionEstado").getAsString().trim()
-										: "Sin dato");
-						ordenesReporte.add(result);
-					}
-					ordenesR.add("ordenes", ordenesReporte);
-					response = ServiceResponseResult.builder().isRespuesta(true).result(gson.toJson(ordenesR)).build();
-				} else {
-					response = ServiceResponseResult.builder().isRespuesta(true).result(null).build();
-				}
-			} else {
-				response = ServiceResponseResult.builder().isRespuesta(true).result(null).build();
-			}
-		}
-
-		logger.info("*** Objeto Response: " + gson.toJson(response));
-
-		return response;
-	}
 
 	@Override
 	public ServiceResponseResult consultarFactibilidad(String params) {
@@ -537,6 +402,126 @@ public class ImplTraspasoService implements TraspasoService {
 				ServiceResponseResult.class, tokenAcces);
 		logger.info("RESULT" + gson.toJson(response));
 		return response;
+	}
+
+	@Override
+	public DataTableResponse consultarHistorico(ParamConsultaOTPI paramsOT) {
+		logger.info("ImplTraspasoService.class [metodo consultaHistorico() ]\n" + gson.toJson(paramsOT));
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		String[][] dataArray = new String[0][13];
+		DataTableResponse dataResponse = DataTableResponse.builder().isRespuesta(false).data(dataArray).paginaActual(0)
+				.registrosTotales(0).recordsFiltered("0").recordsTotal("0").draw(paramsOT.getDraw() + "").result(null)
+				.build();
+		paramsOT.setPagina((Integer.parseInt(paramsOT.getStart()) + 10) / 10);
+		paramsOT.setIdOrden(!paramsOT.getIdOrden().equals("") ? paramsOT.getIdOrden() : null);
+		paramsOT.setFolioSistema(!paramsOT.getFolioSistema().equals("") ? paramsOT.getFolioSistema() : null);
+		paramsOT.setClaveCliente(!paramsOT.getClaveCliente().equals("") ? paramsOT.getClaveCliente() : null);
+
+		logger.info("### Object: " + gson.toJson(paramsOT));
+
+		String tokenAcces = principalDetail.getAccess_token();
+		logger.info("consultaHistorico ##+" + tokenAcces);
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constTraspaso.getConsultaGeneralHistorico());
+		logger.info("URL ##+" + urlRequest);
+
+		ServiceResponseResult response = restCaller.callPostBearerTokenRequest(gson.toJson(paramsOT), urlRequest,
+				ServiceResponseResult.class, tokenAcces);
+		if (response.getResult() == null || response.getResult() instanceof Integer) {
+			dataResponse = DataTableResponse.builder().isRespuesta(false).data(dataArray).paginaActual(0)
+					.registrosTotales(0).recordsFiltered("0").recordsTotal("0").draw(paramsOT.getDraw() + "")
+					.result(response.getResult()).build();
+		} else {
+			JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
+			JsonArray ordenesArray = jsonObjectResponse.getAsJsonArray("ordenes");
+			if (ordenesArray.size() > 0) {
+				if (jsonObjectResponse.get("registrosTotales").getAsInt() > 0) {
+					int count = 0;
+					dataArray = new String[ordenesArray.size()][15];
+					int idOrden = 0;
+					for (int i = 0; i < ordenesArray.size(); i++) {
+						JsonObject object = (JsonObject) ordenesArray.get(i);
+
+						dataArray[count][0] = object.get("idOrdenNueva").getAsInt() != 0
+								? String.valueOf(object.get("idOrdenNueva").getAsInt())
+								: "Sin dato";
+						dataArray[count][1] = object.get("idOrdenOriginal").getAsInt() != 0
+								? String.valueOf(object.get("idOrdenOriginal").getAsInt())
+								: "Sin dato";
+						dataArray[count][2] = (object.get("folioSistema") != null
+								&& object.get("folioSistema").getAsString().trim() != "")
+										? object.get("folioSistema").getAsString().trim()
+										: "Sin dato";
+						dataArray[count][3] = (object.get("nombreCliente") != null
+								&& object.get("nombreCliente").getAsString().trim() != "")
+										? object.get("nombreCliente").getAsString().trim()
+										: "Sin dato";
+						dataArray[count][4] = (object.get("claveCliente") != null
+								&& object.get("claveCliente").getAsString().trim() != "")
+										? object.get("claveCliente").getAsString().trim()
+										: "Sin dato";
+						dataArray[count][5] = (object.get("geografia") != null
+								&& object.get("geografia").getAsString().trim() != "")
+										? object.get("geografia").getAsString().trim()
+										: "Sin dato";
+						dataArray[count][6] = (object.get("fechaAgenda") != null
+								&& object.get("fechaAgenda").getAsString().trim() != "")
+										? object.get("fechaAgenda").getAsString().trim()
+										: "Sin dato";
+						dataArray[count][7] = (object.get("descTipo") != null
+								&& object.get("descTipo").getAsString().trim() != "")
+										? object.get("descTipo").getAsString().trim()
+										: "Sin dato";
+						dataArray[count][8] = (object.get("descSubTipo") != null
+								&& object.get("descSubTipo").getAsString().trim() != "")
+										? object.get("descSubTipo").getAsString().trim()
+										: "Sin dato";
+						dataArray[count][9] = (object.get("descripcionEstatus") != null
+								&& object.get("descripcionEstatus").getAsString().trim() != "")
+										? object.get("descripcionEstatus").getAsString().trim()
+										: "Sin dato";
+						dataArray[count][10] = (object.get("descripcionEstado") != null
+								&& object.get("descripcionEstado").getAsString().trim() != "")
+										? object.get("descripcionEstado").getAsString().trim()
+										: "Sin dato";
+						dataArray[count][11] = (object.get("descripcionMotivo") != null
+								&& object.get("descripcionMotivo").getAsString().trim() != "")
+										? object.get("descripcionMotivo").getAsString().trim()
+										: "Sin dato";
+						dataArray[count][12] = (object.get("motivoTransferencia") != null
+								&& object.get("motivoTransferencia").getAsString().trim() != "")
+										? object.get("motivoTransferencia").getAsString().trim()
+										: "Sin dato";
+						dataArray[count][13] = "<div class='tooltip-btn'> <span onclick='consultaImagenesOTsTraspasos("
+								+ String.valueOf(object.get("idOrdenNueva").getAsInt()) + ", "
+								+ String.valueOf(object.get("claveCliente"))
+								+ ")' class='btn-option btn-floating btn-evidencia btn-sm btn-secondary waves-effect waves-light'><th><i class='icono_cons_bg fa fa-picture-o' aria-hidden='true'></i></th></span></div>";
+						dataArray[count][14] = "<div class='tooltip-btn'> <span onclick='consultaDetalleOtGeneric("
+								+ String.valueOf(object.get("idOrdenNueva").getAsInt()) + ", "
+								+ String.valueOf(object.get("idFlujo"))
+								+ ")' class='btn-floating btn-option btn-sm btn-detalle btn-secondary waves-effect waves-light acciones'><th><i class='icono_cons_bg fa fa-bars' aria-hidden='true'></i></th></span></div>";
+						count++;
+
+					}
+					dataResponse = DataTableResponse.builder().isRespuesta(true).data(dataArray)
+							.paginaActual(jsonObjectResponse.get("paginaActual").getAsInt())
+							.registrosTotales(jsonObjectResponse.get("registrosTotales").getAsInt())
+							.recordsFiltered(jsonObjectResponse.get("registrosTotales").getAsInt() + "")
+							.recordsTotal(jsonObjectResponse.get("registrosTotales").getAsInt() + "")
+							.draw(paramsOT.getDraw() + "").result(response.getResult()).build();
+				} else {
+					dataResponse = DataTableResponse.builder().isRespuesta(true).data(dataArray)
+							.paginaActual(jsonObjectResponse.get("paginaActual").getAsInt())
+							.registrosTotales(jsonObjectResponse.get("registrosTotales").getAsInt())
+							.recordsFiltered(jsonObjectResponse.get("registrosTotales").getAsInt() + "")
+							.recordsTotal(jsonObjectResponse.get("registrosTotales").getAsInt() + "")
+							.draw(paramsOT.getDraw() + "").build();
+				}
+			}
+		}
+
+		logger.info("*** Objeto Response: " + gson.toJson(dataResponse));
+
+		return dataResponse;
 	}
 
 }
