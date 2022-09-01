@@ -659,7 +659,7 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 						let tipoOrdenesTemp = $scope.conversionAnidadaRecursiva(respaldoTipoOrdenArray, 1, $scope.nivelIntervenciones);
 						$scope.filtrosGeneral.tipoOrdenes = $scope.filtraIntervencion(angular.copy(tipoOrdenesTemp));
 
-						$('#filtro-intervencion-tr').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.tipoOrdenesTraspaso, $scope.nivelIntervenciones));
+						$('#filtro-intervencion-tr').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.tipoOrdenesTraspaso, $scope.nivelIntervencionesBuzon));
 						$('#filtro-intervencion').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.tipoOrdenes, $scope.nivelIntervenciones));
 					} else {
 						toastr.warning('No se encontraron  tipo ordenes');
@@ -681,7 +681,7 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 						$scope.filtrosGeneral.estatusdisponiblesTraspaso = $scope.conversionAnidadaRecursiva(results[2].data.result, 1, $scope.nivelEstatusPendientesBuzon);
 						$scope.filtrosGeneral.estatusdisponibles = $scope.filtraEstatus(angular.copy(estatusDisponiblesTemp));
 						$('#filtro-estatus-substatus').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.estatusdisponibles, $scope.nivelEstatusPendientes));
-						$('#filtro-estatus-substatus-tr').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.estatusdisponiblesTraspaso, $scope.nivelEstatusPendientes));
+						$('#filtro-estatus-substatus-tr').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.estatusdisponiblesTraspaso, $scope.nivelEstatusPendientesBuzon));
 
 					} else {
 						toastr.info('No se encontraron catalogo de estatus');
