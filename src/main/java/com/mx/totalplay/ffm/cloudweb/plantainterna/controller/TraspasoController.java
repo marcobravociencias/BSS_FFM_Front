@@ -71,27 +71,6 @@ public class TraspasoController {
 		return new ResponseEntity<DataTableResponse>(dataTableResponse, HttpStatus.ACCEPTED);
 	}
 	
-	@PostMapping("/consultaReporteOts")
-	public ResponseEntity<?> consultaReporteOts(@RequestBody String params) {
-		logger.info("*** TraspasoController.class *** Metodo consultaReporteConsultaOt *** Objecto: " + params);
-		result = traspasoService.consultarReporteOts(params);
-		if (result.getResult() instanceof Integer){
-			return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
-		}
-		return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
-	}
-	
-	@PostMapping("/consultaReporteTraspasos")
-	public ResponseEntity<?> consultaReporteTraspasos(@RequestBody String params) {
-		logger.info("*** TraspasoController.class *** Metodo consultaReporteTraspasos *** Objecto: " + params);
-		result = traspasoService.consultarReporteTraspasos(params);
-		if (result.getResult() instanceof Integer){
-			return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
-		}
-		return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
-	}
-	
-
 	
 	@PostMapping("/consultaFactibilidad")
 	public ResponseEntity<?> consultaFactibilidad(@RequestBody String params) {
@@ -143,15 +122,6 @@ public class TraspasoController {
 		return new ResponseEntity<DataTableResponse>(dataTableResponse, HttpStatus.ACCEPTED);
 	}
 	
-	@PostMapping("/consultaReporteHistorico")
-	public ResponseEntity<?> consultaReporteHistorico(@RequestBody String params) {
-		logger.info("*** TraspasoController.class *** Metodo consultaReporteHistorico *** Objecto: " + params);
-		result = traspasoService.consultarReporteHistorico(params);
-		if (result.getResult() instanceof Integer){
-			return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
-		}
-		return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
-	}
 	
 	
 }
