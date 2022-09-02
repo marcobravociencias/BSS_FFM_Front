@@ -226,12 +226,14 @@ label.dropdown-item.form-check-inputfiltro {
 
 #traspasosTable tbody tr:nth-child(even),
 #historicoTable tbody tr:nth-child(even),
+#transferidasTable tbody tr:nth-child(even),
 #otsTable tbody tr:nth-child(even) {
     background: #f5f5f5;
 }
 
 #traspasosTable>tbody>tr>td,
 #historicoTable>tbody>tr>td,
+#transferidasTable>tbody>tr>td,
 #otsTable>tbody>tr>td {
     color: #39455b;
     font-family: 'Montserrat';
@@ -242,6 +244,7 @@ label.dropdown-item.form-check-inputfiltro {
 
 #traspasosTable thead th,
 #historicoTable thead th,
+#transferidasTable thead th,
 #otsTable thead th {
     position: relative;
     background-color: #b1b1b1;
@@ -255,6 +258,7 @@ label.dropdown-item.form-check-inputfiltro {
 
 #traspasosTable tbody tr td,
 #historicoTable tbody tr td,
+#transferidasTable tbody tr td,
 #otsTable tbody tr td {
     padding: 0.5em;
     border: none;
@@ -995,3 +999,19 @@ i.icono-noseleccion {
 }
 
 /* ORDER COLUMNS TABLE */
+
+.title-tranferidas{
+    text-align: center;
+    line-height: 1;
+    font-size: 1.2em;
+    margin-top: -1em;
+}
+
+.btn-transferir{
+    background: var(--estandar-color);
+    padding: 0.65em 3em;
+}
+
+..btn-transferir:hover, .btn-transferir:active{
+    background: var(--estandar-color);
+}

@@ -53,26 +53,6 @@ app.service("traspasosService", function ($http) {
         });
     };
 
-    this.consultaReporteTraspasos = function (params) {
-        return $http({
-            method: "post",
-            url: "req/consultaReporteTraspasos",
-            data: JSON.stringify(params),
-            headers: { 'Content-Type': "application/json; charset=utf-8" },
-            transformRequest: angular.identity
-        });
-    };
-
-    this.consultaReporteTraspasosOts = function (params) {
-        return $http({
-            method: "post",
-            url: "req/consultaReporteOts",
-            data: JSON.stringify(params),
-            headers: { 'Content-Type': "application/json; charset=utf-8" },
-            transformRequest: angular.identity
-        });
-    };
-
     this.consultaFactibilidad = function (params) {
         return $http({
             method: "post",
@@ -107,6 +87,16 @@ app.service("traspasosService", function ($http) {
         return $http({
             method: "post",
             url: "req/consultarMotivosTraspasos",
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
+            transformRequest: angular.identity
+        });
+    };
+
+    this.consultarTransferidasOt = function (params) {
+        return $http({
+            method: "post",
+            data: JSON.stringify(params),
+            url: "req/consultarTransferidasOt",
             headers: { 'Content-Type': "application/json; charset=utf-8" },
             transformRequest: angular.identity
         });

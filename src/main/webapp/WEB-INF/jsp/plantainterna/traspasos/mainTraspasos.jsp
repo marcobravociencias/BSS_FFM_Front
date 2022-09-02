@@ -94,6 +94,7 @@
         <jsp:include page="modals/modalCluster.jsp"></jsp:include>
         <jsp:include page="modals/modalImagenEvidencia.jsp"></jsp:include>
         <jsp:include page="modals/modalDetalleOt.jsp"></jsp:include>
+        <jsp:include page="modals/modalValidaOts.jsp"></jsp:include>
     </body>
     <jsp:include page="./content/filtroTraspasos.jsp"></jsp:include>
     <!-- Scripts libraries -->

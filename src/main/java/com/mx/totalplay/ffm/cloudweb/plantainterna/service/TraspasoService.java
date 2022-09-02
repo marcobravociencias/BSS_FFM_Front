@@ -25,4 +25,5 @@ public interface TraspasoService {
 	
 	public DataTableResponse consultarHistorico(ParamConsultaOTPI paramsOT);
 		
+	public ServiceResponseResult consultarTransferidasOt(String params);
 }

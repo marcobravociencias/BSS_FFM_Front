@@ -7,6 +7,7 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 
 	var otsTable;
 	var traspasosTable;
+	var transferidasTable;
 	let is_consulta_info_ot = false;
 	let is_consulta_comentarios = false;
 	let is_consulta_historico = false;
@@ -29,6 +30,7 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 	$scope.listMotivos = [];
 	$scope.infoFactibilidad = {};
 	$scope.listImagenesTipo = [];
+	$scope.listaOrdenesTransferidas = [];
 	$scope.isTraspaso = false;
 
 	$scope.configPermisoAccionConsultaOts = false;
@@ -913,6 +915,19 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 			"language": idioma_espanol_not_font
 		});
 
+		transferidasTable = $('#transferidasTable').DataTable({
+			"paging": true,
+			"lengthChange": false,
+			"ordering": false,
+			"pageLength": 5,
+			"info": true,
+			"searching": false,
+			"scrollX": false,
+			"autoWidth": false,
+			"language": idioma_espanol_not_font
+		});
+
+
 		$scope.consultarCatalagosPI();
 	}
 
@@ -1099,7 +1114,9 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 			$("#search-input-place").val('');
 			$scope.isFactibilidad = false;
 			$("#wizzard-1").click();
-			$scope.consultaDetalleTraspasoGen(id);
+			$scope.datoOt = id;
+			$scope.consultarTransferidasOt(id);
+
 		}
 
 	}
@@ -1139,8 +1156,12 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 		let params = {
 			id_ot: id
 		}
-		swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
-		swal.showLoading();
+
+		if (!swal.isVisible()) {
+			swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
+			swal.showLoading();
+		}
+	
 		traspasosService.consultaInfoDetalleTraspaso(JSON.stringify(params)).then(function success(response) {
 			if (response.data !== undefined) {
 				if (response.data.respuesta) {
@@ -1935,6 +1956,65 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 		}).catch(err => handleError(err));
 	}
 
+	$scope.consultarTransferidasOt = function (id) {
+		$scope.listaOrdenesTransferidas = [];
+		swal({ text: 'Espera un momento ...', allowOutsideClick: false });
+		swal.showLoading();
+
+		let params = {
+			idOrden: id
+		}
+
+		traspasosService.consultarTransferidasOt(params).then(function success(response) {
+			swal.close();
+			let arraRow = [];
+			if (response.data !== undefined) {
+				if (response.data.respuesta) {
+					if (response.data.result && response.data.result.transferencias.length) {
+						$scope.listaOrdenesTransferidas = response.data.result.transferencias;
+						$.each(response.data.result.transferencias, function (i, elemento) {
+				
+							let row = [];
+							row[0] = elemento.folioSistema ? elemento.folioSistema : 'Sin informaci&oacute;n';
+							row[1] = elemento.claveCliente ? elemento.claveCliente : 'Sin informaci&oacute;n';
+							row[2] = elemento.nombreUsuario ? elemento.nombreUsuario : 'Sin informaci&oacute;n';
+							row[3] = elemento.fechaAgenda ? elemento.fechaAgenda : 'Sin informaci&oacute;n';
+							row[4] = elemento.descripcionTipo ? elemento.descripcionTipo : 'Sin informaci&oacute;n';
+							row[5] = elemento.descripcionSubtipo ? elemento.descripcionSubtipo : 'Sin informaci&oacute;n';
+							row[6] = elemento.estado ? elemento.estado : 'Sin informaci&oacute;n';
+							row[7] = elemento.estatus ? elemento.estatus : 'Sin informaci&oacute;n';
+							row[8] = elemento.geografia ? elemento.geografia : 'Sin informaci&oacute;n';
+							row[9] = elemento.motivo ? elemento.motivo : 'Sin informaci&oacute;n';
+							
+							arraRow.push(row);
+						})
+						transferidasTable = $('#transferidasTable').DataTable({
+							"paging": true,
+							"lengthChange": false,
+							"ordering": true,
+							"pageLength": 5,
+							"info": true,
+							"bDestroy": true,
+							"scrollX": false,
+							"data": arraRow,
+							"autoWidth": false,
+							"language": idioma_espanol_not_font,
+						});
+						$("#modal-valida-ot").modal('show');
+
+					}else{
+						$scope.consultaDetalleTraspasoGen(id);
+					}
+				} else {
+					mostrarMensajeWarningValidacion(response.data.resultDescripcion);
+				}
+			} else {
+				mostrarMensajeErrorAlert('Ha ocurrido un error al consultar las ots tranferidas de la OT:' + id);
+			}
+
+		}).catch(err => handleError(err));
+	}
+
 	angular.element(document).ready(function () {
 		$scope.elementTab = 1;
 		$("#wizzard-1").addClass("current");
@@ -2082,6 +2162,6 @@ app.controller('traspasosController', ['$scope', '$q', 'traspasosService', 'gene
 			$.each(arraySort, function (index, elemento) {
 				historicoTable.row(index).data(elemento);
 			});
-		}
+		} 
 	}
 }])

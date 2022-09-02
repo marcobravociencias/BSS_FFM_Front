@@ -36,5 +36,7 @@ private static final long serialVersionUID = 1L;
 	@Value("${consultaGeneralHistorico}")
 	private String consultaGeneralHistorico;
 	
-
+	@Value("${consultarTransferidas}")
+	private String consultarTransferidas;
+	
 }

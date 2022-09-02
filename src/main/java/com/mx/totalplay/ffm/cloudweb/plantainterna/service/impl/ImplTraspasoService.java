@@ -524,4 +524,24 @@ public class ImplTraspasoService implements TraspasoService {
 		return dataResponse;
 	}
 
+	@Override
+	public ServiceResponseResult consultarTransferidasOt(String params) {
+		logger.info("ImplTraspasoService.class [metodo = consultarTransferidasOt() ]\n" + params);
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+
+		String tokenAcces = principalDetail.getAccess_token();
+		String urlRequest = principalDetail.getDireccionAmbiente()
+				.concat(constTraspaso.getConsultarTransferidas());
+		logger.info("URL ##+" + urlRequest);
+
+		Map<String, String> paramsRequestGet = new HashMap<String, String>();
+		paramsRequestGet.put("idOrden", jsonObject.get("idOrden").getAsString());
+
+		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
+				ServiceResponseResult.class, tokenAcces);
+		return response;
+	}
+
 }

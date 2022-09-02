@@ -122,6 +122,16 @@ public class TraspasoController {
 		return new ResponseEntity<DataTableResponse>(dataTableResponse, HttpStatus.ACCEPTED);
 	}
 	
+	@PostMapping("/consultarTransferidasOt")
+	public ResponseEntity<?> consultarTransferidasOt(@RequestBody String params) {
+		logger.info("*** Objeto: " + gson.toJson(params));
+		result = traspasoService.consultarTransferidasOt(params);
+		if (dataTableResponse.getResult() instanceof Integer){
+			return new ResponseEntity<>(result, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
+	}
+	
 	
 	
 }
