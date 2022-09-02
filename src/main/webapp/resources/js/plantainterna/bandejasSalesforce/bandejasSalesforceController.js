@@ -65,19 +65,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
             clearBtn: false
         });
         $('.datepicker').datepicker('update', new Date());
-        pendientesAgendarTable = $('#tablePendientesAgendar').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": true,
-            "ordering": true,
-            "pageLength": 10,
-            "info": true,
-            "autoWidth": true,
-            "language": idioma_espanol_not_font,
-            "aoColumnDefs" : [
-                { "aTargets": [11], "bSortable": false }
-            ]
-        });
+        $scope.reiniciarTablaPendientesAgendar()
         rescataventasTable = $('#tableRescataventas').DataTable({
             "paging": true,
             "lengthChange": false,
@@ -841,24 +829,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         let isValid = true;
         let mensajeError = '';
         var comentarios = $("#comentariosAgendamiento").val();
-        let params = {
-        		"idFlujo": 1,
-        		"turno":$scope.elementoCSP.turnoAgendamiento,
-        		"tipo": $scope.llaveTipoIntervencion != undefined ? $scope.llaveTipoIntervencion : 48,
-        		"subtipo": $scope.llaveSubtipoIntervencion != undefined ? $scope.llaveSubtipoIntervencion : 106,
-        		"numeroCuenta": $scope.elementoCSP.infoSitio.numeroCuenta,
-        		"cluster": $scope.elementoCSP.cluster,
-        		"comentarios": comentarios,
-        		"fechaAgendamiento":$scope.elementoCSP.fechaAgendamiento,
-        		"hora": "12:00",
-        		"confirmacion":"0", 
-        		"distribuidor":"",
-        		"idTicketSF": "",
-        		"posventa": false,
-                "folioCsp":$scope.elementoCSP.name,
-                "entrecalles":$scope.elementoCSP.entrecalles,
-                "referencias":$scope.elementoCSP.referencias
-        };    
+         
 
         if ($("#comentariosAgendamiento").val() == undefined || $("#comentariosAgendamiento").val() == '') {
 			$("#comentariosAgendamiento").addClass("campoNoValido");
@@ -892,6 +863,29 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         }
         
         if (isValid) {
+            let contactoTemp=angular.copy($scope.listContactosAgendamiento.find(e=> e.id== $scope.idContactoSelected))
+
+            let params = {
+        		"idFlujo": 1,
+        		"turno":$scope.elementoCSP.turnoAgendamiento,
+        		"tipo": $scope.llaveTipoIntervencion != undefined ? $scope.llaveTipoIntervencion : 48,
+        		"subtipo": $scope.llaveSubtipoIntervencion != undefined ? $scope.llaveSubtipoIntervencion : 106,
+        		"numeroCuenta": $scope.elementoCSP.infoSitio.numeroCuenta,
+        		"cluster": $scope.elementoCSP.cluster,
+        		"comentarios": comentarios,
+        		"fechaAgendamiento":$scope.elementoCSP.fechaAgendamiento,
+        		"hora": "12:00",
+        		"confirmacion":"0", 
+        		"distribuidor":"",
+        		"idTicketSF": "",
+        		"posventa": false,
+                "folioCsp":$scope.elementoCSP.name,
+                "entrecalles":$scope.elementoCSP.entrecalles,
+                "referencias":$scope.elementoCSP.referencias,
+                "nombreContacto":contactoTemp.nombreCompleto,
+                "numContacto":contactoTemp.telefono
+            };  
+
             swal({
                 title: "\u00BFEst\u00E1s seguro de enviar la informaci\u00F3n?",
                 type: "warning",
@@ -923,7 +917,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                 if (isConfirm) {
                 	swal({ text: 'Espera un momento...', allowOutsideClick: false });
                     swal.showLoading();
-                    let tituloAccion = "Agendar pendiente";
+                    let tituloAccion = "Agendar "+$scope.elementoCSP.name;
                     let mensajeEnvio = 'Ha ocurrido un error al agendar la OT con la cuenta: ' + params.numeroCuenta;
                 	bandejasSalesforceService.agendarPendienteBandejaSF(params).then(function success(response) {
                         if (response.data !== undefined) {
@@ -1023,10 +1017,8 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                                     rowAg[5] = elemento.dpPlan && elemento.dpPlan.nameDpPlan && elemento.dpPlan.nameDpPlan !== '' ? elemento.dpPlan.nameDpPlan : 'Sin informaci&oacute;n';
                                     rowAg[6] = elemento.cuadrillaFfm && elemento.cuadrillaFfm !== '' ? elemento.cuadrillaFfm : 'Sin informaci&oacute;n';
                                     rowAg[7] = elemento.cluster && elemento.cluster !== '' ? elemento.cluster : 'Sin informaci&oacute;n';
-                                    rowAg[8] = elemento.ordenServicio && elemento.ordenServicio !== '' ? elemento.ordenServicio : 'Sin informaci&oacute;n';
-                                    rowAg[9] = elemento.estatusOs && elemento.estatusOs !== '' ? elemento.estatusOs : 'Sin informaci&oacute;n';
-                                    rowAg[10] = elemento.fechaCreacion && elemento.fechaCreacion !== '' ? elemento.fechaCreacion : 'Sin informaci&oacute;n';
-                                    rowAg[11] =
+                                    rowAg[8] = elemento.fechaCreacion && elemento.fechaCreacion !== '' ? elemento.fechaCreacion : 'Sin informaci&oacute;n';
+                                    rowAg[9] =
                                         '<div class="text-center">' +
                                         '   <span title="Agendar" id="btnAgendamiento' + elemento.name + '" class="btnAgendamiento btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones btnTables" onclick="visualizarAgendamiento(' + i + ')">' +
                                         '       <i class="fa fa-calendar-alt .iconAgendamiento"></i>' +
@@ -1046,7 +1038,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                                     "language": idioma_espanol_not_font,
                                     "aoColumnDefs" : [ 
                     		        	{"aTargets" : [0], "sClass":  "rowTablaCsp"},
-                                        { "aTargets": [11], "bSortable": false }
+                                        { "aTargets": [9], "bSortable": false }
                     		        ]
                                 });
                                 if (!$scope.isPermisoAgendamiento) {
@@ -1095,7 +1087,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
             "data": [],
             "language": idioma_espanol_not_font,
             "aoColumnDefs": [
-                { "aTargets": [11], "bSortable": false }
+                { "aTargets": [9], "bSortable": false }
             ]
         });
 	}
@@ -1264,7 +1256,11 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
     }
     
     $scope.detallePaqueteCSP = {};
-    $scope.consultarResumenPaqueteBandejasSF = function (idCSP) {
+    $scope.consultarResumenPaqueteBandejasSFCSP = function (csp) {
+        $scope.detallePaqueteCSP={}
+        $scope.isConsultaEquiposModelos=false;
+        $scope.selectedEquipoPaquete={}
+
         $scope.listDetalleEquipos = [];
         $scope.detallePaqueteCSP = {};
         if (!swal.isVisible()) {
@@ -1272,19 +1268,23 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
             swal.showLoading();
         }
         let params = {
-            // "folio": "OS-6949017" 
-            "folio": $scope.elementoCSP.ordenServicio.nombreOrdenServicio
+            "folioCps": csp.name
         };
-        bandejasSalesforceService.consultarResumenPaqueteBandejasSF(params).then(function success(response) {
+        bandejasSalesforceService.consultarResumenPaqueteBandejasSFCsp(params).then(function success(response) {
             if (response.data) {
                 if (response.data.respuesta) {
                     if (response.data.result) {
                         if (response.data.result.resumenPaquete) {
                             $scope.detallePaqueteCSP = angular.copy(response.data.result.resumenPaquete);
-                            $scope.detallePaqueteCSP.idCSP = idCSP;
                             $("#modalDetallePaquete").modal('show');
                             swal.close();
+                        }else{
+                            mostrarMensajeInformativo('No se encontr\u00F3 informaci\u00F3n del paquete')
+                            swal.close()
                         }
+                    }else{
+                        mostrarMensajeInformativo('No se encontr\u00F3 informaci\u00F3n del paquete')
+                        swal.close()
                     }
                 } else {
                     mostrarMensajeErrorAlert(response.data.resultDescripcion);
@@ -1297,35 +1297,65 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         });
     } 
 
-    $scope.listDetalleEquipos = [];
-    $scope.consultarDetalleEquiposBandejas = function (servicio) {
-        if (!swal.isVisible()) {
-            swal({ text: 'Espera un momento...', allowOutsideClick: false });
+
+    $scope.consultarDetalleServicio = function (servicio) {
+        
+        if(!$scope.isConsultaEquiposModelos){
+            swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
             swal.showLoading();
-        }
-        $scope.detallePaqueteCSP.productos = [];
-        $scope.listDetalleEquipos = [];
-        $scope.detallePaqueteCSP.productos = servicio.productos;
-        let params = {
-            'idCotSitioPlan': $scope.detallePaqueteCSP.idCotSitio
-        }
-        bandejasSalesforceService.consultarDetalleEquiposBandejasSF(params).then(function success(response) {
-            if (response.data) {
-                if (response.data.respuesta) {
-                    if (response.data.result) {
-                        $scope.listDetalleEquipos = angular.copy(response.data.result.detalleEquipos);
+            $scope.detallePaqueteCSP.productos = [];
+            $scope.listDetalleEquipos = [];
+            $scope.detallePaqueteCSP.productos = servicio.productos;
+            let params = {
+                'idCotSitioPlan': idCSP
+            }
+    
+            //$scope.responseServicios
+            bandejasSalesforceService.consultarDetalleEquiposBandejasSF(params).then(function success(response) {
+                console.log(response)
+                if (response.data) {
+                    if (response.data.respuesta) {
+                        if (response.data.result) {
+                            $scope.isConsultaEquiposModelos=true;
+                           
+                            if (response.data.result.detalleEquipos.length) {
+                                let listadoEquipos = angular.copy(response.data.result.detalleEquipos);
+                                if($scope.detallePaqueteCSP!= undefined && 
+                                    $scope.detallePaqueteCSP.resumenServicios!=undefined && $scope.detallePaqueteCSP.resumenServicios.length >0){                                
+                                    $scope.detallePaqueteCSP.resumenServicios=$scope.detallePaqueteCSP.resumenServicios.map(function(e){
+                                        e.elementoEquipoModelos={}
+                                        e.isTieneEquipoModeos=false;
+                                        return e;
+                                    })
+                                    listadoEquipos.forEach(function(elem,index){
+                                        let servicioTemp= $scope.detallePaqueteCSP.resumenServicios.find(function(e){ return e.id==elem.idCotPlanServicio })
+                                        if(servicioTemp!=undefined){
+                                            servicioTemp.elementoEquipoModelos=elem
+                                            servicioTemp.isTieneEquipoModeos=true;
+                                        }
+                                    });                                
+                                }
+                                swal.close();
+                            } else {
+                                mostrarMensajeInformativo("No se encontraron Equipos");
+                                swal.close();
+                            }
+                        } else {
+                            mostrarMensajeErrorAlert(response.data.resultDescripcion);
+                            swal.close();
+                        }
+                    } else {
+                        mostrarMensajeErrorAlert(response.data.resultDescripcion);
                         swal.close();
                     }
                 } else {
                     mostrarMensajeErrorAlert(response.data.resultDescripcion);
                     swal.close();
                 }
-            } else {
-                mostrarMensajeErrorAlert(response.data.resultDescripcion);
-                swal.close();
-            }
-        });
-    } 
+            });
+        }
+        $scope.selectedEquipoPaquete=servicio     
+    }
 
     $scope.listFieldsValidacion = [];
     $scope.listFieldsCopy = [];

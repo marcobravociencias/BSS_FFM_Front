@@ -393,7 +393,8 @@ a.fc-col-header-cell-cushion {
     background: white !important;
     border-radius: 0;
     border-radius: .5em;
-    border: 1px solid #dbdbdb !important
+    border: 1px solid #dbdbdb !important;
+    cursor: pointer;
 }
 
 .btn-buscar-generica span {
@@ -691,4 +692,10 @@ a.ui-corner-all {
 .modal-footer .btn-cerrar-modal {
 	color: var(--btn-color-cerrar-modal) !important;
     border: 0.09rem solid var(--btn-color-cerrar-modal) !important;
+}
+
+.col-12.resumen-title-content {
+    text-align: left;
+    font-weight: bold;
+    color: #393939;
 }

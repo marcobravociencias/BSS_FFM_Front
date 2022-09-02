@@ -39,4 +39,7 @@ public interface BusquedaService {
     ServiceResponseResult consultarAutofindActivacion(String params);
     
     ServiceResponseResult generarDnsActivacion(String params);
+    
+    ServiceResponseResult consultarResumenPaquetePorCSP(String params);
+
 }

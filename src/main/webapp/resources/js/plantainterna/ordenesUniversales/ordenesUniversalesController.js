@@ -69,8 +69,8 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
 
     $scope.guardarOrdenUniversal = function () {
         if ($.trim($scope.infoBasica.folio) !== '') {
-            if (!$scope.validarFolio())
-                return false;
+            //if (!$scope.validarFolio())
+            //    return false;
         }
         $scope.isValForm = true;
         if ($scope.validarPrimerPaso()) {
@@ -450,10 +450,10 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
             return false
         }
     }
-
+    $scope.listadoOsDisponibles=[]
     $scope.consultarInformacionFolio = function () {
         if ($.trim($scope.infoBasica.folio) !== '') {
-            if ($scope.validarFolio()) {
+           // if ($scope.validarFolio()) {
                 swal({ text: 'Espera un momento...', allowOutsideClick: false });
                 swal.showLoading();
                 let paramsConsultaInfoCliente = {
@@ -461,31 +461,66 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
                 }
 
                 ordenesUniversalesService.consultarInfoCliente(paramsConsultaInfoCliente).then(function success(response) {
-                	if (response.data !== undefined) {
+                    $scope.listadoOsDisponibles=[]
+                    if (response.data !== undefined) {
                     	if(response.data.respuesta){
-                    		if(response.data.result !== null){
+                    		if(response.data.result != undefined){
 	                            $scope.infocuenta = {};
 	                            $scope.infocuenta = response.data.result[0];
-	                            $scope.informacionCliente.nombre = $scope.infocuenta.nombre != undefined ? $scope.infocuenta.nombre : "";
-	                            $scope.informacionCliente.apaterno = $scope.infocuenta.apellidoPaterno != undefined ? $scope.infocuenta.apellidoPaterno : "";
-	                            $scope.informacionCliente.amaterno = $scope.infocuenta.apellidoMaterno != undefined ? $scope.infocuenta.apellidoMaterno : "";
-	                            $scope.informacionCliente.nombreContacto = $scope.infocuenta.cuenta.contactoPrincipal.nombreContacto != undefined ? $scope.infocuenta.cuenta.contactoPrincipal.nombreContacto : "";
-	                            $scope.informacionCliente.calle = $scope.infocuenta.calle != undefined ? $scope.infocuenta.calle : "";
-	                            $scope.informacionCliente.numeroExt = $scope.infocuenta.noExterior != undefined ? $scope.infocuenta.noExterior : "";
-	                            $scope.informacionCliente.numeroInt = $scope.infocuenta.noInterior != undefined ? $scope.infocuenta.noInterior : "";
-	                            $scope.informacionCliente.codigoPostal = $scope.infocuenta.codigoPostal != undefined ? $scope.infocuenta.codigoPostal : "";
-	                            $scope.informacionCliente.estado = $scope.infocuenta.estado != undefined ? $scope.infocuenta.estado : "";
-	                            $scope.informacionCliente.municipio = $scope.infocuenta.municipio != undefined ? $scope.infocuenta.municipio : "";
-	                            $scope.informacionCliente.telefono = $scope.infocuenta.telefono != undefined ? $scope.infocuenta.telefono : "";
-	                            $scope.informacionCliente.celular = $scope.infocuenta.celular != undefined ? $scope.infocuenta.celular : "";
-	                            $scope.informacionCliente.ciudad = $scope.infocuenta.ciudad != undefined ? $scope.infocuenta.ciudad : "";
-	                            $scope.informacionCliente.colonia = $scope.infocuenta.colonia != undefined ? $scope.infocuenta.colonia : "";
-	                            
-//	                            $scope.informacionCliente.entreCalles = $scope.infocuenta.Entre_Calles;
-//	                            $scope.informacionCliente.referencias = $scope.infocuenta.Referencias;
-//	                            $scope.informacionCliente.cuenta = $scope.infocuenta.cuenta;
-//	                            $scope.informacionCliente.os = $scope.infocuenta.os;
-	                            
+                                if($scope.infocuenta !=undefined ){
+                                    $scope.informacionCliente.nombre = $scope.infocuenta.nombre != undefined ? $scope.infocuenta.nombre : "";
+                                    $scope.informacionCliente.apaterno = $scope.infocuenta.apellidoPaterno != undefined ? $scope.infocuenta.apellidoPaterno : "";
+                                    $scope.informacionCliente.amaterno = $scope.infocuenta.apellidoMaterno != undefined ? $scope.infocuenta.apellidoMaterno : "";
+                                    if( $scope.infocuenta.cuenta==undefined )
+                                         $scope.infocuenta.cuenta={}
+                                    if( $scope.infocuenta.cuenta.contactoPrincipal == undefined ){
+                                        $scope.infocuenta.cuenta.contactoPrincipal={}
+                                    }     
+
+                                    $scope.informacionCliente.telefonoContacto=$scope.infocuenta.cuenta.contactoPrincipal.telefonoContacto != undefined ? $scope.infocuenta.cuenta.contactoPrincipal.telefonoContacto : "";
+
+                                    $scope.informacionCliente.nombreContacto = $scope.infocuenta.cuenta.contactoPrincipal.nombreContacto != undefined ? $scope.infocuenta.cuenta.contactoPrincipal.nombreContacto : "";
+                                    $scope.informacionCliente.calle = $scope.infocuenta.calle != undefined ? $scope.infocuenta.calle : "";
+                                    $scope.informacionCliente.numeroExt = $scope.infocuenta.noExterior != undefined ? $scope.infocuenta.noExterior : "";
+                                    $scope.informacionCliente.numeroInt = $scope.infocuenta.noInterior != undefined ? $scope.infocuenta.noInterior : "";
+                                    $scope.informacionCliente.codigoPostal = $scope.infocuenta.codigoPostal != undefined ? $scope.infocuenta.codigoPostal : "";
+                                    $scope.informacionCliente.estado = $scope.infocuenta.estado != undefined ? $scope.infocuenta.estado : "";
+                                    $scope.informacionCliente.municipio = $scope.infocuenta.municipio != undefined ? $scope.infocuenta.municipio : "";
+                                    $scope.informacionCliente.telefono = $scope.infocuenta.telefono != undefined ? $scope.infocuenta.telefono : "";
+                                    $scope.informacionCliente.celular = $scope.infocuenta.celular != undefined ? $scope.infocuenta.celular : "";
+                                    $scope.informacionCliente.ciudad = $scope.infocuenta.ciudad != undefined ? $scope.infocuenta.ciudad : "";
+                                    $scope.informacionCliente.colonia = $scope.infocuenta.colonia != undefined ? $scope.infocuenta.colonia : "";
+                                    
+                                    $scope.informacionCliente.razonsocial=$scope.infocuenta.nombreCliente//mapear a razon social                                   
+                                    $scope.informacionCliente.entreCalles=$scope.infocuenta.entreCalles
+                                    $scope.informacionCliente.referencias=$scope.infocuenta.referencias
+                                    $scope.informacionCliente.correo=$scope.infocuenta.email
+
+                                    $scope.listadoOsDisponibles=$scope.infocuenta.os != undefined ? $scope.infocuenta.os :  [];
+                                    //$scope.listadoOsDisponibles=[{'os':'OS-123','id':'xxxxx'}]
+
+                                    let isValidCoordenadas=validarLatitudLongitudMapUtil(  
+                                        $scope.infocuenta.latitud,
+                                        $scope.infocuenta.longitud
+                                    )
+                                    if(isValidCoordenadas){
+                                        $("#search-input-place").val( $scope.infocuenta.latitud+','+ $scope.infocuenta.longitud)
+                                        $scope.latitudSelectedMap=$scope.infocuenta.latitud
+                                        $scope.longitudSelectedMap=$scope.infocuenta.longitud
+
+                                        marker.setPosition(new google.maps.LatLng($scope.latitudSelectedMap, $scope.longitudSelectedMap));
+                                        map.setZoom(17);
+                                        map.setCenter(new google.maps.LatLng($scope.latitudSelectedMap, $scope.longitudSelectedMap));
+                        
+                                        markerRes.setPosition(new google.maps.LatLng($scope.latitudSelectedMap, $scope.longitudSelectedMap));
+                                        mapResumen.setCenter(new google.maps.LatLng($scope.latitudSelectedMap, $scope.longitudSelectedMap));
+                                        mapResumen.setZoom(17);
+                                    }
+                                    console.log("VALID COORDENADAS "+isValidCoordenadas)              
+                                }else{
+                                    mostrarMensajeInformativo('No se encontraron datos de la cuenta')
+                                }
+	
 	                            swal.close();
                     		} else {
                                 swal.close();
@@ -499,7 +534,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
                         swal.close();
                     }
                 }).catch(err => handleError(err));
-            }
+           // }
         }
     }
 
@@ -1048,17 +1083,26 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
         return Math.max.apply(Math, array.map(function (o) { return o.nivel; }));
     }
 
+    $scope.setOsSelectedListado=function(){
+        $scope.selectedOrdenServicio=undefined;
+        if($scope.osSeleccionada!=undefined ){
+            $scope.selectedOrdenServicio=angular.copy( $scope.listadoOsDisponibles.find(function(e){ return e.id== $scope.osSeleccionada }) )
+        }
+        console.log("ordenservicio ",$scope.selectedOrdenServicio)
+
+    }
     $scope.guardarOrdenUniversalRegistro = function () {
         let selectedElmsTipoOrden = $('#jstree-tipoordenes').jstree("get_selected", true);
         let selected_tipo_orden;
         let subTipoOrden = ''
-
+        let idFlujoSelected=8;
         angular.forEach(selectedElmsTipoOrden, function (elem, index) {
             selected_tipo_orden = elem.original;
         });
         if (selected_tipo_orden !== undefined) {
             if (selected_tipo_orden !== undefined && selected_tipo_orden.nivel === $scope.nTipoOrdenes) {
                 subTipoOrden = selected_tipo_orden.id;
+                idFlujoSelected = selected_tipo_orden.idFlujo ? selected_tipo_orden.idFlujo : 8 ;
             }
         }
         let tipoOrdenId = $('#jstree-tipoordenes').jstree(true).get_node(selected_tipo_orden.parent).id
@@ -1088,16 +1132,20 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
             envioFechaAgenda = angular.copy($scope.infoBasica.fechaTurnoTextAplica)
             envioidTurno = angular.copy(parseInt($scope.infoBasica.idTurnoSeleccionAplica))
         }
+        let osTempSelected=undefined ;
+        if($scope.osSeleccionada!=undefined ){
+            osTempSelected=angular.copy( $scope.listadoOsDisponibles.find(function(e){ return e.id== $scope.osSeleccionada }) )
+        }
         let jsonEnvio = {
-            "nombreOrden": nombreOrden,   //Ejemplo: Instalación
-            "tipoOrden": tipoOrdenId,            //id tipo orden
+            "nombreOrden":  nombreOrden,   //Ejemplo: Instalación
+            "tipoOrden":    tipoOrdenId,            //id tipo orden
             "subTipoOrden": subTipoOrden,         //id siubtipo orden
-            "flujo": 8,
-            "geografia1": geografia1.text, //DESCRIPCION CIUDAD
-            "geografia2": geografia2.text, //DESCRIPCION ULTIMO NIVEL
+            "flujo":        idFlujoSelected,
+            "geografia1":   geografia1.text, //DESCRIPCION CIUDAD
+            "geografia2":   geografia2.text, //DESCRIPCION ULTIMO NIVEL
             "folios": [{   // CUANDO LLEVA ORDEN DE SERVICIO
-                "folio": "NA",
-                "idFolio": "NA",
+                "folio":    osTempSelected== undefined ? 'NA' : osTempSelected.os,
+                "idFolio":  osTempSelected== undefined ? 'NA' : osTempSelected.id, 
                 "idSistema": 1
             }],
             "cliente": {
@@ -1136,7 +1184,7 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
                 "estado": $scope.validarCampoNA($scope.informacionCliente.estado),
                 "codigoPostal": $scope.validarCampoNA($scope.informacionCliente.codigoPostal),
                 "calleReferencia": $scope.validarCampoNA($scope.informacionCliente.referencias),
-                "entreCalles": $scope.validarCampoNA($scope.informacionCliente.calle),
+                "entreCalles": $scope.validarCampoNA($scope.informacionCliente.entreCalles),
                 "pais": "MX",    //ESTE VALOR NO LO TENEMOS
             },
             "informacionAdicional": [
@@ -1173,7 +1221,8 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
                         $scope.calendarDisp.removeAllEvents()
                         $scope.verAplicaDisponbilidad = true;
                         $scope.errorSeleccionIntGeografia = true;
-
+                        $scope.osSeleccionada=undefined
+                        $scope.listadoOsDisponibles=[]
                         $('#dia-form-turno').datepicker('update', FECHA_HOY_DATE).trigger('change');
                         let textCalendar = $('#dia-form-turno').val()
                         $scope.infoBasica.fechaTurnoTextAplica = textCalendar;

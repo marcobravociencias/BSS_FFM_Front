@@ -1,11 +1,11 @@
 let objectMapaResumen;
 let objectMapaUbiacion;
 var map;
-
+var marker;
+var mapResumen;
+var markerRes = [];
 app.mapController = function ($scope, ordenesUniversalesService) {
-    var marker;
-    var mapResumen;
-    var markerRes = [];
+   
 
     $scope.latitudSelectedMap;
     $scope.longitudSelectedMap;

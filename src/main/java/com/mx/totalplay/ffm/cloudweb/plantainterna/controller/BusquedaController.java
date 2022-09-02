@@ -23,7 +23,16 @@ public class BusquedaController {
     public BusquedaController(BusquedaService busquedaService) {
         this.busquedaService = busquedaService;
     }
-
+    @PostMapping("/consultarResumenPaquetePorCSP")
+    public ResponseEntity<?> consultarResumenPaquetePorCSP(@RequestBody String params){
+        logger.info("#### BUSQUEDA GENERAL SALEFORCES consultarResumenPaquetePorCSP ### \n" + params);
+        ServiceResponseResult response = busquedaService.consultarResumenPaquetePorCSP(params);
+        if (response.getResult() instanceof Integer){
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
+    
     @PostMapping("/busquedaGeneralSF")
     public ResponseEntity<?> busquedaGeneralSF(@RequestBody String params){
         logger.info("#### BUSQUEDA GENERAL SALEFORCES ### \n" + params);

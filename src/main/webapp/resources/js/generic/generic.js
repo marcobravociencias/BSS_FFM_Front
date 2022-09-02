@@ -826,3 +826,32 @@ cargarEstatusUs = function () {
 	});
 
 }
+
+
+validateLatitudLongitudCaracteresUtil=function(latitudOrLongintud){
+	let  regexLongitud=/[,'Â°`/;#_"$%*]/ 
+	return regexLongitud.test(latitudOrLongintud)
+}
+
+isLatitudeUtil=function(lat) {
+	return isFinite(lat) && Math.abs(lat) <= 90;
+}
+
+isLongitudeUtil=function(lng) {
+	return isFinite(lng) && Math.abs(lng) <= 180;
+}
+
+validarLatitudLongitudMapUtil=function(latitud, longitud){
+	if( !latitud || !longitud){
+		return false;
+	}else{
+		if( !isLatitudeUtil( latitud ) || !isLongitudeUtil( longitud ) ){
+			return false;
+		} else if(validateLatitudLongitudCaracteresUtil( longitud ) || validateLatitudLongitudCaracteresUtil( longitud ) ){
+			return false;
+		}else if( isNaN( latitud ) || isNaN( longitud )){
+			return false;
+		}
+	}   
+	return true;
+}

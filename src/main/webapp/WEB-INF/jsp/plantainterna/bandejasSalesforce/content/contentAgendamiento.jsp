@@ -35,8 +35,8 @@
             </div>
             <div class="container-text-content-detalle"> 
                 <span class="link-busqueda-salesforce" ng-click="consultarDetalleObjectosSF(elementoCSP.idCSP, 'CP', elementoCSP.name)" ng-bind="elementoCSP.name || 'Sin dato'" ></span> 
-                <span ng-show="elementoCSP.ordenServicio.nombreOrdenServicio" class="text-content-agendamiento btn-detalle-csp" ng-click="consultarResumenPaqueteBandejasSF(elementoCSP.idCSP)"> 
-                    <i class="fa fa-bars"></i> 
+                <span  class="text-content-agendamiento btn-detalle-csp" ng-click="consultarResumenPaqueteBandejasSFCSP(elementoCSP)"> 
+                    <i class="fas fa-info-circle"></i>
                 </span> 
 <!--                 <span class="text-content-agendamiento btn-detalle-csp" title="Validaci&oacute;n CSP" ng-click="consultarValidacionCSP(elementoCSP.idCSP)">  -->
 <!--                     <i class="fa fa-tasks"></i>  -->

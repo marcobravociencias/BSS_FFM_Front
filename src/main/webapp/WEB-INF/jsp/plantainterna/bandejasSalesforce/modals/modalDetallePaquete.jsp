@@ -115,8 +115,8 @@
                             <div class="row justify-content-center">
                                 <div class="col-md-12">
                                     <h5 class="title-detallePaquete">Servicios</h5>
-                                    <div>
-                                        <table class="detalle-productos-table table table-sm" id="tableDetalleServicios">
+                                    <div class="parent_table_detalle">
+                                        <table class="detalle-productos-table table table-sm">
                                             <thead class="thead_table_servicios">
                                                 <tr>
                                                     <th scope="col">Nombre del Servicio</th>
@@ -125,21 +125,28 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr ng-repeat="servicio in detallePaqueteCSP.resumenServicios">
-                                                    <td ng-bind="servicio.descripcion || 'Sin dato'"></td>
-                                                    <td ng-bind="servicio.tipo || 'Sin dato'"></td>
+                                                <tr ng-class="{'active-selected-servicio-plan': selectedEquipoPaquete == servicio }"
+                                                    ng-repeat="servicio in detallePaqueteCSP.resumenServicios">
+                                                    <td ng-bind="servicio.descripcion"></td>
+                                                    <td ng-bind="servicio.tipo"></td>
                                                     <td>
-                                                        <div class="text-center">
-                                                            <button ng-if="servicio.id !== undefined" type="button" ng-click="consultarDetalleEquiposBandejas(servicio)" class="btn_detalleServicio btn btn-rounded btn-sm my-0 waves-effect waves-light">
-                                                                <i class="fa fa-eye"></i>
-                                                            </button>
+                                                        <div class="text-center">   
+                                                            <button
+                                                                ng-if="servicio.id !== undefined"
+                                                                type="button"
+                                                                ng-click="consultarDetalleServicio(servicio, detallePaqueteCSP.idCotSitio)"
+                                                                class="btn_detalleServicio btn btn-info btn-rounded btn-sm my-0 waves-effect waves-light">
+                                                                <i class="fa fa-eye"></i></button>
+                                                            <span
+                                                                ng-if="servicio.id === undefined">Sin
+                                                                detalle</span>
                                                         </div>
                                                     </td>
                                                 </tr>
                                             </tbody>
-                                            <tfoot ng-if="detallePaqueteCSP.resumenServicios === undefined || detallePaqueteCSP.resumenServicios.length <= 0">
-                                                <tr>
-                                                    <td class="text-center" colspan="2">No se cuenta con servicios</td>
+                                            <tfoot>
+                                                <tr ng-if="detallePaqueteCSP.resumenServicios === undefined || detallePaqueteCSP.resumenServicios.length <= 0">
+                                                    <td class="text-center" colspan="3">No se cuenta con servicios</td>
                                                 </tr>
                                             </tfoot>
                                         </table>
@@ -150,7 +157,7 @@
                                 <div class="col-md-12">
                                     <h5 class="title-detallePaquete"> Productos </h5>
                                     <div class="parent_table_detalle_productos">
-                                        <table class="table detalle-productos-table table-sm" id="tableDetalleProductos">
+                                        <table class="table detalle-productos-table table-sm">
                                             <thead class="thead_table_productos_servicio">
                                                 <tr>
                                                     <th scope="col">Nombre del producto</th>
@@ -158,14 +165,14 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr ng-repeat="producto in detallePaqueteCSP.productos">
-                                                    <td ng-bind="producto.descripcion || 'Sin dato'"></td>
-                                                    <td ng-bind="producto.tipo || 'Sin dato'"></td>
+                                                <tr ng-repeat="producto in selectedEquipoPaquete.productos">
+                                                    <td ng-bind="producto.descripcion"></td>
+                                                    <td ng-bind="producto.tipo"></td>
                                                 </tr>
                                             </tbody>
-                                            <tfoot ng-if="detallePaqueteCSP.productos === undefined || detallePaqueteCSP.productos.length <= 0">
-                                                <tr>
-                                                    <td class="text-center" colspan="2">No se cuenta con Productos</td>
+                                            <tfoot>
+                                                <tr ng-if="selectedEquipoPaquete.productos === undefined || selectedEquipoPaquete.productos.length <= 0">
+                                                    <td class="text-center" colspan="2">No se cuenta con productos</td>
                                                 </tr>
                                             </tfoot>
                                         </table>
@@ -176,7 +183,7 @@
                                 <div class="col-md-12">
                                     <h5 class="title-detallePaquete"> Promociones </h5>
                                     <div class="parent_table_detalle_promociones">
-                                        <table class="detalle-productos-table table table-sm" id="tableDetallePromociones">
+                                        <table class="detalle-productos-table table table-sm">
                                             <thead class="thead_table_promociones_servicio">
                                                 <tr>
                                                     <th scope="col">Folio promoci&oacute;n</th>
@@ -184,14 +191,14 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr ng-repeat="promocion in detallePaqueteCSP.promociones">
-                                                    <td ng-bind="promocion.id || 'Sin dato'"></td>
-                                                    <td ng-bind="promocion.descripcion || 'Sin dato'"></td>
+                                                <tr  ng-repeat="promocion in detallePaqueteCSP.promociones">
+                                                    <td ng-bind="promocion.id"></td>
+                                                    <td ng-bind="promocion.descripcion"></td>
                                                 </tr>
                                             </tbody>
-                                            <tfoot ng-if="detallePaqueteCSP.promociones === undefined || detallePaqueteCSP.promociones.length <= 0">
-                                                <tr>
-                                                    <td class="text-center" colspan="2">No se cuenta con Promociones</td>
+                                            <tfoot>
+                                                <tr ng-if="detallePaqueteCSP.promociones === undefined || detallePaqueteCSP.promociones.length <= 0">
+                                                    <td class="text-center" colspan="2">No se cuenta con promociones</td>
                                                 </tr>
                                             </tfoot>
                                         </table>
@@ -204,69 +211,21 @@
                                 <h5 class="text-center title-detallePaquete">Equipo y Modelos</h5>
                             </div>
                             <div>
-                                <div ng-if="listDetalleEquipos.length" ng-repeat="detServicio in listDetalleEquipos">
+                                <div ng-if="selectedEquipoPaquete.isTieneEquipoModeos">
                                     <div class="content_info_detalle">
-                                        <h6 class="text-equipo-paquete">
-                                            {{detServicio.nombreEquipo}} &nbsp;
-                                        </h6>
+                                        <h6 class="ml-3 mt-2 text-equipo-paquete" ng-bind="selectedEquipoPaquete.elementoEquipoModelos.nombreEquipo"> </h6>
                                         <div class="ml-4">
-                                            <div class="container-fluid detallePaquete-content">
+                                            <!--div class="container-fluid detallePaquete-content">
                                                 <div class="container-text-title-detalle">
                                                     <span class="text-title-detallePaquete">Nombre Servicio</span>
                                                 </div>
                                                 <div class="container-text-content-detalle">
                                                     <span class="text-content-detallePaquete" title="{{detServicio.nombreServicio}}" ng-bind="detServicio.nombreServicio || 'Sin dato'"></span>
                                                 </div>
-                                            </div>
-                                            <div class="container-fluid detallePaquete-content">
-                                                <div class="container-text-title-detalle">
-                                                    <span class="text-title-detallePaquete">Flujo</span>
-                                                </div>
-                                                <div class="container-text-content-detalle">
-                                                    <span class="text-content-detallePaquete" title="{{detServicio.flujo}}" ng-bind="detServicio.flujo || 'Sin dato'"></span>
-                                                </div>
-                                            </div>
-                                            <div class="container-fluid detallePaquete-content">
-                                                <div class="container-text-title-detalle">
-                                                    <span class="text-title-detallePaquete">Tipo Dispositivo</span>
-                                                </div>
-                                                <div class="container-text-content-detalle">
-                                                    <span class="text-content-detallePaquete" title="{{detServicio.tipoDispositivo}}" ng-bind="detServicio.tipoDispositivo || 'Sin dato'"></span>
-                                                </div>
-                                            </div>
-                                            <div class="container-fluid detallePaquete-content">
-                                                <div class="container-text-title-detalle">
-                                                    <span class="text-title-detallePaquete">&iquest;Es Equipo?</span>
-                                                </div>
-                                                <div class="container-text-content-detalle">
-                                                    <span class="text-content-detallePaquete" ng-show="detServicio.esEquipo">Si</span>
-                                                    <span class="text-content-detallePaquete" ng-show="!detServicio.esEquipo">No</span>
-                                                </div>
-                                            </div>
-                                            <div class="container-fluid detallePaquete-content">
-                                                <div class="container-text-title-detalle">
-                                                    <span class="text-title-detallePaquete">&iquest;Es Microonda?</span>
-                                                </div>
-                                                <div class="container-text-content-detalle">
-                                                    <span class="text-content-detallePaquete" ng-show="detServicio.esMicroonda">Si</span>
-                                                    <span class="text-content-detallePaquete" ng-show="!detServicio.esMicroonda">No</span>
-                                                </div>
-                                            </div>
-                                            <div class="container-fluid detallePaquete-content">
-                                                <div class="container-text-title-detalle">
-                                                    <span class="text-title-detallePaquete">Autofind</span>
-                                                </div>
-                                                <div class="container-text-content-detalle">
-                                                    <span class="text-content-detallePaquete" ng-show="detServicio.tieneAutofind">Si</span>
-                                                    <span class="text-content-detallePaquete" ng-show="!detServicio.tieneAutofind">No</span>
-                                                </div>
-                                            </div>
-                                            <div class="container-fluid detallePaquete-content">
-                                                <div class="container-text-title-detalle">
-                                                    <span class="text-title-detallePaquete">Modelos</span>
-                                                </div>
+                                            </div-->                                                         
+                                            <div class="container-fluid detallePaquete-content">                                                                   
                                                 <ul style="color: #797979" class="listado_modelos">
-                                                    <li ng-repeat="modelo in detServicio.modelo" class="li_item_modelo" ng-bind="modelo.nameModelo">
+                                                    <li ng-repeat="modelo in selectedEquipoPaquete.elementoEquipoModelos.modelo" class="li_item_modelo" ng-bind="modelo.modelo">
                                                     </li>
                                                 </ul>
                                             </div>
@@ -282,8 +241,8 @@
                                         </ul> -->
                                     </div>
                                 </div>
-                                <div ng-if="!listDetalleEquipos.length" class="text-center not_info_detalle row h-100 justify-content-center">
-                                    <h6 style="color:#abafae;" class="text-noSeleccion">Sin selecci&oacute;n de servicio</h6>
+                                <div ng-if="!selectedEquipoPaquete.isTieneEquipoModeos" class="text-center not_info_detalle row h-100 justify-content-center">
+                                    <h6 style="color:#abafae;" class="text-noSeleccion">Sin datos para mostrar</h6>
                                 </div>
                             </div>
                         </div>

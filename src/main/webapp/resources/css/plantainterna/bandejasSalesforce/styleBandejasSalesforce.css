@@ -1783,7 +1783,7 @@ select.inputContacto {
   float: right;
   cursor: pointer;
   padding: 0.4em !important;
-  margin-top: 0.2em;
+  font-size: 0.9em !important;
 }
 
 .detalle-csp-table thead tr th {
@@ -1848,7 +1848,8 @@ span.text-content-detallePaquete {
 
 .title-detallePaquete {
   color: #767676;
-  font-size: 1em;
+  font-size: 1.2em;
+  font-weight: bold;
 }
 
 .rowTablaCsp {

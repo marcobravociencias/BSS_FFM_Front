@@ -65,6 +65,9 @@ public class ConstBusqueda {
  
     @Value("${generarDnsActivacion}")
     private String generarDnsActivacion;
+    
+	@Value("${resumenPaquetePorCSP}")
+	private String resumenPaquetePorCSP;
 }
 
 

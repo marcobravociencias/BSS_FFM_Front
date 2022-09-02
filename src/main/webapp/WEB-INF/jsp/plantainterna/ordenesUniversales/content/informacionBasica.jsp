@@ -15,7 +15,9 @@
         <div class="row input-group">
             <label for="compania_select" class="label-filter">Folio</label>
             <div class="input-group mb-1" style="padding: 0;">
-                <input style="width: 90%;" type="text" id="folio" name="folio" ng-model="infoBasica.folio" class="form-control-sm input-filtro-disponibilidad-folio" placeholder="Sin folio">
+                <input ng-keyup="$event.keyCode == 13 && consultarInformacionFolio()" 
+                style="width: 90%;" type="text" id="folio" name="folio" ng-model="infoBasica.folio"
+                 class="form-control-sm input-filtro-disponibilidad-folio" placeholder="Sin folio">
                 <div style="width: 10%;" class="input-group-append btn-buscar-generica" ng-click="consultarInformacionFolio()">
                     <span class="input-group-text"><i class="fa fa-search"></i></span>
                 </div>
@@ -23,9 +25,11 @@
         </div>
         <div class="row input-group columna-filtro-ind">
             <label for="compania_select" class="label-filter">OS</label>
-            <select id="compania_select" class="form-control-sm input-filtro-disponibilidad " placeholder="Compañia" required>
+            <select ng-change="setOsSelectedListado()" ng-model="osSeleccionada" id="compania_select" class="form-control-sm input-filtro-disponibilidad "  placeholder="Compañia" required
+                ng-options="osIndividual.id as osIndividual.os for osIndividual in listadoOsDisponibles" >
                 <option value="">Seleccione ...</option>
             </select>
+        
         </div>
         <div class="row input-group columna-filtro-ind">
             <label class="label-filter">Canal de venta *</label>

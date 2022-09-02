@@ -34,8 +34,6 @@
                     <th>Paquete</th>
                     <th>Cuadrilla</th>
                     <th>Geograf&iacute;a</th>
-                    <th>OS</th>
-                    <th>Estatus OS</th>
                     <th>Fecha Creaci&oacute;n</th>
                     <th>Acciones</th>
                 </tr>

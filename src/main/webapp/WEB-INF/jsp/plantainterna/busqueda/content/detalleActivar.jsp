@@ -163,8 +163,8 @@
                                 <!--button class="btn btn-sm boton-activacion"  ng-if="planActivo !=='true' && statusActivacion !=='proceso'"  ng-click="configurarDispositivosNuevo(servicioIndCot)">Configurar </button-->
                             </div>
                         </div>   
-                        <button ng-if="planActivo !== 'true'"  title="configurar" type="button" class="btn btn-primary btn-floating btn-configuracion-servicio btn-sm" ng-click="configurarEquiposDispositivos(servicioIndCot)" ><i class="fas fa-wrench"></i></button>                    
-                        <button title="Cuenta activada"    ng-if="planActivo === 'true'"  type="button" class="btn btn-primary btn-floating btn-configuracion-servicio-bloqueo btn-sm" >
+                        <button title="configurar"  ng-if="planActivo !== 'true' && servicioIndCot.mostrarInfo"   type="button" class="btn btn-primary btn-floating btn-configuracion-servicio btn-sm" ng-click="configurarEquiposDispositivos(servicioIndCot)" ><i class="fas fa-wrench"></i></button>                    
+                        <button title="Cuenta activada"    ng-if="planActivo === 'true' && servicioIndCot.mostrarInfo"  type="button" class="btn btn-primary btn-floating btn-configuracion-servicio-bloqueo btn-sm" >
                             <i class="fas fa-lock"></i>
                         </button>
                 </div>
@@ -219,8 +219,8 @@
                         </div>
 
                     </div>
-                    <button ng-if="planActivo !== 'true'" title="configurar" type="button" class="btn btn-primary btn-floating btn-configuracion-servicio btn-sm" ng-click="configurarEquiposDispositivos(servicioIndCot)" ><i class="fas fa-wrench"></i></button>                    
-                    <button title="Cuenta activada"    ng-if="planActivo === 'true'"  type="button" class="btn btn-primary btn-floating btn-configuracion-servicio-bloqueo btn-sm" >
+                    <button ng-if="planActivo !== 'true'  && servicioIndCot.mostrarInfo" title="configurar" type="button" class="btn btn-primary btn-floating btn-configuracion-servicio btn-sm" ng-click="configurarEquiposDispositivos(servicioIndCot)" ><i class="fas fa-wrench"></i></button>                    
+                    <button title="Cuenta activada"    ng-if="planActivo === 'true'  && servicioIndCot.mostrarInfo"  type="button" class="btn btn-primary btn-floating btn-configuracion-servicio-bloqueo btn-sm" >
                         <i class="fas fa-lock"></i>
                     </button>
                 </div>
@@ -289,8 +289,8 @@
                         </div>
 
                     </div>
-                    <button ng-if="!servicioIndCot.isConfigurado && planActivo !== 'true'" title="configurar" type="button" class="btn btn-primary btn-floating btn-configuracion-servicio btn-sm"  ng-click="configurarDns(servicioIndCot)" ><i class="fas fa-wrench"></i></button>                    
-                    <button title="Cuenta activada"    ng-if="planActivo === 'true'"  type="button" class="btn btn-primary btn-floating btn-configuracion-servicio-bloqueo btn-sm" >
+                    <button ng-if="!servicioIndCot.isConfigurado && planActivo !== 'true'  && servicioIndCot.mostrarInfo" title="configurar" type="button" class="btn btn-primary btn-floating btn-configuracion-servicio btn-sm"  ng-click="configurarDns(servicioIndCot)" ><i class="fas fa-wrench"></i></button>                    
+                    <button title="Cuenta activada"    ng-if="planActivo === 'true'  && servicioIndCot.mostrarInfo"  type="button" class="btn btn-primary btn-floating btn-configuracion-servicio-bloqueo btn-sm" >
                         <i class="fas fa-lock"></i>
                     </button>
                 </div>
@@ -426,8 +426,8 @@
                             {{servicioIndCot|json}}
                         </pre-->
                     </div>
-                    <button title="configurar"   ng-if="planActivo !== 'true'"  type="button" class="btn btn-primary btn-floating btn-configuracion-servicio btn-sm"  ng-click="configurarONT(servicioIndCot)" ><i class="fas fa-wrench"></i></button>
-                    <button title="Cuenta activada"    ng-if="planActivo === 'true'"  type="button" class="btn btn-primary btn-floating btn-configuracion-servicio-bloqueo btn-sm" >
+                    <button title="configurar"         ng-if="planActivo !== 'true'  && servicioIndCot.mostrarInfo"  type="button" class="btn btn-primary btn-floating btn-configuracion-servicio btn-sm"  ng-click="configurarONT(servicioIndCot)" ><i class="fas fa-wrench"></i></button>
+                    <button title="Cuenta activada"    ng-if="planActivo === 'true'  && servicioIndCot.mostrarInfo"  type="button" class="btn btn-primary btn-floating btn-configuracion-servicio-bloqueo btn-sm" >
                         <i class="fas fa-lock"></i>
                     </button>
 

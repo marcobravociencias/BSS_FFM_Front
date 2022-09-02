@@ -407,4 +407,26 @@ public class ImplBusquedaService implements BusquedaService {
 }
 
 
+
+	@Override
+	public ServiceResponseResult consultarResumenPaquetePorCSP(String params) {
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+        String tokenAcces = principalDetail.getAccess_token();
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constBusqueda.getResumenPaquetePorCSP());
+        logger.info("### URL obtenerResumenPaquete(): \n" + urlRequest);
+        Map<String, String> paramsRequestGet = new HashMap<>();
+        paramsRequestGet.put("folioCps", jsonObject.get("folioCps").getAsString());
+
+        ServiceResponseResult response = restCaller.callGetBearerTokenRequest(
+                paramsRequestGet,
+                urlRequest,
+                ServiceResponseResult.class,
+                tokenAcces);
+
+        logger.info("### RESULT consultarResumenPaquetePorCSP(): " + gson.toJson(response));
+		return response;
+	}
+
+
 }

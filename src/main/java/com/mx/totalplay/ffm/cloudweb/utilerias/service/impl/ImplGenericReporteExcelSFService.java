@@ -321,9 +321,14 @@ public class ImplGenericReporteExcelSFService implements GenericReporteSFExcelSe
 					if (dataArray.size() > 0) {
 						for (int i = 0; i < dataArray.size(); i++) {
 							JsonObject object = (JsonObject) dataArray.get(i);
-							if (object.get("confirmada").getAsBoolean()) {
-								object.addProperty("confirmada", "Si");
-							}else {
+							
+							try {
+								if (object.get("confirmada") != null && object.get("confirmada").getAsBoolean()) {
+									object.addProperty("confirmada", "Si");
+								}else {
+									object.addProperty("confirmada", "No");
+								}
+							}catch(Exception e) {
 								object.addProperty("confirmada", "No");
 							}
 							dataReporte.add(object);
@@ -343,16 +348,28 @@ public class ImplGenericReporteExcelSFService implements GenericReporteSFExcelSe
 					if (dataArray.size() > 0) {
 						for (int i = 0; i < dataArray.size(); i++) {
 							JsonObject object = (JsonObject) dataArray.get(i);
-							if (object.get("repetido") != null && object.get("repetido").getAsBoolean()) {
-								object.addProperty("repetido", "Si");
-							}else {
+							
+							try {
+								if (object.get("repetido") != null && object.get("repetido").getAsBoolean()) {
+									object.addProperty("repetido", "Si");
+								}else {
+									object.addProperty("repetido", "No");
+								}
+							}catch(Exception e) {
 								object.addProperty("repetido", "No");
 							}
-							if (object.get("confirmada") != null && object.get("confirmada").getAsBoolean()) {
-								object.addProperty("confirmada", "Si");
-							}else {
+					
+							
+							try {
+								if (object.get("confirmada") != null && object.get("confirmada").getAsBoolean()) {
+									object.addProperty("confirmada", "Si");
+								}else {
+									object.addProperty("confirmada", "No");
+								}
+							}catch(Exception e) {
 								object.addProperty("confirmada", "No");
 							}
+						
 							dataReporte.add(object);
 
 						}
@@ -395,20 +412,24 @@ public class ImplGenericReporteExcelSFService implements GenericReporteSFExcelSe
 					if (dataArray.size() > 0) {
 						for (int i = 0; i < dataArray.size(); i++) {
 							JsonObject object = (JsonObject) dataArray.get(i);
-							
-							if (object.get("repetido") !=null &&  Boolean.parseBoolean( object.get("repetido").getAsString()  ) ){
-								object.addProperty("repetido", "Si");
-							}else {
+							try {
+								if (object.get("repetido") !=null &&  Boolean.parseBoolean( object.get("repetido").getAsString()  ) ){
+									object.addProperty("repetido", "Si");
+								}else {
+									object.addProperty("repetido", "No");
+								}
+							}catch(Exception e) {
 								object.addProperty("repetido", "No");
 							}
-							
-							
-							if (object.get("repetido60") !=null &&  Boolean.parseBoolean( object.get("repetido60").getAsString()  ) ){
-								object.addProperty("repetido60", "Si");
-							}else {
+							try {							
+								if (object.get("repetido60") !=null &&  Boolean.parseBoolean( object.get("repetido60").getAsString()  ) ){
+									object.addProperty("repetido60", "Si");
+								}else {
+									object.addProperty("repetido60", "No");
+								}
+							}catch(Exception e) {
 								object.addProperty("repetido60", "No");
-							}
-												
+							}			
 							dataReporte.add(object);
 
 						}
@@ -426,11 +447,15 @@ public class ImplGenericReporteExcelSFService implements GenericReporteSFExcelSe
 					if (dataArray.size() > 0) {
 						for (int i = 0; i < dataArray.size(); i++) {
 							JsonObject object = (JsonObject) dataArray.get(i);
-							if (object.get("ventaExpress").getAsBoolean()) {
-								object.addProperty("ventaExpress", "Si");
-							}else {
+							try {
+								if (object.get("ventaExpress") !=null && object.get("ventaExpress").getAsBoolean()) {
+									object.addProperty("ventaExpress", "Si");
+								}else {
+									object.addProperty("ventaExpress", "No");
+								}
+							}catch(Exception e) {
 								object.addProperty("ventaExpress", "No");
-							}
+							}	
 							dataReporte.add(object);
 
 						}

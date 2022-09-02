@@ -53,6 +53,12 @@
 
     </div>
 </div>
+<div class="row" style="text-align: left;">
+    <div class="col-6 contenido-cuenta">        
+        <strong class="color_titulos_resumen">ORDEN SERVICIO:</strong>
+        <label class="resumen-detalle-agenda" ng-bind="selectedOrdenServicio ? selectedOrdenServicio.os : 'NA'"></label>
+    </div> 
+</div>
 
 
 
@@ -66,23 +72,12 @@
 </div>
 
 <div class="row" style="text-align: left;">
-    <div class="col-6 contenido-cuenta">
-        <strong class="color_titulos_resumen">FOLIO:</strong>
-        <label class="resumen-detalle-agenda" ng-bind="infoBasica.paquete.Nombre_Paquete ? infoBasica.paquete.Nombre_Paquete : 'Sin informaci&oacute;n'"></label>
-    </div>
+
     <div class="col-6 contenido-cuenta">        
         <strong class="color_titulos_resumen">NOMBRE CLIENTE:</strong>
-        <label class="resumen-detalle-agenda" ng-bind="informacionCliente.nombre ? informacionCliente.nombre : 'Sin informaci&oacute;n'"></label>
+        <label class="resumen-detalle-agenda" ng-bind="informacionCliente.nombre ? informacionCliente.nombre +' '+ informacionCliente.apaterno+' '+informacionCliente.amaterno  : 'Sin informaci&oacute;n'"></label>
     </div> 
-</div>
-<div class="row" style="text-align: left;">
-    <div class="col-12 contenido-cuenta" >        
-        <strong class="color_titulos_resumen">NOMBRE CONTACTO:</strong>
-        <label class="resumen-detalle-agenda" ng-bind="informacionCliente.nombreContacto ? informacionCliente.nombreContacto : 'Sin informaci&oacute;n'"></label>
-    </div>
-</div>
-<div class="row" style="text-align: left;">
-    <div class="col-12 contenido-cuenta">        
+    <div class="col-6 contenido-cuenta">        
         <strong class="color_titulos_resumen">CALLE:</strong>
         <label class="resumen-detalle-agenda" ng-bind="informacionCliente.calle ? informacionCliente.calle : 'Sin informaci&oacute;n'"></label>
     </div>
@@ -121,6 +116,12 @@
     </div>
 </div>
 <div class="row" style="text-align: left;">
+    <div class="col-12 contenido-cuenta">        
+        <strong class="color_titulos_resumen">RAZ&Oacute;N SOCIAL:</strong>
+        <label class="resumen-detalle-agenda" ng-bind="informacionCliente.razonsocial ? informacionCliente.razonsocial : 'Sin informaci&oacute;n'"></label>
+    </div>
+</div>
+<div class="row" style="text-align: left;">
     <div class="col-4 contenido-cuenta">        
         <strong class="color_titulos_resumen"> EXT.:</strong>
         <label class="resumen-detalle-agenda" ng-bind="informacionCliente.ext ? informacionCliente.ext : 'Sin informaci&oacute;n'"></label>
@@ -156,6 +157,26 @@
     <div class="col-4 contenido-cuenta">
         <strong class="color_titulos_resumen">LONGITUD:</strong>
         <label class="resumen-detalle-agenda" ng-bind="longitudSelectedMap ? longitudSelectedMap : 'Sin informaci&oacute;n'">Sin direcci&oacute;n capturada</label>
+    </div>
+    <div class="col-4 contenido-cuenta">
+        <strong class="color_titulos_resumen">CORREO:</strong>
+        <label class="resumen-detalle-agenda" ng-bind="informacionCliente.correo ? informacionCliente.correo : 'Sin informaci&oacute;n'">Sin direcci&oacute;n capturada</label>
+    </div>
+</div>
+<div class="divider-cuenta " style="border: 0.5px solid #e6e6e6;margin-bottom: 1em; margin-top: .2em;"></div>
+<div class="row">
+    <div class="col-12 resumen-title-content">
+        <span class="resumen-title">INFORMACI&Oacute;N CLIENTE</span>
+    </div>
+</div>
+<div class="row" style="text-align: left;">
+    <div class="col-6 contenido-cuenta" >        
+        <strong class="color_titulos_resumen">NOMBRE CONTACTO:</strong>
+        <label class="resumen-detalle-agenda" ng-bind="informacionCliente.nombreContacto ? informacionCliente.nombreContacto : 'Sin informaci&oacute;n'"></label>
+    </div>
+    <div class="col-6 contenido-cuenta">        
+        <strong class="color_titulos_resumen">TEL&Eacute;FONO CONCTACTO:</strong>
+        <label class="resumen-detalle-agenda" ng-bind="informacionCliente.celular ? informacionCliente.celular : 'Sin informaci&oacute;n'"></label>
     </div>
 </div>
 <br>
