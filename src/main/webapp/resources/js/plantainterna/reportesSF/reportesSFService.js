@@ -121,6 +121,28 @@ app.service("reportesSFService", function ($http) {
         });
     };
 
+    this.consultarReporteFactibilidadCerrados = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultarReporteFactibilidadCerrados",
+            data: JSON.stringify(params),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    };
+
+    this.consultarReporteFactibilidadCancelados = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultarReporteFactibilidadCancelados",
+            data: JSON.stringify(params),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    };
+
     this.consultarReportePlanningAgendas = function (params) {
         return $http({
             method: "post",
@@ -180,6 +202,17 @@ app.service("reportesSFService", function ($http) {
         return $http({
             method: "post",
             url: "req/consultarReporteBackLogProactivo",
+            data: JSON.stringify(params),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    };
+
+    this.consultarReporteIngresoProactivo = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultarReporteIngresoProactivo",
             data: JSON.stringify(params),
             headers: {
                 'Content-Type': 'application/json'

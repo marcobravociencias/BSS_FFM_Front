@@ -35,9 +35,9 @@
             <table id="reportePlanningAddonTable" class="display table  table-reportesf" cellspacing="0" width="100%">
                 <thead id="thead_reportePlanningAddon">
                     <tr>
-                        <th data-idColumn="0" data-isNumber="false" class="orderColumnTable orderColumnAscTable">OS</th>
-                        <th data-idColumn="1" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Cuenta BRM</th>
-                        <th data-idColumn="2" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Num. Caso</th>
+                        <th data-idColumn="0" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Cuenta</th>
+                        <th data-idColumn="1" data-isNumber="false" class="orderColumnTable orderColumnAscTable">OS</th>
+                        <th data-idColumn="2" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Ticket</th>
                         <th data-idColumn="3" data-isNumber="false" class="orderColumnTable orderColumnAscTable">OT GIM</th>
                         <th data-idColumn="4" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Estatus</th>
                         <th data-idColumn="5" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Estado</th>

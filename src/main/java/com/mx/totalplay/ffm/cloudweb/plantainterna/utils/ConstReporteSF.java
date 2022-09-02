@@ -58,6 +58,18 @@ public class ConstReporteSF implements Serializable{
   @Value("${exportaReporteGenerados}")
   private String exportaReporteGenerados;
   
+  @Value("${consultaReporteFactibilidadCerrados}")
+  private String consultaReporteFactibilidadCerrados;
+  
+  @Value("${exportaReporteFactibilidadCerrados}")
+  private String exportaReporteFactibilidadCerrados;
+  
+  @Value("${consultaReporteFactibilidadCancelados}")
+  private String consultaReporteFactibilidadCancelados;
+  
+  @Value("${exportaReporteFactibilidadCancelados}")
+  private String exportaReporteFactibilidadCancelados;
+  
   @Value("${consultaReportePlanningAgenda}")
   private String consultaReportePlanningAgenda;
   
@@ -93,5 +105,11 @@ public class ConstReporteSF implements Serializable{
   
   @Value("${exportaReporteBacklogProactivos}")
   private String exportaReporteBacklogProactivos;
+  
+  @Value("${consultaReporteIngresoProactivo}")
+  private String consultaReporteIngresoProactivo;
+  
+  @Value("${exportaReporteIngresoProactivo}")
+  private String exportaReporteIngresoProactivo;
   
 }

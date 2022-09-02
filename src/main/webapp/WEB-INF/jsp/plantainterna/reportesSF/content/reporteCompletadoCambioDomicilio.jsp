@@ -35,29 +35,29 @@
             <table id="reporteCompletadoCambioDomicilioTable" class="display table  table-reportesf" cellspacing="0" width="100%">
                 <thead id="thead_reporteCompletadoCambioDomicilio">
                     <tr>
-                        <th data-idColumn="0" data-isNumber="true" class="orderColumnTable orderColumnAscTable">N&uacute;mero cuenta</th>
-                        <th data-idColumn="1" data-isNumber="false" class="orderColumnTable orderColumnAscTable">N&uacute;mero ticket</th>
-                        <th data-idColumn="2" data-isNumber="true" class="orderColumnTable orderColumnAscTable">Folio</th>
+                        <th data-idColumn="0" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Cuenta</th>
+                        <th data-idColumn="1" data-isNumber="false" class="orderColumnTable orderColumnAscTable">OS</th>
+                        <th data-idColumn="2" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Ticket</th>
                         <th data-idColumn="3" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Primer fecha de agendamiento</th>
                         <th data-idColumn="4" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Fecha agendamiento</th>
                         <th data-idColumn="5" data-isNumber="false" class="orderColumnTable orderColumnAscTable">TS completado</th>
-                        <th data-idColumn="6" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Cuenta Factura: Fecha activaci&oacute;n</th>
+                        <th data-idColumn="6" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Fecha activaci&oacute;n</th>
                         <th data-idColumn="7" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Estatus</th>
                         <th data-idColumn="8" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Estado</th>
                         <th data-idColumn="9" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Grupo codificaci&oacute;n</th>
                         <th data-idColumn="10" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Nivel 1</th>
                         <th data-idColumn="11" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Nivel 2</th>
                         <th data-idColumn="12" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Nivel 3</th>
-                        <th data-idColumn="13" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Cuenta factura: Cluster instalaci&oacute;n</th>
-                        <th data-idColumn="14" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Cuenta factura: Region instalaci&oacute;n</th>
-                        <th data-idColumn="15" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Cuenta factura: Plaza</th>
+                        <th data-idColumn="13" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Cluster instalaci&oacute;n</th>
+                        <th data-idColumn="14" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Region instalaci&oacute;n</th>
+                        <th data-idColumn="15" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Plaza</th>
                         <th data-idColumn="16" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Repetido</th>
                         <th data-idColumn="17" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Distrito sitio</th>
                         <th data-idColumn="18" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Fecha/Hora apertura</th>
                         <th data-idColumn="19" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Fecha/Hora cierre</th>
                         <th data-idColumn="20" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Subtipo</th>
                         <th data-idColumn="21" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Plaza sitio</th>
-                        <th data-idColumn="22" data-isNumber="false" class="orderColumnTable orderColumnAscTable">OS: Plaza operaci&oacute;n</th>
+                        <th data-idColumn="22" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Plaza operaci&oacute;n</th>
                     </tr>
                 </thead>
                 <tbody>

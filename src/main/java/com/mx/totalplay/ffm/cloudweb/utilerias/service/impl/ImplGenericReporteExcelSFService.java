@@ -505,7 +505,20 @@ public class ImplGenericReporteExcelSFService implements GenericReporteSFExcelSe
 				if (response.getResult() == null || response.getResult() instanceof Integer) {
 				} else {
 					JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
-		            array = jsonObjectResponse.getAsJsonArray("data");
+					JsonArray dataArray = jsonObjectResponse.getAsJsonArray("resultado");
+					JsonArray dataReporte = new JsonArray();
+					if (dataArray.size() > 0) {
+						for (int i = 0; i < dataArray.size(); i++) {
+							JsonObject object = (JsonObject) dataArray.get(i);
+							if (object.get("repetido").getAsBoolean()) {
+								object.addProperty("repetido", "Si");
+							}else {
+								object.addProperty("repetido", "No");
+							}
+							dataReporte.add(object);
+						}
+					}
+		            array = dataReporte;
 				}
 				break;
 			case "reportesf-planningagenda-pi":
@@ -550,6 +563,44 @@ public class ImplGenericReporteExcelSFService implements GenericReporteSFExcelSe
 				break;
 			case "reportesf-backlogproact-pi":
 				response = consultarInformacionExcelGenericPost(params, constReportesSF.getExportaReporteBacklogProactivos(), method);
+				if (response.getResult() == null || response.getResult() instanceof Integer) {
+				} else {
+					JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
+		            array = jsonObjectResponse.getAsJsonArray("resultado");
+				}
+				break;
+			case "reportesf-ingresoproact-pi":
+				response = consultarInformacionExcelGenericPost(params, constReportesSF.getExportaReporteIngresoProactivo(), method);
+				if (response.getResult() == null || response.getResult() instanceof Integer) {
+				} else {
+					JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
+					JsonArray dataArray = jsonObjectResponse.getAsJsonArray("resultado");
+					JsonArray dataReporte = new JsonArray();
+					if (dataArray.size() > 0) {
+						for (int i = 0; i < dataArray.size(); i++) {
+							JsonObject object = (JsonObject) dataArray.get(i);
+							if (object.get("repetido").getAsBoolean()) {
+								object.addProperty("repetido", "Si");
+							}else {
+								object.addProperty("repetido", "No");
+							}
+							dataReporte.add(object);
+
+						}
+					}
+		            array = dataReporte;
+				}
+				break;
+			case "reportesf-factibilcerrados-pi":
+				response = consultarInformacionExcelGenericPost(params, constReportesSF.getExportaReporteFactibilidadCerrados(), method);
+				if (response.getResult() == null || response.getResult() instanceof Integer) {
+				} else {
+					JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
+		            array = jsonObjectResponse.getAsJsonArray("resultado");
+				}
+				break;
+			case "reportesf-factibilcancelados-pi":
+				response = consultarInformacionExcelGenericPost(params, constReportesSF.getExportaReporteFactibilidadCancelados(), method);
 				if (response.getResult() == null || response.getResult() instanceof Integer) {
 				} else {
 					JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);

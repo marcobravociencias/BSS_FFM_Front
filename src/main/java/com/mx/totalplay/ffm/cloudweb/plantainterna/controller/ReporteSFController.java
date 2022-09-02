@@ -144,6 +144,26 @@ public class ReporteSFController {
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 	
+	@PostMapping("/consultarReporteFactibilidadCerrados")
+	public ResponseEntity<?> consultarReporteFactibilidadCerrados(@RequestBody String params) {
+		logger.info("#### Metodo consultarReporteFactibilidadCerrados: " + params);
+		ServiceResponseResult response =reporteSFService.consultarReporteFactibilidadCerrados(params);
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+	
+	@PostMapping("/consultarReporteFactibilidadCancelados")
+	public ResponseEntity<?> consultarReporteFactibilidadCancelados(@RequestBody String params) {
+		logger.info("#### Metodo consultarReporteFactibilidadCancelados: " + params);
+		ServiceResponseResult response =reporteSFService.consultarReporteFactibilidadCancelados(params);
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+	
 	@PostMapping("/consultarReportePlanningAgendas")
 	public ResponseEntity<?> consultarReportePlanningAgendas(@RequestBody String params) {
 		logger.info("#### Metodo consultarReportePlanningAgendas: " + params);
@@ -198,6 +218,16 @@ public class ReporteSFController {
 	public ResponseEntity<?> consultarReporteBackLogProactivo(@RequestBody String params) {
 		logger.info("#### Metodo consultarReporteBackLogProactivo: " + params);
 		ServiceResponseResult response =reporteSFService.consultarReporteBackLogProactivo(params);
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+	
+	@PostMapping("/consultarReporteIngresoProactivo")
+	public ResponseEntity<?> consultarReporteIngresoProactivo (@RequestBody String params) {
+		logger.info("#### Metodo consultarReporteIngresoProactivo: " + params);
+		ServiceResponseResult response =reporteSFService.consultarReporteIngresoProactivo(params);
 		if (response.getResult() instanceof Integer){
 			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
 		}

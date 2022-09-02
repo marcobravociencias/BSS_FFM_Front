@@ -26,6 +26,10 @@ public interface ReporteSFService {
   
   public ServiceResponseResult consultarReporteGenerados(String params);
   
+  public ServiceResponseResult consultarReporteFactibilidadCerrados(String params);
+  
+  public ServiceResponseResult consultarReporteFactibilidadCancelados(String params);
+  
   public ServiceResponseResult consultarReportePlanningAgendas(String params);
   
   public ServiceResponseResult consultarReportePlanningAddon(String params);
@@ -37,6 +41,8 @@ public interface ReporteSFService {
   public ServiceResponseResult consultarReporteCompletosSoporteEmpresarial(String params);
   
   public ServiceResponseResult consultarReporteBackLogProactivo(String params);
+  
+  public ServiceResponseResult consultarReporteIngresoProactivo(String params);
 
   
 }

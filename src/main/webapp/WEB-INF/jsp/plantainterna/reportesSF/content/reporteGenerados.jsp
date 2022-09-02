@@ -1,12 +1,7 @@
 <div class="container-fluid container-tab">
     <div class="container-filtros">
         <div class="row md-form" id="filtros_config">
-            <div class="col-md-2 columna-filtro-indRR">
-                <label class="label-filter">Geograf&iacute;a</label>
-                <input readonly placeholder="GEOGRAF&Iacute;A" type="text" id="cluster-generados"
-                    class="input-filtro form-control form-control-sm" ng-click="abrirModalGeografiaRep('generados')" />
-            </div>
-            <div class="col-md-2 columna-filtro-indR pl-0">
+            <div class="col-md-2 columna-filtro-indR">
                 <label class="label-filter">Tipo fecha</label>
                 <select class="input-filtro form-control form-control-sm" id="tipo_reporte_generados"
                     style="border: 1px solid #dbdbdb !important; background: white !important;" ng-model="reporte.generados" ng-change="changeCalendar(this, 'generados')">
@@ -41,10 +36,10 @@
                 <thead id="thead_reporteGenerados">
                     <tr>
                         <th data-idColumn="0" data-isNumber="true" class="orderColumnTable orderColumnAscTable">Cuenta </th>
-                        <th data-idColumn="1" data-isNumber="true" class="orderColumnTable orderColumnAscTable">Ticket </th>
-                        <th data-idColumn="2" data-isNumber="true" class="orderColumnTable orderColumnAscTable">OS </th>
-                        <th data-idColumn="3" data-isNumber="true" class="orderColumnTable orderColumnAscTable">Primer fecha </th>
-                        <th data-idColumn="4" data-isNumber="true" class="orderColumnTable orderColumnAscTable">Fecha agendada </th>
+                        <th data-idColumn="1" data-isNumber="true" class="orderColumnTable orderColumnAscTable">OS </th>
+                        <th data-idColumn="2" data-isNumber="true" class="orderColumnTable orderColumnAscTable">Ticket</th>
+                        <th data-idColumn="3" data-isNumber="true" class="orderColumnTable orderColumnAscTable">Primer fecha agendamiento </th>
+                        <th data-idColumn="4" data-isNumber="true" class="orderColumnTable orderColumnAscTable">Fecha agendamiento </th>
                         <th data-idColumn="5" data-isNumber="true" class="orderColumnTable orderColumnAscTable">TS completado </th>
                         <th data-idColumn="6" data-isNumber="true" class="orderColumnTable orderColumnAscTable">Fecha activaci&oacute;n </th>
                         <th data-idColumn="7" data-isNumber="true" class="orderColumnTable orderColumnAscTable">Estatus </th>
