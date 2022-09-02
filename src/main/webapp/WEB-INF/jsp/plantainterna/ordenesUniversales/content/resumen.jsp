@@ -176,7 +176,7 @@
     </div>
     <div class="col-6 contenido-cuenta">        
         <strong class="color_titulos_resumen">TEL&Eacute;FONO CONCTACTO:</strong>
-        <label class="resumen-detalle-agenda" ng-bind="informacionCliente.celular ? informacionCliente.celular : 'Sin informaci&oacute;n'"></label>
+        <label class="resumen-detalle-agenda" ng-bind="informacionCliente.telefonoContacto ? informacionCliente.telefonoContacto : 'Sin informaci&oacute;n'"></label>
     </div>
 </div>
 <br>

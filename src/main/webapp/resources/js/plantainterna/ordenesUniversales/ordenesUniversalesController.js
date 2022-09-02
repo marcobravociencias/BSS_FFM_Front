@@ -1252,27 +1252,27 @@ app.controller('ordenesUniversalesController', ['$scope', '$q', 'ordenesUniversa
         $scope.countDatosTesting+=1
         if($scope.countDatosTesting == 4){
             $scope.informacionCliente = {
-                "nombre": "Carlos ",
+                "nombre": "Hector ",
                 "apaterno": "Gomez",
-                "amaterno": "Torres",
-                "nombreContacto": "ORGEMP SA DE CV",
+                "amaterno": "oRDUNs",
                 "calle": "AVENIDA FLORES",
-                "numeroExt": "NA",
+                "numeroExt": "11",
                 "numeroInt": "12",
                 "codigoPostal": "926152",
                 "comentario": "comentario testing",
-                "estado": "CDMX",
-                "municipio": "ALVARO OBREGON",
+                "estado": "Morelos",
+                "municipio": "Emiliano Zapata",
                 "entreCalles": "GUERRERO Y DEL CRUCERO",
                 "referencias": "ENTRE ASP. 1 Y RED..",
-                "ext": "",
-                "telefono": "5592894501",
-                "celular": "5592894502",
-                "ciudad": "SAN JERONIMO",
-                "colonia": "SAN JERONIMO COL",
-                "correo": "totalplaytest@gmail.com",
-                "telefonoContacto": "5592894503",
-                "razonsocial": "Total play empresarial DE cv"
+                "ext": "52",
+                "telefono": "7773885320",
+                "celular": "7772804607",
+                "ciudad": "Emiliano zapata cd",
+                "colonia": "Prohogar",
+                "correo": "tets@gmail.com",
+                "nombreContacto": "Manuel sotelo",
+                "telefonoContacto": "7771526452",
+                "razonsocial": "FATMA"
             }
             $scope.countDatosTesting=0
         }
