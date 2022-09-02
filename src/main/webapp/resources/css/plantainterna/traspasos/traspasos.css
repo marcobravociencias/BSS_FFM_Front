@@ -1012,6 +1012,6 @@ i.icono-noseleccion {
     padding: 0.65em 3em;
 }
 
-..btn-transferir:hover, .btn-transferir:active{
-    background: var(--estandar-color);
+.btn-transferir:hover, .btn-transferir:active, .btn-transferir:focus{
+    background: var(--estandar-color) !important;
 }
