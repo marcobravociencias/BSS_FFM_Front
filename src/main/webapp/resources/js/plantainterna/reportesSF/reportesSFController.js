@@ -16,6 +16,7 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
     $scope.resultReporteVentasResidencial = null;
     $scope.resultReporteVentasEmpresarial = null;
     $scope.resultReporteVentasEmpresarialSA = null;
+    $scope.resultReporteIngresoProact = null;
     $scope.resultReporteSoportesComp = null;
     $scope.resultReporteIntalacionRes = null;
     $scope.resultReporteIntalacionEmp = null;
@@ -58,7 +59,8 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
         compleproact: 'dia',
         complecambdomic: 'dia',
         complesoportempr: 'dia',
-        backlogproact: 'dia'
+        backlogproact: 'dia',
+        ingresoproact: 'dia'
     };
     $scope.filtrosGeneral = {};
 
@@ -84,6 +86,8 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
     $scope.configPermisoAccionConsultaIngresosVentasEmp = false;
     $scope.configPermisoAccionDescargaIngresosVentasEmpSA = false;
     $scope.configPermisoAccionConsultaIngresosVentasEmpSA = false;
+    $scope.configPermisoAccionConsultaIngresosProactivo = false;
+    $scope.configPermisoAccionDescargaIngresosProactivo = false;
     $scope.configPermisoAccionConsultaCompletadoSoportes = false;
     $scope.configPermisoAccionDescargaCompletadoSoportes = false;
     $scope.configPermisoAccionConsultaCompletadoRes = false;
@@ -441,6 +445,18 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
             "language": idioma_espanol_not_font,
             "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
         });
+
+        let reporteIngresoProactivoTable = $('#reporteIngresoProactivoTable').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": false,
+            "pageLength": 10,
+            "info": true,
+            "autoWidth": true,
+            "language": idioma_espanol_not_font,
+            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+        });
         
         $('.drop-down-filters').on("change.bs.dropdown", function (e) {
             $scope.setTextFiltro();
@@ -715,6 +731,13 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                     swal.showLoading();
                 }
                 break;
+            case 'ingresoproact':
+                if ($scope.resultReporteIngresoProact == null) {
+                    $scope.loadDate('ingresoproact');
+                    swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                    swal.showLoading();
+                }
+                break;
         }
         
         if (geografiaReporte.length > 0) {
@@ -873,6 +896,11 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 case 'backlogproact':
                     if ($scope.resultReporteBackLogProact == null) {
                         $scope.consultarReporteBackLogProactivos();
+                    }
+                    break;
+                case 'ingresoproact':
+                    if ($scope.resultReporteIngresoProact == null) {
+                        $scope.consultarReporteIngresoProactivos();
                     }
                     break;
             }
@@ -1034,6 +1062,8 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                                 $scope.configPermisoAccionDescargaCompletadoSoporteEmpresarial = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaGenerados" })[0] != undefined);//PENDIENTE
                                 $scope.configPermisoAccionConsultaBackProactivo = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaGenerados" })[0] != undefined);//PENDIENTE
                                 $scope.configPermisoAccionDescargaBackProactivo = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaGenerados" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionConsultaIngresosProactivo = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaGenerados" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionDescargaIngresosProactivo = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaGenerados" })[0] != undefined);//PENDIENTE
 
                                 objectTempAccion = new GenericAccionRealizada("" + $scope.permisosConfigUser.id, 'TOP_RIGHT');
                                 objectTempAccion.inicializarBotonAccionesRecientes();
@@ -1046,7 +1076,8 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                                 }
 
                                 if ($scope.configPermisoAccionConsultaIngresoSoportes || $scope.configPermisoAccionConsultaIngresosVentasRes
-                                    || $scope.configPermisoAccionConsultaIngresosVentasEmp || $scope.configPermisoAccionConsultaIngresosVentasEmpSA) {
+                                    || $scope.configPermisoAccionConsultaIngresosVentasEmp || $scope.configPermisoAccionConsultaIngresosVentasEmpSA
+                                    || $scope.configPermisoAccionConsultaIngresosProactivo) {
                                     $scope.boxContentVisible.ingresos = true;
                                 }
 
@@ -1150,6 +1181,14 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                                     $scope.tipoReporte = 'ventasempsa';
                                 }
                             }
+
+                            if ($scope.configPermisoAccionConsultaIngresosProactivo) {
+                                if (firstNav === '') {
+                                    firstNav = 'reporteIngresoProact-tab';
+                                    $scope.tipoReporte = 'reporteIngresoProact';
+                                }
+                            }
+
                             if ($scope.configPermisoAccionConsultaCompletadoSoportes) {
                                 if (firstNav === '') {
                                     firstNav = 'reporteSoportesComp-tab';
@@ -2249,8 +2288,8 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                                     let row = [];
 
                                     row[0] = elemento.idCuentaBRM ? elemento.idCuentaBRM : 'Sin informaci&oacute;n';
-                                    row[1] = elemento.caseNumber ? elemento.caseNumber : 'Sin informaci&oacute;n';
-                                    row[2] = elemento.folio ? elemento.folio : 'Sin informaci&oacute;n';
+                                    row[1] = elemento.folio ? elemento.folio : 'Sin informaci&oacute;n';
+                                    row[2] = elemento.caseNumber ? elemento.caseNumber : 'Sin informaci&oacute;n';
                                     row[3] = elemento.idOtGIM ? elemento.idOtGIM : 'Sin informaci&oacute;n';
                                     row[4] = elemento.estatusOS ? elemento.estatusOS : 'Sin informaci&oacute;n';
                                     row[5] = elemento.estado ? elemento.estado : 'Sin informaci&oacute;n';
@@ -2335,10 +2374,10 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 fechaFinal: fechas.fechaFin,
                 sheet: "Reporte backlog proactivo",
                 tipoExcel: 'reportesf-backlogproact-pi',
-                headers: ["CUENTA", "TICKET", "FOLIO", "ID OT GIM", "ESTATUS", "ESTADO", "TIPO", "SUBTIPO","PLAZA","ZONA", "PROPIETARIO TICKET", "TURNO AGENDAMIENTO", "CLUSTER INSTALACION", "COLONIA",
+                headers: ["CUENTA", "OS", "TICKET", "ID OT GIM", "ESTATUS", "ESTADO", "TIPO", "SUBTIPO","PLAZA","ZONA", "PROPIETARIO TICKET", "TURNO AGENDAMIENTO", "CLUSTER INSTALACION", "COLONIA",
                 "FECHA/HORA APERTURA", "PRIMER FECHA AGENDAMIENTO", "FECHA AGENDAMIENTO", "FECHA ACTIVACION", "REGION INSTALACION", "FUNCION PROPIETARIO", "GRUPO CODIFICACION",
                 "NIVEL 1", "NIVEL 2", "NIVEL 3", "REPETIDO", "DISTRITO SITIO", "CLUSTER COMERCIAL", "PLAZA SITIO"],
-                valores: ["idCuentaBRM", "caseNumber", "folio", "idOtGIM", "estatusOS", "estado", "tipoOrden", "subTipo", "plaza", "zona", "propietarioTicket", "turnoAg", "clusterInstalacion", "coloniaFacturacion",
+                valores: ["idCuentaBRM", "folio", "caseNumber", "idOtGIM", "estatusOS", "estado", "tipoOrden", "subTipo", "plaza", "zona", "propietarioTicket", "turnoAg", "clusterInstalacion", "coloniaFacturacion",
                 "createdDate", "primerFechaAgendamiento", "fechaAgendamiento", "fechaActivacion", "regionInstalacion", "empleadoPropietario", "grupo",
                 "nivel1", "nivel2", "nivel3", "repetido", "distritoSitio", "clusterComercial", "plazaSitio"]
             }
@@ -3087,6 +3126,132 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
         }
     }
 
+    $scope.consultarReporteIngresoProactivos = function() {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        if ($("#tipo_reporte_ingresoproact").val() == 'semana' && !$scope.weekDateObjectReport.ingresoproact) {
+            mensaje += '<li>Seleccione semana</li>';
+            isValid = false
+        }
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('ingresoproact');
+            let params = {
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin
+            }
+            if (!swal.isVisible()) {
+                swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                swal.showLoading();
+            }
+            reportesSFService.consultarReporteIngresoProactivo(params).then(function success(response) {
+                swal.close();
+                let arraRow = [];
+                if (response.data !== undefined) {
+                    if (response.data.respuesta) {
+                        if (response.data.result) {
+                            if (response.data.result.resultado) {
+                                $scope.resultReporteIngresoProact = response.data.result.resultado.length;
+                                $.each(response.data.result.resultado, function (i, elemento) {
+                                    let row = [];
+
+                                    row[0] = elemento.idCuentaBRM ? elemento.idCuentaBRM : 'Sin informaci&oacute;n';
+                                    row[1] = elemento.folio ? elemento.folio : 'Sin informaci&oacute;n';
+                                    row[2] = elemento.caseNumber ? elemento.caseNumber : 'Sin informaci&oacute;n';
+                                    row[3] = elemento.estatusOS ? elemento.estatusOS : 'Sin informaci&oacute;n';
+                                    row[4] = elemento.estado ? elemento.estado : 'Sin informaci&oacute;n';
+                                    row[5] = elemento.primerFechaAgendamiento ? elemento.primerFechaAgendamiento : 'Sin informaci&oacute;n';
+                                    row[6] = elemento.fechaAgendamiento ? elemento.fechaAgendamiento : 'Sin informaci&oacute;n';
+                                    row[7] = elemento.fechaActivacion ? elemento.fechaActivacion : 'Sin informaci&oacute;n';
+                                    row[8] = elemento.createdDate ? elemento.createdDate : 'Sin informaci&oacute;n';
+                                    row[9] = elemento.closedDate ? elemento.closedDate : 'Sin informaci&oacute;n';
+                                    row[10] = elemento.grupo ? elemento.grupo : 'Sin informaci&oacute;n';
+                                    row[11] = elemento.nivel1 ? elemento.nivel1 : 'Sin informaci&oacute;n';
+                                    row[12] = elemento.nivel2 ? elemento.nivel2 : 'Sin informaci&oacute;n';
+                                    row[13] = elemento.nivel3 ? elemento.nivel3 : 'Sin informaci&oacute;n';
+                                    row[14] = elemento.clusterInstalacion ? elemento.clusterInstalacion : 'Sin informaci&oacute;n';
+                                    row[15] = elemento.regionInstalacion ? elemento.regionInstalacion : 'Sin informaci&oacute;n';
+                                    row[16] = elemento.plaza ? elemento.plaza : 'Sin informaci&oacute;n';
+                                    row[17] = elemento.repetido == "true" ? '<input type="checkbox" checked disabled>' : '<input type="checkbox" disabled>';
+                                    row[18] = elemento.distritoSitio ? elemento.distritoSitio : 'Sin informaci&oacute;n';
+                                    row[19] = elemento.subTipo ? elemento.subTipo : 'Sin informaci&oacute;n';
+                                    row[20] = elemento.clusterComercial ? elemento.clusterComercial : 'Sin informaci&oacute;n';
+                                    row[21] = elemento.plazaSitio ? elemento.plazaSitio : 'Sin informaci&oacute;n';
+                                    row[22] = elemento.plazaOperacion ? elemento.plazaOperacion : 'Sin informaci&oacute;n';
+                                    
+                                    arraRow.push(row);
+                                })
+
+                            } else {
+                                toastr.info('No se encontraron datos');
+                            }
+                        } else {
+                            toastr.warning('No se encontraron datos');
+                        }
+                    } else {
+                        toastr.warning(response.data.resultDescripcion);
+                    }
+                } else {
+                    toastr.error('Ha ocurrido un error al consultar el reporte');
+                }
+
+                reporteIngresoProactivoTable = $('#reporteIngresoProactivoTable').DataTable({
+                    "paging": true,
+                    "lengthChange": false,
+                    "ordering": true,
+                    "pageLength": 10,
+                    "bDestroy": true,
+                    "info": true,
+                    "scrollX": false,
+                    "data": arraRow,
+                    "autoWidth": false,
+                    "language": idioma_espanol_not_font,
+                    "aoColumnDefs": [
+                        { "aTargets": [11], "bSortable": false }
+                    ]
+                });
+                swal.close();
+            })
+        }
+    }
+
+    $scope.descargarReporteIngresoProactivos = function() {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        if ($("#tipo_reporte_ingresoproact").val() == 'semana' && !$scope.weekDateObjectReport.ingresoproact) {
+            mensaje += '<li>Seleccione semana</li>';
+            isValid = false
+        }
+
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('ingresoproact');
+            let params = {
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin,
+                sheet: "Reporte ingresos proactivos",
+                tipoExcel: 'reportesf-ingresoproact-pi',
+                headers: ["CUENTA", "OS", "TICKET", "ESTATUS", "ESTADO", "PRIMER FECHA AGENDAMIENTO", "FECHA AGENDAMIENTO", "FECHA ACTIVACION","FECHA/HORA APERTURA","FECHA/HORA CIERRE", "GRUPO CODIFICACION", "NIVEL 1", "NIVEL 2", "NIVEL 3",
+                "CLUSTER INSTALACION", "REGION INSTALACION", "PLAZA", "REPETIDO", "DISTRITO SITIO", "SUBTIPO", "CLUSTER COMERCIAL", "PLAZA SITIO", "PLAZA OPERACION"],
+                valores: ["idCuentaBRM", "folio", "caseNumber", "estatusOS", "estado", "primerFechaAgendamiento", "fechaAgendamiento", "fechaActivacion", "createdDate", "closedDate", "grupo", "nivel1", "nivel2", "nivel3",
+                "clusterInstalacion", "regionInstalacion", "plaza", "repetido", "distritoSitio", "subTipo", "clusterComercial", "plazaSitio", "plazaOperacion"]
+            }
+            $scope.downloadReport(params, 'reporteIngresosProactivos', 'ingresoproact');
+        }
+    }
+
     $scope.consultarReporteSoportesCompletado = function () {
         let mensaje = '<ul>';
         let isValid = true;
@@ -3577,8 +3742,8 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                                 $.each(response.data.result.resultado, function (i, elemento) {
                                     let row = [];
 
-                                    row[0] = elemento.folio ? elemento.folio : 'Sin informaci&oacute;n';
-                                    row[1] = elemento.idCuentaBRM ? elemento.idCuentaBRM : 'Sin informaci&oacute;n';
+                                    row[0] = elemento.idCuentaBRM ? elemento.idCuentaBRM : 'Sin informaci&oacute;n';
+                                    row[1] = elemento.folio ? elemento.folio : 'Sin informaci&oacute;n';
                                     row[2] = elemento.idOtGIM ? elemento.idOtGIM : 'Sin informaci&oacute;n';
                                     row[3] = elemento.estatusOT ? elemento.estatusOT : 'Sin informaci&oacute;n';
                                     row[4] = elemento.estatus ? elemento.estatus : 'Sin informaci&oacute;n';
@@ -3648,10 +3813,10 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 fechaFinal: fechas.fechaFin,
                 sheet: "Reporte completados proactivos",
                 tipoExcel: 'reportesf-compleproact-pi',
-                headers: ["OS", "NUMERO CUENTA", "ID OT GIM", "ESTATUS OT", "ESTATUS", "CLUSTER", "DISTRITO SITIO", "REGION","CLUSTER COMERCIAL","PLAZA SITIO", "TS COMPLETADO", "PLAZA OPERACION"],
-                valores: ["folio", "idCuentaBRM", "idOtGIM", "estatusOT", "estatus", "cluster", "distritoSitio", "region", "clusterComercial", "plazaSitio", "tscompletado", "plazaOperacion"]
+                headers: ["CUENTA", "OS", "ID OT GIM", "ESTATUS OT", "ESTATUS", "CLUSTER", "DISTRITO SITIO", "REGION","CLUSTER COMERCIAL","PLAZA SITIO", "TS COMPLETADO", "PLAZA OPERACION"],
+                valores: ["idCuentaBRM", "folio", "idOtGIM", "estatusOT", "estatus", "cluster", "distritoSitio", "region", "clusterComercial", "plazaSitio", "tscompletado", "plazaOperacion"]
             }
-            $scope.downloadReport(params, 'reporteCompletadosProactivo', 'compleproact');
+            $scope.downloadReport(params, 'reporteCompletadosProactivos', 'compleproact');
         }
     }
     
@@ -3690,8 +3855,8 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                                 $.each(response.data.result.resultado, function (i, elemento) {
                                     let row = [];
                                     row[0] = elemento.idCuentaBRM ? elemento.idCuentaBRM : 'Sin informaci&oacute;n';
-                                    row[1] = elemento.caseNumber ? elemento.caseNumber : 'Sin informaci&oacute;n';
-                                    row[2] = elemento.folio ? elemento.folio : 'Sin informaci&oacute;n';
+                                    row[1] = elemento.folio ? elemento.folio : 'Sin informaci&oacute;n'
+                                    row[2] = elemento.caseNumber ? elemento.caseNumber : 'Sin informaci&oacute;n';
                                     row[3] = elemento.primerFechaAgendamiento ? elemento.primerFechaAgendamiento : 'Sin informaci&oacute;n';
                                     row[4] = elemento.fechaAgendada ? elemento.fechaAgendada : 'Sin informaci&oacute;n';
                                     row[5] = elemento.tscompletado ? elemento.tscompletado : 'Sin informaci&oacute;n';
@@ -3771,10 +3936,10 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 fechaFinal: fechas.fechaFin,
                 sheet: "Reporte completados cambio domicilio",
                 tipoExcel: 'reportesf-complecambdomic-pi',
-                headers: ["NUMERO CUENTA", "NUMERO TICKET", "FOLIO", "PRIMER FECHA AGENDAMIENTO", "FECHA AGENDAMIENTO", "TS COMPLETADO", "CUENTA FACTURA: FECHA ACTIVACION", "ESTATUS", "ESTADO", "GRUPO CODIFICACION", 
-                "NIVEL 1", "NIVEL 2", "NIVEL 3", "CUENTA FACTURA: CLUSTER INSTALACION", "CUENTA FACTURA: REGION INSTALACION", "CUENTA FACTURA: PLAZA", "REPETIDO", "DISTRITO SITIO", "FECHA/HORA APERTURA", "FECHA/HORA CIERRE",
-                "SUBTIPO", "PLAZA SITIO", "OS: PLAZA OPERACION"],
-                valores: ["idCuentaBRM", "caseNumber", "folio", "primerFechaAgendamiento", "fechaAgendada", "tscompletado", "fechaActivacion", "estatus", "estado", "grupoCodificacion", 
+                headers: ["CUENTA", "OS", "TICKET", "PRIMER FECHA AGENDAMIENTO", "FECHA AGENDAMIENTO", "TS COMPLETADO", "FECHA ACTIVACION", "ESTATUS", "ESTADO", "GRUPO CODIFICACION", 
+                "NIVEL 1", "NIVEL 2", "NIVEL 3", "CLUSTER INSTALACION", "REGION INSTALACION", "PLAZA", "REPETIDO", "DISTRITO SITIO", "FECHA/HORA APERTURA", "FECHA/HORA CIERRE",
+                "SUBTIPO", "PLAZA SITIO", "PLAZA OPERACION"],
+                valores: ["idCuentaBRM", "folio", "caseNumber", "primerFechaAgendamiento", "fechaAgendada", "tscompletado", "fechaActivacion", "estatus", "estado", "grupoCodificacion", 
                 "nivel1", "nivel2", "nivel3", "clusterInstalacion", "regionInstalacion", "plaza", "repetido60", "distritoSitio", "createdDate", "closedDate",
                 "subTipo", "plazaSitio", "plazaOperacion"]
             }
@@ -3818,8 +3983,8 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                                     let row = [];
 
                                     row[0] = elemento.numeroCuenta ? elemento.numeroCuenta : 'Sin informaci&oacute;n';
-                                    row[1] = elemento.caseNumber ? elemento.caseNumber : 'Sin informaci&oacute;n';
-                                    row[2] = elemento.folio ? elemento.folio : 'Sin informaci&oacute;n';
+                                    row[1] = elemento.folio ? elemento.folio : 'Sin informaci&oacute;n';
+                                    row[2] = elemento.caseNumber ? elemento.caseNumber : 'Sin informaci&oacute;n';
                                     row[3] = elemento.idOtGIM ? elemento.idOtGIM : 'Sin informaci&oacute;n';
                                     row[4] = elemento.estado ? elemento.estado : 'Sin informaci&oacute;n';
                                     row[5] = elemento.estatus ? elemento.estatus : 'Sin informaci&oacute;n';
@@ -3902,9 +4067,9 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 fechaFinal: fechas.fechaFin,
                 sheet: "Reporte completados soporte empresarial",
                 tipoExcel: 'reportesf-complesoportempr-pi',
-                headers: ["CUENTA", "TICKET", "FOLIO", "ID OT GIM", "ESTADO", "ESTATUS", "FECHA/HORA APERTURA", "FECHA/HORA CIERRE", "PRIMER FECHA AGENDAMIENTO", "FECHA AGENDAMIENTO", "TURNO AGENDAMIENTO",
+                headers: ["CUENTA", "OS", "TICKET", "ID OT GIM", "ESTADO", "ESTATUS", "FECHA/HORA APERTURA", "FECHA/HORA CIERRE", "PRIMER FECHA AGENDAMIENTO", "FECHA AGENDAMIENTO", "TURNO AGENDAMIENTO",
                 "TS COMPLETADO", "TS CANCELADO", "FECHA ULTIMA MODIFICACION", "CLUSTER", "DISTRITO", "CALLE", "NIVEL 1", "NIVEL 2", "NIVEL 3", "LATITUD", "LONGITUD", "TIPO ORDEN", "SUBTIPO", "NUEVO SEGMENTO", "REPETIDA"],
-                valores: ["numeroCuenta", "caseNumber", "folio", "idOtGIM", "estado", "estatus", "createdDate", "closedDate", "primerFechaAgendamiento", "fechaAgendada", "turnoAg",
+                valores: ["numeroCuenta", "folio", "caseNumber", "idOtGIM", "estado", "estatus", "createdDate", "closedDate", "primerFechaAgendamiento", "fechaAgendada", "turnoAg",
                 "tSCompletado", "tSCancelado", "lastModifiedDate", "cluster", "distrito", "calle", "nivel1", "nivel2", "nivel3", "latitud", "longitud", "tipoOrden", "subTipo", "nuevoSegmento", "repetido60"]
             }
             $scope.downloadReport(params, 'reporteCompletadosSoporteEmpresarial', 'complesoportempr');
@@ -4375,12 +4540,12 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                                 $.each(response.data.result.resultado, function (i, elemento) {
                                     let row = [];
 
-                                    row[0] = elemento.folio ? elemento.folio : 'Sin informaci&oacute;n';
-                                    row[1] = elemento.estatusOT ? elemento.estatusOT : 'Sin informaci&oacute;n';
-                                    row[2] = elemento.region ? elemento.region : 'Sin informaci&oacute;n';
-                                    row[3] = elemento.distritoSitio ? elemento.distritoSitio : 'Sin informaci&oacute;n';
-                                    row[4] = elemento.cluster ? elemento.cluster : 'Sin informaci&oacute;n';
-                                    row[5] = elemento.idCuentaBRM ? elemento.idCuentaBRM : 'Sin informaci&oacute;n';
+                                    row[0] = elemento.idCuentaBRM ? elemento.idCuentaBRM : 'Sin informaci&oacute;n';
+                                    row[1] = elemento.folio ? elemento.folio : 'Sin informaci&oacute;n';
+                                    row[2] = elemento.estatusOT ? elemento.estatusOT : 'Sin informaci&oacute;n';
+                                    row[3] = elemento.region ? elemento.region : 'Sin informaci&oacute;n';
+                                    row[4] = elemento.distritoSitio ? elemento.distritoSitio : 'Sin informaci&oacute;n';
+                                    row[5] = elemento.cluster ? elemento.cluster : 'Sin informaci&oacute;n';
                                     row[6] = elemento.estatus ? elemento.estatus : 'Sin informaci&oacute;n';
                                     row[7] = elemento.plazaSitio ? elemento.plazaSitio : 'Sin informaci&oacute;n';
                                     row[8] = elemento.plazaOperacion ? elemento.plazaOperacion : 'Sin informaci&oacute;n';
@@ -4446,8 +4611,8 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 fechaFinal: fechas.fechaFin,
                 sheet: "Reporte planning agenda",
                 tipoExcel: 'reportesf-planningagenda-pi',
-                headers: ["OS", "ESTATUS OT", "REGION", "DISTRITO", "CLUSTER", "CUENTA BRM", "ESTATUS", "PLAZA SITIO","PLAZA OPERACION","FECHA CREACION", "FECHA HORA CREACION", "FECHA AGENDADA"],
-                valores: ["folio", "estatusOT", "region", "distritoSitio", "cluster", "idCuentaBRM", "estatus", "plazaSitio", "plazaOperacion", "fechaCreacion", "fechaHoraCreacion", "fechaAgendada"]
+                headers: ["CUENTA", "OS", "ESTATUS OT", "REGION", "DISTRITO", "CLUSTER", "ESTATUS", "PLAZA SITIO","PLAZA OPERACION","FECHA CREACION", "FECHA HORA CREACION", "FECHA AGENDADA"],
+                valores: ["idCuentaBRM", "folio", "estatusOT", "region", "distritoSitio", "cluster", "estatus", "plazaSitio", "plazaOperacion", "fechaCreacion", "fechaHoraCreacion", "fechaAgendada"]
             }
             $scope.downloadReport(params, 'reportePlanningAgenda', 'planningagenda');
         }
@@ -4487,8 +4652,8 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                                 $scope.resultReportePlanningAddon = response.data.result.resultado.length;
                                 $.each(response.data.result.resultado, function (i, elemento) {
                                     let row = [];
-                                    row[0] = elemento.folio ? elemento.folio : 'Sin informaci&oacute;n';
-                                    row[1] = elemento.idCuentaBRM ? elemento.idCuentaBRM : 'Sin informaci&oacute;n';
+                                    row[0] = elemento.idCuentaBRM ? elemento.idCuentaBRM : 'Sin informaci&oacute;n';
+                                    row[1] = elemento.folio ? elemento.folio : 'Sin informaci&oacute;n';
                                     row[2] = elemento.caseNumber ? elemento.caseNumber : 'Sin informaci&oacute;n';
                                     row[3] = elemento.idOtGIM ? elemento.idOtGIM : 'Sin informaci&oacute;n';
                                     row[4] = elemento.estado ? elemento.estado : 'Sin informaci&oacute;n';
@@ -4569,9 +4734,9 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 fechaFinal: fechas.fechaFin,
                 sheet: "Reporte planning agenda",
                 tipoExcel: 'reportesf-planningaddon-pi',
-                headers: ["OS", "CUENTA BRM", "NUMERO CASO", "OT GIM", "ESTATUS", "ESTADO", "TURNO", "REGION INSTALACION","CLUSTER INSTALACION","PLAZA", "ZONA", "COLONIA", "DISTRITO SITIO", "PLAZA ORDEN", "PLAZA OPERACION", 
+                headers: ["CUENTA", "OS", "TICKET", "OT GIM", "ESTATUS", "ESTADO", "TURNO", "REGION INSTALACION","CLUSTER INSTALACION","PLAZA", "ZONA", "COLONIA", "DISTRITO SITIO", "PLAZA ORDEN", "PLAZA OPERACION", 
                 "FECHA CREACION", "FECHA PRIMER AGENDAMIENTO", "FECHA AGENDADA", "FECHA ACTIVACION", "FUNCION PROPIETARIO", "GRUPO CODIFICACION", "NIVEL 1", "NIVEL 2", "NIVEL 3", "EMPLEADO PROPIETARIO"],
-                valores: ["folio", "idCuentaBRM", "caseNumber", "idOtGIM", "estado", "estatus", "turnoAg", "regionInstalacion", "clusterInstalacion", "plaza", "zona", "colonia", "distritoSitio", "plazaOrden", "plazaOperacion",
+                valores: ["idCuentaBRM", "folio", "caseNumber", "idOtGIM", "estado", "estatus", "turnoAg", "regionInstalacion", "clusterInstalacion", "plaza", "zona", "colonia", "distritoSitio", "plazaOrden", "plazaOperacion",
                 "createdDate", "primerFechaAgendamiento", "fechaAgendada", "fechaActivacion", "funcionPropietario", "grupoCodificacion", "nivel1", "nivel2", "nivel3", "empleadoPropietario"]
             }
             $scope.downloadReport(params, 'reportePlanningAddon', 'planningaddon');

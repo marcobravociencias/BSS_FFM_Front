@@ -94,4 +94,10 @@ public class ConstReporteSF implements Serializable{
   @Value("${exportaReporteBacklogProactivos}")
   private String exportaReporteBacklogProactivos;
   
+  @Value("${consultaReporteIngresoProactivo}")
+  private String consultaReporteIngresoProactivo;
+  
+  @Value("${exportaReporteIngresoProactivo}")
+  private String exportaReporteIngresoProactivo;
+  
 }

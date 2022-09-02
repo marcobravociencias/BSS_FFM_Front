@@ -37,6 +37,8 @@ public interface ReporteSFService {
   public ServiceResponseResult consultarReporteCompletosSoporteEmpresarial(String params);
   
   public ServiceResponseResult consultarReporteBackLogProactivo(String params);
+  
+  public ServiceResponseResult consultarReporteIngresoProactivo(String params);
 
   
 }

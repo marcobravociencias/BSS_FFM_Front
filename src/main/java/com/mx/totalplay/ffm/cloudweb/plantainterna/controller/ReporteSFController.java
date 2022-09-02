@@ -204,4 +204,14 @@ public class ReporteSFController {
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 	
+	@PostMapping("/consultarReporteIngresoProactivo")
+	public ResponseEntity<?> consultarReporteIngresoProactivo (@RequestBody String params) {
+		logger.info("#### Metodo consultarReporteIngresoProactivo: " + params);
+		ServiceResponseResult response =reporteSFService.consultarReporteIngresoProactivo(params);
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+	
 }

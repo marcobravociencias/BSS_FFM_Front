@@ -319,6 +319,22 @@ public class ImplReporteSFService implements ReporteSFService {
 		return response;
 	}
 
+	@Override
+	public ServiceResponseResult consultarReporteIngresoProactivo(String params) {
+		logger.info("ImplReporteSFService.class [metodo = consultarReporteIngresoProactivo() ]\n" + params);
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		String tokenAcces = principalDetail.getAccess_token();
+		String urlRequest = principalDetail.getDireccionAmbiente()
+				.concat(constReporteSF.getConsultaReporteIngresoProactivo());
+		logger.info("URL ##+" + urlRequest);
+
+		ServiceResponseResult response = restCaller.callPostBearerTokenRequest(jsonObject.toString(), urlRequest,
+				ServiceResponseResult.class, tokenAcces);
+		return response;
+	}
+
 	
 	
 }

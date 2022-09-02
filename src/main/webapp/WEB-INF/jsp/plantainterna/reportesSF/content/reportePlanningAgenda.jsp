@@ -35,12 +35,12 @@
             <table id="reportePlanningAgendaTable" class="display table  table-reportesf" cellspacing="0" width="100%">
                 <thead id="thead_reportePlanningAgenda">
                     <tr>
+                        <th data-idColumn="5" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Cuenta</th>
                         <th data-idColumn="0" data-isNumber="true" class="orderColumnTable orderColumnAscTable">OS</th>
                         <th data-idColumn="1" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Estatus OT</th>
                         <th data-idColumn="2" data-isNumber="true" class="orderColumnTable orderColumnAscTable">Regi&oacute;n</th>
                         <th data-idColumn="3" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Distrito</th>
                         <th data-idColumn="4" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Cluster</th>
-                        <th data-idColumn="5" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Cuenta BRM</th>
                         <th data-idColumn="6" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Estatus</th>
                         <th data-idColumn="7" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Plaza sitio</th>
                         <th data-idColumn="8" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Plaza operaci&oacute;n</th>

@@ -35,9 +35,9 @@
             <table id="reporteCompletadoProactivoTable" class="display table  table-reportesf" cellspacing="0" width="100%">
                 <thead id="thead_reporteCompletadoProactivo">
                     <tr>
-                        <th data-idColumn="0" data-isNumber="true" class="orderColumnTable orderColumnAscTable">OS</th>
-                        <th data-idColumn="1" data-isNumber="false" class="orderColumnTable orderColumnAscTable">N&uacute;mero cuenta</th>
-                        <th data-idColumn="2" data-isNumber="true" class="orderColumnTable orderColumnAscTable">ID OT GIM</th>
+                        <th data-idColumn="0" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Cuenta</th>
+                        <th data-idColumn="1" data-isNumber="false" class="orderColumnTable orderColumnAscTable">OS</th>
+                        <th data-idColumn="2" data-isNumber="false" class="orderColumnTable orderColumnAscTable">ID OT GIM</th>
                         <th data-idColumn="3" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Estatus OT</th>
                         <th data-idColumn="4" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Estatus</th>
                         <th data-idColumn="5" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Cluster</th>

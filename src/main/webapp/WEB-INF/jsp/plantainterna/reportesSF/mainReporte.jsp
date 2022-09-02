@@ -104,7 +104,7 @@
                             <a id="reporteBackLogProact-tab" data-toggle="tab"
                                 ng-click="cambiaReporte('backlogproact',true,'reporteBackLogProact')" href="reporteBackLogProact" role="tab"
                                 aria-controls="reporteBackLogProact" aria-selected="false">
-                                <i class="icon-menu-left fas fa-folder-plus"></i>&nbsp;<span
+                                <i class="icon-menu-left fas fa-gears"></i>&nbsp;<span
                                     class="titulo-menu">Proactivos</span>
                             </a>
                         </li>
@@ -140,6 +140,14 @@
                                 aria-selected="false"><i class="icon-menu-left fas fa-book-open"></i>&nbsp;<span
                                     class="titulo-menu">Ventas
                                     empresarial sin agenda</span></a>
+                        </li>
+                        <li class="nav-item opcion-menu" ng-if="configPermisoAccionConsultaIngresosProactivo">
+                            <a id="reporteIngresoProact-tab" data-toggle="tab"
+                                ng-click="cambiaReporte('ingresoproact',true,'reporteIngresoProact')" href="reporteIngresoProact" role="tab"
+                                aria-controls="reporteIngresoProact" aria-selected="false">
+                                <i class="icon-menu-left fas fa-gears"></i>&nbsp;<span
+                                    class="titulo-menu">Proactivos</span>
+                            </a>
                         </li>
                         <hr style="margin: 0.3em 1em;" ng-if="boxContentVisible.completados">
                         <span class="title-nav-header titulo-menu" style="position: initial;" ng-if="boxContentVisible.completados"><i
@@ -184,7 +192,7 @@
                             <a id="reporteCompleSoportEmpr-tab" data-toggle="tab"
                                 ng-click="cambiaReporte('complesoportempr', true,'reporteCompleSoportEmpr')"
                                 href="reporteCompleSoportEmpr" role="tab" aria-controls="reporteCompleSoportEmpr"
-                                aria-selected="false"><i class="icon-menu-left fas fa-home"></i>&nbsp;<span
+                                aria-selected="false"><i class="icon-menu-left fas fa-city"></i>&nbsp;<span
                                     class="titulo-menu">Soporte Empresarial</span></a>
                         </li>
 
@@ -291,6 +299,12 @@
                                 <h5 id="texto_header_reportes" class="text-center">Reporte ventas empresarial sin agenda
                                 </h5>
                                 <jsp:include page="./content/reporteVentasEmpresarialSA.jsp"></jsp:include>
+                            </div>
+                            <div class="tab-pane fade" id="reporteIngresoProact" role="tabpanel"
+                                aria-labelledby="reporteIngresoProact-tab">
+                                <h5 id="texto_header_reportes" class="text-center">Reporte ingresos proactivos
+                                </h5>
+                                <jsp:include page="./content/reporteIngresoProactivo.jsp"></jsp:include>
                             </div>
                             <div class="tab-pane fade" id="reporteSoportesComp" role="tabpanel"
                                 aria-labelledby="reporteSoportesComp-tab">
