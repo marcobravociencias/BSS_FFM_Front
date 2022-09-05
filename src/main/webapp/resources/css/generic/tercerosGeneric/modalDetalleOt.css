@@ -345,9 +345,6 @@
 
 /*NAVBAR*/
 
-.containerInformacionDetalleOt {
-	background: #fafafa;
-}
 
 #v-tabs-tab-detalle-ot .nav-link {
 	padding: 27px 28px 26px 23px;
@@ -358,13 +355,18 @@
 #v-tabs-tab-detalle-ot .nav-link.active {
 	border: none;
 	font-weight: bold;
-	color: var(--estandar-color);
+	color: #fff !important;
+	background: var(--estandar-color) !important;
+	margin-left: -0.5em;
+	margin-right: -0.5em;
+	box-shadow: 5px 10px 10px #878ee04d;
 }
 
 #v-tabs-tab-detalle-ot .nav-link:hover {
 	border: none;
 	font-weight: bold;
 	color: var(--estandar-color);
+	background: none;
 }
 
 .content-nav-menu {
@@ -381,17 +383,19 @@
 .tabs-acciones-modal .nav-link {
 	padding: 0.5em;
 	font-weight: 700;
+	border-bottom: 1px solid #ccc !important;
 }
 
 .tabs-acciones-modal .nav-link.active {
-	border-bottom: 1px solid var(--estandar-color);
+	border-bottom: 1px solid var(--estandar-color) !important;
 	font-weight: bold;
 	color: var(--estandar-color);
-	background: #fafafa;
+	background: transparent !important;
 }
 
 .tabs-acciones-modal .nav-link:hover {
-	
+	background-color: transparent !important;
+	color: var(--estandar-color);
 }
 
 /*NAVBAR*/

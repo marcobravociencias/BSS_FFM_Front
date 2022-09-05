@@ -200,19 +200,15 @@
 						<h5 id="tituloInformacionOt"><strong>SIN SELECCI&Oacute;N DE OT</strong></h5>
 						<hr>
 						</hr>
-						<p class="parrafoSinInformacionOt">Selecciona una OT y podr&aacute;s visualizar las siguientes
-							opciones:</p>
+						<p class="parrafoSinInformacionOt">Selecciona una OT y podr&aacute;s visualizar la siguiente
+							informaci&oacute;n:</p>
 						<div id="contenedorParrafosSinInformacionOt">
-							<p class="parrafoSinInformacionOt">Informaci&oacute;n de la OT</p>
+							<p class="parrafoSinInformacionOt">Detalle de la OT</p>
 							<p class="parrafoSinInformacionOt">Detalles de la Instalaci&oacute;n</p>
 							<p class="parrafoSinInformacionOt">Hist&oacute;rico</p>
 							<p class="parrafoSinInformacionOt">Comentarios</p>
 							<p class="parrafoSinInformacionOt">Evidencia</p>
-							<p class="parrafoSinInformacionOt">Asignaci&oacute;n de equipos</p>
 						</div>
-						<p class="parrafoSinInformacionOtFooter">* Si la OT a&uacute;n no se encuentra <FONT
-								COLOR="red">terminada</FONT> solo podr&aacute;s visualizar la Informaci&oacute;n de la
-							OT</p>
 					</div>
 					<div ng-show="mostrarNavAccionesDetalleOtPendiente"
 						class="col-md-12 containerInformacionDetalleOt p-0">

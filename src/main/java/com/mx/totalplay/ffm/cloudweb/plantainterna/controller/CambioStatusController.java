@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/req")
-public class CambioStatusController {
+public class CambioStatusController { 
     private final Logger logger = LogManager.getLogger(CambioStatusController.class.getName());
     private Gson gson = new Gson();
     private final CambioStatusService cambioStatusService;

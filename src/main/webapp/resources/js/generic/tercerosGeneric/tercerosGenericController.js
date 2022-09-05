@@ -16,7 +16,6 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 	$scope.historialOrdenTrabajo = [];
 	$scope.elementoPlazaComercial = {};
 	$scope.elementoRescate = {};
-	$scope.listadoTecnicosGeneral = [];
 	$scope.detencionVistaModal = null;
 	$scope.listOrdenesPE = [];
 	$scope.listadoArrayOtsLocalizacion = [];
@@ -24,6 +23,10 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 	$scope.listadoIconosConfig = []
 	$scope.listadoDictamen = {};
 	$scope.objectDictamen = {};
+	$scope.accionConsultaOts = false;
+	$scope.accionCambioEstatusOt = false;
+	$scope.accionCambioDireccionOt = false;
+	$scope.accionActualizaDictamenOt = false;
 
 	var arrayColors = [
 		'#D32F2F',
@@ -85,7 +88,7 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 			let resultConf = results[3].data.result
 			if (resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves) {
 				let llavesResult = results[3].data.result.MODULO_ACCIONES_USUARIO.llaves;
-                let elementosMapa = angular.copy(results[3].data.result);
+				let elementosMapa = angular.copy(results[3].data.result);
 
 				$scope.nFiltroGeografia = 5//llavesResult.N_FILTRO_GEOGRAFIA
 				$scope.nFiltroIntervenciones = llavesResult.N_FILTRO_INTERVENCIONES
@@ -109,7 +112,13 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 			$("#idBody").removeAttr("style");
 
 			if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
-
+				$scope.accionConsultaOts = $scope.permisosConfigUser.permisos.find(e => { return e.clave === 'accionConsultaOts' });
+				$scope.accionCambioEstatusOt = $scope.permisosConfigUser.permisos.find(e => { return e.clave === 'accionCambioEstatusOt' });
+				$scope.accionCambioDireccionOt = $scope.permisosConfigUser.permisos.find(e => { return e.clave === 'accionCambioDireccionOt' });
+				$scope.accionActualizaDictamenOt = $scope.permisosConfigUser.permisos.find(e => { return e.clave === 'accionActualizaDictamenOt' });
+				
+				objectTempAccion = new GenericAccionRealizada("" + 25, 'TOP_RIGHT');
+				objectTempAccion.inicializarBotonAccionesRecientes();
 			}
 			$scope.estatusCambio = results[4].data.result;
 			if (results[4].data !== undefined) {
@@ -183,7 +192,7 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 								e.parent = e.padre == null ? 0 : e.padre;
 								e.text = e.nombre;
 								e.icon = "fa fa-globe";
-								e.state = { 
+								e.state = {
 									opened: false,
 									selected: true,
 								}
@@ -191,7 +200,6 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 							})
 							$('#jstree-proton-3').bind('loaded.jstree', function (e, data) {
 								$scope.consultarOTsTercerosGeneric();
-								$scope.consultarTecnicosDisponibiles();
 							}).jstree({
 								'plugins': ["wholerow", "checkbox", "search"],
 								'core': {
@@ -222,33 +230,6 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 			}
 
 		}).catch(err => handleError(err));
-	}
-
-	$scope.consultarTecnicosDisponibiles = function () {
-		$scope.listadoTecnicosGeneral = []
-		$scope.isCargaTecnicosDisponibles = false;
-		tercerosGenericService.consultarTecnicosDisponibiles($scope.dataWindow).then(function success(response) {
-			if (response.data !== undefined) {
-				if (response.data.respuesta) {
-					if (response.data.result) {
-						if (response.data.result.detalleTecnicos) {
-							$scope.listadoTecnicosGeneral = response.data.result.detalleTecnicos
-						} else {
-							toastr.info('No se encontraron operarios disponibles');
-
-						}
-					} else {
-						toastr.info('No se encontraron tecnicos ');
-					}
-				} else {
-					toastr.warning(response.data.resultDescripcion);
-				}
-			} else {
-				toastr.error('Ha ocurrido un error en la consulta de tecnicos');
-			}
-			$scope.isCargaTecnicosDisponibles = true;
-			$scope.validarLoadTecnicosOtsAsignadas()
-		}).catch(err => handleError(err))
 	}
 
 
@@ -312,13 +293,13 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 	}
 
 	$scope.cambiarPagTablaSpliters = function (falla, splitter) {
-    	$(".spliters" + falla).addClass("ocultarFilaTablaSplitersFallaDetalleDetencion");
-        $("#detencion" + falla + splitter).removeClass("ocultarFilaTablaSplitersFallaDetalleDetencion");
-        $(".btnPaginadorTablaSpliters" + falla).removeClass("btnPaginadorTablaSplitersActive");
-        $(".btnPaginadorTablaSpliters" + falla).addClass("btnPaginadorTablaSplitersNoActive");
-        $("#btnPaginador" + falla + splitter).removeClass("btnPaginadorTablaSplitersNoActive");
-        $("#btnPaginador" + falla + splitter).addClass("btnPaginadorTablaSplitersActive");
-    }
+		$(".spliters" + falla).addClass("ocultarFilaTablaSplitersFallaDetalleDetencion");
+		$("#detencion" + falla + splitter).removeClass("ocultarFilaTablaSplitersFallaDetalleDetencion");
+		$(".btnPaginadorTablaSpliters" + falla).removeClass("btnPaginadorTablaSplitersActive");
+		$(".btnPaginadorTablaSpliters" + falla).addClass("btnPaginadorTablaSplitersNoActive");
+		$("#btnPaginador" + falla + splitter).removeClass("btnPaginadorTablaSplitersNoActive");
+		$("#btnPaginador" + falla + splitter).addClass("btnPaginadorTablaSplitersActive");
+	}
 
 	$scope.obtenerElementosSeleccionadosFiltro = function (array, nivel) {
 		let arrayReturn = [];
@@ -669,19 +650,18 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 				$("#idotpendiente" + $scope.detalleOtPendienteSelected.idOrden).css("border-left", "2px solid  #3942d7");
 			}
 			if ($("#txtBuscadorOtsConsultaTabla").val().trim() !== '') {
-                setTimeout(function () {
-                    if (tablaOtsConsultaGeneral.page.info().recordsDisplay <= 0)
-                        $scope.consultarLocalizacionOtDespacho(text)
+				setTimeout(function () {
+					if (tablaOtsConsultaGeneral.page.info().recordsDisplay <= 0)
+						$scope.consultarLocalizacionOtDespacho(text)
 
-                }, 300);
-            }
+				}, 300);
+			}
 		}
 	}
 
 	consultarAccionesOtPendiente = function (ot) {
 		$(".card-style").css("border-left", "none");
 		$("#idotpendiente" + ot).css("border-left", "2px solid  #3942d7");
-		$scope.mostrarNavAccionesDetalleOtPendiente = true;
 		$scope.detencionVistaModal = true;
 		$scope.detalleOtPendienteSelected = $scope.listadoOts.find((e) => e.idOrden == ot)
 		$scope.listadoMotivosRescate = $scope.estatusCambio.filter(e => { return e.idPadre === 212 })
@@ -709,6 +689,7 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 		$scope.responseServicios = null;
 		$scope.detalleCotizacion = null
 		$scope.objectDictamen = {};
+		$("#search-input-place").val('');
 		$scope.detalleTecnicoOt = {};
 		$scope.infoDetalleOtPe = {}
 		swal({ text: 'Consultando detalle de la OT ...', allowOutsideClick: false });
@@ -728,6 +709,7 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 				if (results[0].data.respuesta) {
 					if (results[0].data.result) {
 						if (results[0].data.result.orden) {
+							$scope.mostrarNavAccionesDetalleOtPendiente = true;
 							$scope.infoOtDetalle = results[0].data.result.orden
 							/*
 							setTimeout(function () {
@@ -745,14 +727,19 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 
 						} else {
 							toastr.info(results[0].data.result.mensaje);
+							$scope.mostrarNavAccionesDetalleOtPendiente = false;
 						}
 					} else {
 						toastr.warning('No se encontraron datos');
+						$scope.mostrarNavAccionesDetalleOtPendiente = false;
 					}
 				} else {
 					toastr.warning(results[0].data.resultDescripcion);
+					$scope.mostrarNavAccionesDetalleOtPendiente = false;
+
 				}
 			} else {
+				$scope.mostrarNavAccionesDetalleOtPendiente = false;
 				toastr.error('Ha ocurrido un error en la consulta de los datos');
 			}
 			if (results[1].data !== undefined) {
@@ -1415,8 +1402,7 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 		swal({ text: 'Cambiando estatus de la OT ...', allowOutsideClick: false });
 		swal.showLoading();
 		let tituloAccion = "Actualizaci\u00F3n estatus orden";
-		let tecnicoTemp = $scope.listadoTecnicosGeneral.find((e) => e.idTecnico == params.idUsuarioTecnico);
-		let mensajeEnvio = tecnicoTemp ? 'Ha ocurrido un error al cambiar el estatus a "' + text + '" de la OT: ' + params.ot + ' para el t\u00E9cnico ' + tecnicoTemp.nombre + ' ' + tecnicoTemp.apellidoPaterno + ' ' + tecnicoTemp.apellidoMaterno : 'Ha ocurrido un error al cambiar el estatus a "' + text + '" de la OT: ' + params.ot;
+		let mensajeEnvio = 'Ha ocurrido un error al cambiar el estatus a "' + text + '" de la OT: ' + params.ot;
 
 		genericService.cambioStatusOts(params).then(result => {
 			$scope.procesandoAsignacion = false;
@@ -1424,18 +1410,18 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 
 			swal.close();
 			$scope.elementTerminar = {};
-			$scope.elementReagendaOT = {};
+			//$scope.elementReagendaOT = {};
 			$scope.elementoRescate = {};
 			$scope.elementoDesasigna = {};
 			if (result.data.respuesta) {
 
 				toastr.success(result.data.result.mensaje);
-				mensajeEnvio = tecnicoTemp ? 'Se actualiz\u00F3 el estatus a "' + text + '" de la OT: ' + params.ot + ' para el t\u00E9cnico ' + tecnicoTemp.nombre + ' ' + tecnicoTemp.apellidoPaterno + ' ' + tecnicoTemp.apellidoMaterno : 'Se actualizo el estatus a "' + text + '" de la OT: ' + params.ot;
-				//objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
+				mensajeEnvio = 'Se actualiz\u00F3 el estatus a "' + text + '" de la OT: ' + params.ot;
+				objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
 
 			} else {
 				toastr.warning(result.data.resultDescripcion);
-				//objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
+				objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
 			}
 		}).catch(err => handleError(err));
 	}
@@ -1541,19 +1527,19 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 								$scope.verMapaCambioDireccion($scope.infoOtDetalle.direccion.latitud, $scope.infoOtDetalle.direccion.longitud);
 								toastr.success('Direcci\u00F3n actualizada');
 								mensajeEnvio = 'Se cambio la direcci\u00F3n de la OT: ' + params.idOrdenTrabajo;
-								//objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
+								objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
 								$scope.regresarVistaCambioDireccion()
 							} else {
 								toastr.warning('No se cambio la direcci&oacute;n');
-								//objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
+								objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
 							}
 						} else {
 							toastr.warning(response.data.resultDescripcion);
-							//objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
+							objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
 						}
 					} else {
 						toastr.error('Ha ocurrido un error en el cambio de direcci&oacute;n');
-						//objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
+						objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
 					}
 				}).catch(err => handleError(err));
 			} else {
@@ -1614,11 +1600,11 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 		}
 	}
 
-    $scope.consultarPedido = function () {
-        if (!$scope.detalleCotizacion) {
-            $scope.consultarDetalleCotizacion($scope.idOtSelect);
-        }
-    }
+	$scope.consultarPedido = function () {
+		if (!$scope.detalleCotizacion) {
+			$scope.consultarDetalleCotizacion($scope.idOtSelect);
+		}
+	}
 
 	$scope.pintarTablaOTPEDetalle = function () {
 		let arrayRowPE = [];
@@ -1628,7 +1614,7 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 		$.each($scope.listOrdenesPE, function (i, elemento) {
 			let rowPE = [];
 			rowPE[0] = elemento.idOrdenPe && elemento.idOrdenPe !== '' ? elemento.idOrdenPe : 'Sin informaci&oacute;n';
-			rowPE[1] = elemento.tipoOrden ? elemento.tipoOrden  : 'Sin informaci&oacute;n';
+			rowPE[1] = elemento.tipoOrden ? elemento.tipoOrden : 'Sin informaci&oacute;n';
 			rowPE[2] = elemento.subTipoOrden && elemento.subTipoOrden !== '' ? elemento.subTipoOrden : 'Sin informaci&oacute;n';
 			rowPE[3] = elemento.nombreTecnico && elemento.nombreTecnico !== '' ? elemento.nombreTecnico : 'Sin informaci&oacute;n';
 			rowPE[4] = elemento.localizacion && elemento.localizacion !== '' ? elemento.localizacion : 'Sin informaci&oacute;n';
@@ -1656,112 +1642,259 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 		});
 	}
 
-    $scope.consultarOrdenesPlantaExternaOTDetalle = function () {
-        if (!$scope.tabOTPlantaExterna) {
-            swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
-            swal.showLoading();
-            $scope.listOrdenesPE = [];
-            let params = {
-                "idOrden": $scope.idOtSelect
-            };
+	$scope.consultarOrdenesPlantaExternaOTDetalle = function () {
+		if (!$scope.tabOTPlantaExterna) {
+			swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
+			swal.showLoading();
+			$scope.listOrdenesPE = [];
+			let params = {
+				"idOrden": $scope.idOtSelect
+			};
 
-            tercerosGenericService.consultaOrdenesPlantaExternaOt(params).then(function success(response) {
-                if (response.data) {
-                    if (response.data.respuesta) {
-                        if (response.data.result) {
-                            if (response.data.result.detalleOrdenPe.length) {
-                                $scope.listOrdenesPE = angular.copy(response.data.result.detalleOrdenPe);
-                                $scope.tabOTPlantaExterna = true;
-                                $scope.pintarTablaOTPEDetalle();                              
-                                swal.close();
-                            } else {
-                                $scope.pintarTablaOTPEDetalle();                              
-                                mostrarMensajeInformativo("No se encontr&oacute; informaci&oacute;n");
-                                swal.close();
-                            }
-                        } else {
-                            $scope.pintarTablaOTPEDetalle();                              
-                            mostrarMensajeWarningValidacion("No se encontr&oacute; Informaci&oacute;n");
-                            swal.close();
-                        }
-                    } else {
-                        $scope.pintarTablaOTPEDetalle();                              
-                        mostrarMensajeWarningValidacion(response.data.result.resultDescripcion);
-                        swal.close();
-                    }
-                } else {
-                    $scope.pintarTablaOTPEDetalle();                              
-                    mostrarMensajeWarningValidacion(response.data.result.resultDescripcion);
-                    swal.close();
-                }
-            });
-        }
-    }
+			tercerosGenericService.consultaOrdenesPlantaExternaOt(params).then(function success(response) {
+				if (response.data) {
+					if (response.data.respuesta) {
+						if (response.data.result) {
+							if (response.data.result.detalleOrdenPe.length) {
+								$scope.listOrdenesPE = angular.copy(response.data.result.detalleOrdenPe);
+								$scope.tabOTPlantaExterna = true;
+								$scope.pintarTablaOTPEDetalle();
+								swal.close();
+							} else {
+								$scope.pintarTablaOTPEDetalle();
+								mostrarMensajeInformativo("No se encontr&oacute; informaci&oacute;n");
+								swal.close();
+							}
+						} else {
+							$scope.pintarTablaOTPEDetalle();
+							mostrarMensajeWarningValidacion("No se encontr&oacute; Informaci&oacute;n");
+							swal.close();
+						}
+					} else {
+						$scope.pintarTablaOTPEDetalle();
+						mostrarMensajeWarningValidacion(response.data.result.resultDescripcion);
+						swal.close();
+					}
+				} else {
+					$scope.pintarTablaOTPEDetalle();
+					mostrarMensajeWarningValidacion(response.data.result.resultDescripcion);
+					swal.close();
+				}
+			});
+		}
+	}
 
 	$scope.listadoArrayOtsLocalizacion = []
-    $scope.consultarLocalizacionOtDespacho = function (valorbusqueda) {
-        $scope.listadoArrayOtsLocalizacion = [];
-        swal({ text: 'Consultando registros ...', allowOutsideClick: false });
-        swal.showLoading();
-        let params = {
-            "yekparam": valorbusqueda
-        }
-        tercerosGenericService.consultarLocalizacionOtDespacho(params).then(function success(response) {
-            swal.close()
-            if (response.data !== undefined) {
-                if (response.data.respuesta) {
-                    if (response.data.result) {
-                        if (response.data.result.ordenes && response.data.result.ordenes.length > 0) {
-                            let arrayRow = [];
-                            if (tableRegistrosLocalizados) {
-                                tableRegistrosLocalizados.destroy();
-                            }
-                            //$scope.listadoTecnicosGeneral=tecnicosAsignacion
-                            $scope.listadoArrayOtsLocalizacion = response.data.result.ordenes;
+	$scope.consultarLocalizacionOtDespacho = function (valorbusqueda) {
+		$scope.listadoArrayOtsLocalizacion = [];
+		swal({ text: 'Consultando registros ...', allowOutsideClick: false });
+		swal.showLoading();
+		let params = {
+			"yekparam": valorbusqueda
+		}
+		tercerosGenericService.consultarLocalizacionOtDespacho(params).then(function success(response) {
+			swal.close()
+			if (response.data !== undefined) {
+				if (response.data.respuesta) {
+					if (response.data.result) {
+						if (response.data.result.ordenes && response.data.result.ordenes.length > 0) {
+							let arrayRow = [];
+							if (tableRegistrosLocalizados) {
+								tableRegistrosLocalizados.destroy();
+							}
+							$scope.listadoArrayOtsLocalizacion = response.data.result.ordenes;
 
-                            $.each($scope.listadoArrayOtsLocalizacion, function (i, elemento) {
-                                let row = [];
-                                row[0] = elemento.idOrden && elemento.idOrden !== '' ? elemento.idOrden : 'Sin informaci&oacute;n';
-                                row[1] = elemento.folioSistema && elemento.folioSistema !== '' ? elemento.folioSistema : 'Sin informaci&oacute;n';
-                                row[2] = elemento.claveCliente && elemento.claveCliente !== '' ? elemento.claveCliente : 'Sin informaci&oacute;n';
-                                row[3] = elemento.nombreCliente && elemento.nombreCliente !== '' ? elemento.nombreCliente : 'Sin informaci&oacute;n';
-                                row[4] = elemento.ciudad && elemento.ciudad !== '' ? elemento.ciudad : 'Sin informaci&oacute;n';
-                                row[5] = elemento.cluster && elemento.cluster !== '' ? elemento.cluster : 'Sin informaci&oacute;n';
-                                row[6] = elemento.fechaAgenda && elemento.fechaAgenda !== '' ? elemento.fechaAgenda : 'Sin informaci&oacute;n';
-                                row[7] = elemento.descripcionEstado && elemento.descripcionEstado !== '' ? elemento.descripcionEstado : 'Sin informaci&oacute;n';
-                                row[8] = elemento.descripcionEstatus && elemento.descripcionEstatus !== '' ? elemento.descripcionEstatus : 'Sin informaci&oacute;n';
-                                row[9] = elemento.descripcionMotivo && elemento.descripcionMotivo !== '' ? elemento.descripcionMotivo : 'Sin informaci&oacute;n';
-                                arrayRow.push(row);
-                            });
-                            tableRegistrosLocalizados = $('#table-registrosLocalizados').DataTable({
-                                "paging": true,
-                                "lengthChange": false,
-                                "ordering": false,
-                                "pageLength": 10,
-                                "info": true,
-                                "data": arrayRow,
-                                "autoWidth": true,
-                                "language": idioma_espanol_not_font,
-                            });
+							$.each($scope.listadoArrayOtsLocalizacion, function (i, elemento) {
+								let row = [];
+								row[0] = elemento.idOrden && elemento.idOrden !== '' ? elemento.idOrden : 'Sin informaci&oacute;n';
+								row[1] = elemento.folioSistema && elemento.folioSistema !== '' ? elemento.folioSistema : 'Sin informaci&oacute;n';
+								row[2] = elemento.claveCliente && elemento.claveCliente !== '' ? elemento.claveCliente : 'Sin informaci&oacute;n';
+								row[3] = elemento.nombreCliente && elemento.nombreCliente !== '' ? elemento.nombreCliente : 'Sin informaci&oacute;n';
+								row[4] = elemento.ciudad && elemento.ciudad !== '' ? elemento.ciudad : 'Sin informaci&oacute;n';
+								row[5] = elemento.cluster && elemento.cluster !== '' ? elemento.cluster : 'Sin informaci&oacute;n';
+								row[6] = elemento.fechaAgenda && elemento.fechaAgenda !== '' ? elemento.fechaAgenda : 'Sin informaci&oacute;n';
+								row[7] = elemento.descripcionEstado && elemento.descripcionEstado !== '' ? elemento.descripcionEstado : 'Sin informaci&oacute;n';
+								row[8] = elemento.descripcionEstatus && elemento.descripcionEstatus !== '' ? elemento.descripcionEstatus : 'Sin informaci&oacute;n';
+								row[9] = elemento.descripcionMotivo && elemento.descripcionMotivo !== '' ? elemento.descripcionMotivo : 'Sin informaci&oacute;n';
+								arrayRow.push(row);
+							});
+							tableRegistrosLocalizados = $('#table-registrosLocalizados').DataTable({
+								"paging": true,
+								"lengthChange": false,
+								"ordering": false,
+								"pageLength": 10,
+								"info": true,
+								"data": arrayRow,
+								"autoWidth": true,
+								"language": idioma_espanol_not_font,
+							});
 
-                            $("#modalRegistrosLocalizados").modal('show')
-                        } else {
-                            toastr.info(response.data.result.mensaje);
-                        }
-                    } else {
-                        toastr.info('No se encontraron datos');
-                    }
-                } else {
-                    toastr.warning(response.data.resultDescripcion);
-                }
-            } else {
-                toastr.error('Ha ocurrido un error en la consulta de los datos');
-            }
-        }).catch(err => handleError(err))
-    }
+							$("#modalRegistrosLocalizados").modal('show')
+						} else {
+							toastr.info(response.data.result.mensaje);
+						}
+					} else {
+						toastr.info('No se encontraron datos');
+					}
+				} else {
+					toastr.warning(response.data.resultDescripcion);
+				}
+			} else {
+				toastr.error('Ha ocurrido un error en la consulta de los datos');
+			}
+		}).catch(err => handleError(err))
+	}
 
-	$scope.consultarDictamen = function(){		
-		
+	$scope.consultarDictamen = function () {
+		if (!$scope.listadoDictamen.isConsulta) {
+			$scope.consultaCatalogosDictamen();
+		}
+	}
+
+	$scope.guardarDictamen = function () {
+		let message = '';
+		if (!$scope.objectDictamen.estatus) {
+			message += "<li>Selecciona estatus</li>";
+		}
+
+		if (!$scope.objectDictamen.comentario) {
+			message += "<li>Ingresa comentario</li>";
+		}
+
+		if ($scope.objectDictamen.estatus && ($scope.objectDictamen.estatus.descripcion == 'Pendiente' || $scope.objectDictamen.estatus.descripcion == 'Terminada')) {
+			if (!$scope.objectDictamen.estado) {
+				message += "<li>Selecciona estado</li>";
+			}
+
+			if (!$scope.objectDictamen.tiempo) {
+				message += "<li>Selecciona tiempo de entrega</li>";
+			}
+
+			if (!$scope.objectDictamen.distancia) {
+				message += "<li>Selecciona distancia</li>";
+			}
+
+			if (!$scope.objectDictamen.latitud || !$scope.objectDictamen.longitud) {
+				message += "<li>Selecciona en mapa</li>";
+			}
+		}
+
+		if (message != '') {
+			let info = "Verifica los siguientes campos: " + message;
+			mostrarMensajeWarningValidacion(info);
+			return false
+		}
+		console.log($scope.detalleOtPendienteSelected);
+		let params = {
+			folioTicket: $scope.detalleOtPendienteSelected.folioTicket,
+			folioOS: $scope.detalleOtPendienteSelected.folioOrden,
+			idOT: $scope.detalleOtPendienteSelected.idOrden,
+			latitudViejoDomicilio: $scope.detalleOtPendienteSelected.latitud,
+			longitudViejoDomicilio: $scope.detalleOtPendienteSelected.longitud,
+			status: $scope.objectDictamen.estatus.idEstatus,
+			comentarios: $scope.objectDictamen.comentario
+		};
+
+		if ($scope.objectDictamen.estatus.descripcion == 'Pendiente' || $scope.objectDictamen.estatus.descripcion == 'Terminada') {
+			params.latitudNuevoDomicilio = $scope.objectDictamen.latitud;
+			params.longitudNuevoDomicilio = $scope.objectDictamen.longitud;
+			params.distanciaDomicilioSplitter = $scope.objectDictamen.distancia.idDistancia;
+			params.tiempoEntrega = $scope.objectDictamen.tiempo.idTiempoEntrega;
+			params.estado = $scope.objectDictamen.estado.idEstado;
+		}
+
+		let tituloAccion = "Guardar dictamen OT";
+		let mensajeEnvio = 'Ha ocurrido un error al guardar el dictamen de la OT: ' + $scope.idOtSelect;
+		swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
+		swal.showLoading();
+		tercerosGenericService.guardarDictamenTerceros(params).then(function success(response) {
+			swal.close();
+			if (response.data) {
+				if (response.data.respuesta) {
+					if (response.data.result) {
+						mensajeEnvio = 'Se guardo el dictamen de la OT: ' + $scope.idOtSelect;
+						toastr.success('Se actualizaron los datos del dictamen correctamente');
+						objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_EXITO, tituloAccion);
+
+					} else {
+						mostrarMensajeWarningValidacion("No se guardo la informaci&oacute;n");
+						objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
+					}
+				} else {
+					mostrarMensajeWarningValidacion(response.data.result.resultDescripcion);
+					objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
+				}
+			} else {
+				mostrarMensajeWarningValidacion("Ocurri&oacute; un error al guardar el dictamen");
+				objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
+			}
+		});
+	}
+
+	$scope.consultaCatalogosDictamen = function () {
+		$scope.listadoDictamen.isConsulta = true;
+		$q.all([
+			tercerosGenericService.consultarCatalogoEstatusDictamen(),
+			tercerosGenericService.consultarCatalogoEstadoDictamen(),
+			tercerosGenericService.consultarCatalogoTiempoDictamen(),
+			tercerosGenericService.consultarCatalogoDistanciaDictamen()
+		]).then(function (results) {
+			if (results[0].data !== undefined) {
+				if (results[0].data.respuesta) {
+					if (results[0].data.result) {
+						$scope.listadoDictamen.estatus = results[0].data.result.estatus;
+					} else {
+						toastr.warning('No se encontr&oacute; catalogo estatus dictamen');
+					}
+				} else {
+					toastr.warning(results[0].data.resultDescripcion);
+				}
+			} else {
+				toastr.error('Ha ocurrido un error en la consulta de catalogo estatus dictamen');
+			}
+
+			if (results[1].data !== undefined) {
+				if (results[1].data.respuesta) {
+					if (results[1].data.result) {
+						$scope.listadoDictamen.estados = results[1].data.result.estados;
+					} else {
+						toastr.warning('No se  encontr&oacute; catalogo estado dictamen');
+					}
+				} else {
+					toastr.warning(results[1].data.resultDescripcion);
+				}
+			} else {
+				toastr.error('Ha ocurrido un error en la consulta de catalogo estado dictamen');
+			}
+
+			if (results[2].data !== undefined) {
+				if (results[2].data.respuesta) {
+					if (results[2].data.result) {
+						$scope.listadoDictamen.tiempos = results[2].data.result.tiemposEntregas;
+					} else {
+						toastr.warning('No se encontr&oacute; catalogo tiempos de entrega dictamen');
+					}
+				} else {
+					toastr.warning(results[2].data.resultDescripcion);
+				}
+			} else {
+				toastr.error('Ha ocurrido un error en la consulta de catalogo tiempos de entrega dictamen');
+			}
+
+			if (results[3].data !== undefined) {
+				if (results[3].data.respuesta) {
+					if (results[3].data.result) {
+						$scope.listadoDictamen.distancias = results[3].data.result.distancias;
+					} else {
+						toastr.warning('No se encontr&oacute; catalogo distancia dictamen');
+					}
+				} else {
+					toastr.warning(results[3].data.resultDescripcion);
+				}
+			} else {
+				toastr.error('Ha ocurrido un error en la consulta de catalogo distancia dictamen');
+			}
+		})
 	}
 
 

@@ -181,4 +181,54 @@ app.service("tercerosGenericService", function ($http) {
 		});
 	};
 
+	this.consultarCatalogoEstatusDictamen=function(){
+		return $http({
+			method: "get",
+			url: "req/consultarEstatusTerceros",
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
+
+	this.consultarCatalogoEstadoDictamen=function(){
+		return $http({
+			method: "get",
+			url: "req/consultarEstadoTerceros",
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
+
+	this.consultarCatalogoTiempoDictamen=function(){
+		return $http({
+			method: "get",
+			url: "req/consultarTiempoTerceros",
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
+
+	this.consultarCatalogoDistanciaDictamen=function(){
+		return $http({
+			method: "get",
+			url: "req/consultarDistanciaTerceros",
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	};
+
+	this.guardarDictamenTerceros=function(params){
+		return $http({
+			method: "post",
+			url: "req/guardarDictamenTerceros",
+			data:JSON.stringify(params),
+			headers: { 'Content-Type': "application/json; charset=utf-8" },
+            transformRequest: angular.identity
+		});
+	};
+
 })
