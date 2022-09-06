@@ -234,4 +234,104 @@ public class ReporteSFController {
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 	
+	@PostMapping("/consultarReporteRecoleccionGeneradas")
+	public ResponseEntity<?> consultarReporteRecoleccionGeneradas (@RequestBody String params) {
+		logger.info("#### Metodo consultarReporteRecoleccionGeneradas: " + params);
+		ServiceResponseResult response =reporteSFService.consultarReporteRecoleccionGeneradas(params);
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+	
+	@PostMapping("/consultarReporteRecoleccionCerradas")
+	public ResponseEntity<?> consultarReporteRecoleccionCerradas (@RequestBody String params) {
+		logger.info("#### Metodo consultarReporteRecoleccionCerradas: " + params);
+		ServiceResponseResult response =reporteSFService.consultarReporteRecoleccionCerradas(params);
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+	
+	@PostMapping("/consultarReporteRecoleccionAgendadas")
+	public ResponseEntity<?> consultarReporteRecoleccionAgendadas (@RequestBody String params) {
+		logger.info("#### Metodo consultarReporteRecoleccionAgendadas: " + params);
+		ServiceResponseResult response =reporteSFService.consultarReporteRecoleccionAgendadas(params);
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+	
+	@PostMapping("/consultarReporteBackLogFactibilidades")
+	public ResponseEntity<?> consultarReporteBackLogFactibilidades (@RequestBody String params) {
+		logger.info("#### Metodo consultarReporteBackLogFactibilidades: " + params);
+		ServiceResponseResult response =reporteSFService.consultarReporteBackLogFactibilidades(params);
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+	
+	@PostMapping("/consultarReporteBackLogVoluntarias")
+	public ResponseEntity<?> consultarReporteBackLogVoluntarias (@RequestBody String params) {
+		logger.info("#### Metodo consultarReporteBackLogVoluntarias: " + params);
+		ServiceResponseResult response =reporteSFService.consultarReporteBackLogVoluntarias(params);
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+	
+	@PostMapping("/consultarReporteVentas")
+	public ResponseEntity<?> consultarReporteVentas (@RequestBody String params) {
+		logger.info("#### Metodo consultarReporteVentas: " + params);
+		ServiceResponseResult response =reporteSFService.consultarReporteVentas(params);
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+	
+	@PostMapping("/consultarReportePlanningNuevoAddon")
+	public ResponseEntity<?> consultarReportePlanningNuevoAddon (@RequestBody String params) {
+		logger.info("#### Metodo consultarReportePlanningNuevoAddon: " + params);
+		ServiceResponseResult response =reporteSFService.consultarReportePlanningNuevoAddon(params);
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+	
+	@PostMapping("/consultarReportePlanningCompletosOrdenes")
+	public ResponseEntity<?> consultarReportePlanningCompletosOrdenes (@RequestBody String params) {
+		logger.info("#### Metodo consultarReportePlanningCompletosOrdenes: " + params);
+		ServiceResponseResult response =reporteSFService.consultarReportePlanningCompletosOrdenes(params);
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+	
+	@PostMapping("/consultarReportePlanningCompletosAddon")
+	public ResponseEntity<?> consultarReportePlanningCompletosAddon (@RequestBody String params) {
+		logger.info("#### Metodo consultarReportePlanningCompletosAddon: " + params);
+		ServiceResponseResult response =reporteSFService.consultarReportePlanningCompletosAddon(params);
+		if (response.getResult() instanceof Integer){  
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+	
+	@PostMapping("/consultarReporteVentasInstalacion")
+	public ResponseEntity<?> consultarReporteVentasInstalacion (@RequestBody String params) {
+		logger.info("#### Metodo consultarReporteVentasInstalacion: " + params);
+		ServiceResponseResult response =reporteSFService.consultarReporteVentasInstalacion(params);
+		if (response.getResult() instanceof Integer){  
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+	
 }

@@ -1,12 +1,7 @@
 <div class="container-fluid container-tab">
     <div class="container-filtros">
         <div class="row md-form" id="filtros_config">
-            <div class="col-md-2 columna-filtro-indRR">
-                <label class="label-filter">Geograf&iacute;a</label>
-                <input readonly placeholder="GEOGRAF&Iacute;A" type="text" id="cluster-redessoc"
-                    class="input-filtro form-control form-control-sm" ng-click="abrirModalGeografiaRep('redessoc')" />
-            </div>
-            <div class="col-md-2 columna-filtro-indR pl-0">
+            <div class="col-md-2 columna-filtro-indR">
                 <label class="label-filter">Tipo fecha</label>
                 <select class="input-filtro form-control form-control-sm" id="tipo_reporte_redessoc"
                     style="border: 1px solid #dbdbdb !important; background: white !important;" ng-model="reporte.redessoc" ng-change="changeCalendar(this, 'redessoc')">
@@ -50,7 +45,7 @@
                         </th>
                         <th data-idColumn="5" data-isNumber="false" class="orderColumnTable orderColumnAscTable">
                             Cluster instalaci&oacute;n</th>
-                        <th data-idColumn="6" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Creador
+                        <th data-idColumn="6" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Crea OS
                         </th>
                         <th data-idColumn="7" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Nivel 1 </th>
                         <th data-idColumn="8" data-isNumber="false" class="orderColumnTable orderColumnAscTable">Nivel 2 </th>

@@ -220,4 +220,114 @@ app.service("reportesSFService", function ($http) {
         });
     };
 
+    this.consultarReporteRecoleccionGeneradas = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultarReporteRecoleccionGeneradas",
+            data: JSON.stringify(params),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    };
+
+    this.consultarReporteRecoleccionCerradas = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultarReporteRecoleccionCerradas",
+            data: JSON.stringify(params),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    };
+
+    this.consultarReporteRecoleccionAgendadas = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultarReporteRecoleccionAgendadas",
+            data: JSON.stringify(params),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    };
+
+    this.consultarReporteBackLogFactibilidades = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultarReporteBackLogFactibilidades",
+            data: JSON.stringify(params),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    };
+
+    this.consultarReporteBackLogVoluntarias = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultarReporteBackLogVoluntarias",
+            data: JSON.stringify(params),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    };
+
+    this.consultarReporteVentas = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultarReporteVentas",
+            data: JSON.stringify(params),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    };
+
+    this.consultarReportePlanningNuevoAddon = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultarReportePlanningNuevoAddon",
+            data: JSON.stringify(params),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    };
+
+    this.consultarReportePlanningCompletosOrdenes = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultarReportePlanningCompletosOrdenes",
+            data: JSON.stringify(params),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    };
+
+    this.consultarReportePlanningCompletosAddon = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultarReportePlanningCompletosAddon",
+            data: JSON.stringify(params),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    };
+
+    this.consultarReporteVentasInstalacion = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultarReporteVentasInstalacion",
+            data: JSON.stringify(params),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+    };
+
 })

@@ -30,6 +30,16 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
     $scope.resultReporteFactibilCancelados = null;
     $scope.resultReportePlanningAgendas = null;
     $scope.resultReportePlanningAddon = null;
+    $scope.resultReportePlanningNuevosAddon = null;
+    $scope.resultReportePlanningCompletosOrdenes = null;
+    $scope.resultReportePlanningCompletosAddon = null;
+    $scope.resultReporteRecolecGeneradas = null;
+    $scope.resultReporteRecolecCerradas = null;
+    $scope.resultReporteRecolecAgendadas = null;
+    $scope.resultReporteBackLogFactibilidades = null;
+    $scope.resultReporteBackLogVoluntarias = null;
+    $scope.resultReporteVentasInstalacion = null;
+    $scope.resultReporteVentasPrincipal = null;
     $scope.boxContentVisible = {
         backlog: false,
         ingresos: false,
@@ -64,7 +74,17 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
         backlogproact: 'dia',
         ingresoproact: 'dia',
         factibilcerrados: 'dia',
-        factibilcancelados: 'dia'
+        factibilcancelados: 'dia',
+        recolecgenerados: 'dia',
+        recoleccerrados: 'dia',
+        recolecagendadas: 'dia',
+        backlogfactib: 'dia',
+        backlogvolun: 'dia',
+        planningnuevosaddon: 'dia',
+        planningcompleord: 'dia',
+        planningcompaddon: 'dia',
+        ventasinstalacion: 'dia',
+        ventasprinc: 'dia'
     };
     $scope.filtrosGeneral = {};
 
@@ -118,6 +138,26 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
     $scope.configPermisoAccionDescargaPlanningAgendas = false;
     $scope.configPermisoAccionConsultaPlanningAddon = false;
     $scope.configPermisoAccionDescargaPlanningAddon = false;
+    $scope.configPermisoAccionConsultaPlanningNuevosAddon = false;
+    $scope.configPermisoAccionDescargaPlanningNuevosAddon = false;
+    $scope.configPermisoAccionConsultaPlanningCompletosOrdenes = false;
+    $scope.configPermisoAccionDescargaPlanningCompletosOrdenes = false;
+    $scope.configPermisoAccionConsultaPlanningCompletadosAddon = false;
+    $scope.configPermisoAccionDescargaPlanningCompletadosAddon = false;
+    $scope.configPermisoAccionConsultaRecoleccionGeneradas = false;
+    $scope.configPermisoAccionDescargaRecoleccionGeneradas = false;
+    $scope.configPermisoAccionConsultaRecoleccionCerrados = false;
+    $scope.configPermisoAccionDescargaRecoleccionCerrados = false;
+    $scope.configPermisoAccionConsultaRecoleccionAgendadas = false;
+    $scope.configPermisoAccionDescargaRecoleccionAgendadas = false;
+    $scope.configPermisoAccionConsultaBackLogFactibilidades = false;
+    $scope.configPermisoAccionDescargaBackLogFactibilidades = false;
+    $scope.configPermisoAccionConsultaBackLogVoluntarias = false;
+    $scope.configPermisoAccionDescargaBackLogVoluntarias= false;
+    $scope.configPermisoAccionConsultaVentasInstalacion = false;
+    $scope.configPermisoAccionDescargaVentasInstalacion = false;
+    $scope.configPermisoAccionConsultaVentasPrincipal = false;
+    $scope.configPermisoAccionDescargaVentasPrincipal = false;
 
     angular.element(document).ready(function () {
         $('#searchGeo-instalaciones').on('keyup', function () {
@@ -489,6 +529,128 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
             "language": idioma_espanol_not_font,
             "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
         });
+
+        let reporteRecoleccionGeneradosTable = $('#reporteRecoleccionGeneradosTable').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": false,
+            "pageLength": 10,
+            "info": true,
+            "autoWidth": true,
+            "language": idioma_espanol_not_font,
+            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+        });
+
+        let reporteRecoleccionCerradosTable = $('#reporteRecoleccionCerradosTable').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": false,
+            "pageLength": 10,
+            "info": true,
+            "autoWidth": true,
+            "language": idioma_espanol_not_font,
+            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+        });
+
+        let reporteRecoleccionAgendadasTable = $('#reporteRecoleccionAgendadasTable').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": false,
+            "pageLength": 10,
+            "info": true,
+            "autoWidth": true,
+            "language": idioma_espanol_not_font,
+            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+        });
+
+        let reporteBackLogFactibilidadTable = $('#reporteBackLogFactibilidadTable').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": false,
+            "pageLength": 10,
+            "info": true,
+            "autoWidth": true,
+            "language": idioma_espanol_not_font,
+            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+        });
+
+        let reporteBackLogVoluntariosTable = $('#reporteBackLogVoluntariosTable').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": false,
+            "pageLength": 10,
+            "info": true,
+            "autoWidth": true,
+            "language": idioma_espanol_not_font,
+            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+        });
+
+        let reportePlanningNuevosAddonTable = $('#reportePlanningNuevosAddonTable').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": false,
+            "pageLength": 10,
+            "info": true,
+            "autoWidth": true,
+            "language": idioma_espanol_not_font,
+            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+        });
+
+        let reportePlanningCompletosOrdenesTable = $('#reportePlanningCompletosOrdenesTable').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": false,
+            "pageLength": 10,
+            "info": true,
+            "autoWidth": true,
+            "language": idioma_espanol_not_font,
+            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+        });
+
+        let reportePlanningCompletadosAddonTable = $('#reportePlanningCompletadosAddonTable').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": false,
+            "pageLength": 10,
+            "info": true,
+            "autoWidth": true,
+            "language": idioma_espanol_not_font,
+            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+        });
+
+        let reporteVentasInstalacionTable = $('#reporteVentasInstalacionTable').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": false,
+            "pageLength": 10,
+            "info": true,
+            "autoWidth": true,
+            "language": idioma_espanol_not_font,
+            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+        });
+
+        let reporteVentasPrincipalTable = $('#reporteVentasPrincipalTable').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": false,
+            "pageLength": 10,
+            "info": true,
+            "autoWidth": true,
+            "language": idioma_espanol_not_font,
+            "sDom": '<"top"i>rt<"bottom"lp><"bottom"r><"clear">',
+        });
+
+        
         
         $('.drop-down-filters').on("change.bs.dropdown", function (e) {
             $scope.setTextFiltro();
@@ -749,6 +911,27 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                     swal.showLoading();
                 }
                 break;
+            case 'planningnuevosaddon':
+                if ($scope.resultReportePlanningNuevosAddon == null) {
+                    $scope.loadDate('planningnuevosaddon');
+                    swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                    swal.showLoading();
+                }
+                break;
+            case 'planningcompleord':
+                if ($scope.resultReportePlanningCompletosOrdenes == null) {
+                    $scope.loadDate('planningcompleord');
+                    swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                    swal.showLoading();
+                }
+                break;
+            case 'planningcompaddon':
+                if ($scope.resultReportePlanningCompletosAddon == null) {
+                    $scope.loadDate('planningcompaddon');
+                    swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                    swal.showLoading();
+                }
+                break;
             case 'compleproact':
                 if ($scope.resultReporteComplProact == null) {
                     $scope.loadDate('compleproact');
@@ -780,6 +963,55 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
             case 'ingresoproact':
                 if ($scope.resultReporteIngresoProact == null) {
                     $scope.loadDate('ingresoproact');
+                    swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                    swal.showLoading();
+                }
+                break;
+            case 'recolecgenerados':
+                if ($scope.resultReporteRecolecGeneradas == null) {
+                    $scope.loadDate('recolecgenerados');
+                    swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                    swal.showLoading();
+                }
+                break;
+            case 'recoleccerrados':
+                if ($scope.resultReporteRecolecCerradas == null) {
+                    $scope.loadDate('recoleccerrados');
+                    swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                    swal.showLoading();
+                }
+                break;
+            case 'recolecagendadas':
+                if ($scope.resultReporteRecolecAgendadas == null) {
+                    $scope.loadDate('recolecagendadas');
+                    swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                    swal.showLoading();
+                }
+                break;
+            case 'backlogfactib':
+                if ($scope.resultReporteBackLogFactibilidades == null) {
+                    $scope.loadDate('backlogfactib');
+                    swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                    swal.showLoading();
+                }
+                break;
+            case 'backlogvolun':
+                if ($scope.resultReporteBackLogVoluntarias == null) {
+                    $scope.loadDate('backlogvolun');
+                    swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                    swal.showLoading();
+                }
+                break;
+            case 'ventasinstalacion':
+                if ($scope.resultReporteVentasInstalacion == null) {
+                    $scope.loadDate('ventasinstalacion');
+                    swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                    swal.showLoading();
+                }
+                break;
+            case 'ventasprinc':
+                if ($scope.resultReporteVentasPrincipal == null) {
+                    $scope.loadDate('ventasprinc');
                     swal({ text: 'Cargando registros...', allowOutsideClick: false });
                     swal.showLoading();
                 }
@@ -958,6 +1190,56 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                         $scope.consultarReporteFactibilidadCancelados();
                     }
                     break;
+                case 'recolecgenerados':
+                    if ($scope.resultReporteRecolecGeneradas == null) {
+                        $scope.consultarReporteRecoleccionGeneradas();
+                    }
+                    break;
+                case 'recoleccerrados':
+                    if ($scope.resultReporteRecolecCerradas == null) {
+                        $scope.consultarReporteRecoleccionCerradas();
+                    }
+                    break;
+                case 'recolecagendadas':
+                    if ($scope.resultReporteRecolecAgendadas == null) {
+                        $scope.consultarReporteRecoleccionAgendadas();
+                    }
+                    break;
+                case 'backlogfactib':
+                    if ($scope.resultReporteBackLogFactibilidades == null) {
+                        $scope.consultarReporteBackLogFactibilidades();
+                    }
+                    break;
+                case 'backlogvolun':
+                    if ($scope.resultReporteBackLogVoluntarias == null) {
+                        $scope.consultarReporteBackLogVoluntarias();
+                    }
+                    break;
+                case 'planningnuevosaddon':
+                    if ($scope.resultReportePlanningAddon == null) {
+                        $scope.consultarReportePlanningNuevoAddon();
+                    }
+                    break;
+                case 'planningcompleord':
+                    if ($scope.resultReportePlanningCompletosOrdenes == null) {
+                        $scope.consultarReportePlanningCompletosOrdenes();
+                    }
+                    break;
+                case 'planningcompaddon':
+                    if ($scope.resultReportePlanningCompletosAddon == null) {
+                        $scope.consultarReportePlanningCompletosAddon();
+                    }
+                    break;
+                case 'ventasinstalacion':
+                    if ($scope.resultReporteVentasInstalacion == null) {
+                        $scope.consultarReporteVentasInstalacion();
+                    }
+                    break;
+                case 'ventasprinc':
+                    if ($scope.resultReporteVentasPrincipal == null) {
+                        $scope.consultarReporteVentasPrincipal();
+                    }
+                    break;
             }
         }
 
@@ -1104,25 +1386,45 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                                 $scope.configPermisoAccionDescargaRedesSociales = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaRedesSociales" })[0] != undefined);
                                 $scope.configPermisoAccionConsultaGenerados = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaGenerados" })[0] != undefined);
                                 $scope.configPermisoAccionDescargaGenerados = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaGenerados" })[0] != undefined);
-                                $scope.configPermisoAccionConsultaFactibilidadCerrados = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaGenerados" })[0] != undefined);//PENDIENTE
-                                $scope.configPermisoAccionDescargaFactibilidadCerrados = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaGenerados" })[0] != undefined);//PENDIENTE
-                                $scope.configPermisoAccionConsultaFactibilidadCancelados = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaGenerados" })[0] != undefined);//PENDIENTE
-                                $scope.configPermisoAccionDescargaFactibilidadCancelados = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaGenerados" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionConsultaFactibilidadCerrados = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaFactibilidadCerrados" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionDescargaFactibilidadCerrados = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaFactibilidadCerrados" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionConsultaFactibilidadCancelados = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaFactibilidadCancelados" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionDescargaFactibilidadCancelados = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaFactibilidadCancelados" })[0] != undefined);//PENDIENTE
 
-                                $scope.configPermisoAccionConsultaPlanningAgendas = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaGenerados" })[0] != undefined);//PENDIENTE
-                                $scope.configPermisoAccionDescargaPlanningAgendas = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaGenerados" })[0] != undefined);//PENDIENTE
-                                $scope.configPermisoAccionConsultaPlanningAddon = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaGenerados" })[0] != undefined);//PENDIENTE
-                                $scope.configPermisoAccionDescargaPlanningAddon = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaGenerados" })[0] != undefined);//PENDIENTE
-                                $scope.configPermisoAccionConsultaCompletadoProactivo = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaGenerados" })[0] != undefined);//PENDIENTE
-                                $scope.configPermisoAccionDescargaCompletadoProactivo = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaGenerados" })[0] != undefined);//PENDIENTE
-                                $scope.configPermisoAccionConsultaCompletadoCambioDomicilio = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaGenerados" })[0] != undefined);//PENDIENTE
-                                $scope.configPermisoAccionDescargaCompletadoCambioDomicilio = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaGenerados" })[0] != undefined);//PENDIENTE
-                                $scope.configPermisoAccionConsultaCompletadoSoporteEmpresarial = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaGenerados" })[0] != undefined);//PENDIENTE
-                                $scope.configPermisoAccionDescargaCompletadoSoporteEmpresarial = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaGenerados" })[0] != undefined);//PENDIENTE
-                                $scope.configPermisoAccionConsultaBackProactivo = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaGenerados" })[0] != undefined);//PENDIENTE
-                                $scope.configPermisoAccionDescargaBackProactivo = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaGenerados" })[0] != undefined);//PENDIENTE
-                                $scope.configPermisoAccionConsultaIngresosProactivo = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaGenerados" })[0] != undefined);//PENDIENTE
-                                $scope.configPermisoAccionDescargaIngresosProactivo = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaGenerados" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionConsultaPlanningAgendas = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaPlanningAgendas" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionDescargaPlanningAgendas = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaPlanningAgendas" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionConsultaPlanningAddon = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaPlanningAddon" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionDescargaPlanningAddon = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaPlanningAddon" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionConsultaPlanningNuevosAddon = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaPlanningNuevosAddon" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionDescargaPlanningNuevosAddon = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaPlanningNuevosAddon" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionConsultaPlanningCompletosOrdenes = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaPlanningCompletosOrdenes" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionDescargaPlanningCompletosOrdenes = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaPlanningCompletosOrdenes" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionConsultaPlanningCompletadosAddon = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaPlanningCompletadosAddon" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionDescargaPlanningCompletadosAddon = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaPlanningCompletadosAddon" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionConsultaCompletadoProactivo = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaCompletadoProactivo" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionDescargaCompletadoProactivo = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaCompletadoProactivo" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionConsultaCompletadoCambioDomicilio = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaCompletadoCambioDomicilio" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionDescargaCompletadoCambioDomicilio = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaCompletadoCambioDomicilio" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionConsultaCompletadoSoporteEmpresarial = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaCompletadoSoporteEmpresarial" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionDescargaCompletadoSoporteEmpresarial = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaCompletadoSoporteEmpresarial" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionConsultaBackProactivo = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaBackProactivo" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionDescargaBackProactivo = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaBackProactivo" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionConsultaIngresosProactivo = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaIngresosProactivo" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionDescargaIngresosProactivo = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaIngresosProactivo" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionConsultaRecoleccionGeneradas = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaRecoleccionGeneradas" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionDescargaRecoleccionGeneradas = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaRecoleccionGeneradas" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionConsultaRecoleccionCerrados = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaRecoleccionCerrados" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionDescargaRecoleccionCerrados = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaRecoleccionCerrados" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionConsultaRecoleccionAgendadas = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaRecoleccionAgendadas" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionDescargaRecoleccionAgendadas = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaRecoleccionAgendadas" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionConsultaBackLogFactibilidades = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaBackLogFactibilidades" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionDescargaBackLogFactibilidades = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaBackLogFactibilidades" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionConsultaBackLogVoluntarias = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaBackLogVoluntarias" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionDescargaBackLogVoluntarias = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaBackLogVoluntarias" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionConsultaVentasInstalacion = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaVentasInstalacion" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionDescargaVentasInstalacion = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaVentasInstalacion" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionConsultaVentasPrincipal = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultaVentasPrincipal" })[0] != undefined);//PENDIENTE
+                                $scope.configPermisoAccionDescargaVentasPrincipal = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaVentasPrincipal" })[0] != undefined);//PENDIENTE
 
                                 objectTempAccion = new GenericAccionRealizada("" + $scope.permisosConfigUser.id, 'TOP_RIGHT');
                                 objectTempAccion.inicializarBotonAccionesRecientes();
@@ -1130,7 +1432,8 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                                 if ($scope.configPermisoAccionConsultaBackInstalaciones || $scope.configPermisoAccionConsultaBackSoportes
                                     || $scope.configPermisoAccionConsultaBackRecolecciones || $scope.configPermisoAccionConsultaBackAddon
                                     || $scope.configPermisoAccionConsultaBackEmpresarial || $scope.configPermisoAccionConsultaBackGeneral
-                                    || $scope.configPermisoAccionConsultaBackProactivo) {
+                                    || $scope.configPermisoAccionConsultaBackProactivo || $scope.configPermisoAccionConsultaBackLogFactibilidades
+                                    || $scope.configPermisoAccionConsultaBackLogVoluntarias) {
                                     $scope.boxContentVisible.backlog = true;
                                 }
 
@@ -1155,8 +1458,19 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                                     $scope.boxContentVisible.factibilidad = true;
                                 }
 
-                                if ($scope.configPermisoAccionConsultaPlanningAgendas || $scope.configPermisoAccionConsultaPlanningAddon) {
+                                if ($scope.configPermisoAccionConsultaPlanningAgendas || $scope.configPermisoAccionConsultaPlanningAddon
+                                    || $scope.configPermisoAccionConsultaPlanningNuevosAddon || $scope.configPermisoAccionConsultaPlanningCompletosOrdenes
+                                    || $scope.configPermisoAccionConsultaPlanningCompletadosAddon) {
                                     $scope.boxContentVisible.planning = true;
+                                }
+
+                                if ($scope.configPermisoAccionConsultaRecoleccionGeneradas || $scope.configPermisoAccionConsultaRecoleccionCerrados
+                                    || $scope.configPermisoAccionConsultaRecoleccionAgendadas) {
+                                    $scope.boxContentVisible.recoleccion = true;
+                                }
+
+                                if ($scope.configPermisoAccionConsultaVentasInstalacion || $scope.configPermisoAccionConsultaVentasPrincipal) {
+                                    $scope.boxContentVisible.ventas = true;
                                 }
                             }
 
@@ -1337,6 +1651,76 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                                 if (firstNav === '') {
                                     firstNav = 'reportePlanningAddon-tab';
                                     $scope.tipoReporte = 'planningaddon';
+                                }
+                            }
+
+                            if ($scope.configPermisoAccionConsultaRecoleccionGeneradas) {
+                                if (firstNav === '') {
+                                    firstNav = 'reporteRecolecGenerados-tab';
+                                    $scope.tipoReporte = 'recolecgenerados';
+                                }
+                            }
+
+                            if ($scope.configPermisoAccionConsultaRecoleccionCerrados) {
+                                if (firstNav === '') {
+                                    firstNav = 'reporteRecolecCerrados-tab';
+                                    $scope.tipoReporte = 'recoleccerrados';
+                                }
+                            }
+
+                            if ($scope.configPermisoAccionConsultaRecoleccionAgendadas) {
+                                if (firstNav === '') {
+                                    firstNav = 'reporteRecolecAgendadas-tab';
+                                    $scope.tipoReporte = 'recolecagendadas';
+                                }
+                            }
+
+                            if ($scope.configPermisoAccionConsultaBackLogFactibilidades) {
+                                if (firstNav === '') {
+                                    firstNav = 'reporteBackLogFactib-tab';
+                                    $scope.tipoReporte = 'backlogfactib';
+                                }
+                            }
+
+                            if ($scope.configPermisoAccionConsultaBackLogVoluntarias) {
+                                if (firstNav === '') {
+                                    firstNav = 'reporteBackLogVolun-tab';
+                                    $scope.tipoReporte = 'backlogvolun';
+                                }
+                            }
+
+                            if ($scope.configPermisoAccionConsultaPlanningNuevosAddon) {
+                                if (firstNav === '') {
+                                    firstNav = 'reportePlanningNuevosAddon-tab';
+                                    $scope.tipoReporte = 'planningnuevosaddon';
+                                }
+                            }
+
+                            if ($scope.configPermisoAccionConsultaPlanningCompletosOrdenes) {
+                                if (firstNav === '') {
+                                    firstNav = 'reportePlanningCompleOrd-tab';
+                                    $scope.tipoReporte = 'planningcompleord';
+                                }
+                            }
+
+                            if ($scope.configPermisoAccionConsultaPlanningCompletadosAddon) {
+                                if (firstNav === '') {
+                                    firstNav = 'reportePlanningCompAddon-tab';
+                                    $scope.tipoReporte = 'planningcompaddon';
+                                }
+                            }
+
+                            if ($scope.configPermisoAccionConsultaVentasInstalacion) {
+                                if (firstNav === '') {
+                                    firstNav = 'reporteVentasInstalacion-tab';
+                                    $scope.tipoReporte = 'ventasinstalacion';
+                                }
+                            }
+
+                            if ($scope.configPermisoAccionConsultaVentasPrincipal) {
+                                if (firstNav === '') {
+                                    firstNav = 'reporteVentasPrinc-tab';
+                                    $scope.tipoReporte = 'ventasprinc';
                                 }
                             }
 
@@ -4154,14 +4538,14 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
         let mensaje = '<ul>';
         let isValid = true;
 
-        let clustersparam = $("#jstree-proton-sitiosfibr").jstree("get_selected", true)
-            .filter(e => e.original.nivel == $scope.nfiltrogeografiaSitFibr)
-            .map(e => e.original.nombre);
+        // let clustersparam = $("#jstree-proton-sitiosfibr").jstree("get_selected", true)
+        //     .filter(e => e.original.nivel == $scope.nfiltrogeografiaSitFibr)
+        //     .map(e => e.original.nombre);
 
-        if (clustersparam.length === 0) {
-            mensaje += '<li>Seleccione geograf&iacute;a.</li>';
-            isValid = false
-        }
+        // if (clustersparam.length === 0) {
+        //     mensaje += '<li>Seleccione geograf&iacute;a.</li>';
+        //     isValid = false
+        // }
 
         if ($("#tipo_reporte_sitiosfibr").val() == 'semana' && !$scope.weekDateObjectReport.sitiosfibr) {
             mensaje += '<li>Seleccione semana</li>';
@@ -4177,8 +4561,8 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
         } else {
             let fechas = $scope.getFecha('sitiosfibr');
             let params = {
-                tiposOrden: [55, 91, 93],
-                clusters: clustersparam,
+                // tiposOrden: [55, 91, 93],
+                // clusters: clustersparam,
                 fechaInicial: fechas.fechaInicio,
                 fechaFinal: fechas.fechaFin
             }
@@ -4192,12 +4576,12 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 if (response.data !== undefined) {
                     if (response.data.respuesta) {
                         if (response.data.result) {
-                            if (response.data.result.data) {
-                                $scope.resultReporteSitiosFibr = response.data.result.data.length;
-                                $.each(response.data.result.data, function (i, elemento) {
+                            if (response.data.result.resultado) {
+                                $scope.resultReporteSitiosFibr = response.data.result.resultado.length;
+                                $.each(response.data.result.resultado, function (i, elemento) {
                                     let row = [];
 
-                                    row[0] = elemento.idCuentaBrm ? elemento.idCuentaBrm : 'Sin informaci&oacute;n';
+                                    row[0] = elemento.idCuentaBRM ? elemento.idCuentaBRM : 'Sin informaci&oacute;n';
                                     row[1] = elemento.numeroTicket ? elemento.numeroTicket : 'Sin informaci&oacute;n';
                                     row[2] = elemento.fechaApertura ? elemento.fechaApertura : 'Sin informaci&oacute;n';
                                     row[3] = elemento.clusterInstalacion ? elemento.clusterInstalacion : 'Sin informaci&oacute;n';
@@ -4244,14 +4628,14 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
         let mensaje = '<ul>';
         let isValid = true;
 
-        let clustersparam = $("#jstree-proton-sitiosfibr").jstree("get_selected", true)
-            .filter(e => e.original.nivel == $scope.nfiltrogeografiaSitFibr)
-            .map(e => e.original.nombre);
+        // let clustersparam = $("#jstree-proton-sitiosfibr").jstree("get_selected", true)
+        //     .filter(e => e.original.nivel == $scope.nfiltrogeografiaSitFibr)
+        //     .map(e => e.original.nombre);
 
-        if (clustersparam.length === 0) {
-            mensaje += '<li>Seleccione geograf&iacute;a.</li>';
-            isValid = false
-        }
+        // if (clustersparam.length === 0) {
+        //     mensaje += '<li>Seleccione geograf&iacute;a.</li>';
+        //     isValid = false
+        // }
 
         if ($("#tipo_reporte_sitiosfibr").val() == 'semana' && !$scope.weekDateObjectReport.sitiosfibr) {
             mensaje += '<li>Seleccione semana</li>';
@@ -4267,14 +4651,14 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
         } else {
             let fechas = $scope.getFecha('sitiosfibr');
             let params = {
-                tiposOrden: [55, 91, 93],
-                clusters: clustersparam,
+                // tiposOrden: [55, 91, 93],
+                // clusters: clustersparam,
                 fechaInicial: fechas.fechaInicio,
                 fechaFinal: fechas.fechaFin,
                 sheet: "Reporte sitios fibrados",
                 tipoExcel: 'reportesf-sitiosfibrados-pi',
                 headers: ["CUENTA", "TICKET", "FECHA APERTURA", "CLUSTER", "NIVEL 1", "NIVEL 2", "NIVEL 3"],
-                valores: ["idCuentaBrm", "numeroTicket", "fechaApertura", "clusterInstalacion", "nivel1", "nivel2", "nivel3"]
+                valores: ["idCuentaBRM", "numeroTicket", "fechaApertura", "clusterInstalacion", "nivel1", "nivel2", "nivel3"]
             }
             $scope.downloadReport(params, 'reporteSitiosFibrados', 'sitios fibrados');
             // if ($scope.resultReporteSitiosFibr && $scope.resultReporteSitiosFibr > 0) {
@@ -4289,14 +4673,14 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
         let mensaje = '<ul>';
         let isValid = true;
 
-        let clustersparam = $("#jstree-proton-redessoc").jstree("get_selected", true)
-            .filter(e => e.original.nivel == $scope.nfiltrogeografiaRedSoc)
-            .map(e => e.original.nombre);
+        // let clustersparam = $("#jstree-proton-redessoc").jstree("get_selected", true)
+        //     .filter(e => e.original.nivel == $scope.nfiltrogeografiaRedSoc)
+        //     .map(e => e.original.nombre);
 
-        if (clustersparam.length === 0) {
-            mensaje += '<li>Seleccione geograf&iacute;a.</li>';
-            isValid = false
-        }
+        // if (clustersparam.length === 0) {
+        //     mensaje += '<li>Seleccione geograf&iacute;a.</li>';
+        //     isValid = false
+        // }
 
         if ($("#tipo_reporte_redessoc").val() == 'semana' && !$scope.weekDateObjectReport.redessoc) {
             mensaje += '<li>Seleccione semana</li>';
@@ -4312,8 +4696,8 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
         } else {
             let fechas = $scope.getFecha('redessoc');
             let params = {
-                tiposOrden: [55, 91, 93],
-                clusters: clustersparam,
+                // tiposOrden: [55, 91, 93],
+                // clusters: clustersparam,
                 fechaInicial: fechas.fechaInicio,
                 fechaFinal: fechas.fechaFin
             }
@@ -4327,18 +4711,18 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 if (response.data !== undefined) {
                     if (response.data.respuesta) {
                         if (response.data.result) {
-                            if (response.data.result.data) {
-                                $scope.resultReporteRedesSoc = response.data.result.data.length;
-                                $.each(response.data.result.data, function (i, elemento) {
+                            if (response.data.result.resultado) {
+                                $scope.resultReporteRedesSoc = response.data.result.resultado.length;
+                                $.each(response.data.result.resultado, function (i, elemento) {
                                     let row = [];
 
-                                    row[0] = elemento.cuentaFactura ? elemento.cuentaFactura : 'Sin informaci&oacute;n';
+                                    row[0] = elemento.idCuentaBrm ? elemento.idCuentaBrm : 'Sin informaci&oacute;n';
                                     row[1] = elemento.numeroTicket ? elemento.numeroTicket : 'Sin informaci&oacute;n';
                                     row[2] = elemento.origenTicket ? elemento.origenTicket : 'Sin informaci&oacute;n';
                                     row[3] = elemento.fechaApertura ? elemento.fechaApertura : 'Sin informaci&oacute;n';
                                     row[4] = elemento.fechaCierre ? elemento.fechaCierre : 'Sin informaci&oacute;n';
                                     row[5] = elemento.clusterInstalacion ? elemento.clusterInstalacion : 'Sin informaci&oacute;n';
-                                    row[6] = elemento.creaOs ? elemento.creaOs : 'Sin informaci&oacute;n';
+                                    row[6] = elemento.creaOs == "true" ? '<input type="checkbox" checked disabled>' : '<input type="checkbox" disabled>';
                                     row[7] = elemento.nivel1 ? elemento.nivel1 : 'Sin informaci&oacute;n';
                                     row[8] = elemento.nivel2 ? elemento.nivel2 : 'Sin informaci&oacute;n';
                                     row[9] = elemento.nivel3 ? elemento.nivel3 : 'Sin informaci&oacute;n';
@@ -4412,12 +4796,12 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 clusters: clustersparam,
                 fechaInicial: fechas.fechaInicio,
                 fechaFinal: fechas.fechaFin,
-                sheet: "Reporte redes sociales",
+                sheet: "Reporte tickets redes sociales",
                 tipoExcel: 'reportesf-redessociales-pi',
-                headers: ["CUENTA", "TICKET", "ORIGEN TICKET", "FECHA APERTURA", "FECHA CIERRE", "CLUSTER INSTALACION", "CREADOR", "NIVEL 1", "NIVEL 2", "NIVEL 3", "ASUNTO", "GRUPO", "DESCRIPCION"],
-                valores: ["cuentaFactura", "numeroTicket", "origenTicket", "fechaApertura", "fechaCierre", "clusterInstalacion", "creaOs", "nivel1", "nivel2", "nivel3", "asunto", "grupoCodificacion", "descripcion"]
+                headers: ["CUENTA", "TICKET", "ORIGEN TICKET", "FECHA APERTURA", "FECHA CIERRE", "CLUSTER INSTALACION", "CREA OS", "NIVEL 1", "NIVEL 2", "NIVEL 3", "ASUNTO", "GRUPO", "DESCRIPCION"],
+                valores: ["idCuentaBrm", "numeroTicket", "origenTicket", "fechaApertura", "fechaCierre", "clusterInstalacion", "creaOs", "nivel1", "nivel2", "nivel3", "asunto", "grupoCodificacion", "descripcion"]
             }
-            $scope.downloadReport(params, 'reporteRedesSociales', 'redes sociales');
+            $scope.downloadReport(params, 'reporteTicketsRedesSociales', 'redes sociales');
             // if ($scope.resultReporteRedesSoc && $scope.resultReporteRedesSoc > 0) {
             //     $scope.downloadReport(params, 'reporteRedesSociales', 'redes sociales');
             // } else {
@@ -5043,6 +5427,1255 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 "createdDate", "primerFechaAgendamiento", "fechaAgendada", "fechaActivacion", "funcionPropietario", "grupoCodificacion", "nivel1", "nivel2", "nivel3", "empleadoPropietario"]
             }
             $scope.downloadReport(params, 'reportePlanningAddon', 'planningaddon');
+        }
+    }
+
+    $scope.consultarReportePlanningNuevoAddon = function() {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        if ($("#tipo_reporte_planningnuevosaddon").val() == 'semana' && !$scope.weekDateObjectReport.planningnuevosaddon) {
+            mensaje += '<li>Seleccione semana</li>';
+            isValid = false
+        }
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('planningnuevosaddon');
+            let params = {
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin
+            }
+            if (!swal.isVisible()) {
+                swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                swal.showLoading();
+            }
+            reportesSFService.consultarReportePlanningNuevoAddon(params).then(function success(response) {
+                swal.close();
+                let arraRow = [];
+                if (response.data !== undefined) {
+                    if (response.data.respuesta) {
+                        if (response.data.result) {
+                            if (response.data.result.resultado) {
+                                $scope.resultReportePlanningNuevosAddon = response.data.result.resultado.length;
+                                $.each(response.data.result.resultado, function (i, elemento) {
+                                    let row = [];
+
+                                    row[0] = elemento.idCuentaBRM ? elemento.idCuentaBRM : 'Sin informaci&oacute;n';
+                                    row[1] = elemento.name ? elemento.name : 'Sin informaci&oacute;n';
+                                    row[2] = elemento.caseNumber ? elemento.caseNumber : 'Sin informaci&oacute;n';
+                                    row[3] = elemento.primerFechaAgendamiento ? elemento.primerFechaAgendamiento : 'Sin informaci&oacute;n';
+                                    row[4] = elemento.fechaAgendamiento ? elemento.fechaAgendamiento : 'Sin informaci&oacute;n';
+                                    row[5] = elemento.tSCompletado ? elemento.tSCompletado : 'Sin informaci&oacute;n';
+                                    row[6] = elemento.fechaActivacion ? elemento.fechaActivacion : 'Sin informaci&oacute;n';
+                                    row[7] = elemento.estatusOS ? elemento.estatusOS : 'Sin informaci&oacute;n';
+                                    row[8] = elemento.estado ? elemento.estado : 'Sin informaci&oacute;n';
+                                    row[9] = elemento.grupo ? elemento.grupo : 'Sin informaci&oacute;n';
+                                    row[10] = elemento.nivel1 ? elemento.nivel1 : 'Sin informaci&oacute;n';
+                                    row[11] = elemento.nivel2 ? elemento.nivel2 : 'Sin informaci&oacute;n';
+                                    row[12] = elemento.nivel3 ? elemento.nivel3 : 'Sin informaci&oacute;n';
+                                    row[13] = elemento.clusterInstalacion ? elemento.clusterInstalacion : 'Sin informaci&oacute;n';
+                                    row[14] = elemento.regionInstalacion ? elemento.regionInstalacion : 'Sin informaci&oacute;n';
+                                    row[15] = elemento.plaza ? elemento.plaza : 'Sin informaci&oacute;n';
+                                    row[16] = elemento.repetido == "true" ? '<input type="checkbox" checked disabled>' : '<input type="checkbox" disabled>';
+                                    row[17] = elemento.distritoSitio ? elemento.distritoSitio : 'Sin informaci&oacute;n';
+                                    row[18] = elemento.createdDate ? elemento.createdDate : 'Sin informaci&oacute;n';
+                                    row[19] = elemento.closedDate ? elemento.closedDate : 'Sin informaci&oacute;n';
+                                    row[20] = elemento.subTipo ? elemento.subTipo : 'Sin informaci&oacute;n';
+                                    row[21] = elemento.clusterComercial ? elemento.clusterComercial : 'Sin informaci&oacute;n';
+                                    row[22] = elemento.plazaSitio ? elemento.plazaSitio : 'Sin informaci&oacute;n';
+                                    row[23] = elemento.plazaOperacion ? elemento.plazaOperacion : 'Sin informaci&oacute;n';
+                                    
+                                    arraRow.push(row);
+                                })
+
+                            } else {
+                                toastr.info('No se encontraron datos');
+                            }
+                        } else {
+                            toastr.warning('No se encontraron datos');
+                        }
+                    } else {
+                        toastr.warning(response.data.resultDescripcion);
+                    }
+                } else {
+                    toastr.error('Ha ocurrido un error al consultar el reporte');
+                }
+
+                reportePlanningNuevosAddonTable = $('#reportePlanningNuevosAddonTable').DataTable({
+                    "paging": true,
+                    "lengthChange": false,
+                    "ordering": true,
+                    "pageLength": 10,
+                    "bDestroy": true,
+                    "info": true,
+                    "scrollX": false,
+                    "data": arraRow,
+                    "autoWidth": false,
+                    "language": idioma_espanol_not_font,
+                    "aoColumnDefs": [
+                        { "aTargets": [23], "bSortable": false }
+                    ]
+                });
+                swal.close();
+            })
+        }
+    }
+
+    $scope.descargarReportePlanningNuevoAddon = function() {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        if ($("#tipo_reporte_planningnuevosaddon").val() == 'semana' && !$scope.weekDateObjectReport.planningnuevosaddon) {
+            mensaje += '<li>Seleccione semana</li>';
+            isValid = false
+        }
+
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('planningnuevosaddon');
+            let params = {
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin,
+                sheet: "Reporte planning nuevos addon",
+                tipoExcel: 'reportesf-planningnuevosaddon-pi',
+                headers: ["CUENTA", "OS", "TICKET", "PRIMER FECHA AGENDAMIENTO", "FECHA AGENDAMIENTO", "TS COMPLETADO", "FECHA ACTIVACION", "ESTATUS","ESTADO",
+                "GRUPO CODIFICACION", "NIVEL 1", "NIVEL 2", "NIVEL 3", "CLUSTER INSTALACION", "REGION INSTALACION", "PLAZA", "REPETIDO", "DISTRITO SITIO", 
+                "FECHA/HORA APERTURA", "FECHA/HORA CIERRE", "SUBTIPO", "CLUSTER COMERCIAL", "PLAZA SITIO", "PLAZA OPERACION"],
+                valores: ["idCuentaBRM", "name", "caseNumber", "primerFechaAgendamiento", "fechaAgendamiento", "tSCompletado", "fechaActivacion", "estatusOS", "estado", "grupo", 
+                "nivel1", "nivel2", "nivel3", "clusterInstalacion", "regionInstalacion", "plaza", "repetido", "distritoSitio", "createdDate", "closedDate", "subTipo",
+                "clusterComercial", "plazaSitio", "plazaOperacion"]
+            }
+            $scope.downloadReport(params, 'reportePlanningNuevosAddon', 'planningnuevosaddon');
+        }
+    }
+
+    $scope.consultarReportePlanningCompletosOrdenes = function() {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        if ($("#tipo_reporte_planningcompleord").val() == 'semana' && !$scope.weekDateObjectReport.planningcompleord) {
+            mensaje += '<li>Seleccione semana</li>';
+            isValid = false
+        }
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('planningcompleord');
+            let params = {
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin
+            }
+            if (!swal.isVisible()) {
+                swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                swal.showLoading();
+            }
+            reportesSFService.consultarReportePlanningCompletosOrdenes(params).then(function success(response) {
+                swal.close();
+                let arraRow = [];
+                if (response.data !== undefined) {
+                    if (response.data.respuesta) {
+                        if (response.data.result) {
+                            if (response.data.result.resultado) {
+                                $scope.resultReportePlanningCompletosOrdenes = response.data.result.resultado.length;
+                                $.each(response.data.result.resultado, function (i, elemento) {
+                                    let row = [];
+
+                                    row[0] = elemento.numeroCuenta ? elemento.numeroCuenta : 'Sin informaci&oacute;n';
+                                    row[1] = elemento.folio ? elemento.folio : 'Sin informaci&oacute;n';
+                                    row[2] = elemento.fechaCreacion ? elemento.fechaCreacion : 'Sin informaci&oacute;n';
+                                    row[3] = elemento.idOtGIM ? elemento.idOtGIM : 'Sin informaci&oacute;n';
+                                    row[4] = elemento.estatusOT ? elemento.estatusOT : 'Sin informaci&oacute;n';
+                                    row[5] = elemento.estatus ? elemento.estatus : 'Sin informaci&oacute;n';
+                                    row[6] = elemento.cluster ? elemento.cluster : 'Sin informaci&oacute;n';
+                                    row[7] = elemento.distrito ? elemento.distrito : 'Sin informaci&oacute;n';
+                                    row[8] = elemento.canalDeVenta ? elemento.canalDeVenta : 'Sin informaci&oacute;n';
+                                    row[9] = elemento.region ? elemento.region : 'Sin informaci&oacute;n';
+                                    row[10] = elemento.plazaSitio ? elemento.plazaSitio : 'Sin informaci&oacute;n';
+                                    row[11] = elemento.clusterComercial ? elemento.clusterComercial : 'Sin informaci&oacute;n';
+                                    row[12] = elemento.subTipo ? elemento.subTipo : 'Sin informaci&oacute;n';
+                                    row[13] = elemento.plazaOperacion ? elemento.plazaOperacion : 'Sin informaci&oacute;n';
+                                    row[14] = elemento.tscompletado ? elemento.tscompletado : 'Sin informaci&oacute;n';
+                                    row[15] = elemento.tipoOrden ? elemento.tipoOrden : 'Sin informaci&oacute;n';
+                                    
+                                    arraRow.push(row);
+                                })
+
+                            } else {
+                                toastr.info('No se encontraron datos');
+                            }
+                        } else {
+                            toastr.warning('No se encontraron datos');
+                        }
+                    } else {
+                        toastr.warning(response.data.resultDescripcion);
+                    }
+                } else {
+                    toastr.error('Ha ocurrido un error al consultar el reporte');
+                }
+
+                reportePlanningCompletosOrdenesTable = $('#reportePlanningCompletosOrdenesTable').DataTable({
+                    "paging": true,
+                    "lengthChange": false,
+                    "ordering": true,
+                    "pageLength": 10,
+                    "bDestroy": true,
+                    "info": true,
+                    "scrollX": false,
+                    "data": arraRow,
+                    "autoWidth": false,
+                    "language": idioma_espanol_not_font,
+                    "aoColumnDefs": [
+                        { "aTargets": [15], "bSortable": false }
+                    ]
+                });
+                swal.close();
+            })
+        }
+    }
+
+    $scope.descargarReportePlanningCompletosOrdenes = function() {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        if ($("#tipo_reporte_planningcompleord").val() == 'semana' && !$scope.weekDateObjectReport.planningcompleord) {
+            mensaje += '<li>Seleccione semana</li>';
+            isValid = false
+        }
+
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('planningcompleord');
+            let params = {
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin,
+                sheet: "Reporte planning completos ordenes",
+                tipoExcel: 'reportesf-planningcompleord-pi',
+                headers: ["CUENTA", "OS", "FECHA CREACION", "ID OT GIM", "ESTATUS OT", "ESTATUS", "CLUSTER", "DISTRITO SITIO", "CANAL VENTA", "REGION", "PLAZA SITIO", "CLUSTER COMERCIAL", "SUBTIPO", "PLAZA OPERACION", "TS COMPLETADO", "TIPO ORDEN"],
+                valores: ["numeroCuenta", "folio", "fechaCreacion", "idOtGIM", "estatusOT", "estatus", "cluster", "distrito", "canalDeVenta", "region", "plazaSitio", "clusterComercial", "subTipo", "plazaOperacion", "tscompletado", "tipoOrden"]
+            }
+            $scope.downloadReport(params, 'reportePlanningCompletosOrdenes', 'planningcompleord');
+        }
+    }
+
+    $scope.consultarReportePlanningCompletosAddon = function() {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        if ($("#tipo_reporte_planningcompaddon").val() == 'semana' && !$scope.weekDateObjectReport.planningcompaddon) {
+            mensaje += '<li>Seleccione semana</li>';
+            isValid = false
+        }
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('planningcompaddon');
+            let params = {
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin
+            }
+            if (!swal.isVisible()) {
+                swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                swal.showLoading();
+            }
+            reportesSFService.consultarReportePlanningCompletosAddon(params).then(function success(response) {
+                swal.close();
+                let arraRow = [];
+                if (response.data !== undefined) {
+                    if (response.data.respuesta) {
+                        if (response.data.result) {
+                            if (response.data.result.resultado) {
+                                $scope.resultReportePlanningCompletosAddon = response.data.result.resultado.length;
+                                $.each(response.data.result.resultado, function (i, elemento) {
+                                    let row = [];
+
+                                    row[0] = elemento.numeroCuenta ? elemento.numeroCuenta : 'Sin informaci&oacute;n';
+                                    row[1] = elemento.folio ? elemento.folio : 'Sin informaci&oacute;n';
+                                    row[2] = elemento.plazaSitio ? elemento.plazaSitio : 'Sin informaci&oacute;n';
+                                    row[3] = elemento.idOtGIM ? elemento.idOtGIM : 'Sin informaci&oacute;n';
+                                    row[4] = elemento.estatusOT ? elemento.estatusOT : 'Sin informaci&oacute;n';
+                                    row[5] = elemento.estatus ? elemento.estatus : 'Sin informaci&oacute;n';
+                                    row[6] = elemento.cluster ? elemento.cluster : 'Sin informaci&oacute;n';
+                                    row[7] = elemento.distritoSitio ? elemento.distritoSitio : 'Sin informaci&oacute;n';
+                                    row[8] = elemento.region ? elemento.region : 'Sin informaci&oacute;n';
+                                    row[9] = elemento.clusterComercial ? elemento.clusterComercial : 'Sin informaci&oacute;n';
+                                    row[10] = elemento.plazaOperacion ? elemento.plazaOperacion : 'Sin informaci&oacute;n';
+                                    row[11] = elemento.tscompletado ? elemento.tscompletado : 'Sin informaci&oacute;n';
+                                    row[12] = elemento.tipoOrden ? elemento.tipoOrden : 'Sin informaci&oacute;n';
+                                    
+                                    arraRow.push(row);
+                                })
+
+                            } else {
+                                toastr.info('No se encontraron datos');
+                            }
+                        } else {
+                            toastr.warning('No se encontraron datos');
+                        }
+                    } else {
+                        toastr.warning(response.data.resultDescripcion);
+                    }
+                } else {
+                    toastr.error('Ha ocurrido un error al consultar el reporte');
+                }
+
+                reportePlanningCompletadosAddonTable = $('#reportePlanningCompletadosAddonTable').DataTable({
+                    "paging": true,
+                    "lengthChange": false,
+                    "ordering": true,
+                    "pageLength": 10,
+                    "bDestroy": true,
+                    "info": true,
+                    "scrollX": false,
+                    "data": arraRow,
+                    "autoWidth": false,
+                    "language": idioma_espanol_not_font,
+                    "aoColumnDefs": [
+                        { "aTargets": [12], "bSortable": false }
+                    ]
+                });
+                swal.close();
+            })
+        }
+    }
+
+    $scope.descargarReportePlanningCompletosAddon = function() {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        if ($("#tipo_reporte_planningcompaddon").val() == 'semana' && !$scope.weekDateObjectReport.planningcompaddon) {
+            mensaje += '<li>Seleccione semana</li>';
+            isValid = false
+        }
+
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('planningcompaddon');
+            let params = {
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin,
+                sheet: "Reporte planning completos addon",
+                tipoExcel: 'reportesf-planningcompaddon-pi',
+                headers: ["CUENTA", "OS", "PLAZA SITIO", "ID OT GIM", "ESTATUS OT", "ESTATUS", "CLUSTER", "DISTRITO SITIO", "REGION", "CLUSTER COMERCIAL", "PLAZA OPERACION", "TS COMPLETADO", "TIPO ORDEN"],
+                valores: ["numeroCuenta", "folio", "plazaSitio", "idOtGIM", "estatusOT", "estatus", "cluster", "distritoSitio", "region", "clusterComercial", "plazaOperacion", "tscompletado", "tipoOrden"]
+            }
+            $scope.downloadReport(params, 'reportePlanningCompletosAddon', 'planningcompaddon');
+        }
+    }
+
+
+
+    // ---------------------------------
+
+    $scope.consultarReporteRecoleccionGeneradas = function() {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        if ($("#tipo_reporte_recolecgenerados").val() == 'semana' && !$scope.weekDateObjectReport.recolecgenerados) {
+            mensaje += '<li>Seleccione semana</li>';
+            isValid = false
+        }
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('recolecgenerados');
+            let params = {
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin
+            }
+            if (!swal.isVisible()) {
+                swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                swal.showLoading();
+            }
+            reportesSFService.consultarReporteRecoleccionGeneradas(params).then(function success(response) {
+                swal.close();
+                let arraRow = [];
+                if (response.data !== undefined) {
+                    if (response.data.respuesta) {
+                        if (response.data.result) {
+                            if (response.data.result.resultado) {
+                                $scope.resultReporteRecolecGeneradas = response.data.result.resultado.length;
+                                $.each(response.data.result.resultado, function (i, elemento) {
+                                    let row = [];
+
+                                    row[0] = elemento.numeroCuenta ? elemento.numeroCuenta : 'Sin informaci&oacute;n';
+                                    row[1] = elemento.folio ? elemento.folio : 'Sin informaci&oacute;n';
+                                    row[2] = elemento.numeroTicket ? elemento.numeroTicket : 'Sin informaci&oacute;n';
+                                    row[3] = elemento.plaza ? elemento.plaza : 'Sin informaci&oacute;n';
+                                    row[4] = elemento.primerFechaAgendamiento ? elemento.primerFechaAgendamiento : 'Sin informaci&oacute;n';
+                                    row[5] = elemento.fechaAgendamiento ? elemento.fechaAgendamiento : 'Sin informaci&oacute;n';
+                                    row[6] = elemento.fechaActivacion ? elemento.fechaActivacion : 'Sin informaci&oacute;n';
+                                    row[7] = elemento.estatus ? elemento.estatus : 'Sin informaci&oacute;n';
+                                    row[8] = elemento.estado ? elemento.estado : 'Sin informaci&oacute;n';
+                                    row[9] = elemento.grupoCodificacion ? elemento.grupoCodificacion : 'Sin informaci&oacute;n';
+                                    row[10] = elemento.nivel1 ? elemento.nivel1 : 'Sin informaci&oacute;n';
+                                    row[11] = elemento.nivel2 ? elemento.nivel2 : 'Sin informaci&oacute;n';
+                                    row[12] = elemento.nivel3 ? elemento.nivel3 : 'Sin informaci&oacute;n';
+                                    row[13] = elemento.clusterInstalacion ? elemento.clusterInstalacion : 'Sin informaci&oacute;n';
+                                    row[14] = elemento.regionInstalacion ? elemento.regionInstalacion : 'Sin informaci&oacute;n';
+                                    row[15] = elemento.repetido == "true" ? '<input type="checkbox" checked disabled>' : '<input type="checkbox" disabled>';
+                                    row[16] = elemento.distritoSitio ? elemento.distritoSitio : 'Sin informaci&oacute;n';
+                                    row[17] = elemento.fechaCierre ? elemento.fechaCierre : 'Sin informaci&oacute;n';
+                                    row[18] = elemento.subTipo ? elemento.subTipo : 'Sin informaci&oacute;n';
+                                    row[19] = elemento.clusterComercial ? elemento.clusterComercial : 'Sin informaci&oacute;n';
+                                    row[20] = elemento.plazaSitio ? elemento.plazaSitio : 'Sin informaci&oacute;n';
+                                    row[21] = elemento.fechaApertura ? elemento.fechaApertura : 'Sin informaci&oacute;n';
+                                    row[22] = elemento.plazaOperacion ? elemento.plazaOperacion : 'Sin informaci&oacute;n';
+                                    
+                                    arraRow.push(row);
+                                })
+
+                            } else {
+                                toastr.info('No se encontraron datos');
+                            }
+                        } else {
+                            toastr.warning('No se encontraron datos');
+                        }
+                    } else {
+                        toastr.warning(response.data.resultDescripcion);
+                    }
+                } else {
+                    toastr.error('Ha ocurrido un error al consultar el reporte');
+                }
+
+                reporteRecoleccionGeneradosTable = $('#reporteRecoleccionGeneradosTable').DataTable({
+                    "paging": true,
+                    "lengthChange": false,
+                    "ordering": true,
+                    "pageLength": 10,
+                    "bDestroy": true,
+                    "info": true,
+                    "scrollX": false,
+                    "data": arraRow,
+                    "autoWidth": false,
+                    "language": idioma_espanol_not_font,
+                    "aoColumnDefs": [
+                        { "aTargets": [22], "bSortable": false }
+                    ]
+                });
+                swal.close();
+            })
+        }
+    }
+
+    $scope.descargarReporteRecoleccionGenerados = function() {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        if ($("#tipo_reporte_recolecgenerados").val() == 'semana' && !$scope.weekDateObjectReport.recolecgenerados) {
+            mensaje += '<li>Seleccione semana</li>';
+            isValid = false
+        }
+
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('recolecgenerados');
+            let params = {
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin,
+                sheet: "Reporte recoleccion generados",
+                tipoExcel: 'reportesf-recolecgenerados-pi',
+                headers: ["CUENTA", "OS", "TICKET", "PLAZA", "PRIMER FECHA AGENDAMIENTO", "FECHA AGENDAMIENTO", "FECHA ACTIVACION", "ESTATUS", "ESTADO", "GRUPO CODIFICACION", "NIVEL 1", "NIVEL 2", "NIVEL 3",
+                "CLUSTER INSTALACION", "REGION INSTALACION", "REPETIDO", "DISTRITO SITIO", "FECHA/HORA CIERRE", "SUBTIPO", "CLUSTER COMERCIAL", "PLAZA SITIO", "FECHA/HORA APERTURA", "PLAZA OPERACION"],
+                valores: ["numeroCuenta", "folio", "numeroTicket", "plaza", "primerFechaAgendamiento", "fechaAgendamiento", "fechaActivacion", "estatus", "estado", "grupoCodificacion", "nivel1", "nivel2", "nivel3",
+                "clusterInstalacion", "regionInstalacion", "repetido", "distritoSitio", "fechaCierre", "subTipo", "clusterComercial", "plazaSitio", "fechaApertura", "plazaOperacion"]
+            }
+            $scope.downloadReport(params, 'reporteRecoleccionGenerados', 'recolecgenerados');
+        }
+    }
+
+    $scope.consultarReporteRecoleccionCerradas = function() {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        if ($("#tipo_reporte_recoleccerrados").val() == 'semana' && !$scope.weekDateObjectReport.recoleccerrados) {
+            mensaje += '<li>Seleccione semana</li>';
+            isValid = false
+        }
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('recoleccerrados');
+            let params = {
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin
+            }
+            if (!swal.isVisible()) {
+                swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                swal.showLoading();
+            }
+            reportesSFService.consultarReporteRecoleccionCerradas(params).then(function success(response) {
+                swal.close();
+                let arraRow = [];
+                if (response.data !== undefined) {
+                    if (response.data.respuesta) {
+                        if (response.data.result) {
+                            if (response.data.result.resultado) {
+                                $scope.resultReporteRecolecCerradas = response.data.result.resultado.length;
+                                $.each(response.data.result.resultado, function (i, elemento) {
+                                    let row = [];
+
+                                    row[0] = elemento.numeroCuenta ? elemento.numeroCuenta : 'Sin informaci&oacute;n';
+                                    row[1] = elemento.folio ? elemento.folio : 'Sin informaci&oacute;n';
+                                    row[2] = elemento.idOtGIM ? elemento.idOtGIM : 'Sin informaci&oacute;n';
+                                    row[3] = elemento.estatusOt ? elemento.estatusOt : 'Sin informaci&oacute;n';
+                                    row[4] = elemento.estatus ? elemento.estatus : 'Sin informaci&oacute;n';
+                                    row[5] = elemento.cluster ? elemento.cluster : 'Sin informaci&oacute;n';
+                                    row[6] = elemento.distrito ? elemento.distrito : 'Sin informaci&oacute;n';
+                                    row[7] = elemento.region ? elemento.region : 'Sin informaci&oacute;n';
+                                    row[8] = elemento.clusterComercial ? elemento.clusterComercial : 'Sin informaci&oacute;n';
+                                    row[9] = elemento.plaza ? elemento.plaza : 'Sin informaci&oacute;n';
+                                    row[10] = elemento.plazaSitio ? elemento.plazaSitio : 'Sin informaci&oacute;n';
+                                    row[11] = elemento.tsCompletado ? elemento.tsCompletado : 'Sin informaci&oacute;n';
+                                    row[12] = elemento.plazaOperacion ? elemento.plazaOperacion : 'Sin informaci&oacute;n';
+                                    
+                                    arraRow.push(row);
+                                })
+
+                            } else {
+                                toastr.info('No se encontraron datos');
+                            }
+                        } else {
+                            toastr.warning('No se encontraron datos');
+                        }
+                    } else {
+                        toastr.warning(response.data.resultDescripcion);
+                    }
+                } else {
+                    toastr.error('Ha ocurrido un error al consultar el reporte');
+                }
+
+                reporteRecoleccionCerradosTable = $('#reporteRecoleccionCerradosTable').DataTable({
+                    "paging": true,
+                    "lengthChange": false,
+                    "ordering": true,
+                    "pageLength": 10,
+                    "bDestroy": true,
+                    "info": true,
+                    "scrollX": false,
+                    "data": arraRow,
+                    "autoWidth": false,
+                    "language": idioma_espanol_not_font,
+                    "aoColumnDefs": [
+                        { "aTargets": [12], "bSortable": false }
+                    ]
+                });
+                swal.close();
+            })
+        }
+    }
+
+    $scope.descargarReporteRecoleccionCerradas = function() {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        if ($("#tipo_reporte_recoleccerrados").val() == 'semana' && !$scope.weekDateObjectReport.recoleccerrados) {
+            mensaje += '<li>Seleccione semana</li>';
+            isValid = false
+        }
+
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('recoleccerrados');
+            let params = {
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin,
+                sheet: "Reporte recoleccion cerrados",
+                tipoExcel: 'reportesf-recoleccerrados-pi',
+                headers: ["CUENTA", "OS", "ID OT GIM", "ESTATUS OT", "ESTATUS", "CLUSTER", "DISTRITO", "REGION", "CLUSTER COMERCIAL", "PLAZA", "PLAZA SITIO", "TS COMPLETADO", "PLAZA OPERACION"],
+                valores: ["numeroCuenta", "folio", "idOtGIM", "estatusOt", "estatus", "cluster", "distrito", "region", "clusterComercial", "plaza", "plazaSitio", "tsCompletado", "plazaOperacion"]
+            }
+            $scope.downloadReport(params, 'reporteRecoleccionCerrados', 'recoleccerrados');
+        }
+    }
+
+    $scope.consultarReporteRecoleccionAgendadas = function() {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        if ($("#tipo_reporte_recolecagendadas").val() == 'semana' && !$scope.weekDateObjectReport.recolecagendadas) {
+            mensaje += '<li>Seleccione semana</li>';
+            isValid = false
+        }
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('recolecagendadas');
+            let params = {
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin
+            }
+            if (!swal.isVisible()) {
+                swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                swal.showLoading();
+            }
+            reportesSFService.consultarReporteRecoleccionAgendadas(params).then(function success(response) {
+                swal.close();
+                let arraRow = [];
+                if (response.data !== undefined) {
+                    if (response.data.respuesta) {
+                        if (response.data.result) {
+                            if (response.data.result.resultado) {
+                                $scope.resultReporteRecolecAgendadas = response.data.result.resultado.length;
+                                $.each(response.data.result.resultado, function (i, elemento) {
+                                    let row = [];
+
+                                    row[0] = elemento.numeroCuenta ? elemento.numeroCuenta : 'Sin informaci&oacute;n';
+                                    row[1] = elemento.folio ? elemento.folio : 'Sin informaci&oacute;n';
+                                    row[2] = elemento.numeroTicket ? elemento.numeroTicket : 'Sin informaci&oacute;n';
+                                    row[3] = elemento.idOtGIM ? elemento.idOtGIM : 'Sin informaci&oacute;n';
+                                    row[4] = elemento.estatus ? elemento.estatus : 'Sin informaci&oacute;n';
+                                    row[5] = elemento.estado ? elemento.estado : 'Sin informaci&oacute;n';
+                                    row[6] = elemento.plaza ? elemento.plaza : 'Sin informaci&oacute;n';
+                                    row[7] = elemento.zona ? elemento.zona : 'Sin informaci&oacute;n';
+                                    row[8] = elemento.nombreCompleto ? elemento.nombreCompleto : 'Sin informaci&oacute;n';
+                                    row[9] = elemento.turnoAgendamiento ? elemento.turnoAgendamiento : 'Sin informaci&oacute;n';
+                                    row[10] = elemento.clusterInstalacion ? elemento.clusterInstalacion : 'Sin informaci&oacute;n';
+                                    row[11] = elemento.colonia ? elemento.colonia : 'Sin informaci&oacute;n';
+                                    row[12] = elemento.fechaApertura ? elemento.fechaApertura : 'Sin informaci&oacute;n';
+                                    row[13] = elemento.primerFechaAgendamiento ? elemento.primerFechaAgendamiento : 'Sin informaci&oacute;n';
+                                    row[14] = elemento.fechaAgendamiento ? elemento.fechaAgendamiento : 'Sin informaci&oacute;n';
+                                    row[15] = elemento.fechaActivacion ? elemento.fechaActivacion : 'Sin informaci&oacute;n';
+                                    row[16] = elemento.regionInstalacion ? elemento.regionInstalacion : 'Sin informaci&oacute;n';
+                                    row[17] = elemento.funcionPropietario ? elemento.funcionPropietario : 'Sin informaci&oacute;n';
+                                    row[18] = elemento.grupoCodificacion ? elemento.grupoCodificacion : 'Sin informaci&oacute;n';
+                                    row[19] = elemento.nivel1 ? elemento.nivel1 : 'Sin informaci&oacute;n';
+                                    row[20] = elemento.nivel2 ? elemento.nivel2 : 'Sin informaci&oacute;n';
+                                    row[21] = elemento.nivel3 ? elemento.nivel3 : 'Sin informaci&oacute;n';
+                                    row[22] = elemento.repetido == "true" ? '<input type="checkbox" checked disabled>' : '<input type="checkbox" disabled>';
+                                    row[23] = elemento.distritoSitio ? elemento.distritoSitio : 'Sin informaci&oacute;n';
+                                    row[24] = elemento.subTipo ? elemento.subTipo : 'Sin informaci&oacute;n';
+                                    row[25] = elemento.clusterComercial ? elemento.clusterComercial : 'Sin informaci&oacute;n';
+                                    row[26] = elemento.plazaSitio ? elemento.plazaSitio : 'Sin informaci&oacute;n';
+                                    row[27] = elemento.plazaOperacion ? elemento.plazaOperacion : 'Sin informaci&oacute;n';
+                                    arraRow.push(row);
+                                })
+
+                            } else {
+                                toastr.info('No se encontraron datos');
+                            }
+                        } else {
+                            toastr.warning('No se encontraron datos');
+                        }
+                    } else {
+                        toastr.warning(response.data.resultDescripcion);
+                    }
+                } else {
+                    toastr.error('Ha ocurrido un error al consultar el reporte');
+                }
+
+                reporteRecoleccionAgendadasTable = $('#reporteRecoleccionAgendadasTable').DataTable({
+                    "paging": true,
+                    "lengthChange": false,
+                    "ordering": true,
+                    "pageLength": 10,
+                    "bDestroy": true,
+                    "info": true,
+                    "scrollX": false,
+                    "data": arraRow,
+                    "autoWidth": false,
+                    "language": idioma_espanol_not_font,
+                    "aoColumnDefs": [
+                        { "aTargets": [27], "bSortable": false }
+                    ]
+                });
+                swal.close();
+            })
+        }
+    }
+
+    $scope.descargarReporteRecoleccionAgendadas = function() {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        if ($("#tipo_reporte_recolecagendadas").val() == 'semana' && !$scope.weekDateObjectReport.recolecagendadas) {
+            mensaje += '<li>Seleccione semana</li>';
+            isValid = false
+        }
+
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('recolecagendadas');
+            let params = {
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin,
+                sheet: "Reporte recoleccion agendadas",
+                tipoExcel: 'reportesf-recolecagendadas-pi',
+                headers: ["CUENTA", "OS", "TICKET", "ID OT GIM", "ESTATUS", "ESTADO", "PLAZA", "ZONA", "PROPIETARIO TICKET", "TURNO AGENDAMIENTO", "CLUSTER INSTALACION", "COLONIA", "FECHA/HORA APERTURA", "PRIMER FECHA AGENDAMIENTO", "FECHA AGENDAMIENTO", 
+                "FECHA ACTIVACION", "REGION INSTALACION", "PROPIETARIO", "GRUPO CODIFICACION", "NIVEL 1", "NIVEL 2", "NIVEL 3", "REPETIDO", "DISTRITO SITIO", "SUBTIPO", "CLUSTER COMERCIAL", "PLAZA SITIO", "PLAZA OPERACION"],
+                valores: ["numeroCuenta", "folio", "numeroTicket", "idOtGIM", "estatus", "estado", "plaza", "zona", "nombreCompleto", "turnoAgendamiento", "clusterInstalacion", "colonia", "fechaApertura", "primerFechaAgendamiento", "fechaAgendamiento",
+                "fechaActivacion", "regionInstalacion", "funcionPropietario", "grupoCodificacion", "nivel1", "nivel2", "nivel3", "repetido", "distritoSitio", "subTipo", "clusterComercial", "plazaSitio", "plazaOperacion"]
+            }
+            $scope.downloadReport(params, 'reporteRecoleccionAgendas', 'recolecagendadas');
+        }
+    }
+    // --
+
+    $scope.consultarReporteBackLogFactibilidades = function() {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        if ($("#tipo_reporte_backlogfactib").val() == 'semana' && !$scope.weekDateObjectReport.backlogfactib) {
+            mensaje += '<li>Seleccione semana</li>';
+            isValid = false
+        }
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('backlogfactib');
+            let params = {
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin
+            }
+            if (!swal.isVisible()) {
+                swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                swal.showLoading();
+            }
+            reportesSFService.consultarReporteBackLogFactibilidades(params).then(function success(response) {
+                swal.close();
+                let arraRow = [];
+                if (response.data !== undefined) {
+                    if (response.data.respuesta) {
+                        if (response.data.result) {
+                            if (response.data.result.resultado) {
+                                $scope.resultReporteBackLogFactibilidades = response.data.result.resultado.length;
+                                $.each(response.data.result.resultado, function (i, elemento) {
+                                    let row = [];
+
+                                    row[0] = elemento.numeroCuenta ? elemento.numeroCuenta : 'Sin informaci&oacute;n';
+                                    row[1] = elemento.folio ? elemento.folio : 'Sin informaci&oacute;n';
+                                    row[2] = elemento.numeroTicket ? elemento.numeroTicket : 'Sin informaci&oacute;n';
+                                    row[3] = elemento.idOtGIM ? elemento.idOtGIM : 'Sin informaci&oacute;n';
+                                    row[4] = elemento.estatus ? elemento.estatus : 'Sin informaci&oacute;n';
+                                    row[5] = elemento.estado ? elemento.estado : 'Sin informaci&oacute;n';
+                                    row[6] = elemento.plaza ? elemento.plaza : 'Sin informaci&oacute;n';
+                                    row[7] = elemento.zona ? elemento.zona : 'Sin informaci&oacute;n';
+                                    row[8] = elemento.nombreCompleto ? elemento.nombreCompleto : 'Sin informaci&oacute;n';
+                                    row[9] = elemento.turnoAgendamiento ? elemento.turnoAgendamiento : 'Sin informaci&oacute;n';
+                                    row[10] = elemento.clusterInstalacion ? elemento.clusterInstalacion : 'Sin informaci&oacute;n';
+                                    row[11] = elemento.colonia ? elemento.colonia : 'Sin informaci&oacute;n';
+                                    row[12] = elemento.fechaApertura ? elemento.fechaApertura : 'Sin informaci&oacute;n';
+                                    row[13] = elemento.primerFechaAgendamiento ? elemento.primerFechaAgendamiento : 'Sin informaci&oacute;n';
+                                    row[14] = elemento.fechaAgendamiento ? elemento.fechaAgendamiento : 'Sin informaci&oacute;n';
+                                    row[15] = elemento.fechaActivacion ? elemento.fechaActivacion : 'Sin informaci&oacute;n';
+                                    row[16] = elemento.regionInstalacion ? elemento.regionInstalacion : 'Sin informaci&oacute;n';
+                                    row[17] = elemento.funcionPropietario ? elemento.funcionPropietario : 'Sin informaci&oacute;n';
+                                    row[18] = elemento.grupoCodificacion ? elemento.grupoCodificacion : 'Sin informaci&oacute;n';
+                                    row[19] = elemento.nivel1 ? elemento.nivel1 : 'Sin informaci&oacute;n';
+                                    row[20] = elemento.nivel2 ? elemento.nivel2 : 'Sin informaci&oacute;n';
+                                    row[21] = elemento.nivel3 ? elemento.nivel3 : 'Sin informaci&oacute;n';
+                                    row[22] = elemento.repetido == "true" ? '<input type="checkbox" checked disabled>' : '<input type="checkbox" disabled>';
+                                    row[23] = elemento.distritoSitio ? elemento.distritoSitio : 'Sin informaci&oacute;n';
+                                    row[24] = elemento.subTipo ? elemento.subTipo : 'Sin informaci&oacute;n';
+                                    row[25] = elemento.plazaSitio ? elemento.plazaSitio : 'Sin informaci&oacute;n';
+                                    row[26] = elemento.plazaOperacion ? elemento.plazaOperacion : 'Sin informaci&oacute;n';
+                                    
+                                    arraRow.push(row);
+                                })
+
+                            } else {
+                                toastr.info('No se encontraron datos');
+                            }
+                        } else {
+                            toastr.warning('No se encontraron datos');
+                        }
+                    } else {
+                        toastr.warning(response.data.resultDescripcion);
+                    }
+                } else {
+                    toastr.error('Ha ocurrido un error al consultar el reporte');
+                }
+
+                reporteBackLogFactibilidadTable = $('#reporteBackLogFactibilidadTable').DataTable({
+                    "paging": true,
+                    "lengthChange": false,
+                    "ordering": true,
+                    "pageLength": 10,
+                    "bDestroy": true,
+                    "info": true,
+                    "scrollX": false,
+                    "data": arraRow,
+                    "autoWidth": false,
+                    "language": idioma_espanol_not_font,
+                    "aoColumnDefs": [
+                        { "aTargets": [26], "bSortable": false }
+                    ]
+                });
+                swal.close();
+            })
+        }
+    }
+
+    $scope.descargarReporteBackLogFactibilidades = function() {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        if ($("#tipo_reporte_backlogfactib").val() == 'semana' && !$scope.weekDateObjectReport.backlogfactib) {
+            mensaje += '<li>Seleccione semana</li>';
+            isValid = false
+        }
+
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('backlogfactib');
+            let params = {
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin,
+                sheet: "Reporte backlog factibilidad",
+                tipoExcel: 'reportesf-backlogfactib-pi',
+                headers: ["CUENTA", "OS", "TICKET", "ID OT GIM", "ESTATUS", "ESTADO", "PLAZA", "ZONA", "PROPIETARIO TICKET", "TURNO AGENDAMIENTO", "CLUSTER INSTALACION", "COLONIA", "FECHA/HORA APERTURA", "PRIMER FECHA AGENDAMIENTO", "FECHA AGENDAMIENTO", 
+                "FECHA ACTIVACION", "REGION INSTALACION", "PROPIETARIO", "GRUPO CODIFICACION", "NIVEL 1", "NIVEL 2", "NIVEL 3", "REPETIDO", "DISTRITO SITIO", "SUBTIPO", "PLAZA SITIO", "PLAZA OPERACION"],
+                valores: ["numeroCuenta", "folio", "numeroTicket", "idOtGIM", "estatus", "estado", "plaza", "zona", "nombreCompleto", "turnoAgendamiento", "clusterInstalacion", "colonia", "fechaApertura", "primerFechaAgendamiento", "fechaAgendamiento",
+                "fechaActivacion", "regionInstalacion", "funcionPropietario", "grupoCodificacion", "nivel1", "nivel2", "nivel3", "repetido", "distritoSitio", "subTipo", "plazaSitio", "plazaOperacion"]
+            }
+            $scope.downloadReport(params, 'reporteBackLogFactibilidad', 'backlogfactib');
+        }
+    }
+
+    $scope.consultarReporteBackLogVoluntarias = function() {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        if ($("#tipo_reporte_backlogvolun").val() == 'semana' && !$scope.weekDateObjectReport.backlogvolun) {
+            mensaje += '<li>Seleccione semana</li>';
+            isValid = false
+        }
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('backlogvolun');
+            let params = {
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin
+            }
+            if (!swal.isVisible()) {
+                swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                swal.showLoading();
+            }
+            reportesSFService.consultarReporteBackLogVoluntarias(params).then(function success(response) {
+                swal.close();
+                let arraRow = [];
+                if (response.data !== undefined) {
+                    if (response.data.respuesta) {
+                        if (response.data.result) {
+                            if (response.data.result.resultado) {
+                                $scope.resultReporteBackLogVoluntarias = response.data.result.resultado.length;
+                                $.each(response.data.result.resultado, function (i, elemento) {
+                                    let row = [];
+
+                                    row[0] = elemento.numeroCuenta ? elemento.numeroCuenta : 'Sin informaci&oacute;n';
+                                    row[1] = elemento.folio ? elemento.folio : 'Sin informaci&oacute;n';
+                                    row[2] = elemento.numeroTicket ? elemento.numeroTicket : 'Sin informaci&oacute;n';
+                                    row[3] = elemento.idOtGIM ? elemento.idOtGIM : 'Sin informaci&oacute;n';
+                                    row[4] = elemento.estatus ? elemento.estatus : 'Sin informaci&oacute;n';
+                                    row[5] = elemento.estado ? elemento.estado : 'Sin informaci&oacute;n';
+                                    row[6] = elemento.plaza ? elemento.plaza : 'Sin informaci&oacute;n';
+                                    row[7] = elemento.zona ? elemento.zona : 'Sin informaci&oacute;n';
+                                    row[8] = elemento.nombreCompleto ? elemento.nombreCompleto : 'Sin informaci&oacute;n';
+                                    row[9] = elemento.turnoAgendamiento ? elemento.turnoAgendamiento : 'Sin informaci&oacute;n';
+                                    row[10] = elemento.clusterInstalacion ? elemento.clusterInstalacion : 'Sin informaci&oacute;n';
+                                    row[11] = elemento.fechaApertura ? elemento.fechaApertura : 'Sin informaci&oacute;n';
+                                    row[12] = elemento.primerFechaAgendamiento ? elemento.primerFechaAgendamiento : 'Sin informaci&oacute;n';
+                                    row[13] = elemento.fechaAgendamiento ? elemento.fechaAgendamiento : 'Sin informaci&oacute;n';
+                                    row[14] = elemento.fechaActivacion ? elemento.fechaActivacion : 'Sin informaci&oacute;n';
+                                    row[15] = elemento.regionInstalacion ? elemento.regionInstalacion : 'Sin informaci&oacute;n';
+                                    row[16] = elemento.funcionPropietario ? elemento.funcionPropietario : 'Sin informaci&oacute;n';
+                                    row[17] = elemento.grupoCodificacion ? elemento.grupoCodificacion : 'Sin informaci&oacute;n';
+                                    row[18] = elemento.nivel1 ? elemento.nivel1 : 'Sin informaci&oacute;n';
+                                    row[19] = elemento.nivel2 ? elemento.nivel2 : 'Sin informaci&oacute;n';
+                                    row[20] = elemento.nivel3 ? elemento.nivel3 : 'Sin informaci&oacute;n';
+                                    row[21] = elemento.repetido == "true" ? '<input type="checkbox" checked disabled>' : '<input type="checkbox" disabled>';
+                                    row[22] = elemento.distritoSitio ? elemento.distritoSitio : 'Sin informaci&oacute;n';
+                                    row[23] = elemento.subTipo ? elemento.subTipo : 'Sin informaci&oacute;n';
+                                    row[24] = elemento.distrito ? elemento.distrito : 'Sin informaci&oacute;n';
+                                    row[25] = elemento.clusterComercial ? elemento.clusterComercial : 'Sin informaci&oacute;n';
+                                    row[26] = elemento.plazaSitio ? elemento.plazaSitio : 'Sin informaci&oacute;n';
+                                    row[27] = elemento.tipoOrden ? elemento.tipoOrden : 'Sin informaci&oacute;n';
+                                    row[28] = elemento.plazaOperacion ? elemento.plazaOperacion : 'Sin informaci&oacute;n';
+                                    arraRow.push(row);
+                                })
+
+                            } else {
+                                toastr.info('No se encontraron datos');
+                            }
+                        } else {
+                            toastr.warning('No se encontraron datos');
+                        }
+                    } else {
+                        toastr.warning(response.data.resultDescripcion);
+                    }
+                } else {
+                    toastr.error('Ha ocurrido un error al consultar el reporte');
+                }
+
+                reporteBackLogVoluntariosTable = $('#reporteBackLogVoluntariosTable').DataTable({
+                    "paging": true,
+                    "lengthChange": false,
+                    "ordering": true,
+                    "pageLength": 10,
+                    "bDestroy": true,
+                    "info": true,
+                    "scrollX": false,
+                    "data": arraRow,
+                    "autoWidth": false,
+                    "language": idioma_espanol_not_font,
+                    "aoColumnDefs": [
+                        { "aTargets": [28], "bSortable": false }
+                    ]
+                });
+                swal.close();
+            })
+        }
+    }
+
+    $scope.descargarReporteBackLogVoluntarias = function() {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        if ($("#tipo_reporte_backlogvolun").val() == 'semana' && !$scope.weekDateObjectReport.backlogvolun) {
+            mensaje += '<li>Seleccione semana</li>';
+            isValid = false
+        }
+
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('backlogvolun');
+            let params = {
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin,
+                sheet: "Reporte backlog voluntarias",
+                tipoExcel: 'reportesf-backlogvolun-pi',
+                headers: ["CUENTA", "OS", "TICKET", "ID OT GIM", "ESTATUS", "ESTADO", "PLAZA", "ZONA", "PROPIETARIO TICKET", "TURNO AGENDAMIENTO", "CLUSTER INSTALACION", "FECHA/HORA APERTURA", "PRIMER FECHA AGENDAMIENTO", "FECHA AGENDAMIENTO", 
+                "FECHA ACTIVACION", "REGION INSTALACION", "PROPIETARIO", "GRUPO CODIFICACION", "NIVEL 1", "NIVEL 2", "NIVEL 3", "REPETIDO", "DISTRITO SITIO", "SUBTIPO", "DISTRITO", "CLUSTER COMERCIAL", "PLAZA SITIO", "TIPO ORDEN", "PLAZA OPERACION"],
+                valores: ["numeroCuenta", "folio", "numeroTicket", "idOtGIM", "estatus", "estado", "plaza", "zona", "nombreCompleto", "turnoAgendamiento", "clusterInstalacion", "fechaApertura", "primerFechaAgendamiento", "fechaAgendamiento",
+                "fechaActivacion", "regionInstalacion", "funcionPropietario", "grupoCodificacion", "nivel1", "nivel2", "nivel3", "repetido", "distritoSitio", "subTipo", "distrito", "clusterComercial", "plazaSitio", "tipoOrden", "plazaOperacion"]
+            }
+            $scope.downloadReport(params, 'reporteBackLogVoluntarias', 'backlogvolun');
+        }
+    }
+
+    // ----------------------------------------
+
+    $scope.consultarReporteVentasInstalacion = function() {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        if ($("#tipo_reporte_ventasinstalacion").val() == 'semana' && !$scope.weekDateObjectReport.ventasinstalacion) {
+            mensaje += '<li>Seleccione semana</li>';
+            isValid = false
+        }
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('ventasinstalacion');
+            let params = {
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin
+            }
+            if (!swal.isVisible()) {
+                swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                swal.showLoading();
+            }
+            reportesSFService.consultarReporteVentasInstalacion(params).then(function success(response) {
+                swal.close();
+                let arraRow = [];
+                if (response.data !== undefined) {
+                    if (response.data.respuesta) {
+                        if (response.data.result) {
+                            if (response.data.result.resultado) {
+                                $scope.resultReporteVentasInstalacion = response.data.result.resultado.length;
+                                $.each(response.data.result.resultado, function (i, elemento) {
+                                    let row = [];
+
+                                    row[0] = elemento.idCuentaBRM ? elemento.idCuentaBRM : 'Sin informaci&oacute;n';
+                                    row[1] = elemento.folio ? elemento.folio : 'Sin informaci&oacute;n';
+                                    row[2] = elemento.closeDate ? elemento.closeDate : 'Sin informaci&oacute;n';
+                                    row[3] = elemento.leadSource ? elemento.leadSource : 'Sin informaci&oacute;n';
+                                    row[4] = elemento.canal ? elemento.canal : 'Sin informaci&oacute;n';
+                                    row[5] = elemento.subCanal ? elemento.subCanal : 'Sin informaci&oacute;n';
+                                    row[6] = elemento.cluster ? elemento.cluster : 'Sin informaci&oacute;n';
+                                    row[7] = elemento.fechaActivacion ? elemento.fechaActivacion : 'Sin informaci&oacute;n';
+                                    row[8] = elemento.empleado ? elemento.empleado : 'Sin informaci&oacute;n';
+                                    row[9] = elemento.estatus ? elemento.estatus : 'Sin informaci&oacute;n';
+                                    row[10] = elemento.motivoCancelacion ? elemento.motivoCancelacion : 'Sin informaci&oacute;n';
+                                    row[11] = elemento.fechaAgendada ? elemento.fechaAgendada : 'Sin informaci&oacute;n';
+                                    row[12] = elemento.tipoOrden ? elemento.tipoOrden : 'Sin informaci&oacute;n';
+                                    row[13] = elemento.familiaId ? elemento.familiaId : 'Sin informaci&oacute;n';
+                                    row[14] = elemento.dpplan ? elemento.dpplan : 'Sin informaci&oacute;n';
+                                    row[15] = elemento.tscancelado ? elemento.tscancelado : 'Sin informaci&oacute;n';
+                                    
+                                    arraRow.push(row);
+                                })
+
+                            } else {
+                                toastr.info('No se encontraron datos');
+                            }
+                        } else {
+                            toastr.warning('No se encontraron datos');
+                        }
+                    } else {
+                        toastr.warning(response.data.resultDescripcion);
+                    }
+                } else {
+                    toastr.error('Ha ocurrido un error al consultar el reporte');
+                }
+
+                reporteVentasInstalacionTable = $('#reporteVentasInstalacionTable').DataTable({
+                    "paging": true,
+                    "lengthChange": false,
+                    "ordering": true,
+                    "pageLength": 10,
+                    "bDestroy": true,
+                    "info": true,
+                    "scrollX": false,
+                    "data": arraRow,
+                    "autoWidth": false,
+                    "language": idioma_espanol_not_font,
+                    "aoColumnDefs": [
+                        { "aTargets": [15], "bSortable": false }
+                    ]
+                });
+                swal.close();
+            })
+        }
+    }
+
+    $scope.descargarReporteVentasInstalacion = function() {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        if ($("#tipo_reporte_ventasinstalacion").val() == 'semana' && !$scope.weekDateObjectReport.ventasinstalacion) {
+            mensaje += '<li>Seleccione semana</li>';
+            isValid = false
+        }
+
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('ventasinstalacion');
+            let params = {
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin,
+                sheet: "Reporte planning ventas instalacion",
+                tipoExcel: 'reportesf-ventasinstalacion-pi',
+                headers: ["CUENTA BRM", "OS", "FECHA CIERRE", "ORIGEN DEL PROSPECTO", "CANAL", "SUBCANAL", "CLUSTER", "FECHA ACTIVACION", "NOMBRE EMPLEADO", "ESTATUS", "MOTIVO CANCELACION", "FECHA AGENDAMIENTO", "TIPO ORDEN",
+                "FAMILIA PLAN", "PLAN", "TS CANCELADO"],
+                valores: ["idCuentaBRM", "folio", "closeDate", "leadSource", "canal", "subCanal", "cluster", "fechaActivacion", "empleado", "estatus", "motivoCancelacion", "fechaAgendada", "tipoOrden",
+                "familiaId", "dpplan", "tscancelado"]
+            }
+            $scope.downloadReport(params, 'reporteVentasInstalacion', 'ventasinstalacion');
+        }
+    }
+
+    $scope.consultarReporteVentasPrincipal = function() {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        if ($("#tipo_reporte_ventasprinc").val() == 'semana' && !$scope.weekDateObjectReport.ventasprinc) {
+            mensaje += '<li>Seleccione semana</li>';
+            isValid = false
+        }
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('ventasprinc');
+            let params = {
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin
+            }
+            if (!swal.isVisible()) {
+                swal({ text: 'Cargando registros...', allowOutsideClick: false });
+                swal.showLoading();
+            }
+            reportesSFService.consultarReporteVentas(params).then(function success(response) {
+                swal.close();
+                let arraRow = [];
+                if (response.data !== undefined) {
+                    if (response.data.respuesta) {
+                        if (response.data.result) {
+                            if (response.data.result.resultado) {
+                                $scope.resultReporteVentasPrincipal = response.data.result.resultado.length;
+                                $.each(response.data.result.resultado, function (i, elemento) {
+                                    let row = [];
+
+                                    row[0] = elemento.idCuentaBRM ? elemento.idCuentaBRM : 'Sin informaci&oacute;n';
+                                    row[1] = elemento.folio ? elemento.folio : 'Sin informaci&oacute;n';
+                                    row[2] = elemento.idOtGIM ? elemento.idOtGIM : 'Sin informaci&oacute;n';
+                                    row[3] = elemento.numOportunidad ? elemento.numOportunidad : 'Sin informaci&oacute;n';
+                                    row[4] = elemento.nombreCuenta ? elemento.nombreCuenta : 'Sin informaci&oacute;n';
+                                    row[5] = elemento.estatus ? elemento.estatus : 'Sin informaci&oacute;n';
+                                    row[6] = elemento.motivoCancelacion ? elemento.motivoCancelacion : 'Sin informaci&oacute;n';
+                                    row[7] = elemento.subCanal ? elemento.subCanal : 'Sin informaci&oacute;n';
+                                    row[8] = elemento.fechaActivacion ? elemento.fechaActivacion : 'Sin informaci&oacute;n';
+                                    row[9] = elemento.jefeVentas ? elemento.jefeVentas : 'Sin informaci&oacute;n';
+                                    row[10] = elemento.distrital ? elemento.distrital : 'Sin informaci&oacute;n';
+                                    row[11] = elemento.empleado ? elemento.empleado : 'Sin informaci&oacute;n';
+                                    row[12] = elemento.canal ? elemento.canal : 'Sin informaci&oacute;n';
+                                    row[13] = elemento.canalRecomendador ? elemento.canalRecomendador : 'Sin informaci&oacute;n';
+                                    row[14] = elemento.folioEmpleado ? elemento.folioEmpleado : 'Sin informaci&oacute;n';
+                                    row[15] = elemento.fechaAgendamiento ? elemento.fechaAgendamiento : 'Sin informaci&oacute;n';
+                                    row[16] = elemento.turnoAgendamiento ? elemento.turnoAgendamiento : 'Sin informaci&oacute;n';
+                                    row[17] = elemento.tipoOrden ? elemento.tipoOrden : 'Sin informaci&oacute;n';
+                                    row[18] = elemento.sitioEstado ? elemento.sitioEstado : 'Sin informaci&oacute;n';
+                                    row[19] = elemento.plaza ? elemento.plaza : 'Sin informaci&oacute;n';
+                                    row[20] = elemento.distrito ? elemento.distrito : 'Sin informaci&oacute;n';
+                                    row[21] = elemento.region ? elemento.region : 'Sin informaci&oacute;n';
+                                    row[22] = elemento.fechaCreacion ? elemento.fechaCreacion : 'Sin informaci&oacute;n';
+                                    row[23] = elemento.clusterComercial ? elemento.clusterComercial : 'Sin informaci&oacute;n';
+                                    row[24] = elemento.fechaCierre ? elemento.fechaCierre : 'Sin informaci&oacute;n';
+                                    row[25] = elemento.cluster ? elemento.cluster : 'Sin informaci&oacute;n';
+                                    row[26] = elemento.sitioplaza ? elemento.sitioplaza : 'Sin informaci&oacute;n';
+                                    row[27] = elemento.comentariosGIM ? elemento.comentariosGIM : 'Sin informaci&oacute;n';
+                                    arraRow.push(row);
+                                })
+
+                            } else {
+                                toastr.info('No se encontraron datos');
+                            }
+                        } else {
+                            toastr.warning('No se encontraron datos');
+                        }
+                    } else {
+                        toastr.warning(response.data.resultDescripcion);
+                    }
+                } else {
+                    toastr.error('Ha ocurrido un error al consultar el reporte');
+                }
+
+                reporteVentasPrincipalTable = $('#reporteVentasPrincipalTable').DataTable({
+                    "paging": true,
+                    "lengthChange": false,
+                    "ordering": true,
+                    "pageLength": 10,
+                    "bDestroy": true,
+                    "info": true,
+                    "scrollX": false,
+                    "data": arraRow,
+                    "autoWidth": false,
+                    "language": idioma_espanol_not_font,
+                    "aoColumnDefs": [
+                        { "aTargets": [27], "bSortable": false }
+                    ]
+                });
+                swal.close();
+            })
+        }
+    }
+
+    $scope.descargarReporteVentasPrincipal = function() {
+        let mensaje = '<ul>';
+        let isValid = true;
+
+        if ($("#tipo_reporte_ventasprinc").val() == 'semana' && !$scope.weekDateObjectReport.ventasprinc) {
+            mensaje += '<li>Seleccione semana</li>';
+            isValid = false
+        }
+
+
+        if (!isValid) {
+            swal.close()
+            mensaje += '</ul>';
+            mostrarMensajeWarningValidacion(mensaje);
+            return false;
+        } else {
+            let fechas = $scope.getFecha('ventasprinc');
+            let params = {
+                fechaInicial: fechas.fechaInicio,
+                fechaFinal: fechas.fechaFin,
+                sheet: "Reporte planning ventas principal",
+                tipoExcel: 'reportesf-ventasprinc-pi',
+                headers: ["CUENTA", "OS", "ID OT GIM", "NUMERO OPORTUNIDAD", "NOMBRE CUENTA", "ESTATUS", "MOTIVO CANCELACION", "SUBCANAL", "FECHA ACTIVACION", "JEFE VENTAS", "DISTRITAL", "EMPLEADO", "CANAL",
+                "CANAL RECOMENDADOR", "FOLIO EMPLEADO", "FECHA AGENDAMIENTO", "TURNO AGENDAMIENTO", "TIPO ORDEN", "SITIO ESTADO", "PLAZA", "DISTRITO", "REGION", "FECHA CREACION", "CLUSTER COMERCIAL",
+                "FECHA CIERRE", "CLUSTER", "SITIO PLAZA", "COMENTARIO GIM"],
+                valores: ["idCuentaBRM", "folio", "idOtGIM", "numOportunidad", "nombreCuenta", "estatus", "motivoCancelacion", "subCanal", "fechaActivacion", "jefeVentas", "distrital", "empleado", "canal",
+                "canalRecomendador", "folioEmpleado", "fechaAgendamiento", "turnoAgendamiento", "tipoOrden", "sitioEstado", "plaza", "distrito", "region", "fechaCreacion", "clusterComercial",
+                "fechaCierre", "cluster", "sitioplaza", "comentariosGIM"]
+            }
+            $scope.downloadReport(params, 'reporteVentasPrincipal', 'ventasprinc');
         }
     }
 

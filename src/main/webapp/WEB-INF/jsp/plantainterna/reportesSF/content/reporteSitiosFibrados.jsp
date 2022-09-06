@@ -1,12 +1,7 @@
 <div class="container-fluid container-tab">
     <div class="container-filtros">
         <div class="row md-form" id="filtros_config">
-            <div class="col-md-2 columna-filtro-indRR">
-                <label class="label-filter">Geograf&iacute;a</label>
-                <input readonly placeholder="GEOGRAF&Iacute;A" type="text" id="cluster-sitiosfibr"
-                    class="input-filtro form-control form-control-sm" ng-click="abrirModalGeografiaRep('sitiosfibr')" />
-            </div>
-            <div class="col-md-2 columna-filtro-indR pl-0">
+            <div class="col-md-2 columna-filtro-indR">
                 <label class="label-filter">Tipo fecha</label>
                 <select class="input-filtro form-control form-control-sm" id="tipo_reporte_sitiosfibr"
                     style="border: 1px solid #dbdbdb !important; background: white !important;" ng-model="reporte.sitiosfibr" ng-change="changeCalendar(this, 'sitiosfibr')">

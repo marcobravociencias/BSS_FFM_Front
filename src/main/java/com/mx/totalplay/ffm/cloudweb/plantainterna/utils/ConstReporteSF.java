@@ -112,4 +112,64 @@ public class ConstReporteSF implements Serializable{
   @Value("${exportaReporteIngresoProactivo}")
   private String exportaReporteIngresoProactivo;
   
+  @Value("${consultaReporteRecoleccionGeneradas}")
+  private String consultaReporteRecoleccionGeneradas;
+  
+  @Value("${exportaReporteRecoleccionGeneradas}")
+  private String exportaReporteRecoleccionGeneradas;
+  
+  @Value("${consultaReporteRecoleccionCerradas}")
+  private String consultaReporteRecoleccionCerradas;
+  
+  @Value("${exportaReporteRecoleccionCerradas}")
+  private String exportaReporteRecoleccionCerradas;
+  
+  @Value("${consultaReporteRecoleccionAgendadas}")
+  private String consultaReporteRecoleccionAgendadas;
+  
+  @Value("${exportaReporteRecoleccionAgendadas}")
+  private String exportaReporteRecoleccionAgendadas;
+  
+  @Value("${consultaReporteBackLogFactibilidades}")
+  private String consultaReporteBackLogFactibilidades;
+  
+  @Value("${exportaReporteBackLogFactibilidades}")
+  private String exportaReporteBackLogFactibilidades;
+  
+  @Value("${consultaReporteBackLogVoluntarias}")
+  private String consultaReporteBackLogVoluntarias;
+  
+  @Value("${exportaReporteBackLogVoluntarias}")
+  private String exportaReporteBackLogVoluntarias;
+  
+  @Value("${consultaReporteVentas}")
+  private String consultaReporteVentas;
+  
+  @Value("${exportaReporteVentas}")
+  private String exportaReporteVentas;
+  
+  @Value("${consultaReportePlanningNuevosAddon}")
+  private String consultaReportePlanningNuevosAddon;
+  
+  @Value("${exportaReportePlanningNuevosAddon}")
+  private String exportaReportePlanningNuevosAddon;
+  
+  @Value("${consultaReportePlanningCompletadosOrdenes}")
+  private String consultaReportePlanningCompletadosOrdenes;
+  
+  @Value("${exportaReportePlanningCompletadosOrdenes}")
+  private String exportaReportePlanningCompletadosOrdenes;
+  
+  @Value("${consultaReportePlanningCompletadosAddon}")
+  private String consultaReportePlanningCompletadosAddon;
+  
+  @Value("${exportaReportePlanningCompletadosAddon}")
+  private String exportaReportePlanningCompletadosAddon;
+  
+  @Value("${consultaReporteVentasInstalacion}")
+  private String consultaReporteVentasInstalacion;
+  
+  @Value("${exportaReporteVentasInstalacion}")
+  private String exportaReporteVentasInstalacion;
+  
 }
