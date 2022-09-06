@@ -122,8 +122,12 @@
 		<div class="container-fluid">
 
 			<button id="btnEditarDireccionOT" class="btn btn-sm btn-primary disable-terminada"
+				ng-if="accionesUserConfigText.indexOf('accionCambioDireccionOt') !== -1"
 				ng-click="mostrarVistaModificarDireccion(infoOtDetalle.direccion.latitud, infoOtDetalle.direccion.longitud)">Editar</button>
-			<span class="text-terminada" ng-if="keyBloqueoBtn.includes(infoOtDetalle.idEstatus)"><i class="fas fa-exclamation-circle"></i> La acci&oacute;n no esta disponible</span>
+			<div ng-if="accionesUserConfigText.indexOf('accionCambioDireccionOt') === -1" class="text-accion-nopermiso">
+				<i class="icon-not-permiso fas fa-user-lock"></i>
+				<b class="text-not-permiso">No tienes permiso para actualizar la direcci&oacute;n</b>
+			</div>
 		</div>
 	</div>
 </div>
@@ -157,8 +161,10 @@
 			<div class="col-md-12">
 				<label class="etiquetaCambioDireccion">C&oacute;digo postal</label>
 				<div class="input-group">
-					<input type="text" class="form-control form-control-sm txtCambioDireccion input-acciones" maxlength="6"
-						ng-model="infoOtDetalle.direccion.codigoPostal" id="codigoPostalNum" oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+					<input type="text" class="form-control form-control-sm txtCambioDireccion input-acciones"
+						maxlength="6" ng-model="infoOtDetalle.direccion.codigoPostal" id="codigoPostalNum"
+						oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+						onkeypress="return event.charCode >= 48 && event.charCode <= 57">
 				</div>
 			</div>
 		</div>

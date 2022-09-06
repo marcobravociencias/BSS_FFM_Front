@@ -77,7 +77,11 @@
             style="font-size: 16px;">
         <div id="content-mapa-dictamen"></div>
     </div>
-    <div class="col-12" style="text-align: right;">
+    <div class="col-12" style="text-align: right;" ng-if="accionesUserConfigText.indexOf('accionActualizaDictamenOt') !== -1" >
         <button ng-click="guardarDictamen()" class="btn btn-modalAcciones btn-primary">Guardar</button>
+    </div>
+    <div ng-if="accionesUserConfigText.indexOf('accionActualizaDictamenOt') === -1" class="text-accion-nopermiso">
+        <i class="icon-not-permiso fas fa-user-lock"></i>
+        <b class="text-not-permiso">No tienes permiso para actualizar el dictamen</b>
     </div>
 </div>

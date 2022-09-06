@@ -24,7 +24,6 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 	$scope.listadoDictamen = {};
 	$scope.objectDictamen = {};
 	$scope.accionConsultaOts = false;
-	$scope.accionCambioEstatusOt = false;
 	$scope.accionCambioDireccionOt = false;
 	$scope.accionActualizaDictamenOt = false;
 
@@ -112,11 +111,9 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 			$("#idBody").removeAttr("style");
 
 			if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
-				$scope.accionConsultaOts = $scope.permisosConfigUser.permisos.find(e => { return e.clave === 'accionConsultaOts' });
-				$scope.accionCambioEstatusOt = $scope.permisosConfigUser.permisos.find(e => { return e.clave === 'accionCambioEstatusOt' });
-				$scope.accionCambioDireccionOt = $scope.permisosConfigUser.permisos.find(e => { return e.clave === 'accionCambioDireccionOt' });
-				$scope.accionActualizaDictamenOt = $scope.permisosConfigUser.permisos.find(e => { return e.clave === 'accionActualizaDictamenOt' });
-				
+				$scope.accionConsultaOts = true//$scope.permisosConfigUser.permisos.find(e => { return e.clave === 'accionConsultaOts' });
+				$scope.accionesUserConfigText = $scope.permisosConfigUser.permisos.map(e => { return e.clave })
+
 				objectTempAccion = new GenericAccionRealizada("" + 25, 'TOP_RIGHT');
 				objectTempAccion.inicializarBotonAccionesRecientes();
 			}
@@ -199,7 +196,11 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 								return e
 							})
 							$('#jstree-proton-3').bind('loaded.jstree', function (e, data) {
-								$scope.consultarOTsTercerosGeneric();
+								if ($scope.accionConsultaOts) {
+									$scope.iniciarFechasConsulta();
+									$scope.consultarOTsTercerosGeneric();
+								}
+
 							}).jstree({
 								'plugins': ["wholerow", "checkbox", "search"],
 								'core': {
@@ -1902,7 +1903,8 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 
 		$("#moduloTercerosGeneric").addClass('active');
 	});
+
+
 	$scope.verMapaDictamen();
-	$scope.iniciarFechasConsulta();
 	$scope.inicializarsTableOts()
 }]);

@@ -49,7 +49,13 @@
 
 	<body id="idBody" ng-controller="tercerosGenericController" style="display: none;">
 		<jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
-		<div class="container-fluid container-filtros-generic" id="container_terceros_generic">
+		<div class="container container-nocontent" id="container_terceros_generic" ng-show="!accionConsultaOts">
+			<div class="text-accion-nopermiso">
+                <i class="icon-not-permiso fas fa-user-lock"></i>
+                <b class="text-not-permiso">No cuentas con el permiso de consulta.</b>
+            </div>
+		</div>
+		<div class="container-fluid container-filtros-generic" id="container_terceros_generic" ng-show="accionConsultaOts">
 			<div class="row">
 				<div style="width: 1em;" ng-if="!filtrosGeneral.tipoOrdenes || !filtrosGeneral.tipoOrdenes.length">
 					<i class="icono-noseleccion fas fa-exclamation-circle me-2"
