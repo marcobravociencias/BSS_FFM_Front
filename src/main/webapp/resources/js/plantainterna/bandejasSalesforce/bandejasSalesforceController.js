@@ -66,16 +66,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         });
         $('.datepicker').datepicker('update', new Date());
         $scope.reiniciarTablaPendientesAgendar()
-        rescataventasTable = $('#tableRescataventas').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": true,
-            "ordering": true,
-            "pageLength": 10,
-            "info": true,
-            "autoWidth": true,
-            "language": idioma_espanol_not_font
-        });
+        $scope.reiniciarTablaRescataventas()
         pendientesActivarTable = $('#tablePendienteActivar').DataTable({
             "paging": true,
             "lengthChange": false,
@@ -1092,6 +1083,22 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
         });
 	}
 
+    $scope.reiniciarTablaRescataventas=function(){
+        if (rescataventasTable) {
+            rescataventasTable.destroy();
+        }
+        rescataventasTable = $('#tableRescataventas').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": true,
+            "ordering": true,
+            "pageLength": 10,
+            "info": true,
+            "autoWidth": true,
+            "language": idioma_espanol_not_font
+        });
+    }
+
     $scope.consultarRescataventasBandejas = function () {
         let isValid = true;
         let mensajeError = '';
@@ -1111,6 +1118,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
             let params = {
                 "geografias": clustersSelected,
             }
+            $scope.reiniciarTablaRescataventas()
             bandejasSalesforceService.consultarRescataventasBandejasSF(params).then(function success(response) {
                 if (response.data) {
                     if (response.data.respuesta) {
@@ -1298,7 +1306,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
     } 
 
 
-    $scope.consultarDetalleServicio = function (servicio) {
+    $scope.consultarDetalleServicio = function (servicio,idCSP) {
         
         if(!$scope.isConsultaEquiposModelos){
             swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });

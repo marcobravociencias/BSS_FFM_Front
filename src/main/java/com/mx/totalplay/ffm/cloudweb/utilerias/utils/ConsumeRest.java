@@ -230,7 +230,7 @@ public class ConsumeRest {
             		String.class);
             String bodyResponse = responseEntity.getBody();
             logger.info("--- RESPONSE ---");
-            logger.info(bodyResponse);
+            //logger.info(bodyResponse);
             Object result = gson.fromJson(bodyResponse, Object.class);
             int valueEstatusCode=responseEntity.getStatusCode() == null  ? -1 : responseEntity.getStatusCode().value() ;
             logger.info("--- RESPONSE ESTATUS ---"+valueEstatusCode);
@@ -289,7 +289,7 @@ public class ConsumeRest {
                     String.class);
             String bodyResponse = responseEntity.getBody();
             logger.info("--- RESPONSE ---***");
-            logger.info(bodyResponse);
+           // logger.info(bodyResponse);
             Object result = gson.fromJson(bodyResponse, Object.class);
             int valueEstatusCode=responseEntity.getStatusCode() == null  ? -1 : responseEntity.getStatusCode().value() ;
             logger.info("--- RESPONSE ESTATUS ---"+valueEstatusCode);
@@ -346,7 +346,7 @@ public class ConsumeRest {
                     String.class);
             String bodyResponse = responseEntity.getBody();
             logger.info("--- RESPONSE ---");
-            logger.info(bodyResponse);
+            //logger.info(bodyResponse);
             Object result = gson.fromJson(bodyResponse, Object.class);
             int valueEstatusCode=responseEntity.getStatusCode() == null  ? -1 : responseEntity.getStatusCode().value() ;
             logger.info("--- RESPONSE ESTATUS ---"+valueEstatusCode);
@@ -634,7 +634,7 @@ public class ConsumeRest {
                     String.class);
             String bodyResponse = responseEntity.getBody();
             logger.info("--- RESPONSE ---***");
-            logger.info(bodyResponse);
+            //logger.info(bodyResponse);
             Object result = gson.fromJson(bodyResponse, Object.class);
             
             int valueEstatusCode=responseEntity.getStatusCode() == null  ? -1 : responseEntity.getStatusCode().value() ;
@@ -703,7 +703,7 @@ public class ConsumeRest {
                     String.class);
             String bodyResponse = responseEntity.getBody();
             logger.info("--- RESPONSE ---");
-            logger.info(bodyResponse);
+            //logger.info(bodyResponse);
             Object result = gson.fromJson(bodyResponse, Object.class);
             
             
