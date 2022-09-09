@@ -374,8 +374,9 @@ app.controller('inspectorIncidenciaController', ['$scope', '$q', 'inspectorIncid
                             $scope.listadogeografiacopy = results[3].data.result.geografia
                             $scope.nfiltrogeografia = $scope.nfiltrogeografia ? $scope.nfiltrogeografia : $scope.obtenerNivelUltimoJerarquiaGeneric(results[3].data.result.geografia);
                             geografia = results[3].data.result.geografia.filter(e => e.nivel <= parseInt($scope.nfiltrogeografia));
+                            geografia.push({ id: 0, nombre: "TOTALPLAY", nivel: 0, padre: "#", state: { opened: true } });
                             geografia.map((e) => {
-                                e.parent = e.padre == undefined ? "#" : e.padre;
+                                e.parent = e.padre == null ? 0 : e.padre;
                                 e.text = e.nombre;
                                 e.icon = "fa fa-globe";
                                 e.state = {

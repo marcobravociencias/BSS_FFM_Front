@@ -6445,7 +6445,7 @@ ResourceRow = (function(superClass) {
               </div>
               <div class="row">
                   <div  class="col-12 content-icons-operario ">
-                      <div class="icon-content-operario tooltip-icon-des">
+                      <div class="icon-content-operario tooltip-icon-des validateShowChangeEstatus" style="display:none">
                           <span class="tooltiptext-icon-des">Status operario</span>
                           <span class="icono_operario_accion  fa fa-eye" onclick="abrirCambioEstatusTecnico('${resource.idTecnico}');"></span>
                       </div>                  

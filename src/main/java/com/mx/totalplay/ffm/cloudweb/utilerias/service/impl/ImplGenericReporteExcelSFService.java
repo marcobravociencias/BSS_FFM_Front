@@ -527,12 +527,17 @@ public class ImplGenericReporteExcelSFService implements GenericReporteSFExcelSe
 					if (dataArray.size() > 0) {
 						for (int i = 0; i < dataArray.size(); i++) {
 							JsonObject object = (JsonObject) dataArray.get(i);
-							if (object.get("creaOs").getAsBoolean()) {
-								object.addProperty("creaOs", "Si");
-							}else {
+							try {
+								if (object.get("creaOs") !=null &&  Boolean.parseBoolean( object.get("creaOs").getAsString()  )) {
+									object.addProperty("creaOs", "Si");
+								}else {
+									object.addProperty("creaOs", "No");
+								}
+							}catch(Exception e) {
 								object.addProperty("creaOs", "No");
-							}
+							}	
 							dataReporte.add(object);
+
 						}
 					}
 		            array = dataReporte;
@@ -548,12 +553,17 @@ public class ImplGenericReporteExcelSFService implements GenericReporteSFExcelSe
 					if (dataArray.size() > 0) {
 						for (int i = 0; i < dataArray.size(); i++) {
 							JsonObject object = (JsonObject) dataArray.get(i);
-							if (object.get("repetido").getAsBoolean()) {
-								object.addProperty("repetido", "Si");
-							}else {
+							try {
+								if (object.get("repetido") !=null &&  Boolean.parseBoolean( object.get("repetido").getAsString()  )) {
+									object.addProperty("repetido", "Si");
+								}else {
+									object.addProperty("repetido", "No");
+								}
+							}catch(Exception e) {
 								object.addProperty("repetido", "No");
-							}
+							}	
 							dataReporte.add(object);
+
 						}
 					}
 		            array = dataReporte;
@@ -588,7 +598,25 @@ public class ImplGenericReporteExcelSFService implements GenericReporteSFExcelSe
 				if (response.getResult() == null || response.getResult() instanceof Integer) {
 				} else {
 					JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
-		            array = jsonObjectResponse.getAsJsonArray("resultado");
+					JsonArray dataArray = jsonObjectResponse.getAsJsonArray("resultado");
+					JsonArray dataReporte = new JsonArray();
+					if (dataArray.size() > 0) {
+						for (int i = 0; i < dataArray.size(); i++) {
+							JsonObject object = (JsonObject) dataArray.get(i);
+							try {
+								if (object.get("repetido60") !=null &&  Boolean.parseBoolean( object.get("repetido60").getAsString()  )) {
+									object.addProperty("repetido60", "Si");
+								}else { 
+									object.addProperty("repetido60", "No");
+								}
+							}catch(Exception e) {
+								object.addProperty("repetido60", "No");
+							}	
+							dataReporte.add(object);
+
+						}
+					}
+		            array = dataReporte;
 				}
 				break;
 			case "reportesf-complesoportempr-pi":
@@ -596,7 +624,25 @@ public class ImplGenericReporteExcelSFService implements GenericReporteSFExcelSe
 				if (response.getResult() == null || response.getResult() instanceof Integer) {
 				} else {
 					JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
-		            array = jsonObjectResponse.getAsJsonArray("resultado");
+					JsonArray dataArray = jsonObjectResponse.getAsJsonArray("resultado");
+					JsonArray dataReporte = new JsonArray();
+					if (dataArray.size() > 0) {
+						for (int i = 0; i < dataArray.size(); i++) {
+							JsonObject object = (JsonObject) dataArray.get(i);
+							try {
+								if (object.get("repetido60") !=null &&  Boolean.parseBoolean( object.get("repetido60").getAsString()  )) {
+									object.addProperty("repetido60", "Si");
+								}else {
+									object.addProperty("repetido60", "No");
+								}
+							}catch(Exception e) {
+								object.addProperty("repetido60", "No");
+							}	
+							dataReporte.add(object);
+
+						}
+					}
+		            array = dataReporte;
 				}
 				break;
 			case "reportesf-backlogproact-pi":
@@ -604,7 +650,25 @@ public class ImplGenericReporteExcelSFService implements GenericReporteSFExcelSe
 				if (response.getResult() == null || response.getResult() instanceof Integer) {
 				} else {
 					JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
-		            array = jsonObjectResponse.getAsJsonArray("resultado");
+					JsonArray dataArray = jsonObjectResponse.getAsJsonArray("resultado");
+					JsonArray dataReporte = new JsonArray();
+					if (dataArray.size() > 0) {
+						for (int i = 0; i < dataArray.size(); i++) {
+							JsonObject object = (JsonObject) dataArray.get(i);
+							try {
+								if (object.get("repetido") !=null &&  Boolean.parseBoolean( object.get("repetido").getAsString()  ) ){
+									object.addProperty("repetido", "Si");
+								}else {
+									object.addProperty("repetido", "No");
+								}
+							}catch(Exception e) {
+								object.addProperty("repetido", "No");
+							}
+								
+							dataReporte.add(object);
+						}
+					}
+		            array = dataReporte;
 				}
 				break;
 			case "reportesf-ingresoproact-pi":
@@ -794,6 +858,10 @@ public class ImplGenericReporteExcelSFService implements GenericReporteSFExcelSe
 					JsonObject jsonObjectResponse = gson.fromJson(gson.toJson(response.getResult()), JsonObject.class);
 		            array = jsonObjectResponse.getAsJsonArray("resultado");
 				}
+				break;
+			case "reporte-disponibilidadv2-pi":
+				JsonObject jsonObjectDisponibilidad = gson.fromJson(params, JsonObject.class);
+		        array = jsonObjectDisponibilidad.getAsJsonArray("listDisponibilidad");;
 				break;
 	
 		}

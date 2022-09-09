@@ -202,6 +202,14 @@ app.controller('reportesLogController', ['$scope', '$q', 'reportesLogService', '
             }
 
             $("#container_logs").css("display", "block")
+            $('.datepicker').datepicker({
+                format: 'dd/mm/yyyy',
+                autoclose: true,
+                language: 'es',
+                todayHighlight: true,
+                clearBtn: false
+            });
+            $('.datepicker').datepicker('update', new Date());
 
             if (results[1].data !== undefined) {
                 if (results[1].data.respuesta) {
@@ -778,18 +786,6 @@ app.controller('reportesLogController', ['$scope', '$q', 'reportesLogService', '
 
 
     angular.element(document).ready(function () {
-        setTimeout(() => {
-            $('.datepicker').datepicker({
-                format: 'dd/mm/yyyy',
-                autoclose: true,
-                language: 'es',
-                todayHighlight: true,
-                clearBtn: false
-            });
-            $('.datepicker').datepicker('update', new Date());
-
-        }, 300);
-
         $("#moduloReportesLog").addClass('active')
         $("#nav-bar-otros-options ul li.active").closest("#nav-bar-otros-options").addClass('active-otros-navbar');
     });

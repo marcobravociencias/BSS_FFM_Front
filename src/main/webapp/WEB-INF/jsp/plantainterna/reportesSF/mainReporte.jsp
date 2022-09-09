@@ -345,28 +345,28 @@
                         <div class="row tab-content">
                             <div class="tab-pane fade" id="reporteInstalaciones" role="tabpanel"
                                 aria-labelledby="reporteInstalaciones-tab">
-                                <h5 id="texto_header_reportes" class="text-center">Reporte instalaciones</h5>
+                                <h5 id="texto_header_reportes" class="text-center">Reporte backlog instalaciones</h5>
                                 <jsp:include page="./content/reporteInstalaciones.jsp"></jsp:include>
                             </div>
                             <div class="tab-pane fade" id="reporteSoportes" role="tabpanel"
                                 aria-labelledby="reporteSoportes-tab">
-                                <h5 id="texto_header_reportes" class="text-center">Reporte soportes backlog</h5>
+                                <h5 id="texto_header_reportes" class="text-center">Reporte backlog soportes</h5>
                                 <jsp:include page="./content/reporteSoportes.jsp"></jsp:include>
                             </div>
                             <div class="tab-pane fade" id="reporteRecolecciones" role="tabpanel"
                                 aria-labelledby="reporteRecolecciones-tab">
-                                <h5 id="texto_header_reportes" class="text-center">Reporte recolecciones
+                                <h5 id="texto_header_reportes" class="text-center">Reporte backlog recolecciones
                                 </h5>
                                 <jsp:include page="./content/reporteRecolecciones.jsp"></jsp:include>
                             </div>
                             <div class="tab-pane fade" id="reporteAddon" role="tabpanel"
                                 aria-labelledby="reporteAddon-tab">
-                                <h5 id="texto_header_reportes" class="text-center">Reporte addon</h5>
+                                <h5 id="texto_header_reportes" class="text-center">Reporte backlog addon</h5>
                                 <jsp:include page="./content/reporteAddon.jsp"></jsp:include>
                             </div>
                             <div class="tab-pane fade" id="reporteEmpresarial" role="tabpanel"
                                 aria-labelledby="reporteEmpresarial-tab">
-                                <h5 id="texto_header_reportes" class="text-center">Reporte empresarial</h5>
+                                <h5 id="texto_header_reportes" class="text-center">Reporte backlog empresarial</h5>
                                 <jsp:include page="./content/reporteEmpresarial.jsp"></jsp:include>
                             </div>
                             <div class="tab-pane fade" id="reporteBackLogProact" role="tabpanel"
@@ -386,17 +386,17 @@
                             </div>
                             <div class="tab-pane fade" id="reporteSoportesIng" role="tabpanel"
                                 aria-labelledby="reporteSoportesIng-tab">
-                                <h5 id="texto_header_reportes" class="text-center">Reporte soporte ingresos</h5>
+                                <h5 id="texto_header_reportes" class="text-center">Reporte ingresos soporte</h5>
                                 <jsp:include page="./content/reporteIngresoSoportes.jsp"></jsp:include>
                             </div>
                             <div class="tab-pane fade" id="reporteVentasRes" role="tabpanel"
                                 aria-labelledby="reporteVentasRes-tab">
-                                <h5 id="texto_header_reportes" class="text-center">Reporte ventas residencial</h5>
+                                <h5 id="texto_header_reportes" class="text-center">Reporte ingresos ventas residencial</h5>
                                 <jsp:include page="./content/reporteVentasResidencial.jsp"></jsp:include>
                             </div>
                             <div class="tab-pane fade" id="reporteVentasEmp" role="tabpanel"
                                 aria-labelledby="reporteVentasEmp-tab">
-                                <h5 id="texto_header_reportes" class="text-center">Reporte ventas empresarial</h5>
+                                <h5 id="texto_header_reportes" class="text-center">Reporte ingresos ventas empresarial</h5>
                                 <jsp:include page="./content/reporteVentasEmpresarial.jsp"></jsp:include>
                             </div>
                             <div class="tab-pane fade" id="reporteVentasEmpSA" role="tabpanel"
@@ -413,37 +413,37 @@
                             </div>
                             <div class="tab-pane fade" id="reporteSoportesComp" role="tabpanel"
                                 aria-labelledby="reporteSoportesComp-tab">
-                                <h5 id="texto_header_reportes" class="text-center">Reporte soportes completados
+                                <h5 id="texto_header_reportes" class="text-center">Reporte completados soportes
                                 </h5>
                                 <jsp:include page="./content/reporteCompletadoSoportes.jsp"></jsp:include>
                             </div>
                             <div class="tab-pane fade" id="reporteInstRes" role="tabpanel"
                                 aria-labelledby="reporteInstRes-tab">
-                                <h5 id="texto_header_reportes" class="text-center">Reporte completado residencial
+                                <h5 id="texto_header_reportes" class="text-center">Reporte completados residencial
                                 </h5>
                                 <jsp:include page="./content/reporteInstalacionRes.jsp"></jsp:include>
                             </div>
                             <div class="tab-pane fade" id="reporteInstEmp" role="tabpanel"
                                 aria-labelledby="reporteInstEmp-tab">
-                                <h5 id="texto_header_reportes" class="text-center">Reporte completado empresarial
+                                <h5 id="texto_header_reportes" class="text-center">Reporte completados empresarial
                                 </h5>
                                 <jsp:include page="./content/reporteInstalacionEmp.jsp"></jsp:include>
                             </div>
                             <div class="tab-pane fade" id="reporteCompleProact" role="tabpanel"
                                 aria-labelledby="reporteCompleProact-tab">
-                                <h5 id="texto_header_reportes" class="text-center">Reporte completado proactivos
+                                <h5 id="texto_header_reportes" class="text-center">Reporte completados proactivos
                                 </h5>
                                 <jsp:include page="./content/reporteCompletadoProactivo.jsp"></jsp:include>
                             </div>
                             <div class="tab-pane fade" id="reporteCompleCambDomic" role="tabpanel"
                                 aria-labelledby="reporteCompleCambDomic-tab">
-                                <h5 id="texto_header_reportes" class="text-center">Reporte completado cambio domicilio
+                                <h5 id="texto_header_reportes" class="text-center">Reporte completados cambio domicilio
                                 </h5>
                                 <jsp:include page="./content/reporteCompletadoCambioDomicilio.jsp"></jsp:include>
                             </div>
                             <div class="tab-pane fade" id="reporteCompleSoportEmpr" role="tabpanel"
                                 aria-labelledby="reporteCompleSoportEmpr-tab">
-                                <h5 id="texto_header_reportes" class="text-center">Reporte completado soporte empresarial
+                                <h5 id="texto_header_reportes" class="text-center">Reporte completados soporte empresarial
                                 </h5>
                                 <jsp:include page="./content/reporteCompletadoSoporteEmpresarial.jsp"></jsp:include>
                             </div>
@@ -456,13 +456,13 @@
                             </div>
                             <div class="tab-pane fade" id="reporteRedesSoc" role="tabpanel"
                                 aria-labelledby="reporteRedesSoc-tab">
-                                <h5 id="texto_header_reportes" class="text-center">Reporte redes sociales
+                                <h5 id="texto_header_reportes" class="text-center">Reporte tickets redes sociales
                                 </h5>
                                 <jsp:include page="./content/reporteRedesSociales.jsp"></jsp:include>
                             </div>
                             <div class="tab-pane fade" id="reporteGenerados" role="tabpanel"
                                 aria-labelledby="reporteGenerados-tab">
-                                <h5 id="texto_header_reportes" class="text-center">Reporte Generados
+                                <h5 id="texto_header_reportes" class="text-center">Reporte factibilidad generados
                                 </h5>
                                 <jsp:include page="./content/reporteGenerados.jsp"></jsp:include>
                             </div>

@@ -136,8 +136,9 @@ app.controller('vistaChecklistController', ['$scope', '$q', 'vistaChecklistServi
                             let listGeo = results[1].data.result.geografia.filter(e => { return e.nivel <= $scope.nGeografia });
                             $scope.listaGeografia = listGeo;
                             let geografia = listGeo;
+                            geografia.push({ id: 0, nombre: "TOTALPLAY", nivel: 0, padre: "#", state: { opened: true } });
                             geografia.map((e) => {
-                                e.parent = e.padre == null ? "#" : e.padre;
+                                e.parent = e.padre == null ? 0 : e.padre;
                                 e.text = e.nombre;
                                 e.icon = "fa fa-globe";
                                 e.state = {

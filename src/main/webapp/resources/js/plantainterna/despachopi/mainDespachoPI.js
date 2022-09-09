@@ -82,6 +82,7 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
         $scope.resultReporteDiario = 0;
         $scope.arbolIntervenciones = [];
         $scope.isAsignacionTecnicosGeocerca = false;
+        $scope.accionCambiarEstatusTecnicos = false;
         $scope.dataWindow = window.usuario ?  {token: window.token, usuario: window.usuario}:null;
 
         $('#searchGeo').on('keyup', function () {
@@ -991,6 +992,10 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
                 })
                 setTimeout(function () {
                     $scope.initFullCalendar($scope.listadoTecnicosGeneral)
+                    if($scope.accionCambiarEstatusTecnicos){
+                        $(".validateShowChangeEstatus").removeAttr("style")
+                    }
+                   
                 }, 500)
             }
         }
@@ -1121,6 +1126,7 @@ app.controller('despachoController', ['$scope', '$q', 'mainDespachoService', 'ma
                         $scope.permisoDescargaSeguimientoDiario = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionDescargaSeguimientoDiario" })[0] != undefined);
                         $scope.accionReAsignacionOtPermiso = $scope.permisosConfigUser.permisos.find(e => { return e.clave === 'accionReasignaOT' })
                         $scope.accionAsignarTecnicosGeocerca = $scope.permisosConfigUser.permisos.find(e => { return e.clave === 'accionAsignarTecnicosGeocerca' });
+                        $scope.accionCambiarEstatusTecnicos = $scope.permisosConfigUser.permisos.find(e => { return e.clave === 'accionActualizaUS' });
                         if ($scope.accionAsignacionOtPermiso != undefined) {
                             $scope.accionAsignacionOtPermiso = $scope.accionAsignacionOtPermiso.banderaPermiso
                         }

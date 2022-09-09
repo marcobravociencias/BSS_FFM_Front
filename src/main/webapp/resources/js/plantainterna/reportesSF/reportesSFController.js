@@ -55,7 +55,6 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
         instalaciones: 'dia',
         recolecciones: 'dia',
         empresarial: 'dia',
-        general: 'dia',
         soportesing: 'dia',
         ventasres: 'dia',
         ventasemp: 'dia',
@@ -178,10 +177,6 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
 
         $('#searchGeo-empresarial').on('keyup', function () {
             $("#jstree-proton-empresarial").jstree("search", this.value);
-        });
-
-        $('#searchGeo-general').on('keyup', function () {
-            $("#jstree-proton-general").jstree("search", this.value);
         });
 
         $('#searchGeo-soportesing').on('keyup', function () {
@@ -795,14 +790,6 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                     swal.showLoading();
                 }
                 break;
-            case 'general':
-                geografiaReporte = angular.copy($scope.listaGeografiaReporte.general);
-                if ($scope.resultReporteGeneral == null && geografiaReporte) {
-                    $scope.loadDate('general');
-                    swal({ text: 'Cargando registros...', allowOutsideClick: false });
-                    swal.showLoading();
-                }
-                break;
             case 'soportesing':
                 geografiaReporte = angular.copy($scope.listaGeografiaReporte.soportesing);
                 if ($scope.resultReporteSoportesIng == null && geografiaReporte) {
@@ -1061,12 +1048,6 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                             $scope.consultarReporteEmpresarial();
                         }
                         break;
-                    case 'general':
-                        $scope.getTextGeografia('jstree-proton-general', 'cluster-general');
-                        if ($scope.resultReporteGeneral == null) {
-                            $scope.consultarReporteGeneral();
-                        }
-                        break;
                     case 'soportesing':
                         $scope.getTextGeografia('jstree-proton-soportesing', 'cluster-soportesing');
                         if ($scope.resultReporteSoportesIng == null) {
@@ -1216,7 +1197,7 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                     }
                     break;
                 case 'planningnuevosaddon':
-                    if ($scope.resultReportePlanningAddon == null) {
+                    if ($scope.resultReportePlanningNuevosAddon == null) {
                         $scope.consultarReportePlanningNuevoAddon();
                     }
                     break;
@@ -1521,12 +1502,6 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                                 }
                             }
 
-                            if ($scope.configPermisoAccionConsultaBackGeneral) {
-                                if (firstNav === '') {
-                                    firstNav = 'reporteGeneral-tab';
-                                    $scope.tipoReporte = 'general';
-                                }
-                            }
 
                             if ($scope.configPermisoAccionConsultaIngresoSoportes) {
                                 if (firstNav === '') {
@@ -1792,11 +1767,7 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                                 $scope.listaGeografiaReporte.empresarial = angular.copy(geografia);
                             }
 
-                            if ($scope.configPermisoAccionConsultaBackGeneral) {
-                                let geografia = $scope.ordenarGeografia(results[0].data.result.geografia, $scope.nfiltrogeografiaGeneral);
-                                $scope.listaGeografiaReporte.general = angular.copy(geografia);
-                            }
-
+    
                             if ($scope.configPermisoAccionConsultaIngresoSoportes) {
                                 let geografia = $scope.ordenarGeografia(results[0].data.result.geografia, $scope.nfiltrogeografiaSoportesIng);
                                 $scope.listaGeografiaReporte.soportesing = angular.copy(geografia);
@@ -1864,13 +1835,6 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 if (results[2].data.respuesta) {
                     if (results[2].data.result) {
                         $scope.nfiltrointervencionesGeneral = $scope.nfiltrointervencionesGeneral ? $scope.nfiltrointervencionesGeneral : $scope.obtenerNivelUltimoJerarquiaGeneric(results[2].data.result);
-                        if ($scope.configPermisoAccionConsultaBackGeneral) {
-                            $scope.filtrosGeneral.general = {
-                                tipoOrdenes: $scope.conversionAnidadaRecursiva(results[2].data.result, 1, $scope.nfiltrointervencionesGeneral)
-                            }
-                            $('#filtro-intervencion-general').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.general.tipoOrdenes, $scope.nfiltrointervencionesGeneral))
-                        }
-
 
                     } else {
                         toastr.info('No se encontraron tipo ordenes');
@@ -1995,10 +1959,6 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
         });
     }
 
-    $scope.setTextFiltro = function () {
-        $('#filtro-intervencion-general').val($scope.listaSeleccionSelectGral($scope.filtrosGeneral.general.tipoOrdenes, $scope.nfiltrointervencionesGeneral))
-    }
-
     $scope.obtenerElementosSeleccionadosFiltro = function (array, nivel) {
         let arrayReturn = [];
         angular.forEach(array, function (elemento, index) {
@@ -2054,7 +2014,7 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                                     row[2] = elemento.numeroCuenta ? elemento.numeroCuenta : 'Sin informaci&oacute;n';
                                     row[3] = elemento.estatusOs ? elemento.estatusOs : 'Sin informaci&oacute;n';
                                     row[4] = elemento.nombreFamilia ? elemento.nombreFamilia : 'Sin informaci&oacute;n';
-                                    row[5] = elemento.confirmada == "true" ? 'Si' : 'No';
+                                    row[5] = elemento.confirmada == "true" ? '<input type="checkbox" checked disabled>' : '<input type="checkbox" disabled>';
                                     row[6] = elemento.turno ? elemento.turno : 'Sin informaci&oacute;n';
                                     row[7] = elemento.plazaSitio ? elemento.plazaSitio : 'Sin informaci&oacute;n';
                                     row[8] = elemento.plazaOperacion ? elemento.plazaOperacion : 'Sin informaci&oacute;n';
@@ -2129,12 +2089,12 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 tiposOrden: [48],
                 clusters: clustersparam,
                 tipoExcel: 'reportesf-backloginstalaciones-pi',
-                sheet: "Reporte instalaciones",
+                sheet: "Reporte backlog instalaciones",
                 headers: ["OT", "OS", "CUENTA", "ESTATUS", "FAMILIA", "CONFIRMADA", "TURNO",
-                    "PLAZA SITIO", "OPERACION", "CLUSTER", "DELEGACION", "DISTRITO", "FECHA CREACION", "FECHA AGENDA", "FECHA MODIFICACION",
+                    "PLAZA SITIO", "OPERACION","CLUSTER COMERCIAL", "CLUSTER", "DELEGACION", "DISTRITO", "FECHA CREACION", "FECHA AGENDA", "FECHA MODIFICACION",
                     "CANAL VENTA", "COMPANIA", "TIPO ORDEN", "SUBTIPO"],
                 valores: ["idOt", "ordenServicio", "numeroCuenta", "estatusOs", "nombreFamilia", "confirmada", "turno",
-                    "plazaSitio", "plazaOperacion", "clusterComercial", "delegacionMunicipio", "distritoSitio", "fechaCreacion",
+                    "plazaSitio", "plazaOperacion", "clusterComercial","cluster", "delegacionMunicipio", "distritoSitio", "fechaCreacion",
                     "fechaAgendada", "fechaModificacion", "canalVenta", "compania", "tipoOrden", "subTipoOrden"]
             }
             $scope.downloadReport(params, 'reporteBacklogInstalaciones', 'backlog instalaciones');
@@ -2208,7 +2168,7 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                                     row[20] = elemento.nivel1 ? elemento.nivel1 : 'Sin informaci&oacute;n';
                                     row[21] = elemento.nivel2 ? elemento.nivel2 : 'Sin informaci&oacute;n';
                                     row[22] = elemento.nivel3 ? elemento.nivel3 : 'Sin informaci&oacute;n';
-                                    row[23] = elemento.repetido == "true" ? 'Si' : 'No';
+                                    row[23] = elemento.repetido == "true" ? '<input type="checkbox" checked disabled>' : '<input type="checkbox" disabled>';
                                     row[24] = elemento.tipoOrden ? elemento.tipoOrden : 'Sin informaci&oacute;n';
                                     row[25] = elemento.subTipo ? elemento.subTipo : 'Sin informaci&oacute;n';
                                     row[26] = elemento.nuevoSegmento ? elemento.nuevoSegmento : 'Sin informaci&oacute;n';
@@ -2271,9 +2231,8 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
             let params = {
                 tiposOrden: [55, 91, 93],
                 clusters: clustersparam,
-                nombre: "soportes",
                 tipoExcel: 'reportesf-backlog-pi',
-                sheet: "Reprote soportes",
+                sheet: "Reporte backlog soportes",
                 headers: ["OT", "OS", "CUENTA", "TICKET", "REGION INSTALACION", "PLAZA", "ZONA",
                     "CLUSTER INSTALACION", "COLONIA", "PLAZA SITIO", "DISTRITO SITIO", "PRIMER FECHA AGENDAMIENTO", "FECHA AGENDAMIENTO", "TURNO",
                     "FECHA ACTIVACION", "ESTATUS", "ESTADO", "FECHA APERTURA", "PROPIETARIO", "GRUPO", "NIVEL1", "NIVEL2", "NIVEL3", "REPETIDO",
@@ -2352,7 +2311,7 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                                     row[20] = elemento.nivel1 ? elemento.nivel1 : 'Sin informaci&oacute;n';
                                     row[21] = elemento.nivel2 ? elemento.nivel2 : 'Sin informaci&oacute;n';
                                     row[22] = elemento.nivel3 ? elemento.nivel3 : 'Sin informaci&oacute;n';
-                                    row[23] = elemento.repetido == "true" ? 'Si' : 'No';
+                                    row[23] = elemento.repetido == "true" ? '<input type="checkbox" checked disabled>' : '<input type="checkbox" disabled>';
                                     row[24] = elemento.tipoOrden ? elemento.tipoOrden : 'Sin informaci&oacute;n';
                                     row[25] = elemento.subTipo ? elemento.subTipo : 'Sin informaci&oacute;n';
                                     row[26] = elemento.nuevoSegmento ? elemento.nuevoSegmento : 'Sin informaci&oacute;n';
@@ -2416,7 +2375,7 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 tiposOrden: [85],
                 clusters: clustersparam,
                 tipoExcel: 'reportesf-backlog-pi',
-                sheet: "Reporte recolecciones",
+                sheet: "Reporte backlog recolecciones",
                 headers: ["OT", "OS", "CUENTA", "TICKET", "REGION INSTALACION", "PLAZA", "ZONA",
                     "CLUSTER INSTALACION", "COLONIA", "PLAZA SITIO", "DISTRITO SITIO", "PRIMER FECHA AGENDAMIENTO", "FECHA AGENDAMIENTO", "TURNO",
                     "FECHA ACTIVACION", "ESTATUS", "ESTADO", "FECHA APERTURA", "PROPIETARIO", "GRUPO", "NIVEL1", "NIVEL2", "NIVEL3", "REPETIDO",
@@ -2496,7 +2455,7 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                                     row[20] = elemento.nivel1 ? elemento.nivel1 : 'Sin informaci&oacute;n';
                                     row[21] = elemento.nivel2 ? elemento.nivel2 : 'Sin informaci&oacute;n';
                                     row[22] = elemento.nivel3 ? elemento.nivel3 : 'Sin informaci&oacute;n';
-                                    row[23] = elemento.repetido == "true" ? 'Si' : 'No';
+                                    row[23] = elemento.repetido == "true" ? '<input type="checkbox" checked disabled>' : '<input type="checkbox" disabled>';
                                     row[24] = elemento.tipoOrden ? elemento.tipoOrden : 'Sin informaci&oacute;n';
                                     row[25] = elemento.subTipo ? elemento.subTipo : 'Sin informaci&oacute;n';
                                     row[26] = elemento.nuevoSegmento ? elemento.nuevoSegmento : 'Sin informaci&oacute;n';
@@ -2560,7 +2519,7 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 tiposOrden: [65, 130, 95, 136],
                 clusters: clustersparam,
                 tipoExcel: 'reportesf-backlog-pi',
-                sheet: "Reporte addon",
+                sheet: "Reporte backlog addon",
                 headers: ["OT", "OS", "CUENTA", "TICKET", "REGION INSTALACION", "PLAZA", "ZONA",
                     "CLUSTER INSTALACION", "COLONIA", "PLAZA SITIO", "DISTRITO SITIO", "PRIMER FECHA AGENDAMIENTO", "FECHA AGENDAMIENTO", "TURNO",
                     "FECHA ACTIVACION", "ESTATUS", "ESTADO", "FECHA APERTURA", "PROPIETARIO", "GRUPO", "NIVEL1", "NIVEL2", "NIVEL3", "REPETIDO",
@@ -2622,7 +2581,7 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                                     row[2] = elemento.numeroCuenta ? elemento.numeroCuenta : 'Sin informaci&oacute;n';
                                     row[3] = elemento.estatusOs ? elemento.estatusOs : 'Sin informaci&oacute;n';
                                     row[4] = elemento.nombreFamilia ? elemento.nombreFamilia : 'Sin informaci&oacute;n';
-                                    row[5] = elemento.confirmada == "true" ? 'Si' : 'No';
+                                    row[5] = elemento.confirmada == "true" ? '<input type="checkbox" checked disabled>' : '<input type="checkbox" disabled>';
                                     row[6] = elemento.turno ? elemento.turno : 'Sin informaci&oacute;n';
                                     row[7] = elemento.plazaSitio ? elemento.plazaSitio : 'Sin informaci&oacute;n';
                                     row[8] = elemento.plazaOperacion ? elemento.plazaOperacion : 'Sin informaci&oacute;n';
@@ -2697,7 +2656,7 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
             let params = {
                 tiposOrden: [200],
                 clusters: clustersparam,
-                sheet: "Reporte empresarial",
+                sheet: "Reporte backlog empresarial",
                 tipoExcel: 'reportesf-backlog-pi',
                 headers: ["OT", "OS", "CUENTA", "ESTATUS", "FAMILIA", "CONFIRMADA", "TURNO",
                     "PLAZA SITIO", "OPERACION", "CLUSTER", "CLUSTER COMERCIAL", "DELEGACION", "DISTRITO", "FECHA CREACION", "FECHA AGENDA",
@@ -2843,172 +2802,6 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
         }
     }
 
-    $scope.consultarReporteGeneral = function () {
-        let mensaje = '<ul>';
-        let isValid = true;
-
-        let clustersparam = $("#jstree-proton-general").jstree("get_selected", true)
-            .filter(e => e.original.nivel == $scope.nfiltrogeografiaGeneral)
-            .map(e => e.original.nombre);
-
-        if (clustersparam.length === 0) {
-            mensaje += '<li>Seleccione geograf&iacute;a.</li>';
-            isValid = false
-        }
-
-        if ($("#tipo_reporte_general").val() == 'semana' && !$scope.weekDateObjectReport.general) {
-            mensaje += '<li>Seleccione semana</li>';
-            isValid = false
-        }
-
-        let intervencioncopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.general.tipoOrdenes, $scope.nfiltrointervencionesGeneral);
-        if (!intervencioncopy.length) {
-            mensaje += '<li>Introducir Intervenci\u00F3n</li>';
-            isValid = false;
-        }
-
-        if (!isValid) {
-            swal.close()
-            mensaje += '</ul>';
-            mostrarMensajeWarningValidacion(mensaje);
-            return false;
-        } else {
-            let fechas = $scope.getFecha('general');
-            let params = {
-                tiposOrden: intervencioncopy,
-                clusters: clustersparam,
-                fechaInicial: fechas.fechaInicio,
-                fechaFinal: fechas.fechaFin
-            }
-            if (!swal.isVisible()) {
-                swal({ text: 'Cargando registros...', allowOutsideClick: false });
-                swal.showLoading();
-            }
-            reportesSFService.consultarReporteBacklog(params).then(function success(response) {
-                swal.close();
-                let arraRow = [];
-                if (response.data !== undefined) {
-                    if (response.data.respuesta) {
-                        if (response.data.result) {
-                            if (response.data.result.data) {
-                                $scope.resultReporteGeneral = response.data.result.data.length;
-                                $.each(response.data.result.data, function (i, elemento) {
-                                    let row = [];
-
-                                    row[0] = elemento.idOt ? elemento.idOt : 'Sin informaci&oacute;n';
-                                    row[1] = elemento.ordenServicio ? elemento.ordenServicio : 'Sin informaci&oacute;n';
-                                    row[2] = elemento.numeroCuenta ? elemento.numeroCuenta : 'Sin informaci&oacute;n';
-                                    row[3] = elemento.ticket ? elemento.ticket : 'Sin informaci&oacute;n';
-                                    row[4] = elemento.regionInstalacion ? elemento.regionInstalacion : 'Sin informaci&oacute;n';
-                                    row[5] = elemento.plaza ? elemento.plaza : 'Sin informaci&oacute;n';
-                                    row[6] = elemento.zona ? elemento.zona : 'Sin informaci&oacute;n';
-                                    row[7] = elemento.clusterInstalacion ? elemento.clusterInstalacion : 'Sin informaci&oacute;n';
-                                    row[8] = elemento.colonia ? elemento.colonia : 'Sin informaci&oacute;n';
-                                    row[9] = elemento.plazaSitio ? elemento.plazaSitio : 'Sin informaci&oacute;n';
-                                    row[10] = elemento.distritoSitio ? elemento.distritoSitio : 'Sin informaci&oacute;n';
-                                    row[11] = elemento.fechaApertura ? elemento.fechaApertura : 'Sin informaci&oacute;n';
-                                    row[12] = elemento.primerFechaAgendamiento ? elemento.primerFechaAgendamiento : 'Sin informaci&oacute;n';
-                                    row[13] = elemento.fechaAgendamiento ? elemento.fechaAgendamiento : 'Sin informaci&oacute;n';
-                                    row[14] = elemento.turno ? elemento.turno : 'Sin informaci&oacute;n';
-                                    row[15] = elemento.fechaActivacion ? elemento.fechaActivacion : 'Sin informaci&oacute;n';
-                                    row[16] = elemento.estatus ? elemento.estatus : 'Sin informaci&oacute;n';
-                                    row[17] = elemento.estado ? elemento.estado : 'Sin informaci&oacute;n';
-                                    row[18] = elemento.propietario ? elemento.propietario : 'Sin informaci&oacute;n';
-                                    row[19] = elemento.grupoCodificador ? elemento.grupoCodificador : 'Sin informaci&oacute;n';
-                                    row[20] = elemento.nivel1 ? elemento.nivel1 : 'Sin informaci&oacute;n';
-                                    row[21] = elemento.nivel2 ? elemento.nivel2 : 'Sin informaci&oacute;n';
-                                    row[22] = elemento.nivel3 ? elemento.nivel3 : 'Sin informaci&oacute;n';
-                                    row[23] = elemento.repetido == "true" ? 'Si' : 'No';
-                                    row[24] = elemento.tipoOrden ? elemento.tipoOrden : 'Sin informaci&oacute;n';
-                                    row[25] = elemento.subTipo ? elemento.subTipo : 'Sin informaci&oacute;n';
-                                    row[26] = elemento.nuevoSegmento ? elemento.nuevoSegmento : 'Sin informaci&oacute;n';
-
-                                    arraRow.push(row);
-                                })
-
-                            } else {
-                                toastr.info('No se encontraron datos');
-                            }
-                        } else {
-                            toastr.warning('No se encontraron datos');
-                        }
-                    } else {
-                        toastr.warning(response.data.resultDescripcion);
-                    }
-                } else {
-                    toastr.error('Ha ocurrido un error al consultar el reporte');
-                }
-
-                reporteGeneralTable = $('#reporteGeneralTable').DataTable({
-                    "paging": true,
-                    "lengthChange": false,
-                    "ordering": true,
-                    "pageLength": 10,
-                    "bDestroy": true,
-                    "info": true,
-                    "scrollX": false,
-                    "data": arraRow,
-                    "autoWidth": false,
-                    "language": idioma_espanol_not_font,
-                    "aoColumnDefs": [
-                        { "aTargets": [26], "bSortable": false }
-                    ]
-                });
-                swal.close();
-            })
-        }
-    }
-
-    $scope.descargarReporteGeneral = function () {
-        let mensaje = '<ul>';
-        let isValid = true;
-
-        let clustersparam = $("#jstree-proton-general").jstree("get_selected", true)
-            .filter(e => e.original.nivel == $scope.nfiltrogeografiaGeneral)
-            .map(e => e.original.nombre);
-
-        if (clustersparam.length === 0) {
-            mensaje += '<li>Seleccione geograf&iacute;a.</li>';
-            isValid = false
-        }
-
-        if ($("#tipo_reporte_general").val() == 'semana' && !$scope.weekDateObjectReport.general) {
-            mensaje += '<li>Seleccione semana</li>';
-            isValid = false
-        }
-
-        let intervencioncopy = $scope.obtenerElementosSeleccionadosFiltro($scope.filtrosGeneral.general.tipoOrdenes, $scope.nfiltrointervencionesGeneral);
-        if (!intervencioncopy.length) {
-            mensaje += '<li>Introducir Intervenci\u00F3n</li>';
-            isValid = false;
-        }
-
-        if (!isValid) {
-            swal.close()
-            mensaje += '</ul>';
-            mostrarMensajeWarningValidacion(mensaje);
-            return false;
-        } else {
-            let fechas = $scope.getFecha('general');
-            let params = {
-                tiposOrden: intervencioncopy,
-                clusters: clustersparam,
-                fechaInicial: fechas.fechaInicio,
-                fechaFinal: fechas.fechaFin,
-                sheet: "Reporte general",
-                tipoExcel: 'reportesf-backloggeneral-pi',
-                headers: ["OT", "OS", "CUENTA", "TICKET", "REGION INSTALACION", "PLAZA", "ZONA",
-                    "CLUSTER INSTALACION", "COLONIA", "PLAZA SITIO", "DISTRITO SITIO", "PRIMER FECHA AGENDAMIENTO", "FECHA AGENDAMIENTO", "TURNO",
-                    "FECHA ACTIVACION", "ESTATUS", "ESTADO", "FECHA APERTURA", "PROPIETARIO", "GRUPO", "NIVEL1", "NIVEL2", "NIVEL3", "REPETIDO",
-                    "TIPO ORDEN", "SUBTIPO", "NUEVO SEGMENTO"],
-                valores: ["idOt", "ordenServicio", "numeroCuenta", "ticket", "regionInstalacion", "plaza", "zona",
-                    "clusterInstalacion", "colonia", "plazaSitio", "distritoSitio", "primerFechaAgendamiento", "fechaAgendamiento", "turno", "fechaActivacion", "estatus", "estado",
-                    "fechaApertura", "propietario", "grupoCodificador", "nivel1", "nivel2", "nivel3", "repetido", "tipoOrden", "subTipo", "nuevoSegmento"]
-            }
-            //$scope.downloadReport(params, 'reporteBacklogGeneral', 'backlog general');
-        }
-    }
-
     $scope.consultarReporteSoportesIng = function () {
         let mensaje = '<ul>';
         let isValid = true;
@@ -3070,7 +2863,7 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                                     row[12] = elemento.fechaActivacion ? elemento.fechaActivacion : 'Sin informaci&oacute;n';
                                     row[13] = elemento.fechaCierre ? elemento.fechaCierre : 'Sin informaci&oacute;n';
                                     row[14] = elemento.tsCompletado ? elemento.tsCompletado : 'Sin informaci&oacute;n';
-                                    row[15] = elemento.tsCancelado == "true" ? "Si" : 'No';
+                                    row[15] = elemento.tsCancelado ? elemento.tsCancelado : 'Sin informaci&oacute;n';
                                     row[16] = elemento.turnoAgendamiento ? elemento.turnoAgendamiento : 'Sin informaci&oacute;n';
                                     row[17] = elemento.estatus ? elemento.estatus : 'Sin informaci&oacute;n';
                                     row[18] = elemento.estado ? elemento.estado : 'Sin informaci&oacute;n';
@@ -3081,8 +2874,8 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                                     row[23] = elemento.nivel3 ? elemento.nivel3 : 'Sin informaci&oacute;n';
                                     row[24] = elemento.tipoOrden ? elemento.tipoOrden : 'Sin informaci&oacute;n';
                                     row[25] = elemento.subTipo ? elemento.subTipo : 'Sin informaci&oacute;n';
-                                    row[26] = elemento.repetido == "true" ? 'Si' : 'No';
-                                    row[27] = elemento.repetido60 == "true" ? 'Si' : 'No';
+                                    row[26] = elemento.repetido == "true" ? '<input type="checkbox" checked disabled>' : '<input type="checkbox" disabled>';
+                                    row[27] = elemento.repetido60 == "true" ? '<input type="checkbox" checked disabled>' : '<input type="checkbox" disabled>';
                                     row[28] = elemento.instalacionLatitude ? elemento.instalacionLatitude : 'Sin informaci&oacute;n';
                                     row[29] = elemento.instalacionLongitude ? elemento.instalacionLongitude : 'Sin informaci&oacute;n';
                                     row[30] = elemento.origenTicket ? elemento.origenTicket : 'Sin informaci&oacute;n';
@@ -3155,7 +2948,7 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 clusters: clustersparam,
                 fechaInicial: fechas.fechaInicio,
                 fechaFinal: fechas.fechaFin,
-                sheet: "Reporte ingreso soportes",
+                sheet: "Reporte ingresos soportes",
                 tipoExcel: 'reportesf-ingresosoportes-pi',
                 headers: ["OT", "OS", "CUENTA", "TICKET", "CLUSTER INSTALACION", "ZONA", "PLAZA", "REGION INSTALACION", "FECHA CREACION",
                     "FECHA APERTURA", "PRIMER FECHA AGENDAMIENTO", "FECHA AGENDAMIENTO", "FECHA ACTIVACION", "FECHA CIERRE", "COMPLETADO",
@@ -3234,8 +3027,8 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                                     row[8] = elemento.fechaCierre ? elemento.fechaCierre : 'Sin informaci&oacute;n';
                                     row[9] = elemento.tsGanada ? elemento.tsGanada : 'Sin informaci&oacute;n';
                                     row[10] = elemento.etapa ? elemento.etapa : 'Sin informaci&oacute;n';
-                                    row[11] = elemento.tsConfirmado == "true" ? "Si" : 'No';
-                                    row[12] = elemento.tsCancelado == "true" ? "Si" : 'No';
+                                    row[11] = elemento.tsConfirmado ? elemento.tsConfirmado : 'Sin informaci&oacute;n';
+                                    row[12] = elemento.tsCancelado ? elemento.tsCancelado : 'Sin informaci&oacute;n';
 
                                     arraRow.push(row);
                                 })
@@ -3303,14 +3096,14 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 clusters: clustersparam,
                 fechaInicial: fechas.fechaInicio,
                 fechaFinal: fechas.fechaFin,
-                sheet: "Reporte ventas residencial",
+                sheet: "Reporte ingresos ventas residencial",
                 tipoExcel: 'reportesf-ingresoresidencial-pi',
-                headers: ["CUENTA", "CLUSTER", "ESTATUS", "FECHA CREACION", "FECHA ACTIVACION", "MOTIVO CANCELACION", "FECHA AGENDAMIENTO",
+                headers: ["CUENTA", "CLUSTER INSTALACION", "ESTATUS", "FECHA CREACION", "FECHA ACTIVACION", "MOTIVO CANCELACION", "FECHA AGENDAMIENTO",
                     "ORIGEN", "FECHA CIERRE", "GANADA", "ETAPA", "CONFIRMADO", "CANCELADO"],
-                valores: ["numeroCuenta", "cluster", "estatus", "fechaCreacion", "fechaActivacion", "motivoCancelacion", "fechaAgendamiento",
+                valores: ["numeroCuenta", "clusterInstalacion", "estatus", "fechaCreacion", "fechaActivacion", "motivoCancelacion", "fechaAgendamiento",
                     "origenProspecto", "fechaCierre", "tsGanada", "etapa", "tsConfirmado", "tsCancelado"]
             }
-            $scope.downloadReport(params, 'reporteVentasResidencial', 'ventas residencial');
+            $scope.downloadReport(params, 'reporteIngresosVentasResidencial', 'ventas residencial');
             // if ($scope.resultReporteVentasResidencial && $scope.resultReporteVentasResidencial > 0) {
             //     $scope.downloadReport(params, 'reporteVentasResidencial', 'ventas residencial');
             // } else {
@@ -3440,14 +3233,14 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 clusters: clustersparam,
                 fechaInicial: fechas.fechaInicio,
                 fechaFinal: fechas.fechaFin,
-                sheet: "Reporte ventas empresarial",
+                sheet: "Reporte ingresos ventas empresarial",
                 tipoExcel: 'reportesf-ingresoempresarial-pi',
                 headers: ["CUENTA", "CLUSTER", "COTIZACION", "CSP", "FECHA AGENDAMIENTO", "NUEVO SEGMENTO", "PLAZA",
                     "GANADA", "TIPO ORDEN"],
                 valores: ["numeroCuenta", "clusterInstalacion", "cotizacion", "csp", "fechaAgendamiento", "nuevoSegmento", "plaza",
                     "tsGanada", "tipoOrden"]
             }
-            $scope.downloadReport(params, 'reporteVentasEmpresarial', 'ventas empresarial');
+            $scope.downloadReport(params, 'reporteIngresosVentasEmpresarial', 'ventas empresarial');
             // if ($scope.resultReporteVentasEmpresarial && $scope.resultReporteVentasEmpresarial > 0) {
             //     $scope.downloadReport(params, 'reporteVentasEmpresarial', 'ventas empresarial');
             // } else {
@@ -3575,12 +3368,12 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 clusters: clustersparam,
                 fechaInicial: fechas.fechaInicio,
                 fechaFinal: fechas.fechaFin,
-                sheet: "Reporte ventas empresarial sin agenda",
+                sheet: "Reporte ingresos ventas empresarial sin agenda",
                 tipoExcel: 'reportesf-ingresoempresarialsa-pi',
                 headers: ["COTIZACION", "CSP", "PLAZA", "TIPO ORDEN", "GANADA"],
                 valores: ["cotizacion", "csp", "plaza", "tipoOrden", "tsGanada"]
             }
-            $scope.downloadReport(params, 'reporteVentasEmpresarialSinAgenda', 'ventas empresarial sin agenda');
+            $scope.downloadReport(params, 'reporteIngresosVentasEmpresarialSinAgenda', 'ventas empresarial sin agenda');
         }
     }
 
@@ -3784,8 +3577,8 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                                     row[23] = elemento.nivel3 ? elemento.nivel3 : 'Sin informaci&oacute;n';
                                     row[24] = elemento.tipoOrden ? elemento.tipoOrden : 'Sin informaci&oacute;n';
                                     row[25] = elemento.subTipo ? elemento.subTipo : 'Sin informaci&oacute;n';
-                                    row[26] = elemento.repetido == "true" ? 'Si' : 'No';
-                                    row[27] = elemento.repetido60 == "true" ? 'Si' : 'No';
+                                    row[26] = elemento.repetido == "true" ? '<input type="checkbox" checked disabled>' : '<input type="checkbox" disabled>';
+                                    row[27] = elemento.repetido60 == "true" ? '<input type="checkbox" checked disabled>' : '<input type="checkbox" disabled>';
                                     row[28] = elemento.instalacionLatitude ? elemento.instalacionLatitude : 'Sin informaci&oacute;n';
                                     row[29] = elemento.instalacionLongitude ? elemento.instalacionLongitude : 'Sin informaci&oacute;n';
                                     row[30] = elemento.origenTicket ? elemento.origenTicket : 'Sin informaci&oacute;n';
@@ -3870,7 +3663,7 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                     "propietario", "grupoCodificador", "nivel1", "nivel2", "nivel3", "tipoOrden", "subTipo", "repetido", "repetido60",
                     "instalacionLatitude", "instalacionLongitude", "origenTicket", "descripcion"]
             }
-            $scope.downloadReport(params, 'reporteCompletadoSoportes', 'completado soportes');
+            $scope.downloadReport(params, 'reporteCompletadosSoportes', 'completado soportes');
             // if ($scope.resultReporteSoportesComp && $scope.resultReporteSoportesComp > 0) {
             //     $scope.downloadReport(params, 'reporteCompletadoSoportes', 'completado soportes');
             // } else {
@@ -3933,7 +3726,7 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                                     row[4] = elemento.subcanal ? elemento.subcanal : 'Sin informaci&oacute;n';
                                     row[5] = elemento.aprobarVentaExpress ? elemento.aprobarVentaExpress : 'Sin informaci&oacute;n';
                                     row[6] = elemento.fechaCreacion ? elemento.fechaCreacion : 'Sin informaci&oacute;n';
-                                    row[7] = elemento.ventaExpress == "true" ? 'Si' : 'No';
+                                    row[7] = elemento.ventaExpress == "true" ? '<input type="checkbox" checked disabled>' : '<input type="checkbox" disabled>';
                                     row[8] = elemento.fechaCierre ? elemento.fechaCierre : 'Sin informaci&oacute;n';
                                     row[9] = elemento.origenProspecto ? elemento.origenProspecto : 'Sin informaci&oacute;n';
                                     row[10] = elemento.clusterInstalacion ? elemento.clusterInstalacion : 'Sin informaci&oacute;n';
@@ -4019,7 +3812,7 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 valores: ["ordenServicio", "numeroCuenta", "nombrePlan", "nombreFamilia", "subcanal", "aprobarVentaExpress", "fechaCreacion", "ventaExpress", "fechaCierre", "origenProspecto", "clusterInstalacion",
                     "fechaActivacion", "subTipo", "numeroEmpleadoActiva", "nombreEmpleadoActiva", "sistemaActivacion", "activacionLatitude", "activacionLongitude"]
             }
-            $scope.downloadReport(params, 'reporteInstalacionResidencial', 'instalacion residencial');
+            $scope.downloadReport(params, 'reporteCompletadosInstalacionResidencial', 'instalacion residencial');
             // if ($scope.resultReporteIntalacionRes && $scope.resultReporteIntalacionRes > 0) {
             //     $scope.downloadReport(params, 'reporteInstalacionResidencial', 'instalacion residencial');
             // } else {
@@ -4156,7 +3949,7 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 headers: ["OS", "CUENTA", "COTIZACION", "CSP", "PLAZA", "CLUSTER INSTALACION", "FECHA ACTIVACION", "TIPO ORDEN"],
                 valores: ["ordenServicio", "numeroCuenta", "cotizacion", "csp", "plaza", "clusterInstalacion", "fechaActivacion", "tipoOrden"]
             }
-            $scope.downloadReport(params, 'reporteInstalacionEmpresarial', 'instalacion empresarial');
+            $scope.downloadReport(params, 'reporteCompletadosInstalacionEmpresarial', 'instalacion empresarial');
             // if ($scope.resultReporteIntalacionEmp && $scope.resultReporteIntalacionEmp > 0) {
             //     $scope.downloadReport(params, 'reporteInstalacionEmpresarial', 'instalacion empresarial');
             // } else {
@@ -4655,12 +4448,12 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 // clusters: clustersparam,
                 fechaInicial: fechas.fechaInicio,
                 fechaFinal: fechas.fechaFin,
-                sheet: "Reporte sitios fibrados",
+                sheet: "Reporte tickets sitios fibrados",
                 tipoExcel: 'reportesf-sitiosfibrados-pi',
                 headers: ["CUENTA", "TICKET", "FECHA APERTURA", "CLUSTER", "NIVEL 1", "NIVEL 2", "NIVEL 3"],
                 valores: ["idCuentaBRM", "numeroTicket", "fechaApertura", "clusterInstalacion", "nivel1", "nivel2", "nivel3"]
             }
-            $scope.downloadReport(params, 'reporteSitiosFibrados', 'sitios fibrados');
+            $scope.downloadReport(params, 'reporteTicketsSitiosFibrados', 'sitios fibrados');
             // if ($scope.resultReporteSitiosFibr && $scope.resultReporteSitiosFibr > 0) {
             //     $scope.downloadReport(params, 'reporteSitiosFibrados', 'sitios fibrados');
             // } else {
@@ -4947,14 +4740,14 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
                 // clusters: clustersparam,
                 fechaInicial: fechas.fechaInicio,
                 fechaFinal: fechas.fechaFin,
-                sheet: "Reporte generados",
+                sheet: "Reporte factibilidad generados",
                 tipoExcel: 'reportesf-generados-pi',
                 headers: ["CUENTA", "OS", "TICKET", "PRIMER FECHA AGENDAMIENTO", "FECHA AGENDAMIENTO", "TS COMPLETADO", "FECHA ACTIVACION", "ESTATUS", "ESTADO", "GRUPO CODIFICACION", 
                 "NIVEL 1", "NIVEL 2", "NIVEL 3", "CLUSTER INSTALACION","REGION INSTALACION", "PLAZA", "REPETIDO", "DISTRITO SITIO", "FECHA CIERRE", "SUBTIPO", "CLUSTER COMERCIAL", "PLAZA SITIO", "FECHA APERTURA", "PLAZA OPERACION"],
                 valores: ["numeroCuenta", "folio", "numeroTicket", "primerfechaAgendada", "fechaAgendada", "tscompletado", "fechaActivacion", "estatus", "estado", "grupoCodificacion", 
                 "nivel1", "nivel2", "nivel3", "clusterInstalacion", "regionInstalacion", "plaza", "repetido", "distritoSitio", "fechaCierre", "subTipo", "clusterComercial", "plazaSitio", "fechaApertura", "plazaOperacion"]
             }
-            $scope.downloadReport(params, 'reporteGenerados', 'generados');
+            $scope.downloadReport(params, 'reporteFactibilidadGenerados', 'generados');
             // if ($scope.resultReporteGenerados && $scope.resultReporteGenerados > 0) {
             //     $scope.downloadReport(params, 'reporteGenerados', 'generados');
             // } else {
@@ -5419,7 +5212,7 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
             let params = {
                 fechaInicial: fechas.fechaInicio,
                 fechaFinal: fechas.fechaFin,
-                sheet: "Reporte planning agenda",
+                sheet: "Reporte planning addon",
                 tipoExcel: 'reportesf-planningaddon-pi',
                 headers: ["CUENTA", "OS", "TICKET", "OT GIM", "ESTATUS", "ESTADO", "TURNO", "REGION INSTALACION","CLUSTER INSTALACION","PLAZA", "ZONA", "COLONIA", "DISTRITO SITIO", "PLAZA ORDEN", "PLAZA OPERACION", 
                 "FECHA CREACION", "FECHA PRIMER AGENDAMIENTO", "FECHA AGENDADA", "FECHA ACTIVACION", "FUNCION PROPIETARIO", "GRUPO CODIFICACION", "NIVEL 1", "NIVEL 2", "NIVEL 3", "EMPLEADO PROPIETARIO"],
@@ -6536,7 +6329,7 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
             let params = {
                 fechaInicial: fechas.fechaInicio,
                 fechaFinal: fechas.fechaFin,
-                sheet: "Reporte planning ventas instalacion",
+                sheet: "Reporte ventas instalacion",
                 tipoExcel: 'reportesf-ventasinstalacion-pi',
                 headers: ["CUENTA BRM", "OS", "FECHA CIERRE", "ORIGEN DEL PROSPECTO", "CANAL", "SUBCANAL", "CLUSTER", "FECHA ACTIVACION", "NOMBRE EMPLEADO", "ESTATUS", "MOTIVO CANCELACION", "FECHA AGENDAMIENTO", "TIPO ORDEN",
                 "FAMILIA PLAN", "PLAN", "TS CANCELADO"],
@@ -6666,7 +6459,7 @@ app.controller('reportesSFController', ['$scope', '$q', 'reportesSFService', 'ge
             let params = {
                 fechaInicial: fechas.fechaInicio,
                 fechaFinal: fechas.fechaFin,
-                sheet: "Reporte planning ventas principal",
+                sheet: "Reporte ventas principal",
                 tipoExcel: 'reportesf-ventasprinc-pi',
                 headers: ["CUENTA", "OS", "ID OT GIM", "NUMERO OPORTUNIDAD", "NOMBRE CUENTA", "ESTATUS", "MOTIVO CANCELACION", "SUBCANAL", "FECHA ACTIVACION", "JEFE VENTAS", "DISTRITAL", "EMPLEADO", "CANAL",
                 "CANAL RECOMENDADOR", "FOLIO EMPLEADO", "FECHA AGENDAMIENTO", "TURNO AGENDAMIENTO", "TIPO ORDEN", "SITIO ESTADO", "PLAZA", "DISTRITO", "REGION", "FECHA CREACION", "CLUSTER COMERCIAL",
