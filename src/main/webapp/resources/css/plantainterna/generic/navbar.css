@@ -926,3 +926,66 @@ img.img-despacho-navbar.img-user-profile-navbar {
   
 
 }
+
+.container-fluid.vehiculo-content {
+  padding: 0;
+  display: flex;
+  /* border-bottom: 1px solid #e1e1e1; */
+}
+.container-text-content-detalle {
+  width: 70%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.container-text-title-detalle {
+  width: 30%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+span.text-tile-vehiculo {
+  font-weight: bold;
+  font-size: 0.8em;
+  color: #303030;
+}
+
+span.text-content-vehiculo {
+  font-size: 0.8em;
+  color: #303030;
+}
+
+.detalle-productos-table tbody tr td {
+  padding: 0;
+  font-size: 0.8em;
+  padding: 0.3em;
+  color: #303030;
+}
+
+.detalle-productos-table thead tr th {
+  padding: 0;
+  padding: 0.3em;
+  font-weight: bold;
+  color: #303030;
+}
+
+.text-equipo-paquete {
+  font-size: .8em;
+  color: #797979;
+  font-weight: bold;
+}
+
+.li_item_modelo {
+  font-size: .8em !important;
+}
+
+.btn_detalle_servicio {
+  padding: 0.1em 1em;
+  background: #2196f3;
+  font-size: 1em;
+}
+
+.active-selected-servicio-plan {
+  background: #efefef;
+}

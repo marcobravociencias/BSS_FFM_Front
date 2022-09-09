@@ -434,6 +434,430 @@ class GenericAccionRealizada {
 	}
 }
 
+class GenericDetallePaquete {
+
+	/**
+	 * 
+	 * @param {*} idDiv; 
+	 * @param {*} responseServicios; 
+	 * @param {*} idCotSitio; 
+	 * @param {*} isConsultaEquiposModelos;
+	 * @param {*} listadoEquipos;
+	 */
+
+	 constructor(idDiv) {
+		this.idDiv = idDiv;
+	}
+
+	consultarDetallePaqueteGeneric(os) {
+
+		// $("#container-ultimasAcciones").show();
+		// $("#loading-data").show();
+		//let listaUltimasAcciones = this.getAccionesRecientesUsuario();
+
+		this.idCotSitio = "";
+		this.isConsultaEquiposModelos=false;
+		var resultDetalle = {};
+		var params = {
+			folio: os
+		}
+		this.consultarDetallePaqueteService(params).done(function (jsonResponse) {
+			if (jsonResponse.respuesta) {
+				if (jsonResponse.result) {
+					if (jsonResponse.result.resumenPaquete) {
+						resultDetalle = jsonResponse.result.resumenPaquete;
+					}
+				}
+			}
+		});
+		this.responseServicios = resultDetalle
+		this.idCotSitio = resultDetalle.idCotSitio;
+		$(this.idDiv).empty();
+		var contentResumenPaquete = "";
+		contentResumenPaquete =
+		'<div class="row parent-detallecotizacion">'+
+			'<div class="col-12">'+
+				'<div class="row">'+
+					'<div class="col-md-6">'+
+						'<div class="container-fluid vehiculo-content">'+
+							'<div class="container-text-title-detalle">'+
+								'<span class="text-tile-vehiculo">Paquete</span>'+
+							'</div>'+
+							'<div class="container-text-content-detalle">'+
+								'<span class="text-content-vehiculo" title="'+this.responseServicios.nombrePaquete+'">'+this.responseServicios.nombrePaquete+'</span>'+
+							'</div>'+
+						'</div>'+
+					'</div>'+
+				'</div>'+
+				'<div class="row">'+
+					'<div class="col-md-6">'+
+						'<div class="container-fluid vehiculo-content">'+
+							'<div class="container-text-title-detalle">'+
+								'<span class="text-tile-vehiculo">Cuenta factura</span>'+
+							'</div>'+
+							'<div class="container-text-content-detalle">'+
+								'<span class="text-content-vehiculo" title="'+this.responseServicios.folioCuentaFactura+'">'+this.responseServicios.folioCuentaFactura+'</span>'+
+							'</div>'+
+						'</div>'+
+					'</div>'+
+					'<div class="col-md-6">'+
+						'<div class="container-fluid vehiculo-content">'+
+							'<div class="container-text-title-detalle">'+
+								'<span class="text-tile-vehiculo">Folio OS</span>'+
+							'</div>'+
+							'<div class="container-text-content-detalle">'+
+								'<span class="text-content-vehiculo" title="'+this.responseServicios.folioOs+'">'+this.responseServicios.folioOs+'</span>'+
+							'</div>'+
+						'</div>'+
+					'</div>'+
+				'</div>'+
+				'<div class="row">'+
+					'<div class="col-md-6">'+
+						'<div class="container-fluid vehiculo-content">'+
+							'<div class="container-text-title-detalle">'+
+								'<span class="text-tile-vehiculo">Folio CSP</span>'+
+							'</div>'+
+							'<div class="container-text-content-detalle">'+
+								'<span class="text-content-vehiculo" title="'+this.responseServicios.folioCotSitioPlan+'">'+this.responseServicios.folioCotSitioPlan+'</span>'+
+							'</div>'+
+						'</div>'+
+					'</div>'+
+					'<div class="col-md-6">'+
+						'<div class="container-fluid vehiculo-content">'+
+							'<div class="container-text-title-detalle">'+
+								'<span class="text-tile-vehiculo">Folio Sitio</span>'+
+							'</div>'+
+							'<div class="container-text-content-detalle">'+
+								'<span class="text-content-vehiculo" title="'+this.responseServicios.folioSitio+'">'+this.responseServicios.folioSitio+'</span>'+
+							'</div>'+
+						'</div>'+
+					'</div>'+
+				'</div>'+
+				'<div class="row">'+
+					'<div class="col-md-6">'+
+						'<div class="container-fluid vehiculo-content">'+
+							'<div class="container-text-title-detalle">'+
+								'<span class="text-tile-vehiculo">Num. ips</span>'+
+							'</div>'+
+							'<div class="container-text-content-detalle">'+
+								'<span class="text-content-vehiculo" title="'+this.responseServicios.numIps+'">'+this.responseServicios.numIps+'</span>'+
+							'</div>'+
+						'</div>'+
+					'</div>'+
+					'<div class="col-md-6">'+
+						'<div class="container-fluid vehiculo-content">'+
+							'<div class="container-text-title-detalle">'+
+								'<span class="text-tile-vehiculo">Num. dns</span>'+
+							'</div>'+
+							'<div class="container-text-content-detalle">'+
+								'<span class="text-content-vehiculo" title="'+this.responseServicios.numDns+'">'+this.responseServicios.numDns+'</span>'+
+							'</div>'+
+						'</div>'+
+					'</div>'+
+				'</div>'+
+				'<div class="row">'+
+					'<div class="col-md-6">'+
+						'<div class="container-fluid vehiculo-content">'+
+							'<div class="container-text-title-detalle">'+
+								'<span class="text-tile-vehiculo">Monto primer pago</span>'+
+							'</div>'+
+							'<div class="container-text-content-detalle">'+
+								'<span class="text-content-vehiculo" title="'+this.responseServicios.precioProntoPago+'">'+this.responseServicios.precioProntoPago+'</span>'+
+							'</div>'+
+						'</div>'+
+					'</div>'+
+					'<div class="col-md-6">'+
+						'<div class="container-fluid vehiculo-content">'+
+							'<div class="container-text-title-detalle">'+
+								'<span class="text-tile-vehiculo">Pago instalacion</span>'+
+							'</div>'+
+							'<div class="container-text-content-detalle">'+
+								'<span class="text-content-vehiculo" title="'+this.responseServicios.pagoEnInstalacion+'">'+this.responseServicios.pagoEnInstalacion+'</span>'+
+							'</div>'+
+						'</div>'+
+					'</div>'+
+				'</div>'+
+				'<br>'+
+				'<div class="row">'+
+					'<div class="col-7">'+
+						'<div class="row justify-content-center">'+
+							'<div class="col-md-12">'+
+								'<h5 style="color:#767676" class="titlemodalproductos">Servicios a instalar</h5>'+
+								'<div class="parent_table_detalle">'+
+									'<table class="detalle-productos-table table table-sm">'+
+										'<thead class="thead_table_servicios">'+
+											'<tr>'+
+												'<th>Nombre del Servicio</th>'+
+												'<th>Tipo Servicio</th>'+
+												'<th>Detalle</th>'+
+											'</tr>'+
+										'</thead>'+
+										'<tbody>';
+											var index = 0;
+											this.responseServicios.resumenServicios.forEach(element => {
+												contentResumenPaquete = contentResumenPaquete + 
+												'<tr id="trIndex-'+index+'" class="tr-class-remove">'+
+													'<td>'+ element.descripcion+'</td>'+
+													'<td>'+ element.tipo+'</td>'+
+													'<td>'+
+														'<div class="text-center">'+
+															'<button ng-if="servicio.id !== undefined" type="button" tagIndex="'+ index + '" class="btn_detalle_servicio btn btn-info btn-rounded btn-sm my-0 waves-effect waves-light ng-scope">'+
+																'<i tagIndex="'+ index + '" class="fa fa-eye"></i>'+
+															'</button>'+
+														'</div>'+
+													'</td>'+
+												'</tr>';
+												index++;
+											});
+											contentResumenPaquete = contentResumenPaquete +
+										'</tbody>'+
+									'</table>'+
+								'</div>'+
+							'</div>'+
+						'</div>'+
+						'<div class="row" id="contentProductosPaquete">'+
+							'<div class="col-md-12">'+
+								'<h5 style="color:#767676" class="titlemodalproductos"> Productos </h5>'+
+								'<div class="parent_table_detalle_productos">'+
+									'<table class="table detalle-productos-table table-sm">'+
+										'<thead class="thead_table_productos_servicio">'+
+											'<tr>'+
+												'<th scope="col">Nombre del producto</th>'+
+												'<th scope="col">Tipo producto</th>'+
+											'</tr>'+
+										'</thead>'+
+										'<tbody>'+
+											'<tr>'+
+												'<td class="text-center" colspan="2">No se cuenta con productos</td>'+
+											'</tr>'+
+										'</tbody>'+
+									'</table>'+
+								'</div>'+
+							'</div>'+
+						'</div>'+
+						'<div class="row">'+
+							'<div class="col-md-12">'+
+								'<h5 style="color:#767676" class="titlemodalproductos"> Promociones </h5>'+
+								'<div class="parent_table_detalle_productos">'+
+									'<table class="table detalle-productos-table table-sm">'+
+										'<thead class="thead_table_productos_servicio">'+
+											'<tr>'+
+												'<th scope="col">Folio de la promocion</th>'+
+												'<th scope="col">Nombre de la promocion</th>'+
+											'</tr>'+
+										'</thead>'+
+										'<tbody>';
+										if (this.responseServicios.promociones.length > 0) {
+											this.responseServicios.promociones.forEach(element => {
+												contentResumenPaquete = contentResumenPaquete + 
+												'<tr>'+
+													'<td>'+ element.id+'</td>'+
+													'<td>'+ element.descripcion+'</td>'+
+												'</tr>'
+											});
+										} else {
+											contentResumenPaquete = contentResumenPaquete + 
+											'<tr>'+
+												'<td class="text-center" colspan="2">No se cuenta con promociones</td>'+
+											'</tr>'
+										}
+										
+										contentResumenPaquete = contentResumenPaquete +
+
+										'</tbody>'+
+									'</table>'+
+								'</div>'+
+							'</div>'+
+						'</div>'+
+					'</div>'+
+					'<div id="info_equipos_detalle" class="col-5">'+
+						'<div class="text-center">'+
+							'<h5 style="color:#767676" class="text-center titlemodalproductos">Equipo y Modelos</h5>'+
+							'<div>'+
+								'<div class="text-center not_info_detalle row h-100 justify-content-center">'+
+									'<h6 style="color:#abafae;" class="text-noSeleccion">Sin datos para mostrar</h6>'+
+								'</div>'+
+							'</div>'+
+						'</div>'+
+					'</div>'+
+			'</div>'+
+		'</div>'
+		$(this.idDiv).append(contentResumenPaquete);
+
+		$(this.idDiv).find('.btn_detalle_servicio').on('click', (e) => {
+			$('.tr-class-remove').removeClass('active-selected-servicio-plan');
+			$('#trIndex-'+$(e.target).attr('tagIndex')).addClass('active-selected-servicio-plan');
+			this.consultarDetalleEquiposBandejasSF($(e.target).attr('tagIndex'));
+		});
+	}
+
+	consultarDetalleEquiposBandejasSF(index) {
+		var params = {
+			idCotSitioPlan: this.idCotSitio
+		}
+		var resultBandera = false;
+		var listadoEquiposResult = [];
+		if (!this.isConsultaEquiposModelos) {
+			swal({ text: 'Espera un momento...', allowOutsideClick: false });
+			swal.showLoading();
+			this.consultarDetalleEquiposServicios(params).done(function (response) {
+				if (response.result) {
+					if (response.respuesta) {
+						if (response.result) {
+							resultBandera=true;
+						   
+							if (response.result.detalleEquipos.length) {
+								listadoEquiposResult = angular.copy(response.result.detalleEquipos);
+								if(this.responseServicios!= undefined && 
+									this.responseServicios.resumenServicios!=undefined && this.responseServicios.resumenServicios.length >0){                                
+									this.responseServicios.resumenServicios=this.responseServicios.resumenServicios.map(function(e){
+										e.elementoEquipoModelos={}
+										e.isTieneEquipoModeos=false;
+										return e;
+									})
+									listadoEquiposResult.forEach(function(elem,index){
+										let servicioTemp= this.responseServicios.resumenServicios.find(function(e){ return e.id==elem.idCotPlanServicio })
+										if(servicioTemp!=undefined){
+											servicioTemp.elementoEquipoModelos=elem
+											servicioTemp.isTieneEquipoModeos=true;
+										}
+									});                                
+								}
+								swal.close();
+							} else {
+								mostrarMensajeInformativo("No se encontraron Equipos");
+								swal.close();
+							}
+						} else {
+							mostrarMensajeErrorAlert(response.resultDescripcion);
+							swal.close();
+						}
+					} else {
+						mostrarMensajeErrorAlert(response.resultDescripcion);
+						swal.close();
+					}
+				} else {
+					mostrarMensajeErrorAlert(response.resultDescripcion);
+					swal.close();
+				}
+			});
+			this.isConsultaEquiposModelos = resultBandera;
+			this.listadoEquipos = listadoEquiposResult;
+			var infoEquip = this.listadoEquipos.filter(e => { return e.idCotPlanServicio === this.responseServicios.resumenServicios[index].id })
+			this.actualizarDetalleEquipos(infoEquip);
+		} else {
+			var infoEquip = this.listadoEquipos.filter(e => { return e.idCotPlanServicio === this.responseServicios.resumenServicios[index].id })
+			this.actualizarDetalleEquipos(infoEquip);
+		}
+		this.actualizarTablaProductos(this.responseServicios.resumenServicios[index]);
+		
+		
+	}
+
+	actualizarTablaProductos(object) {
+		$("#contentProductosPaquete").empty();
+		var contentPaquete = 
+		'<div class="col-md-12">'+
+			'<h5 style="color:#767676" class="titlemodalproductos"> Productos </h5>'+
+			'<div class="parent_table_detalle_productos">'+
+				'<table class="table detalle-productos-table table-sm">'+
+					'<thead class="thead_table_productos_servicio">'+
+						'<tr>'+
+							'<th scope="col">Nombre del producto</th>'+
+							'<th scope="col">Tipo producto</th>'+
+						'</tr>'+
+					'</thead>'+
+					'<tbody>';
+					object.productos.forEach(element => {
+						contentPaquete = contentPaquete + 
+						'<tr>'+
+							'<td>'+ element.descripcion+'</td>'+
+							'<td>'+ element.tipo+'</td>'+
+						'</tr>'
+					});
+					contentPaquete = contentPaquete +
+
+					'</tbody>'+
+				'</table>'+
+			'</div>'+
+		'</div>'+
+		$("#contentProductosPaquete").append(contentPaquete);
+	}
+
+	actualizarDetalleEquipos(infoEquipo) {
+		if (infoEquipo.length > 0) {
+			var object = infoEquipo[0];
+			$("#info_equipos_detalle").empty();
+			var contentInfoEquipo = 
+				'<div class="text-center">'+
+					'<h5 style="color:#767676" class="text-center titlemodalproductos">Equipo y Modelos</h5>'+
+				'</div>'+
+				'<div>'+
+					'<div>'+
+						'<div class="content_info_detalle">'+
+							'<h6 class="ml-3 mt-2 text-equipo-paquete">'+ object.nombreEquipo +'</h6>'+
+							'<div class="ml-4">'+
+								'<div class="container-fluid detallePaquete-content">'+
+									'<ul style="color: #797979" class="listado_modelos">';
+										object.modelo.forEach(element => {
+											contentInfoEquipo = contentInfoEquipo +'<li class="li_item_modelo">'+ element.modelo +'</li>'
+										});
+										contentInfoEquipo = contentInfoEquipo +
+									'</ul>'+
+								'</div>'+
+							'</div>'+
+						'</div>'+
+					'</div>'+
+				'</div>'
+
+			$("#info_equipos_detalle").append(contentInfoEquipo);
+		} else {
+			$("#info_equipos_detalle").empty();
+			var contentInfoEquipo = 
+				'<div class="text-center">'+
+					'<h5 st<yle="color:#767676" class="text-center titlemodalproductos">Equipo y Modelos</h5>'+
+					'<div>'+
+						'<div class="text-center not_info_detalle row h-100 justify-content-center">'+
+							'<h6 style="color:#abafae;" class="text-noSeleccion">Sin datos para mostrar</h6>'+
+						'</div>'+
+					'</div>'+
+				'</div>';
+			$("#info_equipos_detalle").append(contentInfoEquipo);
+		}
+	}
+	
+	consultarDetallePaqueteService(params) {
+		return $.ajax({
+			url: 'req/obtenerResumenPaquete',
+			type: "POST",
+			data: JSON.stringify(params),
+			async: false,
+			dataType: "json",
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
+	}
+
+	consultarDetalleEquiposServicios(params) {
+		return $.ajax({
+			url: 'req/consultarDetalleEquiposBandejasSF',
+			type: "POST",
+			data: JSON.stringify(params),
+			async: false,
+			dataType: "json",
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		});
+	}
+
+	
+	
+
+
+
+}
 
 var idioma_espanol_not_font = {
 	"sProcessing": "Procesando...",
