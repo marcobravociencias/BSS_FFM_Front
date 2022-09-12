@@ -74,6 +74,14 @@ app.controller('coordInstPIController', ['$scope', '$q', 'coordInstalacionesPISe
 							$scope.nivelEstatusCalendarizada = llavesResult.N_ESTATUS_PENDIENTES_CALENDARIZADA ? llavesResult.N_ESTATUS_PENDIENTES_CALENDARIZADA : llavesResult.N_ESTATUS_PENDIENTES;
 							$scope.nivelEstatusGestoria = llavesResult.N_ESTATUS_PENDIENTES_GESTORIA ? parseInt(llavesResult.N_ESTATUS_PENDIENTES_GESTORIA) : parseInt(llavesResult.N_ESTATUS_PENDIENTES);
 
+							$scope.idEstatusPendiente = llavesResult.ID_ESTATUS_PENDIENTE ? parseInt(llavesResult.ID_ESTATUS_PENDIENTE) : 1;
+							$scope.idEstatusAsignada = llavesResult.ID_ESTATUS_ASIGNADA ? parseInt(llavesResult.ID_ESTATUS_ASIGNADA) : 2;
+							$scope.idEstatusDetenida = llavesResult.ID_ESTATUS_DETENIDA ? parseInt(llavesResult.ID_ESTATUS_DETENIDA) : 3;
+							$scope.idEstatusTerminada = llavesResult.ID_ESTATUS_TERMINADA ? parseInt(llavesResult.ID_ESTATUS_TERMINADA) : 4;
+							$scope.idEstatusCancelada = llavesResult.ID_ESTATUS_CANCELADA ? parseInt(llavesResult.ID_ESTATUS_CANCELADA) : 5;
+							$scope.idEstatusCalendarizada = llavesResult.ID_ESTATUS_CALENDARIZADA ? llavesResult.ID_ESTATUS_CALENDARIZADA : 6;
+							$scope.idEstatusGestoria = llavesResult.ID_ESTATUS_GESTORIA ? parseInt(llavesResult.ID_ESTATUS_GESTORIA) : 7;
+
 							if (llavesResult.N_FILTRO_GEOGRAFIA)
 								$scope.nivelArbol = parseInt(llavesResult.N_FILTRO_GEOGRAFIA)
 
@@ -129,13 +137,13 @@ app.controller('coordInstPIController', ['$scope', '$q', 'coordInstalacionesPISe
 						$scope.filtrosCatalogoCalendarizada = $scope.conversionAnidadaRecursiva($scope.respaldoFiltroCatalogo, 1, $scope.nivelEstatusCalendarizada);
 						$scope.filtrosCatalogoGestoria = $scope.conversionAnidadaRecursiva($scope.respaldoFiltroCatalogo, 1, $scope.nivelEstatusGestoria);
 
-						$scope.filtrosGeneral.estatusPendiente = $scope.filtrosCatalogoPendiente.filter(e => { return e.id === 1 });
-						$scope.filtrosGeneral.estatusAsignada = $scope.filtrosCatalogoAsignada.filter(e => { return e.id === 2 });
-						$scope.filtrosGeneral.estatusDetenida = $scope.filtrosCatalogoDetenida.filter(e => { return e.id === 3 });
-						$scope.filtrosGeneral.estatusTerminada = $scope.filtrosCatalogoTerminada.filter(e => { return e.id === 4 });
-						$scope.filtrosGeneral.estatusCancelada = $scope.filtrosCatalogoCancelada.filter(e => { return e.id === 5 });
-						$scope.filtrosGeneral.estatusCalendarizada = $scope.filtrosCatalogoCalendarizada.filter(e => { return e.id === 6 });
-						$scope.filtrosGeneral.estatusGestoria = $scope.filtrosCatalogoGestoria.filter(e => { return e.id === 7 });
+						$scope.filtrosGeneral.estatusPendiente = $scope.filtrosCatalogoPendiente.filter(e => { return e.id === $scope.idEstatusPendiente });
+						$scope.filtrosGeneral.estatusAsignada = $scope.filtrosCatalogoAsignada.filter(e => { return e.id === $scope.idEstatusAsignada });
+						$scope.filtrosGeneral.estatusDetenida = $scope.filtrosCatalogoDetenida.filter(e => { return e.id === $scope.idEstatusDetenida });
+						$scope.filtrosGeneral.estatusTerminada = $scope.filtrosCatalogoTerminada.filter(e => { return e.id === $scope.idEstatusTerminada });
+						$scope.filtrosGeneral.estatusCancelada = $scope.filtrosCatalogoCancelada.filter(e => { return e.id === $scope.idEstatusCancelada });
+						$scope.filtrosGeneral.estatusCalendarizada = $scope.filtrosCatalogoCalendarizada.filter(e => { return e.id === $scope.idEstatusCalendarizada });
+						$scope.filtrosGeneral.estatusGestoria = $scope.filtrosCatalogoGestoria.filter(e => { return e.id === $scope.idEstatusGestoria });
 
 						$scope.listadoMotivosReagenda = $scope.respaldoFiltroCatalogo.filter(e => { return e.idPadre === 201 })
 						$scope.listadoMotivosCalendarizado = $scope.respaldoFiltroCatalogo.filter(e => { return e.idPadre === 243 })
