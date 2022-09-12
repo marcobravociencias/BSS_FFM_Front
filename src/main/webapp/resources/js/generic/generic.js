@@ -223,16 +223,22 @@ class GenericAccionRealizada {
 			fechaFin: moment(new Date()).format("YYYY-MM-DD"),
 			idModulo: this.idModuloAccion
 		}
-
-		return $.ajax({
-			url: 'req/consultarAccionesRealizadasService',
-			type: "POST",
-			data: JSON.stringify(params),
-			async: false,
-			dataType: "json",
-			headers: {
-				'Content-Type': 'application/json'
-			}
+		return new Promise((resolve, reject) => {
+			 $.ajax({
+				url: 'req/consultarAccionesRealizadasService',
+				type: "POST",
+				data: JSON.stringify(params),
+				dataType: "json",
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				success: function (data) {
+					resolve(data)
+				},
+				error: function (error) {
+					reject(error)
+				},
+			})
 		});
 
 		/*
@@ -281,7 +287,7 @@ class GenericAccionRealizada {
 		$("#loading-data").show();
 		//let listaUltimasAcciones = this.getAccionesRecientesUsuario();
 		let listaUltimasAcciones = [];
-		this.getAccionesRecientesUsuario().done(function (jsonResponse) {
+		this.getAccionesRecientesUsuario().then(function (jsonResponse) {
 			if (jsonResponse.respuesta) {
 				if (jsonResponse.result) {
 					if (jsonResponse.result.modulos) {
@@ -289,6 +295,8 @@ class GenericAccionRealizada {
 					}
 				}
 			}
+		}).catch(function(error){
+			console.log("manejar error")
 		});
 		$("#listAccionesRecientes").empty();
 		let contentAcciones = "";
@@ -461,7 +469,7 @@ class GenericDetallePaquete {
 		var params = {
 			folio: os
 		}
-		this.consultarDetallePaqueteService(params).done(function (jsonResponse) {
+		this.consultarDetallePaqueteService(params).then(function (jsonResponse) {
 			if (jsonResponse.respuesta) {
 				if (jsonResponse.result) {
 					if (jsonResponse.result.resumenPaquete) {
@@ -469,6 +477,8 @@ class GenericDetallePaquete {
 					}
 				}
 			}
+		}).catch((error) => {
+			console.log(error)
 		});
 		this.responseServicios = resultDetalle
 		this.idCotSitio = resultDetalle.idCotSitio;
@@ -826,30 +836,44 @@ class GenericDetallePaquete {
 		}
 	}
 	
-	consultarDetallePaqueteService(params) {
-		return $.ajax({
-			url: 'req/obtenerResumenPaquete',
-			type: "POST",
-			data: JSON.stringify(params),
-			async: false,
-			dataType: "json",
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		});
+	 consultarDetallePaqueteService =function(params){
+		return new Promise((resolve, reject) => {
+			$.ajax({
+				url: 'req/obtenerResumenPaquete',
+				type: "POST",
+				data: JSON.stringify(params),
+				dataType: "json",
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				success: function (data) {
+					resolve(data)
+				},
+				error: function (error) {
+					reject(error)
+				},
+			})
+		})
 	}
 
-	consultarDetalleEquiposServicios(params) {
-		return $.ajax({
-			url: 'req/consultarDetalleEquiposBandejasSF',
-			type: "POST",
-			data: JSON.stringify(params),
-			async: false,
-			dataType: "json",
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		});
+	consultarDetalleEquiposServicios=function(params) {
+		return new Promise((resolve, reject) => {
+			$.ajax({
+				url: 'req/consultarDetalleEquiposBandejasSF',
+				type: "POST",
+				data: JSON.stringify(params),
+				dataType: "json",
+				headers: {
+					'Content-Type': 'application/json'
+				},success: function (data) {
+					resolve(data)
+				},
+				error: function (error) {
+					reject(error)
+				},
+			})
+
+		})
 	}
 
 	
