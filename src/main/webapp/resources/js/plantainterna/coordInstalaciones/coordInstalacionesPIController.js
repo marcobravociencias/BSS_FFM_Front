@@ -79,7 +79,7 @@ app.controller('coordInstPIController', ['$scope', '$q', 'coordInstalacionesPISe
 							$scope.idEstatusDetenida = llavesResult.ID_ESTATUS_DETENIDA ? parseInt(llavesResult.ID_ESTATUS_DETENIDA) : 3;
 							$scope.idEstatusTerminada = llavesResult.ID_ESTATUS_TERMINADA ? parseInt(llavesResult.ID_ESTATUS_TERMINADA) : 4;
 							$scope.idEstatusCancelada = llavesResult.ID_ESTATUS_CANCELADA ? parseInt(llavesResult.ID_ESTATUS_CANCELADA) : 5;
-							$scope.idEstatusCalendarizada = llavesResult.ID_ESTATUS_CALENDARIZADA ? llavesResult.ID_ESTATUS_CALENDARIZADA : 6;
+							$scope.idEstatusCalendarizada = llavesResult.ID_ESTATUS_CALENDARIZADA ? parseInt(llavesResult.ID_ESTATUS_CALENDARIZADA) : 6;
 							$scope.idEstatusGestoria = llavesResult.ID_ESTATUS_GESTORIA ? parseInt(llavesResult.ID_ESTATUS_GESTORIA) : 7;
 
 							if (llavesResult.N_FILTRO_GEOGRAFIA)
