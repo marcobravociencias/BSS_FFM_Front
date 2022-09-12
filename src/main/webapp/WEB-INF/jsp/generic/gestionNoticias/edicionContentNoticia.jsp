@@ -47,10 +47,10 @@
 			                        <div  class="imagen-noticia-previsualizador-mod">                      
 			                            <img id="imgNoticiaMod" ng-if="fileCargaArchivoNoticiaEdit.archivo && banderaEdicionImagen" class="imagen-visor-creanotica" ng-src="{{fileCargaArchivoNoticiaEdit.archivo}}" alt="">
 			                            <img id="imgNoticiaModNueva" ng-if="fileCargaArchivoNoticiaEdit.archivo && !banderaEdicionImagen" class="imagen-visor-creanotica" ng-src="data:image/jpeg;base64,{{fileCargaArchivoNoticiaEdit.archivo}}" alt="">
-			                            <div ng-if="!inhabilidarCamposEdicion" class="content-titulo-principal">
+			                            <div ng-if="!inhabilidarCamposEdicion" class="content-titulo-principal" ng-show="editObj.soloImagen == 0">
 			                                <span class="text-title titulo-principal" ng-bind="editObj.tituloPrincipal" ></span>
 			                            </div>
-			                            <div ng-if="!inhabilidarCamposEdicion" class="content-titulo-secundario">
+			                            <div ng-if="!inhabilidarCamposEdicion" class="content-titulo-secundario" ng-show="editObj.soloImagen == 0">
 			                                <span class="text-title titulo-secundario" ng-bind="editObj.tituloSecundario" ></span>
 			                            </div>
 			                            <div class="content-icons-image">
@@ -84,10 +84,10 @@
 		                    	<div class="container-noticias-visualizador-mod">
 			                        <div  class="imagen-noticia-previsualizador-mod">                      
 			                            <img class="imagen-visor-creanotica" ng-src="{{otraNoticia.urlBanner}}" alt="">
-			                            <div class="content-titulo-principal">
+			                            <div class="content-titulo-principal" ng-if="otraNoticia.soloImagen == 0">
 			                                <span class="text-title titulo-principal" ng-bind="otraNoticia.tituloPrincipal" ></span>
 			                            </div>
-			                            <div class="content-titulo-secundario">
+			                            <div class="content-titulo-secundario" ng-if="otraNoticia.soloImagen == 0">
 			                                <span class="text-title titulo-secundario" ng-bind="otraNoticia.tituloSecundario" ></span>
 			                            </div>
 			                        </div>
@@ -167,13 +167,13 @@
                                 </div>
                             </div>
                             <div>
-                                <div class="form row  row-input-crea">
+                                <div class="form row  row-input-crea" ng-show="editObj.soloImagen == 0">
                                     <div class="col-12">
                                         <label class="label-noticiar-creacion form-label" for="tituloPrincipalEditar">T&iacute;tulo principal</label>
                                         <input type="text" ng-model="editObj.tituloPrincipal" id="tituloPrincipalEditar" class="form-control form-control-sm" ng-click="regresarInicioCarruselImgNoticiasMod()" />
                                     </div>                                
                                 </div>                      
-                                <div class="form row  row-input-crea">
+                                <div class="form row  row-input-crea" ng-show="editObj.soloImagen == 0">
                                     <div class="col-12">
                                         <label class="label-noticiar-creacion form-label" for="tituloSecundarioEditar">T&iacute;tulo secundario</label>
                                         <input type="text" ng-model="editObj.tituloSecundario" id="tituloSecundarioEditar" class="form-control form-control-sm" ng-click="regresarInicioCarruselImgNoticiasMod()" />

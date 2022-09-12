@@ -14,6 +14,7 @@ app.edicionNoticiaController=function($scope,gestionNoticiasService){
         $scope.editObj.idNoticia=$scope.editObj.id
         $scope.banderaEdicionImagen=true;
         $scope.edicionNoticaContent=true;
+        $scope.soloImagenCheckMod = $scope.editObj.soloImagen == 1 ? 1 : 0;
         
         if($scope.editObj.soloImagen != undefined && $scope.editObj.soloImagen != null){
     		if($scope.editObj.soloImagen == 1){

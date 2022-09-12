@@ -27,7 +27,6 @@
     font-family: 'Montserrat';
     font-size: .8em;
     border-top: 0px solid #eceeef !important;
-    text-align: center;
 }
 
 #modulosTable thead th ,
@@ -40,7 +39,6 @@
     padding: 1em;
     border: none;
     font-weight: normal;
-    text-align: center;
 }
 
 #modulosTable tbody tr td ,
@@ -566,6 +564,14 @@ span.text-tile-permiso {
 
 .encabezadosTablas {
 	font-weight: bold !important;
+}
+
+.filaCentrada {
+	text-align: center !important;
+}
+
+.filaJustificada {
+	text-align: justify !important;
 }
 
 /* tbody { */

@@ -46,10 +46,10 @@
 		                    	<div class="container-noticias-visualizador">
 					                <div  class="imagen-noticia-previsualizador">                      
 					                    <img id="imgNoticiaRegistro" ng-show="fileCargaArchivoNoticia.archivo" class="imagen-visor-creanotica" ng-src="data:image/jpeg;base64,{{fileCargaArchivoNoticia.archivo}}" alt="">
-					                    <div ng-show="!inhabilidarCamposRegistro" class="content-titulo-principal">
+					                    <div ng-show="!soloImagenCheck" class="content-titulo-principal">
 					                        <span class="text-title titulo-principal" ng-bind="saveObj.tituloPrincipal" ></span>
 					                    </div>
-					                    <div ng-show="!inhabilidarCamposRegistro" class="content-titulo-secundario">
+					                    <div ng-show="!soloImagenCheck" class="content-titulo-secundario">
 					                        <span class="text-title titulo-secundario" ng-bind="saveObj.tituloSecundario" ></span>
 					                    </div>
 					                    <div class="content-icons-image">
@@ -83,10 +83,10 @@
 		                    	<div class="container-noticias-visualizador">
 			                        <div  class="imagen-noticia-previsualizador">                      
 			                            <img class="imagen-visor-creanotica" ng-src="{{otraNoticia.urlBanner}}" alt="">
-			                            <div class="content-titulo-principal">
+			                            <div class="content-titulo-principal" ng-if="otraNoticia.soloImagen == 0">
 			                                <span class="text-title titulo-principal" ng-bind="otraNoticia.tituloPrincipal" ></span>
 			                            </div>
-			                            <div class="content-titulo-secundario">
+			                            <div class="content-titulo-secundario" ng-if="otraNoticia.soloImagen == 0">
 			                                <span class="text-title titulo-secundario" ng-bind="otraNoticia.tituloSecundario" ></span>
 			                            </div>
 			                        </div>
@@ -165,13 +165,13 @@
 		                        </div>
 		                    </div>
 		                    <div>                        
-		                        <div class="form row  row-input-crea">
+		                        <div class="form row  row-input-crea" ng-show="!soloImagenCheck">
 		                            <div class="col-12">
 		                                <label class="label-noticiar-creacion form-label" for="tituloPrincipal">T&iacute;tulo principal</label>
 		                                <input type="text" ng-model="saveObj.tituloPrincipal" id="tituloPrincipal" class="form-control form-control-sm" ng-click="regresarInicioCarruselImgNoticiasRegistro()" />
 		                            </div>                                
 		                        </div>                      
-		                        <div class="form row  row-input-crea">
+		                        <div class="form row  row-input-crea" ng-show="!soloImagenCheck">
 		                            <div class="col-12">
 		                                <label class="label-noticiar-creacion form-label" for="tituloSecundario">T&iacute;tulo secundario</label>
 		                                <input type="text" ng-model="saveObj.tituloSecundario" id="tituloSecundario" class="form-control form-control-sm" ng-click="regresarInicioCarruselImgNoticiasRegistro()" />

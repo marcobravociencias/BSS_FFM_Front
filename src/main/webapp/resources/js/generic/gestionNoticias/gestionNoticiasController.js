@@ -549,14 +549,16 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 			isErrorRegistro = true
 		}
 
-		if (!$scope.saveObj.tituloPrincipal) {
-			textErrorRegistro += '<li>Captura título principal</li>';
-			isErrorRegistro = true
-		}
+		if(!$scope.soloImagenCheck){
+			if (!$scope.saveObj.tituloPrincipal) {
+				textErrorRegistro += '<li>Captura título principal</li>';
+				isErrorRegistro = true
+			}
 
-		if (!$scope.saveObj.tituloSecundario) {
-			textErrorRegistro += '<li>Captura título secundario</li>';
-			isErrorRegistro = true
+			if (!$scope.saveObj.tituloSecundario) {
+				textErrorRegistro += '<li>Captura título secundario</li>';
+				isErrorRegistro = true
+			}
 		}
 
 		if (!$scope.saveObj.detalle) {
@@ -628,6 +630,20 @@ app.controller('gestionNoticiasController', ['$scope', '$q', '$filter', 'gestion
 
 	$scope.regresarInicioCarruselImgNoticiasRegistro = function () {
 		$('#carruselImgNoticiasRegistro').animate({ scrollLeft: '=0' }, 150);
+	}
+	
+	$scope.cambiarTipoDeRegistroNoticia = function() {
+		if($scope.soloImagenCheck){
+			$("#tituloPrincipal").val("NA");
+			$("#tituloSecundario").val("NA");
+			$scope.saveObj.tituloPrincipal = "NA";
+			$scope.saveObj.tituloSecundario = "NA";
+		}else{
+			$("#tituloPrincipal").val("");
+			$("#tituloSecundario").val("");
+			$scope.saveObj.tituloPrincipal = "";
+			$scope.saveObj.tituloSecundario = "";
+		}
 	}
 
 }]);

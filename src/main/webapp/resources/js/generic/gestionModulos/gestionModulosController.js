@@ -23,10 +23,10 @@ app.controller('gestionModulosController', ['$scope', '$q', '$filter', 'gestionM
     $scope.listaUnidadesNegocio = [];
     
     //DATOS HARDCODEADOS
-    $scope.jsonListaModulos = [{"id":"1","nombre":"Usuarios","clave":"moduloUsuarios","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#ffffff","colorHover":"#000000","icono":"fa fa-users","idPadre":null,"nivel":"1"},{"id":"2","nombre":"Vehículos","clave":"moduloVehiculos","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#ffffff","colorHover":"#000000","icono":"fa fa-cars","idPadre":null,"nivel":"1"},{"id":"3","nombre":"Skills","clave":"moduloSkills","propietario":"1","unidadNegocio":"Empresarial","fechaActualizacion":"08/08/2022","color":"#ffffff","colorHover":"#000000","icono":"fa fa-work","idPadre":null,"nivel":"1"},{"id":"4","nombre":"Despacho","clave":"moduloDespacho","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#f2f2f2","colorHover":"#f3f3f3","icono":"fa fa-desk","idPadre":null,"nivel":"1"},{"id":"5","nombre":"Consulta OT","clave":"moduloConsultaOT","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#121212","colorHover":"#333","icono":"fa fa-read","idPadre":null,"nivel":"1"},{"id":"6","nombre":"Reportes PI","clave":"moduloReportes","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#e3e3e3","colorHover":"#f0f0f0","icono":"fa fa-report","idPadre":null,"nivel":"1"}];
-    $scope.jsonListaPermisosModulo = [{"id":"7","nombre":"Crear usuario","clave":"crearUsuario","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#ffffff","colorHover":"#000000","icono":"fa fa-users","idPadre":"1","nivel":"2"},{"id":"8","nombre":"Consultar usuarios","clave":"consultaUsuarios","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#ffffff","colorHover":"#000000","icono":"fa fa-users","idPadre":"1","nivel":"2"},{"id":"9","nombre":"Modificar usuario","clave":"modificarUsuario","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#ffffff","colorHover":"#000000","icono":"fa fa-users","idPadre":"1","nivel":"2"},{"id":"10","nombre":"Eliminar usuarios","clave":"eliminarUsuario","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#ffffff","colorHover":"#000000","icono":"fa fa-users","idPadre":"1","nivel":"2"},{"id":"11","nombre":"Consultar vechículos","clave":"consultaVehiculos","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#ffffff","colorHover":"#000000","icono":"fa fa-cars","idPadre":"2","nivel":"2"},{"id":"12","nombre":"Crear vehículo","clave":"crearVehiculo","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#ffffff","colorHover":"#000000","icono":"fa fa-cars","idPadre":"2","nivel":"2"},{"id":"13","nombre":"Eliminar vehículo","clave":"eliminarVehiculo","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#ffffff","colorHover":"#000000","icono":"fa fa-cars","idPadre":"2","nivel":"2"},{"id":"14","nombre":"Modificar vehículo","clave":"modificarVehiculo","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#ffffff","colorHover":"#000000","icono":"fa fa-cars","idPadre":"2","nivel":"2"},{"id":"15","nombre":"Descarga seguimiento diario","clave":"descargaSeguimientoDiario","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#d0d0d0","colorHover":"#f5f5f5","icono":"fa fa-desk","idPadre":"4","nivel":"2"},{"id":"16","nombre":"Confirma Orden","clave":"confirmaOrden","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#d0d0d0","colorHover":"#f5f5f5","icono":"fa fa-desk","idPadre":"4","nivel":"2"},{"id":"17","nombre":"Desconfirma Orden","clave":"desconfirmaOrden","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#d0d0d0","colorHover":"#f5f5f5","icono":"fa fa-desk","idPadre":"4","nivel":"2"},{"id":"18","nombre":"Asigna Orden","clave":"asignaOrden","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#d0d0d0","colorHover":"#f5f5f5","icono":"fa fa-desk","idPadre":"4","nivel":"2"},{"id":"19","nombre":"Desasigna Orden","clave":"desasignaOrden","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#d0d0d0","colorHover":"#f5f5f5","icono":"fa fa-desk","idPadre":"4","nivel":"2"},{"id":"20","nombre":"Reasigna Orden","clave":"reasignaOrden","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#d0d0d0","colorHover":"#f5f5f5","icono":"fa fa-desk","idPadre":"4","nivel":"2"},{"id":"21","nombre":"Reagenda Orden","clave":"reagendaOrden","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#d0d0d0","colorHover":"#f5f5f5","icono":"fa fa-desk","idPadre":"4","nivel":"2"},{"id":"22","nombre":"Calendariza Orden","clave":"calendarizaOrden","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#d0d0d0","colorHover":"#f5f5f5","icono":"fa fa-desk","idPadre":"4","nivel":"2"},{"id":"23","nombre":"Consulta Seguimiento Diario","clave":"consultaSeguimientoDiario","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#3942d7","colorHover":"#f55756","icono":"fa fa-report","idPadre":"6","nivel":"2"},{"id":"24","nombre":"Consulta Cierre Diario","clave":"consultaCierreDiario","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#3942d7","colorHover":"#f55756","icono":"fa fa-report","idPadre":"6","nivel":"2"},{"id":"25","nombre":"Consulta Asignadas Compensacion","clave":"consultaAsignadasCompensacion","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#3942d7","colorHover":"#f55756","icono":"fa fa-report","idPadre":"6","nivel":"2"},{"id":"26","nombre":"Descarga Cierre Diario","clave":"descargaCierreDiario","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#3942d7","colorHover":"#f55756","icono":"fa fa-report","idPadre":"6","nivel":"2"},{"id":"27","nombre":"Descarga Reporte Tecnicos Tipos Ordenes","clave":"descargaReporteTecnicosTiposOrdenes","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#3942d7","colorHover":"#f55756","icono":"fa fa-report","idPadre":"6","nivel":"2"}];
-    $scope.jsonListaPropietarios = [{"id":"1","nombre":"PI Mexico"},{"id":"2","nombre":"PE Distrital Mexíco"},{"id":"3","nombre":"PE CORE Mexíco"},{"id":"4","nombre":"PMO Mexíco"},{"id":"5","nombre":"Delivery Mexíco"},{"id":"6","nombre":"PI Colombia"}];
-    $scope.jsonListaUnidadesNegocio = [{"id":"1","nombre":"Residencial"},{"id":"2","nombre":"Empresarial"},{"id":"3","nombre":"Planta Externa"},{"id":"4","nombre":"Delivery"}];
+    $scope.jsonListaModulos = [{"id":"1","descripcion":"Usuarios","clave":"moduloUsuarios","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#ffffff","colorHover":"#000000","icono":"fa fa-users","idPadre":null,"nivel":"1"},{"id":"2","descripcion":"Vehículos","clave":"moduloVehiculos","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#ffffff","colorHover":"#000000","icono":"fa fa-cars","idPadre":null,"nivel":"1"},{"id":"3","descripcion":"Skills","clave":"moduloSkills","propietario":"1","unidadNegocio":"Empresarial","fechaActualizacion":"08/08/2022","color":"#ffffff","colorHover":"#000000","icono":"fa fa-work","idPadre":null,"nivel":"1"},{"id":"4","descripcion":"Despacho","clave":"moduloDespacho","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#f2f2f2","colorHover":"#f3f3f3","icono":"fa fa-desk","idPadre":null,"nivel":"1"},{"id":"5","descripcion":"Consulta OT","clave":"moduloConsultaOT","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#121212","colorHover":"#333","icono":"fa fa-read","idPadre":null,"nivel":"1"},{"id":"6","descripcion":"Reportes PI","clave":"moduloReportes","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#e3e3e3","colorHover":"#f0f0f0","icono":"fa fa-report","idPadre":null,"nivel":"1"}];
+    $scope.jsonListaPermisosModulo = [{"id":"7","descripcion":"Crear usuario","clave":"crearUsuario","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#ffffff","colorHover":"#000000","icono":"fa fa-users","idPadre":"1","nivel":"2"},{"id":"8","descripcion":"Consultar usuarios","clave":"consultaUsuarios","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#ffffff","colorHover":"#000000","icono":"fa fa-users","idPadre":"1","nivel":"2"},{"id":"9","descripcion":"Modificar usuario","clave":"modificarUsuario","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#ffffff","colorHover":"#000000","icono":"fa fa-users","idPadre":"1","nivel":"2"},{"id":"10","descripcion":"Eliminar usuarios","clave":"eliminarUsuario","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#ffffff","colorHover":"#000000","icono":"fa fa-users","idPadre":"1","nivel":"2"},{"id":"11","descripcion":"Consultar vechículos","clave":"consultaVehiculos","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#ffffff","colorHover":"#000000","icono":"fa fa-cars","idPadre":"2","nivel":"2"},{"id":"12","descripcion":"Crear vehículo","clave":"crearVehiculo","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#ffffff","colorHover":"#000000","icono":"fa fa-cars","idPadre":"2","nivel":"2"},{"id":"13","descripcion":"Eliminar vehículo","clave":"eliminarVehiculo","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#ffffff","colorHover":"#000000","icono":"fa fa-cars","idPadre":"2","nivel":"2"},{"id":"14","descripcion":"Modificar vehículo","clave":"modificarVehiculo","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#ffffff","colorHover":"#000000","icono":"fa fa-cars","idPadre":"2","nivel":"2"},{"id":"15","descripcion":"Descarga seguimiento diario","clave":"descargaSeguimientoDiario","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#d0d0d0","colorHover":"#f5f5f5","icono":"fa fa-desk","idPadre":"4","nivel":"2"},{"id":"16","descripcion":"Confirma Orden","clave":"confirmaOrden","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#d0d0d0","colorHover":"#f5f5f5","icono":"fa fa-desk","idPadre":"4","nivel":"2"},{"id":"17","descripcion":"Desconfirma Orden","clave":"desconfirmaOrden","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#d0d0d0","colorHover":"#f5f5f5","icono":"fa fa-desk","idPadre":"4","nivel":"2"},{"id":"18","descripcion":"Asigna Orden","clave":"asignaOrden","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#d0d0d0","colorHover":"#f5f5f5","icono":"fa fa-desk","idPadre":"4","nivel":"2"},{"id":"19","descripcion":"Desasigna Orden","clave":"desasignaOrden","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#d0d0d0","colorHover":"#f5f5f5","icono":"fa fa-desk","idPadre":"4","nivel":"2"},{"id":"20","descripcion":"Reasigna Orden","clave":"reasignaOrden","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#d0d0d0","colorHover":"#f5f5f5","icono":"fa fa-desk","idPadre":"4","nivel":"2"},{"id":"21","descripcion":"Reagenda Orden","clave":"reagendaOrden","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#d0d0d0","colorHover":"#f5f5f5","icono":"fa fa-desk","idPadre":"4","nivel":"2"},{"id":"22","descripcion":"Calendariza Orden","clave":"calendarizaOrden","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#d0d0d0","colorHover":"#f5f5f5","icono":"fa fa-desk","idPadre":"4","nivel":"2"},{"id":"23","descripcion":"Consulta Seguimiento Diario","clave":"consultaSeguimientoDiario","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#3942d7","colorHover":"#f55756","icono":"fa fa-report","idPadre":"6","nivel":"2"},{"id":"24","descripcion":"Consulta Cierre Diario","clave":"consultaCierreDiario","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#3942d7","colorHover":"#f55756","icono":"fa fa-report","idPadre":"6","nivel":"2"},{"id":"25","descripcion":"Consulta Asignadas Compensacion","clave":"consultaAsignadasCompensacion","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#3942d7","colorHover":"#f55756","icono":"fa fa-report","idPadre":"6","nivel":"2"},{"id":"26","descripcion":"Descarga Cierre Diario","clave":"descargaCierreDiario","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#3942d7","colorHover":"#f55756","icono":"fa fa-report","idPadre":"6","nivel":"2"},{"id":"27","descripcion":"Descarga Reporte Tecnicos Tipos Ordenes","clave":"descargaReporteTecnicosTiposOrdenes","propietario":"1","unidadNegocio":"Residencial","fechaActualizacion":"08/08/2022","color":"#3942d7","colorHover":"#f55756","icono":"fa fa-report","idPadre":"6","nivel":"2"}];
+    $scope.jsonListaPropietarios = [{"id":"1","descripcion":"PI Mexico"},{"id":"2","descripcion":"PE Distrital Mexíco"},{"id":"3","descripcion":"PE CORE Mexíco"},{"id":"4","descripcion":"PMO Mexíco"},{"id":"5","descripcion":"Delivery Mexíco"},{"id":"6","descripcion":"PI Colombia"}];
+    $scope.jsonListaUnidadesNegocio = [{"id":"1","descripcion":"Residencial"},{"id":"2","descripcion":"Empresarial"},{"id":"3","descripcion":"Planta Externa"},{"id":"4","descripcion":"Delivery"}];
     $scope.contadorId = 50;
     $scope.contadorIdPermisos = 100;
 
@@ -36,15 +36,9 @@ app.controller('gestionModulosController', ['$scope', '$q', '$filter', 'gestionM
         		mostrarMensajeInformativo("Tienes un proceso de " + $scope.procesoEnEjecucion +" pendiente.");
         		if($scope.isNuevoModulo){
         			$("#rowModuloNuevo").addClass("bordeRowProcesoEnEjecucion");
-        			setTimeout(function () {
-        				$("#rowModuloNuevo").removeClass("bordeRowProcesoEnEjecucion");
-        	        }, 3000);
         		}
         		if($scope.isEditModulo && $scope.idModuloEdit != null){
         			$("#rowModuloConsulta"+$scope.idModuloEdit).addClass("bordeRowProcesoEnEjecucion");
-        			setTimeout(function () {
-        				$("#rowModuloConsulta"+$scope.idModuloEdit).removeClass("bordeRowProcesoEnEjecucion");
-        	        }, 3000);
         		}
         	}else{
         		$(".title-vista-modulos").remove();
@@ -64,62 +58,84 @@ app.controller('gestionModulosController', ['$scope', '$q', '$filter', 'gestionM
     	    	$("#btnNuevoModulo").addClass("btnsBloqueados");
     	    	$(".rowConsultaModuloTxt").addClass("rowsTablaModulosBloqueados");
     	    	$(".encabezadosTablaModulos").addClass("encabezadosTablas");
+    	    	
+    	    	const modulosOrdenados = $scope.listaModulos.sort((a,b) =>{
+    	    		  return Number.parseInt(b.id) - Number.parseInt(a.id)
+    	    	});
+    	        console.log('Mayor Valor: ', modulosOrdenados[0]);
+    	        $("#idModulo").val(Number.parseInt(modulosOrdenados[0].id) + 1);
+    	        
+    	    	
         	}
     	}
     }
 
     $scope.getInformation = function () {
+//    	swal({ text: 'Espera un momento...', allowOutsideClick: false });
+//        swal.showLoading();
 //        $q.all([
-//    		  gestionModulosService.consultarPropietarios(),
-//            gestionModulosService.consultarUnidadNegocio()
+//        	gestionModulosService.consultarPropietarios(),
+//            gestionModulosService.consultarUnidadesNegocio()
 //        ]).then(function (results) {
 //            if (results[0].data !== undefined) {
 //                if (results[0].data.respuesta) {
 //                    if (results[0].data.result) {
-    					$scope.listaPropietarios = $scope.jsonListaPropietarios;
+//                    	if(results[0].data.result.catalogo != undefined && results[0].data.result.catalogo != null && results[0].data.result.catalogo.length > 0){
+//                    		$scope.listaPropietarios = results[0].data.result.catalogo;
+//                    	}else{
+//                    		mostrarMensajeInformativo('No se encontr\u00F3 catalogo de unidades de negocio');
+//                    	}
 //                    } else {
-//                        toastr.info('No se encontr\u00F3 catalogo de unidades de negocio');
+//                    	mostrarMensajeInformativo('No se encontr\u00F3 catalogo de unidades de negocio');
 //                    }
 //                } else {
-//                    toastr.warning(results[0].data.resultDescripcion);
+//                	mostrarMensajeInformativo(results[0].data.resultDescripcion);
 //                }
 //            } else {
-//                toastr.error('Ha ocurrido un error en la consulta de unidades de negocio');
+//            	mostrarMensajeErrorAlert('Ha ocurrido un error en la consulta de unidades de negocio');
 //            }
 //
 //            if (results[1].data !== undefined) {
 //                if (results[1].data.respuesta) {
 //                    if (results[1].data.result) {
-    					$scope.listaUnidadesNegocio = $scope.jsonListaUnidadesNegocio;
+//                    	if(results[1].data.result.catalogo != undefined && results[1].data.result.catalogo != null && results[1].data.result.catalogo.length > 0){
+//                    		$scope.listaUnidadesNegocio = results[1].data.result.catalogo;
+//                    		setTimeout(function () {
+//                            	$scope.idPropietario = $("#logPropietario").val();
+//                                $scope.idUnidadNegocio = $("#logUnidadNegocio").val();
+//                                
+//                                if($scope.idPropietario != undefined){
+//                                	$("#moduloPropietario").val(""+$scope.idPropietario);
+//                                }
+//                                
+//                                if($scope.idUnidadNegocio != undefined){
+//                                	$("#moduloUnidadNegocio").val(""+$scope.idUnidadNegocio);
+//                                }
+//                                
+//                                if($scope.idPropietario != undefined && $scope.idUnidadNegocio != undefined){
+//                                	$scope.consultarModulos();
+//                                	$scope.$apply();
+//                                }
+//                    		}, 300);
+//                    	}else{
+//                    		swal.close();
+//                    		mostrarMensajeInformativo('No se encontr\u00F3 catalogo de propietarios');
+//                    	}
 //                    } else {
-//                        toastr.info('No se encontr\u00F3 catalogo de propietarios');
+//                    	swal.close();
+//                    	mostrarMensajeInformativo('No se encontr\u00F3 catalogo de propietarios');
 //                    }
 //                } else {
-//                    toastr.warning(results[1].data.resultDescripcion);
+//                	swal.close();
+//                	mostrarMensajeInformativo(results[1].data.resultDescripcion);
 //                }
 //            } else {
-//                toastr.error('Ha ocurrido un error en la consulta del catalogo de propietarios');
+//            	swal.close();
+//            	mostrarMensajeErrorAlert('Ha ocurrido un error en la consulta del catalogo de propietarios');
 //            }
-//
 //        }).catch(err => handleError(err));
-        
-        setTimeout(function () {
-        	$scope.idPropietario = $("#logPropietario").val();
-            $scope.idUnidadNegocio = $("#logUnidadNegocio").val();
-            
-            if($scope.idPropietario != undefined){
-            	$("#moduloPropietario").val(""+$scope.idPropietario);
-            }
-            
-            if($scope.idUnidadNegocio != undefined){
-            	$("#moduloUnidadNegocio").val(""+$scope.idUnidadNegocio);
-            }
-            
-            if($scope.idPropietario != undefined && $scope.idUnidadNegocio != undefined){
-            	$scope.consultarModulos();
-            	$scope.$apply();
-            }
-		}, 300);
+        $scope.listaPropietarios = $scope.jsonListaPropietarios;
+        $scope.listaUnidadesNegocio = $scope.jsonListaUnidadesNegocio;
     }
 
     $scope.consultarModulos = function () {
@@ -127,39 +143,30 @@ app.controller('gestionModulosController', ['$scope', '$q', '$filter', 'gestionM
     		mostrarMensajeInformativo("Tienes un proceso de " + $scope.procesoEnEjecucion +" pendiente.");
     		if($scope.isNuevoModulo){
     			$("#rowModuloNuevo").addClass("bordeRowProcesoEnEjecucion");
-    			setTimeout(function () {
-    				$("#rowModuloNuevo").removeClass("bordeRowProcesoEnEjecucion");
-    	        }, 3000);
     		}
     		if($scope.isEditModulo && $scope.idModuloEdit != null){
     			$("#rowModuloConsulta"+$scope.idModuloEdit).addClass("bordeRowProcesoEnEjecucion");
-    			setTimeout(function () {
-    				$("#rowModuloConsulta"+$scope.idModuloEdit).removeClass("bordeRowProcesoEnEjecucion");
-    	        }, 3000);
     		}
     	}else{
     		if($scope.validateFormConsulta()){
+//    			if (!swal.isVisible()) {
+//        			swal({ text: 'Espera un momento...', allowOutsideClick: false });
+//                    swal.showLoading();
+//                }
         		$scope.listaModulos = [];
         		let params = {
         				"idPropietario":$("#moduloPropietario").val(),
         				"idUnidadNegocio":$("#moduloUnidadNegocio").val()
         		};
-        		swal({ text: 'Espera un momento...', allowOutsideClick: false });
-                swal.showLoading();
-//                gestionModulosService.consultarModulos(params).then(function success(response) {
-                    swal.close();
+//                gestionModulosService.consultarModulosPermisos(params).then(function success(response) {
 //                    if (response.data !== undefined) {
 //                        if (response.data.respuesta) {
 //                            if (response.data.result) {
-                    			$scope.listaModulos = $scope.jsonListaModulos;
-                    			$scope.exisModulos = $scope.listaModulos.length > 0 ? true : false;
-                    			if($scope.isNuevoModulo){
-                    				setTimeout(function () {
-                    					$(".btnEditarModulo").addClass("btnsBloqueados");
-                            	    	$(".btnDetalleModulo").addClass("btnsBloqueados");
-                            	    	$(".btnEliminarModulo").addClass("btnsBloqueados");
-                        	        }, 300);
-                    			}
+//                            	if(response.data.result.modulos != undefined && response.data.result.modulos != null && response.data.result.modulos.length > 0){
+//                            		$scope.listaModulos = response.data.result.modulos;
+//                            	}else{
+//                            		
+//                            	}
 //                            } else {
 //                                toastr.info('No se encontraron permisos');
 //                            }
@@ -169,23 +176,11 @@ app.controller('gestionModulosController', ['$scope', '$q', '$filter', 'gestionM
 //                    } else {
 //                        toastr.error('Ha ocurrido un error en la consulta de permisos');
 //                    }
-//                    modulosTable = $('#modulosTable').DataTable({
-//                        "paging": true,
-//                        "lengthChange": false,
-//                        "ordering": true,
-//                        "pageLength": 10,
-//                        "info": true,
-//                        "searching": false,
-//                        "bDestroy": true,
-//                        "scrollX": false,
-//                        "data": arraRow,
-//                        "autoWidth": false,
-//                        "language": idioma_espanol_not_font,
-//                        "aoColumnDefs": [
-////                            { "aTargets": [11], "bSortable": false }
-//                        ]
-//                    });
+//                    $scope.exisModulos = $scope.listaModulos.length > 0 ? true : false;
+//                    swal.close();
 //                }); 
+        		$scope.listaModulos = $scope.jsonListaModulos;
+        		$scope.exisModulos = $scope.listaModulos.length > 0 ? true : false;
         	}
     	}
     }
@@ -221,15 +216,9 @@ app.controller('gestionModulosController', ['$scope', '$q', '$filter', 'gestionM
     		mostrarMensajeInformativo("Tienes un proceso de " + $scope.procesoEnEjecucion +" pendiente.");
     		if($scope.isNuevoModulo){
     			$("#rowModuloNuevo").addClass("bordeRowProcesoEnEjecucion");
-    			setTimeout(function () {
-    				$("#rowModuloNuevo").removeClass("bordeRowProcesoEnEjecucion");
-    	        }, 3000);
     		}
     		if($scope.isEditModulo && $scope.idModuloEdit != null){
     			$("#rowModuloConsulta"+$scope.idModuloEdit).addClass("bordeRowProcesoEnEjecucion");
-    			setTimeout(function () {
-    				$("#rowModuloConsulta"+$scope.idModuloEdit).removeClass("bordeRowProcesoEnEjecucion");
-    	        }, 3000);
     		}
     	}else{
     		$scope.isModulo = false;
@@ -237,26 +226,12 @@ app.controller('gestionModulosController', ['$scope', '$q', '$filter', 'gestionM
             $scope.listaPermisosModulo = [];
             $scope.moduloSeleccionado = $scope.listaModulos.find((e) => e.id == idModulo);
             $(".title-vista-permisos").remove();
-        	$("#containerTituloVistaPermisos").append("<h6 class='title-vista-permisos'>Módulo " + $scope.moduloSeleccionado.nombre + " > <b>Permisos</b></h6>");
+        	$("#containerTituloVistaPermisos").append("<h6 class='title-vista-permisos'>Módulo " + $scope.moduloSeleccionado.descripcion + " > <b>Permisos</b></h6>");
             swal({ text: 'Espera un momento...', allowOutsideClick: false });
             swal.showLoading();
-//            gestionModulosService.consultarPermisos().then(function success(response) {
-                swal.close();
-//                if (response.data !== undefined) {
-//                    if (response.data.respuesta) {
-//                        if (response.data.result) {
-                			$scope.listaPermisosModulo = $scope.jsonListaPermisosModulo.filter(e => {return e.idPadre == idModulo});
-                			$scope.exisPermisosModulo = $scope.listaPermisosModulo.length > 0 ? true : false;
-//                        } else {
-//                            toastr.info('No se encontraron permisos');
-//                        }
-//                    } else {
-//                        toastr.warning(response.data.resultDescripcion);
-//                    }
-//                } else {
-//                    toastr.error('Ha ocurrido un error en la consulta de permisos');
-//                }
-//            });
+            $scope.listaPermisosModulo = $scope.moduloSeleccionado.acciones;
+			$scope.exisPermisosModulo = $scope.listaPermisosModulo.length > 0 ? true : false;
+            swal.close();
     	}
     }
     
@@ -273,37 +248,39 @@ app.controller('gestionModulosController', ['$scope', '$q', '$filter', 'gestionM
     		}).then(function (isConfirm) {
 		        if (isConfirm) {
 		        	let params = {
-		    				"id":$scope.contadorId,
-		    				"nombre":$("#nombreModulo").val(),
+		    				"descripcion":$("#nombreModulo").val(),
 		    				"clave":$("#claveModulo").val(),
-		    				"color":$("#colorModulo").val(),
-		    				"colorHover":$("#colorHoverModulo").val(),
+		    				"hexaColor":$("#colorModulo").val(),
+		    				"hexaHoverColor":$("#colorHoverModulo").val(),
 		    				"icono":$("#iconoModulo").val(),
 		    				"idPadre":null,
-		    				"nivel":"1"
+		    				"nivel":"1",
+		    				"activo":"1",
+		    				"idPropietario":$("#moduloPropietario").val(),
+		    				"idUnidadNegocio":$("#moduloUnidadNegocio").val()
 		    		};
-		    		$scope.contadorId = ($scope.contadorId + 1);
+		    		console.log(params);
 		            swal({ text: 'Espera un momento...', allowOutsideClick: false });
 		            swal.showLoading();
-//		            gestionModulosService.guardarNuevoModulo(params).then(function success(response) {
+		            gestionModulosService.guardarModuloPermiso(params).then(function success(response) {
 		                swal.close();
-//		                if (response.data !== undefined) {
-//		                    if (response.data.respuesta) {
-//		                        if (response.data.result) {
+		                if (response.data !== undefined) {
+		                    if (response.data.respuesta) {
+		                        if (response.data.result) {
 		                			$scope.listaModulos.push(params);
 		                			$scope.limpiarDatosNuevoModulo();
 		                			mostrarMensajeExitoAlert("Registro guardado con éxito.");
 		                			$scope.$apply();
-//		                        } else {
-//		                            toastr.info('No se encontraron permisos');
-//		                        }
-//		                    } else {
-//		                        toastr.warning(response.data.resultDescripcion);
-//		                    }
-//		                } else {
-//		                    toastr.error('Ha ocurrido un error en la consulta de permisos');
-//		                }
-//		            });
+		                        } else {
+		                            toastr.info('No se encontraron permisos');
+		                        }
+		                    } else {
+		                        toastr.warning(response.data.resultDescripcion);
+		                    }
+		                } else {
+		                    toastr.error('Ha ocurrido un error en la consulta de permisos');
+		                }
+		            });
 		        }
     		}).catch(err => {
     		});
@@ -312,6 +289,13 @@ app.controller('gestionModulosController', ['$scope', '$q', '$filter', 'gestionM
 
     $scope.validateForm = function () {
         let text = "";
+        
+        if ($("#idModulo").val() === null  || $("#idModulo").val() === "" || $("#idModulo").val() === undefined) {
+            $("#idModulo").addClass("input-valid-error");
+            text += "<li>ID</li>";
+        }else{
+        	$("#nombreModulo").removeClass("input-valid-error");
+        }
         
         if ($("#nombreModulo").val() === null  || $("#nombreModulo").val() === "" || $("#nombreModulo").val() === undefined) {
             $("#nombreModulo").addClass("input-valid-error");
@@ -396,15 +380,9 @@ app.controller('gestionModulosController', ['$scope', '$q', '$filter', 'gestionM
     		mostrarMensajeInformativo("Tienes un proceso de " + $scope.procesoEnEjecucion +" pendiente.");
     		if($scope.isNuevoModulo){
     			$("#rowModuloNuevo").addClass("bordeRowProcesoEnEjecucion");
-    			setTimeout(function () {
-    				$("#rowModuloNuevo").removeClass("bordeRowProcesoEnEjecucion");
-    	        }, 3000);
     		}
     		if($scope.isEditModulo && $scope.idModuloEdit != null){
     			$("#rowModuloConsulta"+$scope.idModuloEdit).addClass("bordeRowProcesoEnEjecucion");
-    			setTimeout(function () {
-    				$("#rowModuloConsulta"+$scope.idModuloEdit).removeClass("bordeRowProcesoEnEjecucion");
-    	        }, 3000);
     		}
     	}else{
     		$(".title-vista-modulos").remove();
@@ -436,6 +414,9 @@ app.controller('gestionModulosController', ['$scope', '$q', '$filter', 'gestionM
 					$("#"+input).removeClass("input-valid-error");
 				}
 			});
+			$(".txtEditModulo").click(function() {
+				$(".rowModuloConsulta").removeClass("bordeRowProcesoEnEjecucion");
+			});
     	}
 	}
     
@@ -452,41 +433,42 @@ app.controller('gestionModulosController', ['$scope', '$q', '$filter', 'gestionM
     		}).then(function (isConfirm) {
 		        if (isConfirm) {
 		        	let params = {
-		    				"id":id,
-		    				"nombre":$("#nombreModuloEdit"+id).val(),
+		    				"idPermiso":id,
+		    				"descripcion":$("#nombreModuloEdit"+id).val(),
 		    				"clave":$("#claveModuloEdit"+id).val(),
-		    				"color":$("#colorModuloEdit"+id).val(),
-		    				"colorHover":$("#colorHoverModuloEdit"+id).val(),
+		    				"hexaColor":$("#colorModuloEdit"+id).val(),
+		    				"hexaHoverColor":$("#colorHoverModuloEdit"+id).val(),
 		    				"icono":$("#iconoModuloEdit"+id).val(),
 		    				"idPadre":null,
-		    				"nivel":"1"
+		    				"nivel":"1",
+		    				"activo":"1",
 		    		};
 		            swal({ text: 'Espera un momento...', allowOutsideClick: false });
 		            swal.showLoading();
-//		            gestionModulosService.modificarModulo(params).then(function success(response) {
+		            gestionModulosService.modificarModuloPermiso(params).then(function success(response) {
 		                swal.close();
-//		                if (response.data !== undefined) {
-//		                    if (response.data.respuesta) {
-//		                        if (response.data.result) {
+		                if (response.data !== undefined) {
+		                    if (response.data.respuesta) {
+		                        if (response.data.result) {
 		                			var moduloSeleccionadoEdit = $scope.listaModulos.find((e) => e.id == id);
-		                			moduloSeleccionadoEdit.nombre = $("#nombreModuloEdit"+id).val();
+		                			moduloSeleccionadoEdit.descripcion = $("#nombreModuloEdit"+id).val();
 		                			moduloSeleccionadoEdit.clave = $("#claveModuloEdit"+id).val();
-		                			moduloSeleccionadoEdit.color = $("#colorModuloEdit"+id).val();
-		                			moduloSeleccionadoEdit.colorHover = $("#colorHoverModuloEdit"+id).val();
+		                			moduloSeleccionadoEdit.hexaColor = $("#colorModuloEdit"+id).val();
+		                			moduloSeleccionadoEdit.hexaHoverColor = $("#colorHoverModuloEdit"+id).val();
 		                			moduloSeleccionadoEdit.icono = $("#iconoModuloEdit"+id).val();
 		                			$scope.limpiarDatosEditModulo(id);
 		                			mostrarMensajeExitoAlert("Modificación realizada con éxito.");
 		                			$scope.$apply();
-//		                        } else {
-//		                            toastr.info('No se encontraron permisos');
-//		                        }
-//		                    } else {
-//		                        toastr.warning(response.data.resultDescripcion);
-//		                    }
-//		                } else {
-//		                    toastr.error('Ha ocurrido un error en la consulta de permisos');
-//		                }
-//		            });
+		                        } else {
+		                            toastr.info('No se encontraron permisos');
+		                        }
+		                    } else {
+		                        toastr.warning(response.data.resultDescripcion);
+		                    }
+		                } else {
+		                    toastr.error('Ha ocurrido un error en la consulta de permisos');
+		                }
+		            });
 		        }
     		}).catch(err => {
     		});
@@ -542,10 +524,10 @@ app.controller('gestionModulosController', ['$scope', '$q', '$filter', 'gestionM
     
     $scope.cancelarEditModulo = function(id) {
     	var moduloSeleccionado = $scope.listaModulos.find((e) => e.id == id);
-    	$("#nombreModuloEdit"+id).val(moduloSeleccionado.nombre);
+    	$("#nombreModuloEdit"+id).val(moduloSeleccionado.descripcion);
 		$("#claveModuloEdit"+id).val(moduloSeleccionado.clave);
-		$("#colorModuloEdit"+id).val(moduloSeleccionado.color);
-		$("#colorHoverModuloEdit"+id).val(moduloSeleccionado.colorHover);
+		$("#colorModuloEdit"+id).val(moduloSeleccionado.hexaColor);
+		$("#colorHoverModuloEdit"+id).val(moduloSeleccionado.hexaHoverColor);
 		$("#iconoModuloEdit"+id).val(moduloSeleccionado.icono);
 		$scope.limpiarDatosEditModulo(id);
 	}
@@ -583,15 +565,9 @@ app.controller('gestionModulosController', ['$scope', '$q', '$filter', 'gestionM
     		mostrarMensajeInformativo("Tienes un proceso de " + $scope.procesoEnEjecucion +" pendiente.");
     		if($scope.isNuevoModulo){
     			$("#rowModuloNuevo").addClass("bordeRowProcesoEnEjecucion");
-    			setTimeout(function () {
-    				$("#rowModuloNuevo").removeClass("bordeRowProcesoEnEjecucion");
-    	        }, 3000);
     		}
     		if($scope.isEditModulo && $scope.idModuloEdit != null){
     			$("#rowModuloConsulta"+$scope.idModuloEdit).addClass("bordeRowProcesoEnEjecucion");
-    			setTimeout(function () {
-    				$("#rowModuloConsulta"+$scope.idModuloEdit).removeClass("bordeRowProcesoEnEjecucion");
-    	        }, 3000);
     		}
     	}else{
     		swal({
@@ -605,29 +581,29 @@ app.controller('gestionModulosController', ['$scope', '$q', '$filter', 'gestionM
     		}).then(function (isConfirm) {
 		        if (isConfirm) {
 		        	let params = {
-		    				"id":id
+		    				"idPermiso":id
 		    		};
 		            swal({ text: 'Espera un momento...', allowOutsideClick: false });
 		            swal.showLoading();
-//		            gestionModulosService.eliminarModulo(params).then(function success(response) {
+		            gestionModulosService.eliminarModuloPermiso(params).then(function success(response) {
 		                swal.close();
-//		                if (response.data !== undefined) {
-//		                    if (response.data.respuesta) {
-//		                        if (response.data.result) {
+		                if (response.data !== undefined) {
+		                    if (response.data.respuesta) {
+		                        if (response.data.result) {
 		                			$scope.listaModulos = $scope.listaModulos.filter(e => {return e.id != id});
 		                			$scope.exisModulos = $scope.listaModulos.length > 0 ? true : false;
 		                			mostrarMensajeExitoAlert("Módulo eliminado con éxito.");
 		                			$scope.$apply();
-//		                        } else {
-//		                            toastr.info('No se encontraron permisos');
-//		                        }
-//		                    } else {
-//		                        toastr.warning(response.data.resultDescripcion);
-//		                    }
-//		                } else {
-//		                    toastr.error('Ha ocurrido un error en la consulta de permisos');
-//		                }
-//		            });
+		                        } else {
+		                            toastr.info('No se encontraron permisos');
+		                        }
+		                    } else {
+		                        toastr.warning(response.data.resultDescripcion);
+		                    }
+		                } else {
+		                    toastr.error('Ha ocurrido un error en la consulta de permisos');
+		                }
+		            });
 		        }
     		}).catch(err => {
     		});
@@ -658,15 +634,9 @@ app.controller('gestionModulosController', ['$scope', '$q', '$filter', 'gestionM
     		mostrarMensajeInformativo("Tienes un proceso de " + $scope.procesoEnEjecucion +" pendiente.");
     		if($scope.isNuevoPermiso){
     			$("#rowPermisoNuevo").addClass("bordeRowProcesoEnEjecucion");
-    			setTimeout(function () {
-    				$("#rowPermisoNuevo").removeClass("bordeRowProcesoEnEjecucion");
-    	        }, 3000);
     		}
     		if($scope.isEditPermiso && $scope.idPermisoEdit != null){
     			$("#rowPermisoConsulta"+$scope.idPermisoEdit).addClass("bordeRowProcesoEnEjecucion");
-    			setTimeout(function () {
-    				$("#rowPermisoConsulta"+$scope.idPermisoEdit).removeClass("bordeRowProcesoEnEjecucion");
-    	        }, 3000);
     		}
     	}else{
     		$("#buscadorTablaPermisos").val("");
@@ -684,19 +654,13 @@ app.controller('gestionModulosController', ['$scope', '$q', '$filter', 'gestionM
     		mostrarMensajeInformativo("Tienes un proceso de " + $scope.procesoEnEjecucion +" pendiente.");
     		if($scope.isNuevoPermiso){
     			$("#rowPermisoNuevo").addClass("bordeRowProcesoEnEjecucion");
-    			setTimeout(function () {
-    				$("#rowPermisoNuevo").removeClass("bordeRowProcesoEnEjecucion");
-    	        }, 3000);
     		}
     		if($scope.isEditPermiso && $scope.idPermisoEdit != null){
     			$("#rowPermisoConsulta"+$scope.idPermisoEdit).addClass("bordeRowProcesoEnEjecucion");
-    			setTimeout(function () {
-    				$("#rowPermisoConsulta"+$scope.idPermisoEdit).removeClass("bordeRowProcesoEnEjecucion");
-    	        }, 3000);
     		}
     	}else{
     		$(".title-vista-permisos").remove();
-    		$("#containerTituloVistaPermisos").append("<h6 class='title-vista-permisos'>Módulo " + $scope.moduloSeleccionado.nombre + " > Permisos > <b>Registro</b></h6>");
+    		$("#containerTituloVistaPermisos").append("<h6 class='title-vista-permisos'>Módulo " + $scope.moduloSeleccionado.descripcion + " > Permisos > <b>Registro</b></h6>");
 	    	$scope.isNuevoPermiso = true;
 	    	$scope.procesoEnEjecucion = "registro";
 	    	$("#buscadorTablaPermisos").prop("disabled",true);
@@ -714,7 +678,7 @@ app.controller('gestionModulosController', ['$scope', '$q', '$filter', 'gestionM
     	if ($scope.validateFormRegistroPermiso()) {
     		swal({
 		        title: "Se guardará un nuevo permiso",
-		        text: "\u00BFDesea registrar el permiso al módulo "+ $scope.moduloSeleccionado.nombre + "?",
+		        text: "\u00BFDesea registrar el permiso al módulo "+ $scope.moduloSeleccionado.descripcion + "?",
 		        type: "warning",
 		        showCancelButton: true,
 		        confirmButtonColor: '#007bff',
@@ -818,7 +782,7 @@ app.controller('gestionModulosController', ['$scope', '$q', '$filter', 'gestionM
     
     $scope.limpiarDatosNuevoPermiso = function() {
     	$(".title-vista-permisos").remove();
-    	$("#containerTituloVistaPermisos").append("<h6 class='title-vista-permisos'>Módulo " + $scope.moduloSeleccionado.nombre + " > <b>Permisos</b></h6>");
+    	$("#containerTituloVistaPermisos").append("<h6 class='title-vista-permisos'>Módulo " + $scope.moduloSeleccionado.descripcion + " > <b>Permisos</b></h6>");
     	$("#rowPermisoNuevo").removeClass("bordeRowProcesoEnEjecucion");
     	$scope.isNuevoPermiso = false;
     	$("#nombrePermiso").val("");
@@ -846,19 +810,13 @@ app.controller('gestionModulosController', ['$scope', '$q', '$filter', 'gestionM
     		mostrarMensajeInformativo("Tienes un proceso de " + $scope.procesoEnEjecucion +" pendiente.");
     		if($scope.isNuevoPermiso){
     			$("#rowPermisoNuevo").addClass("bordeRowProcesoEnEjecucion");
-    			setTimeout(function () {
-    				$("#rowPermisoNuevo").removeClass("bordeRowProcesoEnEjecucion");
-    	        }, 3000);
     		}
     		if($scope.isEditPermiso && $scope.idPermisoEdit != null){
     			$("#rowPermisoConsulta"+$scope.idPermisoEdit).addClass("bordeRowProcesoEnEjecucion");
-    			setTimeout(function () {
-    				$("#rowPermisoConsulta"+$scope.idPermisoEdit).removeClass("bordeRowProcesoEnEjecucion");
-    	        }, 3000);
     		}
     	}else{
     		$(".title-vista-permisos").remove();
-    		$("#containerTituloVistaPermisos").append("<h6 class='title-vista-permisos'>Módulo " + $scope.moduloSeleccionado.nombre + " > Permisos > <b>Modificación</b></h6>");
+    		$("#containerTituloVistaPermisos").append("<h6 class='title-vista-permisos'>Módulo " + $scope.moduloSeleccionado.descripcion + " > Permisos > <b>Modificación</b></h6>");
 	    	$scope.isEditPermiso = true;
 	    	$scope.procesoEnEjecucion = "modificación";
 	    	$scope.idPermisoEdit = id;
@@ -880,15 +838,18 @@ app.controller('gestionModulosController', ['$scope', '$q', '$filter', 'gestionM
 					$("#"+input).removeClass("input-valid-error");
 				}
 			});
+			$(".txtEditPermiso").click(function() {
+				$(".rowPermisoConsulta").removeClass("bordeRowProcesoEnEjecucion");
+			});
     	}
 	}
     
     $scope.cancelarEditPermiso = function(id) {
     	var permisoSeleccionado = $scope.listaPermisosModulo.find((e) => e.id == id);
-    	$("#nombrePermisoEdit"+id).val(permisoSeleccionado.nombre);
+    	$("#nombrePermisoEdit"+id).val(permisoSeleccionado.descripcion);
 		$("#clavePermisoEdit"+id).val(permisoSeleccionado.clave);
-		$("#colorPermisoEdit"+id).val(permisoSeleccionado.color);
-		$("#colorHoverPermisoEdit"+id).val(permisoSeleccionado.colorHover);
+		$("#colorPermisoEdit"+id).val(permisoSeleccionado.hexaColor);
+		$("#colorHoverPermisoEdit"+id).val(permisoSeleccionado.hexaHoverColor);
 		$("#iconoPermisoEdit"+id).val(permisoSeleccionado.icono);
 		$scope.limpiarDatosEditPermiso(id);
 	}
@@ -897,7 +858,7 @@ app.controller('gestionModulosController', ['$scope', '$q', '$filter', 'gestionM
     	$("#rowPermisoConsulta"+$scope.idPermisoEdit).removeClass("bordeRowProcesoEnEjecucion");
     	$scope.idPermisoEdit = null;
     	$(".title-vista-permisos").remove();
-    	$("#containerTituloVistaPermisos").append("<h6 class='title-vista-permisos'>Módulo " + $scope.moduloSeleccionado.nombre + " > <b>Permisos</b></h6>");
+    	$("#containerTituloVistaPermisos").append("<h6 class='title-vista-permisos'>Módulo " + $scope.moduloSeleccionado.descripcion + " > <b>Permisos</b></h6>");
     	$scope.isEditPermiso = false;
 		$("#nombrePermisoEdit"+id).removeClass("input-valid-error");
 		$("#clavePermisoEdit"+id).removeClass("input-valid-error");
@@ -921,15 +882,9 @@ app.controller('gestionModulosController', ['$scope', '$q', '$filter', 'gestionM
     		mostrarMensajeInformativo("Tienes un proceso de " + $scope.procesoEnEjecucion +" pendiente.");
     		if($scope.isNuevoPermiso){
     			$("#rowPermisoNuevo").addClass("bordeRowProcesoEnEjecucion");
-    			setTimeout(function () {
-    				$("#rowPermisoNuevo").removeClass("bordeRowProcesoEnEjecucion");
-    	        }, 3000);
     		}
     		if($scope.isEditPermiso && $scope.idPermisoEdit != null){
     			$("#rowPermisoConsulta"+$scope.idPermisoEdit).addClass("bordeRowProcesoEnEjecucion");
-    			setTimeout(function () {
-    				$("#rowPermisoConsulta"+$scope.idPermisoEdit).removeClass("bordeRowProcesoEnEjecucion");
-    	        }, 3000);
     		}
     	}else{
     		swal({
@@ -943,29 +898,30 @@ app.controller('gestionModulosController', ['$scope', '$q', '$filter', 'gestionM
     		}).then(function (isConfirm) {
 		        if (isConfirm) {
 		        	let params = {
-		    				"id":id
+		        			"idPermiso":id
 		    		};
 		            swal({ text: 'Espera un momento...', allowOutsideClick: false });
 		            swal.showLoading();
-//		            gestionModulosService.eliminarModulo(params).then(function success(response) {
+		            gestionModulosService.eliminarModuloPermiso(params).then(function success(response) {
 		                swal.close();
-//		                if (response.data !== undefined) {
-//		                    if (response.data.respuesta) {
-//		                        if (response.data.result) {
+		                if (response.data !== undefined) {
+		                    if (response.data.respuesta) {
+		                        if (response.data.result) {
 		                			$scope.listaPermisosModulo = $scope.listaPermisosModulo.filter(e => {return e.id != id});
+		                			$scope.moduloSeleccionado.acciones = $scope.listaPermisosModulo;
 		                			$scope.exisPermisosModulo = $scope.listaPermisosModulo.length > 0 ? true : false;
 		                			mostrarMensajeExitoAlert("Permiso eliminado con éxito.");
 		                			$scope.$apply();
-//		                        } else {
-//		                            toastr.info('No se encontraron permisos');
-//		                        }
-//		                    } else {
-//		                        toastr.warning(response.data.resultDescripcion);
-//		                    }
-//		                } else {
-//		                    toastr.error('Ha ocurrido un error en la consulta de permisos');
-//		                }
-//		            });
+		                        } else {
+		                            toastr.info('No se encontraron permisos');
+		                        }
+		                    } else {
+		                        toastr.warning(response.data.resultDescripcion);
+		                    }
+		                } else {
+		                    toastr.error('Ha ocurrido un error en la consulta de permisos');
+		                }
+		            });
 		        }
     		}).catch(err => {
     		});
@@ -985,41 +941,40 @@ app.controller('gestionModulosController', ['$scope', '$q', '$filter', 'gestionM
     		}).then(function (isConfirm) {
 		        if (isConfirm) {
 		        	let params = {
-		    				"id":id,
-		    				"nombre":$("#nombrePermisoEdit"+id).val(),
+		        			"idPermiso":id,
+		    				"descripcion":$("#nombrePermisoEdit"+id).val(),
 		    				"clave":$("#clavePermisoEdit"+id).val(),
-		    				"color":$("#colorPermisoEdit"+id).val(),
-		    				"colorHover":$("#colorHoverPermisoEdit"+id).val(),
+		    				"hexaColor":$("#colorPermisoEdit"+id).val(),
+		    				"hexaHoverColor":$("#colorHoverPermisoEdit"+id).val(),
 		    				"icono":$("#iconoPermisoEdit"+id).val()
 		    		};
 		    		
 		            swal({ text: 'Espera un momento...', allowOutsideClick: false });
 		            swal.showLoading();
-//		            gestionModulosService.modificarModulo(params).then(function success(response) {
+		            gestionModulosService.modificarModuloPermiso(params).then(function success(response) {
 		                swal.close();
-//		                if (response.data !== undefined) {
-//		                    if (response.data.respuesta) {
-//		                        if (response.data.result) {
+		                if (response.data !== undefined) {
+		                    if (response.data.respuesta) {
+		                        if (response.data.result) {
 		                			var permisoSeleccionadoEdit = $scope.listaPermisosModulo.find((e) => e.id == id);
-		                			permisoSeleccionadoEdit.nombre = $("#nombrePermisoEdit"+id).val();
+		                			permisoSeleccionadoEdit.descripcion = $("#nombrePermisoEdit"+id).val();
 		                			permisoSeleccionadoEdit.clave = $("#clavePermisoEdit"+id).val();
-		                			permisoSeleccionadoEdit.color = $("#colorPermisoEdit"+id).val();
-		                			permisoSeleccionadoEdit.colorHover = $("#colorHoverPermisoEdit"+id).val();
+		                			permisoSeleccionadoEdit.hexaColor = $("#colorPermisoEdit"+id).val();
+		                			permisoSeleccionadoEdit.hexaHoverColor = $("#colorHoverPermisoEdit"+id).val();
 		                			permisoSeleccionadoEdit.icono = $("#iconoPermisoEdit"+id).val();
-		                			
 		                			$scope.limpiarDatosEditPermiso(id);
 		                			mostrarMensajeExitoAlert("Modificación realizada con éxito.");
 		                			$scope.$apply();
-//		                        } else {
-//		                            toastr.info('No se encontraron permisos');
-//		                        }
-//		                    } else {
-//		                        toastr.warning(response.data.resultDescripcion);
-//		                    }
-//		                } else {
-//		                    toastr.error('Ha ocurrido un error en la consulta de permisos');
-//		                }
-//		            });
+		                        } else {
+		                            toastr.info('No se encontraron permisos');
+		                        }
+		                    } else {
+		                        toastr.warning(response.data.resultDescripcion);
+		                    }
+		                } else {
+		                    toastr.error('Ha ocurrido un error en la consulta de permisos');
+		                }
+		            });
 		        }
     		}).catch(err => {
     		});
@@ -1072,6 +1027,14 @@ app.controller('gestionModulosController', ['$scope', '$q', '$filter', 'gestionM
             return true;
         }
     }
+    
+    $(".txtNuevoModulo").click(function() {
+		$("#rowModuloNuevo").removeClass("bordeRowProcesoEnEjecucion");
+	});
+    
+    $(".txtNuevoPermiso").click(function() {
+		$("#rowPermisoNuevo").removeClass("bordeRowProcesoEnEjecucion");
+	});
 
     $scope.getInformation();
     
