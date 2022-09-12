@@ -2037,7 +2037,7 @@ b.title_span_1 {
   text-align: center;
   border: 1px #ccc;
   background-color: #ffffff !important;
-  color: #39455b;
+  color: #39455b !important;
   font-weight: bold;
 }
 

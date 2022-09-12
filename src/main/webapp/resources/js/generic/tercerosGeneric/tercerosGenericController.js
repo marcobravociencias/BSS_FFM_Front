@@ -81,7 +81,7 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 			tercerosGenericService.consultarCatalogosTurnos(),
 			tercerosGenericService.consultarCatalogoTipoOrdenUsuario(),
 			tercerosGenericService.consulCatalogoGeografiaUsuario(),
-			tercerosGenericService.consultarConfiguracion({ "moduloAccionesUsuario": "moduloDespacho" }),
+			tercerosGenericService.consultarConfiguracion({ "moduloAccionesUsuario": "moduloTercerosGeneric" }),
 			tercerosGenericService.consultarCatalogoEstatus()
 		]).then(function (results) {
 			let resultConf = results[3].data.result
@@ -89,7 +89,7 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 				let llavesResult = results[3].data.result.MODULO_ACCIONES_USUARIO.llaves;
 				let elementosMapa = angular.copy(results[3].data.result);
 
-				$scope.nFiltroGeografia = 5//llavesResult.N_FILTRO_GEOGRAFIA
+				//$scope.nFiltroGeografia = llavesResult.N_FILTRO_GEOGRAFIA
 				$scope.nFiltroIntervenciones = llavesResult.N_FILTRO_INTERVENCIONES
 				$scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
 				$scope.nFiltroEstatusArr = llavesResult.N_ESTATUS_ARR_ENVIO;
@@ -111,7 +111,7 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 			$("#idBody").removeAttr("style");
 
 			if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
-				$scope.accionConsultaOts = true//$scope.permisosConfigUser.permisos.find(e => { return e.clave === 'accionConsultaOts' });
+				$scope.accionConsultaOts = $scope.permisosConfigUser.permisos.find(e => { return e.clave === 'accionConsultaOts' });
 				$scope.accionesUserConfigText = $scope.permisosConfigUser.permisos.map(e => { return e.clave })
 
 				objectTempAccion = new GenericAccionRealizada("" + 25, 'TOP_RIGHT');

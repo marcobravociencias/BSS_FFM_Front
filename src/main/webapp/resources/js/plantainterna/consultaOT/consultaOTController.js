@@ -1881,11 +1881,11 @@ app.controller('consultaOTController', ['$scope', '$q', 'consultaOTService', 'ge
 
 		arrayDetalleRed.forEach(detalle => {
 			tableHTML += "<tr>" +
-				"<td>" + ((detalle != undefined && detalle.nombreOlt) ? detalle.nombreOlt : 'Sin dato') + "</td>" +
-				"<td>" + ((detalle != undefined && detalle.tipoAprovisionamiento) ? detalle.nombreOlt : 'Sin dato') + "</td>" +
-				"<td>" + ((detalle != undefined && detalle.frame) ? detalle.nombreOlt : 'Sin dato') + "</td>" +
-				"<td>" + ((detalle != undefined && detalle.slot) ? detalle.nombreOlt : 'Sin dato') + "</td>" +
-				"<td>" + ((detalle != undefined && detalle.puerto) ? detalle.nombreOlt : 'Sin dato') + "</td>" +
+				"<td>" + ((detalle != undefined && detalle.nombreOlt) ? detalle.nombreOlt  : 'Sin dato') + "</td>" +
+				"<td>" + ((detalle != undefined && detalle.tipoAprovisionamiento) ? detalle.tipoAprovisionamiento : 'Sin dato') + "</td>" +
+				"<td>" + ((detalle != undefined && detalle.frame) ? detalle.frame : 'Sin dato') + "</td>" +
+				"<td>" + ((detalle != undefined && detalle.slot) ? detalle.slot : 'Sin dato') + "</td>" +
+				"<td>" + ((detalle != undefined && detalle.puerto) ? detalle.puerto : 'Sin dato') + "</td>" +
 				"</tr>";
 
 		})

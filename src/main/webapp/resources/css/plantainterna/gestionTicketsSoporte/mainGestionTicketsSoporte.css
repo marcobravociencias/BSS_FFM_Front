@@ -1685,7 +1685,7 @@ img.img-tecnico-materiales {
     font-size: 0.6em !important;
     text-align: center;
     border: 1px #ccc;
-    color: #39455b;
+    color: #39455b !important;
     font-weight: bold;
 }
 
