@@ -291,5 +291,15 @@
             </div>
         </div>
     </div>
+    <div class="card-header style_card_header_detallepro separador-according">
+        <div class="row">
+            <div class="col-md-12 colTitulo">
+                <p class="mb-0 header-according">Detalle paquete</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <div id="infoPaqueteGeneric" class="row"></div>
+    </div>
     <jsp:include page="perfiles.jsp"></jsp:include>
 </div>

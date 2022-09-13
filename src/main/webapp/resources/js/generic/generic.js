@@ -224,7 +224,7 @@ class GenericAccionRealizada {
 			idModulo: this.idModuloAccion
 		}
 		return new Promise((resolve, reject) => {
-			$.ajax({
+			 $.ajax({
 				url: 'req/consultarAccionesRealizadasService',
 				type: "POST",
 				data: JSON.stringify(params),
@@ -284,7 +284,6 @@ class GenericAccionRealizada {
 		}
 
 		$("#container-ultimasAcciones").show();
-		$("#listAccionesRecientes").empty();
 		$("#loading-data").show();
 		//let listaUltimasAcciones = this.getAccionesRecientesUsuario();
 		let listaUltimasAcciones = [];
@@ -293,6 +292,7 @@ class GenericAccionRealizada {
 				if (jsonResponse.result) {
 					if (jsonResponse.result.modulos) {
 						listaUltimasAcciones = jsonResponse.result.modulos;
+						$("#listAccionesRecientes").empty();
 						let contentAcciones = "";
 						if (listaUltimasAcciones.length > 0) {
 							$.each(listaUltimasAcciones, function (i, accion) {
@@ -322,28 +322,30 @@ class GenericAccionRealizada {
 										'				</li>';
 								}
 							});
-							$("#listAccionesRecientes").empty();
-							$("#loading-data").hide();
-							$("#listAccionesRecientes").append(contentAcciones);
+							setTimeout(() => {
+								$("#listAccionesRecientes").empty();
+								$("#loading-data").hide();
+								$("#listAccionesRecientes").append(contentAcciones);
+							}, 300);
 
 						} else {
 							contentAcciones = '<div class="text-no-acciones pt-2" style="padding: 0 !important; font-size:11px !important; padding-top:2em !important">' +
 								'	<i class="icon-not-action fas fa-ban"></i>' +
 								'	<b class="text-not-action">Sin movimientos para mostrar</b>' +
 								'</div>';
-							$("#listAccionesRecientes").empty();
-							$("#loading-data").hide();
-							$("#listAccionesRecientes").append(contentAcciones);
+							setTimeout(() => {
+								$("#listAccionesRecientes").empty();
+								$("#loading-data").hide();
+								$("#listAccionesRecientes").append(contentAcciones);
+							}, 300);
 
 						}
 					}
 				}
 			}
-		}).catch(function (error) {
+		}).catch(function(error){
 			console.log("manejar error")
 		});
-
-
 	}
 
 	pintarBotonAccionesRecientes() {
@@ -442,27 +444,33 @@ class GenericAccionRealizada {
 class GenericDetallePaquete {
 
 	/**
-	 * 
-	 * @param {*} idDiv; 
-	 * @param {*} responseServicios; 
-	 * @param {*} idCotSitio; 
-	 * @param {*} isConsultaEquiposModelos;
-	 * @param {*} listadoEquipos;
-	 */
-
-	 constructor(idDiv) {
+   *
+   * @param {*} idDiv;
+   * @param {*} responseServicios;
+   * @param {*} idCotSitio;
+   * @param {*} isConsultaEquiposModelos;
+   * @param {*} listadoEquipos;
+   */
+ 
+	constructor(idDiv) {
 		this.idDiv = idDiv;
+		this.responseServicios = {};
 	}
 
 	consultarDetallePaqueteGeneric(os) {
-
-		// $("#container-ultimasAcciones").show();
-		// $("#loading-data").show();
-		//let listaUltimasAcciones = this.getAccionesRecientesUsuario();
-
-		this.idCotSitio = "";
-		this.isConsultaEquiposModelos=false;
-		var resultDetalle = {};
+		let instanciaThis = this;
+		$(instanciaThis.idDiv).empty();
+		var load = 
+			'<div class="row parent-detallecotizacion">'+
+				'<div class="col-12">'+
+					'<div  id="loading-paquete" class="spinner-border spinner-cargando-info">' +
+						'<span class="visually-hidden">Loading...</span>' +
+					'</div>' +
+				'</div>'+
+			'</div>'
+		$(instanciaThis.idDiv).append(load);
+		instanciaThis.idCotSitio = "";
+		instanciaThis.isConsultaEquiposModelos=false;
 		var params = {
 			folio: os
 		}
@@ -470,266 +478,265 @@ class GenericDetallePaquete {
 			if (jsonResponse.respuesta) {
 				if (jsonResponse.result) {
 					if (jsonResponse.result.resumenPaquete) {
-						resultDetalle = jsonResponse.result.resumenPaquete;
+						instanciaThis.responseServicios = jsonResponse.result.resumenPaquete;
+						instanciaThis.responseServicios = jsonResponse.result.resumenPaquete;
+						instanciaThis.idCotSitio = jsonResponse.result.resumenPaquete.idCotSitio;
+						$(instanciaThis.idDiv).empty();
+						var contentResumenPaquete = "";
+						contentResumenPaquete =
+						'<div class="row parent-detallecotizacion">'+
+							'<div class="col-12">'+
+								'<div class="row">'+
+									'<div class="col-md-6">'+
+										'<div class="container-fluid vehiculo-content">'+
+											'<div class="container-text-title-detalle">'+
+												'<span class="text-tile-vehiculo">Paquete</span>'+
+											'</div>'+
+											'<div class="container-text-content-detalle">'+
+												'<span class="text-content-vehiculo" title="'+instanciaThis.responseServicios.nombrePaquete+'">'+instanciaThis.responseServicios.nombrePaquete+'</span>'+
+											'</div>'+
+										'</div>'+
+									'</div>'+
+								'</div>'+
+								'<div class="row">'+
+									'<div class="col-md-6">'+
+										'<div class="container-fluid vehiculo-content">'+
+											'<div class="container-text-title-detalle">'+
+												'<span class="text-tile-vehiculo">Cuenta factura</span>'+
+											'</div>'+
+											'<div class="container-text-content-detalle">'+
+												'<span class="text-content-vehiculo" title="'+instanciaThis.responseServicios.folioCuentaFactura+'">'+instanciaThis.responseServicios.folioCuentaFactura+'</span>'+
+											'</div>'+
+										'</div>'+
+									'</div>'+
+									'<div class="col-md-6">'+
+										'<div class="container-fluid vehiculo-content">'+
+											'<div class="container-text-title-detalle">'+
+												'<span class="text-tile-vehiculo">Folio OS</span>'+
+											'</div>'+
+											'<div class="container-text-content-detalle">'+
+												'<span class="text-content-vehiculo" title="'+instanciaThis.responseServicios.folioOs+'">'+instanciaThis.responseServicios.folioOs+'</span>'+
+											'</div>'+
+										'</div>'+
+									'</div>'+
+								'</div>'+
+								'<div class="row">'+
+									'<div class="col-md-6">'+
+										'<div class="container-fluid vehiculo-content">'+
+											'<div class="container-text-title-detalle">'+
+												'<span class="text-tile-vehiculo">Folio CSP</span>'+
+											'</div>'+
+											'<div class="container-text-content-detalle">'+
+												'<span class="text-content-vehiculo" title="'+instanciaThis.responseServicios.folioCotSitioPlan+'">'+instanciaThis.responseServicios.folioCotSitioPlan+'</span>'+
+											'</div>'+
+										'</div>'+
+									'</div>'+
+									'<div class="col-md-6">'+
+										'<div class="container-fluid vehiculo-content">'+
+											'<div class="container-text-title-detalle">'+
+												'<span class="text-tile-vehiculo">Folio Sitio</span>'+
+											'</div>'+
+											'<div class="container-text-content-detalle">'+
+												'<span class="text-content-vehiculo" title="'+instanciaThis.responseServicios.folioSitio+'">'+instanciaThis.responseServicios.folioSitio+'</span>'+
+											'</div>'+
+										'</div>'+
+									'</div>'+
+								'</div>'+
+								'<div class="row">'+
+									'<div class="col-md-6">'+
+										'<div class="container-fluid vehiculo-content">'+
+											'<div class="container-text-title-detalle">'+
+												'<span class="text-tile-vehiculo">Num. ips</span>'+
+											'</div>'+
+											'<div class="container-text-content-detalle">'+
+												'<span class="text-content-vehiculo" title="'+instanciaThis.responseServicios.numIps+'">'+instanciaThis.responseServicios.numIps+'</span>'+
+											'</div>'+
+										'</div>'+
+									'</div>'+
+									'<div class="col-md-6">'+
+										'<div class="container-fluid vehiculo-content">'+
+											'<div class="container-text-title-detalle">'+
+												'<span class="text-tile-vehiculo">Num. dns</span>'+
+											'</div>'+
+											'<div class="container-text-content-detalle">'+
+												'<span class="text-content-vehiculo" title="'+instanciaThis.responseServicios.numDns+'">'+instanciaThis.responseServicios.numDns+'</span>'+
+											'</div>'+
+										'</div>'+
+									'</div>'+
+								'</div>'+
+								'<div class="row">'+
+									'<div class="col-md-6">'+
+										'<div class="container-fluid vehiculo-content">'+
+											'<div class="container-text-title-detalle">'+
+												'<span class="text-tile-vehiculo">Monto primer pago</span>'+
+											'</div>'+
+											'<div class="container-text-content-detalle">'+
+												'<span class="text-content-vehiculo" title="'+instanciaThis.responseServicios.precioProntoPago+'">'+instanciaThis.responseServicios.precioProntoPago+'</span>'+
+											'</div>'+
+										'</div>'+
+									'</div>'+
+									'<div class="col-md-6">'+
+										'<div class="container-fluid vehiculo-content">'+
+											'<div class="container-text-title-detalle">'+
+												'<span class="text-tile-vehiculo">Pago instalacion</span>'+
+											'</div>'+
+											'<div class="container-text-content-detalle">'+
+												'<span class="text-content-vehiculo" title="'+instanciaThis.responseServicios.pagoEnInstalacion+'">'+instanciaThis.responseServicios.pagoEnInstalacion+'</span>'+
+											'</div>'+
+										'</div>'+
+									'</div>'+
+								'</div>'+
+								'<br>'+
+								'<div class="row">'+
+									'<div class="col-7">'+
+										'<div class="row justify-content-center">'+
+											'<div class="col-md-12">'+
+												'<h5 style="color:#767676" class="titlemodalproductos">Servicios a instalar</h5>'+
+												'<div class="parent_table_detalle">'+
+													'<table class="detalle-productos-table table table-sm">'+
+														'<thead class="thead_table_servicios">'+
+															'<tr>'+
+																'<th>Nombre del Servicio</th>'+
+																'<th>Tipo Servicio</th>'+
+																'<th>Detalle</th>'+
+															'</tr>'+
+														'</thead>'+
+														'<tbody>';
+															var index = 0;
+															instanciaThis.responseServicios.resumenServicios.forEach(element => {
+																contentResumenPaquete = contentResumenPaquete + 
+																'<tr id="trIndex-'+index+'" class="tr-class-remove">'+
+																	'<td>'+ element.descripcion+'</td>'+
+																	'<td>'+ element.tipo+'</td>'+
+																	'<td>'+
+																		'<div class="text-center">'+
+																			'<button ng-if="servicio.id !== undefined" type="button" tagIndex="'+ index + '" class="btn_detalle_servicio btn btn-info btn-rounded btn-sm my-0 waves-effect waves-light ng-scope">'+
+																				'<i tagIndex="'+ index + '" class="fa fa-eye"></i>'+
+																			'</button>'+
+																		'</div>'+
+																	'</td>'+
+																'</tr>';
+																index++;
+															});
+															contentResumenPaquete = contentResumenPaquete +
+														'</tbody>'+
+													'</table>'+
+												'</div>'+
+											'</div>'+
+										'</div>'+
+										'<div class="row" id="contentProductosPaquete">'+
+											'<div class="col-md-12">'+
+												'<h5 style="color:#767676" class="titlemodalproductos"> Productos </h5>'+
+												'<div class="parent_table_detalle_productos">'+
+													'<table class="table detalle-productos-table table-sm">'+
+														'<thead class="thead_table_productos_servicio">'+
+															'<tr>'+
+																'<th scope="col">Nombre del producto</th>'+
+																'<th scope="col">Tipo producto</th>'+
+															'</tr>'+
+														'</thead>'+
+														'<tbody>'+
+															'<tr>'+
+																'<td class="text-center" colspan="2">No se cuenta con productos</td>'+
+															'</tr>'+
+														'</tbody>'+
+													'</table>'+
+												'</div>'+
+											'</div>'+
+										'</div>'+
+										'<div class="row">'+
+											'<div class="col-md-12">'+
+												'<h5 style="color:#767676" class="titlemodalproductos"> Promociones </h5>'+
+												'<div class="parent_table_detalle_productos">'+
+													'<table class="table detalle-productos-table table-sm">'+
+														'<thead class="thead_table_productos_servicio">'+
+															'<tr>'+
+																'<th scope="col">Folio de la promocion</th>'+
+																'<th scope="col">Nombre de la promocion</th>'+
+															'</tr>'+
+														'</thead>'+
+														'<tbody>';
+														if (instanciaThis.responseServicios.promociones.length > 0) {
+															instanciaThis.responseServicios.promociones.forEach(element => {
+																contentResumenPaquete = contentResumenPaquete + 
+																'<tr>'+
+																	'<td>'+ element.id+'</td>'+
+																	'<td>'+ element.descripcion+'</td>'+
+																'</tr>'
+															});
+														} else {
+															contentResumenPaquete = contentResumenPaquete + 
+															'<tr>'+
+																'<td class="text-center" colspan="2">No se cuenta con promociones</td>'+
+															'</tr>'
+														}
+														
+														contentResumenPaquete = contentResumenPaquete +
+
+														'</tbody>'+
+													'</table>'+
+												'</div>'+
+											'</div>'+
+										'</div>'+
+									'</div>'+
+									'<div id="info_equipos_detalle" class="col-5">'+
+										'<div class="text-center">'+
+											'<h5 style="color:#767676" class="text-center titlemodalproductos">Equipo y Modelos</h5>'+
+											'<div>'+
+												'<div class="text-center not_info_detalle row h-100 justify-content-center">'+
+													'<h6 style="color:#abafae;" class="text-noSeleccion">Sin datos para mostrar</h6>'+
+												'</div>'+
+											'</div>'+
+										'</div>'+
+									'</div>'+
+							'</div>'+
+						'</div>'
+						$(instanciaThis.idDiv).append(contentResumenPaquete);
+						$(instanciaThis.idDiv).find('.btn_detalle_servicio').on('click', (e) => {
+							$('.tr-class-remove').removeClass('active-selected-servicio-plan');
+							$('#trIndex-'+$(e.target).attr('tagIndex')).addClass('active-selected-servicio-plan');
+							instanciaThis.consultarDetalleEquiposBandejasSF($(e.target).attr('tagIndex'));
+						});
 					}
 				}
 			}
 		}).catch((error) => {
 			console.log(error)
 		});
-		this.responseServicios = resultDetalle
-		this.idCotSitio = resultDetalle.idCotSitio;
-		$(this.idDiv).empty();
-		var contentResumenPaquete = "";
-		contentResumenPaquete =
-		'<div class="row parent-detallecotizacion">'+
-			'<div class="col-12">'+
-				'<div class="row">'+
-					'<div class="col-md-6">'+
-						'<div class="container-fluid vehiculo-content">'+
-							'<div class="container-text-title-detalle">'+
-								'<span class="text-tile-vehiculo">Paquete</span>'+
-							'</div>'+
-							'<div class="container-text-content-detalle">'+
-								'<span class="text-content-vehiculo" title="'+this.responseServicios.nombrePaquete+'">'+this.responseServicios.nombrePaquete+'</span>'+
-							'</div>'+
-						'</div>'+
-					'</div>'+
-				'</div>'+
-				'<div class="row">'+
-					'<div class="col-md-6">'+
-						'<div class="container-fluid vehiculo-content">'+
-							'<div class="container-text-title-detalle">'+
-								'<span class="text-tile-vehiculo">Cuenta factura</span>'+
-							'</div>'+
-							'<div class="container-text-content-detalle">'+
-								'<span class="text-content-vehiculo" title="'+this.responseServicios.folioCuentaFactura+'">'+this.responseServicios.folioCuentaFactura+'</span>'+
-							'</div>'+
-						'</div>'+
-					'</div>'+
-					'<div class="col-md-6">'+
-						'<div class="container-fluid vehiculo-content">'+
-							'<div class="container-text-title-detalle">'+
-								'<span class="text-tile-vehiculo">Folio OS</span>'+
-							'</div>'+
-							'<div class="container-text-content-detalle">'+
-								'<span class="text-content-vehiculo" title="'+this.responseServicios.folioOs+'">'+this.responseServicios.folioOs+'</span>'+
-							'</div>'+
-						'</div>'+
-					'</div>'+
-				'</div>'+
-				'<div class="row">'+
-					'<div class="col-md-6">'+
-						'<div class="container-fluid vehiculo-content">'+
-							'<div class="container-text-title-detalle">'+
-								'<span class="text-tile-vehiculo">Folio CSP</span>'+
-							'</div>'+
-							'<div class="container-text-content-detalle">'+
-								'<span class="text-content-vehiculo" title="'+this.responseServicios.folioCotSitioPlan+'">'+this.responseServicios.folioCotSitioPlan+'</span>'+
-							'</div>'+
-						'</div>'+
-					'</div>'+
-					'<div class="col-md-6">'+
-						'<div class="container-fluid vehiculo-content">'+
-							'<div class="container-text-title-detalle">'+
-								'<span class="text-tile-vehiculo">Folio Sitio</span>'+
-							'</div>'+
-							'<div class="container-text-content-detalle">'+
-								'<span class="text-content-vehiculo" title="'+this.responseServicios.folioSitio+'">'+this.responseServicios.folioSitio+'</span>'+
-							'</div>'+
-						'</div>'+
-					'</div>'+
-				'</div>'+
-				'<div class="row">'+
-					'<div class="col-md-6">'+
-						'<div class="container-fluid vehiculo-content">'+
-							'<div class="container-text-title-detalle">'+
-								'<span class="text-tile-vehiculo">Num. ips</span>'+
-							'</div>'+
-							'<div class="container-text-content-detalle">'+
-								'<span class="text-content-vehiculo" title="'+this.responseServicios.numIps+'">'+this.responseServicios.numIps+'</span>'+
-							'</div>'+
-						'</div>'+
-					'</div>'+
-					'<div class="col-md-6">'+
-						'<div class="container-fluid vehiculo-content">'+
-							'<div class="container-text-title-detalle">'+
-								'<span class="text-tile-vehiculo">Num. dns</span>'+
-							'</div>'+
-							'<div class="container-text-content-detalle">'+
-								'<span class="text-content-vehiculo" title="'+this.responseServicios.numDns+'">'+this.responseServicios.numDns+'</span>'+
-							'</div>'+
-						'</div>'+
-					'</div>'+
-				'</div>'+
-				'<div class="row">'+
-					'<div class="col-md-6">'+
-						'<div class="container-fluid vehiculo-content">'+
-							'<div class="container-text-title-detalle">'+
-								'<span class="text-tile-vehiculo">Monto primer pago</span>'+
-							'</div>'+
-							'<div class="container-text-content-detalle">'+
-								'<span class="text-content-vehiculo" title="'+this.responseServicios.precioProntoPago+'">'+this.responseServicios.precioProntoPago+'</span>'+
-							'</div>'+
-						'</div>'+
-					'</div>'+
-					'<div class="col-md-6">'+
-						'<div class="container-fluid vehiculo-content">'+
-							'<div class="container-text-title-detalle">'+
-								'<span class="text-tile-vehiculo">Pago instalacion</span>'+
-							'</div>'+
-							'<div class="container-text-content-detalle">'+
-								'<span class="text-content-vehiculo" title="'+this.responseServicios.pagoEnInstalacion+'">'+this.responseServicios.pagoEnInstalacion+'</span>'+
-							'</div>'+
-						'</div>'+
-					'</div>'+
-				'</div>'+
-				'<br>'+
-				'<div class="row">'+
-					'<div class="col-7">'+
-						'<div class="row justify-content-center">'+
-							'<div class="col-md-12">'+
-								'<h5 style="color:#767676" class="titlemodalproductos">Servicios a instalar</h5>'+
-								'<div class="parent_table_detalle">'+
-									'<table class="detalle-productos-table table table-sm">'+
-										'<thead class="thead_table_servicios">'+
-											'<tr>'+
-												'<th>Nombre del Servicio</th>'+
-												'<th>Tipo Servicio</th>'+
-												'<th>Detalle</th>'+
-											'</tr>'+
-										'</thead>'+
-										'<tbody>';
-											var index = 0;
-											this.responseServicios.resumenServicios.forEach(element => {
-												contentResumenPaquete = contentResumenPaquete + 
-												'<tr id="trIndex-'+index+'" class="tr-class-remove">'+
-													'<td>'+ element.descripcion+'</td>'+
-													'<td>'+ element.tipo+'</td>'+
-													'<td>'+
-														'<div class="text-center">'+
-															'<button ng-if="servicio.id !== undefined" type="button" tagIndex="'+ index + '" class="btn_detalle_servicio btn btn-info btn-rounded btn-sm my-0 waves-effect waves-light ng-scope">'+
-																'<i tagIndex="'+ index + '" class="fa fa-eye"></i>'+
-															'</button>'+
-														'</div>'+
-													'</td>'+
-												'</tr>';
-												index++;
-											});
-											contentResumenPaquete = contentResumenPaquete +
-										'</tbody>'+
-									'</table>'+
-								'</div>'+
-							'</div>'+
-						'</div>'+
-						'<div class="row" id="contentProductosPaquete">'+
-							'<div class="col-md-12">'+
-								'<h5 style="color:#767676" class="titlemodalproductos"> Productos </h5>'+
-								'<div class="parent_table_detalle_productos">'+
-									'<table class="table detalle-productos-table table-sm">'+
-										'<thead class="thead_table_productos_servicio">'+
-											'<tr>'+
-												'<th scope="col">Nombre del producto</th>'+
-												'<th scope="col">Tipo producto</th>'+
-											'</tr>'+
-										'</thead>'+
-										'<tbody>'+
-											'<tr>'+
-												'<td class="text-center" colspan="2">No se cuenta con productos</td>'+
-											'</tr>'+
-										'</tbody>'+
-									'</table>'+
-								'</div>'+
-							'</div>'+
-						'</div>'+
-						'<div class="row">'+
-							'<div class="col-md-12">'+
-								'<h5 style="color:#767676" class="titlemodalproductos"> Promociones </h5>'+
-								'<div class="parent_table_detalle_productos">'+
-									'<table class="table detalle-productos-table table-sm">'+
-										'<thead class="thead_table_productos_servicio">'+
-											'<tr>'+
-												'<th scope="col">Folio de la promocion</th>'+
-												'<th scope="col">Nombre de la promocion</th>'+
-											'</tr>'+
-										'</thead>'+
-										'<tbody>';
-										if (this.responseServicios.promociones.length > 0) {
-											this.responseServicios.promociones.forEach(element => {
-												contentResumenPaquete = contentResumenPaquete + 
-												'<tr>'+
-													'<td>'+ element.id+'</td>'+
-													'<td>'+ element.descripcion+'</td>'+
-												'</tr>'
-											});
-										} else {
-											contentResumenPaquete = contentResumenPaquete + 
-											'<tr>'+
-												'<td class="text-center" colspan="2">No se cuenta con promociones</td>'+
-											'</tr>'
-										}
-										
-										contentResumenPaquete = contentResumenPaquete +
-
-										'</tbody>'+
-									'</table>'+
-								'</div>'+
-							'</div>'+
-						'</div>'+
-					'</div>'+
-					'<div id="info_equipos_detalle" class="col-5">'+
-						'<div class="text-center">'+
-							'<h5 style="color:#767676" class="text-center titlemodalproductos">Equipo y Modelos</h5>'+
-							'<div>'+
-								'<div class="text-center not_info_detalle row h-100 justify-content-center">'+
-									'<h6 style="color:#abafae;" class="text-noSeleccion">Sin datos para mostrar</h6>'+
-								'</div>'+
-							'</div>'+
-						'</div>'+
-					'</div>'+
-			'</div>'+
-		'</div>'
-		$(this.idDiv).append(contentResumenPaquete);
-
-		$(this.idDiv).find('.btn_detalle_servicio').on('click', (e) => {
-			$('.tr-class-remove').removeClass('active-selected-servicio-plan');
-			$('#trIndex-'+$(e.target).attr('tagIndex')).addClass('active-selected-servicio-plan');
-			this.consultarDetalleEquiposBandejasSF($(e.target).attr('tagIndex'));
-		});
 	}
 
 	consultarDetalleEquiposBandejasSF(index) {
+		let instanciaThis = this;
 		var params = {
-			idCotSitioPlan: this.idCotSitio
+			idCotSitioPlan: instanciaThis.idCotSitio
 		}
-		var resultBandera = false;
-		var listadoEquiposResult = [];
-		if (!this.isConsultaEquiposModelos) {
+		if (!instanciaThis.isConsultaEquiposModelos) {
 			swal({ text: 'Espera un momento...', allowOutsideClick: false });
 			swal.showLoading();
-			this.consultarDetalleEquiposServicios(params).done(function (response) {
+			this.consultarDetalleEquiposServicios(params).then(function (response) {
 				if (response.result) {
 					if (response.respuesta) {
 						if (response.result) {
-							resultBandera=true;
-						   
+							instanciaThis.isConsultaEquiposModelos = true;
 							if (response.result.detalleEquipos.length) {
-								listadoEquiposResult = angular.copy(response.result.detalleEquipos);
-								if(this.responseServicios!= undefined && 
-									this.responseServicios.resumenServicios!=undefined && this.responseServicios.resumenServicios.length >0){                                
-									this.responseServicios.resumenServicios=this.responseServicios.resumenServicios.map(function(e){
+								instanciaThis.listadoEquipos = angular.copy(response.result.detalleEquipos);
+								if(instanciaThis.responseServicios!= undefined && 
+									instanciaThis.responseServicios.resumenServicios!=undefined && instanciaThis.responseServicios.resumenServicios.length >0){                                
+										instanciaThis.responseServicios.resumenServicios=instanciaThis.responseServicios.resumenServicios.map(function(e){
 										e.elementoEquipoModelos={}
 										e.isTieneEquipoModeos=false;
 										return e;
 									})
-									listadoEquiposResult.forEach(function(elem,index){
-										let servicioTemp= this.responseServicios.resumenServicios.find(function(e){ return e.id==elem.idCotPlanServicio })
+									instanciaThis.listadoEquipos.forEach(function(elem,index){
+										let servicioTemp= instanciaThis.responseServicios.resumenServicios.find(function(e){ return e.id==elem.idCotPlanServicio })
 										if(servicioTemp!=undefined){
 											servicioTemp.elementoEquipoModelos=elem
 											servicioTemp.isTieneEquipoModeos=true;
 										}
 									});                                
 								}
+								var infoEquip = instanciaThis.listadoEquipos.filter(e => { return e.idCotPlanServicio === instanciaThis.responseServicios.resumenServicios[index].id })
+								instanciaThis.actualizarDetalleEquipos(infoEquip);
 								swal.close();
 							} else {
 								mostrarMensajeInformativo("No se encontraron Equipos");
@@ -747,18 +754,14 @@ class GenericDetallePaquete {
 					mostrarMensajeErrorAlert(response.resultDescripcion);
 					swal.close();
 				}
+			}).catch((error) => {
+				console.log(error)
 			});
-			this.isConsultaEquiposModelos = resultBandera;
-			this.listadoEquipos = listadoEquiposResult;
-			var infoEquip = this.listadoEquipos.filter(e => { return e.idCotPlanServicio === this.responseServicios.resumenServicios[index].id })
-			this.actualizarDetalleEquipos(infoEquip);
 		} else {
-			var infoEquip = this.listadoEquipos.filter(e => { return e.idCotPlanServicio === this.responseServicios.resumenServicios[index].id })
-			this.actualizarDetalleEquipos(infoEquip);
+			var infoEquip = instanciaThis.listadoEquipos.filter(e => { return e.idCotPlanServicio === instanciaThis.responseServicios.resumenServicios[index].id })
+			instanciaThis.actualizarDetalleEquipos(infoEquip);
 		}
-		this.actualizarTablaProductos(this.responseServicios.resumenServicios[index]);
-		
-		
+		instanciaThis.actualizarTablaProductos(instanciaThis.responseServicios.resumenServicios[index]);
 	}
 
 	actualizarTablaProductos(object) {
@@ -783,11 +786,10 @@ class GenericDetallePaquete {
 						'</tr>'
 					});
 					contentPaquete = contentPaquete +
-
 					'</tbody>'+
 				'</table>'+
 			'</div>'+
-		'</div>'+
+		'</div>'
 		$("#contentProductosPaquete").append(contentPaquete);
 	}
 
@@ -828,12 +830,12 @@ class GenericDetallePaquete {
 							'<h6 style="color:#abafae;" class="text-noSeleccion">Sin datos para mostrar</h6>'+
 						'</div>'+
 					'</div>'+
-				'</div>';
+				'</div>'
 			$("#info_equipos_detalle").append(contentInfoEquipo);
 		}
 	}
 	
-	 consultarDetallePaqueteService =function(params){
+	consultarDetallePaqueteService(params){
 		return new Promise((resolve, reject) => {
 			$.ajax({
 				url: 'req/obtenerResumenPaquete',
@@ -853,7 +855,7 @@ class GenericDetallePaquete {
 		})
 	}
 
-	consultarDetalleEquiposServicios=function(params) {
+	consultarDetalleEquiposServicios(params) {
 		return new Promise((resolve, reject) => {
 			$.ajax({
 				url: 'req/consultarDetalleEquiposBandejasSF',
@@ -869,14 +871,8 @@ class GenericDetallePaquete {
 					reject(error)
 				},
 			})
-
 		})
 	}
-
-	
-	
-
-
 
 }
 

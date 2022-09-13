@@ -989,3 +989,9 @@ span.text-content-vehiculo {
 .active-selected-servicio-plan {
   background: #efefef;
 }
+
+#loading-paquete{
+  margin-left: 45%;
+  color: #ccc;
+  margin-top: 1em;
+}

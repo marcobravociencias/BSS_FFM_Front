@@ -47,6 +47,8 @@ app.busquedaSalesforce = function ($scope, busquedaSalesforceService) {
     $scope.banderaNoticiasOportunidad = false;
     $scope.banderaNoticiasOs = false;
 
+    objectDetallePaquete = new GenericDetallePaquete('#infoPaqueteGeneric');
+
     $scope.consultarDetalleObjectosSF = function (id, keyObjeto,nombre) {
         console.log("id: " + id + " tipo del objeto: " + keyObjeto)
         $scope.isConsultaPrimeraVezNoticias = false;
@@ -94,6 +96,7 @@ app.busquedaSalesforce = function ($scope, busquedaSalesforceService) {
                         case "OS":
                             tipo = 'Orden de servicio'
                             $scope.mostrarDetalleOs(result.data.result.detalleOs, keyObjeto);
+                            objectDetallePaquete.consultarDetallePaqueteGeneric(nombre);
                             break;
                         case "TK":
                             tipo = 'Ticket'
