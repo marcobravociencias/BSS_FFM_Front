@@ -224,7 +224,7 @@ class GenericAccionRealizada {
 			idModulo: this.idModuloAccion
 		}
 		return new Promise((resolve, reject) => {
-			 $.ajax({
+			$.ajax({
 				url: 'req/consultarAccionesRealizadasService',
 				type: "POST",
 				data: JSON.stringify(params),
@@ -284,6 +284,7 @@ class GenericAccionRealizada {
 		}
 
 		$("#container-ultimasAcciones").show();
+		$("#listAccionesRecientes").empty();
 		$("#loading-data").show();
 		//let listaUltimasAcciones = this.getAccionesRecientesUsuario();
 		let listaUltimasAcciones = [];
@@ -292,60 +293,54 @@ class GenericAccionRealizada {
 				if (jsonResponse.result) {
 					if (jsonResponse.result.modulos) {
 						listaUltimasAcciones = jsonResponse.result.modulos;
+						let contentAcciones = "";
+						if (listaUltimasAcciones.length > 0) {
+							$.each(listaUltimasAcciones, function (i, accion) {
+								if (accion.descripcionEstatusHttp == 'success') {
+									contentAcciones += '<li class="timeline-actions timeline-icon-success active">' +
+										'					<div class="action-time">' + validarAcci(accion.fechaRegistro) + '</div>' +
+										'					<h6 class="action-title">' + validarAcci(accion.descripcionAccion) + '</h6>' +
+										'					<p class="action-text">' + validarAcci(accion.descripcionMensajeHttp) + '</p>' +
+										'				</li>';
+								} else if (accion.descripcionEstatusHttp == 'warning') {
+									contentAcciones += '<li class="timeline-actions timeline-icon-warning active">' +
+										'					<div class="action-time">' + validarAcci(accion.fechaRegistro) + '</div>' +
+										'					<h6 class="action-title">' + validarAcci(accion.descripcionAccion) + '</h6>' +
+										'					<p class="action-text">' + validarAcci(accion.descripcionMensajeHttp) + '</p>' +
+										'				</li>';
+								} else if (accion.descripcionEstatusHttp == 'error') {
+									contentAcciones += '<li class="timeline-actions timeline-icon-error active">' +
+										'					<div class="action-time">' + validarAcci(accion.fechaRegistro) + '</div>' +
+										'					<h6 class="action-title">' + validarAcci(accion.descripcionAccion) + '</h6>' +
+										'					<p class="action-text">' + validarAcci(accion.descripcionMensajeHttp) + '</p>' +
+										'				</li>';
+								} else if (accion.descripcionEstatusHttp == 'info') {
+									contentAcciones += '<li class="timeline-actions timeline-icon-info active">' +
+										'					<div class="action-time">' + validarAcci(accion.fechaRegistro) + '</div>' +
+										'					<h6 class="action-title">' + validarAcci(accion.descripcionAccion) + '</h6>' +
+										'					<p class="action-text">' + validarAcci(accion.descripcionMensajeHttp) + '</p>' +
+										'				</li>';
+								}
+							});
+							$("#loading-data").hide();
+							$("#listAccionesRecientes").append(contentAcciones);
+
+						} else {
+							contentAcciones = '<div class="text-no-acciones pt-2" style="padding: 0 !important; font-size:11px !important; padding-top:2em !important">' +
+								'	<i class="icon-not-action fas fa-ban"></i>' +
+								'	<b class="text-not-action">Sin movimientos para mostrar</b>' +
+								'</div>';
+							$("#loading-data").hide();
+							$("#listAccionesRecientes").append(contentAcciones);
+
+						}
 					}
 				}
 			}
-		}).catch(function(error){
+		}).catch(function (error) {
 			console.log("manejar error")
 		});
-		$("#listAccionesRecientes").empty();
-		let contentAcciones = "";
-		if (listaUltimasAcciones.length > 0) {
-			$.each(listaUltimasAcciones, function (i, accion) {
-				if (accion.descripcionEstatusHttp == 'success') {
-					contentAcciones += '<li class="timeline-actions timeline-icon-success active">' +
-						'					<div class="action-time">' + validarAcci(accion.fechaRegistro) + '</div>' +
-						'					<h6 class="action-title">' + validarAcci(accion.descripcionAccion) + '</h6>' +
-						'					<p class="action-text">' + validarAcci(accion.descripcionMensajeHttp) + '</p>' +
-						'				</li>';
-				} else if (accion.descripcionEstatusHttp == 'warning') {
-					contentAcciones += '<li class="timeline-actions timeline-icon-warning active">' +
-						'					<div class="action-time">' + validarAcci(accion.fechaRegistro) + '</div>' +
-						'					<h6 class="action-title">' + validarAcci(accion.descripcionAccion) + '</h6>' +
-						'					<p class="action-text">' + validarAcci(accion.descripcionMensajeHttp) + '</p>' +
-						'				</li>';
-				} else if (accion.descripcionEstatusHttp == 'error') {
-					contentAcciones += '<li class="timeline-actions timeline-icon-error active">' +
-						'					<div class="action-time">' + validarAcci(accion.fechaRegistro) + '</div>' +
-						'					<h6 class="action-title">' + validarAcci(accion.descripcionAccion) + '</h6>' +
-						'					<p class="action-text">' + validarAcci(accion.descripcionMensajeHttp) + '</p>' +
-						'				</li>';
-				} else if (accion.descripcionEstatusHttp == 'info') {
-					contentAcciones += '<li class="timeline-actions timeline-icon-info active">' +
-						'					<div class="action-time">' + validarAcci(accion.fechaRegistro) + '</div>' +
-						'					<h6 class="action-title">' + validarAcci(accion.descripcionAccion) + '</h6>' +
-						'					<p class="action-text">' + validarAcci(accion.descripcionMensajeHttp) + '</p>' +
-						'				</li>';
-				}
-			});
-			setTimeout(() => {
-				$("#listAccionesRecientes").empty();
-				$("#loading-data").hide();
-				$("#listAccionesRecientes").append(contentAcciones);
-			}, 300);
 
-		} else {
-			contentAcciones = '<div class="text-no-acciones pt-2" style="padding: 0 !important; font-size:11px !important; padding-top:2em !important">' +
-				'	<i class="icon-not-action fas fa-ban"></i>' +
-				'	<b class="text-not-action">Sin movimientos para mostrar</b>' +
-				'</div>';
-			setTimeout(() => {
-				$("#listAccionesRecientes").empty();
-				$("#loading-data").hide();
-				$("#listAccionesRecientes").append(contentAcciones);
-			}, 300);
-
-		}
 
 	}
 

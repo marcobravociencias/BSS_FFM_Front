@@ -93,8 +93,9 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 				$scope.nFiltroIntervenciones = llavesResult.N_FILTRO_INTERVENCIONES
 				$scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
 				$scope.nFiltroEstatusArr = llavesResult.N_ESTATUS_ARR_ENVIO;
+				$scope.nFiltroIntervencionesArr = llavesResult.N_INTERVENCION_ARR_ENVIO;
 				$scope.nFiltroEstatus = llavesResult.N_ESTATUS_PENDIENTES;
-
+		
 				validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
 				validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
 				$scope.elementosConfigGeneral = new Map(Object.entries(resultConf))
@@ -124,7 +125,7 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 						$scope.respaldoStatusArray = angular.copy(results[4].data.result);
 						$scope.nFiltroEstatus = $scope.nFiltroEstatus ? $scope.nFiltroEstatus : $scope.obtenerUltimoNivelFiltros($scope.respaldoStatusArray);
 						$scope.filtrosGeneral.estatusdisponibles = $scope.conversionAnidadaRecursiva($scope.respaldoStatusArray, 1, $scope.nFiltroEstatus);
-						if ($scope.nFiltroEstatusArr != undefined && $scope.nFiltroEstatusArr) {
+						if ($scope.nFiltroEstatusArr) {
 							let tempSlice = $scope.nFiltroEstatusArr.split(",").map(e => parseInt(e));
 							let tempArray = []
 							angular.forEach(tempSlice, function (elm, index) {
@@ -165,7 +166,16 @@ app.controller('tercerosGenericController', ['$scope', '$q', '$filter', 'tercero
 						$scope.respaldoTipoOrdenArray = angular.copy(results[1].data.result);
 						$scope.nFiltroIntervenciones = $scope.nFiltroIntervenciones ? $scope.nFiltroIntervenciones : $scope.obtenerUltimoNivelFiltros($scope.respaldoTipoOrdenArray);
 						$scope.filtrosGeneral.tipoOrdenes = $scope.conversionAnidadaRecursiva($scope.respaldoTipoOrdenArray, 1, $scope.nFiltroIntervenciones);
-						$scope.intervencionesConteo = $scope.conversionAnidadaRecursiva($scope.respaldoTipoOrdenArray, 1, $scope.nFiltroIntervenciones);
+						if ($scope.nFiltroIntervencionesArr) {
+							let tempSlice = $scope.nFiltroIntervencionesArr.split(",").map(e => parseInt(e));
+							let tempArray = []
+							angular.forEach(tempSlice, function (elm, index) {
+								let elemInt = angular.copy($scope.filtrosGeneral.tipoOrdenes.find(e => e.id == elm))
+								if (!elemInt != undefined)
+									tempArray.push(elemInt)
+							});
+							$scope.filtrosGeneral.tipoOrdenes = tempArray
+						}
 					} else {
 						toastr.warning('No se encontraron  tipo ordenes');
 					}

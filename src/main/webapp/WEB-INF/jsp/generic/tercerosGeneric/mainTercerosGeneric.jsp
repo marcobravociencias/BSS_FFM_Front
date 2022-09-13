@@ -281,7 +281,7 @@
 									</div>
 								</div>
 								<div class="col-10">
-									<div class="tab-content" id="v-tabs-tabsContent" style="height: 80vh;">
+									<div class="tab-content" id="v-tabs-tabsContent">
 										<div class="tab-pane fade show active" id="v-tabs-consulta-detalleot"
 											role="tabpanel" aria-labelledby="v-tabs-consulta-detalleot-tab">
 											<div class="row">
@@ -1246,7 +1246,7 @@
 													</div>
 													<br />
 													<div class="row">
-														<div class="col-7">
+														<div class="col-6">
 															<div class="row justify-content-center">
 																<div class="col-md-12">
 																	<h5 style="color:#767676"
@@ -1368,7 +1368,7 @@
 																</div>
 															</div>
 														</div>
-														<div class="col-5"
+														<div class="col-6"
 															style="overflow-x: auto; max-height: calc(100vh - 225px);">
 															<div class="text-center">
 																<h5 style="color:#767676"
