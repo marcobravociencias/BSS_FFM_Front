@@ -493,7 +493,7 @@ class GenericDetallePaquete {
 												'<span class="text-tile-vehiculo">Paquete</span>'+
 											'</div>'+
 											'<div class="container-text-content-detalle">'+
-												'<span class="text-content-vehiculo" title="'+instanciaThis.responseServicios.nombrePaquete+'">'+instanciaThis.responseServicios.nombrePaquete+'</span>'+
+												'<span class="text-content-vehiculo" title="'+instanciaThis.responseServicios.nombrePaquete+'">'+(instanciaThis.responseServicios.nombrePaquete ? instanciaThis.responseServicios.nombrePaquete : 'Sin dato')+'</span>'+
 											'</div>'+
 										'</div>'+
 									'</div>'+
@@ -505,7 +505,7 @@ class GenericDetallePaquete {
 												'<span class="text-tile-vehiculo">Cuenta factura</span>'+
 											'</div>'+
 											'<div class="container-text-content-detalle">'+
-												'<span class="text-content-vehiculo" title="'+instanciaThis.responseServicios.folioCuentaFactura+'">'+instanciaThis.responseServicios.folioCuentaFactura+'</span>'+
+												'<span class="text-content-vehiculo" title="'+instanciaThis.responseServicios.folioCuentaFactura+'">'+(instanciaThis.responseServicios.folioCuentaFactura ? instanciaThis.responseServicios.folioCuentaFactura : 'Sin dato')+'</span>'+
 											'</div>'+
 										'</div>'+
 									'</div>'+
@@ -515,7 +515,7 @@ class GenericDetallePaquete {
 												'<span class="text-tile-vehiculo">Folio OS</span>'+
 											'</div>'+
 											'<div class="container-text-content-detalle">'+
-												'<span class="text-content-vehiculo" title="'+instanciaThis.responseServicios.folioOs+'">'+instanciaThis.responseServicios.folioOs+'</span>'+
+												'<span class="text-content-vehiculo" title="'+instanciaThis.responseServicios.folioOs+'">'+(instanciaThis.responseServicios.folioOs ? instanciaThis.responseServicios.folioOs : 'Sin dato')+'</span>'+
 											'</div>'+
 										'</div>'+
 									'</div>'+
@@ -527,7 +527,7 @@ class GenericDetallePaquete {
 												'<span class="text-tile-vehiculo">Folio CSP</span>'+
 											'</div>'+
 											'<div class="container-text-content-detalle">'+
-												'<span class="text-content-vehiculo" title="'+instanciaThis.responseServicios.folioCotSitioPlan+'">'+instanciaThis.responseServicios.folioCotSitioPlan+'</span>'+
+												'<span class="text-content-vehiculo" title="'+instanciaThis.responseServicios.folioCotSitioPlan+'">'+(instanciaThis.responseServicios.folioCotSitioPlan ? instanciaThis.responseServicios.folioCotSitioPlan : 'Sin dato')+'</span>'+
 											'</div>'+
 										'</div>'+
 									'</div>'+
@@ -537,7 +537,7 @@ class GenericDetallePaquete {
 												'<span class="text-tile-vehiculo">Folio Sitio</span>'+
 											'</div>'+
 											'<div class="container-text-content-detalle">'+
-												'<span class="text-content-vehiculo" title="'+instanciaThis.responseServicios.folioSitio+'">'+instanciaThis.responseServicios.folioSitio+'</span>'+
+												'<span class="text-content-vehiculo" title="'+instanciaThis.responseServicios.folioSitio+'">'+(instanciaThis.responseServicios.folioSitio ? instanciaThis.responseServicios.folioSitio : 'Sin dato')+'</span>'+
 											'</div>'+
 										'</div>'+
 									'</div>'+
@@ -571,7 +571,7 @@ class GenericDetallePaquete {
 												'<span class="text-tile-vehiculo">Monto primer pago</span>'+
 											'</div>'+
 											'<div class="container-text-content-detalle">'+
-												'<span class="text-content-vehiculo" title="'+instanciaThis.responseServicios.precioProntoPago+'">'+instanciaThis.responseServicios.precioProntoPago+'</span>'+
+												'<span class="text-content-vehiculo" title="'+instanciaThis.responseServicios.precioProntoPago+'">'+(instanciaThis.responseServicios.precioProntoPago ? '$' + instanciaThis.responseServicios.precioProntoPago : 'Sin dato') +'</span>'+
 											'</div>'+
 										'</div>'+
 									'</div>'+
@@ -581,7 +581,7 @@ class GenericDetallePaquete {
 												'<span class="text-tile-vehiculo">Pago instalacion</span>'+
 											'</div>'+
 											'<div class="container-text-content-detalle">'+
-												'<span class="text-content-vehiculo" title="'+instanciaThis.responseServicios.pagoEnInstalacion+'">'+instanciaThis.responseServicios.pagoEnInstalacion+'</span>'+
+												'<span class="text-content-vehiculo" title="'+instanciaThis.responseServicios.pagoEnInstalacion+'">'+(instanciaThis.responseServicios.pagoEnInstalacion ? '$' + instanciaThis.responseServicios.pagoEnInstalacion : 'Sin dato')+'</span>'+
 											'</div>'+
 										'</div>'+
 									'</div>'+

@@ -374,7 +374,7 @@ h1.h6.subtitle-modulo {
 }
 
 
-#nav-bar-otros-options !>.active {
+#nav-bar-otros-options>.active {
   background: #000 !important;
 }
 
@@ -691,7 +691,7 @@ img.img-despacho-navbar.img-user-profile-navbar {
   padding-top: 1em;
 }
 
-#user-info-login .widget-subheading,  {
+#user-info-login .widget-subheading  {
   width: 90%;
   white-space: nowrap;
   display: inline-block ;
@@ -733,7 +733,7 @@ img.img-despacho-navbar.img-user-profile-navbar {
 #user-info-login .btn-primary.button-salir:hover {
   background:white;
   color:#2955c8;
-  border:1px solid #2955c8 !important:
+  border:1px solid #2955c8 !important;
 }
 
 .fotoUsuarioLog {
