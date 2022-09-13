@@ -9,7 +9,4 @@ import lombok.Data;
 @Component
 public class ConstDisponibilidadV2 {
 	
-	@Value("${consultaDisponibilidadV2}")
-    private String consultaDisponibilidad;
-	
 }

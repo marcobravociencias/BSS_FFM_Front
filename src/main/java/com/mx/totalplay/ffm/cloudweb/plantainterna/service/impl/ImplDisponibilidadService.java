@@ -100,4 +100,17 @@ public class ImplDisponibilidadService implements DisponibilidadService {
         logger.info("RESULT" + gson.toJson(response));
         return response;
 	}
+
+	@Override
+	public ServiceResponseResult consultarDisponibilidadV2(String params) {
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		logger.info("ImplDisponibilidadService.class [metodo = consultarDisponibilidadV2() ]\n" + jsonObject);
+        LoginResult principalDetail = utileriaGeneral.obtenerObjetoPrincipal();
+        String tokenAcces = principalDetail.getAccess_token();
+        logger.info("consultarDisponibilidadv2 ##+" + tokenAcces);
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constDisponbilidadPI.getConsultaDisponibilidadV2());
+        ServiceResponseResult response = consumeRest.callPostBearerTokenRequest(jsonObject.toString(), urlRequest, ServiceResponseResult.class, tokenAcces);
+        logger.info("RESULT" + gson.toJson(response));
+        return response;
+	}
 }

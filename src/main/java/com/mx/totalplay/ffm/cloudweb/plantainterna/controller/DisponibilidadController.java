@@ -50,4 +50,14 @@ public class DisponibilidadController {
         }
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
+    
+    @PostMapping("/consultaDisponibilidadV2")
+    public ResponseEntity<?> consultaDisponibilidadV2(@RequestBody String params) {
+        logger.info("#### CONSULTANDO DISPONIBILIDADV2 ###");
+        ServiceResponseResult response = disponibilidadService.consultarDisponibilidadV2(params);
+        if (response.getResult() instanceof Integer){
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
 }

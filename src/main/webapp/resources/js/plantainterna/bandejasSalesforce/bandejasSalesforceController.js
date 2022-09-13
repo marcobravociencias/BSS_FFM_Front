@@ -343,8 +343,9 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                             //GEOGRAFIA PENDIENTES ACTIVAR
                             $scope.nfiltrogeografiaPendienteActivar = $scope.nfiltrogeografiaPendienteActivar ? $scope.nfiltrogeografiaPendienteActivar : $scope.obtenerNivelUltimoJerarquiaGeneric($scope.listadogeografiacopy);
                             $scope.geografiasPendienteActivar = $scope.listadogeografiacopy.filter(e => e.nivel <= parseInt($scope.nfiltrogeografiaPendienteActivar));
+                            $scope.geografiasPendienteActivar.push({ id: 0, nombre: "TOTALPLAY", nivel: 0, padre: "#", state: { opened: true } });
                             $scope.geografiasPendienteActivar.map((e) => {
-                                e.parent = e.padre == undefined ? "#" : e.padre;
+                                e.parent = e.padre == null ? 0 : e.padre;
                                 e.text = e.nombre;
                                 e.icon = "fa fa-globe";
                                 e.state = {
@@ -357,8 +358,9 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                             //GEOGRAFIA PENDIENTES AGENDAR
                             $scope.nfiltrogeografiaPendienteAgendar = $scope.nfiltrogeografiaPendienteAgendar ? $scope.nfiltrogeografiaPendienteAgendar : $scope.obtenerNivelUltimoJerarquiaGeneric($scope.listadogeografiacopy);
                             $scope.geografiasPendienteAgendar = $scope.listadogeografiacopy.filter(e => e.nivel <= parseInt($scope.nfiltrogeografiaPendienteAgendar));
+                            $scope.geografiasPendienteAgendar.push({ id: 0, nombre: "TOTALPLAY", nivel: 0, padre: "#", state: { opened: true } });
                             $scope.geografiasPendienteAgendar.map((e) => {
-                                e.parent = e.padre == undefined ? "#" : e.padre;
+                                e.parent = e.padre == null ? 0 : e.padre;
                                 e.text = e.nombre;
                                 e.icon = "fa fa-globe";
                                 e.state = {
@@ -371,6 +373,7 @@ app.controller('bandejasSalesforceController', ['$scope', '$q', 'bandejasSalesfo
                             //GEOGRAFIA RESCATAVENTAS
                             $scope.nfiltrogeografiaRescataVentas = $scope.nfiltrogeografiaRescataVentas ? $scope.nfiltrogeografiaRescataVentas : $scope.obtenerNivelUltimoJerarquiaGeneric($scope.listadogeografiacopy);
                             $scope.geografiasRescataventas = $scope.listadogeografiacopy.filter(e => e.nivel <= parseInt($scope.nfiltrogeografiaRescataVentas));
+                            $scope.geografiasRescataventas.push({ id: 0, nombre: "TOTALPLAY", nivel: 0, padre: "#", state: { opened: true } });
                             $scope.geografiasRescataventas.map((e) => {
                                 e.parent = e.padre == undefined ? "#" : e.padre;
                                 e.text = e.nombre;

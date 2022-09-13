@@ -52,7 +52,12 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
     $scope.accessEditarDisponibilidad = true;
     let timeTable = 1000;
 
+    $scope.isContentDisponibilidadv2 = false;
+    $scope.banderaErrorTurnos = false;
+    $scope.listTurnosUsuarioDispV2 = [];
+
     app.disponibilidadCalendar($scope);
+    app.disponibilidadV2Controller($scope, disponibilidadService, genericService);
 
     $(document).ready(function () {
 
@@ -65,10 +70,10 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                 if ($scope.banderaVespertino) {
                     document.getElementById('vespertino_actualizar').value = vespertino;
                 }
-                
+
                 if ($scope.banderaNocturno) {
                     document.getElementById('nocturno_actualizar').value = nocturno;
-                    
+
                 }
                 document.getElementById('fecha_actualizar').value = fecha
                 let fechaSplit = fecha.split('-')
@@ -84,10 +89,10 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                     document.getElementById('radio_inactivo_mod').checked = true
                     document.getElementById('radio_activo_mod').checked = false
                 }
-    
+
                 $("#modificar_disponibilidad_modal").modal('show');
             } else {
-                swal({type: "warning", title:"Aviso", text:"No cuentas con permiso para editar disponibilidad."});
+                swal({ type: "warning", title: "Aviso", text: "No cuentas con permiso para editar disponibilidad." });
             }
 
         }
@@ -142,6 +147,10 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
     $scope.banderaErrorGeografia = false;
     $scope.banderaErrorGeneral = false;
 
+    $scope.obtenerUltimoNivelFiltros = function (array) {
+        return Math.max.apply(Math, array.map(function (o) { return o.nivel; }));
+    }
+
     $scope.consultarCatalogos = function () {
         $scope.arrayTurnosDisponibilidad = []
         let params = {
@@ -154,29 +163,46 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
             genericService.consultarCatalogosTurnos()
         ]).then(result => {
             if (result[0].data.respuesta) {
-                let resultConf= result[0].data.result
-                if( resultConf != undefined && resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves){
+                let resultConf = result[0].data.result
+                if (resultConf != undefined && resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves) {
                     $scope.permisosDisponibilidad = resultConf.MODULO_ACCIONES_USUARIO.permisos;
-                    $scope.accessConsultaDisponibilidad = $scope.permisosDisponibilidad.filter(elemento => { return elemento.clave === 'accionConsultaDisponibilidad'}).length > 0 ? true : false;
-                    $scope.accessAgregarDisponibilidad = $scope.permisosDisponibilidad.filter(elemento => { return elemento.clave === 'accionAgregaDisponibilidad'}).length > 0 ? true : false; 
-                    $scope.accessEditarDisponibilidad = $scope.permisosDisponibilidad.filter(elemento => { return elemento.clave === 'accionEditaDisponibilidad'}).length > 0 ? true : false; 
-                    let  llavesResult=result[0].data.result.MODULO_ACCIONES_USUARIO.llaves;                    
-                    $scope.nIntervencion = llavesResult.N_FILTRO_INTERVENCIONES ? Number( llavesResult.N_FILTRO_INTERVENCIONES ) : null;
-                    $scope.nGeografia = llavesResult.N_FILTRO_GEOGRAFIA ? Number( llavesResult.N_FILTRO_GEOGRAFIA ) : null;
+                    $scope.accessConsultaDisponibilidad = $scope.permisosDisponibilidad.filter(elemento => { return elemento.clave === 'accionConsultaDisponibilidad' }).length > 0 ? true : false;
+                    $scope.accessAgregarDisponibilidad = $scope.permisosDisponibilidad.filter(elemento => { return elemento.clave === 'accionAgregaDisponibilidad' }).length > 0 ? true : false;
+                    $scope.accessEditarDisponibilidad = $scope.permisosDisponibilidad.filter(elemento => { return elemento.clave === 'accionEditaDisponibilidad' }).length > 0 ? true : false;
+                    $scope.isPermisoConsultaDisponibilidadv2 = ($scope.permisosDisponibilidad.filter(e => { return e.clave == "accionConsultarDisponibilidadv2" })[0] != undefined);
+                    $scope.isPermisoDescargaDisponibilidadv2 = ($scope.permisosDisponibilidad.filter(e => { return e.clave == "accionDescargarReporteDisponibilidadv2" })[0] != undefined);
+                    $scope.isPermisoActualizarDisponibilidadv2 = ($scope.permisosDisponibilidad.filter(e => { return e.clave == "accionActualizarDisponibilidadv2" })[0] != undefined);
+
+                    let llavesResult = result[0].data.result.MODULO_ACCIONES_USUARIO.llaves;
+                    $scope.nIntervencion = llavesResult.N_FILTRO_INTERVENCIONES ? Number(llavesResult.N_FILTRO_INTERVENCIONES) : null;
+                    $scope.nGeografia = llavesResult.N_FILTRO_GEOGRAFIA ? Number(llavesResult.N_FILTRO_GEOGRAFIA) : null
+
+                    if ($scope.nGeografia) {
+                        $scope.nGeografiaDispV2 = $scope.nGeografia;
+                    } else {
+                        $scope.nGeografiaDispV2 = llavesResult.N_FILTRO_GEOGRAFIA_DISPONIBILIDADV2 ? Number(llavesResult.N_FILTRO_GEOGRAFIA_DISPONIBILIDADV2) : null
+                    }
+
+                    if ($scope.nIntervencion) {
+                        $scope.nIntervencionDispV2 = $scope.nIntervencion;
+                    } else {
+                        $scope.nIntervencionDispV2 = llavesResult.N_FILTRO_INTERVENCIONES_DISPONIBILIDADV2 ? Number(llavesResult.N_FILTRO_INTERVENCIONES_DISPONIBILIDADV2) : null
+                    }
+
                     $("#idBody").removeAttr("style");
-                    if($scope.accessConsultaDisponibilidad){
+                    if ($scope.accessConsultaDisponibilidad) {
                         $scope.inicialCalendario();
                     }
 
                     objectTempAccion = new GenericAccionRealizada("" + resultConf.MODULO_ACCIONES_USUARIO.id, 'TOP_RIGHT');
-				    objectTempAccion.inicializarBotonAccionesRecientes();
+                    objectTempAccion.inicializarBotonAccionesRecientes();
 
                     validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
                     validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
-                   
-                }else{
+
+                } else {
                     mostrarMensajeErrorAlert("No se encontraron configuraciones del usuario")
-                } 
+                }
             } else {
                 mostrarMensajeErrorAlert(result[0].data.resultDescripcion)
             }
@@ -184,7 +210,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                 if (result[1].data.result) {
                     let intervencionesArray = [];
                     if ($scope.nIntervencion) {
-                        intervencionesArray = result[1].data.result.filter(elemento => { return elemento.nivel <= $scope.nIntervencion && elemento.aplicaDisponibilidad === 1});
+                        intervencionesArray = result[1].data.result.filter(elemento => { return elemento.nivel <= $scope.nIntervencion && elemento.aplicaDisponibilidad === 1 });
                     } else {
                         intervencionesArray = result[1].data.result;
                     }
@@ -213,22 +239,22 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                         $scope.arrayIntervencion = intervencionesArray;
 
                         $('#jstreeIntervencion')
-                        .bind('loaded.jstree', function (e, data) {
-                        }).jstree({
-                            'plugins': ["wholerow", 'search'],
-                            'search': {
-    							"case_sensitive": false,
-    							"show_only_matches": true
-    						},
-                            'core': {
-                                'data': intervencionesArray,
-                                'themes': {
-                                    'name': 'proton',
-                                    'responsive': true,
-                                    "icons": false
-                                }
-                            },
-                        });
+                            .bind('loaded.jstree', function (e, data) {
+                            }).jstree({
+                                'plugins': ["wholerow", 'search'],
+                                'search': {
+                                    "case_sensitive": false,
+                                    "show_only_matches": true
+                                },
+                                'core': {
+                                    'data': intervencionesArray,
+                                    'themes': {
+                                        'name': 'proton',
+                                        'responsive': true,
+                                        "icons": false
+                                    }
+                                },
+                            });
                         /*.on("ready.jstree", function (e, data) {
 
                             var jsonNodes = $('#jstreeIntervencion').jstree(true).get_json('#', { flat: true });
@@ -245,6 +271,11 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                                 }
                             })
                         })*/
+                        $scope.listaIntervencionesDispV2Copy = angular.copy(result[1].data.result);
+                        $scope.nIntervencionDispV2 = $scope.nIntervencionDispV2 ? $scope.nIntervencionDispV2 : $scope.obtenerUltimoNivelFiltros($scope.listaIntervencionesDispV2Copy);
+                        $scope.listaIntervencionesDispV2 = result[1].data.result.filter(elemento => { return elemento.nivel === $scope.nIntervencionDispV2 && elemento.aplicaDisponibilidad === 1 });
+                        $scope.listaIntervencionesDispV2.map(intervencion => { return intervencion.isVisible = true });
+                        $scope.mostrarColumnaNoIntervenciones = $scope.listaIntervencionesDispV2.length;
                     } else {
                         $scope.banderaErrorIntervencion = true;
                         $scope.banderaErrorGeneral = true;
@@ -281,32 +312,68 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                                 e.text = e.nombre;
                                 if (e.nivel > $scope.nGeografia) {
                                     e.icon = 'fa fa-ban',
-                                    e.state = {
-                                        disabled: true
-                                    }
-                                } else{
+                                        e.state = {
+                                            disabled: true
+                                        }
+                                } else {
                                     e.icon = 'fa fa-instagram'
                                 }
                                 return e
                             })
 
                             $('#jstreeconsulta')
-                            .bind('loaded.jstree', function (e, data) {})
-                            .jstree({
-                                'plugins': ["wholerow", 'search'],
-                                'search': {
-        							"case_sensitive": false,
-        							"show_only_matches": true
-        						},
-                                'core': {
-                                    'data': geografia,
-                                    'themes': {
-                                        'name': 'proton',
-                                        'responsive': true,
-                                        "icons": true
+                                .bind('loaded.jstree', function (e, data) { })
+                                .jstree({
+                                    'plugins': ["wholerow", 'search'],
+                                    'search': {
+                                        "case_sensitive": false,
+                                        "show_only_matches": true
+                                    },
+                                    'core': {
+                                        'data': geografia,
+                                        'themes': {
+                                            'name': 'proton',
+                                            'responsive': true,
+                                            "icons": true
+                                        }
                                     }
+                                });
+
+                            $scope.listadoGeografiaCopyDV2 = angular.copy(result[2].data.result.geografia);
+                            $scope.nGeografiaDispV2 = $scope.nGeografiaDispV2 ? $scope.nGeografiaDispV2 : $scope.obtenerUltimoNivelFiltros($scope.listadoGeografiaCopyDV2);
+                            let geografiaDv2 = $scope.listadoGeografiaCopyDV2.filter(e => e.nivel <= parseInt($scope.nGeografiaDispV2));
+                            geografiaDv2.push({ id: 0, nombre: "TOTALPLAY", nivel: 0, padre: "#", state: { opened: true } });
+                            geografiaDv2.map((e) => {
+                                e.parent = e.padre == null ? 0 : e.padre;
+                                e.text = e.nombre;
+                                e.icon = "fa fa-globe";
+                                e.state = {
+                                    opened: true,
+                                    selected: true,
                                 }
+                                return e;
                             });
+
+                            $('#geografiaDisponibilidadv2')
+                                .bind('loaded.jstree', function (e, data) {
+                                    $scope.btnAceptarGeografiaConsultaDispV2();
+                                })
+                                .jstree({
+                                    'plugins': ["wholerow", "checkbox", "search"],
+                                    'core': {
+                                        'data': geografiaDv2,
+                                        'themes': {
+                                            'name': 'proton',
+                                            'responsive': true,
+                                            "icons": false
+                                        }
+                                    },
+                                    "search": {
+                                        "case_sensitive": false,
+                                        "show_only_matches": true
+                                    }
+                                });
+
                         } else {
                             $scope.banderaErrorGeografia = true;
                             $scope.banderaErrorGeneral = true;
@@ -341,7 +408,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                                 }
                                 return titulo
                             })
-                        } else if (parseInt(elemento.id)  === 2) {
+                        } else if (parseInt(elemento.id) === 2) {
                             $scope.banderaVespertino = true
                             $scope.arrayTitulo.map(titulo => {
                                 if (titulo.title === 'Vespertino') {
@@ -359,13 +426,17 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                             })
                         }
                     })
+
+                    $scope.listTurnosUsuarioDispV2 = angular.copy(result[3].data.result);
                 } else {
                     mostrarMensajeErrorAlert(result[2].data.result.mensaje)
+                    $scope.banderaErrorTurnos = true;
                     $scope.banderaErrorGeografia = true;
                     $scope.banderaErrorGeneral = true;
                 }
             } else {
                 mostrarMensajeErrorAlert(result[2].data.resultDescripcion)
+                $scope.banderaErrorTurnos = true;
                 $scope.banderaErrorGeografia = true;
                 $scope.banderaErrorGeneral = true;
             }
@@ -376,7 +447,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
     $scope.consultaDisponibilidad = function () {
         let mensaje = '<ul>';
         let isValidado = true;
-        
+
 
         let ultimonivel;
         if ($scope.nGeografia) {
@@ -498,13 +569,13 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
 
     }
 
-    $scope.insertarDisponibilidad = function () {   
+    $scope.insertarDisponibilidad = function () {
         let arrayTurno = [];
         let vespertinoCant;
         let matutinoCant;
         let nocturnoCantidad;
         if ($scope.banderaVespertino) {
-            vespertinoCant = $.trim(document.getElementById('vespertino_adddisp').value); 
+            vespertinoCant = $.trim(document.getElementById('vespertino_adddisp').value);
         }
         if ($scope.banderaMatutino) {
             matutinoCant = $.trim(document.getElementById('matutino_adddisp').value);
@@ -549,7 +620,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
                     })
                     isValido = true
                 }
-    
+
             } else {
                 mensajeError += '<li>Introducir cantidad turno matutino</li>'
                 isValido = false
@@ -642,7 +713,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
             swal({ text: 'Espera un momento...', allowOutsideClick: false });
             swal.showLoading();
             let tituloAccion = "Crear disponibilidad";
-			let mensajeEnvio = 'Ha ocurrido un error al crear disponibilidad para las fechas ' + fechaInicioC + ' al ' + fechaFinC;
+            let mensajeEnvio = 'Ha ocurrido un error al crear disponibilidad para las fechas ' + fechaInicioC + ' al ' + fechaFinC;
             disponibilidadService.insertarDisponibilidad(JSON.stringify(params)).then(function success(response) {
                 console.log(response.data);
                 if (response.data.respuesta) {
@@ -670,8 +741,8 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
     $scope.actualizarDisponibilidad = function () {
         let isValido = true;
         let mensajeError = "<ul>";
-        let arrayTurno = [];  
-        
+        let arrayTurno = [];
+
         let bloqueo = $("input[name='radio-bloqueo-mod-individual']:checked").val();
         let fechaInicio = $.trim(document.getElementById('fecha_inicio_updateDis').value);
         let fechaFin = $.trim(document.getElementById('fecha_fin_updateDis').value);
@@ -768,7 +839,7 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
             swal({ text: 'Espera un momento...', allowOutsideClick: false });
             swal.showLoading();
             let tituloAccion = "Editar disponibilidad";
-			let mensajeEnvio = 'Ha ocurrido un error al editar disponibilidad para las fechas ' + fechaInicioC + ' al ' + fechaFinC;
+            let mensajeEnvio = 'Ha ocurrido un error al editar disponibilidad para las fechas ' + fechaInicioC + ' al ' + fechaFinC;
             disponibilidadService.actualizarDisponibilidad(JSON.stringify(params)).then(function success(response) {
                 console.log(response.data);
                 $("#modificar_disponibilidad_modal").modal('hide');
@@ -950,9 +1021,12 @@ app.controller('disponibilidadController', ['$scope', 'disponibilidadService', '
 
     document.getElementById('arbol_disponibilidad_consulta').addEventListener('click', function () {
         $('#modal_cluster_arbol_diponibilidad').modal('show');
-        setTimeout(function (){
-	        $("#searchGeografia").focus();
-	    }, 750);
+        $scope.isDisponibilidad = true;
+        $scope.isDisponibilidadV2 = false;
+        $scope.$apply();
+        setTimeout(function () {
+            $("#searchGeografia").focus();
+        }, 750);
     });
 
     document.getElementById('arbol_intervencion').addEventListener('click', function () {

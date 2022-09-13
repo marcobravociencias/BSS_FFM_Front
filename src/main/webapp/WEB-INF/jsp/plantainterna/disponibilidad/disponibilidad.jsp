@@ -11,6 +11,7 @@ pageEncoding="ISO-8859-1"%>
 	<link rel="icon" type="image/png" sizes="96x96" href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-96x96.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/resources/img/iconsistema/favicon-16x16.png">
 	<link href="${pageContext.request.contextPath}/resources/libraries/bootstrap/css/bootstrap.css" rel="stylesheet">
+	<link href="${pageContext.request.contextPath}/resources/css/plantainterna/disponibilidad/styleDisponibilidadV2.css?v=${sessionScope.versionDepl}" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/resources/css/plantainterna/disponibilidad/styleDisponibilidad.css?v=${sessionScope.versionDepl}" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/resources/css/plantainterna/disponibilidad/responsiveComponents.css?v=${sessionScope.versionDepl}" rel="stylesheet">
 	<link href="${pageContext.request.contextPath}/resources/libraries/fullcalendar/main.css" rel="stylesheet">
@@ -29,17 +30,16 @@ pageEncoding="ISO-8859-1"%>
 
 <body ng-controller="disponibilidadController" id="idBody" style="display: none;">
 	<jsp:include page="../../utilerias/navbar/navbargeneric.jsp"></jsp:include>
-	<div class="container container-title-header">
+	<div class="container container-title-header" ng-show="!isContentDisponibilidadv2">
 		<div class="header-modulo">
 			<h5 class="title-modulo">Administraci&oacute;n de disponibilidad</h5>
 			<h1 class="h6 subtitle-modulo">En este m&oacute;dulo podr&aacute;s realizar la gesti&oacute;n de disponibilidad de tus cuadrillas</h1>
 		</div>
 	</div>
-	<div class="container container-filtros-disponibilidad" id="container_consulta_disponbilidad" ng-show="accessConsultaDisponibilidad">
+	<div class="container container-filtros-disponibilidad" id="container_consulta_disponbilidad" ng-show="accessConsultaDisponibilidad && !isContentDisponibilidadv2">
 		<div class="container-fluid">
 			<div class="row md-form" id="filters-dispo">
-				<div id="container_arbol_dispo_consulta" class="col-sm-2 columna-filtro-ind"
-					data-intro="Opci&oacute;n tipo de intervenci&oacute;n">
+				<div id="container_arbol_dispo_consulta" class="col-sm-2 columna-filtro-ind" data-intro="Opci&oacute;n tipo de intervenci&oacute;n">
 					<label for="arbol_disponibilidad_consulta" class="label-filter">Geograf&iacute;a</label>
 					<input type="text" readonly id="arbol_disponibilidad_consulta" style="background: white;cursor: pointer" class="input-filtro-disponibilidad form-control form-control-sm" aria-describedby="emailHelp" placeholder="Seleccione">
 				</div>
@@ -63,7 +63,7 @@ pageEncoding="ISO-8859-1"%>
 			</div>
 		</div>
 	</div>
-	<div class="container">
+	<div class="container" ng-show="!isContentDisponibilidadv2">
 		<div class="container contenedor_disponibilidad">
 			<div class="row" ng-show="!accessConsultaDisponibilidad">
 				<div class="text-accion-nopermiso">
@@ -93,10 +93,12 @@ pageEncoding="ISO-8859-1"%>
 								</div>
 								<div class="col-6">
 									<div class="col col-mns-permiso" ng-show="!accessAgregarDisponibilidad">
-										<i class="icono-noseleccion fas fa-lock"></i> <b class="text-no-seleccion-geografia">No cuentas con permiso para agregar disponibilidad</b>
+										<i class="icono-noseleccion fas fa-lock"></i> 
+										<b class="text-no-seleccion-geografia">No cuentas con permiso para agregar disponibilidad</b>
 									</div>
 									<div class="col col-mns-permiso" ng-show="!accessEditarDisponibilidad">
-										<i class="icono-noseleccion fas fa-lock"></i> <b class="text-no-seleccion-geografia">No cuentas con permiso para editar disponibilidad</b>
+										<i class="icono-noseleccion fas fa-lock"></i>
+										<b class="text-no-seleccion-geografia">No cuentas con permiso para editar disponibilidad</b>
 									</div>							
 								</div>
 							</div>
@@ -176,6 +178,22 @@ pageEncoding="ISO-8859-1"%>
 		</div>
 	</div>
 
+	<div id="container-option-dispv2" ng-show="isPermisoConsultaDisponibilidadv2">
+		<ul class="nav nav-tabs flex-column small-option-disponibilidadv2 option-disponibilidadv2" id="option-disponibilidadv2" style="top: 10%;" role="tablist">
+			<li class="nav-item">	
+				<a class="opcion-disponibilidadv2" id="" ng-click="showDisponibilidadv2()">		
+					<i class="icon-option-disponibilidadv2 far fa-calendar-check"></i>	
+				</a>
+			</li>
+		</ul>
+		
+	</div>
+	<div class="container-fluid" ng-show="isContentDisponibilidadv2">
+		<div class="container container_disponibilidadv2">
+			<jsp:include page="./content/contentDisponibilidadv2.jsp"></jsp:include>
+		</div>
+	</div>
+
 	
 
 	<jsp:include page="./modals/modal_actualizar_capacidad.jsp"></jsp:include>
@@ -184,6 +202,8 @@ pageEncoding="ISO-8859-1"%>
 	<jsp:include page="./modals/modalClusterModifica.jsp"></jsp:include>
 	<jsp:include page="./modals/modalClusterConsulta.jsp"></jsp:include>
 	<jsp:include page="./modals/modalArbolIntervenciones.jsp"></jsp:include>
+	<jsp:include page="./modals/modalFiltrarIntervencion.jsp"></jsp:include>
+	<jsp:include page="./modals/modalActualizarDisponibilidadV2.jsp"></jsp:include>
 
 </body>
 
@@ -210,6 +230,7 @@ pageEncoding="ISO-8859-1"%>
 	<script src="${pageContext.request.contextPath}/resources/js/plantainterna/disponibilidad/disponibilidadController.js?v=${sessionScope.versionDepl}"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plantainterna/disponibilidad/disponibilidadService.js?v=${sessionScope.versionDepl}"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/plantainterna/disponibilidad/disponibilidadCalendar.js?v=${sessionScope.versionDepl}"></script>
+	<script src="${pageContext.request.contextPath}/resources/js/plantainterna/disponibilidad/disponibilidadV2Controller.js?v=${sessionScope.versionDepl}"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/generic/generic.js?v=${sessionScope.versionDepl}"></script>
 	<script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js?v=${sessionScope.versionDepl}"></script>
 	<script type="text/javascript">let contex_project = "${pageContext.request.contextPath}";</script>

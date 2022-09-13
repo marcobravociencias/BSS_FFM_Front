@@ -1,0 +1,316 @@
+/* CONTENEDOR DISPONIBILIDAD V2 */
+
+.container_disponibilidadv2 {
+    /* margin-top: 15px; */
+    max-width: 1800px !important;
+}
+
+.icon-exit-disponibillidadv2 {
+    cursor: pointer;
+    font-size: 1.5em;
+    margin-right: 0.2em;
+    float: right;
+}
+
+.container.container_disponibilidadv2 {
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
+    /* padding-top: 1em; */
+    padding-bottom: 1em;
+    background: white;
+    border-radius: .5em;
+    padding-top: 1em;
+    margin-top: 1em;
+}
+
+.option-disponibilidadv2 {
+    padding: 0;
+    z-index: 1001;
+    position: fixed;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    display: block;
+    border-right: 1px solid #d2d2d2;
+    border-radius: 0 0.5rem 0.5rem 0;
+    box-shadow: 0 0.46875rem 2.1875rem rgb(4 9 20 / 3%), 0 0.9375rem 1.40625rem rgb(4 9 20 / 3%), 0 0.25rem 0.53125rem rgb(4 9 20 / 5%), 0 0.125rem 0.1875rem rgb(4 9 20 / 3%);
+    border: none;
+    color: #fff !important;
+    background: -webkit-linear-gradient(45deg, #0288d1, #2652da) !important;
+    background: linear-gradient(45deg, #0288d1, #4f26da) !important;
+}
+
+.small-option-disponibilidadv2 {
+    width: auto !important;
+    transition: width .5s;
+}
+
+.small-option-disponibilidadv2 .opcion-disponibilidadv2 {
+    color: #fff;
+    font-weight: normal;
+    font-size: .8em;
+    cursor: pointer;
+}
+
+.icon-option-disponibilidadv2 {
+    padding: 0.5em 0.7em;
+}
+
+.contenedor_disponibilidadv2 {
+    margin-top: 1em;
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%),
+        0 1px 5px 0 rgb(0 0 0 / 20%);
+    border-radius: 0.5em;
+    padding: 1em 0;
+}
+
+.contenedor_consulta_disponibilidadv2 {
+    margin-top: 1em;
+    height: 42.5em;
+    max-height: 45em;
+    overflow: auto;
+}
+
+/* CONTENEDOR DISPONIBILIDAD V2 */
+
+/* FILTROS DISPONIBILIDAD V2 */
+#filtros_config_dispv2 {
+    margin-bottom: 1em;
+}
+
+.column-style-dispv2 {
+    width: 125px !important;
+    padding-right: 0px !important;
+}
+
+.columna-filtro-ind_dispv2::after {
+    content: "";
+    position: absolute;
+    right: 6%;
+    top: 67%;
+    width: 0;
+    height: 0;
+    border-left: 0.3em solid transparent;
+    border-right: 0.3em solid transparent;
+    border-top: 0.6em solid #939db2;
+    clear: both;
+    z-index: 2;
+    font-size: 14px;
+}
+
+i.icono-noseleccion_dispv2 {
+    color: #ff9f3b;
+    display: inline-block;
+}
+
+label.label-filter-dispv2 {
+    margin-bottom: 0;
+    font-size: 0.7em;
+    font-weight: bold;
+}
+
+.input-filtro-dispv2 {
+    border: 1px solid #dbdbdb !important;
+    font-weight: 400;
+    font-size: 1em;
+    color: #818181 !important;
+    transition: all 0.5s ease;
+    border-bottom: 1px solid white;
+    background: white !important;
+    border-radius: 0.5em !important;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.07), 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+    padding-right: 1.5em !important;
+}
+
+.input-filtro-dispv2::placeholder {
+    font-weight: 400;
+    font-size: 1em;
+    color: #818181 !important;
+}
+
+.input-filtro-dispv2:focus {
+    -webkit-box-shadow: none;
+}
+
+.input-filtro-dispv2:hover {
+    background: #e4e6f2 !important;
+    cursor: pointer;
+    border-bottom: 2px solid #a4b1ff !important;
+}
+
+#btn_consultarDisponibilidadv2 {
+    background-color: #ffffff;
+    color: var(--btn-color-buscar) !important;
+    border: solid 1px var(--btn-color-buscar) !important;
+    padding: .4em 1.5em;
+    border-radius: 5px;
+    font-size: 0.7em;
+    /* margin-top: 26px; */
+}
+
+.content-seach-group-disponibilidadv2 {
+    height: 1em;
+    display: inline-flex;
+    margin: 0em auto 1em;
+}
+
+.buscadorGenerico_disponibilidadv2 {
+    height: 2em !important;
+    min-height: 2em !important;
+    padding: 0 !important;
+    padding-left: 1em !important;
+    border-radius: 1em !important;
+    border: 1px solid #e2e2e2;
+    background: #fcfcfc;
+}
+
+.iconoBusqueda_disponibilidadv2 {
+    color: #888888;
+    position: absolute;
+    right: 0.8em;
+    top: 0.4em;
+    font-size: 0.8em;
+}
+
+#geografiaDisponibilidadv2 .jstree-wholerow-clicked {
+    background: white;
+}
+
+#geografiaDisponibilidadv2 .jstree-search {
+    font-style: italic !important;
+    color: #8b0000 !important;
+    font-weight: bold !important;
+}
+
+#geografiaDisponibilidadv2 .jstree-anchor {
+    font-family: 'Montserrat';
+    font-size: .8em;
+}
+
+#geografiaDisponibilidadv2 .jstree-clicked {
+    color: #808080 !important;
+}
+
+/* FILTROS DISPONIBILIDAD V2 */
+
+/* TABLE INTERVENCIONES */
+#tableIntervenciones thead th {
+    position: relative;
+    background-color: #b1b1b1;
+    color: #fff;
+    font-size: 0.8em;
+    white-space: nowrap;
+    padding: 1em;
+    border: none;
+    font-weight: normal;
+}
+
+#tableIntervenciones tbody tr td {
+    padding: .5em;
+}
+
+#tableIntervenciones_paginate .page-item.active .page-link {
+    background-color: var(--btn-color-paginador-tabla) !important;
+}
+
+#tableIntervenciones tbody tr:nth-child(even) {
+    background: #f5f5f5;
+}
+
+#tableIntervenciones>tbody>tr>td {
+    font-size: .65em !important;
+    color: #39455b;
+    font-family: 'Montserrat' !important;
+    border-top: 0px solid #eceeef !important;
+}
+
+#iconFiltroIntervenciones {
+    cursor: pointer;
+}
+
+/* TABLE INTERVENCIONES */
+
+/* TABLE DISPONIBILIDAD */
+.geografiaTd {
+    max-width: 10em;
+}
+
+#disponibilidadv2-table thead th {
+    position: relative;
+    background-color: #b1b1b1;
+    color: #fff;
+    font-size: 0.65em;
+    white-space: nowrap;
+    padding: .5em;
+    font-weight: normal;
+    text-align: center;
+}
+
+#disponibilidadv2-table tr td {
+    padding: .5em;
+    text-align: center;
+    border: 1px solid #dee2e6 !important;
+    font-size: .65em !important;
+    color: #39455b;
+    font-family: 'Montserrat' !important;
+}
+
+.col-table-disponibilidadv2 {
+    padding-right: 1em;
+}
+
+/* TABLE DISPONIBILIDAD */
+
+/* ACTUALIZAR DISPONIBILIDAD */
+.container-fluid.dispv2-content {
+    padding: 0;
+    display: flex;
+}
+
+.container-text-title-detalle-dispv2 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.container-text-content-detalle-dispv2 {
+    /* width: 70%; */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+span.text-title-dispv2 {
+    font-weight: bold;
+    font-size: 0.8em;
+    color: #444444;
+}
+
+span.text-content-dispv2 {
+    font-size: 0.8em;
+    color: #303030;
+}
+
+.title_campos_dispv2 {
+    color: #1b1b1b;
+    margin-bottom: 0;
+}
+
+.title_campos_dispv2>.fa {
+    padding-right: 0.2em;
+    font-size: .8em !important;
+    color: #919191;
+    margin-bottom: 0;
+    font-size: 1em;
+}
+
+#modalActualizarDisponibilidad .input-filtro-disponibilidad {
+    font-weight: 400;
+    font-size: 1em;
+    color: #818181 !important;
+    transition: all 0.5s ease;
+    background: white !important;
+    border: 1px solid #dbdbdb !important;
+    box-shadow: none !important;
+    border-radius: 0.5em !important;
+}
+
+/* ACTUALIZAR DISPONIBILIDAD */

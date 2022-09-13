@@ -31,17 +31,5 @@ public class ImplDisponibilidadV2Service implements DisponibilidadV2Service {
 		this.utileriaGeneral = utileriaGeneral;
 	}
 
-	@Override
-	public ServiceResponseResult consultarDisponibilidadV2(String params) {
-		logger.info("ImplDisponibilidadV2Service.class [metodo = consultarDisponibilidadV2() ]\n" + params);
-        LoginResult principalDetail = utileriaGeneral.obtenerObjetoPrincipal();
-        String tokenAcces = principalDetail.getAccess_token();
-        logger.info("consultarDisponibilidad ##+" + tokenAcces);
-        String urlRequest = principalDetail.getDireccionAmbiente().concat(constDisponibilidadV2.getConsultaDisponibilidad());
-        ServiceResponseResult response = consumeRest.callPostBearerTokenRequest(params, urlRequest,
-                ServiceResponseResult.class, tokenAcces);
-        logger.info("RESULT" + gson.toJson(response));
-        return response;
-	}
 
 }

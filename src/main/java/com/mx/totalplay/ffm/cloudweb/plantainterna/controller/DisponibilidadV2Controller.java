@@ -22,18 +22,6 @@ public class DisponibilidadV2Controller {
 	public DisponibilidadV2Controller(DisponibilidadV2Service disponibilidadV2Service) {
 		this.disponibilidadV2Service = disponibilidadV2Service;
 	}
-	
-	@PostMapping("/consultaDisponibilidadV2")
-    public ResponseEntity<?> consultaDisponibilidadV2(@RequestBody String params) {
-        logger.info("#### CONSULTANDO DISPONIBILIDADV2 ###");
-        ServiceResponseResult response = disponibilidadV2Service.consultarDisponibilidadV2(params);
-        if (response.getResult() instanceof Integer){
-            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
-        }
-        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
-    }
-	
-	
-	
+		
 
 }

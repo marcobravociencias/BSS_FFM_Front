@@ -30,20 +30,17 @@
             </div>
             <div class="modal-footer">
                 <div ng-show="isPendienteAgendar">
-                    <button type="button" class="btn btn-cerrar-modal btn-secondary ripple-surface"
-                        ng-click="btnAceptarGeografiaConsulta(pendientesAgendar)" data-mdb-dismiss="modal">
+                    <button type="button" class="btn btn-cerrar-modal btn-secondary ripple-surface" ng-click="btnAceptarGeografiaConsulta('pendientesAgendar')" data-mdb-dismiss="modal">
                         Cerrar
                     </button>
                 </div>
                 <div ng-show="isRescataventas">
-                    <button type="button" class="btn btn-cerrar-modal btn-secondary ripple-surface"
-                        ng-click="btnAceptarGeografiaConsulta(rescataventas)" data-mdb-dismiss="modal">
+                    <button type="button" class="btn btn-cerrar-modal btn-secondary ripple-surface" ng-click="btnAceptarGeografiaConsulta('rescataventas')" data-mdb-dismiss="modal">
                         Cerrar
                     </button>
                 </div>
                 <div ng-show="isPendienteActivar">
-                    <button type="button" class="btn btn-cerrar-modal btn-secondary ripple-surface"
-                        ng-click="btnAceptarGeografiaConsulta(pendientesActivar)" data-mdb-dismiss="modal">
+                    <button type="button" class="btn btn-cerrar-modal btn-secondary ripple-surface" ng-click="btnAceptarGeografiaConsulta('pendientesActivar')" data-mdb-dismiss="modal">
                         Cerrar
                     </button>
                 </div>

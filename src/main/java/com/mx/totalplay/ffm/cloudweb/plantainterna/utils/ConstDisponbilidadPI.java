@@ -15,10 +15,8 @@ public class ConstDisponbilidadPI {
 
     @Value("${crearDisponibilidad}")
     private String crearDisponibilidad;
-
+    
     @Value("${consultaDisponibilidadV2}")
-    private String consultaDisponibilidad;
+    private String consultaDisponibilidadV2;
 
-    @Value("${actualizaDisponibilidad}")
-    private String actualizaDisponibilidad;
 }
