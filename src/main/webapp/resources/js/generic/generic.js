@@ -322,6 +322,7 @@ class GenericAccionRealizada {
 										'				</li>';
 								}
 							});
+							$("#listAccionesRecientes").empty();
 							$("#loading-data").hide();
 							$("#listAccionesRecientes").append(contentAcciones);
 
@@ -330,6 +331,7 @@ class GenericAccionRealizada {
 								'	<i class="icon-not-action fas fa-ban"></i>' +
 								'	<b class="text-not-action">Sin movimientos para mostrar</b>' +
 								'</div>';
+							$("#listAccionesRecientes").empty();
 							$("#loading-data").hide();
 							$("#listAccionesRecientes").append(contentAcciones);
 
