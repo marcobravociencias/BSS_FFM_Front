@@ -64,8 +64,8 @@
 
 .contenedor_consulta_disponibilidadv2 {
     margin-top: 1em;
-    height: 42.5em;
-    max-height: 45em;
+    height: 27em;
+    max-height: 27em;
     overflow: auto;
 }
 

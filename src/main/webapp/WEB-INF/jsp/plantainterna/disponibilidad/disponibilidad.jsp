@@ -178,7 +178,7 @@ pageEncoding="ISO-8859-1"%>
 		</div>
 	</div>
 
-	<div id="container-option-dispv2" ng-show="isPermisoConsultaDisponibilidadv2">
+	<div id="container-option-dispv2" ng-show="isPermisoConsultaDisponibilidadv2 && !isContentDisponibilidadv2">
 		<ul class="nav nav-tabs flex-column small-option-disponibilidadv2 option-disponibilidadv2" id="option-disponibilidadv2" style="top: 10%;" role="tablist">
 			<li class="nav-item">	
 				<a class="opcion-disponibilidadv2" id="" ng-click="showDisponibilidadv2()">		
