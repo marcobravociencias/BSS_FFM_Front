@@ -163,6 +163,15 @@ app.service("busquedaService", function($http){
             transformRequest: angular.identity
         })
     }
+    
+    this.consultarCatalogoJustificacionActivacion = function() {
+        return $http({
+            method: "post",
+            url: "req/consultarCatalogoJustificacionActivacion",
+            headers: { 'Content-Type': undefined },
+            transformRequest: angular.identity
+        })
+    }
 
     this.configurarServicios = function(params) {
         return $http({

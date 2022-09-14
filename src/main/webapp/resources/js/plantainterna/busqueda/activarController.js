@@ -43,6 +43,7 @@ app.activacionController=function($scope, $q, busquedaService){
         $scope.validarActivacionos=csp.idCsp
         csp.id_cotsitioplansf=csp.id
         $scope.objectglobalactivacion=csp
+        $scope.objectglobalactivacion.folioOrdenServicio=csp.folioOs
 
         console.log(csp)
         $scope.codigopostalplan=''
@@ -79,7 +80,7 @@ app.activacionController=function($scope, $q, busquedaService){
         os.Folio_OS = os.nombre;
         os.id_cotsitioplansf=os.idCsp
         $scope.objectglobalactivacion=os
-
+        $scope.objectglobalactivacion.folioOrdenServicio=os.nombre
         $scope.codigopostalplan=''
         $scope.codigopostalplanactivacion=os.cp
         $scope.idotActivacion=os.idOt
@@ -326,9 +327,9 @@ app.activacionController=function($scope, $q, busquedaService){
         swal({ text: 'Configurando Equipos ...', allowOutsideClick: false });
         swal.showLoading();
         
-        $scope.params = {};
-        $scope.params.folioOs = csp.Folio_OS;
-        $scope.params.idCotSitioPlan = csp.id_cotsitioplansf;
+        let params = {};
+        params.folioOs =  $scope.objectglobalactivacion.folioOrdenServicio;
+        params.idCotSitioPlan = $scope.objectglobalactivacion.idCsp;
 
         $scope.infoDNConfigurados = {};
         $scope.listadoInfoEquiposConfigurados = [];
@@ -337,9 +338,9 @@ app.activacionController=function($scope, $q, busquedaService){
         $scope.listaServiciosCot = [];
 
         $q.all([
-			busquedaService.consultarEquiposConfigurados($scope.params),
-			busquedaService.consultarEquipos($scope.params),
-			busquedaService.consultarCotizacionesEquipos($scope.params)
+			busquedaService.consultarEquiposConfigurados( params ),
+			busquedaService.consultarEquipos( params ),
+			busquedaService.consultarCotizacionesEquipos( params )
 		]).then(function(results) {
             if (results[0].data !== undefined) {
                 if (results[0].data.respuesta) {
@@ -781,10 +782,97 @@ app.activacionController=function($scope, $q, busquedaService){
 
     }
 
+    $scope.litadoCatalogoJustificacion=[]
+    $scope.isConsultarCatalogoJustifiacion=false;
+    $scope.consultarCatalogoActivacion=function(){
+        if(!$scope.isConsultarCatalogoJustifiacion){                
+            busquedaService.consultarCatalogoJustificacionActivacion().then(function success(response) {
+                console.log(response);
+                if (response.data !== undefined) {    
+                    if (response.data.respuesta) {                                      
+                        $scope.litadoCatalogoJustificacion= [{
+                            "id": "360",
+                            "descripcion": "Falla en sistema"
+                        }, {
+                            "id": "361",
+                            "descripcion": "Falta de cobertura en línea m\u00F3vil"
+                        }, {
+                            "id": "362",
+                            "descripcion": "Tel\u00E9fono no compatible"
+                        }]
+                        document.querySelector('#archivo-evidencia').value = '';
+                        $scope.elementActivacion=undefined
+                        $("#modalDetalleActivacionJustificacion").modal('show')
+                        $scope.isConsultarCatalogoJustifiacion=true;
+                        $scope.isValidateActivacionError=false;
+                    } else {
+                        swal.close()
+                        mostrarMensajeErroActivacion('No se pudo consultar el cat\u00E1logo de justificaci\u00F3n')                                    
+                    }
+                } else {
+                    swal.close()
+                    mostrarMensajeErroActivacion('Ha ocurrido un error al consultar el cat\u00E1logo de justificaci\u00F3n')    
+                }
+            }, function error(response) {
+                swal.close();
+            });
+        }else{
+            $scope.elementActivacion=undefined
+            document.querySelector('#archivo-evidencia').value = '';
+            $("#modalDetalleActivacionJustificacion").modal('show')
+            $scope.isValidateActivacionError=false;
+        }
+    }
 
-  
+    $scope.fileNameChangedActivacion=function(){
+        if (document.querySelector('#archivo-evidencia').value == '') {
+            $scope.isValidateFileActivacion=true;
+            $scope.$apply()
+        }else{
+            $scope.isValidateFileActivacion=false;
+            $scope.$apply()
+        }
+    }
+    $scope.elementActivacion=undefined
+    $scope.isValidateActivacionError=false;
+    $scope.isValidateFileActivacion=false;
+    $scope.validarErrorEvidenciaActivacion=function(){
+        let validateCamposEvidencia=true;
+        $scope.isValidateFileActivacion=false;
+        let mensajeError='VALIDA LOS SIGUIENTES CAMPOS:';
+        if (document.querySelector('#archivo-evidencia').value == '') {
+            mensajeError += "<br/> *Adjunte evidencia";
+            validateCamposEvidencia=false
+            $scope.isValidateFileActivacion=true;
+        }
 
-    $scope.activacionEquipos = function(servicio) {
+        if ( $scope.elementActivacion != undefined ){
+            if($scope.elementActivacion.justificacion==undefined){                
+                mensajeError += "<br/> *Justificaci\u00F3n";
+                validateCamposEvidencia=false
+            }
+            if(!$scope.elementActivacion.comentarios){
+                mensajeError += "<br/> *Comentarios";
+                validateCamposEvidencia=false
+            }
+        }else{
+            mensajeError +=`<br/> *Justificaci\u00F3n
+                            <br/> *Comentarios"`
+
+            validateCamposEvidencia=false
+        }
+        if(!validateCamposEvidencia){
+            mostrarMensajeInformativo(mensajeError)
+        }
+        $scope.isValidateActivacionError=true;
+
+        return validateCamposEvidencia;
+    }
+    $scope.activacionEquipos = function() {
+        let isValidarError=$scope.validarErrorEvidenciaActivacion();
+        if(!isValidarError){
+            return false
+        }
         $scope.consultarValidacionCuentaAsync=false
         $scope.isProcesandoActivacion='error'
         let indexOnt=undefined;
@@ -796,110 +884,118 @@ app.activacionController=function($scope, $q, busquedaService){
             }
         })
         if(indexOnt=== undefined){
-            mostrarMensajeErroActivacion('No se encontr\u00F3 ONT para la activaci\u00F3n')                               
+            mostrarMensajeInformativo('No se encontr\u00F3 ONT para la activaci\u00F3n')                               
             return false
         }
-        let ontRegistro= $scope.listaServiciosCot[indexOnt]
-    
         swal({ text: 'Activando datos ...', allowOutsideClick: false });
         swal.showLoading();
-        /*
-        var params = new FormData();
-        params.append("params.MensajeChatter", 'Activacion servicios de '+$scope.planactivaciontemp.nombre);
-        params.append("params.IdPlanServicio",  ontRegistro.idCotPlanServicio);
-        params.append("params.Id_OT",  $scope.idotActivacion);
-        params.append("params.UnidadNegocio",   $scope.unidadNegocioActivacion);
-        */
-
-        $scope.params = {};
-        $scope.params.idOt = $scope.idotActivacion;
-        $scope.params.idCsp = $scope.objectglobalactivacion.idCsp;
-        $scope.params.idUsuario;
-        $scope.params.idClaveCliente = $scope.objectglobalactivacion.numeroCuentaFactura;
-        $scope.params.folioSistema = $scope.objectglobalactivacion.Folio_OS;
-        $scope.params.latitud = "1.0";
-        $scope.params.longitud = "1.0";
-        $scope.params.idFlujo = "1";
-        $scope.params.comentarios = 'Activacion servicios de ' + $scope.objectglobalactivacion.nombre;
     
-        
-        busquedaService.activacionEquipos($scope.params).then(function success(response) {
-            console.log(response);
-            if (response.data !== undefined) {
-                /**
-                response.data.success=true
-                response.data.result={}
-                response.data.result.result='0'
-                response.data.result.Es_asyncrona='true'
-                **/
-                if (response.data.respuesta) {
-                     
-                    if(response.data.result.mensaje=='OK'){
+        let ontRegistro= $scope.listaServiciosCot[indexOnt]
 
-                        if( $scope.unidadNegocioActivacion === '2'  ){
-                            //$scope.isProcesandoActivacion='cargando'                                   
-                            $scope.statusActivacion='proceso'
-                            setTimeout(function(){
-                                $scope.validarActivacion()
-                            },5000)
-                        }else{
-                            if(response.data.result.esAsincrona){
+        var myFile = document.querySelector('#archivo-evidencia').files[0];
+        var reader = new FileReader();
+        reader.readAsDataURL(myFile);
+        console.log(reader)
+        reader.onload = function () {
+            let nombreOriginalFile=document.querySelector('#archivo-evidencia').files[0].name;
+            let indiceExtencion=document.querySelector('#archivo-evidencia').files[0].name.lastIndexOf('.')            
+            let extensionArchivo=nombreOriginalFile.substr( indiceExtencion + 1 , nombreOriginalFile.length -1 );
+            let params={
+                "document":reader.result.split(",")[1],
+                "documentName":       nombreOriginalFile.split('.')[0],
+                "documentExtension":  extensionArchivo ,
+                "sistemaActivacion": "FFM WEB",
+                "idMotivoActivacion": $scope.elementActivacion.justificacion.id,
+                "motivoActivacion":   $scope.elementActivacion.justificacion.descripcion,
+                "idOT":               $scope.idotActivacion,//ok
+                "idCsp":              $scope.objectglobalactivacion.idCsp,
+                "idClientKey":        $scope.objectglobalactivacion.numeroCuentaFactura,
+                "folioSystem":        $scope.objectglobalactivacion.folioOrdenServicio,
+                "comments":           $scope.elementActivacion.comentarios,
+                "idFlujo": 1,
+                "latitude": 19.25934578,
+                "longitude": 19.2635889
+            }
+            busquedaService.activacionEquipos(params).then(function success(response) {
+                console.log(response);
+                if (response.data !== undefined) {
+                   
+                    response.data.result={}
+                    response.data.result.result='0'
+                    response.data.result.Es_asyncrona='true'
+                    response.data.result.mensaje='OK'
+                     /****/
+                    if (response.data.respuesta) {
+                        
+                        if(response.data.result.mensaje=='OK'){
+                            $("#modalDetalleActivacionJustificacion").modal('hide')
+                            if( $scope.unidadNegocioActivacion == '2'  ){
                                 //$scope.isProcesandoActivacion='cargando'                                   
                                 $scope.statusActivacion='proceso'
                                 setTimeout(function(){
                                     $scope.validarActivacion()
                                 },5000)
+                            }else{
+                                if(response.data.result.Es_asyncrona){
+                                    //$scope.isProcesandoActivacion='cargando'                                   
+                                    $scope.statusActivacion='proceso'
+                                    setTimeout(function(){
+                                        $scope.validarActivacion()
+                                    },5000)
+                                }
+                                
                             }
-                            
-                        }
+                            swal.close()
+                            swal({
+                                text:response.data.result.description,
+                                type: 'success',
+                                timer:3000,
+                                showConfirmButton: true,
+                                showCancelButton: false,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                cancelConfirmText:"Cerrar",
+                                }).then(function () {
+                            }).catch(swal.noop);
+                        }else{ 
+                            swal.close()                                               
+                            mostrarMensajeErroActivacion(
+                                                        response.data.result.resultDescription ? response.data.result.resultDescription:
+                                                        'Ha ocurrido un error en la activaci\u00F3n' )                
+                        }                        
+                    } else {
                         swal.close()
-                        swal({
-                            text:response.data.result.description,
-                            type: 'success',
-                            timer:3000,
-                            showConfirmButton: true,
-                            showCancelButton: false,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            cancelConfirmText:"Cerrar",
-                            }).then(function () {
-                        }).catch(swal.noop);
-                    }else{ 
-                        swal.close()                                               
-                        mostrarMensajeErroActivacion(response.data.result.resultDescription)                
+                        mostrarMensajeErroActivacion('No se pudo activar el plan')                                    
                     }
-                    
                 } else {
                     swal.close()
-                    mostrarMensajeErroActivacion('No se pudo activar el plan')                                    
+                    mostrarMensajeErroActivacion('No se pudo activar el plan')                
                 }
-            } else {
-                swal.close()
-                mostrarMensajeErroActivacion('No se pudo activar el plan')                
-            }
-        }, function error(response) {
-            swal.close();
-        });
+            }, function error(response) {
+                swal.close();
+            });
+        };
+        reader.onerror = function (error) {
+            console.log('Error: ', error);
+        };
         
     }
+
     $scope.validarActivacion = function() {    
     
         if(!$scope.consultarValidacionCuentaAsync  ){      
-            
-            /*
-            var params = new FormData();        
-            params.append("params.Id_os_sf", $scope.validarActivacionos);            
-            */
-            $scope.params = {};
-            $scope.params.idCsp = $scope.validarActivacionos;
-            $scope.params.idOt = $scope.idotActivacion;
-            busquedaService.validarActivacion($scope.params).then(function success(response) {
-                console.log(response);
           
+            let params = {
+                idCsp :$scope.validarActivacionos,
+                idOt: $scope.idotActivacion
+            };
+            busquedaService.validarActivacion(params).then(function success(response) {
+                console.log(response);
+                 /**
                 if($scope.pruebaPeticionActivacion=='true'){
                     response.data.result.estatusActivacion='3'
                 }
-                /****/
+                 **/
                 if (response.data !== undefined) {
                     if (response.data.respuesta) {
                         
@@ -908,13 +1004,13 @@ app.activacionController=function($scope, $q, busquedaService){
                         2 - En espera (Se reconsume)
                         Cualquier otro caso -  Error en la activación
                         **/
-                        if(response.data.result.estatusActivacion ===1){
+                        if(response.data.result.estatusActivacion ==1){
                             $scope.consultarValidacionCuentaAsync=true
                             $scope.statusActivacion='true'    
                             $scope.planActivo='true'                                                                                                
                             $scope.objectglobalactivacion.cuentaActiva='true'
 
-                        }else if(response.data.result.estatusActivacion ===2 ){
+                        }else if(response.data.result.estatusActivacion ==2 ){
                             setTimeout(function(){
                                 $scope.validarActivacion()
                             },5000)
@@ -928,7 +1024,7 @@ app.activacionController=function($scope, $q, busquedaService){
                     }
                     swal.close();
                 } else {
-                    mostrarMensajeWarning("No se encontro informaci\u00f3n");
+                    mostrarMensajeWarning("Ha ocurrido un error al validar la activaci\u00f3n ");
                     swal.close();
                 }
             }, function error(response) {
@@ -1071,41 +1167,41 @@ app.activacionController=function($scope, $q, busquedaService){
     }
   
     $scope.showSearch = true;
-/**
+/** 
     $scope.mostrarDetalleActivarOs({
-        Folio_OS: "OS-6950955",
-        canalVenta: null,
-        comentariosOs: null,
-        cp: "04519",
-        creadoPor: null,
-        cuentaActiva: "true",
-        detalleCotSitioPlan: null,
-        detalleCotizacion: null,
-        detalleCuentaFactura: null,
-        detalleOportunidad: null,
-        detalleSitio: null,
-        editadoPor: null,
-        estatus: "Inicio",
-        fechaAgendada: null,
-        id: "a153C0000015fzeQAA",
-        idCsp: "a113C000000pFAaQAM",
-        idOt: null,
-        id_cotsitioplansf: "a113C000000pFAaQAM",
-        keyObject: "OS",
-        motivoCancelacion: null,
-        nombre: "OS-6950955",
-        numeroCuentaFactura: "0190003647",
-        osConfirmada: null,
-        propietario: null,
-        propietarioOportunidad: null,
-        tipoOrden: null,
-        tscompletado: null,
-        tsconfirmado: null,
-        turnoAg: null,
-        unidadNegocio: "2",
+            canalVenta: null,
+            comentariosOs: null,
+            cp: "91637",
+            creadoPor: null,
+            cuentaActiva: "false",
+            detalleCotSitioPlan: null,
+            detalleCotizacion: null,
+            detalleCuentaFactura: null,
+            detalleOportunidad: null,
+            detalleSitio: null,
+            editadoPor: null,
+            estatus: "Confirmado",
+            fechaAgendada: null,
+            id: "a153C0000015iGNQAY",
+            idCsp: "a113C000000rvRVQAY",
+            idOt: "7986332",
+            keyObject: "OS",
+            motivoCancelacion: null,
+            nombre: "OS-6951058",
+            numeroCuentaFactura: "0190022092",
+            osConfirmada: null,
+            propietario: null,
+            propietarioOportunidad: null,
+            tipoOrden: null,
+            tscompletado: null,
+            tsconfirmado: null,
+            turnoAg: null,
+            unidadNegocio: "2"
     })
+    $scope.showDetalleActivar=true; **/
 
-    $scope.showDetalleActivar=true;  **/
+    
+
 
 
     $scope.consultarAutofindActivacion = function(servicio) {

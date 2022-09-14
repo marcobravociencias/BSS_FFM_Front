@@ -41,5 +41,7 @@ public interface BusquedaService {
     ServiceResponseResult generarDnsActivacion(String params);
     
     ServiceResponseResult consultarResumenPaquetePorCSP(String params);
+    
+    ServiceResponseResult consultarCatalogoJustificacionActivacion();
 
 }

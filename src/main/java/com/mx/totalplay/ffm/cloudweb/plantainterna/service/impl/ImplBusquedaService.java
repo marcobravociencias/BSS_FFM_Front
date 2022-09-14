@@ -191,10 +191,26 @@ public class ImplBusquedaService implements BusquedaService {
 	public ServiceResponseResult activarServicios(String params) {
 		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
         LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
-        jsonObject.addProperty("idUsuario", principalDetail.getIdUsuario());
+        jsonObject.addProperty("idUser", principalDetail.getIdUsuario());
         String tokenAcces = principalDetail.getAccess_token();
         String urlRequest = principalDetail.getDireccionAmbiente().concat(constBusqueda.getActivarServicios());
-        logger.info("ImplBusquedaService.class activarServicios(): \n" + gson.toJson(jsonObject));
+        
+        logger.info( "-- idUser              * "+  jsonObject.get( "idUser" ).toString()); 
+        logger.info( "-- documentName        * "+  jsonObject.get( "documentName" ).toString()); 
+        logger.info( "-- documentExtension   * "+  jsonObject.get( "documentExtension" ).toString()); 
+        logger.info( "-- sistemaActivacion   * "+  jsonObject.get( "sistemaActivacion" ).toString()); 
+        logger.info( "-- idMotivoActivacion  * "+  jsonObject.get( "idMotivoActivacion" ).toString()); 
+        logger.info( "-- motivoActivacion    * "+  jsonObject.get( "motivoActivacion" ).toString()); 
+        logger.info( "-- idOT                * "+  jsonObject.get( "idOT" ).toString()); 
+        logger.info( "-- idCsp               * "+  jsonObject.get( "idCsp" ).toString()); 
+        logger.info( "-- idClientKey         * "+  jsonObject.get( "idClientKey" ).toString()); 
+        logger.info( "-- folioSystem         * "+  jsonObject.get( "folioSystem" ).toString()); 
+        logger.info( "-- comments            * "+  jsonObject.get( "comments" ).toString()); 
+        logger.info( "-- idFlujo             * "+  jsonObject.get( "idFlujo" ).toString()); 
+        logger.info( "-- latitude            * "+  jsonObject.get( "latitude" ).toString()); 
+        logger.info( "-- longitude           * "+  jsonObject.get( "longitude" ).toString()); 
+        logger.info( "-- document      size  * "+  jsonObject.get( "document" ).toString().length()); 
+
         logger.info("###URL consultarDetalleObjectSF(): "+ urlRequest);
         ServiceResponseResult response = restCaller.callPostBearerTokenRequest(gson.toJson(jsonObject), urlRequest, ServiceResponseResult.class, tokenAcces);
         logger.info("####RESULT: " + gson.toJson(response));
@@ -424,6 +440,32 @@ public class ImplBusquedaService implements BusquedaService {
                 ServiceResponseResult.class,
                 tokenAcces);
 
+        logger.info("### RESULT consultarResumenPaquetePorCSP(): " + gson.toJson(response));
+		return response;
+	}
+
+
+
+	@Override
+	public ServiceResponseResult consultarCatalogoJustificacionActivacion() {
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+        String tokenAcces = principalDetail.getAccess_token();
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constBusqueda.getConsultarCatalogoJustificacionActivacion());
+        logger.info("### URL consultarCatalogoJustificacionActivacion(): \n" + urlRequest);
+        /**Map<String, String> paramsRequestGet = new HashMap<>();
+
+        ServiceResponseResult response = restCaller.callGetBearerTokenRequest(
+                paramsRequestGet,
+                urlRequest,
+                ServiceResponseResult.class,
+                tokenAcces);
+        */
+        ServiceResponseResult response=ServiceResponseResult.builder()
+                .isRespuesta(true)
+                .resultDescripcion("Accion completada")
+                .result(null)
+                .codigoEstatusService(200)
+                .build();
         logger.info("### RESULT consultarResumenPaquetePorCSP(): " + gson.toJson(response));
 		return response;
 	}

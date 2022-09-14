@@ -7,9 +7,9 @@
     <div  class="container-estatusactivacion text-center ">
         <span class="badge-mensaje-activacion cuenta-noactiva-badge"  ng-if="statusActivacion =='false' ||  statusActivacion =='' || statusActivacion === undefined || statusActivacion ==='null' || statusActivacion===null" >La cuenta no esta activa</span>
         <span class="badge-mensaje-activacion cuenta-activa-badge"  ng-if="statusActivacion ==='true'" >Cuenta activada correctamente</span>
-        <span class="statusactivacion-top statusactivacion-enproceso" ng-if="statusActivacion=='proceso'" >La cuenta esta en proceso de activaci&oacute;n</span>
-        <span class="statusactivacion-top statusactivacion-error    " ng-if="statusActivacion=='error'" >Error en la activaci&oacute;n</span><br />
-        <span class="statusactivacion-top statusactivacion-error    " ng-if="statusActivacion=='error'" ng-bind="Network_code" ></span>
+        <span class="badge-mensaje-activacion statusactivacion-enproceso" ng-if="statusActivacion=='proceso'" >La cuenta esta en proceso de activaci&oacute;n ...</span>
+        <span class="badge-mensaje-activacion statusactivacion-error   cuenta-erroractivacion-badge " ng-if="statusActivacion=='error'" ng-bind="'Error en la activaci&oacute;n   '+ Network_code" >Error en la activaci&oacute;n</span><br />
+        <!--span class="badge-mensaje-activacion statusactivacion-error   cuenta-erroractivacion-badge " ng-if="statusActivacion=='error'" ng-bind="Network_code" ></span-->
     </div>    
 </div>
 <div ng-show="showDetalleActivar" class="header-back-title col-3">
@@ -90,7 +90,7 @@
             </table>
             <!--button ng-click="activacionEquipos()"  ng-if="planActivo!== 'true' &&  isProcesandoActivacion!=='cargando'" class="activar-servicios  btn btn-sm">Activar</button-->
             <span  class="text-activacion-warning" ng-if="!isTodosConfigurado">Para activar necesitas configurar todos los servicios</span>
-            <button ng-click="activacionEquipos()"  ng-disabled="!isTodosConfigurado || statusActivacion=='proceso'"  ng-if="planActivo !=='true'"  class="activar-servicios  btn btn-sm">Activar</button>
+            <button ng-click="consultarCatalogoActivacion()"  ng-disabled="!isTodosConfigurado || statusActivacion=='proceso'"  ng-if="planActivo !=='true'"  class="activar-servicios  btn btn-sm">Activar</button>
             <!--div ng-if="planActivo !== 'true' && isProcesandoActivacion==='cargando'" class="sk-chase"-->
             <div class="sk-chase" ng-if="statusActivacion=='proceso'">
                 <div class="sk-chase-dot"></div>

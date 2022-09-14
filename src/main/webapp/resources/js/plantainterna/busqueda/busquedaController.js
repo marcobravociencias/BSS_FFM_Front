@@ -35,11 +35,13 @@ app.controller('busquedaController', ['$scope', '$q', 'busquedaService', 'generi
 
     app.activacionController($scope, $q, busquedaService)
     app.noticiasController($scope, $q, busquedaService)
-
+    $scope.permisoActivarPlanesOs=false
     $scope.consultaPermisos = function () {
         let params = {
             moduloAccionesUsuario: 'moduloBusqueda'
         }
+        swal({ text: 'Espera ...', allowOutsideClick: false });
+        swal.showLoading();
         genericService.consultarConfiguracionDespachoDespacho(params).then((result) => {
             if (result.data !== undefined) {
                 if (result.data.respuesta) {
@@ -49,17 +51,26 @@ app.controller('busquedaController', ['$scope', '$q', 'busquedaService', 'generi
                         objectTempAccion.inicializarBotonAccionesRecientes();
                         objectDetallePaquete = new GenericDetallePaquete('#infoPaqueteGeneric');
                         let llavesResult = result.data.result.MODULO_ACCIONES_USUARIO.llaves;
+
                         $scope.keyCodigoPostalDns=llavesResult.KEY_HABILITA_CODIGO_POSTAL_DN ? llavesResult.KEY_HABILITA_CODIGO_POSTAL_DN : false ;
                         $scope.keyCantidadDns=llavesResult.KEY_HABILITA_CANTIDAD_DN ? llavesResult.KEY_HABILITA_CANTIDAD_DN : false ;
-
+                        swal.close()
+                        $scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
+                        if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
+                            $scope.permisoActivarPlanesOs=($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionActivarPlanesOs" })[0] != undefined);
+                        }
+                        //$scope.permisoActivarPlanesOs=true
                     } else {
                         toastr.warning('No se encontraron datos para la configuraci\u00F3n');
+                        swal.close()
                     }
                 } else {
                     toastr.warning(result.data.resultDescripcion);
+                    swal.close()
                 }
             } else {
                 toastr.error('Ha ocurrido un error en la consulta de configuraci\u00F3n');
+                swal.close()
             }
         }).catch((err) => handleError(err));
     }

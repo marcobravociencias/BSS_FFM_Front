@@ -334,7 +334,7 @@
                             <div class="col-3">
                                 <span class="text-head-table">Nombre</span>
                             </div>
-                            <div class="col-3">
+                            <div ng-class="{'col-5': !permisoActivarPlanesOs ,'col-3':permisoActivarPlanesOs }" >
                                 <span class="text-head-table">Nombre plan</span>
                             </div>
                             <div class="col-2">
@@ -343,7 +343,7 @@
                             <div class="col-2">
                                 <span class="text-head-table">OS</span>
                             </div>
-                            <div class="col-2">
+                            <div ng-if="permisoActivarPlanesOs"  class="col-2">
                                 <span class="text-head-table">Acci&oacute;n</span>
                             </div>
                         </div>
@@ -353,7 +353,7 @@
                                     <span class="text-table" ng-bind="cotSitioPlan.nombre"></span>
                                 </a>
                             </div>
-                            <div class="col-3">
+                            <div ng-class="{'col-5': !permisoActivarPlanesOs ,'col-3':permisoActivarPlanesOs }">
                                 <span class="text-table" ng-bind="cotSitioPlan.nombrePlan"></span>
                             </div>
                             <div class="col-2">
@@ -362,7 +362,7 @@
                             <div class="col-2">
                                 <span class="text-table" ng-bind="cotSitioPlan.folioOs"></span>
                             </div>
-                            <div class="col-2">
+                            <div ng-if="permisoActivarPlanesOs"  class="col-2">
                                 <a ng-if="cotSitioPlan.folioOs && cotSitioPlan.cuentaActiva ==='false'" href="" class="link-consultardetalle" ng-click="mostrarDetalleActivar(cotSitioPlan)">
                                     <span class='text-table-click'>Activar</span>
                                 </a>
@@ -394,13 +394,13 @@
                             <div class="col-3">
                                 <span class="text-head-table">Nombre</span>
                             </div>
-                            <div class="col-3">
+                            <div ng-class="{'col-5': !permisoActivarPlanesOs ,'col-3':permisoActivarPlanesOs }" >
                                 <span class="text-head-table">N&uacute;mero cuenta factura</span>
                             </div>
                             <div class="col-2">
                                 <span class="text-head-table">Estatus</span>
                             </div>
-                            <div class="col-2">
+                            <div  ng-if="permisoActivarPlanesOs" class="col-2">
                                 <span class="text-head-table">Acci&oacute;n</span>
                             </div>
                             <div class="col-2">
@@ -413,13 +413,13 @@
                                     <span class="text-table" ng-bind="os.nombre"></span>
                                 </a>
                             </div>
-                            <div class="col-3">
+                            <div ng-class="{'col-5': !permisoActivarPlanesOs ,'col-3':permisoActivarPlanesOs }" >
                                 <span class="text-table" ng-bind="os.numeroCuentaFactura"></span>
                             </div>
                             <div class="col-2">
                                 <span class="text-table" ng-bind="os.estatus"></span>
                             </div>
-                            <div class="col-2">
+                            <div ng-if="permisoActivarPlanesOs" class="col-2">
                                 <!--a ng-if="os.idCsp && (os.cuentaActiva ==='false' || os.cuentaActiva ===undefined)" href="" class="link-consultardetalle">
                                     <span class="text-table-click">Activar</span>
                                 </a-->
@@ -431,7 +431,6 @@
                                 </a>
     
                                 <span  class="noosactivar" ng-if="!os.idCsp" >Postventa</span>
-    
                             </div>
                             <div class="col-2">
                                 <a ng-if="os.idOt" href="" class="link-consultardetalle">
@@ -525,7 +524,7 @@
     <jsp:include page="./modal/modalImagenEvidenciaBusqueda.jsp"></jsp:include>
     <jsp:include page="./modal/modalProductos.jsp"></jsp:include>
     <jsp:include page="./modal/serviciosNoConfigurables.jsp"></jsp:include>
-    
+    <jsp:include page="./modal/modalJustificacionActivacion.jsp"></jsp:include>
 </body>
 <!-- Scripts libraries -->
 <script src="${pageContext.request.contextPath}/resources/libraries/angularjs/js/angular.min.js"></script>

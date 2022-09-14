@@ -167,6 +167,18 @@ public class BusquedaController {
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
     
+    @PostMapping("/consultarCatalogoJustificacionActivacion")
+    public ResponseEntity<?> consultarCatalogoJustificacionActivacion(){
+        logger.info("#### AconsultarCatalogoJustificacionActivacion ###");
+        ServiceResponseResult response = busquedaService.consultarCatalogoJustificacionActivacion();
+        if (response.getResult() instanceof Integer){
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
+    
+    
+    
     @PostMapping("/consultarEstatusActivacion")
     public ResponseEntity<?> consultarEstatusActivacion(@RequestBody String params){
         logger.info("#### CONSULTAR ESTATUS ACTIVACION ### \n" + params);

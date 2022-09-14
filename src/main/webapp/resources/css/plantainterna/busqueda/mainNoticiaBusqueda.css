@@ -208,3 +208,10 @@ img#btnRefresNoticias {
     font-size: .9em !important;
 }
 
+#modalDetalleActivacionJustificacion .modal-dialog {
+    max-width: 35%;
+    
+}
+.invalidate-campo{
+    border-bottom: 2px solid rgb(245, 87, 86);
+}

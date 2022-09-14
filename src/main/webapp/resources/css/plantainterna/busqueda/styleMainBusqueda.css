@@ -890,8 +890,8 @@ b.title-info-services.dnsmensaje-config {
 
 
 .sk-chase {
-  width: 2em;
-  height: 2em;
+  width: 1.5em;
+  height: 1.5em;
   position: relative;
   animation: sk-chase 2.5s infinite linear both;
   display: inline-block;
@@ -1785,6 +1785,14 @@ span.text-activacion-warning {
     background-color: #ff6e40 !important;
 }
 
+.cuenta-erroractivacion-badge{
+      background-color: #dc4c64 !important;
+}
+.statusactivacion-enproceso{
+  
+  background-color: #3b71ca !important;
+}
+
 .badge-mensaje-activacion{
     font-size: .8rem;
     padding: 2px 4px;
@@ -2014,3 +2022,6 @@ span.text-content-ont {
   color: #999999 !important;
 }
 
+.bloqueo-activar{
+   text-align:center; 
+}

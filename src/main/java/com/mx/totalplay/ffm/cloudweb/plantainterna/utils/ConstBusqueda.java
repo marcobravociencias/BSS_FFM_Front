@@ -68,6 +68,9 @@ public class ConstBusqueda {
     
 	@Value("${resumenPaquetePorCSP}")
 	private String resumenPaquetePorCSP;
+	
+	@Value("${consultarCatalogoJustificacionActivacion}")
+	private String consultarCatalogoJustificacionActivacion;
 }
 
 
