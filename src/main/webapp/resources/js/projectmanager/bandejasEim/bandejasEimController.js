@@ -1509,207 +1509,65 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 		if (opcion === 1) {
 
 			if (!$scope.banderaGeografiaPendiente) {
+				console.log("entra 0");
 				swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 				swal.showLoading();
-				$("#jstree-pendiente").bind('loaded.jstree', function (e, data) {
-					//swal.close();
-					$scope.banderaGeografiaPendiente = true;
-					$scope.consultarPendientes();
-					$scope.btnAceptarModalGeografiaPendiente();
-					$scope.pintarNombreEstatus($scope.filtrosGeneral.estatusPendiente, '#estatusPendiente');
-				}).jstree({
-					'plugins': ["wholerow", "checkbox", "search"],
-					'search': {
-						"case_sensitive": false,
-						"show_only_matches": true
-					},
-					'core': {
-						'data': geografiaPendiente,
-						'themes': {
-							'name': 'proton',
-							'responsive': true,
-							"icons": false
-						}
-					}
-				});
+				
+				
 			}
-
-			$scope.nombreBandeja = "PENDIENTE";
+			swal.close();
+			$scope.nombreBandeja = "CSP SIN EIM";
 		}
 
 		if (opcion === 2) {
 
 			if (!$scope.banderaGeografiaAsignada) {
+				console.log("entra 0");
 				swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 				swal.showLoading();
-				$("#jstree-asignado").bind('loaded.jstree', function (e, data) {
-					//swal.close();
-					$scope.banderaGeografiaAsignada = true;
-					$scope.consultarAsignada();
-					$scope.btnAceptarModalGeografiaAsignada();
-					$scope.pintarNombreEstatus($scope.filtrosGeneral.estatusAsignada, '#estatusAsignada');
-				}).jstree({
-					'plugins': ["wholerow", "checkbox", "search"],
-					'search': {
-						"case_sensitive": false,
-						"show_only_matches": true
-					},
-					'core': {
-						'data': geografiaAsignada,
-						'themes': {
-							'name': 'proton',
-							'responsive': true,
-							"icons": false
-						}
-					}
-				});
+				
+				
 			}
+			swal.close();
 
-			$scope.nombreBandeja = "ASIGNADA";
+			$scope.nombreBandeja = "PENDIENTES POR IMPLENTAR";
 		}
 		if (opcion === 3) {
 
 			if (!$scope.banderaGeografiaDetenida) {
+				console.log("entra 0");
 				swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 				swal.showLoading();
-				$("#jstree-detenido").bind('loaded.jstree', function (e, data) {
-					//swal.close();
-					$scope.banderaGeografiaDetenida = true;
-					$scope.consultarDetenida();
-					$scope.btnAceptarModalGeografiaDetenida();
-					$scope.pintarNombreEstatus($scope.filtrosGeneral.estatusDetenida, '#estatusDetenida');
-				}).jstree({
-					'plugins': ["wholerow", "checkbox", "search"],
-					'search': {
-						"case_sensitive": false,
-						"show_only_matches": true
-					},
-					'core': {
-						'data': geografiaDetenida,
-						'themes': {
-							'name': 'proton',
-							'responsive': true,
-							"icons": false
-						}
-					}
-				});
+				
+				
 			}
+			swal.close();
 
-			$scope.nombreBandeja = "DETENIDA";
+			$scope.nombreBandeja = "DEPENDENCIAS";
 		}
 		if (opcion === 4) {
 			if (!$scope.banderaGeografiaTerminada) {
+				console.log("entra 0");
 				swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 				swal.showLoading();
-				$("#jstree-terminada").bind('loaded.jstree', function (e, data) {
-					//swal.close();
-					$scope.banderaGeografiaTerminada = true;
-					$scope.consultarTerminada();
-					$scope.btnAceptarModalGeografiaTerminada();
-					$scope.pintarNombreEstatus($scope.filtrosGeneral.estatusTerminada, '#estatusTerminada');
-				}).jstree({
-					'plugins': ["wholerow", "checkbox", "search"],
-					'search': {
-						"case_sensitive": false,
-						"show_only_matches": true
-					},
-					'core': {
-						'data': geografiaTerminada,
-						'themes': {
-							'name': 'proton',
-							'responsive': true,
-							"icons": false
-						}
-					}
-				});
+				
+				
 			}
-			$scope.nombreBandeja = "TERMINADA";
+			swal.close();
+			$scope.nombreBandeja = "EN IMPLEMENTACIÓN";
 		}
 		if (opcion === 5) {
 			if (!$scope.banderaGeografiaCancelada) {
+				console.log("entra 0");
 				swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 				swal.showLoading();
-				$("#jstree-cancelada").bind('loaded.jstree', function (e, data) {
-					//swal.close();
-					$scope.banderaGeografiaCancelada = true;
-					$scope.consultarCancelada();
-					$scope.btnAceptarModalGeografiaCancelada();
-					$scope.pintarNombreEstatus($scope.filtrosGeneral.estatusCancelada, '#estatusCancelada');
-				}).jstree({
-					'plugins': ["wholerow", "checkbox", "search"],
-					'search': {
-						"case_sensitive": false,
-						"show_only_matches": true
-					},
-					'core': {
-						'data': geografiaCancelada,
-						'themes': {
-							'name': 'proton',
-							'responsive': true,
-							"icons": false
-						}
-					}
-				});
+				
+				
 			}
-			$scope.nombreBandeja = "CANCELADA";
+			swal.close();
+			$scope.nombreBandeja = "IMPLEMENTADOS";
 		}
-		if (opcion === 6) {
-			if (!$scope.banderaGeografiaCalendarizada) {
-				swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
-				swal.showLoading();
-				$("#jstree-calendarizar").bind('loaded.jstree', function (e, data) {
-					//swal.close();
-					$scope.banderaGeografiaCalendarizada = true;
-					$scope.consultarCalendarizada();
-					$scope.btnAceptarModalGeografiaCalendarizada();
-					$scope.pintarNombreEstatus($scope.filtrosGeneral.estatusCalendarizada, '#estatusCalendarizada');
-				}).jstree({
-					'plugins': ["wholerow", "checkbox", "search"],
-					'search': {
-						"case_sensitive": false,
-						"show_only_matches": true
-					},
-					'core': {
-						'data': geografiaCalendarizada,
-						'themes': {
-							'name': 'proton',
-							'responsive': true,
-							"icons": false
-						}
-					}
-				});
-			}
-			$scope.nombreBandeja = "CALENDARIZADA";
-		}
-		if (opcion === 7) {
-			if (!$scope.banderaGeografiaGestoria) {
-				swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
-				swal.showLoading();
-				$("#jstree-gestoria").bind('loaded.jstree', function (e, data) {
-					//swal.close();
-					$scope.banderaGeografiaGestoria = true;
-					$scope.consultarGestoria();
-					$scope.btnAceptarModalGeografiaGestoria();
-					$scope.pintarNombreEstatus($scope.filtrosGeneral.estatusGestoria, '#estatusGestoria');
-				}).jstree({
-					'plugins': ["wholerow", "checkbox", "search"],
-					'search': {
-						"case_sensitive": false,
-						"show_only_matches": true
-					},
-					'core': {
-						'data': geografiaGestoria,
-						'themes': {
-							'name': 'proton',
-							'responsive': true,
-							"icons": false
-						}
-					}
-				});
-			}
-			$scope.nombreBandeja = "GESTORIA";
-		}
-
+		
 		$scope.vistaCoordinacion = opcion;
 	}
 
