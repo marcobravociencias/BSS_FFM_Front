@@ -1,4 +1,4 @@
-var app = angular.module('coordInstalacionesPIApp', []);
+var app = angular.module('mainBandejasEimPMApp', []);
 var tableTerminada = undefined;
 var geografia;
 var geografiaPendiente = [];
@@ -10,7 +10,7 @@ var geografiaCalendarizada = [];
 var geografiaGestoria = [];
 var objectTempAccion;
 
-app.controller('coordInstPIController', ['$scope', '$q', 'coordInstalacionesPIService', 'genericService', function ($scope, $q, coordInstalacionesPIService, genericService) {
+app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPIService', 'genericService', function ($scope, $q, coordInstalacionesPIService, genericService) {
 
 	app.coordInstalacionesSF($scope, coordInstalacionesPIService, $q, genericService)
 	$scope.vistaCoordinacion = 0;
