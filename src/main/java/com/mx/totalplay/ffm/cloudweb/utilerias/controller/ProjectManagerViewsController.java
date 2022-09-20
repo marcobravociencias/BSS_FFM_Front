@@ -45,4 +45,9 @@ public class ProjectManagerViewsController {
 	public String oportunidades() {
 		return "projectmanager/oportunidades/mainOportunidades";
 	}
+	
+	@GetMapping("/moduloBandejasEim")
+	public String BandejasEim() {
+		return "projectmanager/bandejaEim/mainbandejasEim";
+	}
 }
