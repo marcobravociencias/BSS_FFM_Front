@@ -13,7 +13,7 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 
 
 	$scope.filtrosGeneral = {};
-
+	var tableCspSinEim = undefined;
 	$scope.nombreBandeja = "";
 
 	$scope.nivelArbol = 0;
@@ -394,52 +394,74 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 			}
 		}).catch(err => handleError(err));
 	}
-
+	$scope.resultPendientes = [];
 	$scope.consultarCspSinEim = function () {
+		$scope.resultPendientes = [];
 		let params = {
-			elementosPorPagina: 10
+			idOrdenTrabajo: "",
+			folioSistema: "",
+			idClaveCliente: "",
+			idEstatus: "",
+			idEstados: "",
+			idGeografias: "",
+			fechaInicio: "",
+			fechaFin: "",
+			elementosPorPagina: 10,
+			fechaSeleccionada: "fechaInicio"
 		}
-		tableCspSinEim = $("#table_cspSinEim").DataTable({
+		let mensaje = "";
+		let bandera = true;
+		if (bandera) {
+		if (tableCspSinEim) {
+			tableCspSinEim.destroy()
+		}
+		console.log("entre antes del ajax");
+		tableCspSinEim = $("#tablecspSinEim").DataTable({
 			"processing": false,
-				"ordering": false,
-				"serverSide": true,
-				"scrollX": false,
-				"paging": true,
-				"lengthChange": false,
-				"searching": false,
-				"pageLength": 10,
-				"ajax":{
-					"url": "req/consultarBandejaCspSinEim",
-					"type": "POST",
-					"data": params,
-					"beforeSend": function(){
-						if (!swal.isVisible()) {
-							swal({ text: 'Cargando registros...', allowOutsideClick: false });
-							swal.showLoading();
-						}
-					},
-					"dataSrc": function (json){
-						if(json.result){
-
-						}
-						$scope.tempReporteCspSinEim = json.data;
-						return json.data;
-					},
-					"error": function (xhr, error, thrown){
-						handleError(xhr)
-					},
-					"complete": function(){
-						swal.close()
+			"ordering": false,
+			"serverSide": true,
+			"scrollX": false,
+			"paging": true,
+			"lengthChange": false,
+			"searching": false,
+			"pageLength": 10,
+			"ajax": {
+				"url": "req/consultarMarcas",
+				"type": "GET",
+				"beforeSend": function () {
+					if (!swal.isVisible()) {
+						swal({ text: 'Cargando registros...', allowOutsideClick: false });
+						swal.showLoading();
 					}
+
 				},
-				"columns": [null, null, null, null, null, null, null, null, null, null],
-				"language": idioma_espanol_not_font
+				"dataSrc": function (json) {
+					if (json.result) {
+						$scope.resultPendientes = json.result.ordenes ? json.result.ordenes : [];
+						$scope.objetoBusqueda.pendiente = json.result.ordenes ? json.result.ordenes : []
+					}
+					$scope.tempReportePendiente = json.data;
+					//$scope.elementosRegistro = json.registrosTotales
+					return json.data;
+				},
+				"error": function (xhr, error, thrown) {
+					handleError(xhr)
+				},
+				"complete": function () {
+					swal.close()
+				}
+			},
+			"columns": [null, null, null, null, null, null, null, null, null, null],
+			"language": idioma_espanol_not_font
 		});
-		
+	} else{
+		mostrarMensajeWarningValidacion(mensaje);
+	}
 	}
 
 	angular.element(document).ready(function () {
-		tableCspSinEim = $('#table_cspSinEim').DataTable({
+
+		tableCspSinEim = $('#tablecspSinEim').DataTable({
 			"processing": false,
 			"ordering": false,
 			"scrollX": false,
@@ -449,6 +471,37 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 			"pageLength": 10,
 			"language": idioma_espanol_not_font,
 			"data": []
+		});
+		$("#btn_mostrar_nav").hide(500);
+		$('.datepicker').datepicker({
+			format: 'dd/mm/yyyy',
+			autoclose: true,
+			language: 'es',
+			todayHighlight: true,
+			clearBtn: true
+		});
+		$('.datepicker').datepicker('update', new Date());
+
+		$('#fecha-reagendamiento').datepicker({
+			format: 'dd/mm/yyyy',
+			autoclose: true,
+			language: 'es',
+			todayHighlight: true,
+			startDate: moment(new Date()).toDate()
+		});
+		$('#fecha-reagendamiento').datepicker('update', new Date());
+
+		$('#fecha-calendarizado').datepicker({
+			format: 'dd/mm/yyyy',
+			autoclose: true,
+			language: 'es',
+			todayHighlight: true,
+			startDate: moment(new Date()).add('days', 8).toDate()
+		});
+		$('#fecha-calendarizado').datepicker('update', moment(new Date()).add('days', 8).toDate());
+
+		$('.drop-down-filters').on("click.bs.dropdown", function (e) {
+			e.stopPropagation();
 		});
 		$("#idBody").removeAttr("style");
 		$('#moduloBandejasEim').addClass('active');
@@ -475,21 +528,9 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 
 	$scope.orderTableByColumnGeneric = function (colNumber, typeTable, isAsc, isNumber) {
 		let arraySort = [];
-		if (typeTable == 'reportePendiente') {
-			arraySort = angular.copy($scope.tempReportePendiente);
-		} else if (typeTable == 'reporteAsignada') {
-			arraySort = angular.copy($scope.tempReporteAsignada);
-		} else if (typeTable == 'reporteDetenida') {
-			arraySort = angular.copy($scope.tempReporteDetenida);
-		} else if (typeTable == 'reporteTerminada') {
-			arraySort = angular.copy($scope.tempReporteTerminada);
-		} else if (typeTable == 'reporteCancelada') {
-			arraySort = angular.copy($scope.tempReporteCancelada);
-		} else if (typeTable == 'reporteCalendarizada') {
-			arraySort = angular.copy($scope.tempReporteCalendarizada);
-		} else if (typeTable == 'reporteGestoria') {
-			arraySort = angular.copy($scope.tempReporteGestoria);
-		}
+		if (typeTable == 'reporteCspSinEim') {
+			arraySort = angular.copy($scope.tempReporteCspSinEim);
+		} 
 
 
 		if (isNumber === 'true') {
@@ -522,33 +563,9 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 			});
 		}
 
-		if (typeTable == 'reportePendiente') {
+		if (typeTable == 'reporteCspSinEim') {
 			$.each(arraySort, function (index, elemento) {
-				tablePendiente.row(index).data(elemento);
-			});
-		} else if (typeTable == 'reporteAsignada') {
-			$.each(arraySort, function (index, elemento) {
-				tableAsignada.row(index).data(elemento);
-			});
-		} else if (typeTable == 'reporteDetenida') {
-			$.each(arraySort, function (index, elemento) {
-				tableDetenida.row(index).data(elemento);
-			});
-		} else if (typeTable == 'reporteTerminada') {
-			$.each(arraySort, function (index, elemento) {
-				tableTerminada.row(index).data(elemento);
-			});
-		} else if (typeTable == 'reporteCancelada') {
-			$.each(arraySort, function (index, elemento) {
-				tableCancelada.row(index).data(elemento);
-			});
-		} else if (typeTable == 'reporteCalendarizada') {
-			$.each(arraySort, function (index, elemento) {
-				tableCalendarizada.row(index).data(elemento);
-			});
-		} else if (typeTable == 'reporteGestoria') {
-			$.each(arraySort, function (index, elemento) {
-				tableGestoria.row(index).data(elemento);
+				tableCspSinEim.row(index).data(elemento);
 			});
 		}
 	}
