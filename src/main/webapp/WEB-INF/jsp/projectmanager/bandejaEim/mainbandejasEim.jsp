@@ -112,6 +112,8 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/projectmanager/bandejasEim/bandejasEimController.js?v=${sessionScope.versionDepl}"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/projectmanager/bandejasEim/bandejasEimSFController.js?v=${sessionScope.versionDepl}"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/projectmanager/bandejasEim/bandejasEimPMService.js?v=${sessionScope.versionDepl}"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/projectmanager/bandejasEim/busqGral.js?v=${sessionScope.versionDepl}"></script>
+
 
     <script type="text/javascript">let contex_project = "${pageContext.request.contextPath}";</script>
 	<script src="${pageContext.request.contextPath}/resources/js/generic/genericService.js?v=${sessionScope.versionDepl}"></script>
