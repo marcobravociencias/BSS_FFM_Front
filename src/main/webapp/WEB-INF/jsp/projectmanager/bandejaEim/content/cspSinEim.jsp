@@ -24,7 +24,7 @@
 </div>
 <div class="row">
     <div class="col-12 table-responsive" style="margin-top: 1em; padding: 0;">
-        <table id="table_cspSinEim" class="table">
+        <table id="tablecspSinEim" class="table">
             <thead id="thead_cspSinEim">
                 <tr>
                     <th data-idColumn="0" data-isNumber="true" data-typeTable="reporteCspSinEim" class="orderColumnTable orderColumnAscTable">Oportunidad</th>
