@@ -75,9 +75,6 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 							$("#idBody").removeAttr("style");
 							validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
 							validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
-							
-							$scope.cambiarVista(1);
-
 						}
 					} else {
 						swal.close();
@@ -139,7 +136,6 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 			
 			if ($scope.configPermisoAccionAsignarEimCSP) {
 			if (!$scope.banderaCspSinEim) {
-				console.log("hola mind");
 				swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 				swal.showLoading();
 				$scope.banderaCspSinEim = true;
@@ -1188,7 +1184,7 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 					swal.close()
 				}
 			},
-			"columns": [null, null, null, null, null, null, null],
+			"columns": [null,null, null, null, null, null, null],
 			"language": idioma_espanol_not_font
 		});
 	} else{
