@@ -27,12 +27,13 @@
         <table id="tablecspSinEim" class="table">
             <thead id="theadcspSinEim">
                 <tr>
-                    <th data-idColumn="0" data-isNumber="true" data-typeTable="reporteCspSinEim" class="orderColumnTable orderColumnAscTable">Oportunidad</th>
-                    <th data-idColumn="1" data-isNumber="false" data-typeTable="reporteCspSinEim" class="orderColumnTable orderColumnAscTable">Vertical</th>
-                    <th data-idColumn="2" data-isNumber="true" data-typeTable="reporteCspSinEim" class="orderColumnTable orderColumnAscTable">Celula</th>
-                    <th data-idColumn="3" data-isNumber="false" data-typeTable="reporteCspSinEim" class="orderColumnTable orderColumnAscTable">Cliente</th>
-                    <th data-idColumn="4" data-isNumber="false" data-typeTable="reporteCspSinEim" class="orderColumnTable orderColumnAscTable">CSP</th>
-                    <th data-idColumn="5" data-isNumber="false" data-typeTable="reporteCspSinEim" class="orderColumnTable orderColumnAscTable">Fecha Venta</th>      
+                    <th data-idColumn="0" data-isNumber="false" data-typeTable="reporteCspSinEim" class="orderColumnTable orderColumnAscTable"><input type="checkbox" id="selectAll" class="main"/></th>
+                    <th data-idColumn="1" data-isNumber="true" data-typeTable="reporteCspSinEim" class="orderColumnTable orderColumnAscTable">Oportunidad</th>
+                    <th data-idColumn="2" data-isNumber="false" data-typeTable="reporteCspSinEim" class="orderColumnTable orderColumnAscTable">Vertical</th>
+                    <th data-idColumn="3" data-isNumber="false" data-typeTable="reporteCspSinEim" class="orderColumnTable orderColumnAscTable">Celula</th>
+                    <th data-idColumn="4" data-isNumber="false" data-typeTable="reporteCspSinEim" class="orderColumnTable orderColumnAscTable">Cliente</th>
+                    <th data-idColumn="5" data-isNumber="false" data-typeTable="reporteCspSinEim" class="orderColumnTable orderColumnAscTable">CSP</th>
+                    <th data-idColumn="6" data-isNumber="false" data-typeTable="reporteCspSinEim" class="orderColumnTable orderColumnAscTable">Fecha Venta</th>      
                 </tr>
             </thead>
         </table>
