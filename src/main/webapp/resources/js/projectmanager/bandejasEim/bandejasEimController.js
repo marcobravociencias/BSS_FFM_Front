@@ -8,6 +8,7 @@ var geografiaPendiente = [];
 app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPIService', 'genericService', function ($scope, $q, coordInstalacionesPIService, genericService) {
 
 	app.coordInstalacionesSF($scope, coordInstalacionesPIService, $q, genericService)
+	app.implementadosEim($scope, coordInstalacionesPIService, $q, genericService)
 	$scope.vistaCoordinacion = 0;
 	$scope.filtrosCatalogo = [];
 
