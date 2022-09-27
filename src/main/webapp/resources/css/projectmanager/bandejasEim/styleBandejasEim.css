@@ -234,7 +234,7 @@ label.label-filter {
   font-weight: bold;
 }
 
-.input-filtro-coordInst {
+.input-filtro-coordInst, .input-filtro {
   border: 1px solid #dbdbdb !important;
   font-weight: 400;
   font-size: 1em;
@@ -246,17 +246,17 @@ label.label-filter {
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .07), 0 1px 2px 0 rgba(0, 0, 0, .05) !important;
 }
 
-.input-filtro-coordInst::placeholder {
+.input-filtro-coordInst::placeholder, .input-filtro::placeholder {
   font-weight: 400;
-  font-size: 1em;
+  font-size: 0.8em;
   color: #818181 !important;
 }
 
-.input-filtro-coordInst:focus {
+.input-filtro-coordInst:focus, .input-filtro:focus {
   -webkit-box-shadow: none;
 }
 
-.input-filtro-coordInst:hover {
+.input-filtro-coordInst:hover, .input-filtro:hover {
   background: #e4e6f2 !important;
   cursor: pointer;
   border-bottom: 2px solid #a4b1ff !important;
@@ -2371,4 +2371,86 @@ label.dropdown-item.form-check-inputfiltro {
   z-index: 2;
   font-size: 14px;
   font-size: 14px;
+}
+
+/*-------------------------IMPLEMENTADOS---------------------------------*/
+
+
+.btn_consultar:active, .btn_consultar:focus .btn_consultar:hover {
+  background-color: white !important;
+  box-shadow: 0 4px 10px 0 rgb(0 0 0 / 20%), 0 4px 20px 0 rgb(0 0 0 / 10%);
+  color: var(--estandar-color);
+}
+
+.btn_consultar {
+  background-color: #ffffff !important;
+  color: var(--btn-color-buscar) !important;
+  border: solid 1px    var(--btn-color-buscar) !important;
+  padding: .3em 2em !important;
+  border-radius: 5px;
+  font-size: 0.6em !important;
+  position: relative;
+  display: block;
+  border-radius: .5em !important;
+  float: left;
+  margin-top: 2.6em !important;
+  height: 28px !important;
+}
+
+#implementadosTable tbody tr:nth-child(even) {
+  background: #f5f5f5;
+}
+
+#implementadosTable>tbody>tr>td {
+  white-space: nowrap;
+  color: #39455b;
+  font-family: 'Montserrat';
+  font-size: .8em;
+  border-top: 0px solid #eceeef !important;
+  text-align: center;
+}
+
+#implementadosTable thead th {
+  position: relative;
+  background-color: #b1b1b1;
+  color: #fff;
+  font-size: 0.8em;
+  white-space: nowrap;
+  padding: 1em;
+  border: none;
+  font-weight: normal;
+  text-align: center;
+}
+
+#implementadosTable tbody tr td {
+  padding: 0.5em;
+  border: none;
+}
+
+.text-accion-nopermiso {
+  font-size: 12px;
+  color: grey;
+  padding: 2em 1em;
+  font-weight: bold;
+  text-align: center;
+}
+
+.text-accion-nopermiso .icon-not-permiso {
+  color: #9586a9;
+  font-size: 1.3em;
+  padding: 0.5em;
+  border-radius: 50%;
+  width: 2em;
+  height: 2em;
+}
+
+.text-not-permiso {
+  margin-left: 0.5em;
+  font-size: 1.5em;
+  font-weight: normal;
+}
+
+i.icono-noseleccion {
+  color: #ff9f3b;
+  display: inline-block;
 }

@@ -83,7 +83,11 @@
                                 <div id="vistaTerminada" class="col-12" ng-show="vistaCoordinacion === 5">
                                     <jsp:include page="./content/enImplementacion.jsp"></jsp:include>
                                 </div>
+<<<<<<< HEAD
                                 <div id="vistaCancelada" class="col-12" ng-show="vistaCoordinacion === 6">
+=======
+                                <div id="vistaCancelada" class="col-12 p-0" ng-show="vistaCoordinacion === 5">
+>>>>>>> 482246739648cc8a81fbc4fc5aa0f839b344fc54
                                     <jsp:include page="./content/implementados.jsp"></jsp:include>
                                 </div>
                                
@@ -95,6 +99,7 @@
                 </div>
             </div>  
         </div>
+        <jsp:include page="filtrosEim.jsp"></jsp:include>
 </body>
     <script src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.min.js"></script>    
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=${googlkeyattrvar['gkeactok']}&libraries=geometry,places"></script>
@@ -118,6 +123,7 @@
     
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/projectmanager/bandejasEim/bandejasEimController.js?v=${sessionScope.versionDepl}"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/projectmanager/bandejasEim/bandejasEimSFController.js?v=${sessionScope.versionDepl}"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/projectmanager/bandejasEim/implementadosEimController.js?v=${sessionScope.versionDepl}"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/projectmanager/bandejasEim/bandejasEimPMService.js?v=${sessionScope.versionDepl}"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/projectmanager/bandejasEim/busqGral.js?v=${sessionScope.versionDepl}"></script>
 
