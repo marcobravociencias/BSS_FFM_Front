@@ -46,17 +46,21 @@
                             <div class="opcion-menu" ng-click="cambiarVista(1);" ng-if="configPermisoAccionAsignarEimCSP">
                                 <i ng-class="{'active-iconmenu':vistaCoordinacion==1}" class="icon-menu-left fa fa-users"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==1}" class="titulo-menu">CSP sin EIM</span>
                             </div>
-                            <div class="opcion-menu" ng-click="cambiarVista(2);" ng-if="configPermisoAccionConsultarBandejaCSPSinEim">
-                                <i ng-class="{'active-iconmenu':vistaCoordinacion==2}" class="icon-menu-left fa fa-clock-o"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==2}" class="titulo-menu">Pendientes</span>
+                            <div class="opcion-menu" ng-click="cambiarVista(2);" ng-if="configPermisoAccionAsignarEimCSP">
+                                <i ng-class="{'active-iconmenu':vistaCoordinacion==2}" class="icon-menu-left fa fa-chalkboard-teacher"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==2}" class="titulo-menu">Validación de lider ...</span>
                             </div>
-                            <div class="opcion-menu" ng-click="cambiarVista(3);" ng-if="configPermisoAccionConsultarBandejaDependencias">
-                                <i ng-class="{'active-iconmenu':vistaCoordinacion==3}" class="icon-menu-left fa fa-caret-square-o-left"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==3}" class="titulo-menu">Dependencias</span>
+                            
+                            <div class="opcion-menu" ng-click="cambiarVista(3);" ng-if="configPermisoAccionConsultarBandejaCSPSinEim">
+                                <i ng-class="{'active-iconmenu':vistaCoordinacion==3}" class="icon-menu-left fa fa-clock-o"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==3}" class="titulo-menu">Pendientes</span>
                             </div>
-                            <div class="opcion-menu" ng-click="cambiarVista(4);" ng-if="configPermisoAccionConsultarBandejaEnImplementacion">
-                                <i ng-class="{'active-iconmenu':vistaCoordinacion==4}" class="icon-menu-left fa fa-retweet"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==4}" class="titulo-menu">En implementaci&oacute;n</span>
+                            <div class="opcion-menu" ng-click="cambiarVista(4);" ng-if="configPermisoAccionConsultarBandejaDependencias">
+                                <i ng-class="{'active-iconmenu':vistaCoordinacion==4}" class="icon-menu-left fa fa-caret-square-o-left"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==4}" class="titulo-menu">Dependencias</span>
                             </div>
-                            <div class="opcion-menu" ng-click="cambiarVista(5);" ng-if="configPermisoAccionConsultarBandejaImplementados">
-                                <i ng-class="{'active-iconmenu':vistaCoordinacion==5}" class="icon-menu-left fa fa-check"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==5}" class="titulo-menu">Implementados</span>
+                            <div class="opcion-menu" ng-click="cambiarVista(5);" ng-if="configPermisoAccionConsultarBandejaEnImplementacion">
+                                <i ng-class="{'active-iconmenu':vistaCoordinacion==5}" class="icon-menu-left fa fa-retweet"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==5}" class="titulo-menu">En implementaci&oacute;n</span>
+                            </div>
+                            <div class="opcion-menu" ng-click="cambiarVista(6);" ng-if="configPermisoAccionConsultarBandejaImplementados">
+                                <i ng-class="{'active-iconmenu':vistaCoordinacion==6}" class="icon-menu-left fa fa-check"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==6}" class="titulo-menu">Implementados</span>
                             </div>
                         </div>
                         <div    class="right-content">
@@ -67,16 +71,19 @@
                                 <div id="vistaPendiente" class="col-12" ng-show="vistaCoordinacion === 1" ng-if="configPermisoAccionAsignarEimCSP">
                                     <jsp:include page="./content/cspSinEim.jsp"></jsp:include>
                                 </div>
-                                <div id="vistaAsignada" class="col-12" ng-show="vistaCoordinacion === 2">
+                                 <div id="vistaValidacion" class="col-12" ng-show="vistaCoordinacion === 2" ng-if="configPermisoAccionAsignarEimCSP">
+                                    <jsp:include page="./content/validacionDeLider.jsp"></jsp:include>
+                                </div>
+                                <div id="vistaAsignada" class="col-12" ng-show="vistaCoordinacion === 3">
                                     <jsp:include page="./content/pendientesPorImplementar.jsp"></jsp:include>
                                 </div>
-                                <div id="vistaDetenida" class="col-12" ng-show="vistaCoordinacion === 3">
+                                <div id="vistaDetenida" class="col-12" ng-show="vistaCoordinacion === 4">
                                     <jsp:include page="./content/dependencias.jsp"></jsp:include>
                                 </div>
-                                <div id="vistaTerminada" class="col-12" ng-show="vistaCoordinacion === 4">
+                                <div id="vistaTerminada" class="col-12" ng-show="vistaCoordinacion === 5">
                                     <jsp:include page="./content/enImplementacion.jsp"></jsp:include>
                                 </div>
-                                <div id="vistaCancelada" class="col-12" ng-show="vistaCoordinacion === 5">
+                                <div id="vistaCancelada" class="col-12" ng-show="vistaCoordinacion === 6">
                                     <jsp:include page="./content/implementados.jsp"></jsp:include>
                                 </div>
                                

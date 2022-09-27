@@ -160,7 +160,7 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 			}
 			swal.close();
 
-			$scope.nombreBandeja = "PENDIENTES POR IMPLEMENTAR";
+			$scope.nombreBandeja = "VALIDACIÓN DE LÍDER TÉCNICO Y TORRE DE CONTROL";
 		}
 		if (opcion === 3) {
 
@@ -173,7 +173,7 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 			}
 			swal.close();
 
-			$scope.nombreBandeja = "DEPENDENCIAS";
+			$scope.nombreBandeja = "PENDIENTES POR IMPLEMENTAR";
 		}
 		if (opcion === 4) {
 			if (!$scope.banderaGeografiaTerminada) {
@@ -184,9 +184,20 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 				
 			}
 			swal.close();
-			$scope.nombreBandeja = "EN IMPLEMENTACIÓN";
+			$scope.nombreBandeja = "DEPENDENCIAS";
 		}
 		if (opcion === 5) {
+			if (!$scope.banderaGeografiaCancelada) {
+				console.log("entra 0");
+				swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
+				swal.showLoading();
+				
+				
+			}
+			swal.close();
+			$scope.nombreBandeja = "EN IMPLEMENTACIÓN";
+		}
+		if (opcion === 6) {
 			if (!$scope.banderaGeografiaCancelada) {
 				console.log("entra 0");
 				swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
