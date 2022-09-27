@@ -15,7 +15,6 @@
         <input type="text" ng-model="" ng-change="limpiarCamposCalendarizada(2)" id="os_calendarizado" placeholder="Ej: 23214"
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
-    
     <div class="col-md-2" style="width: 85px;">
         <button id="btn-calendarizado-salesforce" ng-click="consultarCalendarizada()" type="button" class="btn btn-sm waves-effect waves-light btn-primary">
             <i class="fa fa-search" ></i>
@@ -38,10 +37,7 @@
                     Asignar EIM
             </button>
     </div>
-
 </div>
-
-
 <div class="row">
     <div class="col-12 table-responsive" style="margin-top: 1em; padding: 0;">
         <table id="tablecspSinEim" class="table">

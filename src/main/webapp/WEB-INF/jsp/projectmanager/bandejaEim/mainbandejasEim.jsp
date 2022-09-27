@@ -83,11 +83,7 @@
                                 <div id="vistaTerminada" class="col-12" ng-show="vistaCoordinacion === 5">
                                     <jsp:include page="./content/enImplementacion.jsp"></jsp:include>
                                 </div>
-<<<<<<< HEAD
-                                <div id="vistaCancelada" class="col-12" ng-show="vistaCoordinacion === 6">
-=======
-                                <div id="vistaCancelada" class="col-12 p-0" ng-show="vistaCoordinacion === 5">
->>>>>>> 482246739648cc8a81fbc4fc5aa0f839b344fc54
+                                <div id="vistaCancelada" class="col-12 p-0" ng-show="vistaCoordinacion === 6">
                                     <jsp:include page="./content/implementados.jsp"></jsp:include>
                                 </div>
                                
