@@ -51,9 +51,10 @@
 </div>
 <div class="row">
     <div class="col-12 table-responsive" style="margin-top: 1em; padding: 0;">
-        <table id="tableAsignada" class="table">
-            <thead id="thead_asignada">
+        <table id="tablePendientesPorImplementar" class="table">
+            <thead id="thead_PendientesPorImplementar">
                 <tr>
+                    <th></th>
                     <th data-idColumn="0" data-isNumber="false" data-typeTable="reporteAsignada" class="orderColumnTable orderColumnAscTable">Vertical</th>
                     <th data-idColumn="1" data-isNumber="false" data-typeTable="reporteAsignada" class="orderColumnTable orderColumnAscTable">Celula</th>
                     <th data-idColumn="2" data-isNumber="true" data-typeTable="reporteAsignada" class="orderColumnTable orderColumnAscTable">EIM</th>
@@ -70,6 +71,7 @@
                     <th data-idColumn="13" data-isNumber="false" data-typeTable="reporteAsignada" class="orderColumnTable orderColumnAscTable">Fecha Compromiso</th>
                     <th data-idColumn="14" data-isNumber="false" data-typeTable="reporteAsignada" class="orderColumnTable orderColumnAscTable">Cuadrilla</th>
                     <th data-idColumn="15" data-isNumber="false" data-typeTable="reporteAsignada" class="orderColumnTable orderColumnAscTable">Tipo de sitio</th>
+                    
                 </tr>
             </thead>
         </table>

@@ -26,13 +26,18 @@
     <div class="col-md-3">
     </div>
     <div class="col-md-1" style="float:right; width: 42px; padding:27px; border: 3px;">
+        <a href="#" data-toggle="tooltip" title="Solicitar L&iacute;der T&eacute;cnico y Torre de Control">
         <i class="icon-item far fa-calendar alt" style="color:#577CE1;" role="button" data-prefix="far" data-id="hourglass-end" data-unicode="f253" data-mdb-original-title="" title=""></i>
+        </a>
     </div>
     <div class="col-md-1" style="float:right; width: 42px; padding:27px; border: 3px;">
+    <a href="#" data-toggle="tooltip" title="No Requiere L&iacute;der T&eacute;cnico y Torre de Control">
         <i class="icon-item fas fa-city alt" style="color:#577CE1;" role="button" data-prefix="far" data-id="hourglass-end" data-unicode="f253" data-mdb-original-title="" title=""></i>
+         </a>
     </div>
 
 </div>
+        
 
 
 <div class="row">

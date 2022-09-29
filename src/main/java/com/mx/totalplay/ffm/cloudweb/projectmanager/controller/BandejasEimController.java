@@ -39,4 +39,15 @@ public class BandejasEimController {
 		}
 		return new ResponseEntity<DataTableResponse>(dataTableResponse, HttpStatus.ACCEPTED);
 	}
+	
+	@PostMapping("consultarPendientesPorImplementar")
+	public ResponseEntity<DataTableResponse> consultarPendientesPorImplementar(@ModelAttribute ParamFFMBandejasEimVO params) {
+		logger.info("*** Objeto: " + gson.toJson(params));
+		dataTableResponse = bandejasEimPmService.consultarPendientesPorImplementar(params);
+		if (dataTableResponse.getResult() instanceof Integer){
+			return new ResponseEntity<DataTableResponse>(dataTableResponse, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<DataTableResponse>(dataTableResponse, HttpStatus.ACCEPTED);
+	}
+	
 }

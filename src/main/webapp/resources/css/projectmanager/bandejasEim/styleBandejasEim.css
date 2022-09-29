@@ -1932,20 +1932,22 @@ span.btn-floating.btn-evidencia.btn-sm.btn-secondary.waves-effect.waves-light {
 
 /* TABLES */
 #tablecspSinEim tbody tr:nth-child(even),
+#tablePendientesPorImplementar tbody tr:nth-child(even),
 #table_pendiente tbody tr:nth-child(even),
 #tableAsignada tbody tr:nth-child(even),
-#tableDetenida tbody tr:nth-child(even),
-#tableTerminada tbody tr:nth-child(even),
+#tableDependencia tbody tr:nth-child(even),
+#tableEnImplementacion tbody tr:nth-child(even),
 #tableCancelada tbody tr:nth-child(even),
 #tableCalendarizada tbody tr:nth-child(even),
 #tableGestoria tbody tr:nth-child(even) {
   background: #f5f5f5;
 }
 #tablecspSinEim>tbody>tr>td,
+#tablePendientesPorImplementar>tbody>tr>td,
 #table_pendiente>tbody>tr>td,
 #tableAsignada>tbody>tr>td,
-#tableDetenida>tbody>tr>td,
-#tableTerminada>tbody>tr>td,
+#tableDependencia>tbody>tr>td,
+#tableEnImplementacion>tbody>tr>td,
 #tableCancelada>tbody>tr>td,
 #tableCalendarizada>tbody>tr>td,
 #tableGestoria>tbody>tr>td {
@@ -1954,10 +1956,11 @@ span.btn-floating.btn-evidencia.btn-sm.btn-secondary.waves-effect.waves-light {
   font-size: .8em;
 }
 #tablecspSinEim thead th,
+#tablePendientesPorImplementar thead th,
 #table_pendiente thead th,
 #tableAsignada thead th,
-#tableDetenida thead th,
-#tableTerminada thead th,
+#tableDependencia thead th,
+#tableEnImplementacion thead th,
 #tableCancelada thead th,
 #tableCalendarizada thead th,
 #tableGestoria thead th {
@@ -1971,10 +1974,11 @@ span.btn-floating.btn-evidencia.btn-sm.btn-secondary.waves-effect.waves-light {
   font-weight: normal;
 }
 #tablecspSinEim tbody tr td,
+#tablePendientesPorImplementar tbody tr td,
 #table_pendiente tbody tr td,
 #tableAsignada tbody tr td,
-#tableDetenida tbody tr td,
-#tableTerminada tbody tr td,
+#tableDependencia tbody tr td,
+#tableEnImplementacion tbody tr td,
 #tableCancelada tbody tr td,
 #tableCalendarizada tbody tr td,
 #tableGestoria tbody tr td {
