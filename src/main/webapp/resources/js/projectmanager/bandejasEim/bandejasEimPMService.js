@@ -110,5 +110,34 @@ app.service("coordInstalacionesPIService", function ($http) {
 		});
 	}
     
-    
+    this.consultarImplementadosEim=function(params){
+		return $http({
+			method: "post",
+			url: "req/consultarImplementadosEim",
+			data:JSON.stringify(params),
+            headers : {
+                'Content-Type' : 'application/json'
+            }
+		});
+	}
+
+    this.consultaInfoDetalleOt = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultarDetalleDespachoOT",
+            data: params,
+            headers: { 'Content-Type': "application/json; charset=utf-8" },
+            transformRequest: angular.identity
+        });
+    };
+
+    this.consultaMaterialOt = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultaMaterialesOts",
+            data: params,
+            headers: {'Content-Type': "application/json; charset=utf-8"},
+            transformRequest: angular.identity
+        });
+    };
 });

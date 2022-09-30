@@ -5,8 +5,8 @@ var geografiaPendiente = [];
 
 
 
-app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPIService', 'genericService', function ($scope, $q, coordInstalacionesPIService, genericService) {
-
+app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPIService', 'genericService', 'evidenciaService', function ($scope, $q, coordInstalacionesPIService, genericService, evidenciaService) {
+	app.evidenciaController($scope, evidenciaService)
 	app.coordInstalacionesSF($scope, coordInstalacionesPIService, $q, genericService)
 	app.implementadosEim($scope, coordInstalacionesPIService, $q, genericService)
 	$scope.vistaCoordinacion = 0;
@@ -20,10 +20,58 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 
 	$scope.nivelArbol = 0;
 	$scope.tempReporteCspSinEim = [];
+	$scope.listadogeografiacopy = [];
+	$scope.filtroGeografia = {};
+
+	function compareGeneric(a, b) {
+		let niveluno = a.nivel;
+		let niveldos = b.nivel;
+		if (niveluno > niveldos) {
+			return -1
+		} else if (niveluno < niveldos) {
+			return 1
+		}
+		return 0
+	}
+
+	$scope.obtenerNivelUltimoJerarquiaGeneric = function (list) {
+		return list.sort(compareGeneric)[0].nivel
+	}
+
+		$scope.ordenarGeografia = function (lista, filtro) {
+		
+		let listaGeografiaTemp = lista.filter(e => e.nivel <= parseInt(filtro));
+		listaGeografiaTemp.push({id: 0, nombre: "TOTALPLAY", nivel: 0, padre: "#", state:{opened: true}});
+
+		let geografia = angular.copy(listaGeografiaTemp);
+		geografia.map((e) => {
+			e.parent = e.padre == null ? 0 : e.padre;
+			e.text = e.nombre;
+			e.icon = "fa fa-globe";
+			e.state = {
+				opened: false,
+				selected: true,
+			}
+			return e
+		})
+
+		return geografia
+	}
+
+	$scope.getTextGeografia = function (idJsTree, idInput) {
+		var geografias = $('#' + idJsTree).jstree("get_selected", true);
+		let textoGeografias = [];
+		angular.forEach(geografias, (geografia, index) => {
+			textoGeografias.push(geografia.text);
+		});
+		$('#' + idInput).val(textoGeografias);
+	}
+
 
 	$scope.consultarCatalogos = function () {
 		$q.all([
-			coordInstalacionesPIService.consultarConfiguracionDespachoDespacho({ "moduloAccionesUsuario": "moduloBandejasEim" })
+			coordInstalacionesPIService.consultarConfiguracionDespachoDespacho({ "moduloAccionesUsuario": "moduloBandejasEim" }),
+			genericService.consulCatalogoGeografia()
 		]).then(function (results) {
 			if (results[0].data !== undefined) {
 				if (results[0].data.respuesta) {
@@ -34,35 +82,8 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 						if (resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves) {
 							let llavesResult = results[0].data.result.MODULO_ACCIONES_USUARIO.llaves;
 
-							$scope.nivelArbolPendiente = llavesResult.N_FILTRO_GEOGRAFIA_PENDIENTE ? parseInt(llavesResult.N_FILTRO_GEOGRAFIA_PENDIENTE) : parseInt(llavesResult.N_FILTRO_GEOGRAFIA);
-							$scope.nivelArbolAsignada = llavesResult.N_FILTRO_GEOGRAFIA_ASIGNADA ? parseInt(llavesResult.N_FILTRO_GEOGRAFIA_ASIGNADA) : parseInt(llavesResult.N_FILTRO_GEOGRAFIA);
-							$scope.nivelArbolDetenida = llavesResult.N_FILTRO_GEOGRAFIA_DETENIDA ? parseInt(llavesResult.N_FILTRO_GEOGRAFIA_DETENIDA) : parseInt(llavesResult.N_FILTRO_GEOGRAFIA);
-							$scope.nivelArbolTerminada = llavesResult.N_FILTRO_GEOGRAFIA_TERMINADA ? parseInt(llavesResult.N_FILTRO_GEOGRAFIA_TERMINADA) : parseInt(llavesResult.N_FILTRO_GEOGRAFIA);
-							$scope.nivelArbolCancelada = llavesResult.N_FILTRO_GEOGRAFIA_CANCELADA ? parseInt(llavesResult.N_FILTRO_GEOGRAFIA_CANCELADA) : parseInt(llavesResult.N_FILTRO_GEOGRAFIA);
-							$scope.nivelArbolCalendarizada = llavesResult.N_FILTRO_GEOGRAFIA_CALENDARIZADA ? parseInt(llavesResult.N_FILTRO_GEOGRAFIA_CALENDARIZADA) : parseInt(llavesResult.N_FILTRO_GEOGRAFIA);
-							$scope.nivelArbolGestoria = llavesResult.N_FILTRO_GEOGRAFIA_GESTORIA ? parseInt(llavesResult.N_FILTRO_GEOGRAFIA_GESTORIA) : parseInt(llavesResult.N_FILTRO_GEOGRAFIA);
-
-							$scope.nivelEstatusPendiente = llavesResult.N_ESTATUS_PENDIENTES_PENDIENTE ? parseInt(llavesResult.N_ESTATUS_PENDIENTES_PENDIENTE) : parseInt(llavesResult.N_ESTATUS_PENDIENTES);
-							$scope.nivelEstatusAsignada = llavesResult.N_ESTATUS_PENDIENTES_ASIGNADA ? parseInt(llavesResult.N_ESTATUS_PENDIENTES_ASIGNADA) : parseInt(llavesResult.N_ESTATUS_PENDIENTES);
-							$scope.nivelEstatusDetenida = llavesResult.N_ESTATUS_PENDIENTES_DETENIDA ? parseInt(llavesResult.N_ESTATUS_PENDIENTES_DETENIDA) : parseInt(llavesResult.N_ESTATUS_PENDIENTES);
-							$scope.nivelEstatusTerminada = llavesResult.N_ESTATUS_PENDIENTES_TERMINADA ? parseInt(llavesResult.N_ESTATUS_PENDIENTES_TERMINADA) : parseInt(llavesResult.N_ESTATUS_PENDIENTES);
-							$scope.nivelEstatusCancelada = llavesResult.N_ESTATUS_PENDIENTES_CANCELADA ? parseInt(llavesResult.N_ESTATUS_PENDIENTES_CANCELADA) : parseInt(llavesResult.N_ESTATUS_PENDIENTES);
-							$scope.nivelEstatusCalendarizada = llavesResult.N_ESTATUS_PENDIENTES_CALENDARIZADA ? llavesResult.N_ESTATUS_PENDIENTES_CALENDARIZADA : llavesResult.N_ESTATUS_PENDIENTES;
-							$scope.nivelEstatusGestoria = llavesResult.N_ESTATUS_PENDIENTES_GESTORIA ? parseInt(llavesResult.N_ESTATUS_PENDIENTES_GESTORIA) : parseInt(llavesResult.N_ESTATUS_PENDIENTES);
-
-							$scope.idEstatusPendiente = llavesResult.ID_ESTATUS_PENDIENTE ? parseInt(llavesResult.ID_ESTATUS_PENDIENTE) : 1;
-							$scope.idEstatusAsignada = llavesResult.ID_ESTATUS_ASIGNADA ? parseInt(llavesResult.ID_ESTATUS_ASIGNADA) : 2;
-							$scope.idEstatusDetenida = llavesResult.ID_ESTATUS_DETENIDA ? parseInt(llavesResult.ID_ESTATUS_DETENIDA) : 3;
-							$scope.idEstatusTerminada = llavesResult.ID_ESTATUS_TERMINADA ? parseInt(llavesResult.ID_ESTATUS_TERMINADA) : 4;
-							$scope.idEstatusCancelada = llavesResult.ID_ESTATUS_CANCELADA ? parseInt(llavesResult.ID_ESTATUS_CANCELADA) : 5;
-							$scope.idEstatusCalendarizada = llavesResult.ID_ESTATUS_CALENDARIZADA ? parseInt(llavesResult.ID_ESTATUS_CALENDARIZADA) : 6;
-							$scope.idEstatusGestoria = llavesResult.ID_ESTATUS_GESTORIA ? parseInt(llavesResult.ID_ESTATUS_GESTORIA) : 7;
-
-							if (llavesResult.N_FILTRO_GEOGRAFIA)
-								$scope.nivelArbol = parseInt(llavesResult.N_FILTRO_GEOGRAFIA)
-
-							if (llavesResult.N_ESTATUS_PENDIENTES)
-								$scope.nivelEstatusGeneral = parseInt(llavesResult.N_ESTATUS_PENDIENTES)
+							$scope.nivelArbolImplementados = llavesResult.N_FILTRO_GEOGRAFIA_IMPLEMENTADOS;
+							
 
 							$scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
 
@@ -93,20 +114,23 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 			if (results[1].data !== undefined) {
 				if (results[1].data.respuesta) {
 					if (results[1].data.result) {
-
-						/*
-						$scope.filtrosCatalogo = results[0].data.result;
-						$scope.filtrosCatalogo.map((e)=>{
-							e.check = true;
-						})
-						$scope.mostrarFiltros();
-						*/
+						if (results[1].data.result.geografia) {
+							$scope.listadogeografiacopy = results[1].data.result.geografia;
+							$scope.nivelArbolImplementados = $scope.nivelArbolImplementados ? $scope.nivelArbolImplementados : $scope.obtenerNivelUltimoJerarquiaGeneric(results[1].data.result.geografia);
+							let geografia = $scope.ordenarGeografia(results[1].data.result.geografia, $scope.nivelArbolImplementados);
+							$scope.filtroGeografia.implementados = angular.copy(geografia);
+							
+						} else {
+							toastr.info('No se encontraron datos para la geograf\u00EDa');
+						}
 					} else {
-						toastr.warning('No se encontraron resultados');
+						toastr.info('No se encontraron datos para la geograf\u00EDa');
 					}
 				} else {
-					toastr.warning(results[0].data.resultDescripcion);
+					toastr.warning(results[1].data.resultDescripcion);
 				}
+			} else {
+				toastr.error('Ha ocurrido un error en la consulta de la geograf\u00EDa');
 			}
 		}).catch(err => handleError(err));
 	}
@@ -203,7 +227,23 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 				console.log("entra 0");
 				swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 				swal.showLoading();
-
+				$('#jstreeGeografia-implementados').bind('loaded.jstree', function (e, data) {
+					$scope.getTextGeografia('jstreeGeografia-implementados', 'cluster-implementados');
+				}).jstree({
+					'plugins': ["wholerow", "checkbox", "search"],
+					'core': {
+						'data': $scope.filtroGeografia.implementados,
+						'themes': {
+							'name': 'proton',
+							'responsive': true,
+							"icons": false
+						}
+					},
+					"search": {
+						"case_sensitive": false,
+						"show_only_matches": true
+					}
+				});
 
 			}
 			swal.close();
