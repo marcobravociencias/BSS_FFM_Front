@@ -1,5 +1,8 @@
 package com.mx.totalplay.ffm.cloudweb.projectmanager.service.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -230,6 +233,22 @@ public class ImplBandejaEimService implements BandejasEimPMService {
 		        logger.info("*** Objeto Response: " + gson.toJson(dataResponse));
 				
 				return dataResponse;
+	}
+	
+	@Override
+	public ServiceResponseResult consultarSinEim() {
+		logger.info("ImplBandejaEimService.class [metodo = consultarSinEim() ]\n");
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		String tokenAcces = principalDetail.getAccess_token();
+		String urlRequest = principalDetail.getDireccionAmbiente()
+				.concat(constBandejasEim.getConsultaBandejaSinEimApi());
+
+		logger.info("URL: " + urlRequest);
+
+		Map<String, String> paramsRequestGet = new HashMap<String, String>();
+		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
+				ServiceResponseResult.class, tokenAcces);
+		return response;
 	}
 	
 }

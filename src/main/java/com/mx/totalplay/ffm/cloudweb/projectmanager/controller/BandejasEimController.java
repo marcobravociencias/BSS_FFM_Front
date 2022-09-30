@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import com.mx.totalplay.ffm.cloudweb.plantainterna.model.CoordInstalacionesPI.Pa
 import com.mx.totalplay.ffm.cloudweb.projectmanager.model.ParamFFMBandejasEimVO;
 import com.mx.totalplay.ffm.cloudweb.projectmanager.service.BandejasEimPMService;
 import com.mx.totalplay.ffm.cloudweb.utilerias.model.DataTableResponse;
+import com.mx.totalplay.ffm.cloudweb.utilerias.model.ServiceResponseResult;
 
 @RestController
 @RequestMapping("/req")
@@ -49,5 +51,13 @@ public class BandejasEimController {
 		}
 		return new ResponseEntity<DataTableResponse>(dataTableResponse, HttpStatus.ACCEPTED);
 	}
-	
+	@GetMapping("/consultarSinEim")
+	public ResponseEntity<?> consultarSinEim() {
+		logger.info("##### CONSULTANDO consultarSinEim");
+		ServiceResponseResult response = bandejasEimPmService.consultarSinEim();
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
 }
