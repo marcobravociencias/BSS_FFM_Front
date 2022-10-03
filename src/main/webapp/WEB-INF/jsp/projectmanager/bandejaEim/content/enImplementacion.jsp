@@ -2,36 +2,36 @@
 <div class="row" id="">
   	<div class="col-md-2" style="width: 11%;">
         <label for="" class="label-filter">Oportunidad</label>
-        <input type="text" ng-model="" ng-change="limpiarCamposCalendarizada(3)" placeholder="Ej: 23214"
+        <input type="text" ng-model="test" ng-change="limpiarCamposCalendarizada(3)" placeholder="Ej: 23214"
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
     <div class="col-md-2" style="width: 11%;">
         <label for="" class="label-filter">Regi&oacute;n</label>
-        <input type="text" ng-model="" ng-change="limpiarCamposCalendarizada(1)" id="ot_calendarizado" placeholder="Ej: 65434"
+        <input type="text" ng-model="test" ng-change="limpiarCamposCalendarizada(1)" id="ot_calendarizado" placeholder="Ej: 65434"
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
     <div class="col-md-2" style="width: 11%;">
         <label for="" class="label-filter">Fecha</label>
-        <input type="text" ng-model="" ng-change="limpiarCamposCalendarizada(2)" id="os_calendarizado" placeholder="Ej: 23214"
+        <input type="text" ng-model="test" ng-change="limpiarCamposCalendarizada(2)" id="os_calendarizado" placeholder="Ej: 23214"
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
     <div class="col-md-2" style="width: 11%;">
         <label for="" class="label-filter">Estatus de OT</label>
-        <input type="text" ng-model="" ng-change="limpiarCamposCalendarizada(2)" id="os_calendarizado" placeholder="Ej: 23214"
+        <input type="text" ng-model="test" ng-change="limpiarCamposCalendarizada(2)" id="os_calendarizado" placeholder="Ej: 23214"
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
     <div class="col-md-2" style="width: 11%;">
         <label for="" class="label-filter">Vertical / C&eacute;lula</label>
-        <input type="text" ng-model="" ng-change="limpiarCamposCalendarizada(2)" id="os_calendarizado" placeholder="Ej: 23214"
+        <input type="text" ng-model="test" ng-change="limpiarCamposCalendarizada(2)" id="os_calendarizado" placeholder="Ej: 23214"
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
     <div class="col-md-2" style="width: 11%;">
         <label for="" class="label-filter">EIM</label>
-        <input type="text" ng-model="" ng-change="limpiarCamposCalendarizada(2)" id="os_calendarizado" placeholder="Ej: 23214"
+        <input type="text" ng-model="test" ng-change="limpiarCamposCalendarizada(2)" id="os_calendarizado" placeholder="Ej: 23214"
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
     <div class="col-md-2" style="width: 85px;">
-        <button id="btn-calendarizado-salesforce" ng-click="consultarCalendarizada()" type="button" class="btn btn-sm waves-effect waves-light btn-primary">
+        <button id="btn-calendarizado-salesforce"   ng-model="test" ng-click="consultarCalendarizada()" type="button" class="btn btn-sm waves-effect waves-light btn-primary">
             <i class="fa fa-search" ></i>
         </button>
     </div>

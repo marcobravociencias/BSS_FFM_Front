@@ -2,18 +2,30 @@
 <div class="row" id="">
   	<div class="col-md-2" style="width: 11%;">
         <label for="" class="label-filter">Clave cliente</label>
+<<<<<<< HEAD
         <input type="text" ng-model="" ng-change="" placeholder="Ej: 23214"
+=======
+        <input type="text" ng-model="test" ng-change="limpiarCamposCalendarizada(3)" placeholder="Ej: 23214"
+>>>>>>> 586f5b78b011198a927c778ed670d485b3dca8ff
         class="form-control input-filtro-coordInst form-control-sm">
         
     </div>
     <div class="col-md-2" style="width: 11%;">
         <label for="" class="label-filter">CSP</label>
+<<<<<<< HEAD
         <input type="text" ng-model="" ng-change="" id="ot_calendarizado" placeholder="Ej: 65434"
+=======
+        <input type="text" ng-model="test" ng-change="limpiarCamposCalendarizada(1)" id="ot_calendarizado" placeholder="Ej: 65434"
+>>>>>>> 586f5b78b011198a927c778ed670d485b3dca8ff
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
     <div class="col-md-2" style="width: 11%;">
         <label for="" class="label-filter">COT</label>
+<<<<<<< HEAD
         <input type="text" ng-model="" ng-change="" id="os_calendarizado" placeholder="Ej: 23214"
+=======
+        <input type="text" ng-model="test" ng-change="limpiarCamposCalendarizada(2)" id="os_calendarizado" placeholder="Ej: 23214"
+>>>>>>> 586f5b78b011198a927c778ed670d485b3dca8ff
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
     <div class="col-md-2" style="width: 85px;">
