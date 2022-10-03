@@ -60,4 +60,13 @@ public class BandejasEimController {
 		}
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
+	@GetMapping("/consultarListaEim")
+	public ResponseEntity<?> consultarListaEim() {
+		logger.info("##### CONSULTANDO consultarListaEim");
+		ServiceResponseResult response = bandejasEimPmService.consultarListaEim();
+		if (response.getResult() instanceof Integer){
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
 }

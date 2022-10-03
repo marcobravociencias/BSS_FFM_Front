@@ -16,4 +16,7 @@ public class ConstBandejasEim implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Value("${consultaBandejaSinEimApi}")
     private String consultaBandejaSinEimApi;
+	
+	@Value("${consultaListaEim}")
+	private String consultaListaEim;
 }

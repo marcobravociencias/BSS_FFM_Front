@@ -141,4 +141,21 @@ app.service("genericService", function ($http) {
             }
         });
     }
+
+    this.consultarSinEim = function () {
+        return $http({
+            method: "get",
+            url: "req/consultarSinEim",
+            headers: {'Content-Type': "application/json; charset=utf-8"},
+        });
+    };
+    
+    this.consultarListaEim = function () {
+        return $http({
+            method: "get",
+            url: "req/consultarListaEim",
+            headers: {'Content-Type': "application/json; charset=utf-8"},
+        });
+    };
+
 })

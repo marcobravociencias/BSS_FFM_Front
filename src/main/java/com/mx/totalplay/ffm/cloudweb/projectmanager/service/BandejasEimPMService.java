@@ -11,6 +11,8 @@ public interface BandejasEimPMService {
 	public DataTableResponse consultarPendientesPorImplementar(ParamFFMBandejasEimVO params);
 
 	public ServiceResponseResult consultarSinEim();
+
+	public ServiceResponseResult consultarListaEim();
 	
 	
 }

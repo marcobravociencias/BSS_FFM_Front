@@ -295,7 +295,7 @@ app.noticiasController = function ($scope, $q, busquedaService) {
                         mostrarMensajeWarningValidacion('Escribir un comentario')
                         return false;
                     }
-                    let params = {
+                     = {
                         newId: noticia,
                         text: document.getElementById('texto-comentario-os-' + noticia).value
                     }

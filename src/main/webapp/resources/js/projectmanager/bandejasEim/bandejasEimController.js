@@ -22,7 +22,7 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 	$scope.tempReporteCspSinEim = [];
 	$scope.listadogeografiacopy = [];
 	$scope.filtroGeografia = {};
-
+	$scope.data = {};
 	function compareGeneric(a, b) {
 		let niveluno = a.nivel;
 		let niveldos = b.nivel;
@@ -165,7 +165,7 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 					swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 					swal.showLoading();
 					$scope.banderaCspSinEim = true;
-					$scope.consultarCspSinEim();
+					$scope.consultarSinEimPm();
 				}
 				swal.close();
 				$scope.nombreBandeja = "CSP SIN EIM";
@@ -446,6 +446,94 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 			}
 		}).catch(err => handleError(err));
 	}
+	//Table con metodo get
+	$scope.consultarSinEimPm = function(isSwal){
+		let params = { cot: "", csp: "", cveCliente: ""};
+		let arraRow = [];
+		if (isSwal) {
+            swal({ text: 'Espera un momento...', allowOutsideClick: false });
+            swal.showLoading();
+        }
+
+        if (tableCspSinEim) {
+            tableCspSinEim.destroy();
+        }
+		genericService.consultarSinEim(params).then(function success(response){
+			if(response.data !== undefined){
+				if(response.data.respuesta){
+					if (response.data.result) {
+						if (response.data.result.puntas) {
+							$scope.listaSinEim = response.data.result.puntas;
+							$.each(response.data.result.puntas, function (i, elemento){
+								let row = [];
+								row[0] = '<input type="checkbox" id="check" name="check" value="' + elemento.idOportunidad + '" class="main"/>';
+								row[1] = elemento.idOportunidad ? elemento.idOportunidad : 'Sin informaci&oacute;n';
+								row[2] = elemento.vertical ? elemento.vertical : 'Sin informaci&oacute;n';
+								row[3] = elemento.celula ? elemento.celula : 'Sin informaci&oacute;n';
+								row[4] = elemento.cliente ? elemento.cliente : 'Sin informaci&oacute;n';
+								row[5] = elemento.csp ? elemento.csp : 'Sin informaci&oacute;n';
+								row[6] = elemento.fechaVenta ? elemento.fechaVenta : 'Sin informaci&oacute;n';
+								arraRow.push(row);
+							})
+						} else{
+							toastr.error(response.data.resultDescripcion);
+						}
+					} else{
+						toastr.warning('No se encontraron Eims');
+					}
+				} else{
+					toastr.warning(response.data.resultDescripcion);
+				}
+			} else {
+				toastr.error('Ha ocurrido un error al consultar los Eims');
+			}
+	
+			tableCspSinEim = $('#tablecspSinEim').DataTable({
+				"paging": true,
+				"lengthChange": false,
+				"ordering": true,
+				"pageLength": 10,
+				"info": true,
+				"scrollX": false,
+				"data": arraRow,
+				"autoWidth": false,
+				"language": idioma_espanol_not_font,
+				"aoColumnDefs": [
+					{ "aTargets": [5], "bSortable": false }
+				]
+			});
+			swal.close();
+
+		})
+				
+	}
+	
+	$scope.getData = function () {
+		$q.all([
+			genericService.consultarListaEim()
+		]).then(function (results) {
+			if (results[0].data !== undefined) {
+				if (results[0].data.respuesta) {
+					if (results[0].data.result) {
+						if (results[0].data.result.eims.length > 0) {
+							
+							$scope.data.eims = results[0].data.result.eims;
+						} else {
+							toastr.info('No se encontr\u00F3 catalogo de Eims');
+						}
+					} else {
+						toastr.info('No se encontr\u00F3 catalogo de Eims');
+					}
+				} else {
+					toastr.warning(results[0].data.resultDescripcion);
+				}
+			}
+		}).catch(err => handleError(err));
+	}
+	$scope.getData();
+
+
+
 	$scope.resultPendientes = [];
 	$scope.consultarCspSinEim = function () {
 		$scope.resultPendientes = [];
@@ -1243,7 +1331,6 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 		}
 	}
 	function format(d) {
-		// `d` is the original data object for the row
 		return (
 			'<div class="col-10 table-responsive" style="margin-top: 1em; padding: 0;">'+
 			'<table id="tableDetenida" class="table">' +

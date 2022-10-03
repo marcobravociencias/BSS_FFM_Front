@@ -250,5 +250,21 @@ public class ImplBandejaEimService implements BandejasEimPMService {
 				ServiceResponseResult.class, tokenAcces);
 		return response;
 	}
+
+	@Override
+	public ServiceResponseResult consultarListaEim() {
+		logger.info("ImplBandejaEimService.class [metodo = consultarListaEim() ]\n");
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		String tokenAcces = principalDetail.getAccess_token();
+		String urlRequest = principalDetail.getDireccionAmbiente()
+				.concat(constBandejasEim.getConsultaListaEim());
+
+		logger.info("URL: " + urlRequest);
+
+		Map<String, String> paramsRequestGet = new HashMap<String, String>();
+		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
+				ServiceResponseResult.class, tokenAcces);
+		return response;
+	}
 	
 }
