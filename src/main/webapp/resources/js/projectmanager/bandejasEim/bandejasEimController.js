@@ -82,6 +82,8 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 						if (resultConf.MODULO_ACCIONES_USUARIO && resultConf.MODULO_ACCIONES_USUARIO.llaves) {
 							let llavesResult = results[0].data.result.MODULO_ACCIONES_USUARIO.llaves;
 
+							$scope.nivelArbolCspSinEim = llavesResult.N_FILTRO_GEOGRAFIA_CSPSINEIM;
+							$scope.nivelArbolPendientesPorImplementar = llavesResult.N_FILTRO_GEOGRAFIA_PENDIENTESIMPLEMENTAR;
 							$scope.nivelArbolImplementados = llavesResult.N_FILTRO_GEOGRAFIA_IMPLEMENTADOS;
 							
 
@@ -96,8 +98,10 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 								$scope.configPermisoAccionConsultarBandejaPendientesPorImplementar = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultarBandejaPendientesPorImplementar" })[0] != undefined);
 							}
 							$("#idBody").removeAttr("style");
+
 							validateCreed = llavesResult.KEY_VL_CREED_RESU ? llavesResult.KEY_VL_CREED_RESU : false;
 							validateCreedMask = llavesResult.KEY_MASCARA_CREED_RESU ? llavesResult.KEY_MASCARA_CREED_RESU : null;
+
 						}
 					} else {
 						swal.close();
@@ -116,9 +120,26 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 					if (results[1].data.result) {
 						if (results[1].data.result.geografia) {
 							$scope.listadogeografiacopy = results[1].data.result.geografia;
+
+							$scope.nivelArbolCspSinEim = $scope.nivelArbolCspSinEim ? $scope.nivelArbolCspSinEim : $scope.obtenerNivelUltimoJerarquiaGeneric(results[1].data.result.geografia);
+							$scope.nivelArbolPendientesPorImplementar = $scope.nivelArbolPendientesPorImplementar ? $scope.nivelArbolPendientesPorImplementar : $scope.obtenerNivelUltimoJerarquiaGeneric(results[1].data.result.geografia);
 							$scope.nivelArbolImplementados = $scope.nivelArbolImplementados ? $scope.nivelArbolImplementados : $scope.obtenerNivelUltimoJerarquiaGeneric(results[1].data.result.geografia);
-							let geografia = $scope.ordenarGeografia(results[1].data.result.geografia, $scope.nivelArbolImplementados);
-							$scope.filtroGeografia.implementados = angular.copy(geografia);
+							
+							if($scope.configPermisoAccionAsignarEimCSP){
+								let geografia = $scope.ordenarGeografia(results[1].data.result.geografia, $scope.nivelArbolCspSinEim);
+								$scope.filtroGeografia.cspSinEim = angular.copy(geografia);
+							}
+
+							if($scope.configPermisoAccionConsultarBandejaPendientesPorImplementar){
+								let geografia = $scope.ordenarGeografia(results[1].data.result.geografia, $scope.nivelArbolPendientesPorImplementar);
+								$scope.filtroGeografia.pendientesPorImplementar = angular.copy(geografia);
+							}
+
+							if($scope.configPermisoAccionConsultarBandejaImplementados){
+								let geografia = $scope.ordenarGeografia(results[1].data.result.geografia, $scope.nivelArbolImplementados);
+								$scope.filtroGeografia.implementados = angular.copy(geografia);
+							}
+							
 							
 						} else {
 							toastr.info('No se encontraron datos para la geograf\u00EDa');
@@ -149,35 +170,63 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 		$scope.listadoMotivosReagenda = $scope.filtrosCatalogo.filter(e => { return e.idPadre === 201 })
 	}
 
-	$scope.banderaCspSinEim = false;
-	$scope.banderaGeografiaAsignada = false;
-	$scope.banderaPendientesPorImplementar = false;
-	$scope.banderaGeografiaTerminada = false;
-	$scope.banderaGeografiaCancelada = false;
-	$scope.banderaGeografiaCalendarizada = false;
-	$scope.banderaGeografiaGestoria = false;
-	$scope.cambiarVista = function (opcion) {
+	$scope.guardarArbol = function (type) {
+		let arbolActual = $("#jstreeGeografia-" + type).jstree("get_selected", true)
+			.map(e => parseInt(e.id));
 
-		if (opcion === 1) {
-
-			if ($scope.configPermisoAccionAsignarEimCSP) {
-				if (!$scope.banderaCspSinEim) {
-					swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
-					swal.showLoading();
-					$scope.banderaCspSinEim = true;
-					$scope.consultarCspSinEim();
-				}
-				swal.close();
-				$scope.nombreBandeja = "CSP SIN EIM";
-			}
-			if (!$scope.configPermisoAccionAsignarEimCSP) {
-				$scope.nombreBandeja = "Bienvenido al Modulo Bandejas EIM"
-			}
+		switch (type+"") {
+			case '1':
+				$scope.filtroGeografia.cspSinEim.map((e) => {
+					e.state = {
+						opened: true,
+						selected: arbolActual.find((t) => t == parseInt(e.id)) > 0 ? true : false,
+					}
+					return e
+				});
+				break;
+			case '3':
+				$scope.filtroGeografia.pendientesPorImplementar.map((e) => {
+					e.state = {
+						opened: true,
+						selected: arbolActual.find((t) => t == parseInt(e.id)) > 0 ? true : false,
+					}
+					return e
+				});
+				break;
+			case '6':
+				$scope.filtroGeografia.implementados.map((e) => {
+					e.state = {
+						opened: true,
+						selected: arbolActual.find((t) => t == parseInt(e.id)) > 0 ? true : false,
+					}
+					return e
+				});
+				break;
 		}
 
+	}
+
+	$scope.banderaCspSinEim = false;
+	$scope.banderaPendientesPorImplementar = false;
+	$scope.banderaValidacionLider = false;
+	$scope.banderaDependencias = false;
+	$scope.banderaEnImplementacion = false;
+	$scope.banderaImplementados = false;
+
+	$scope.cambiarVista = function (opcion) {
+		let geografiaReporte = [];
+		
+		if (opcion === 1) {
+			geografiaReporte = angular.copy($scope.filtroGeografia.cspSinEim);
+			if (!$scope.banderaCspSinEim) {
+				swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
+				swal.showLoading();
+			}
+			$scope.nombreBandeja = "CSP SIN EIM";
+		}
 		if (opcion === 2) {
 
-			if (!$scope.banderaGeografiaAsignada) {
+			if (!$scope.banderaValidacionLider) {
 
 				swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 				swal.showLoading();
@@ -189,32 +238,24 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 			$scope.nombreBandeja = "VALIDACIÓN DE LÍDER TÉCNICO Y TORRE DE CONTROL";
 		}
 		if (opcion === 3) {
-
+			geografiaReporte = angular.copy($scope.filtroGeografia.pendientesPorImplementar);
 			if (!$scope.banderaPendientesPorImplementar) {
-
 				swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 				swal.showLoading();
-				$scope.banderaPendientesPorImplementar = true;
-				$scope.consultarPendientesPorImplementar();
-
 			}
-			swal.close();
-
 			$scope.nombreBandeja = "PENDIENTES POR IMPLEMENTAR";
 		}
 		if (opcion === 4) {
-			if (!$scope.banderaGeografiaTerminada) {
+			if (!$scope.banderaDependencias) {
 				console.log("entra 0");
 				swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 				swal.showLoading();
-
-
 			}
 			swal.close();
 			$scope.nombreBandeja = "DEPENDENCIAS";
 		}
 		if (opcion === 5) {
-			if (!$scope.banderaGeografiaCancelada) {
+			if (!$scope.banderaEnImplementacion) {
 				console.log("entra 0");
 				swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 				swal.showLoading();
@@ -223,232 +264,72 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 			$scope.nombreBandeja = "EN IMPLEMENTACIÓN";
 		}
 		if (opcion === 6) {
-			if (!$scope.banderaGeografiaCancelada) {
-				console.log("entra 0");
-				swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
+			geografiaReporte = angular.copy($scope.filtroGeografia.implementados);
+			if (!$scope.banderaImplementados) {
+				swal({ text: 'Cargando registros...', allowOutsideClick: false });
 				swal.showLoading();
-				$('#jstreeGeografia-implementados').bind('loaded.jstree', function (e, data) {
-					$scope.getTextGeografia('jstreeGeografia-implementados', 'cluster-implementados');
-				}).jstree({
-					'plugins': ["wholerow", "checkbox", "search"],
-					'core': {
-						'data': $scope.filtroGeografia.implementados,
-						'themes': {
-							'name': 'proton',
-							'responsive': true,
-							"icons": false
-						}
-					},
-					"search": {
-						"case_sensitive": false,
-						"show_only_matches": true
-					}
-				});
-
 			}
-			swal.close();
 			$scope.nombreBandeja = "IMPLEMENTADOS";
 		}
+		
+		if (geografiaReporte) {
+			$scope.guardarArbol($scope.vistaCoordinacion);
+			let isJsTree = $('#jstreeGeografia-' + $scope.vistaCoordinacion).jstree('is_loaded')[0] ? true : false;
+			if (!isJsTree) {
+				$('#jstreeGeografia-' + $scope.vistaCoordinacion).jstree('destroy');
+			}
 
-		$scope.vistaCoordinacion = opcion;
-	}
+			$scope.vistaCoordinacion = opcion;
 
-	$('#modal-geografia-pendiente').on('hidden.bs.modal', function () {
-		$scope.btnAceptarModalGeografiaPendiente();
-	});
-
-	$('#modal-geografia-asignada').on('hidden.bs.modal', function () {
-		$scope.btnAceptarModalGeografiaAsignada();
-	});
-
-	$('#modal-geografia-detenido').on('hidden.bs.modal', function () {
-		$scope.btnAceptarModalGeografiaDetenida();
-	});
-
-	$('#modal-geografia-terminada').on('hidden.bs.modal', function () {
-		$scope.btnAceptarModalGeografiaTerminada();
-	});
-
-	$('#modal-geografia-cancelada').on('hidden.bs.modal', function () {
-		$scope.btnAceptarModalGeografiaCancelada();
-	});
-
-	$('#modal-geografia-calendarizada').on('hidden.bs.modal', function () {
-		$scope.btnAceptarModalGeografiaCalendarizada();
-	});
-
-	$('#modal-geografia-gestoria').on('hidden.bs.modal', function () {
-		$scope.btnAceptarModalGeografiaGestoria();
-	});
-
-
-	$scope.detalleOtSeleccionada = {};
-	consultaDetalleOt = function (id) {
-
-		$scope.elementCalendarizado = {};
-		$scope.elementReagendaOT = {};
-		$scope.elementoPlazaComercial = {};
-		$scope.detalleOtSeleccionada = {};
-		$scope.$apply();
-		$scope.objetoSelecionado = {};
-
-		switch ($scope.vistaCoordinacion) {
-			case 1:
-				$scope.objetoSelecionado = $scope.objetoBusqueda.pendiente.find(o => { return Number(o.idOrden) == id });
-				break;
-			case 2:
-				$scope.objetoSelecionado = $scope.objetoBusqueda.asignada.find(o => { return Number(o.idOrden) == id });
-				break;
-			case 3:
-				$scope.objetoSelecionado = $scope.objetoBusqueda.detenida.find(o => { return Number(o.idOrden) == id });
-				break;
-			case 4:
-				$scope.objetoSelecionado = $scope.objetoBusqueda.terminada.find(o => { return Number(o.idOrden) == id });
-				break;
-			case 5:
-				$scope.objetoSelecionado = $scope.objetoBusqueda.cancelada.find(o => { return Number(o.idOrden) == id });
-				break;
-			case 6:
-				$scope.objetoSelecionado = $scope.objetoBusqueda.calendarizada.find(o => { return Number(o.idOrden) == id });
-				break;
-			case 7:
-				$scope.objetoSelecionado = $scope.objetoBusqueda.gestoria.find(o => { return Number(o.idOrden) == id });
-				break;
-			default:
-				break;
-		}
-
-		$scope.permisosModal = $scope.elementosConfigGeneral.get("MODAL_FLUJO_" + $scope.objetoSelecionado.idFlujo).split(",");
-		$scope.requestModalInformacion($scope.objetoSelecionado.idOrden);
-		/*
-		switch ($scope.vistaCoordinacion) {
-			case 1:
-				$scope.objetoSelecionado = $scope.resultPendientes[index];
-				break;
-			case 6:
-				$scope.objetoSelecionado = $scope.resultCalendarizada[index];
-				break;
-			case 7:
-				$scope.objetoSelecionado = $scope.resultGestoria[index];
-				break;
-			default:
-				break;
-		}
-		*/
-		$scope.detalleOtSeleccionada.idOrden = $scope.objetoSelecionado.idOrden;
-		$scope.detalleOtSeleccionada.folioOrden = $scope.objetoSelecionado.folioSistema;
-		$scope.detalleOtSeleccionada.idFlujo = $scope.objetoSelecionado.idFlujo;
-		$scope.detalleOtSeleccionada.idtipoOrden = $scope.objetoSelecionado.idTipoOrden;
-		$scope.detalleOtSeleccionada.idSubtipoOrden = $scope.objetoSelecionado.idSubTipoOrden;
-		$scope.detalleOtSeleccionada.latitud = $scope.objetoSelecionado.latitud;
-		$scope.detalleOtSeleccionada.longitud = $scope.objetoSelecionado.longitud;
-		$("#modalDetalleOt").modal("show");
-		$('#fecha-reagendamiento').datepicker('update', new Date());
-		$('#fecha-calendarizado').datepicker('update', moment(new Date()).add('days', 8).toDate());
-		if ($scope.vistaCoordinacion !== 1) {
-			document.getElementById('opcion-reagendar').click()
-		} else {
-			document.getElementById('opcion-plaza').click()
-		}
-
-	}
-
-	$scope.idOtSelect = "";
-	$scope.requestModalInformacion = function (idparams) {
-		$scope.otconsultamodal =
-			document.getElementById('v-tabs-consulta-detalleot-tab').click()
-		$scope.idOtSelect = idparams;
-		$scope.flagComentarios = false;
-		$scope.flagHistorico = false;
-		$scope.flagPedido = false;
-		$scope.comentariosOrdenTrabajo = [];
-		$scope.historialOrdenTrabajo = [];
-		$scope.infoOtDetalle = {}
-		$scope.detalleCotizacion = {}
-		$scope.detalleTecnicoOt = {};
-		let params = {
-			"idOt": idparams
-		}
-		swal({ text: 'Consultando detalle de la OT ...', allowOutsideClick: false });
-		swal.showLoading();
-		$q.all([
-			coordInstalacionesPIService.consultarDetalleOtDespacho(params),
-			coordInstalacionesPIService.consultarDetalleTecnicoOt(params),
-		]).then(function (results) {
-			swal.close()
-			if (results[0].data !== undefined) {
-				if (results[0].data.respuesta) {
-					if (results[0].data.result) {
-						if (results[0].data.result.orden) {
-							$scope.infoOtDetalle = results[0].data.result.orden
-							$("#modalDetalleOT").modal({ backdrop: 'static', keyboard: false });
-							$("#modalDetalleOT").modal('show')
-							setTimeout(function () {
-								document.getElementsByClassName('permiso-accion-modal')[0].click();
-							}, 500)
-
-						} else {
-							toastr.info(results[0].data.result.mensaje);
+			$('#jstreeGeografia-' + opcion).bind('loaded.jstree', function (e, data) {
+				switch (opcion) {
+					case 1:
+						$scope.getTextGeografia('jstreeGeografia-1', 'cluster-cspSinEim');
+						if (!$scope.banderaCspSinEim) {
+							$scope.banderaCspSinEim = true;
+							$scope.consultarCspSinEim();
 						}
-					} else {
-						toastr.warning('No se encontraron datos');
-					}
-				} else {
-					toastr.warning(results[0].data.resultDescripcion);
-				}
-			} else {
-				toastr.error('Ha ocurrido un error en la consulta de los datos');
-			}
-			if (results[1].data !== undefined) {
-				if (results[1].data.respuesta) {
-					if (results[1].data.result) {
-						$scope.detalleTecnicoOt = results[1].data.result;
-					} else {
-						toastr.warning('No se encontraron datos');
-					}
-				} else {
-					toastr.warning(results[0].data.resultDescripcion);
-				}
-			} else {
-				toastr.error('Ha ocurrido un error en la consulta de los datos');
-			}
-
-			if (results[2].data !== undefined) {
-				if (results[2].data.respuesta) {
-					if (results[2].data.result) {
-						if (results[2].data.result.orden) {
-
-							$scope.infoDetalleOtPe = results[2].data.result.orden;
-
-							$scope.infoDetalleOtPe.tipoOrden = $scope.respaldoTipoOrdenArray.find(e => { return e.id === $scope.infoDetalleOtPe.idTipoOrden });
-							$scope.infoDetalleOtPe.subTipoOrden = $scope.respaldoTipoOrdenArray.find(e => { return e.id === $scope.infoDetalleOtPe.idSubTipoOrden });
-							$scope.infoDetalleOtPe.estado = $scope.respaldoStatusArray.find(e => { return e.id === $scope.infoDetalleOtPe.idEstado });
-							$scope.infoDetalleOtPe.estatus = $scope.respaldoStatusArray.find(e => { return e.id === $scope.infoDetalleOtPe.idEstatus });
-
-							if ($scope.infoDetalleOtPe.detalleCorteMasivo !== undefined) {
-								$scope.tabDetalleCorteMasivo = true;
-							} else if ($scope.infoDetalleOtPe.detalleDetencion !== undefined) {
-								$scope.tabDetalleDetencion = true;
-							} else if ($scope.infoDetalleOtPe.detalleInspeccion !== undefined) {
-								$scope.tabDetalleInspector = true;
-							}
-						} else {
-							toastr.info(results[2].data.result.mensaje);
+						break;
+					case 3:
+						$scope.getTextGeografia('jstreeGeografia-3', 'cluster-pendientesPorImplementar');
+						if (!$scope.banderaPendientesPorImplementar) {
+							$scope.banderaPendientesPorImplementar = true;
+							$scope.consultarPendientesPorImplementar();
 						}
-					} else {
-						toastr.warning('No se encontraron datos en el detalle de la OT');
-					}
-				} else {
-					toastr.warning(results[2].data.resultDescripcion);
+						break;
+					case 6:
+						$scope.getTextGeografia('jstreeGeografia-6', 'cluster-implementados');
+						if (!$scope.banderaImplementados) {
+							$scope.banderaImplementados = true;
+							$scope.consultarImplementados();
+						}
+						break;
 				}
-			} else {
-				toastr.error('Ha ocurrido un error en la consulta del detalle de la OT');
-			}
-		}).catch(err => handleError(err));
+
+			}).jstree({
+				'plugins': ["wholerow", "checkbox", "search"],
+				'core': {
+					'data': geografiaReporte,
+					'themes': {
+						'name': 'proton',
+						'responsive': true,
+						"icons": false
+					}
+				},
+				"search": {
+					"case_sensitive": false,
+					"show_only_matches": true
+				}
+			});
+		}
 	}
+
 	$scope.resultPendientes = [];
 	$scope.consultarCspSinEim = function () {
 		$scope.resultPendientes = [];
+		//let clustersparam = [];
+		//clustersparam = $("#jstreeGeografia-1").jstree("get_selected", true).filter(e => e.original.nivel == $scope.nivelArbolCspSinEim).map(e => parseInt(e.id));
+
 		let params = {
 			idOrdenTrabajo: "",
 			folioSistema: "",
@@ -1278,6 +1159,9 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 		);
 	}
 	$scope.consultarPendientesPorImplementar = function () {
+		//let clustersparam = [];
+		//clustersparam = $("#jstreeGeografia-3").jstree("get_selected", true).filter(e => e.original.nivel == $scope.nivelArbolPendientesPorImplementar).map(e => parseInt(e.id));
+
 		let params = {
 			idOrdenTrabajo: "",
 			folioSistema: "",
@@ -2126,6 +2010,13 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 			"language": idioma_espanol_not_font,
 			"data": []
 		});
+		$('#searchGeo-1').on('keyup', function () {
+			$("#jstreeGeografia-1").jstree("search", this.value);
+		})
+
+		$('#searchGeo-2').on('keyup', function () {
+			$("#jstreeGeografia-3").jstree("search", this.value);
+		})
 
 		$("#btn_mostrar_nav").hide(500);
 		$('.datepicker').datepicker({
