@@ -2,17 +2,17 @@
 <div class="row" id="">
   	<div class="col-md-2" style="width: 11%;">
         <label for="" class="label-filter">Clave cliente</label>
-        <input type="text" ng-model="test" ng-change="limpiarCamposCalendarizada(3)" placeholder="Ej: 23214"
+        <input type="text" ng-model="" ng-change="limpiarCamposCalendarizada(3)" placeholder="Ej: 23214"
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
     <div class="col-md-2" style="width: 11%;">
         <label for="" class="label-filter">CSP</label>
-        <input type="text" ng-model="test" ng-change="limpiarCamposCalendarizada(1)" id="ot_calendarizado" placeholder="Ej: 65434"
+        <input type="text" ng-model="" ng-change="limpiarCamposCalendarizada(1)" id="ot_calendarizado" placeholder="Ej: 65434"
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
     <div class="col-md-2" style="width: 11%;">
         <label for="" class="label-filter">COT</label>
-        <input type="text" ng-model="test" ng-change="limpiarCamposCalendarizada(2)" id="os_calendarizado" placeholder="Ej: 23214"
+        <input type="text" ng-model="" ng-change="limpiarCamposCalendarizada(2)" id="os_calendarizado" placeholder="Ej: 23214"
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
     

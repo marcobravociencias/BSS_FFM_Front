@@ -7,28 +7,14 @@
       </div>
       <div class="modal-body" style=" max-height: 300px; overflow: auto;">
         <div class="form-group">
-          <div ng-show="vistaCoordinacion == 1">
+          <div>
             <input placeholder="Buscar geograf&iacute;a" type="text" autocomplete="off"
               style=" height: 2em !important;margin-bottom: 0.5em;"
-              class="search-filtro form-control form-control-sm mt-0" id="searchGeo-1"><i
-              class="fa fa-search icon-search" style="margin-top: -1.9em;"></i>
-          </div>
-          <div ng-show="vistaCoordinacion == 3">
-            <input placeholder="Buscar geograf&iacute;a" type="text" autocomplete="off"
-              style=" height: 2em !important;margin-bottom: 0.5em;"
-              class="search-filtro form-control form-control-sm mt-0" id="searchGeo-3"><i
-              class="fa fa-search icon-search" style="margin-top: -1.9em;"></i>
-          </div>
-          <div ng-show="vistaCoordinacion == 6">
-            <input placeholder="Buscar geograf&iacute;a" type="text" autocomplete="off"
-              style=" height: 2em !important;margin-bottom: 0.5em;"
-              class="search-filtro form-control form-control-sm mt-0" id="searchGeo-6"><i
+              class="search-filtro form-control form-control-sm mt-0" id="searchGeo-implementados"><i
               class="fa fa-search icon-search" style="margin-top: -1.9em;"></i>
           </div>
         </div>
-        <div id="jstreeGeografia-1" class="proton-demo jstreeconsulta" ng-show="vistaCoordinacion == 1"></div>
-        <div id="jstreeGeografia-3" class="proton-demo jstreeconsulta" ng-show="vistaCoordinacion == 3"></div>
-        <div id="jstreeGeografia-6" class="proton-demo jstreeconsulta" ng-show="vistaCoordinacion == 6"></div>
+        <div id="jstreeGeografia-implementados" class="proton-demo jstreeconsulta"></div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-cerrar-modal btn-secondary ripple-surface" data-mdb-dismiss="modal">

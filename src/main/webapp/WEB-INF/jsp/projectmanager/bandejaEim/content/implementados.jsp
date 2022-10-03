@@ -24,7 +24,7 @@
                     title="No se encontró catalogo de vertical / c&eacute;lula"
                     ng-show="!filtroGeografia.implementados.length"></i>Geograf&iacute;a</label>
                 <input readonly placeholder="GEOGRAF&Iacute;A" type="text" id="cluster-implementados"
-                    class="input-filtro form-control form-control-sm" ng-click="abrirModalGeografia('6')" />
+                    class="input-filtro form-control form-control-sm" ng-click="abrirModalGeografiaImplementados()" />
             </div>
             <div class="col-md-2 column-style-consulta">
                 <label class="label-filter">Fecha</label>
@@ -132,6 +132,10 @@
                             class="orderColumnTable orderColumnAscTable">N&uacute;m OS</th>
                         <th data-idColumn="6" data-isNumber="false" data-typeTable="asignadasCompensacion"
                             class="orderColumnTable orderColumnAscTable">Estatus OS</th>
+                        <th class="sorting_disabled">Configuraci&oacute;n</th>
+                        <th class="sorting_disabled">Evidencia</th>
+                        <th class="sorting_disabled">Detalle</th>
+
                     </tr>
                 </thead>
                 <tbody>
