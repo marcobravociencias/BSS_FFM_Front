@@ -1,8 +1,8 @@
 var app = angular.module('mainBandejasEimPMApp', []);
 var tableTerminada = undefined;
-
+var objectTempAccion;
 var geografiaPendiente = [];
-
+var csp  = [];
 
 
 app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPIService', 'genericService', 'evidenciaService', function ($scope, $q, coordInstalacionesPIService, genericService, evidenciaService) {
@@ -96,6 +96,8 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 								$scope.configPermisoAccionConsultarBandejaEnImplementacion = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultarBandejaEnImplementacion" })[0] != undefined);
 								$scope.configPermisoAccionConsultarBandejaImplementados = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultarBandejaImplementados" })[0] != undefined);
 								$scope.configPermisoAccionConsultarBandejaPendientesPorImplementar = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultarBandejaPendientesPorImplementar" })[0] != undefined);
+								objectTempAccion = new GenericAccionRealizada("" + $scope.permisosConfigUser.id, 'TOP_RIGHT');
+								objectTempAccion.inicializarBotonAccionesRecientes();
 							}
 							$("#idBody").removeAttr("style");
 
@@ -326,7 +328,7 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 	}
 	//Table con metodo get
 	$scope.consultarSinEimPm = function(isSwal){
-		let params = { cot: "", csp: "", cveCliente: ""};
+		let params = { cot: "a113C0000007malQAA", csp: "", cveCliente: ""};
 		let arraRow = [];
 		if (isSwal) {
             swal({ text: 'Espera un momento...', allowOutsideClick: false });
@@ -412,13 +414,13 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 	$scope.getData();
 
 	$scope.asignarEim = function() {
-		var csp  = new Array();
+		
 		var eim = $("#eim").val();
 		var list = {
 			'puntasActulizar' :[]
 		  };
-	if ($scope.validateGen()){
-		
+	
+		var csp = [] ;
 		$(":checkbox[name=check]").each(function() {
 			if (this.checked) {
 			  csp.push($(this).val());
@@ -431,16 +433,49 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 				"valorNuevo"  : eim,
 			});
 		}
-		  console.log(list);
+	if ($scope.validateGen(csp)){
+		console.log(list);
+		swal({ text: 'Espera un momento...', allowOutsideClick: false });
+				swal.showLoading();
+		$scope.updateEim(list);
 		}
 	}
-	$scope.validateGen = function () {
+	$scope.updateEim = function (list){
+		let tituloAccion = "Crear relaci\o00EDn Eims";
+		let mensajeEnvio = 'Ha ocurrido un error al crear la relaci\o00EDn Eims' + list;
+		genericService.updateEim(list).then(function success(response){
+			if(response.data !== undefined){
+				if(response.data.respuesta){
+					if(response.data.result){
+						mensajeEnvio = 'Se ha creado la relaci\o00EDn Eims';
+						objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio,MENSAJE_ACCION_EXITO, tituloAccion);
+						toastr.success('Se ha asignado correctamente el EIM');
+						
+						swal.close();
+					} else {
+						swal.close();
+						objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
+						mostrarMensajeErrorAler(response.data.resultDescripcion);
+					}
+				} else {
+				swal.close();
+				objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
+				mostrarMensajeErrorAler(response.data.resultDescripcion);
+			}
+		}
+
+		});
+	}
+
+	$scope.validateGen = function (csp) {
 		let text = "";
 		if ($("#eim").val() === "" || $("#eim").val() === undefined) {
 			$("#eim").addClass("input-valid-error");
 			text += "<li>Asigne un EIM</li>";
 		}
-		if ($("#check").prop('checked') === false ) {
+		
+		console.log(csp.length);
+		if (csp.length === 0 ) {
 			$("#check").addClass("input-valid-error");
 			text += "<li>Seleccione un CSP</li>";
 		}
@@ -453,6 +488,8 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 			return true;
 		}
 	}
+	
+
 	// PROXIMO A ELIMINAR. 
 	$scope.resultPendientes = [];
 	$scope.consultarCspSinEim = function () {

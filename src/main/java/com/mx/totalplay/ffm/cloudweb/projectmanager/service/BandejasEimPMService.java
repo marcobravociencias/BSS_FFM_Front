@@ -13,6 +13,8 @@ public interface BandejasEimPMService {
 	public ServiceResponseResult consultarSinEim();
 
 	public ServiceResponseResult consultarListaEim();
+
+    public ServiceResponseResult updateEim(String params);
 	
 	
 }

@@ -19,4 +19,7 @@ public class ConstBandejasEim implements Serializable{
 	
 	@Value("${consultaListaEim}")
 	private String consultaListaEim;
+	
+	@Value("${updateEim}")
+	private String updateEim;
 }

@@ -241,7 +241,7 @@ public class ImplBandejaEimService implements BandejasEimPMService {
 		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
 		String tokenAcces = principalDetail.getAccess_token();
 		String urlRequest = principalDetail.getDireccionAmbiente()
-				.concat(constBandejasEim.getConsultaBandejaSinEimApi());
+				.concat(constBandejasEim.getConsultaBandejaSinEimApi().concat("?&cot=COT3751908"));
 
 		logger.info("URL: " + urlRequest);
 
@@ -266,5 +266,23 @@ public class ImplBandejaEimService implements BandejasEimPMService {
 				ServiceResponseResult.class, tokenAcces);
 		return response;
 	}
+	
+	@Override
+	public ServiceResponseResult updateEim(String params) {
+        logger.info("ImplBandejaEimService.class [metodo = updateEim() ]\n" + params);
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        String tokenAcces = principalDetail.getAccess_token();
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constBandejasEim.getUpdateEim());
+        logger.info("URL ##" + urlRequest);
+
+        Map<String, String> paramsRequestGet = new HashMap<String, String>();
+
+        ServiceResponseResult response = restCaller.callPostBearerTokenRequest(jsonObject.toString(), urlRequest,
+                ServiceResponseResult.class, tokenAcces);
+        logger.info(response);
+        return response;
+    }
 	
 }

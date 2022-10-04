@@ -142,10 +142,10 @@ app.service("genericService", function ($http) {
         });
     }
 
-    this.consultarSinEim = function () {
+    this.consultarSinEim = function (params) {
         return $http({
             method: "get",
-            url: "req/consultarSinEim",
+            url: "req/consultarSinEim"+"?"+"cot="+params.cot,
             headers: {'Content-Type': "application/json; charset=utf-8"},
         });
     };
@@ -158,4 +158,13 @@ app.service("genericService", function ($http) {
         });
     };
 
+    this.updateEim = function (list) {
+        return $http({
+            method: "post",
+            url: "req/updateEim",
+            data: JSON.stringify(list),
+            headers: {'Content-Type': "application/json; charset=utf-8"},
+            transformRequest: angular.identity
+        });
+    };
 })
