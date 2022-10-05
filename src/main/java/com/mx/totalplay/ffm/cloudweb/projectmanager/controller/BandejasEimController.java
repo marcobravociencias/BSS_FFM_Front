@@ -52,15 +52,17 @@ public class BandejasEimController {
 		}
 		return new ResponseEntity<DataTableResponse>(dataTableResponse, HttpStatus.ACCEPTED);
 	}
-	@GetMapping("/consultarSinEim")
-	public ResponseEntity<?> consultarSinEim() {
-		logger.info("##### CONSULTANDO consultarSinEim");
-		ServiceResponseResult response = bandejasEimPmService.consultarSinEim();
+	
+	@PostMapping("/consultarSinEim")
+	public ResponseEntity<?> consultarSinEim(@RequestBody String params) {
+		logger.info("##### CONSULTANDO consultarSinEim" + params);
+		ServiceResponseResult response = bandejasEimPmService.consultarSinEim(params);
 		if (response.getResult() instanceof Integer){
 			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
 		}
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
+	
 	@GetMapping("/consultarListaEim")
 	public ResponseEntity<?> consultarListaEim() {
 		logger.info("##### CONSULTANDO consultarListaEim");

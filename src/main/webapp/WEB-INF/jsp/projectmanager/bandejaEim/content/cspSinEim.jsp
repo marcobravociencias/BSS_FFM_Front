@@ -2,23 +2,21 @@
 <div class="row" id="">
   	<div class="col-md-2" style="width: 11%;">
         <label for="" class="label-filter">Clave cliente</label>
-        <input type="text" placeholder="Ej: 23214"
+        <input type="text" ng-model="objetoEim.cveCliente" id="cveCliente" placeholder="Ej: 23214"
         class="form-control form-control-sm">
-          
-     
     </div>
     <div class="col-md-2" style="width: 11%;">
         <label for="" class="label-filter">CSP</label>
-        <input type="text" id="" placeholder="Ej: 65434"
+        <input type="text"  ng-model="objetoEim.csp" id="csp" placeholder="Ej: 65434"
         class="form-control form-control-sm">
     </div>
     <div class="col-md-2" style="width: 11%;">
         <label for="" class="label-filter">COT</label>
-        <input type="text" id="" placeholder="Ej: 23214"
+        <input type="text"  ng-model="objetoEim.cot" id="cot" placeholder="Ej: 23214"
         class="form-control form-control-sm">
     </div>
     <div class="col-md-2" style="width: 85px;">
-        <button id="btn-asignada-salesforce" type="button" class="btn btn-sm waves-effect waves-light btn-primary">
+        <button id="btn-asignada-salesforce" ng-click="consultarSinEimPm()" type="button" class="btn btn-sm waves-effect waves-light btn-primary">
             <i class="fa fa-search" ></i>
         </button>
     </div>

@@ -235,13 +235,18 @@ public class ImplBandejaEimService implements BandejasEimPMService {
 				return dataResponse;
 	}
 	
-	@Override
-	public ServiceResponseResult consultarSinEim() {
-		logger.info("ImplBandejaEimService.class [metodo = consultarSinEim() ]\n");
+	@SuppressWarnings("unused")
+    @Override
+	public ServiceResponseResult consultarSinEim(String params) {
+		logger.info("ImplBandejaEimService.class [metodo = consultarSinEim() ]\n" + params);
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+	    String cot = jsonObject.get("cot").getAsString();
+	    String csp = jsonObject.get("csp").getAsString();
+	    String cveCliente = jsonObject.get("cveCliente").getAsString();
 		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
 		String tokenAcces = principalDetail.getAccess_token();
 		String urlRequest = principalDetail.getDireccionAmbiente()
-				.concat(constBandejasEim.getConsultaBandejaSinEimApi().concat("?&cot=COT3751908"));
+				.concat(constBandejasEim.getConsultaBandejaSinEimApi().concat("?").concat("cot=").concat(cot).concat("&csp=").concat(csp).concat("&cveCliente=").concat(cveCliente));
 
 		logger.info("URL: " + urlRequest);
 
@@ -284,5 +289,7 @@ public class ImplBandejaEimService implements BandejasEimPMService {
         logger.info(response);
         return response;
     }
+
+  
 	
 }

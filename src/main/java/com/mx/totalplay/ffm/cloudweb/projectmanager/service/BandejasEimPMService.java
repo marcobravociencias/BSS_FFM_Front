@@ -10,11 +10,15 @@ public interface BandejasEimPMService {
 
 	public DataTableResponse consultarPendientesPorImplementar(ParamFFMBandejasEimVO params);
 
-	public ServiceResponseResult consultarSinEim();
+	public ServiceResponseResult consultarSinEim(String params);
 
 	public ServiceResponseResult consultarListaEim();
 
     public ServiceResponseResult updateEim(String params);
+
+  
+
+ 
 	
 	
 }

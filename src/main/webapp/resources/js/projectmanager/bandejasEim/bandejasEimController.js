@@ -124,12 +124,18 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 							$scope.listadogeografiacopy = results[1].data.result.geografia;
 
 							$scope.nivelArbolCspSinEim = $scope.nivelArbolCspSinEim ? $scope.nivelArbolCspSinEim : $scope.obtenerNivelUltimoJerarquiaGeneric(results[1].data.result.geografia);
+							$scope.nivelArbolValidacion = $scope.nivelArbolValidacion ? $scope.nivelArbolValidacion : $scope.obtenerNivelUltimoJerarquiaGeneric(results[1].data.result.geografia);
 							$scope.nivelArbolPendientesPorImplementar = $scope.nivelArbolPendientesPorImplementar ? $scope.nivelArbolPendientesPorImplementar : $scope.obtenerNivelUltimoJerarquiaGeneric(results[1].data.result.geografia);
 							$scope.nivelArbolImplementados = $scope.nivelArbolImplementados ? $scope.nivelArbolImplementados : $scope.obtenerNivelUltimoJerarquiaGeneric(results[1].data.result.geografia);
 							
 							if($scope.configPermisoAccionAsignarEimCSP){
 								let geografia = $scope.ordenarGeografia(results[1].data.result.geografia, $scope.nivelArbolCspSinEim);
 								$scope.filtroGeografia.cspSinEim = angular.copy(geografia);
+							}
+
+							if($scope.configPermisoAccionConsultarBandejaCSPSinEim){
+								let geografia = $scope.ordenarGeografia(results[1].data.result.geografia, $scope.nivelArbolValidacion);
+								$scope.filtroGeografia.validacion = angular.copy(geografia);
 							}
 
 							if($scope.configPermisoAccionConsultarBandejaPendientesPorImplementar){
@@ -186,6 +192,15 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 					return e
 				});
 				break;
+			case '2':
+				$scope.filtroGeografia.validacion.map((e) => {
+					e.state = {
+						opened: true,
+						selected: arbolActual.find((t) => t == parseInt(e.id)) > 0 ? true : false,
+					}
+					return e
+				});
+				break;
 			case '3':
 				$scope.filtroGeografia.pendientesPorImplementar.map((e) => {
 					e.state = {
@@ -228,16 +243,12 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 			$scope.nombreBandeja = "CSP SIN EIM";
 		}
 		if (opcion === 2) {
-
+			geografiaReporte = angular.copy($scope.filtroGeografia.validacion);
 			if (!$scope.banderaValidacionLider) {
-
 				swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 				swal.showLoading();
-
-
 			}
 			swal.close();
-
 			$scope.nombreBandeja = "VALIDACIÓN DE LÍDER TÉCNICO Y TORRE DE CONTROL";
 		}
 		if (opcion === 3) {
@@ -246,6 +257,7 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 				swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 				swal.showLoading();
 			}
+
 			$scope.nombreBandeja = "PENDIENTES POR IMPLEMENTAR";
 		}
 		if (opcion === 4) {
@@ -293,6 +305,13 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 							$scope.consultarSinEimPm();
 						}
 						break;
+					case 2:
+						$scope.getTextGeografia('jstreeGeografia-2', 'cluster-validacion');
+						if (!$scope.banderaValidacionLider) {
+							$scope.banderaValidacionLider = true;
+							$scope.consultarValidacion();
+						}
+						break;
 					case 3:
 						$scope.getTextGeografia('jstreeGeografia-3', 'cluster-pendientesPorImplementar');
 						if (!$scope.banderaPendientesPorImplementar) {
@@ -326,9 +345,83 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 			});
 		}
 	}
+	//Table Validacion Lider Tecnico
+	$scope.consultarValidacion = function(isSwal){
+		cotParams = $("#v_cot").val();
+		cspParams = $("#v_csp").val();
+		cveClienteParams = $("#v_cveCliente").val();
+		let params = {
+			cot: cotParams,
+			csp: cspParams,
+			cveCliente: cveClienteParams
+		};
+		let arraRow = [];
+		if (isSwal) {
+            swal({ text: 'Espera un momento...', allowOutsideClick: false });
+            swal.showLoading();
+        }
+		if (tablevalidacion) {
+            tablevalidacion.destroy();
+        }
+		genericService.consultarValidacion(params).then(function success(response){
+			if(response.data !== undefined){
+				if(response.data.respuesta){
+					if (response.data.result) {
+						if (response.data.result.puntas) {
+							$scope.listaSinEim = response.data.result.puntas;
+							$.each(response.data.result.puntas, function (i, elemento){
+								let row = [];
+								row[0] = '<input type="checkbox" id="check" name="check" value="' + elemento.idCsp + '"/>';
+								row[1] = elemento.idOportunidad ? elemento.idOportunidad : 'Sin informaci&oacute;n';
+								row[2] = elemento.vertical ? elemento.vertical : 'Sin informaci&oacute;n';
+								row[3] = elemento.celula ? elemento.celula : 'Sin informaci&oacute;n';
+								row[4] = elemento.cliente ? elemento.cliente : 'Sin informaci&oacute;n';
+								row[5] = elemento.csp ? elemento.csp : 'Sin informaci&oacute;n';
+								row[6] = elemento.fechaVenta ? elemento.fechaVenta : 'Sin informaci&oacute;n';
+								arraRow.push(row);
+							})
+						} else{
+							toastr.error(response.data.resultDescripcion);
+						}
+					} else{
+						toastr.warning('No se encontraron oportunidades para validar');
+					}
+				} else{
+					toastr.warning(response.data.resultDescripcion);
+				}
+			} else {
+				toastr.error('Ha ocurrido un error al consultar la validacion de lider tecnico y torre de control');
+			}
+	
+			tablevalidacion = $('#tablevalidacion').DataTable({
+				"paging": true,
+				"searching": false,
+				"lengthChange": false,
+				"ordering": true,
+				"pageLength": 10,
+				"info": true,
+				"scrollX": false,
+				"data": arraRow,
+				"autoWidth": false,
+				"language": idioma_espanol_not_font,
+				"aoColumnDefs": [
+					{ "aTargets": [5], "bSortable": false }
+				]
+			});
+			swal.close();
+		})
+	} 
+
 	//Table con metodo get
 	$scope.consultarSinEimPm = function(isSwal){
-		let params = { cot: "a113C0000007malQAA", csp: "", cveCliente: ""};
+		cotParams = $("#cot").val();
+		cspParams = $("#csp").val();
+		cveClienteParams = $("#cveCliente").val();
+		let params = {
+			cot: cotParams,
+			csp: cspParams,
+			cveCliente: cveClienteParams
+		};
 		let arraRow = [];
 		if (isSwal) {
             swal({ text: 'Espera un momento...', allowOutsideClick: false });
@@ -389,6 +482,25 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 				
 	}
 	
+	$scope.objetoEim = {};
+	$scope.limpiarCamposPendiente = function (opcion) {
+		switch (opcion) {
+			case 1:
+				$scope.objetoEim.cot = "";
+				$scope.objetoEim.cveCliente = "";
+				break;
+			case 2:
+				$scope.objetoEim.csp = "";
+				$scope.objetoEim.cveCliente = "";
+				break;
+			case 3:
+				$scope.objetoEim.csp = "";
+				$scope.objetoEim.cot = "";
+				break;
+			default:
+				break;
+		}
+	}
 	$scope.getData = function () {
 		$q.all([
 			genericService.consultarListaEim()
@@ -707,6 +819,18 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 			"data": []
 		});
 
+		tablevalidacion = $('#tablevalidacion').DataTable({
+			"processing": false,
+			"ordering": false,
+			"scrollX": false,
+			"paging": true,
+			"lengthChange": false,
+			"searching": false,
+			"pageLength": 10,
+			"language": idioma_espanol_not_font,
+			"data": []
+		});
+
 		tablePendientesPorImplementar = $('#tablePendientesPorImplementar').DataTable({
 			"processing": false,
 			"ordering": false,
@@ -820,6 +944,11 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 		if (typeTable == 'reporteCspSinEim') {
 			$.each(arraySort, function (index, elemento) {
 				tableCspSinEim.row(index).data(elemento);
+			});
+		}
+		if (typeTable == 'reportevalidacion') {
+			$.each(arraySort, function (index, elemento) {
+				tablevalidacion.row(index).data(elemento);
 			});
 		}
 		if (typeTable == 'reporteCspSinEim') {

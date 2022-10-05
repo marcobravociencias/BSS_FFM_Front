@@ -13,6 +13,12 @@
               class="search-filtro form-control form-control-sm mt-0" id="searchGeo-1"><i
               class="fa fa-search icon-search" style="margin-top: -1.9em;"></i>
           </div>
+          <div ng-show="vistaCoordinacion == 2">
+            <input placeholder="Buscar geograf&iacute;a" type="text" autocomplete="off"
+              style=" height: 2em !important;margin-bottom: 0.5em;"
+              class="search-filtro form-control form-control-sm mt-0" id="searchGeo-2"><i
+              class="fa fa-search icon-search" style="margin-top: -1.9em;"></i>
+          </div>
           <div ng-show="vistaCoordinacion == 3">
             <input placeholder="Buscar geograf&iacute;a" type="text" autocomplete="off"
               style=" height: 2em !important;margin-bottom: 0.5em;"
@@ -27,6 +33,7 @@
           </div>
         </div>
         <div id="jstreeGeografia-1" class="proton-demo jstreeconsulta" ng-show="vistaCoordinacion == 1"></div>
+        <div id="jstreeGeografia-2" class="proton-demo jstreeconsulta" ng-show="vistaCoordinacion == 2"></div>
         <div id="jstreeGeografia-3" class="proton-demo jstreeconsulta" ng-show="vistaCoordinacion == 3"></div>
         <div id="jstreeGeografia-6" class="proton-demo jstreeconsulta" ng-show="vistaCoordinacion == 6"></div>
       </div>

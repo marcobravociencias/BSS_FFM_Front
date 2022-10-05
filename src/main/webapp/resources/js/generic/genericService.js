@@ -144,8 +144,9 @@ app.service("genericService", function ($http) {
 
     this.consultarSinEim = function (params) {
         return $http({
-            method: "get",
-            url: "req/consultarSinEim"+"?"+"cot="+params.cot,
+            method: "post",
+            url: "req/consultarSinEim",
+            data: JSON.stringify(params),
             headers: {'Content-Type': "application/json; charset=utf-8"},
         });
     };
@@ -165,6 +166,14 @@ app.service("genericService", function ($http) {
             data: JSON.stringify(list),
             headers: {'Content-Type': "application/json; charset=utf-8"},
             transformRequest: angular.identity
+        });
+    };
+    this.consultarValidacion = function (params) {
+        return $http({
+            method: "post",
+            url: "req/consultarValidacion",
+            data: JSON.stringify(params),
+            headers: {'Content-Type': "application/json; charset=utf-8"},
         });
     };
 })
