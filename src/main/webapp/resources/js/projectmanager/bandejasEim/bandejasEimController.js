@@ -290,7 +290,6 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 		}
 		if (opcion === 4) {
 			if (!$scope.banderaDependencia) {
-				console.log("entra antes del arbol");
 				swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 				swal.showLoading();
 			}
@@ -298,7 +297,6 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 		}
 		if (opcion === 5) {
 			if (!$scope.banderaImplementacion) {
-				console.log("entra 0");
 				swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 				swal.showLoading();
 			}
@@ -512,7 +510,7 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 				]
 			});
 			swal.close();
-
+			
 		})
 				
 	}
@@ -581,7 +579,6 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 			});
 		}
 	if ($scope.validateGen(csp)){
-		console.log(list);
 		swal({ text: 'Espera un momento...', allowOutsideClick: false });
 				swal.showLoading();
 		$scope.updateEim(list);
@@ -612,6 +609,9 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 		}
 
 		});
+		$scope.banderaCspSinEim = false;
+		$scope.cambiarVista(1);
+
 	}
 
 	$scope.validateGen = function (csp) {
@@ -621,7 +621,6 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 			text += "<li>Asigne un EIM</li>";
 		}
 		
-		console.log(csp.length);
 		if (csp.length === 0 ) {
 			$("#check").addClass("input-valid-error");
 			text += "<li>Seleccione un CSP</li>";
@@ -685,7 +684,6 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 					},
 					"dataSrc": function (json) {
 						if (json.result) {
-							console.log("json result");
 						}
 						$scope.tempReportePendiente = json.data;
 						//$scope.elementosRegistro = json.registrosTotales
@@ -740,7 +738,6 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 		);
 	}
 	$scope.consultarPendientesPorImplementar = function(isSwal){
-		console.log("ok entre al metodo pendientes por implementar");
 		let params = {
 			idOrdenTrabajo: "",
 			folioSistema: "",
@@ -773,7 +770,6 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 							
 							$scope.listaValidacion = response.data.result.resultado;
 							$.each(response.data.result.resultado, function (i, elemento){
-								console.log("ok llena la tabla");
 								let row = [];
 								row[0] = '<a id="mostrar-segundo-nivel-' + elemento.os + '" class="option-mas-implementados segundo-nivel-table-implementados" tag-position="' + elemento.os + '" tag-hide="false"><i id="icono-implementados-' + elemento.id + '" class="icono-implementados fas fa-angle-down" aria-hidden="true"></i></a>';
 								row[1] = elemento.vertical ? elemento.vertical : 'Sin informaci&oacute;n';
@@ -801,7 +797,6 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 								arraRow.push(row);
 							})
 						} else{
-							console.log("entre en esta funcion");
 							toastr.error(response.data.resultDescripcion);
 						}
 					} else{
@@ -836,7 +831,6 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 	}
 
 	$scope.consultarDependencia = function(isSwal){
-		console.log("ok entre al metodo DEPENDENCIAS");
 		let params = {
 			idOrdenTrabajo: "",
 			folioSistema: "",
@@ -869,7 +863,6 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 							$scope.dependencia = response.data.result.resultado;
 							$.each(response.data.result.resultado, function (i, elemento){
 								let row = [];
-								console.log("entre a llenar la tabla");
 								row[0] = '<a id="mostrar-segundo-nivel-' + elemento.os + '" class="option-mas-implementados segundo-nivel-table-implementados" tag-position="' + elemento.os + '" tag-hide="false"><i id="icono-implementados-' + elemento.os + '" class="icono-implementados fas fa-angle-down" aria-hidden="true"></i></a>';
 								//FOLIO
 								row[1] = elemento.csp ? elemento.csp : 'Sin informaci&oacute;n';
@@ -922,7 +915,6 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 	}
 	//Table Implentacion
 	$scope.consultarImplementacion = function(isSwal){
-		console.log("ok entre al metodo IMPLEMENTACION");
 		let params = {
 			idOrdenTrabajo: "",
 			folioSistema: "",
@@ -1057,7 +1049,6 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 				},
 				"dataSrc": function (json) {
 					if (json.result) {
-						console.log("json result");
 					}
 					$scope.tempReportePendiente = json.data;
 					//$scope.elementosRegistro = json.registrosTotales
@@ -1104,6 +1095,8 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 	$(document).ready(function() {
 		$("body").tooltip({ selector: '[data-toggle=tooltip]' });
 	});
+
+	
 	
 	angular.element(document).ready(function () {
 
