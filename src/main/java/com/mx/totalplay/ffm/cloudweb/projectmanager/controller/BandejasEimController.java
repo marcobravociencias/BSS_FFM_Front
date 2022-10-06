@@ -112,4 +112,14 @@ public class BandejasEimController {
         }
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
+	
+	@PostMapping("/consultarValidacion")
+    public ResponseEntity<?> consultarValidacion(@RequestBody String params) {
+        logger.info("##### CONSULTANDO consultarValidacion" + params);
+        ServiceResponseResult response = bandejasEimPmService.consultarValidacion(params);
+        if (response.getResult() instanceof Integer){
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
 }

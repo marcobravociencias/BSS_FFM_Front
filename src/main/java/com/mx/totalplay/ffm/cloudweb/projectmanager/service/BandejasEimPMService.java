@@ -22,7 +22,9 @@ public interface BandejasEimPMService {
 
     public ServiceResponseResult bandejaImplementacion(String params);
 
- 
+    public ServiceResponseResult consultarValidacion(String params);
+
+    
 	
 	
 }

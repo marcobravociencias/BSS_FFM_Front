@@ -401,16 +401,18 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 				if(response.data.respuesta){
 					if (response.data.result) {
 						if (response.data.result.puntas) {
-							$scope.listaSinEim = response.data.result.puntas;
+							$scope.validacion = response.data.result.puntas;
 							$.each(response.data.result.puntas, function (i, elemento){
 								let row = [];
 								row[0] = '<input type="checkbox" id="check" name="check" value="' + elemento.idCsp + '"/>';
-								row[1] = elemento.idOportunidad ? elemento.idOportunidad : 'Sin informaci&oacute;n';
+								row[1] = elemento.nombreOportunoidad ? elemento.nombreOportunoidad : 'Sin informaci&oacute;n';
 								row[2] = elemento.vertical ? elemento.vertical : 'Sin informaci&oacute;n';
 								row[3] = elemento.celula ? elemento.celula : 'Sin informaci&oacute;n';
 								row[4] = elemento.cliente ? elemento.cliente : 'Sin informaci&oacute;n';
 								row[5] = elemento.csp ? elemento.csp : 'Sin informaci&oacute;n';
 								row[6] = elemento.fechaVenta ? elemento.fechaVenta : 'Sin informaci&oacute;n';
+								row[7] = elemento.eim ? elemento.eim : 'Sin informaci&oacute;n';
+								row[8] = elemento.tipo ? elemento.tipo : 'Sin informaci&oacute;n';
 								arraRow.push(row);
 							})
 						} else{
