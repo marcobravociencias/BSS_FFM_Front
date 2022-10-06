@@ -297,7 +297,7 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 			$scope.nombreBandeja = "DEPENDENCIAS";
 		}
 		if (opcion === 5) {
-			if (!$scope.banderaEnImplementacion) {
+			if (!$scope.banderaImplementacion) {
 				console.log("entra 0");
 				swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 				swal.showLoading();
