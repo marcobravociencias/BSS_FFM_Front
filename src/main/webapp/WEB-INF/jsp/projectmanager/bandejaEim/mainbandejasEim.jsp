@@ -61,9 +61,6 @@
                             <div class="opcion-menu" ng-click="cambiarVista(5);" ng-if="configPermisoAccionConsultarBandejaEnImplementacion">
                                 <i ng-class="{'active-iconmenu':vistaCoordinacion==5}" class="icon-menu-left fa fa-retweet"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==5}" class="titulo-menu">En implementacion</span>
                             </div>
-                            <div class="opcion-menu" ng-click="cambiarVista(6);" ng-if="configPermisoAccionConsultarBandejaImplementados">
-                                <i ng-class="{'active-iconmenu':vistaCoordinacion==6}" class="icon-menu-left fa fa-check"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==6}" class="titulo-menu">Implementados</span>
-                            </div>
                         </div>
                         <div    class="right-content">
                             <div class="col-12 text-center">
@@ -84,9 +81,6 @@
                                 </div>
                                 <div id="vistaTerminada" class="col-12" ng-show="vistaCoordinacion === 5">
                                     <jsp:include page="./content/enImplementacion.jsp"></jsp:include>
-                                </div>
-                                <div id="vistaCancelada" class="col-12 p-0" ng-show="vistaCoordinacion === 6">
-                                    <jsp:include page="./content/implementados.jsp"></jsp:include>
                                 </div>
                                
                             </div>

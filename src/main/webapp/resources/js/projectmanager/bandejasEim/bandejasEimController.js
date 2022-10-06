@@ -81,7 +81,6 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 
 							$scope.nivelArbolCspSinEim = llavesResult.N_FILTRO_GEOGRAFIA_CSPSINEIM;
 							$scope.nivelArbolPendientesPorImplementar = llavesResult.N_FILTRO_GEOGRAFIA_PENDIENTESIMPLEMENTAR;
-							$scope.nivelArbolImplementados = llavesResult.N_FILTRO_GEOGRAFIA_IMPLEMENTADOS;
 							
 
 							$scope.permisosConfigUser = resultConf.MODULO_ACCIONES_USUARIO;
@@ -123,7 +122,6 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 							$scope.nivelArbolCspSinEim = $scope.nivelArbolCspSinEim ? $scope.nivelArbolCspSinEim : $scope.obtenerNivelUltimoJerarquiaGeneric(results[1].data.result.geografia);
 							$scope.nivelArbolValidacion = $scope.nivelArbolValidacion ? $scope.nivelArbolValidacion : $scope.obtenerNivelUltimoJerarquiaGeneric(results[1].data.result.geografia);
 							$scope.nivelArbolPendientesPorImplementar = $scope.nivelArbolPendientesPorImplementar ? $scope.nivelArbolPendientesPorImplementar : $scope.obtenerNivelUltimoJerarquiaGeneric(results[1].data.result.geografia);
-							$scope.nivelArbolImplementados = $scope.nivelArbolImplementados ? $scope.nivelArbolImplementados : $scope.obtenerNivelUltimoJerarquiaGeneric(results[1].data.result.geografia);
 							
 							if($scope.configPermisoAccionAsignarEimCSP){
 								let geografia = $scope.ordenarGeografia(results[1].data.result.geografia, $scope.nivelArbolCspSinEim);
@@ -140,11 +138,6 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 								$scope.filtroGeografia.pendientesPorImplementar = angular.copy(geografia);
 							}
 
-							if($scope.configPermisoAccionConsultarBandejaImplementados){
-								let geografia = $scope.ordenarGeografia(results[1].data.result.geografia, $scope.nivelArbolImplementados);
-								$scope.filtroGeografia.implementados = angular.copy(geografia);
-							}
-							
 							
 						} else {
 							toastr.info('No se encontraron datos para la geograf\u00EDa');
@@ -200,15 +193,6 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 				break;
 			case '3':
 				$scope.filtroGeografia.pendientesPorImplementar.map((e) => {
-					e.state = {
-						opened: true,
-						selected: arbolActual.find((t) => t == parseInt(e.id)) > 0 ? true : false,
-					}
-					return e
-				});
-				break;
-			case '6':
-				$scope.filtroGeografia.implementados.map((e) => {
 					e.state = {
 						opened: true,
 						selected: arbolActual.find((t) => t == parseInt(e.id)) > 0 ? true : false,
@@ -275,14 +259,7 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 			swal.close();
 			$scope.nombreBandeja = "EN IMPLEMENTACIÓN";
 		}
-		if (opcion === 6) {
-			geografiaReporte = angular.copy($scope.filtroGeografia.implementados);
-			if (!$scope.banderaImplementados) {
-				swal({ text: 'Cargando registros...', allowOutsideClick: false });
-				swal.showLoading();
-			}
-			$scope.nombreBandeja = "IMPLEMENTADOS";
-		}
+
 		
 		if (geografiaReporte) {
 			$scope.guardarArbol($scope.vistaCoordinacion);
@@ -316,13 +293,7 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 							$scope.consultarPendientesPorImplementar();
 						}
 						break;
-					case 6:
-						$scope.getTextGeografia('jstreeGeografia-6', 'cluster-implementados');
-						if (!$scope.banderaImplementados) {
-							$scope.banderaImplementados = true;
-							swal.close()
-						}
-						break;
+	
 				}
 
 			}).jstree({
