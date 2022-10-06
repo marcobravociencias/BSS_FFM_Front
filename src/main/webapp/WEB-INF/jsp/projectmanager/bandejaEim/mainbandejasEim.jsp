@@ -61,9 +61,6 @@
                             <div class="opcion-menu" ng-click="cambiarVista(5);" ng-if="configPermisoAccionConsultarBandejaImplementacion">
                                 <i ng-class="{'active-iconmenu':vistaCoordinacion==5}" class="icon-menu-left fa fa-retweet"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==5}" class="titulo-menu">En implementacion</span>
                             </div>
-                            <div class="opcion-menu" ng-click="cambiarVista(6);" ng-if="configPermisoAccionConsultarBandejaImplementados">
-                                <i ng-class="{'active-iconmenu':vistaCoordinacion==6}" class="icon-menu-left fa fa-check"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==6}" class="titulo-menu">Implementados</span>
-                            </div>
                         </div>
                         <div    class="right-content">
                             <div class="col-12 text-center">
@@ -85,9 +82,6 @@
                                 <div id="vistaTerminada" class="col-12" ng-show="vistaCoordinacion === 5">
                                     <jsp:include page="./content/enImplementacion.jsp"></jsp:include>
                                 </div>
-                                <div id="vistaCancelada" class="col-12 p-0" ng-show="vistaCoordinacion === 6">
-                                    <jsp:include page="./content/implementados.jsp"></jsp:include>
-                                </div>
                                
                             </div>
                         </div>
@@ -97,10 +91,7 @@
                 </div>
             </div>  
         </div>
-        <jsp:include page="filtrosEim.jsp"></jsp:include>
-        <jsp:include page="modals/modalDetalleOt.jsp"></jsp:include>
         <jsp:include page="modals/modalGeografia.jsp"></jsp:include>
-        <jsp:include page="modals/modalImagenEvidencia.jsp"></jsp:include>
 </body>
    
     <script src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.min.js"></script>
@@ -125,7 +116,6 @@
     
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/projectmanager/bandejasEim/bandejasEimController.js?v=${sessionScope.versionDepl}"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/projectmanager/bandejasEim/bandejasEimSFController.js?v=${sessionScope.versionDepl}"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/projectmanager/bandejasEim/implementadosEimController.js?v=${sessionScope.versionDepl}"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/projectmanager/bandejasEim/bandejasEimPMService.js?v=${sessionScope.versionDepl}"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/projectmanager/bandejasEim/busqGral.js?v=${sessionScope.versionDepl}"></script>
 
