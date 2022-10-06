@@ -235,7 +235,6 @@ public class ImplBandejaEimService implements BandejasEimPMService {
 				return dataResponse;
 	}
 	
-	@SuppressWarnings("unused")
     @Override
 	public ServiceResponseResult consultarSinEim(String params) {
 		logger.info("ImplBandejaEimService.class [metodo = consultarSinEim() ]\n" + params);
@@ -289,7 +288,52 @@ public class ImplBandejaEimService implements BandejasEimPMService {
         logger.info(response);
         return response;
     }
+	@Override
+	public ServiceResponseResult bandejaPendientes(String params) {
+	    logger.info("ImplBandejaEimService.class [metodo = bandejaPendientes() ]\n" + params);
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+        String tokenAcces = principalDetail.getAccess_token();
+        String urlRequest = principalDetail.getDireccionAmbiente()
+                .concat(constBandejasEim.getBandejaPendientes());
 
-  
+        logger.info("URL: " + urlRequest);
+
+        Map<String, String> paramsRequestGet = new HashMap<String, String>();
+        ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
+                ServiceResponseResult.class, tokenAcces);
+        return response;
+	}
+	
+	@Override
+    public ServiceResponseResult bandejaDependencias(String params) {
+        logger.info("ImplBandejaEimService.class [metodo = bandejaDependencias() ]\n" + params);
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+        String tokenAcces = principalDetail.getAccess_token();
+        String urlRequest = principalDetail.getDireccionAmbiente()
+                .concat(constBandejasEim.getBandejaPendientes());
+
+        logger.info("URL: " + urlRequest);
+
+        Map<String, String> paramsRequestGet = new HashMap<String, String>();
+        ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
+                ServiceResponseResult.class, tokenAcces);
+        return response;
+    }
+	
+	@Override
+    public ServiceResponseResult bandejaImplementacion(String params) {
+        logger.info("ImplBandejaEimService.class [metodo = bandejaImplementacion() ]\n" + params);
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+        String tokenAcces = principalDetail.getAccess_token();
+        String urlRequest = principalDetail.getDireccionAmbiente()
+                .concat(constBandejasEim.getBandejaImplementacion());
+
+        logger.info("URL: " + urlRequest);
+
+        Map<String, String> paramsRequestGet = new HashMap<String, String>();
+        ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
+                ServiceResponseResult.class, tokenAcces);
+        return response;
+    }
 	
 }

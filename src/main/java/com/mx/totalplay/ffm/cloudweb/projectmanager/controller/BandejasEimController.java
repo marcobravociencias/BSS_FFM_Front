@@ -82,4 +82,34 @@ public class BandejasEimController {
         }
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
+	
+	@PostMapping("/bandejaPendientes")
+    public ResponseEntity<?> bandejaPendientes(@RequestBody String params){
+        logger.info("#### CONSULTANDO bandejaPendientes");
+        ServiceResponseResult response = bandejasEimPmService.bandejaPendientes(params);
+        if (response.getResult() instanceof Integer) {
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
+	
+	@PostMapping("/bandejaDependencias")
+    public ResponseEntity<?> bandejaDependencias(@RequestBody String params){
+        logger.info("#### CONSULTANDO bandejaDependencias");
+        ServiceResponseResult response = bandejasEimPmService.bandejaDependencias(params);
+        if (response.getResult() instanceof Integer) {
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
+	
+	@PostMapping("/bandejaImplementacion")
+    public ResponseEntity<?> bandejaImplementacion(@RequestBody String params){
+        logger.info("#### CONSULTANDO bandejaImplementacion");
+        ServiceResponseResult response = bandejasEimPmService.bandejaImplementacion(params);
+        if (response.getResult() instanceof Integer) {
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
 }

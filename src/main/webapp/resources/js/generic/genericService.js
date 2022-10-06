@@ -176,4 +176,34 @@ app.service("genericService", function ($http) {
             headers: {'Content-Type': "application/json; charset=utf-8"},
         });
     };
+
+
+    this.bandejaPendientes = function (params) {
+        return $http({
+            method: "post",
+            url: "req/bandejaPendientes",
+            data: JSON.stringify(params),
+            headers: {'Content-Type': "application/json; charset=utf-8"},
+        });
+    };
+
+    this.bandejaDependencias = function (params) {
+        return $http({
+            method: "post",
+            url: "req/bandejaDependencias",
+            data: JSON.stringify(params),
+            headers: {'Content-Type': "application/json; charset=utf-8"},
+        });
+    };
+
+    this.bandejaImplementacion = function (params) {
+        return $http({
+            method: "post",
+            url: "req/bandejaImplementacion",
+            data: JSON.stringify(params),
+            headers: {'Content-Type': "application/json; charset=utf-8"},
+        });
+    };
+
+
 })

@@ -22,4 +22,13 @@ public class ConstBandejasEim implements Serializable{
 	
 	@Value("${updateEim}")
 	private String updateEim;
+	
+	@Value("${bandejaPendientes}")
+    private String bandejaPendientes;
+	
+	@Value("${bandejaDependencias}")
+    private String bandejaDependencias;
+	
+	@Value("${bandejaImplementacion}")
+    private String bandejaImplementacion;
 }

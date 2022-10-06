@@ -92,8 +92,8 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 							if ($scope.permisosConfigUser != undefined && $scope.permisosConfigUser.permisos != undefined && $scope.permisosConfigUser.permisos.length > 0) {
 								$scope.configPermisoAccionAsignarEimCSP = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionAsignarEimCSP" })[0] != undefined);
 								$scope.configPermisoAccionConsultarBandejaCSPSinEim = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultarBandejaCSPSinEim" })[0] != undefined);
-								$scope.configPermisoAccionConsultarBandejaDependencias = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultarBandejaDependencias" })[0] != undefined);
-								$scope.configPermisoAccionConsultarBandejaEnImplementacion = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultarBandejaEnImplementacion" })[0] != undefined);
+								$scope.configPermisoAccionConsultarBandejaDependencia = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultarBandejaDependencias" })[0] != undefined);
+								$scope.configPermisoAccionConsultarBandejaImplementacion = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultarBandejaEnImplementacion" })[0] != undefined);
 								$scope.configPermisoAccionConsultarBandejaImplementados = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultarBandejaImplementados" })[0] != undefined);
 								$scope.configPermisoAccionConsultarBandejaPendientesPorImplementar = ($scope.permisosConfigUser.permisos.filter(e => { return e.clave == "accionConsultarBandejaPendientesPorImplementar" })[0] != undefined);
 								objectTempAccion = new GenericAccionRealizada("" + $scope.permisosConfigUser.id, 'TOP_RIGHT');
@@ -125,7 +125,11 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 
 							$scope.nivelArbolCspSinEim = $scope.nivelArbolCspSinEim ? $scope.nivelArbolCspSinEim : $scope.obtenerNivelUltimoJerarquiaGeneric(results[1].data.result.geografia);
 							$scope.nivelArbolValidacion = $scope.nivelArbolValidacion ? $scope.nivelArbolValidacion : $scope.obtenerNivelUltimoJerarquiaGeneric(results[1].data.result.geografia);
+							
 							$scope.nivelArbolPendientesPorImplementar = $scope.nivelArbolPendientesPorImplementar ? $scope.nivelArbolPendientesPorImplementar : $scope.obtenerNivelUltimoJerarquiaGeneric(results[1].data.result.geografia);
+							$scope.nivelArbolDependencia = $scope.nivelArbolDependencia ? $scope.nivelArbolDependencia : $scope.obtenerNivelUltimoJerarquiaGeneric(results[1].data.result.geografia);
+							$scope.nivelArbolImplementacion = $scope.nivelArbolImplementacion ? $scope.nivelArbolImplementacion : $scope.obtenerNivelUltimoJerarquiaGeneric(results[1].data.result.geografia);
+
 							$scope.nivelArbolImplementados = $scope.nivelArbolImplementados ? $scope.nivelArbolImplementados : $scope.obtenerNivelUltimoJerarquiaGeneric(results[1].data.result.geografia);
 							
 							if($scope.configPermisoAccionAsignarEimCSP){
@@ -141,6 +145,16 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 							if($scope.configPermisoAccionConsultarBandejaPendientesPorImplementar){
 								let geografia = $scope.ordenarGeografia(results[1].data.result.geografia, $scope.nivelArbolPendientesPorImplementar);
 								$scope.filtroGeografia.pendientesPorImplementar = angular.copy(geografia);
+							}
+
+							if($scope.configPermisoAccionConsultarBandejaDependencia){
+								let geografia = $scope.ordenarGeografia(results[1].data.result.geografia, $scope.nivelArbolDependencia);
+								$scope.filtroGeografia.dependencia = angular.copy(geografia);
+							}
+
+							if($scope.configPermisoAccionConsultarBandejaImplementacion){
+								let geografia = $scope.ordenarGeografia(results[1].data.result.geografia, $scope.nivelArbolImplementacion);
+								$scope.filtroGeografia.implementacion = angular.copy(geografia);
 							}
 
 							if($scope.configPermisoAccionConsultarBandejaImplementados){
@@ -210,6 +224,24 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 					return e
 				});
 				break;
+			case '4':
+				$scope.filtroGeografia.dependencia.map((e) => {
+					e.state = {
+						opened: true,
+						selected: arbolActual.find((t) => t == parseInt(e.id)) > 0 ? true : false,
+					}
+					return e
+				});
+				break;
+			case '5':
+				$scope.filtroGeografia.implementacion.map((e) => {
+					e.state = {
+						opened: true,
+						selected: arbolActual.find((t) => t == parseInt(e.id)) > 0 ? true : false,
+					}
+					return e
+				});
+				break;
 			case '6':
 				$scope.filtroGeografia.implementados.map((e) => {
 					e.state = {
@@ -226,8 +258,8 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 	$scope.banderaCspSinEim = false;
 	$scope.banderaPendientesPorImplementar = false;
 	$scope.banderaValidacionLider = false;
-	$scope.banderaDependencias = false;
-	$scope.banderaEnImplementacion = false;
+	$scope.banderaDependencia = false;
+	$scope.banderaImplementacion = false;
 	$scope.banderaImplementados = false;
 
 	$scope.cambiarVista = function (opcion) {
@@ -261,12 +293,11 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 			$scope.nombreBandeja = "PENDIENTES POR IMPLEMENTAR";
 		}
 		if (opcion === 4) {
-			if (!$scope.banderaDependencias) {
-				console.log("entra 0");
+			if (!$scope.banderaDependencia) {
+				console.log("entra antes del arbol");
 				swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 				swal.showLoading();
 			}
-			swal.close();
 			$scope.nombreBandeja = "DEPENDENCIAS";
 		}
 		if (opcion === 5) {
@@ -275,7 +306,6 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 				swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 				swal.showLoading();
 			}
-			swal.close();
 			$scope.nombreBandeja = "EN IMPLEMENTACIÓN";
 		}
 		if (opcion === 6) {
@@ -317,6 +347,20 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 						if (!$scope.banderaPendientesPorImplementar) {
 							$scope.banderaPendientesPorImplementar = true;
 							$scope.consultarPendientesPorImplementar();
+						}
+						break;
+					case 4:
+						$scope.getTextGeografia('jstreeGeografia-4', 'cluster-dependencia');
+						if (!$scope.banderaDependencia) {
+							$scope.banderaDependencia = true;
+							$scope.consultarDependencia();
+						}
+						break;
+					case 5:
+						$scope.getTextGeografia('jstreeGeografia-5', 'cluster-implementacion');
+						if (!$scope.banderaImplementacion) {
+							$scope.banderaImplementacion = true;
+							$scope.consultarImplementacion();
 						}
 						break;
 					case 6:
@@ -411,7 +455,7 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 			swal.close();
 		})
 	} 
-
+	
 	//Table con metodo get
 	$scope.consultarSinEimPm = function(isSwal){
 		cotParams = $("#cot").val();
@@ -706,7 +750,274 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 			
 		);
 	}
-	$scope.consultarPendientesPorImplementar = function () {
+	$scope.consultarPendientesPorImplementar = function(isSwal){
+		console.log("ok entre al metodo pendientes por implementar");
+		let params = {
+			idOrdenTrabajo: "",
+			folioSistema: "",
+			idClaveCliente: "",
+			idEstatus: [
+				1
+			],
+			idEstados: [
+				201, 200, 202
+			],
+			fechaInicio: "2022-09-10",
+			fechaFin: "2022-09-23",
+			elementosPorPagina: 10,
+			fechaSeleccionada: "fechaInicio"
+		}
+		let arraRow = [];
+		if (isSwal) {
+            swal({ text: 'Espera un momento...', allowOutsideClick: false });
+            swal.showLoading();
+        }
+
+        if (tablePendientesPorImplementar) {
+            tablePendientesPorImplementar.destroy();
+        }
+		genericService.bandejaPendientes(params).then(function success(response){
+			if(response.data !== undefined){
+				if(response.data.respuesta){
+					if (response.data.result) {
+						if (response.data.result.resultado) {
+							
+							$scope.listaValidacion = response.data.result.resultado;
+							$.each(response.data.result.resultado, function (i, elemento){
+								console.log("ok llena la tabla");
+								let row = [];
+								row[0] = '<a id="mostrar-segundo-nivel-' + elemento.os + '" class="option-mas-implementados segundo-nivel-table-implementados" tag-position="' + elemento.os + '" tag-hide="false"><i id="icono-implementados-' + elemento.id + '" class="icono-implementados fas fa-angle-down" aria-hidden="true"></i></a>';
+								row[1] = elemento.vertical ? elemento.vertical : 'Sin informaci&oacute;n';
+								row[2] = elemento.celula ? elemento.celula : 'Sin informaci&oacute;n';
+								row[3] = elemento.nombreEim ? elemento.nombreEim : 'Sin informaci&oacute;n';
+								row[4] = elemento.cliente ? elemento.cliente : 'Sin informaci&oacute;n';
+								row[5] = elemento.idCotizacion ? elemento.idCotizacion : 'Sin informaci&oacute;n';
+								row[6] = elemento.csp ? elemento.csp : 'Sin informaci&oacute;n';
+								row[7] = elemento.os ? elemento.os : 'Sin informaci&oacute;n';
+								row[8] = elemento.cuentaFactura ? elemento.cuentaFactura : 'Sin informaci&oacute;n';
+								row[9] = elemento.fechaVenta ? elemento.fechaVenta : 'Sin informaci&oacute;n';
+								row[10] = elemento.plazaVenta ? elemento.plazaVenta : 'Sin informaci&oacute;n';
+								row[11] = elemento.plazaInstalacion ? elemento.plazaInstalacion : 'Sin informaci&oacute;n';
+								//monto
+								row[12] = elemento.idCuentaFactura ? elemento.idCuentaFactura : 'Sin informaci&oacute;n';
+								//estatus
+								row[13] = elemento.idOportunidad ? elemento.idOportunidad : 'Sin informaci&oacute;n';
+								//fecha compromiso
+								row[14] = elemento.fechaAgenda ? elemento.fechaAgenda : 'Sin informaci&oacute;n';
+								//cuadrilla
+								row[15] = elemento.tipoCuadrilla ? elemento.tipoCuadrilla : 'Sin informaci&oacute;n';
+								//tipo de servicio <--
+								row[16] = elemento.nombreLiderTecnico ? elemento.nombreLiderTecnico : 'Sin informaci&oacute;n';
+
+								arraRow.push(row);
+							})
+						} else{
+							console.log("entre en esta funcion");
+							toastr.error(response.data.resultDescripcion);
+						}
+					} else{
+						toastr.warning('No se encontraron Eims');
+					}
+				} else{
+					toastr.warning(response.data.resultDescripcion);
+				}
+			} else {
+				toastr.error('Ha ocurrido un error al consultar los Eims');
+			}
+	
+			tablePendientesPorImplementar = $('#tablePendientesPorImplementar').DataTable({
+				"paging": true,
+				"searching": false,
+				"lengthChange": false,
+				"ordering": true,
+				"pageLength": 10,
+				"info": true,
+				"scrollX": false,
+				"data": arraRow,
+				"autoWidth": false,
+				"language": idioma_espanol_not_font,
+				"aoColumnDefs": [
+					{ "aTargets": [16], "bSortable": false }
+				]
+			});
+			swal.close();
+
+		})
+				
+	}
+
+	$scope.consultarDependencia = function(isSwal){
+		console.log("ok entre al metodo DEPENDENCIAS");
+		let params = {
+			idOrdenTrabajo: "",
+			folioSistema: "",
+			idClaveCliente: "",
+			idEstatus: [
+				1
+			],
+			idEstados: [
+				201, 200, 202
+			],
+			fechaInicio: "2022-09-10",
+			fechaFin: "2022-09-23",
+			elementosPorPagina: 10,
+			fechaSeleccionada: "fechaInicio"
+		}
+		let arraRow = [];
+		if (isSwal) {
+            swal({ text: 'Espera un momento...', allowOutsideClick: false });
+            swal.showLoading();
+        }
+
+        if (tableDependencia) {
+            tableDependencia.destroy();
+        }
+		genericService.bandejaDependencias(params).then(function success(response){
+			if(response.data !== undefined){
+				if(response.data.respuesta){
+					if (response.data.result) {
+						if (response.data.result.resultado) {
+							$scope.dependencia = response.data.result.resultado;
+							$.each(response.data.result.resultado, function (i, elemento){
+								let row = [];
+								console.log("entre a llenar la tabla");
+								row[0] = '<a id="mostrar-segundo-nivel-' + elemento.os + '" class="option-mas-implementados segundo-nivel-table-implementados" tag-position="' + elemento.os + '" tag-hide="false"><i id="icono-implementados-' + elemento.os + '" class="icono-implementados fas fa-angle-down" aria-hidden="true"></i></a>';
+								//FOLIO
+								row[1] = elemento.csp ? elemento.csp : 'Sin informaci&oacute;n';
+								//COTIZACION
+								row[2] = elemento.idCotizacion ? elemento.idCotizacion : 'Sin informaci&oacute;n';
+								//IDBRM
+								row[3] = elemento.idVendedor ? elemento.idVendedor : 'Sin informaci&oacute;n';
+								//CUENTA FACTURA
+								row[4] = elemento.cuentaFactura ? elemento.cuentaFactura : 'Sin informaci&oacute;n';
+								//TIPO DE CUADRILLA
+								row[5] = elemento.tipoCuadrilla ? elemento.tipoCuadrilla : 'Sin informaci&oacute;n';
+								//TIPO DE DEPENDENCIA
+								row[6] = elemento.fechaVenta ? elemento.fechaVenta : 'Sin informaci&oacute;n';
+								//NUM DE OS
+								row[7] = elemento.os ? elemento.os : 'Sin informaci&oacute;n';
+								arraRow.push(row);
+							})
+						} else{
+							toastr.error(response.data.resultDescripcion);
+						}
+					} else{
+						toastr.warning('No se encontraron Dependencias');
+					}
+				} else{
+					toastr.warning(response.data.resultDescripcion);
+				}
+			} else {
+				toastr.error('Ha ocurrido un error al consultar los Dependencias');
+			}
+	
+			tableDependencia = $('#tableDependencia').DataTable({
+				"paging": true,
+				"searching": false,
+				"lengthChange": false,
+				"ordering": true,
+				"pageLength": 10,
+				"info": true,
+				"scrollX": false,
+				"data": arraRow,
+				"autoWidth": false,
+				"language": idioma_espanol_not_font,
+				"aoColumnDefs": [
+					{ "aTargets": [7], "bSortable": false }
+				]
+			});
+			swal.close();
+
+		})
+				
+	}
+	//Table Implentacion
+	$scope.consultarImplementacion = function(isSwal){
+		console.log("ok entre al metodo IMPLEMENTACION");
+		let params = {
+			idOrdenTrabajo: "",
+			folioSistema: "",
+			idClaveCliente: "",
+			idEstatus: [
+				1
+			],
+			idEstados: [
+				201, 200, 202
+			],
+			fechaInicio: "2022-09-10",
+			fechaFin: "2022-09-23",
+			elementosPorPagina: 10,
+			fechaSeleccionada: "fechaInicio"
+		}
+		let arraRow = [];
+		if (isSwal) {
+            swal({ text: 'Espera un momento...', allowOutsideClick: false });
+            swal.showLoading();
+        }
+
+        if (tableimplementacion) {
+            tableimplementacion.destroy();
+        }
+		genericService.bandejaImplementacion(params).then(function success(response){
+			if(response.data !== undefined){
+				if(response.data.respuesta){
+					if (response.data.result) {
+						if (response.data.result.resultado) {
+							$scope.implementacion = response.data.result.resultado;
+							$.each(response.data.result.resultado, function (i, elemento){
+								let row = [];
+								row[0] = '<a id="mostrar-segundo-nivel-' + elemento.os + '" class="option-mas-implementados segundo-nivel-table-implementados" tag-position="' + elemento.os + '" tag-hide="false"><i id="icono-implementados-' + elemento.os + '" class="icono-implementados fas fa-angle-down" aria-hidden="true"></i></a>';
+								//FOLIO
+								row[1] = elemento.csp ? elemento.csp : 'Sin informaci&oacute;n';
+								//COTIZACION
+								row[2] = elemento.idCotizacion ? elemento.idCotizacion : 'Sin informaci&oacute;n';
+								//IDBRM
+								row[3] = elemento.idVendedor ? elemento.idVendedor : 'Sin informaci&oacute;n';
+								//CUENTA FACTURA
+								row[4] = elemento.cuentaFactura ? elemento.cuentaFactura : 'Sin informaci&oacute;n';
+								//TIPO DE CUADRILLA
+								row[5] = elemento.tipoCuadrilla ? elemento.tipoCuadrilla : 'Sin informaci&oacute;n';
+								//TIPO DE DEPENDENCIA
+								row[6] = elemento.os ? elemento.os : 'Sin informaci&oacute;n';
+								//ESTATUS
+								row[7] = elemento.idLiderTecnico ? elemento.idLiderTecnico : 'Sin informaci&oacute;n';
+								arraRow.push(row);
+							})
+						} else{
+							toastr.error(response.data.resultDescripcion);
+						}
+					} else{
+						toastr.warning('No se encontraron Dependencias');
+					}
+				} else{
+					toastr.warning(response.data.resultDescripcion);
+				}
+			} else {
+				toastr.error('Ha ocurrido un error al consultar los Dependencias');
+			}
+	
+			tableimplementacion = $('#tableimplementacion').DataTable({
+				"paging": true,
+				"searching": false,
+				"lengthChange": false,
+				"ordering": true,
+				"pageLength": 10,
+				"info": true,
+				"scrollX": false,
+				"data": arraRow,
+				"autoWidth": false,
+				"language": idioma_espanol_not_font,
+				"aoColumnDefs": [
+					{ "aTargets": [7], "bSortable": false }
+				]
+			});
+			swal.close();
+
+		})
+				
+	}
+	//END
+	$scope.consultarPendientesPorImplementarBASH = function () {
 		//let clustersparam = [];
 		//clustersparam = $("#jstreeGeografia-3").jstree("get_selected", true).filter(e => e.original.nivel == $scope.nivelArbolPendientesPorImplementar).map(e => parseInt(e.id));
 
@@ -786,20 +1097,20 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 		}
 	}
 
-	setTimeout(function(){
-		$('#tablePendientesPorImplementar tbody').on('click', 'td.dt-control', function () {
-			var tr = $(this).closest('tr');
-			var row = tablePendientesPorImplementar.row(tr);
+	//setTimeout(function(){
+	//	$('#tablePendientesPorImplementar tbody').on('click', 'td.dt-control', function () {
+	//		var tr = $(this).closest('tr');
+	//		var row = tablePendientesPorImplementar.row(tr);
 	 
-			if (row.child.isShown()) {
-				row.child.hide();
-				tr.find('svg').attr('data-icon', 'plus-circle');
-			} else {
-				row.child(format(row.data())).show();
-				tr.find('svg').attr('data-icon', 'minus-circle');
-			}
-		});
-	}, 4000);
+	//		if (row.child.isShown()) {
+	//			row.child.hide();
+	//			tr.find('svg').attr('data-icon', 'plus-circle');
+	//		} else {
+	//			row.child(format(row.data())).show();
+	//			tr.find('svg').attr('data-icon', 'minus-circle');
+	//		}
+	//	});
+	//}, 4000);
 	
 	$(document).ready(function() {
 		$("body").tooltip({ selector: '[data-toggle=tooltip]' });
@@ -831,6 +1142,30 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 			"data": []
 		});
 
+		tableDependencia = $('#tableDependencia').DataTable({
+			"processing": false,
+			"ordering": false,
+			"scrollX": false,
+			"paging": true,
+			"lengthChange": false,
+			"searching": false,
+			"pageLength": 10,
+			"language": idioma_espanol_not_font,
+			"data": []
+		});
+
+		tableimplementacion = $('#tableimplementacion').DataTable({
+			"processing": false,
+			"ordering": false,
+			"scrollX": false,
+			"paging": true,
+			"lengthChange": false,
+			"searching": false,
+			"pageLength": 10,
+			"language": idioma_espanol_not_font,
+			"data": []
+		});
+		
 		tablePendientesPorImplementar = $('#tablePendientesPorImplementar').DataTable({
 			"processing": false,
 			"ordering": false,
@@ -954,6 +1289,16 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 		if (typeTable == 'reporteCspSinEim') {
 			$.each(arraySort, function (index, elemento) {
 				tablePendientesPorImplementar.row(index).data(elemento);
+			});
+		}
+		if (typeTable == 'reporteDependencia') {
+			$.each(arraySort, function (index, elemento) {
+				tableDependencia.row(index).data(elemento);
+			});
+		}
+		if (typeTable == 'reporteImplementacion') {
+			$.each(arraySort, function (index, elemento) {
+				tableimplementacion.row(index).data(elemento);
 			});
 		}
 	}

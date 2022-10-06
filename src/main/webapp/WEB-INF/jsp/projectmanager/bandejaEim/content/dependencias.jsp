@@ -54,14 +54,18 @@
         <table id="tableDependencia" class="table">
             <thead id="thead_dependencia">
                 <tr>
-                    <th data-idColumn="0" data-isNumber="false" data-typeTable="reporteDependecia" class="orderColumnTable orderColumnAscTable">Folio</th>
-                    <th data-idColumn="1" data-isNumber="false" data-typeTable="reporteDependecia" class="orderColumnTable orderColumnAscTable">Cotizaci&oacute;n</th>
-                    <th data-idColumn="2" data-isNumber="true" data-typeTable="reporteDependecia" class="orderColumnTable orderColumnAscTable">Idbrm</th>
-                    <th data-idColumn="3" data-isNumber="false" data-typeTable="reporteDependecia" class="orderColumnTable orderColumnAscTable">Cuenta Factura</th>
-                    <th data-idColumn="4" data-isNumber="false" data-typeTable="reporteDependecia" class="orderColumnTable orderColumnAscTable">Tipo de Cuadrilla</th>
-                    <th data-idColumn="5" data-isNumber="false" data-typeTable="reporteDependecia" class="orderColumnTable orderColumnAscTable">Tipo de Dependencia</th>
-                    <th data-idColumn="6" data-isNumber="false" data-typeTable="reporteDependecia" class="orderColumnTable orderColumnAscTable">N&uacute;m OS</th>
-
+                    
+                    <th class="detail">
+                            <div class="fht-cell" style="width: 20px;"></div>
+                    </th>
+                    <th>Folio</th>
+                    <th>Cotizaci&oacute;n</th>
+                    <th>Idbrm</th>
+                    <th>Cuenta Factura</th>
+                    <th>Tipo de Cuadrilla</th>
+                    <th>Tipo de Dependencia</th>
+                    <th>N&uacute;m OS</th>
+                  
                 </tr>
             </thead>
         </table>

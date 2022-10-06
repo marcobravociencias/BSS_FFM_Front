@@ -54,23 +54,25 @@
         <table id="tablePendientesPorImplementar" class="table">
             <thead id="thead_PendientesPorImplementar">
                 <tr>
-                    <th></th>
-                    <th data-idColumn="0" data-isNumber="false" data-typeTable="reporteAsignada" class="orderColumnTable orderColumnAscTable">Vertical</th>
-                    <th data-idColumn="1" data-isNumber="false" data-typeTable="reporteAsignada" class="orderColumnTable orderColumnAscTable">Celula</th>
-                    <th data-idColumn="2" data-isNumber="true" data-typeTable="reporteAsignada" class="orderColumnTable orderColumnAscTable">EIM</th>
-                    <th data-idColumn="3" data-isNumber="false" data-typeTable="reporteAsignada" class="orderColumnTable orderColumnAscTable">Cliente</th>
-                    <th data-idColumn="4" data-isNumber="false" data-typeTable="reporteAsignada" class="orderColumnTable orderColumnAscTable">COT</th>
-                    <th data-idColumn="5" data-isNumber="false" data-typeTable="reporteAsignada" class="orderColumnTable orderColumnAscTable">CSP</th>
-                    <th data-idColumn="6" data-isNumber="false" data-typeTable="reporteAsignada" class="orderColumnTable orderColumnAscTable">OT</th>
-                    <th data-idColumn="7" data-isNumber="false" data-typeTable="reporteAsignada" class="orderColumnTable orderColumnAscTable">Cuenta</th>
-                    <th data-idColumn="8" data-isNumber="false" data-typeTable="reporteAsignada" class="orderColumnTable orderColumnAscTable">Fecha Venta</th>
-                    <th data-idColumn="9" data-isNumber="false" data-typeTable="reporteAsignada" class="orderColumnTable orderColumnAscTable">Tipo de Venta</th>
-                    <th data-idColumn="10" data-isNumber="false" data-typeTable="reporteAsignada" class="orderColumnTable orderColumnAscTable">Tipo de Servicio</th>
-                    <th data-idColumn="11" data-isNumber="false" data-typeTable="reporteAsignada" class="orderColumnTable orderColumnAscTable">Monto</th>
-                    <th data-idColumn="12" data-isNumber="false" data-typeTable="reporteAsignada" class="orderColumnTable orderColumnAscTable">Estatus</th>
-                    <th data-idColumn="13" data-isNumber="false" data-typeTable="reporteAsignada" class="orderColumnTable orderColumnAscTable">Fecha Compromiso</th>
-                    <th data-idColumn="14" data-isNumber="false" data-typeTable="reporteAsignada" class="orderColumnTable orderColumnAscTable">Cuadrilla</th>
-                    <th data-idColumn="15" data-isNumber="false" data-typeTable="reporteAsignada" class="orderColumnTable orderColumnAscTable">Tipo de sitio</th>
+                    <th class="detail">
+                            <div class="fht-cell" style="width: 20px;"></div>
+                    </th>
+                    <th>Vertical</th>
+                    <th>Celula</th>
+                    <th>Eim</th>
+                    <th>Cliente</th>
+                    <th>COT</th>
+                    <th>CSP</th>
+                    <th>OT</th>
+                    <th>Cuenta</th>
+                    <th>Fecha Venta</th>
+                    <th>Tipo de Venta</th>
+                    <th>Tipo de Servicio</th>
+                    <th>Monto</th>
+                    <th>Estatus</th>
+                    <th>Fecha de Compromiso</th>
+                    <th>Cuadrilla</th>
+                    <th>Tipo de Servicio</th>
                     
                 </tr>
             </thead>

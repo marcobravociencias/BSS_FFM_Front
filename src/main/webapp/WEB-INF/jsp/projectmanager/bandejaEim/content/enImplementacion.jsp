@@ -82,16 +82,19 @@
 
 <div class="row">
     <div class="col-12 table-responsive" style="margin-top: 1em; padding: 0;">
-        <table id="tableEnImplementacion" class="table">
-            <thead id="theadEnImplementacion">
+        <table id="tableimplementacion" class="table">
+            <thead id="theadimplementacion">
                 <tr>
-                    <th data-idColumn="0" data-isNumber="false" data-typeTable="reporteEnImplementacion" class="orderColumnTable orderColumnAscTable">Folio</th>
-                    <th data-idColumn="1" data-isNumber="true" data-typeTable="reporteEnImplementacion" class="orderColumnTable orderColumnAscTable">Cotizaci&oacute;n</th>
-                    <th data-idColumn="2" data-isNumber="false" data-typeTable="reporteEnImplementacion" class="orderColumnTable orderColumnAscTable">Idbrm</th>
-                    <th data-idColumn="3" data-isNumber="false" data-typeTable="reporteEnImplementacion" class="orderColumnTable orderColumnAscTable">Cuenta Factura</th>
-                    <th data-idColumn="4" data-isNumber="false" data-typeTable="reporteEnImplementacion" class="orderColumnTable orderColumnAscTable">Tipo de Cuadrilla</th>
-                    <th data-idColumn="5" data-isNumber="false" data-typeTable="reporteEnImplementacion" class="orderColumnTable orderColumnAscTable">N&uacute;m OS</th>
-                    <th data-idColumn="6" data-isNumber="false" data-typeTable="reporteEnImplementacion" class="orderColumnTable orderColumnAscTable">Estatus de OS</th>    
+                    <th class="detail">
+                            <div class="fht-cell" style="width: 20px;"></div>
+                    </th>
+                    <th>Folio</th>
+                    <th>Cotizacion</th>
+                    <th>Idbrm</th>
+                    <th>Cuenta Factura</th>
+                    <th>Tipo de Cuadrilla</th>
+                    <th>N&uacute;m OS</th>
+                    <th>Estatus de Os</th>
                 </tr>
             </thead>
         </table>

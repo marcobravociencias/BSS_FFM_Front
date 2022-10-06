@@ -16,7 +16,11 @@ public interface BandejasEimPMService {
 
     public ServiceResponseResult updateEim(String params);
 
-  
+    public ServiceResponseResult bandejaPendientes(String params);
+
+    public ServiceResponseResult bandejaDependencias(String params);
+
+    public ServiceResponseResult bandejaImplementacion(String params);
 
  
 	
