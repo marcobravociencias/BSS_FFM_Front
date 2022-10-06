@@ -440,7 +440,7 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 							$.each(response.data.result.puntas, function (i, elemento){
 								let row = [];
 								row[0] = '<input type="checkbox" id="check" name="check" value="' + elemento.idCsp + '"/>';
-								row[1] = elemento.idOportunidad ? elemento.idOportunidad : 'Sin informaci&oacute;n';
+								row[1] = elemento.nombreOportunoidad ? elemento.nombreOportunoidad : 'Sin informaci&oacute;n';
 								row[2] = elemento.vertical ? elemento.vertical : 'Sin informaci&oacute;n';
 								row[3] = elemento.celula ? elemento.celula : 'Sin informaci&oacute;n';
 								row[4] = elemento.cliente ? elemento.cliente : 'Sin informaci&oacute;n';
