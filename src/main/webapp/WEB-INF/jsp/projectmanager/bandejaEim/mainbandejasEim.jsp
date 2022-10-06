@@ -55,10 +55,10 @@
                             <div class="opcion-menu" ng-click="cambiarVista(3);" ng-if="configPermisoAccionConsultarBandejaCSPSinEim">
                                 <i ng-class="{'active-iconmenu':vistaCoordinacion==3}" class="icon-menu-left fa fa-clock-o"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==3}" class="titulo-menu">Pendientes</span>
                             </div>
-                            <div class="opcion-menu" ng-click="cambiarVista(4);" ng-if="configPermisoAccionConsultarBandejaDependencias">
+                            <div class="opcion-menu" ng-click="cambiarVista(4);" ng-if="configPermisoAccionConsultarBandejaDependencia">
                                 <i ng-class="{'active-iconmenu':vistaCoordinacion==4}" class="icon-menu-left fa fa-caret-square-o-left"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==4}" class="titulo-menu">Dependencias</span>
                             </div>
-                            <div class="opcion-menu" ng-click="cambiarVista(5);" ng-if="configPermisoAccionConsultarBandejaEnImplementacion">
+                            <div class="opcion-menu" ng-click="cambiarVista(5);" ng-if="configPermisoAccionConsultarBandejaImplementacion">
                                 <i ng-class="{'active-iconmenu':vistaCoordinacion==5}" class="icon-menu-left fa fa-retweet"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==5}" class="titulo-menu">En implementacion</span>
                             </div>
                             <div class="opcion-menu" ng-click="cambiarVista(6);" ng-if="configPermisoAccionConsultarBandejaImplementados">
