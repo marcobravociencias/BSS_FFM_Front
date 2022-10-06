@@ -97,10 +97,7 @@
                 </div>
             </div>  
         </div>
-        <jsp:include page="filtrosEim.jsp"></jsp:include>
-        <jsp:include page="modals/modalDetalleOt.jsp"></jsp:include>
         <jsp:include page="modals/modalGeografia.jsp"></jsp:include>
-        <jsp:include page="modals/modalImagenEvidencia.jsp"></jsp:include>
 </body>
    
     <script src="${pageContext.request.contextPath}/resources/libraries/jquery/jquery-3.6.0.min.js"></script>
@@ -125,7 +122,6 @@
     
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/projectmanager/bandejasEim/bandejasEimController.js?v=${sessionScope.versionDepl}"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/projectmanager/bandejasEim/bandejasEimSFController.js?v=${sessionScope.versionDepl}"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/projectmanager/bandejasEim/implementadosEimController.js?v=${sessionScope.versionDepl}"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/projectmanager/bandejasEim/bandejasEimPMService.js?v=${sessionScope.versionDepl}"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/projectmanager/bandejasEim/busqGral.js?v=${sessionScope.versionDepl}"></script>
 

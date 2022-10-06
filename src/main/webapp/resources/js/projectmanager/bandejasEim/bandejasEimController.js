@@ -8,7 +8,6 @@ var csp  = [];
 app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPIService', 'genericService', 'evidenciaService', function ($scope, $q, coordInstalacionesPIService, genericService, evidenciaService) {
 	app.evidenciaController($scope, evidenciaService)
 	app.coordInstalacionesSF($scope, coordInstalacionesPIService, $q, genericService)
-	app.implementadosEim($scope, coordInstalacionesPIService, $q, genericService)
 	$scope.vistaCoordinacion = 0;
 	$scope.filtrosCatalogo = [];
 
@@ -41,11 +40,10 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 		$scope.ordenarGeografia = function (lista, filtro) {
 		
 		let listaGeografiaTemp = lista.filter(e => e.nivel <= parseInt(filtro));
-		listaGeografiaTemp.push({id: 0, nombre: "TOTALPLAY", nivel: 0, padre: "#", state:{opened: true}});
 
 		let geografia = angular.copy(listaGeografiaTemp);
 		geografia.map((e) => {
-			e.parent = e.padre == null ? 0 : e.padre;
+			e.parent = e.padre == null ? '#' : e.padre;
 			e.text = e.nombre;
 			e.icon = "fa fa-globe";
 			e.state = {
@@ -64,7 +62,6 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 		angular.forEach(geografias, (geografia, index) => {
 			textoGeografias.push(geografia.text);
 		});
-		$('#' + idInput).val(textoGeografias);
 	}
 
 
@@ -323,7 +320,7 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 						$scope.getTextGeografia('jstreeGeografia-6', 'cluster-implementados');
 						if (!$scope.banderaImplementados) {
 							$scope.banderaImplementados = true;
-							$scope.consultarImplementados();
+							swal.close()
 						}
 						break;
 				}
@@ -606,8 +603,6 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 	$scope.resultPendientes = [];
 	$scope.consultarCspSinEim = function () {
 		$scope.resultPendientes = [];
-		//let clustersparam = [];
-		//clustersparam = $("#jstreeGeografia-1").jstree("get_selected", true).filter(e => e.original.nivel == $scope.nivelArbolCspSinEim).map(e => parseInt(e.id));
 
 		let params = {
 			idOrdenTrabajo: "",
@@ -707,8 +702,6 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 		);
 	}
 	$scope.consultarPendientesPorImplementar = function () {
-		//let clustersparam = [];
-		//clustersparam = $("#jstreeGeografia-3").jstree("get_selected", true).filter(e => e.original.nivel == $scope.nivelArbolPendientesPorImplementar).map(e => parseInt(e.id));
 
 		let params = {
 			idOrdenTrabajo: "",
