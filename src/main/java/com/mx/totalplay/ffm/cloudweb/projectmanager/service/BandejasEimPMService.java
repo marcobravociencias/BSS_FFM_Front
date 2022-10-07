@@ -24,6 +24,8 @@ public interface BandejasEimPMService {
 
     public ServiceResponseResult consultarValidacion(String params);
 
+    public ServiceResponseResult localizaOrden(String params);
+
     
 	
 	

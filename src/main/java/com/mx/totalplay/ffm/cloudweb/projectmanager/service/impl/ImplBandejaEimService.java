@@ -356,5 +356,24 @@ public class ImplBandejaEimService implements BandejasEimPMService {
                 ServiceResponseResult.class, tokenAcces);
         return response;
     }
+    
+    @Override
+    public ServiceResponseResult localizaOrden(String params) {
+        // TODO Auto-generated method stub
+        logger.info("ImplBandejaEimService.class [metodo = localizaOrden() ]\n" + params);
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        String os = jsonObject.get("os").getAsString();
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+        String tokenAcces = principalDetail.getAccess_token();
+        String urlRequest = principalDetail.getDireccionAmbiente()
+                .concat(constBandejasEim.getConsultarValidacion().concat(os));
+
+        logger.info("URL: " + urlRequest);
+
+        Map<String, String> paramsRequestGet = new HashMap<String, String>();
+        ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
+                ServiceResponseResult.class, tokenAcces);
+        return response;
+    }
 	
 }

@@ -34,4 +34,7 @@ public class ConstBandejasEim implements Serializable{
 	
 	@Value("${consultarValidacion}")
     private String consultarValidacion;
+	
+	@Value("${localizaOrden}")
+    private String localizaOrden;
 }
