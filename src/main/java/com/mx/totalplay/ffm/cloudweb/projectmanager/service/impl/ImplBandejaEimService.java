@@ -340,10 +340,14 @@ public class ImplBandejaEimService implements BandejasEimPMService {
     public ServiceResponseResult consultarValidacion(String params) {
         // TODO Auto-generated method stub
         logger.info("ImplBandejaEimService.class [metodo = consultarValidacion() ]\n" + params);
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        String cot = jsonObject.get("cot").getAsString();
+        String csp = jsonObject.get("csp").getAsString();
+        String cveCliente = jsonObject.get("cveCliente").getAsString();
         LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
         String tokenAcces = principalDetail.getAccess_token();
         String urlRequest = principalDetail.getDireccionAmbiente()
-                .concat(constBandejasEim.getConsultarValidacion());
+                .concat(constBandejasEim.getConsultarValidacion().concat("?cot=").concat(cot).concat("&csp=").concat(csp).concat("&cveCliente=").concat(cveCliente));
 
         logger.info("URL: " + urlRequest);
 

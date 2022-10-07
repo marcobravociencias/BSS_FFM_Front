@@ -391,6 +391,8 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
             swal({ text: 'Espera un momento...', allowOutsideClick: false });
             swal.showLoading();
         }
+		let mensaje = "";
+		let bandera = true;
 		if (tablevalidacion) {
             tablevalidacion.destroy();
         }
