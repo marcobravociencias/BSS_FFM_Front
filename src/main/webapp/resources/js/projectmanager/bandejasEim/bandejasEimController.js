@@ -706,13 +706,15 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 		}
 	}
 	function format(d) {
+		console.log(d);
 		return (
 			'<div class="col-10 table-responsive" style="margin-top: 1em; padding: 0;">'+
-			'<table id="tableDetenida" class="table">' +
-			'<thead id="thead_Detenida">'+
+			'<table id="" class="table">' +
+			'<thead id="">'+
 			'<tr><th>OT</th><th>Fase</th><th>Subcategoria</th><th>Fecha de Creación</th><th>Estatus</th><th>Solicitante</th></tr>'	+
-			'<tr>' +
-			'<td>Mensaje OT:</td>' +
+			'<tr>' 
+			+'<td>'+ d[0].idOrden 
+			+'</td>' +
 			'<td>Mensaje Fase:</td>' +
 			'<td>Mensaje Subcategoria:</td>' +
 			'<td>Mensaje Fecha:</td>' +
@@ -740,20 +742,20 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 		);
 	}
 	$scope.consultarPendientesPorImplementar = function(isSwal){
+		pCelula = $("#pCelula").val();
+		pEim = $("#pEim").val();
+		pCliente = $("#pCliente").val();
+		pTipoSitio = $("#pTipoSitio").val();
+		pCot = $("#pCot").val();
+		pCsp = $("#pCsp").val();
 		let params = {
-			idOrdenTrabajo: "",
-			folioSistema: "",
-			idClaveCliente: "",
-			idEstatus: [
-				1
-			],
-			idEstados: [
-				201, 200, 202
-			],
-			fechaInicio: "2022-09-10",
-			fechaFin: "2022-09-23",
-			elementosPorPagina: 10,
-			fechaSeleccionada: "fechaInicio"
+			celula: pCelula,
+			vertical: "",
+			eim: pEim,
+			cliente: pCliente,
+			tipoSitio: pTipoSitio,
+			cot: pCot,
+			csp: pCsp,
 		}
 		let arraRow = [];
 		if (isSwal) {
@@ -832,21 +834,50 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 				
 	}
 
+	setTimeout(
+		function () {
+			$('#tablePendientesPorImplementar tbody').on('click', 'tr', function (){
+
+				console.log("click en al tabla");
+				var tr = $(this).closest('tr');
+				var row = tablePendientesPorImplementar.row(tr); //mismo nombre que tabla
+				//console.log(tr, row)
+
+				if (row.child.isShown()) {
+					row.child.hide();
+				}else {
+					console.log('Se ejecuto el else');
+					//row.child(format(row.data())).show();
+					os1 = "OS-6945072";
+					let params = {
+						os: os1,
+					}
+					genericService.localizaOrden(params).then(function success(response){
+						$scope.listaDetalleOs = response.data.result.detalleOS;
+						row.child(format($scope.listaDetalleOs)).show();
+					})
+
+				}
+
+			});
+		},
+		2000);
+
 	$scope.consultarDependencia = function(isSwal){
+		dCelula = $("#dCelula").val();
+		dEim = $("#dEim").val();
+		dCliente = $("#dCliente").val();
+		dTipoSitio = $("#dTipoSitio").val();
+		dCot = $("#dCot").val();
+		dCsp = $("#dCsp").val();
 		let params = {
-			idOrdenTrabajo: "",
-			folioSistema: "",
-			idClaveCliente: "",
-			idEstatus: [
-				1
-			],
-			idEstados: [
-				201, 200, 202
-			],
-			fechaInicio: "2022-09-10",
-			fechaFin: "2022-09-23",
-			elementosPorPagina: 10,
-			fechaSeleccionada: "fechaInicio"
+			celula: dCelula,
+			vertical: "",
+			eim: dEim,
+			cliente: dCliente,
+			tipoSitio: dTipoSitio,
+			cot: dCot,
+			csp: dCsp,
 		}
 		let arraRow = [];
 		if (isSwal) {
@@ -917,20 +948,23 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 	}
 	//Table Implentacion
 	$scope.consultarImplementacion = function(isSwal){
+		iOportunidad = $("#iOportunidad").val();
+		iRegion = $("#iRegion").val();
+		iFecha = $("#iFecha").val();
+		iEstatus = $("#iEstatus").val();
+		iVertical = $("#iVertical").val();
+		iCelula = $("#iCelula").val();
+		iEim = $("#iEim").val();
+		iCsp = $("#iCsp").val();
 		let params = {
-			idOrdenTrabajo: "",
-			folioSistema: "",
-			idClaveCliente: "",
-			idEstatus: [
-				1
-			],
-			idEstados: [
-				201, 200, 202
-			],
-			fechaInicio: "2022-09-10",
-			fechaFin: "2022-09-23",
-			elementosPorPagina: 10,
-			fechaSeleccionada: "fechaInicio"
+			nombreOportunoidad: iOportunidad,
+			region: iRegion,
+			fechaVenta: iFecha,
+			estatusC: iEstatus,
+			vertical: iVertical,
+			celula: iCelula,
+			nombreEim: iEim,
+			csp: iCsp,
 		}
 		let arraRow = [];
 		if (isSwal) {
@@ -999,6 +1033,32 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 		})
 				
 	}
+	$scope.getOt = function () {
+		params = {
+			fecha : "",
+		};
+		$q.all([
+			genericService.otDia(params)
+		]).then(function (results) {
+			if (results[0].data !== undefined) {
+				if (results[0].data.respuesta) {
+					if (results[0].data.result) {
+					
+							$scope.data.detalleOS = results[0].data.result.detalleOS;
+							
+						
+					} else {
+						toastr.info('No se encontr\u00F3 Detalle OS');
+					}
+				} else {
+					toastr.warning(results[0].data.resultDescripcion);
+				}
+			}
+		}).catch(err => handleError(err));
+	}
+
+
+	$scope.getOt();
 	//END
 	$scope.consultarPendientesPorImplementarBASH = function () {
 		//let clustersparam = [];

@@ -26,7 +26,7 @@ public interface BandejasEimPMService {
 
     public ServiceResponseResult localizaOrden(String params);
 
-    
+    public ServiceResponseResult otDia(String params);
 	
 	
 }

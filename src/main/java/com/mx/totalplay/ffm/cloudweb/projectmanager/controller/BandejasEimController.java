@@ -132,4 +132,14 @@ public class BandejasEimController {
         }
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
+	
+   @PostMapping("/otDia")
+      public ResponseEntity<?> otDia(@RequestBody String params) {
+        logger.info("##### CONSULTANDO otDia" + params);
+        ServiceResponseResult response = bandejasEimPmService.otDia(params);
+        if (response.getResult() instanceof Integer){
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
 }

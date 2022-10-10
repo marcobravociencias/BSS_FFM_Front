@@ -204,6 +204,24 @@ app.service("genericService", function ($http) {
             headers: {'Content-Type': "application/json; charset=utf-8"},
         });
     };
+    this.otDia = function (params) {
+        return $http({
+            method: "post",
+            url: "req/otDia",
+            data: JSON.stringify(params),
+            headers: {'Content-Type': "application/json; charset=utf-8"},
+        });
+    };
+
+    this.localizaOrden = function (params) {
+        return $http({
+            method: "post",
+            url: "req/localizaOrden",
+            data: JSON.stringify(params),
+            headers: {'Content-Type': "application/json; charset=utf-8"},
+        });
+    };
+
 
 
 })

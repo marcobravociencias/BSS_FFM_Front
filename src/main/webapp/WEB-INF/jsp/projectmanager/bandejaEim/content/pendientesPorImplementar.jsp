@@ -16,35 +16,45 @@
                     <label  class="dropdown-item form-check-inputfiltro">
                         <input id="filtrotext-{{filtro.id}}" class="form-check-input" type="checkbox" ng-click="setCheckFiltroGenericV2(filtro,filtrosGeneral.estatusAsignada);pintarNombreEstatus(filtrosGeneral.estatusAsignada,'#estatusAsignada');" ng-model="filtro.checkedOpcion" ng-true-value="true" ng-false-value="false"/>
                         <span  for="filtrotext-{{filtro.id}}" class="dropdown-item item-text-filtro" href="#" ng-bind="filtro.nombre"></span>
+                        <span  for="ok" class="dropdown-item item-text-filtro" href="#" ng-bind="okNombre"></span>
                     </label>
                     <ul ng-if="filtro.children !== undefined &&  filtro.children.length > 0" ng-include="'filtroEstatusAsignada.html'" class="dropdown-menu"></ul>
                 </li>
             </ul>
          </div>
     </div>
-  
-    <div class="column-style-consulta" style="width: 11%;">
-        <label for="ot_asignadao" class="label-filter">EIM</label>
-        <input type="text" ng-model="objetoAsignada.ot" ng-change="limpiarCamposAsignada(1)" id="ot_asignada" placeholder="Ej: 65434"
+  <div class="column-style-consulta" style="width: 11%;">
+        <label class="label-filter">Celula</label>
+        <input type="text" ng-model="objetoPendiente.pCelula" ng-change="limpiarCamposAsignada(0)" id="pCelula" placeholder="Ej: 65434"
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
     <div class="column-style-consulta" style="width: 11%;">
-        <label for="os_asignada" class="label-filter">Cliente</label>
-        <input type="text" ng-model="objetoAsignada.folio" ng-change="limpiarCamposAsignada(2)" id="os_asignada" placeholder="Ej: 23214"
+        <label class="label-filter">EIM</label>
+        <input type="text" ng-model="objetoPendiente.pEim" ng-change="limpiarCamposAsignada(1)" id="pEim" placeholder="Ej: 65434"
+        class="form-control input-filtro-coordInst form-control-sm">
+    </div>
+    <div class="column-style-consulta" style="width: 11%;">
+        <label class="label-filter">Cliente</label>
+        <input type="text" ng-model="objetoPendiente.pCliente" ng-change="limpiarCamposAsignada(2)" id="pCliente" placeholder="Ej: 23214"
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
     <div class="column-style-consulta" style="width: 11%;">
         <label for="os_terminada" class="label-filter">Tipo de Sitio</label>
-        <input type="text" ng-model="objetoAsignada.claveCliente" ng-change="limpiarCamposAsignada(3)" placeholder="Ej: 23214"
+        <input type="text" ng-model="objetoPendiente.pTipoSitio" ng-change="limpiarCamposAsignada(3)" id="pTipoSitio" placeholder="Ej: 23214"
+        class="form-control input-filtro-coordInst form-control-sm">
+    </div>
+    <div class="column-style-consulta" style="width: 11%;">
+        <label for="os_terminada" class="label-filter">CSP </label>
+        <input type="text" ng-model="objetoPendiente.pCsp" ng-change="limpiarCamposAsignada(4)" id="pCsp" placeholder="Ej: 23214"
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
      <div class="column-style-consulta" style="width: 11%;">
-        <label for="os_terminada" class="label-filter">COT / CSP</label>
-        <input type="text" ng-model="objetoAsignada.claveCliente" ng-change="limpiarCamposAsignada(3)" placeholder="Ej: 23214"
+        <label for="os_terminada" class="label-filter">COT </label>
+        <input type="text" ng-model="objetoPendite.pOt" ng-change="limpiarCamposAsignada(3)" id="pCot" placeholder="Ej: 23214"
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
     <div class="col-md-1 div-btn-busqueda" style="width: 85px;">
-        <button id="btn-asignada-salesforce" ng-click="consultarAsignada()" type="button" class="btn btn-sm waves-effect waves-light btn-primary">
+        <button id="btn-asignada-salesforce" ng-click="consultarPendientesPorImplementar()" type="button" class="btn btn-sm waves-effect waves-light btn-primary">
             <i class="fa fa-search" ></i>
         </button>
     </div>
@@ -59,7 +69,7 @@
                     </th>
                     <th>Vertical</th>
                     <th>Celula</th>
-                    <th>Eim</th>
+                    <th>EIM</th>
                     <th>Cliente</th>
                     <th>COT</th>
                     <th>CSP</th>

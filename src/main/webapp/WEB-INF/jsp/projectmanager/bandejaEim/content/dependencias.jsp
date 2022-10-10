@@ -22,29 +22,38 @@
             </ul>
          </div>
     </div>
-  
+   <div class="column-style-consulta" style="width: 11%;">
+        <label for="ot_asignadao" class="label-filter">Celula</label>
+        <input type="text" ng-model="objetoCelula.dCelula" ng-change="limpiarCamposAsignada(0)" id="dCelula" placeholder="Ej: 65434"
+        class="form-control input-filtro-coordInst form-control-sm">
+    </div>
     <div class="column-style-consulta" style="width: 11%;">
         <label for="ot_asignadao" class="label-filter">EIM</label>
-        <input type="text" ng-model="objetoAsignada.ot" ng-change="limpiarCamposAsignada(1)" id="ot_asignada" placeholder="Ej: 65434"
+        <input type="text" ng-model="objetoCelula.otdEim" ng-change="limpiarCamposAsignada(1)" id="dEim" placeholder="Ej: 65434"
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
     <div class="column-style-consulta" style="width: 11%;">
         <label for="os_asignada" class="label-filter">Cliente</label>
-        <input type="text" ng-model="objetoAsignada.folio" ng-change="limpiarCamposAsignada(2)" id="os_asignada" placeholder="Ej: 23214"
+        <input type="text" ng-model="objetoCelula.dCliente" ng-change="limpiarCamposAsignada(2)" id="dCliente" placeholder="Ej: 23214"
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
     <div class="column-style-consulta" style="width: 11%;">
         <label for="os_terminada" class="label-filter">Tipo de Sitio</label>
-        <input type="text" ng-model="objetoAsignada.claveCliente" ng-change="limpiarCamposAsignada(3)" placeholder="Ej: 23214"
+        <input type="text" ng-model="objetoCelula.dTipoSitio" ng-change="limpiarCamposAsignada(3)" id="dTipoSitio" placeholder="Ej: 23214"
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
      <div class="column-style-consulta" style="width: 11%;">
-        <label for="os_terminada" class="label-filter">COT / CSP</label>
-        <input type="text" ng-model="objetoAsignada.claveCliente" ng-change="limpiarCamposAsignada(3)" placeholder="Ej: 23214"
+        <label for="os_terminada" class="label-filter">CSP</label>
+        <input type="text" ng-model="objetoCelula.dCsp" ng-change="limpiarCamposAsignada(4)" id="dCsp" placeholder="Ej: 23214"
+        class="form-control input-filtro-coordInst form-control-sm">
+    </div>
+     <div class="column-style-consulta" style="width: 11%;">
+        <label for="os_terminada" class="label-filter">COT</label>
+        <input type="text" ng-model="objetoCelula.dCot" ng-change="limpiarCamposAsignada(5)" id="dCot" placeholder="Ej: 23214"
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
     <div class="col-md-1 div-btn-busqueda" style="width: 85px;">
-        <button id="btn-asignada-salesforce" ng-click="consultarAsignada()" type="button" class="btn btn-sm waves-effect waves-light btn-primary">
+        <button id="btn-asignada-salesforce" ng-click="consultarDependencia()" type="button" class="btn btn-sm waves-effect waves-light btn-primary">
             <i class="fa fa-search" ></i>
         </button>
     </div>
