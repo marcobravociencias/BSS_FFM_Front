@@ -2,7 +2,7 @@
 <div class="row md-form" id="">
     
     <div class="column-style-consulta columna-filtro-ind" style="width: 11%;">
-        <label for="estatus_asignada" class="label-filter">Vertical / Celula</label>
+        <label for="estatus_asignada" class="label-filter">Vertical</label>
         <div class="dropdown">
             <input id="estatusAsignada" readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Seleccione..." 
             type="text" id="estatus_asignada" class="input-filtro-coordInst form-control form-control-sm" />
@@ -23,6 +23,7 @@
             </ul>
          </div>
     </div>
+
   <div class="column-style-consulta" style="width: 11%;">
         <label class="label-filter">Celula</label>
         <input type="text" ng-model="objetoPendiente.pCelula" ng-change="limpiarCamposAsignada(0)" id="pCelula" placeholder="Ej: 65434"

@@ -20,19 +20,21 @@
             <i class="fa fa-search" ></i>
         </button>
     </div>
-    <div class="col-md-2">
-    </div>
     <div class="col-md-1">
     </div>
-    <div class="col-md-2" style="width: 227px;">
-                        <select class="form-control form-control-sm custom-select" id="eim" ng-model="eim.Id">
+
+    <div class="col-md-3" style="width: 300px;">
+                        <select class="form-control form-control-sm custom-select" style="    font-size: .775rem;
+    line-height: 1.5;
+    top: 22px;
+    position: absolute;" id="eim" ng-model="eim.Id">
                             <option value="" selected>NO HAY SELECCI&Oacute;N</option>
                             <option value="{{ eim.Id }}" ng-repeat="eim in data.eims">
                                 {{ eim.Name }}
                             </option>
                         </select>
     </div>
-    <div class="col-md-2" style="width: 165px">
+    <div class="col-md-2" style="top: 22px;width: 200px; float: left; position: relative;left: 60px;">
             <button type="button" class="btn btn-primary ripple-surface" ng-click="asignarEim()">
                     Asignar EIM
             </button>
