@@ -715,7 +715,8 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 			'<tr>' 
 			+'<td>'+ d[0].idOrden 
 			+'</td>' +
-			'<td>Mensaje Fase:</td>' +
+			'<td>'+ d[0].claveCliente 
+			+'</td>' +
 			'<td>Mensaje Subcategoria:</td>' +
 			'<td>Mensaje Fecha:</td>' +
 			'<td>Mensaje Estatus:</td>' +
