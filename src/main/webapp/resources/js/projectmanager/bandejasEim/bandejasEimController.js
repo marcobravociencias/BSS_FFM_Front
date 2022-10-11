@@ -3,7 +3,7 @@ var tableTerminada = undefined;
 var objectTempAccion;
 var geografiaPendiente = [];
 var csp  = [];
-
+listaDetalleOs = [];
 
 app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPIService', 'genericService', 'evidenciaService', function ($scope, $q, coordInstalacionesPIService, genericService, evidenciaService) {
 	app.evidenciaController($scope, evidenciaService)
@@ -707,13 +707,28 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 	}
 	function format(d) {
 		console.log(d);
+		var html = "";
+		for(var i=0; i<d.length; i++){
+			html += `<tr>
+			  <td>`+d[i].idOrden+`</td>
+			  <td>`+d[i].folioSistema+`</td>
+			  <td>`+d[i].nombreCliente+`</td>
+			  <td>`+d[i].fechaAgenda+`</td>
+			  <td>`+d[i].descripcionEstatus+`</td>
+			 
+			</tr>`;
+
+			
+		}
 		return (
 			'<div class="col-8 table-responsive" style="margin-top: 1em; padding: 0;">'+
-			'<table id="myTable" class="table">' +
-			'<thead id="" style="background-color: blue;">'+
+			'<table>' +
+			'<thead> '+
 			'<tr><th>OT</th><th>Fase</th><th>Subcategoria</th><th>Fecha de Creación</th><th>Estatus</th><th>Solicitante</th></tr>'	+
 			'</thead>'+
-			'<tbody id="myTable">'+
+			'<tbody id="myTables">'+
+			html+
+			'</tbody>'+
 			'</table>'+
 			'</div>'
 			
@@ -753,7 +768,8 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 							$scope.listaValidacion = response.data.result.resultado;
 							$.each(response.data.result.resultado, function (i, elemento){
 								let row = [];
-								row[0] = '<a id="mostrar-segundo-nivel-' + elemento.os + '" class="option-mas-implementados segundo-nivel-table-implementados" tag-position="' + elemento.os + '" tag-hide="false"><i id="icono-implementados-' + elemento.id + '" class="icono-implementados fas fa-angle-down" aria-hidden="true"></i></a>';
+								row[0] = '<a id="mostrar-segundo-nivel-' + elemento.os + '" class="dt-control" tag-position="' + elemento.os + '" tag-hide="false"><i id="icono-implementados-' 
+								+ elemento.id + '" class="dt-control icono-implementados fas fa-angle-down" aria-hidden="true"></i></a>';
 								row[1] = elemento.vertical ? elemento.vertical : 'Sin informaci&oacute;n';
 								row[2] = elemento.celula ? elemento.celula : 'Sin informaci&oacute;n';
 								row[3] = elemento.nombreEim ? elemento.nombreEim : 'Sin informaci&oacute;n';
@@ -814,50 +830,37 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 
 	setTimeout(
 		function () {
-			$('#tablePendientesPorImplementar tbody').on('click', 'tr', function (){
+			$('#tablePendientesPorImplementar tbody').on('click', 'td.sorting_1', function (){
 
 				console.log("click en al tabla");
 				var tr = $(this).closest('tr');
 				var row = tablePendientesPorImplementar.row(tr); //mismo nombre que tabla
+				let index = Number($(this).attr('tag-position'));
+				
 				//console.log(tr, row)
 
 				if (row.child.isShown()) {
 					row.child.hide();
 				}else {
+					var listaDetalleOs = [] ;
 					console.log('Se ejecuto el else');
 					//row.child(format(row.data())).show();
 					os1 = "OS-6945072";
 					let params = {
 						os: os1,
 					}
-					$.each($scope.listaDetalleOs, function(i, item) {
-						lista = document.getElementById("myTable");
-						var tr = document.createElement("tr");
-						var columna1 = document.createElement("th")
-						columna1.innerHTML = item.idOrden;
-						var columna2 = document.createElement("th")
-						columna2.innerHTML = item.ciudad;
-						var columna3 = document.createElement("th")
-						columna3.innerHTML = item.descripcionEstado;
-						var columna4 = document.createElement("th")
-						columna4.innerHTML = item.fechaCreacion;
-						var columna5 = document.createElement("th")
-						columna5.innerHTML = item.descripcionEstatus;
-						var columna6 = document.createElement("th")
-						columna6.innerHTML = item.nombreCliente;
-						lista.appendChild(tr);
-						tr.appendChild(columna1);
-						tr.appendChild(columna2);
-						tr.appendChild(columna3);
-						tr.appendChild(columna4);
-						tr.appendChild(columna5);
-						tr.appendChild(columna6);
-						})	
 						genericService.localizaOrden(params).then(function success(response){
-						$scope.listaDetalleOs = response.data.result.detalleOS;
-						row.child(format($scope.listaDetalleOs)).show();
-						
-					
+							if(response.data !== undefined){
+								if(response.data.respuesta){
+									if (response.data.result) {
+										if (response.data.result.detalleOS) {
+										listaDetalleOs = response.data.result.detalleOS;
+											row.child(format(listaDetalleOs)).show();
+										
+										}
+									}
+								}
+							}
 					})
 
 				}
@@ -899,7 +902,10 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 							$scope.dependencia = response.data.result.resultado;
 							$.each(response.data.result.resultado, function (i, elemento){
 								let row = [];
-								row[0] = '<a id="mostrar-segundo-nivel-' + elemento.os + '" class="option-mas-implementados segundo-nivel-table-implementados" tag-position="' + elemento.os + '" tag-hide="false"><i id="icono-implementados-' + elemento.os + '" class="icono-implementados fas fa-angle-down" aria-hidden="true"></i></a>';
+								row[0] = '<a id="mostrar-segundo-nivel-' + elemento.os +
+								 '" class="option-mas-implementados segundo-nivel-table-implementados" tag-position="' +
+								elemento.os + '" tag-hide="false"><i id="icono-implementados-' + elemento.os +
+								'" class="icono-implementados fas fa-angle-down" aria-hidden="true"></i></a>';
 								//FOLIO
 								row[1] = elemento.csp ? elemento.csp : 'Sin informaci&oacute;n';
 								//COTIZACION
@@ -949,6 +955,8 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 		})
 				
 	}
+	///
+	
 	//Table Implentacion
 	$scope.consultarImplementacion = function(isSwal){
 		iOportunidad = $("#iOportunidad").val();
@@ -1285,6 +1293,7 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 			$(this).removeClass('orderColumnDescTable');
 		}
 	});
+	
 
 	$scope.orderTableByColumnGeneric = function (colNumber, typeTable, isAsc, isNumber) {
 		let arraySort = [];
