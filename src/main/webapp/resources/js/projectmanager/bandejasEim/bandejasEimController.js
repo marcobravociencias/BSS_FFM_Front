@@ -711,18 +711,18 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 		for(var i=0; i<d.length; i++){
 			html += `<tr>
 			  <td>`+d[i].idOrden+`</td>
-			  <td>`+d[i].folioSistema+`</td>
-			  <td>`+d[i].nombreCliente+`</td>
-			  <td>`+d[i].fechaAgenda+`</td>
+			  <td>`+d[i].descripcionEstado+`</td>
+			  <td>`+d[i].descTipo+`</td>
+			  <td>`+d[i].fechaCreacion+`</td>
 			  <td>`+d[i].descripcionEstatus+`</td>
-			 
+			  <td>`+d[i].nombreCliente+`</td>
 			</tr>`;
 
 			
 		}
 		return (
-			'<div class="col-8 table-responsive" style="margin-top: 1em; padding: 0;">'+
-			'<table>' +
+			'<div class="col-12 table-responsive" style="margin-top: 1em; padding: 0;">'+
+			'<table class="col-12">' +
 			'<thead> '+
 			'<tr><th>OT</th><th>Fase</th><th>Subcategoria</th><th>Fecha de Creación</th><th>Estatus</th><th>Solicitante</th></tr>'	+
 			'</thead>'+
@@ -757,8 +757,8 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 
 		}
 		return (
-			'<div class="col-8 table-responsive" style="margin-top: 1em; padding: 0;">'+
-			'<table>' +
+			'<div class="col-12 table-responsive" style="margin-top: 1em; padding: 0;">'+
+			'<table class="col-12">' +
 			'<thead> '+
 			'<tr><th>OT</th><th>Categoria</th><th>Subcategoria</th><th>Fecha de Creación</th><th>Técnico Asignado</th><th>Solicitante</th><th>Auxiliar</th><th>Estatus</th><th>Hora de llegada</th></tr>'+
 			'</thead>'+
