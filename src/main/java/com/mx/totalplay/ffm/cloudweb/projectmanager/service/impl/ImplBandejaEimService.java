@@ -340,9 +340,16 @@ public class ImplBandejaEimService implements BandejasEimPMService {
     public ServiceResponseResult bandejaImplementacion(String params) {
         logger.info("ImplBandejaEimService.class [metodo = bandejaImplementacion() ]\n" + params);
         LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        String fechaVenta = jsonObject.get("fechaVenta").getAsString();
+        String estatusOs = jsonObject.get("estatusC").getAsString();
+        String vertical = jsonObject.get("vertical").getAsString();
+        String celula = jsonObject.get("celula").getAsString();
+        String nombreEim = jsonObject.get("nombreEim").getAsString();
+        String csp = jsonObject.get("csp").getAsString();
         String tokenAcces = principalDetail.getAccess_token();
         String urlRequest = principalDetail.getDireccionAmbiente()
-                .concat(constBandejasEim.getBandejaImplementacion());
+                .concat(constBandejasEim.getBandejaImplementacion().concat("&celula="+ celula).concat("&fecha="+ fechaVenta).concat("&vertical="+ vertical).concat("&eim="+ nombreEim).concat("&csp="+csp));
 
         logger.info("URL: " + urlRequest);
 

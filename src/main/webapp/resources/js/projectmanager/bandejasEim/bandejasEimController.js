@@ -1050,7 +1050,7 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 		iCsp = $("#iCsp").val();
 		let params = {
 			nombreOportunoidad: iOportunidad,
-			region: iRegion,
+			//region: iRegion,
 			fechaVenta: iFecha,
 			estatusC: iEstatus,
 			vertical: iVertical,
@@ -1096,13 +1096,13 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 							toastr.error(response.data.resultDescripcion);
 						}
 					} else{
-						toastr.warning('No se encontraron Dependencias');
+						toastr.warning('No se encontraron Implementaciones');
 					}
 				} else{
 					toastr.warning(response.data.resultDescripcion);
 				}
 			} else {
-				toastr.error('Ha ocurrido un error al consultar los Dependencias');
+				toastr.error('Ha ocurrido un error al consultar las Implementaciones');
 			}
 	
 			tableimplementacion = $('#tableimplementacion').DataTable({

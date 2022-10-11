@@ -5,11 +5,13 @@
         <input type="text" id="iOportunidad" placeholder="Ej: 23214"
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
+    <!--
     <div class="col-md-2" style="width: 11%;">
         <label for="" class="label-filter">Regi&oacute;n</label>
         <input type="text" id="iRegion" placeholder="Ej: 65434"
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
+    -->
     <div class="col-md-2" style="width: 11%;">
         <label for="" class="label-filter">Fecha</label>
         <input type="text" id="iFecha" placeholder="Ej: 23214"
@@ -81,7 +83,7 @@
     </div>
 
     <div class="col-lg-2 col-md-6 mb-5 mb-md-0 position-relative">
-      <h5 class="text-muted fw-bold mb-3">{{data.detalleOS[0].porcentaje}} %</h5>
+      <h5 class="text-muted fw-bold mb-3">{{(data.detalleOS[0].porcentaje)}} %</h5>
       <h6 class="text-primary mb-0">Cumplimiento del D&iacute;a</h6>
       <div class="vr vr-blurry position-absolute my-0 h-100 d-none d-md-block top-0 end-0"></div>
     </div>
