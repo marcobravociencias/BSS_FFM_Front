@@ -708,35 +708,12 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 	function format(d) {
 		console.log(d);
 		return (
-			'<div class="col-10 table-responsive" style="margin-top: 1em; padding: 0;">'+
-			'<table id="" class="table">' +
-			'<thead id="">'+
+			'<div class="col-8 table-responsive" style="margin-top: 1em; padding: 0;">'+
+			'<table id="myTable" class="table">' +
+			'<thead id="" style="background-color: blue;">'+
 			'<tr><th>OT</th><th>Fase</th><th>Subcategoria</th><th>Fecha de Creación</th><th>Estatus</th><th>Solicitante</th></tr>'	+
-			'<tr>' 
-			+'<td>'+ d[0].idOrden 
-			+'</td>' +
-			'<td>'+ d[0].claveCliente 
-			+'</td>' +
-			'<td>Mensaje Subcategoria:</td>' +
-			'<td>Mensaje Fecha:</td>' +
-			'<td>Mensaje Estatus:</td>' +
-			'<td>' +
-			 d[2] +
-			'</td>' +
-			'</tr>' +
-
-			'<tr>' +
-			'<td>Mensaje OT-2:</td>' +
-			'<td>Mensaje Fase-2:</td>' +
-			'<td>Mensaje Subcategoria-2:</td>' +
-			'<td>Mensaje Fecha-2</td>' +
-			'<td>Mensaje Estatus-2</td>' +
-			'<td>' +
-			 d[2] +
-			'</td>' +
-			'</tr>' +
-			
 			'</thead>'+
+			'<tbody id="myTable">'+
 			'</table>'+
 			'</div>'
 			
@@ -853,9 +830,34 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 					let params = {
 						os: os1,
 					}
-					genericService.localizaOrden(params).then(function success(response){
+					$.each($scope.listaDetalleOs, function(i, item) {
+						lista = document.getElementById("myTable");
+						var tr = document.createElement("tr");
+						var columna1 = document.createElement("th")
+						columna1.innerHTML = item.idOrden;
+						var columna2 = document.createElement("th")
+						columna2.innerHTML = item.ciudad;
+						var columna3 = document.createElement("th")
+						columna3.innerHTML = item.descripcionEstado;
+						var columna4 = document.createElement("th")
+						columna4.innerHTML = item.fechaCreacion;
+						var columna5 = document.createElement("th")
+						columna5.innerHTML = item.descripcionEstatus;
+						var columna6 = document.createElement("th")
+						columna6.innerHTML = item.nombreCliente;
+						lista.appendChild(tr);
+						tr.appendChild(columna1);
+						tr.appendChild(columna2);
+						tr.appendChild(columna3);
+						tr.appendChild(columna4);
+						tr.appendChild(columna5);
+						tr.appendChild(columna6);
+						})	
+						genericService.localizaOrden(params).then(function success(response){
 						$scope.listaDetalleOs = response.data.result.detalleOS;
 						row.child(format($scope.listaDetalleOs)).show();
+						
+					
 					})
 
 				}
