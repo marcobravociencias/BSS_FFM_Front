@@ -49,11 +49,11 @@
                                 <i ng-class="{'active-iconmenu':vistaCoordinacion==1}" class="icon-menu-left fa fa-users"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==1}" class="titulo-menu">CSP sin EIM</span>
                             </div>
                             <div class="opcion-menu" ng-click="cambiarVista(2);" ng-if="configPermisoAccionAsignarEimCSP">
-                                <i ng-class="{'active-iconmenu':vistaCoordinacion==2}" class="icon-menu-left fa fa-chalkboard-teacher"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==2}" class="titulo-menu">Validación de lider ...</span>
+                                <i ng-class="{'active-iconmenu':vistaCoordinacion==2}" class="icon-menu-left fa fa-chalkboard-teacher"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==2}" class="titulo-menu">Validación de Líder...</span>
                             </div>
                             
                             <div class="opcion-menu" ng-click="cambiarVista(3);" ng-if="configPermisoAccionConsultarBandejaCSPSinEim">
-                                <i ng-class="{'active-iconmenu':vistaCoordinacion==3}" class="icon-menu-left fa fa-clock-o"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==3}" class="titulo-menu">Pendientes</span>
+                                <i ng-class="{'active-iconmenu':vistaCoordinacion==3}" class="icon-menu-left fa fa-clock-o"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==3}" class="titulo-menu">Pendientes por Imp...</span>
                             </div>
                             <div class="opcion-menu" ng-click="cambiarVista(4);" ng-if="configPermisoAccionConsultarBandejaDependencia">
                                 <i ng-class="{'active-iconmenu':vistaCoordinacion==4}" class="icon-menu-left fa fa-caret-square-o-left"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==4}" class="titulo-menu">Dependencias</span>

@@ -419,7 +419,7 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 							toastr.error(response.data.resultDescripcion);
 						}
 					} else{
-						toastr.warning('No se encontraron oportunidades para validar');
+						toastr.warning('No se encontraron registros con el filtro usado');
 					}
 				} else{
 					toastr.warning(response.data.resultDescripcion);
@@ -487,7 +487,7 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 							toastr.error(response.data.resultDescripcion);
 						}
 					} else{
-						toastr.warning('No se encontraron Eims');
+						toastr.warning('No se encontraron registros con el filtro usado');
 					}
 				} else{
 					toastr.warning(response.data.resultDescripcion);
@@ -811,23 +811,24 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 								row[2] = elemento.celula ? elemento.celula : 'Sin informaci&oacute;n';
 								row[3] = elemento.nombreEim ? elemento.nombreEim : 'Sin informaci&oacute;n';
 								row[4] = elemento.cliente ? elemento.cliente : 'Sin informaci&oacute;n';
-								row[5] = elemento.idCotizacion ? elemento.idCotizacion : 'Sin informaci&oacute;n';
+								row[5] = elemento.idCotizacion ? elemento.cotizacion : 'Sin informaci&oacute;n';
 								row[6] = elemento.csp ? elemento.csp : 'Sin informaci&oacute;n';
 								row[7] = elemento.os ? elemento.os : 'Sin informaci&oacute;n';
 								row[8] = elemento.cuentaFactura ? elemento.cuentaFactura : 'Sin informaci&oacute;n';
 								row[9] = elemento.fechaVenta ? elemento.fechaVenta : 'Sin informaci&oacute;n';
 								row[10] = elemento.plazaVenta ? elemento.plazaVenta : 'Sin informaci&oacute;n';
+								//TipoSitio
 								row[11] = elemento.plazaInstalacion ? elemento.plazaInstalacion : 'Sin informaci&oacute;n';
 								//monto
-								row[12] = elemento.idCuentaFactura ? elemento.idCuentaFactura : 'Sin informaci&oacute;n';
-								//estatus
-								row[13] = elemento.idOportunidad ? elemento.idOportunidad : 'Sin informaci&oacute;n';
+								row[12] = elemento.monto ? elemento.monto : 'Sin informaci&oacute;n';
+								//estatuscsp
+								row[13] = elemento.estatusCSP ? elemento.estatusCSP : 'Sin informaci&oacute;n';
 								//fecha compromiso
 								row[14] = elemento.fechaAgenda ? elemento.fechaAgenda : 'Sin informaci&oacute;n';
 								//cuadrilla
 								row[15] = elemento.tipoCuadrilla ? elemento.tipoCuadrilla : 'Sin informaci&oacute;n';
 								//tipo de servicio <--
-								row[16] = elemento.nombreLiderTecnico ? elemento.nombreLiderTecnico : 'Sin informaci&oacute;n';
+								row[16] = elemento.tipoCot ? elemento.tipoCot : 'Sin informaci&oacute;n';
 
 								arraRow.push(row);
 							})
@@ -835,7 +836,7 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 							toastr.error(response.data.resultDescripcion);
 						}
 					} else{
-						toastr.warning('No se encontraron Eims');
+						toastr.warning('No se encontraron registros con el filtro usado');
 					}
 				} else{
 					toastr.warning(response.data.resultDescripcion);
@@ -947,15 +948,15 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 								//FOLIO
 								row[1] = elemento.csp ? elemento.csp : 'Sin informaci&oacute;n';
 								//COTIZACION
-								row[2] = elemento.idCotizacion ? elemento.idCotizacion : 'Sin informaci&oacute;n';
+								row[2] = elemento.cotizacion ? elemento.cotizacion : 'Sin informaci&oacute;n';
 								//IDBRM
-								row[3] = elemento.idVendedor ? elemento.idVendedor : 'Sin informaci&oacute;n';
+								row[3] = elemento.idBrm ? elemento.idBrm : 'Sin informaci&oacute;n';
 								//CUENTA FACTURA
 								row[4] = elemento.cuentaFactura ? elemento.cuentaFactura : 'Sin informaci&oacute;n';
 								//TIPO DE CUADRILLA
 								row[5] = elemento.tipoCuadrilla ? elemento.tipoCuadrilla : 'Sin informaci&oacute;n';
 								//TIPO DE DEPENDENCIA
-								row[6] = elemento.fechaVenta ? elemento.fechaVenta : 'Sin informaci&oacute;n';
+								row[6] = elemento.estatusD ? elemento.estatusD : 'Sin informaci&oacute;n';
 								//NUM DE OS
 								row[7] = elemento.os ? elemento.os : 'Sin informaci&oacute;n';
 								arraRow.push(row);
@@ -964,7 +965,7 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 							toastr.error(response.data.resultDescripcion);
 						}
 					} else{
-						toastr.warning('No se encontraron Dependencias');
+						toastr.warning('No se encontraron registros con el filtro usado');
 					}
 				} else{
 					toastr.warning(response.data.resultDescripcion);
@@ -1079,9 +1080,9 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 								//FOLIO
 								row[1] = elemento.csp ? elemento.csp : 'Sin informaci&oacute;n';
 								//COTIZACION
-								row[2] = elemento.idCotizacion ? elemento.idCotizacion : 'Sin informaci&oacute;n';
+								row[2] = elemento.cotizacion ? elemento.cotizacion : 'Sin informaci&oacute;n';
 								//IDBRM
-								row[3] = elemento.idVendedor ? elemento.idVendedor : 'Sin informaci&oacute;n';
+								row[3] = elemento.idBrm ? elemento.idBrm : 'Sin informaci&oacute;n';
 								//CUENTA FACTURA
 								row[4] = elemento.cuentaFactura ? elemento.cuentaFactura : 'Sin informaci&oacute;n';
 								//TIPO DE CUADRILLA
@@ -1089,7 +1090,7 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 								//TIPO DE DEPENDENCIA
 								row[6] = elemento.os ? elemento.os : 'Sin informaci&oacute;n';
 								//ESTATUS
-								row[7] = elemento.idLiderTecnico ? elemento.idLiderTecnico : 'Sin informaci&oacute;n';
+								row[7] = elemento.estatusOS ? elemento.estatusOS : 'Sin informaci&oacute;n';
 								arraRow.push(row);
 							})
 						} else{
