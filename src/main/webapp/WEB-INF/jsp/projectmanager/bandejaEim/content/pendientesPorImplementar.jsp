@@ -1,7 +1,8 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <div class="row md-form" id="">
     
-    <div class="column-style-consulta columna-filtro-ind" style="width: 11%;">
+    <!--div class="column-style-consulta columna-filtro-ind" style="width: 11%;">
         <label for="estatus_asignada" class="label-filter">Vertical</label>
         <div class="dropdown">
             <input id="estatusAsignada" readonly data-mdb-toggle="dropdown" aria-expanded="false" placeholder="Seleccione..." 
@@ -22,36 +23,66 @@
                 </li>
             </ul>
          </div>
+    </div-->
+    <div class="col-md-2" style="width: 11%;">
+        <label for="" class="label-filter">Vertical</label>
+        <input list="pVerticales" type="text" id="iVertical" placeholder="Vertical"
+               class="form-control input-filtro-coordInst form-control-sm">
+        <datalist id="pVerticales">
+            <option value="Carriers">
+            <option value="Gobierno Federal">
+            <option value="Estatre&aacute;gicas I">
+            <option value="Estatre&aacute;gicas II">
+            <option value="Estatre&aacute;gicas III">
+            <option value="Estatre&aacute;gicas IV">
+        </datalist>
     </div>
 
   <div class="column-style-consulta" style="width: 11%;">
         <label class="label-filter">Celula</label>
-        <input type="text" ng-model="objetoPendiente.pCelula" ng-change="limpiarCamposAsignada(0)" id="pCelula" placeholder="Ej: 65434"
-        class="form-control input-filtro-coordInst form-control-sm">
+        <!--input type="text" ng-model="objetoPendiente.pCelula" ng-change="limpiarCamposAsignada(0)" id="pCelula" placeholder="Ej: 65434"
+        class="form-control input-filtro-coordInst form-control-sm"-->
+
+      <input list="pCelulas"  ng-model="objetoPendiente.pCelula" ng-change="limpiarCamposAsignada(0)" id="pCelula"  placeholder="Celula" class="form-control input-filtro-coordInst form-control-sm">
+      <datalist id="pCelulas">
+          <option value="Carriers">
+          <option value="Gobierno Federal">
+          <option value="Gobierno Federal">
+          <option value="Finanaciero">
+          <option value="Educacio&aacute;n">
+          <option value="Retail y Hospitalidad">
+          <option value="Noreste">
+          <option value="Noroeste">
+          <option value="Occidente">
+          <option value="Toluca">
+          <option value="CDMX">
+          <option value="Bajio">
+      </datalist>
+
     </div>
     <div class="column-style-consulta" style="width: 11%;">
         <label class="label-filter">EIM</label>
-        <input type="text" ng-model="objetoPendiente.pEim" ng-change="limpiarCamposAsignada(1)" id="pEim" placeholder="Ej: 65434"
+        <input type="text" ng-model="objetoPendiente.pEim" ng-change="limpiarCamposAsignada(1)" id="pEim" placeholder="Ej: Nombre EIM"
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
     <div class="column-style-consulta" style="width: 11%;">
         <label class="label-filter">Cliente</label>
-        <input type="text" ng-model="objetoPendiente.pCliente" ng-change="limpiarCamposAsignada(2)" id="pCliente" placeholder="Ej: 23214"
+        <input type="text" ng-model="objetoPendiente.pCliente" ng-change="limpiarCamposAsignada(2)" id="pCliente" placeholder="Ej: Audi"
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
     <div class="column-style-consulta" style="width: 11%;">
         <label for="os_terminada" class="label-filter">Tipo de Sitio</label>
-        <input type="text" ng-model="objetoPendiente.pTipoSitio" ng-change="limpiarCamposAsignada(3)" id="pTipoSitio" placeholder="Ej: 23214"
+        <input type="text" ng-model="objetoPendiente.pTipoSitio" ng-change="limpiarCamposAsignada(3)" id="pTipoSitio" placeholder="Ej: Tipo de Sitio"
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
     <div class="column-style-consulta" style="width: 11%;">
         <label for="os_terminada" class="label-filter">CSP </label>
-        <input type="text" ng-model="objetoPendiente.pCsp" ng-change="limpiarCamposAsignada(4)" id="pCsp" placeholder="Ej: 23214"
+        <input type="text" ng-model="objetoPendiente.pCsp" ng-change="limpiarCamposAsignada(4)" id="pCsp" placeholder="Ej: CSP#######"
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
      <div class="column-style-consulta" style="width: 11%;">
         <label for="os_terminada" class="label-filter">COT </label>
-        <input type="text" ng-model="objetoPendite.pOt" ng-change="limpiarCamposAsignada(3)" id="pCot" placeholder="Ej: 23214"
+        <input type="text" ng-model="objetoPendite.pOt" ng-change="limpiarCamposAsignada(3)" id="pCot" placeholder="Ej: COT#######"
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
     <div class="col-md-1 div-btn-busqueda" style="width: 85px;">

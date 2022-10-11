@@ -419,7 +419,7 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 							toastr.error(response.data.resultDescripcion);
 						}
 					} else{
-						toastr.warning('No se encontraron oportunidades para validar');
+						toastr.warning('No se encontraron registros con el filtro usado');
 					}
 				} else{
 					toastr.warning(response.data.resultDescripcion);
@@ -487,7 +487,7 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 							toastr.error(response.data.resultDescripcion);
 						}
 					} else{
-						toastr.warning('No se encontraron Eims');
+						toastr.warning('No se encontraron registros con el filtro usado');
 					}
 				} else{
 					toastr.warning(response.data.resultDescripcion);
@@ -817,6 +817,7 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 								row[8] = elemento.cuentaFactura ? elemento.cuentaFactura : 'Sin informaci&oacute;n';
 								row[9] = elemento.fechaVenta ? elemento.fechaVenta : 'Sin informaci&oacute;n';
 								row[10] = elemento.plazaVenta ? elemento.plazaVenta : 'Sin informaci&oacute;n';
+								//TipoSitio
 								row[11] = elemento.plazaInstalacion ? elemento.plazaInstalacion : 'Sin informaci&oacute;n';
 								//monto
 								row[12] = elemento.monto ? elemento.monto : 'Sin informaci&oacute;n';
@@ -835,7 +836,7 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 							toastr.error(response.data.resultDescripcion);
 						}
 					} else{
-						toastr.warning('No se encontraron Eims');
+						toastr.warning('No se encontraron registros con el filtro usado');
 					}
 				} else{
 					toastr.warning(response.data.resultDescripcion);
@@ -964,7 +965,7 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 							toastr.error(response.data.resultDescripcion);
 						}
 					} else{
-						toastr.warning('No se encontraron Dependencias');
+						toastr.warning('No se encontraron registros con el filtro usado');
 					}
 				} else{
 					toastr.warning(response.data.resultDescripcion);
@@ -1096,7 +1097,7 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 							toastr.error(response.data.resultDescripcion);
 						}
 					} else{
-						toastr.warning('No se encontraron Dependencias');
+						toastr.warning('No se encontraron registros con el filtro usado');
 					}
 				} else{
 					toastr.warning(response.data.resultDescripcion);
