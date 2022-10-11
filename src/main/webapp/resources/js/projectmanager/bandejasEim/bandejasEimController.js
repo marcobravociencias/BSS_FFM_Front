@@ -734,6 +734,20 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 			
 		);
 	}
+	function formatEnImplementacion(d) {
+		//console.log(d);
+		return (
+			'<div class="col-8 table-responsive" style="margin-top: 1em; padding: 0;">'+
+			'<table id="myTable" class="table">' +
+			'<thead id="" style="background-color: blue;">'+
+			'<tr><th>OT</th><th>Categoria</th><th>Subcategoria</th><th>Fecha de Creación</th><th>Técnico Asignado</th><th>Solicitante</th><th>Auxiliar</th><th>Estatus</th><th>Hora de llegada</th></tr>'	+
+			'</thead>'+
+			'<tbody id="myTableEnImplementacion">'+
+			'</table>'+
+			'</div>'
+
+		);
+	}
 	$scope.consultarPendientesPorImplementar = function(isSwal){
 		pCelula = $("#pCelula").val();
 		pEim = $("#pEim").val();
@@ -827,12 +841,11 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 		})
 				
 	}
-
 	setTimeout(
 		function () {
 			$('#tablePendientesPorImplementar tbody').on('click', 'td.sorting_1', function (){
 
-				console.log("click en al tabla");
+				//console.log("click en al tabla");
 				var tr = $(this).closest('tr');
 				var row = tablePendientesPorImplementar.row(tr); //mismo nombre que tabla
 				let index = Number($(this).attr('tag-position'));
@@ -845,9 +858,11 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 					var listaDetalleOs = [] ;
 					console.log('Se ejecuto el else');
 					//row.child(format(row.data())).show();
-					os1 = "OS-6945072";
+					osConsulta = row.data()[7];
+					console.log(osConsulta);
+
 					let params = {
-						os: os1,
+						os: osConsulta,
 					}
 						genericService.localizaOrden(params).then(function success(response){
 							if(response.data !== undefined){
@@ -1044,6 +1059,68 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 		})
 				
 	}
+	setTimeout(
+		function () {
+			$('#tableimplementacion tbody').on('click', 'tr', function (){
+
+				//console.log("click en al tabla");
+				var tr = $(this).closest('tr');
+				var row = tableimplementacion.row(tr); //mismo nombre que tabla
+
+
+				if (row.child.isShown()) {
+					row.child.hide();
+				}else {
+					console.log('Se ejecuto el else');
+					//row.child(format(row.data())).show();
+					osConsulta = row.data()[6];
+					console.log(osConsulta);
+
+					let params = {
+						os: osConsulta,
+					}
+					genericService.localizaOrden(params).then(function success(response){
+						$scope.listaDetalleOs = response.data.result.detalleOS;
+						row.child(formatEnImplementacion($scope.listaDetalleOs)).show();
+					})
+					$.each($scope.listaDetalleOs, function(i, item) {
+						lista = document.getElementById("myTableEnImplementacion");
+						var tr = document.createElement("tr");
+						var columna1 = document.createElement("th");
+						columna1.innerHTML = item.idOrden;
+						var columna2 = document.createElement("th");
+						columna2.innerHTML = item.descTipo;
+						var columna3 = document.createElement("th");
+						columna3.innerHTML = item.descSubTipo;
+						var columna4 = document.createElement("th");
+						columna4.innerHTML = item.fechaCreacion;
+						var columna5 = document.createElement("th");
+						columna5.innerHTML = item.tecnico;//falta
+						var columna6 = document.createElement("th");
+						columna6.innerHTML = item.nombreCliente;
+						var columna7 = document.createElement("th");
+						columna7.innerHTML = item.auxAsig;
+						var columna8 = document.createElement("th");
+						columna8.innerHTML = item.descripcionEstatus;
+						var columna9 = document.createElement("th");
+						columna9.innerHTML = item.fechaHoraInicio;
+						lista.appendChild(tr);
+						tr.appendChild(columna1);
+						tr.appendChild(columna2);
+						tr.appendChild(columna3);
+						tr.appendChild(columna4);
+						tr.appendChild(columna5);
+						tr.appendChild(columna6);
+						tr.appendChild(columna7);
+						tr.appendChild(columna8);
+						tr.appendChild(columna9);
+					})
+
+				}
+
+			});
+		},
+		2000);
 	$scope.getOt = function () {
 		params = {
 			fecha : "",
