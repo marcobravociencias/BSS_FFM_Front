@@ -78,7 +78,7 @@
                     <th>Cuenta</th>
                     <th>Fecha Venta</th>
                     <th>Tipo de Venta</th>
-                    <th>Tipo de Servicio</th>
+                    <th>Tipo de Sitio</th>
                     <th>Monto</th>
                     <th>Estatus</th>
                     <th>Fecha de Compromiso</th>
