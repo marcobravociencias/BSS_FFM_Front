@@ -1140,11 +1140,11 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 						var columna4 = document.createElement("th");
 						columna4.innerHTML = item.fechaCreacion;
 						var columna5 = document.createElement("th");
-						columna5.innerHTML = item.tecnicoasigando;//falta
+						columna5.innerHTML = item.tecnico;//falta
 						var columna6 = document.createElement("th");
 						columna6.innerHTML = item.nombreCliente;
 						var columna7 = document.createElement("th");
-						columna7.innerHTML = item.auxiliar;//falta
+						columna7.innerHTML = item.auxAsig;
 						var columna8 = document.createElement("th");
 						columna8.innerHTML = item.descripcionEstatus;
 						var columna9 = document.createElement("th");
@@ -1156,6 +1156,9 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 						tr.appendChild(columna4);
 						tr.appendChild(columna5);
 						tr.appendChild(columna6);
+						tr.appendChild(columna7);
+						tr.appendChild(columna8);
+						tr.appendChild(columna9);
 					})
 
 				}
