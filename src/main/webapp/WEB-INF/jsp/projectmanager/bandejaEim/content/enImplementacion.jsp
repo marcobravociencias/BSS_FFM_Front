@@ -1,8 +1,39 @@
 
 <div class="row" id="">
-  	<div class="col-md-2" style="width: 11%;">
+    <div class="col-md-2" style="width: 11%;">
+        <label for="" class="label-filter">Vertical</label>
+        <input list="pVerticales" type="text" id="iVertical" placeholder="Vertical"
+               class="form-control input-filtro-coordInst form-control-sm">
+        <datalist id="pVerticales">
+            <option value="Carriers">
+            <option value="Gobierno Federal">
+            <option value="Estatre&aacute;gicas I">
+            <option value="Estatre&aacute;gicas II">
+            <option value="Estatre&aacute;gicas III">
+            <option value="Estatre&aacute;gicas IV">
+        </datalist>
+    </div>
+    <div class="col-md-2" style="width: 11%;">
+        <label class="label-filter">Celula</label>
+        <input list="pCelulas"  id="iCelula"  placeholder="Celula" class="form-control input-filtro-coordInst form-control-sm">
+        <datalist id="pCelulas">
+            <option value="Carriers">
+            <option value="Gobierno Federal">
+            <option value="Gobierno Federal">
+            <option value="Finanaciero">
+            <option value="Educacio&aacute;n">
+            <option value="Retail y Hospitalidad">
+            <option value="Noreste">
+            <option value="Noroeste">
+            <option value="Occidente">
+            <option value="Toluca">
+            <option value="CDMX">
+            <option value="Bajio">
+        </datalist>
+    </div>
+    <div class="col-md-2" style="width: 11%;">
         <label for="" class="label-filter">Oportunidad</label>
-        <input type="text" id="iOportunidad" placeholder="Ej: 23214"
+        <input type="text" id="iOportunidad" placeholder="Ej: Nombre Oportunidad"
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
     <!--
@@ -14,15 +45,15 @@
     -->
     <div class="col-md-2" style="width: 11%;">
         <label for="" class="label-filter">Fecha</label>
-        <input type="text" id="iFecha" placeholder="Ej: 23214"
+        <input type="text" id="iFecha" placeholder="Ej: DD/MM/AA"
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
     <div class="col-md-2" style="width: 11%;">
         <label for="" class="label-filter">Estatus de OT</label>
-        <input type="text" id="iEstatus" placeholder="Ej: 23214"
+        <input type="text" id="iEstatus" placeholder="Ej: Confirmado"
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
-    <div class="col-md-2" style="width: 11%;">
+    <!--div class="col-md-2" style="width: 11%;">
         <label for="" class="label-filter">Vertical</label>
         <input type="text" id="iVertical" placeholder="Ej: 23214"
         class="form-control input-filtro-coordInst form-control-sm">
@@ -31,15 +62,15 @@
         <label for="" class="label-filter">C&eacute;lula</label>
         <input type="text" id="iCelula" placeholder="Ej: 23214"
         class="form-control input-filtro-coordInst form-control-sm">
-    </div>
+    </div-->
     <div class="col-md-2" style="width: 11%;">
         <label for="" class="label-filter">EIM</label>
-        <input type="text" id="iEim" placeholder="Ej: 23214"
+        <input type="text" id="iEim" placeholder="Ej: Nombre EIM"
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
      <div class="col-md-2" style="width: 11%;">
         <label for="" class="label-filter">CSP</label>
-        <input type="text" id="iCsp" placeholder="Ej: 23214"
+        <input type="text" id="iCsp" placeholder="Ej: CSP#######"
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
     <div class="col-md-2" style="width: 85px;">
@@ -83,7 +114,7 @@
     </div>
 
     <div class="col-lg-2 col-md-6 mb-5 mb-md-0 position-relative">
-      <h5 class="text-muted fw-bold mb-3">{{(data.detalleOS[0].porcentaje)}} %</h5>
+      <h5 class="text-muted fw-bold mb-3">{{(data.detalleOS[0].porcentaje.substr(0,4))}} %</h5>
       <h6 class="text-primary mb-0">Cumplimiento del D&iacute;a</h6>
       <div class="vr vr-blurry position-absolute my-0 h-100 d-none d-md-block top-0 end-0"></div>
     </div>
