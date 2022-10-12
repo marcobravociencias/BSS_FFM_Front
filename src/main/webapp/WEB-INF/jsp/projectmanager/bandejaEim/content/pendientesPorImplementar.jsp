@@ -29,6 +29,7 @@
         <input type="text" ng-model="objetoPendiente.pCelula" ng-change="limpiarCamposAsignada(0)" id="pCelula" placeholder="Ej: 65434"
         class="form-control input-filtro-coordInst form-control-sm">
     </div-->
+    
     <div class="col-md-2" style="width: 11%;">
         <label for="" class="label-filter">Vertical</label>
         <input list="pVerticales" type="text" id="pVertical" placeholder="Vertical"
