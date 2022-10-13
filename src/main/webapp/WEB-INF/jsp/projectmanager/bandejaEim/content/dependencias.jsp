@@ -94,17 +94,26 @@
         <table id="tableDependencia" class="table">
             <thead id="thead_dependencia">
                 <tr>
-                    
+
                     <th class="detail">
-                            <div class="fht-cell" style="width: 20px;"></div>
+                        <div class="fht-cell" style="width: 20px;"></div>
                     </th>
-                    <th>Folio</th>
-                    <th>Cotizaci&oacute;n</th>
-                    <th>Idbrm</th>
-                    <th>Cuenta Factura</th>
-                    <th>Tipo de Cuadrilla</th>
-                    <th>Tipo de Dependencia</th>
-                    <th>N&uacute;m OS</th>
+                    <th>Vertical</th>
+                    <th>Celula</th>
+                    <th>EIM</th>
+                    <th>Cliente</th>
+                    <th>COT</th>
+                    <th>CSP</th>
+                    <th>OT</th>
+                    <th>Cuenta</th>
+                    <th>Fecha Venta</th>
+                    <th>Tipo de Venta</th>
+                    <th>Tipo de Sitio</th>
+                    <th>Monto</th>
+                    <th>Estatus</th>
+                    <th>Fecha de Compromiso</th>
+                    <th>Cuadrilla</th>
+                    <th>Tipo de Servicio</th>
                   
                 </tr>
             </thead>

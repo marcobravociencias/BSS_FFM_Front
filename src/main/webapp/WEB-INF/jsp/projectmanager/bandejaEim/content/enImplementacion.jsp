@@ -1,5 +1,6 @@
 
 <div class="row" id="">
+
     <div class="col-md-2" style="width: 11%;">
         <label for="" class="label-filter">Vertical</label>
         <input list="pVerticales" type="text" id="iVertical" placeholder="Vertical"
@@ -129,15 +130,24 @@
             <thead id="theadimplementacion">
                 <tr>
                     <th class="detail">
-                            <div class="fht-cell" style="width: 20px;"></div>
+                        <div class="fht-cell" style="width: 20px;"></div>
                     </th>
-                    <th>Folio</th>
-                    <th>Cotizacion</th>
-                    <th>Idbrm</th>
-                    <th>Cuenta Factura</th>
-                    <th>Tipo de Cuadrilla</th>
-                    <th>N&uacute;m OS</th>
-                    <th>Estatus de Os</th>
+                    <th>Vertical</th>
+                    <th>Celula</th>
+                    <th>EIM</th>
+                    <th>Cliente</th>
+                    <th>COT</th>
+                    <th>CSP</th>
+                    <th>OT</th>
+                    <th>Cuenta</th>
+                    <th>Fecha Venta</th>
+                    <th>Tipo de Venta</th>
+                    <th>Tipo de Sitio</th>
+                    <th>Monto</th>
+                    <th>Estatus</th>
+                    <th>Fecha de Compromiso</th>
+                    <th>Cuadrilla</th>
+                    <th>Tipo de Servicio</th>
                 </tr>
             </thead>
         </table>
