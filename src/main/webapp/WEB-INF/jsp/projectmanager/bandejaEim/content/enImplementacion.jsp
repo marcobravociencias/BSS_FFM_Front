@@ -1,5 +1,6 @@
 
 <div class="row" id="">
+
     <div class="col-md-2" style="width: 11%;">
         <label for="" class="label-filter">Vertical</label>
         <input list="pVerticales" type="text" id="iVertical" placeholder="Vertical"
@@ -15,7 +16,7 @@
     </div>
     <div class="col-md-2" style="width: 11%;">
         <label class="label-filter">Celula</label>
-        <input list="pCelulas"  id="dCelula"  placeholder="Celula" class="form-control input-filtro-coordInst form-control-sm">
+        <input list="pCelulas"  id="iCelula"  placeholder="Celula" class="form-control input-filtro-coordInst form-control-sm">
         <datalist id="pCelulas">
             <option value="Carriers">
             <option value="Gobierno Federal">
@@ -31,9 +32,9 @@
             <option value="Bajio">
         </datalist>
     </div>
-  	<div class="col-md-2" style="width: 11%;">
+    <div class="col-md-2" style="width: 11%;">
         <label for="" class="label-filter">Oportunidad</label>
-        <input type="text" id="iOportunidad" placeholder="Ej: 23214"
+        <input type="text" id="iOportunidad" placeholder="Ej: Nombre Oportunidad"
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
     <!--
@@ -53,6 +54,16 @@
         <input type="text" id="iEstatus" placeholder="Ej: Confirmado"
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
+    <!--div class="col-md-2" style="width: 11%;">
+        <label for="" class="label-filter">Vertical</label>
+        <input type="text" id="iVertical" placeholder="Ej: 23214"
+        class="form-control input-filtro-coordInst form-control-sm">
+    </div>
+       <div class="col-md-2" style="width: 11%;">
+        <label for="" class="label-filter">C&eacute;lula</label>
+        <input type="text" id="iCelula" placeholder="Ej: 23214"
+        class="form-control input-filtro-coordInst form-control-sm">
+    </div-->
     <div class="col-md-2" style="width: 11%;">
         <label for="" class="label-filter">EIM</label>
         <input type="text" id="iEim" placeholder="Ej: Nombre EIM"
@@ -104,7 +115,7 @@
     </div>
 
     <div class="col-lg-2 col-md-6 mb-5 mb-md-0 position-relative">
-      <h5 class="text-muted fw-bold mb-3">{{(data.detalleOS[0].porcentaje)}} %</h5>
+      <h5 class="text-muted fw-bold mb-3">{{(data.detalleOS[0].porcentaje.substr(0,4))}} %</h5>
       <h6 class="text-primary mb-0">Cumplimiento del D&iacute;a</h6>
       <div class="vr vr-blurry position-absolute my-0 h-100 d-none d-md-block top-0 end-0"></div>
     </div>
@@ -119,15 +130,24 @@
             <thead id="theadimplementacion">
                 <tr>
                     <th class="detail">
-                            <div class="fht-cell" style="width: 20px;"></div>
+                        <div class="fht-cell" style="width: 20px;"></div>
                     </th>
-                    <th>Folio</th>
-                    <th>Cotizacion</th>
-                    <th>Idbrm</th>
-                    <th>Cuenta Factura</th>
-                    <th>Tipo de Cuadrilla</th>
-                    <th>N&uacute;m OS</th>
-                    <th>Estatus de Os</th>
+                    <th>Vertical</th>
+                    <th>Celula</th>
+                    <th>EIM</th>
+                    <th>Cliente</th>
+                    <th>COT</th>
+                    <th>CSP</th>
+                    <th>OT</th>
+                    <th>Cuenta</th>
+                    <th>Fecha Venta</th>
+                    <th>Tipo de Venta</th>
+                    <th>Tipo de Sitio</th>
+                    <th>Monto</th>
+                    <th>Estatus</th>
+                    <th>Fecha de Compromiso</th>
+                    <th>Cuadrilla</th>
+                    <th>Tipo de Servicio</th>
                 </tr>
             </thead>
         </table>

@@ -1,4 +1,3 @@
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <div class="row md-form" id="">
     
@@ -23,11 +22,18 @@
                 </li>
             </ul>
          </div>
+    </div>
+
+  <div class="column-style-consulta" style="width: 11%;">
+        <label class="label-filter">Celula</label>
+        <input type="text" ng-model="objetoPendiente.pCelula" ng-change="limpiarCamposAsignada(0)" id="pCelula" placeholder="Ej: 65434"
+        class="form-control input-filtro-coordInst form-control-sm">
     </div-->
+    
     <div class="col-md-2" style="width: 11%;">
         <label for="" class="label-filter">Vertical</label>
-        <input list="pVerticales" type="text" id="iVertical" placeholder="Vertical"
-               class="form-control input-filtro-coordInst form-control-sm">
+        <input list="pVerticales" type="text" id="pVertical" placeholder="Vertical"
+                               class="form-control input-filtro-coordInst form-control-sm">
         <datalist id="pVerticales">
             <option value="Carriers">
             <option value="Gobierno Federal">
@@ -37,28 +43,23 @@
             <option value="Estatre&aacute;gicas IV">
         </datalist>
     </div>
-
-  <div class="column-style-consulta" style="width: 11%;">
+    <div class="column-style-consulta" style="width: 11%;">
         <label class="label-filter">Celula</label>
-        <!--input type="text" ng-model="objetoPendiente.pCelula" ng-change="limpiarCamposAsignada(0)" id="pCelula" placeholder="Ej: 65434"
-        class="form-control input-filtro-coordInst form-control-sm"-->
-
-      <input list="pCelulas"  ng-model="objetoPendiente.pCelula" ng-change="limpiarCamposAsignada(0)" id="pCelula"  placeholder="Celula" class="form-control input-filtro-coordInst form-control-sm">
-      <datalist id="pCelulas">
-          <option value="Carriers">
-          <option value="Gobierno Federal">
-          <option value="Gobierno Federal">
-          <option value="Finanaciero">
-          <option value="Educacio&aacute;n">
-          <option value="Retail y Hospitalidad">
-          <option value="Noreste">
-          <option value="Noroeste">
-          <option value="Occidente">
-          <option value="Toluca">
-          <option value="CDMX">
-          <option value="Bajio">
-      </datalist>
-
+        <input list="pCelulas"  ng-model="objetoPendiente.pCelula" ng-change="limpiarCamposAsignada(0)" id="pCelula"  placeholder="Celula" class="form-control input-filtro-coordInst form-control-sm">
+        <datalist id="pCelulas">
+              <option value="Carriers">
+              <option value="Gobierno Federal">
+              <option value="Gobierno Federal">
+              <option value="Finanaciero">
+              <option value="Educacio&aacute;n">
+              <option value="Retail y Hospitalidad">
+              <option value="Noreste">
+              <option value="Noroeste">
+              <option value="Occidente">
+              <option value="Toluca">
+              <option value="CDMX">
+              <option value="Bajio">
+        </datalist>
     </div>
     <div class="column-style-consulta" style="width: 11%;">
         <label class="label-filter">EIM</label>

@@ -21,47 +21,47 @@
                 </li>
             </ul>
          </div>
+    </div>
+   <div class="column-style-consulta" style="width: 11%;">
+        <label for="ot_asignadao" class="label-filter">Celula</label>
+        <input type="text" ng-model="objetoCelula.dCelula" ng-change="limpiarCamposAsignada(0)" id="dCelula" placeholder="Ej: 65434"
+        class="form-control input-filtro-coordInst form-control-sm">
     </div-->
     <div class="col-md-2" style="width: 11%;">
         <label for="" class="label-filter">Vertical</label>
         <input list="pVerticales" type="text" id="iVertical" placeholder="Vertical"
-               class="form-control input-filtro-coordInst form-control-sm">
+            class="form-control input-filtro-coordInst form-control-sm">
         <datalist id="pVerticales">
             <option value="Carriers">
             <option value="Gobierno Federal">
-            <option value="Estatre&aacute;gicas I">
+                   <option value="Estatre&aacute;gicas I">
             <option value="Estatre&aacute;gicas II">
             <option value="Estatre&aacute;gicas III">
             <option value="Estatre&aacute;gicas IV">
         </datalist>
     </div>
-
-   <div class="column-style-consulta" style="width: 11%;">
-        <!--label for="ot_asignadao" class="label-filter">Celula</label>
-        <input type="text" ng-model="objetoCelula.dCelula" ng-change="limpiarCamposAsignada(0)" id="dCelula" placeholder="Celula"
-        class="form-control input-filtro-coordInst form-control-sm"-->
-       <label for="ot_asignadao" class="label-filter">Celula</label>
-       <input list="pCelulas"  ng-model="objetoCelula.dCelula" ng-change="limpiarCamposAsignada(0)" id="dCelula"  placeholder="Celula" class="form-control input-filtro-coordInst form-control-sm">
-       <datalist id="pCelulas">
-           <option value="Carriers">
-           <option value="Gobierno Federal">
-           <option value="Gobierno Federal">
-           <option value="Finanaciero">
-           <option value="Educacio&aacute;n">
-           <option value="Retail y Hospitalidad">
-           <option value="Noreste">
-           <option value="Noroeste">
-           <option value="Occidente">
-           <option value="Toluca">
-           <option value="CDMX">
-           <option value="Bajio">
-       </datalist>
-
+    <div class="column-style-consulta" style="width: 11%;">
+               <label for="ot_asignadao" class="label-filter">Celula</label>
+               <input list="pCelulas"  ng-model="objetoCelula.dCelula" ng-change="limpiarCamposAsignada(0)" id="dCelula"  placeholder="Celula" class="form-control input-filtro-coordInst form-control-sm">
+               <datalist id="pCelulas">
+                   <option value="Carriers">
+                   <option value="Gobierno Federal">
+                   <option value="Gobierno Federal">
+                   <option value="Finanaciero">
+                   <option value="Educacio&aacute;n">
+                   <option value="Retail y Hospitalidad">
+                   <option value="Noreste">
+                   <option value="Noroeste">
+                   <option value="Occidente">
+                   <option value="Toluca">
+                   <option value="CDMX">
+                   <option value="Bajio">
+               </datalist>
     </div>
     <div class="column-style-consulta" style="width: 11%;">
         <label for="ot_asignadao" class="label-filter">EIM</label>
         <input type="text" ng-model="objetoCelula.otdEim" ng-change="limpiarCamposAsignada(1)" id="dEim" placeholder="Ej: Nombre EIM"
-        class="form-control input-filtro-coordInst form-control-sm">
+               class="form-control input-filtro-coordInst form-control-sm">
     </div>
     <div class="column-style-consulta" style="width: 11%;">
         <label for="os_asignada" class="label-filter">Cliente</label>
@@ -80,7 +80,7 @@
     </div>
      <div class="column-style-consulta" style="width: 11%;">
         <label for="os_terminada" class="label-filter">COT</label>
-        <input type="text" ng-model="objetoCelula.dCot" ng-change="limpiarCamposAsignada(5)" id="dCot" placeholder="Ej: COT#######"
+        <input type="text" ng-model="objetoCelula.dCot" ng-change="limpiarCamposAsignada(5)" id="dCot" placeholder="COT#######"
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
     <div class="col-md-1 div-btn-busqueda" style="width: 85px;">
@@ -96,16 +96,25 @@
                 <tr>
 
                     <th class="detail">
-                            <div class="fht-cell" style="width: 20px;"></div>
+                        <div class="fht-cell" style="width: 20px;"></div>
                     </th>
-                    <th>Folio</th>
-                    <th>Cotizaci&oacute;n</th>
-                    <th>Idbrm</th>
-                    <th>Cuenta Factura</th>
-                    <th>Tipo de Cuadrilla</th>
-                    <th>Tipo de Dependencia</th>
-                    <th>N&uacute;m OS</th>
-
+                    <th>Vertical</th>
+                    <th>Celula</th>
+                    <th>EIM</th>
+                    <th>Cliente</th>
+                    <th>COT</th>
+                    <th>CSP</th>
+                    <th>OT</th>
+                    <th>Cuenta</th>
+                    <th>Fecha Venta</th>
+                    <th>Tipo de Venta</th>
+                    <th>Tipo de Sitio</th>
+                    <th>Monto</th>
+                    <th>Estatus</th>
+                    <th>Fecha de Compromiso</th>
+                    <th>Cuadrilla</th>
+                    <th>Tipo de Servicio</th>
+                  
                 </tr>
             </thead>
         </table>
