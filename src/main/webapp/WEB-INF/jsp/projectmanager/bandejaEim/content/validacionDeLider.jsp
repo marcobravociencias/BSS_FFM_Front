@@ -1,21 +1,21 @@
 
 <div class="row" id="">
   	<div class="col-md-2" style="width: 11%;">
-        <label for="" class="label-filter">Clave cliente</label>
-        <input type="text" id="v_cveCliente" placeholder="Ej: 23214"
+        <label for="" class="label-filter">Cliente</label>
+        <input type="text" id="vcliente" placeholder="Ej: Audi"
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
     <div class="col-md-2" style="width: 11%;">
         <label for="" class="label-filter">CSP</label>
-        <input type="text" id="v_csp" placeholder="Ej: CSP65434"
+        <input type="text" id="vcsp" placeholder="Ej: CSP#######"
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
     <div class="col-md-2" style="width: 11%;">
         <label for="" class="label-filter">COT</label>
-        <input type="text" id="v_cot" placeholder="Ej: COT23214"
+        <input type="text" id="vcot" placeholder="Ej: COT#######"
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
-    
+
     <div class="col-md-2" style="width: 85px;">
         <button id="btn-calendarizado-salesforce" ng-click="consultarValidacion()" type="button" class="btn btn-sm waves-effect waves-light btn-primary">
             <i class="fa fa-search" ></i>
@@ -37,7 +37,7 @@
     </div>
 
 </div>
-        
+
 
 
 <div class="row">
@@ -50,9 +50,10 @@
                     </th>
                     <th>Oportunidad</th>
                     <th>Vertical</th>
-                    <th>Celula</th>
+                    <th>C&eacutelula</th>
                     <th>Cliente</th>
-                    <th>CSP</th>
+                    <th>COT</th>
+                    <th>N&uacutem. CSP's </th>
                     <th>Fecha Venta</th>
                     <th>EIM</th>
                     <th>Tipo</th>

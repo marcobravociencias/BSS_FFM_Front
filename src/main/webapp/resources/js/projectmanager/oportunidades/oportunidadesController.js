@@ -6,6 +6,7 @@ app.controller('oportunidadController', ['$scope', '$q', 'oportunidadesService',
     $("#idBody").removeAttr("style");
     $scope.showTable = true;
 
+    var tableSolicitud;
     var tableOportunidad;
     var tableDetalleOportunidad;
 
@@ -13,6 +14,34 @@ app.controller('oportunidadController', ['$scope', '$q', 'oportunidadesService',
     
     $scope.contadorGeneral = {};
     $scope.camposFiltro = {};
+
+    $scope.tablaSolicitudArray = [
+        {
+            id: 13123213213,
+            csp: "CSP13230413",
+            cot: "COT378899",
+            numOportunidad: "8636353555",
+            nombreCliente: "Juan Garcia Lopez",
+            eimAsignado: "Manuel Flores Hernandes",
+            lider: "<a href=>Asignar"
+        },
+        {
+            id: 13123213213,
+            csp: "CSP13230413",
+            cot: "COT378899",
+            numOportunidad: "8636353555",
+            nombreCliente: "Juan Garcia Lopez",
+            eimAsignado: "Manuel Flores Hernandes"
+        },
+        {
+            id: 13123213213,
+            csp: "CSP13230413",
+            cot: "COT378899",
+            numOportunidad: "8636353555",
+            nombreCliente: "Juan Garcia Lopez",
+            eimAsignado: "Manuel Flores Hernandes"
+        }
+    ];
 
     $scope.initOportunidades = function() {
 
@@ -34,6 +63,19 @@ app.controller('oportunidadController', ['$scope', '$q', 'oportunidadesService',
             "autoWidth": false,
             "language": idioma_espanol_not_font,
         });
+
+        tableSolicitud = $('#solicitudTable').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "ordering": false,
+            "pageLength": 10,
+            "info": true,
+            "scrollX": false,
+            "autoWidth": false,
+            "language": idioma_espanol_not_font,
+        });
+
+        $scope.mostrarTablaSolicitudes($scope.tablaSolicitudArray);
 
         $q.all([
             genericService.consultarConfiguracionDespachoDespacho({ moduloAccionesUsuario: 'moduloOportunidades' })
@@ -230,6 +272,46 @@ app.controller('oportunidadController', ['$scope', '$q', 'oportunidadesService',
 				mostrarMensajeErrorAlert("Error del servidor");
 			}
 		}).catch(err => handleError(err));
+    }
+
+    $scope.mostrarTablaSolicitudes = function(array) {
+        if (tableSolicitud) {
+            tableSolicitud.destroy();
+        }
+        let arrayRow = [];
+
+        console.log("crear tabla de lider")
+
+         angular.forEach(array, function (elemento, index) {
+            let row = [];
+            row[0] = elemento.csp;
+            row[1] = elemento.cot;
+            row[2] = elemento.numOportunidad;
+			row[3] = elemento.nombreCliente;
+            row[4] = elemento.eimAsignado;
+            row[5] = '<div class="tooltip-btn"> <span onclick="consultaDetalleLider('+elemento.id+')" class="btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones"><th><i class="icono_cons_bg fa fa-bars" aria-hidden="true"></i></th></span></div>';
+            arrayRow.push(row);
+        });
+        tableSolicitud = $('#solicitudTable').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "ordering": false,
+            "pageLength": 10,
+            "info": true,
+            "scrollX": false,
+            "data": arrayRow,
+            "autoWidth": false,
+            "language": idioma_espanol_not_font,
+        });
+        swal.close();
+    }
+
+    consultaDetalleLider = function(id) {
+        $("#modal-detalle-lider").modal('show');
+    }
+
+    $scope.asignarLider = function() {
+        $("#modal-detalle-lider").modal('hide');
     }
 
     $scope.contadorDetalleOportunidad = {};

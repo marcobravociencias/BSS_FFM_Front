@@ -3,9 +3,9 @@
 
     <div class="col-md-2" style="width: 11%;">
         <label for="" class="label-filter">Vertical</label>
-        <input list="pVerticales" type="text" id="iVertical" placeholder="Vertical"
+        <input list="iVerticales" type="text" id="iVertical" placeholder="Vertical"
                class="form-control input-filtro-coordInst form-control-sm">
-        <datalist id="pVerticales">
+        <datalist id="iVerticales">
             <option value="Carriers">
             <option value="Gobierno Federal">
             <option value="Estatre&aacute;gicas I">
@@ -16,8 +16,8 @@
     </div>
     <div class="col-md-2" style="width: 11%;">
         <label class="label-filter">Celula</label>
-        <input list="pCelulas"  id="iCelula"  placeholder="Celula" class="form-control input-filtro-coordInst form-control-sm">
-        <datalist id="pCelulas">
+        <input list="iCelulas"  id="iCelula"  placeholder="Celula" class="form-control input-filtro-coordInst form-control-sm">
+        <datalist id="iCelulas">
             <option value="Carriers">
             <option value="Gobierno Federal">
             <option value="Gobierno Federal">
@@ -32,47 +32,30 @@
             <option value="Bajio">
         </datalist>
     </div>
-    <div class="col-md-2" style="width: 11%;">
-        <label for="" class="label-filter">Oportunidad</label>
-        <input type="text" id="iOportunidad" placeholder="Ej: Nombre Oportunidad"
-        class="form-control input-filtro-coordInst form-control-sm">
-    </div>
-    <!--
-    <div class="col-md-2" style="width: 11%;">
-        <label for="" class="label-filter">Regi&oacute;n</label>
-        <input type="text" id="iRegion" placeholder="Ej: 65434"
-        class="form-control input-filtro-coordInst form-control-sm">
-    </div>
-    -->
-    <div class="col-md-2" style="width: 11%;">
-        <label for="" class="label-filter">Fecha</label>
-        <input type="text" id="iFecha" placeholder="Ej: DD/MM/AA"
-        class="form-control input-filtro-coordInst form-control-sm">
-    </div>
-    <div class="col-md-2" style="width: 11%;">
-        <label for="" class="label-filter">Estatus de OT</label>
-        <input type="text" id="iEstatus" placeholder="Ej: Confirmado"
-        class="form-control input-filtro-coordInst form-control-sm">
-    </div>
-    <!--div class="col-md-2" style="width: 11%;">
-        <label for="" class="label-filter">Vertical</label>
-        <input type="text" id="iVertical" placeholder="Ej: 23214"
-        class="form-control input-filtro-coordInst form-control-sm">
-    </div>
-       <div class="col-md-2" style="width: 11%;">
-        <label for="" class="label-filter">C&eacute;lula</label>
-        <input type="text" id="iCelula" placeholder="Ej: 23214"
-        class="form-control input-filtro-coordInst form-control-sm">
-    </div-->
-    <div class="col-md-2" style="width: 11%;">
-        <label for="" class="label-filter">EIM</label>
+    <div class="column-style-consulta" style="width: 11%;">
+        <label  class="label-filter">EIM</label>
         <input type="text" id="iEim" placeholder="Ej: Nombre EIM"
-        class="form-control input-filtro-coordInst form-control-sm">
+               class="form-control input-filtro-coordInst form-control-sm">
     </div>
-     <div class="col-md-2" style="width: 11%;">
-        <label for="" class="label-filter">CSP</label>
+    <div class="column-style-consulta" style="width: 11%;">
+        <label  class="label-filter">Cliente</label>
+        <input type="text"  id="iCliente" placeholder="Ej: Audi"
+               class="form-control input-filtro-coordInst form-control-sm">
+    </div>
+    <div class="column-style-consulta" style="width: 11%;">
+        <label  class="label-filter">Tipo de Sitio</label>
+        <input type="text" id="iTipoSitio" placeholder="Ej: Tipo de Sitio"
+               class="form-control input-filtro-coordInst form-control-sm">
+    </div>
+    <div class="column-style-consulta" style="width: 11%;">
+        <label  class="label-filter">COT</label>
+        <input type="text" id="iCot" placeholder="COT#######"
+               class="form-control input-filtro-coordInst form-control-sm">
+    </div>
+    <div class="column-style-consulta" style="width: 11%;">
+        <label class="label-filter">CSP</label>
         <input type="text" id="iCsp" placeholder="Ej: CSP#######"
-        class="form-control input-filtro-coordInst form-control-sm">
+               class="form-control input-filtro-coordInst form-control-sm">
     </div>
     <div class="col-md-2" style="width: 85px;">
         <button id="btn-calendarizado-salesforce" ng-click="consultarImplementacion()" type="button" class="btn btn-sm waves-effect waves-light btn-primary">
@@ -85,7 +68,7 @@
 <section class="text-center">
   <div class="row">
     <div class="col-lg-2 col-md-6 mb-5 mb-md-5 mb-lg-0 position-relative">
-      <h5 class="text-muted fw-bold mb-2">07 oct 2022</h5>
+      <h5 class="text-muted fw-bold mb-2">13 oct 2022</h5>
       <h6 class="text-primary mb-0">Hoy</h6>
       <div class="vr vr-blurry position-absolute my-0 h-100 d-none d-md-block top-0 end-0"></div>
     </div>

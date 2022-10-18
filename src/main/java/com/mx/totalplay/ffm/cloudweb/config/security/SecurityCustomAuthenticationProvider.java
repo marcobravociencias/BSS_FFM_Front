@@ -64,6 +64,7 @@ public class SecurityCustomAuthenticationProvider implements AuthenticationProvi
 	    		put("/moduloReporteSF","ROLE_USER");
 	    		put("/gestionModulos","ROLE_USER");
 	    		put("/moduloBandejasEim","ROLE_USER");
+				put("/moduloOportunidades","ROLE_USER");
 	        }};
 	        
 	        

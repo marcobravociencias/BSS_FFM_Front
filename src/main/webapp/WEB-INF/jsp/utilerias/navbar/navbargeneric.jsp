@@ -64,6 +64,11 @@
                                         </li>
                                     </c:if>
                                 </c:forEach>
+                                 <li id="moduloOportunidades">
+                                                                            <a class="dropdown-item" href="moduloOportunidades">
+                                                                                <i class=" icon-navbar-izquierda icon-otros-dropdown"></i>
+                                                                                Oportunidades</a>
+                                                                        </li>
                             </ul>
                         </li>
                     </c:if>

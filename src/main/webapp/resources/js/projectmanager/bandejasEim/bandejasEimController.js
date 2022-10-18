@@ -378,13 +378,13 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 	}
 	//Table Validacion Lider Tecnico
 	$scope.consultarValidacion = function(isSwal){
-		cotParams = $("#v_cot").val();
-		cspParams = $("#v_csp").val();
-		cveClienteParams = $("#v_cveCliente").val();
+		vcot = $("#vcot").val();
+		vcsp = $("#vcsp").val();
+		vcliente = $("#vcliente").val();
 		let params = {
-			cot: cotParams,
-			csp: cspParams,
-			cveCliente: cveClienteParams
+			cot: vcot,
+			csp: vcsp,
+			cliente: vcliente
 		};
 		let arraRow = [];
 		if (isSwal) {
@@ -409,10 +409,11 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 								row[2] = elemento.vertical ? elemento.vertical : 'Sin informaci&oacute;n';
 								row[3] = elemento.celula ? elemento.celula : 'Sin informaci&oacute;n';
 								row[4] = elemento.cliente ? elemento.cliente : 'Sin informaci&oacute;n';
-								row[5] = elemento.csp ? elemento.csp : 'Sin informaci&oacute;n';
-								row[6] = elemento.fechaVenta ? elemento.fechaVenta : 'Sin informaci&oacute;n';
-								row[7] = elemento.eim ? elemento.eim : 'Sin informaci&oacute;n';
-								row[8] = elemento.tipo ? elemento.tipo : 'Sin informaci&oacute;n';
+								row[5] = elemento.cotizacion ? elemento.cotizacion : 'Sin informaci&oacute;n';
+								row[6] = elemento.numCSP ? elemento.numCSP : 'Sin informaci&oacute;n';
+								row[7] = elemento.fechaVenta ? elemento.fechaVenta : 'Sin informaci&oacute;n';
+								row[8] = elemento.eim ? elemento.eim : 'Sin informaci&oacute;n';
+								row[9] = elemento.tipo ? elemento.tipo : 'Sin informaci&oacute;n';
 								arraRow.push(row);
 							})
 						} else{
@@ -427,7 +428,7 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 			} else {
 				toastr.error('Ha ocurrido un error al consultar la validacion de lider tecnico y torre de control');
 			}
-	
+
 			tablevalidacion = $('#tablevalidacion').DataTable({
 				"paging": true,
 				"searching": false,
@@ -445,17 +446,20 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 			});
 			swal.close();
 		})
-	} 
-	
-	//Table con metodo get
+		$("#vcot").val('');
+		$("#vcsp").val('');
+		$("#vcliente").val('');
+	}
+
+	//CSP SIN EIM
 	$scope.consultarSinEimPm = function(isSwal){
-		cotParams = $("#cot").val();
-		cspParams = $("#csp").val();
-		cveClienteParams = $("#cveCliente").val();
+		scot = $("#scot").val();
+		scsp = $("#scsp").val();
+		scliente = $("#scliente").val();
 		let params = {
-			cot: cotParams,
-			csp: cspParams,
-			cveCliente: cveClienteParams
+			cot: scot,
+			csp: scsp,
+			cliente: scliente
 		};
 		let arraRow = [];
 		if (isSwal) {
@@ -479,8 +483,10 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 								row[2] = elemento.vertical ? elemento.vertical : 'Sin informaci&oacute;n';
 								row[3] = elemento.celula ? elemento.celula : 'Sin informaci&oacute;n';
 								row[4] = elemento.cliente ? elemento.cliente : 'Sin informaci&oacute;n';
-								row[5] = elemento.csp ? elemento.csp : 'Sin informaci&oacute;n';
-								row[6] = elemento.fechaVenta ? elemento.fechaVenta : 'Sin informaci&oacute;n';
+								row[5] = elemento.cotizacion ? elemento.cotizacion : 'Sin informaci&oacute;n';
+								row[6] = elemento.csp ? elemento.csp : 'Sin informaci&oacute;n';
+								row[7] = elemento.fechaVenta ? elemento.fechaVenta : 'Sin informaci&oacute;n';
+								row[8] = elemento.eim ? elemento.eim : 'Sin informaci&oacute;n';
 								arraRow.push(row);
 							})
 						} else{
@@ -495,7 +501,7 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 			} else {
 				toastr.error('Ha ocurrido un error al consultar los Eims');
 			}
-	
+
 			tableCspSinEim = $('#tablecspSinEim').DataTable({
 				"paging": true,
 				"searching": false,
@@ -512,11 +518,15 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 				]
 			});
 			swal.close();
-			
+
 		})
-				
+		//limpieza de filtros
+		$('#scot').val('');
+		$('#scsp').val('');
+		$('#scliente').val('');
+
 	}
-	
+
 	$scope.objetoEim = {};
 	$scope.limpiarCamposPendiente = function (opcion) {
 		switch (opcion) {
@@ -544,7 +554,7 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 				if (results[0].data.respuesta) {
 					if (results[0].data.result) {
 						if (results[0].data.result.eims.length > 0) {
-							
+
 							$scope.data.eims = results[0].data.result.eims;
 						} else {
 							toastr.info('No se encontr\u00F3 catalogo de Eims');
@@ -561,12 +571,12 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 	$scope.getData();
 
 	$scope.asignarEim = function() {
-		
+
 		var eim = $("#eim").val();
 		var list = {
 			'puntasActulizar' :[]
 		  };
-	
+
 		var csp = [] ;
 		$(":checkbox[name=check]").each(function() {
 			if (this.checked) {
@@ -574,8 +584,8 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 			}
 		  });
 		  for(var i= 0; i < csp.length; i++) {
-		
-		   list.puntasActulizar.push({ 
+
+		   list.puntasActulizar.push({
 				"idCampo"    : csp[i],
 				"valorNuevo"  : eim,
 			});
@@ -596,7 +606,7 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 						mensajeEnvio = 'Se ha creado la relaci\o00EDn Eims';
 						objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio,MENSAJE_ACCION_EXITO, tituloAccion);
 						toastr.success('Se ha asignado correctamente el EIM');
-						
+
 						swal.close();
 					} else {
 						swal.close();
@@ -622,7 +632,7 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 			$("#eim").addClass("input-valid-error");
 			text += "<li>Asigne un EIM</li>";
 		}
-		
+
 		if (csp.length === 0 ) {
 			$("#check").addClass("input-valid-error");
 			text += "<li>Seleccione un CSP</li>";
@@ -636,9 +646,9 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 			return true;
 		}
 	}
-	
 
-	// PROXIMO A ELIMINAR. 
+
+	// CSP sin EIM
 	$scope.resultPendientes = [];
 	$scope.consultarCspSinEim = function () {
 		$scope.resultPendientes = [];
@@ -718,7 +728,7 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 			  <td>`+d[i].nombreCliente+`</td>
 			</tr>`;
 
-			
+
 		}
 		return (
 			'<div class="col-12 table-responsive" style="margin-top: 1em; padding: 0;">'+
@@ -731,7 +741,7 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 			'</tbody>'+
 			'</table>'+
 			'</div>'
-			
+
 		);
 	}
 	function formatEnImplementacion(d) {
@@ -797,11 +807,11 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 				if(response.data.respuesta){
 					if (response.data.result) {
 						if (response.data.result.resultado) {
-							
+
 							$scope.listaValidacion = response.data.result.resultado;
 							$.each(response.data.result.resultado, function (i, elemento){
 								let row = [];
-								row[0] = '<a id="mostrar-segundo-nivel-' + elemento.os + '" class="dt-control" tag-position="' + elemento.os + '" tag-hide="false"><i id="icono-implementados-' 
+								row[0] = '<a id="mostrar-segundo-nivel-' + elemento.os + '" class="dt-control" tag-position="' + elemento.os + '" tag-hide="false"><i id="icono-implementados-'
 								+ elemento.id + '" class="dt-control icono-implementados fas fa-angle-down" aria-hidden="true"></i></a>';
 								row[1] = elemento.vertical ? elemento.vertical : 'Sin informaci&oacute;n';
 								row[2] = elemento.celula ? elemento.celula : 'Sin informaci&oacute;n';
@@ -839,7 +849,7 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 			} else {
 				toastr.error('Ha ocurrido un error al consultar los Eims');
 			}
-	
+
 			tablePendientesPorImplementar = $('#tablePendientesPorImplementar').DataTable({
 				"paging": true,
 				"searching": false,
@@ -859,12 +869,14 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 
 		})
 		//limpieza de filtros
+		$('#pVertical').val('');
+		$('#pCelula').val('');
 		$('#pEim').val('');
 		$('#pCliente').val('');
 		$('#pTipoSitio').val('');
 		$('#pCsp').val('');
 		$('#pCot').val('');
-				
+
 	}
 	setTimeout(
 		function () {
@@ -874,7 +886,7 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 				var tr = $(this).closest('tr');
 				var row = tablePendientesPorImplementar.row(tr); //mismo nombre que tabla
 				let index = Number($(this).attr('tag-position'));
-				
+
 				//console.log(tr, row)
 
 				if (row.child.isShown()) {
@@ -896,7 +908,7 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 										if (response.data.result.detalleOS) {
 										listaDetalleOs = response.data.result.detalleOS;
 											row.child(format(listaDetalleOs)).show();
-										
+
 										}
 									}
 								}
@@ -980,7 +992,7 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 			} else {
 				toastr.error('Ha ocurrido un error al consultar los Dependencias');
 			}
-	
+
 			tableDependencia = $('#tableDependencia').DataTable({
 				"paging": true,
 				"searching": false,
@@ -1000,13 +1012,14 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 
 		})
 		//limpieza de filtros
-
+		$('#dVertical').val('');
+		$('#dCelula').val('');
 		$('#dEim').val('');
 		$('#dCliente').val('');
 		$('#dTipoSitio').val('');
 		$('#dCsp').val('');
 		$('#dCot').val('');
-				
+
 	}
 
 	setTimeout(
@@ -1052,25 +1065,23 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 		},
 		2000);
 
-	
+
 	//Table Implentacion
 	$scope.consultarImplementacion = function(isSwal){
-		iOportunidad = $("#iOportunidad").val();
-		iRegion = $("#iRegion").val();
-		iFecha = $("#iFecha").val();
-		iEstatus = $("#iEstatus").val();
 		iVertical = $("#iVertical").val();
 		iCelula = $("#iCelula").val();
+		iCliente = $("#iCliente").val();
+		iTipoSitio = $("#iTipoSitio").val();
+		iCot = $("#iCot").val();
 		iEim = $("#iEim").val();
 		iCsp = $("#iCsp").val();
 		let params = {
-			nombreOportunoidad: iOportunidad,
-			//region: iRegion,
-			fechaVenta: iFecha,
-			estatusC: iEstatus,
 			vertical: iVertical,
 			celula: iCelula,
-			nombreEim: iEim,
+			eim: iEim,
+			cliente: iCliente,
+			tipoSitio: iTipoSitio,
+			cot: iCot,
 			csp: iCsp,
 		}
 		let arraRow = [];
@@ -1128,7 +1139,7 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 			} else {
 				toastr.error('Ha ocurrido un error al consultar las Implementaciones');
 			}
-	
+
 			tableimplementacion = $('#tableimplementacion').DataTable({
 				"paging": true,
 				"searching": false,
@@ -1147,10 +1158,11 @@ app.controller('bandejasEimController', ['$scope', '$q', 'coordInstalacionesPISe
 			swal.close();
 
 		})
-
-		$('#iOportunidad').val('');
-		$('#iFecha').val('');
-		$('#iEstatus').val('');
+		$('#iVertical').val('');
+		$('#iCelula').val('');
+		$('#iCliente').val('');
+		$('#iTipoSitio').val('');
+		$('#iCot').val('');
 		$('#iEim').val('');
 		$('#iCsp').val('');
 				

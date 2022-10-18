@@ -118,6 +118,25 @@
                     </li>
                 </ul>
             </div>
+
+            <div class="row row-content-principal">
+                <div class="col-md-12">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" >
+                            <a class="nav-link " id="opcion-estatus-tab" data-toggle="tab"
+                                href="#opcion-estatus" role="tab" aria-controls="opcion-estatus"
+                                aria-selected="true">Estatus Oportunidades</a>
+                        </li>
+                        <li class="nav-item" >
+                            <a class="nav-link active" id="opcion-solicitudes-tab" data-toggle="tab"
+                                href="#opcion-solicitudes" role="tab" aria-controls="opcion-solicitudes"
+                                aria-selected="false">CSP's con Solicitudes de Torre de Control y Lider Tecnico</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="v-pills-tabContent">
+                        <div class="tab-pane fade "  id="opcion-estatus"
+                            role="tabpanel" aria-labelledby="opcion-estatus-tab">
+            <!--inicio tabla-->
             <div class="content-fluid">
                 <div class="table-responsive">
                     <table id="oportunidadTable" class="display table" cellspacing="0" width="100%">
@@ -144,6 +163,34 @@
                     </table>
                 </div>
             </div>
+            <!--inicio tabla-->
+        </div>
+        <div class="tab-pane fade show active" 
+            id="opcion-solicitudes" role="tabpanel" aria-labelledby="opcion-solicitudes-tab">
+            <div class="content-fluid">
+                <div class="table-responsive">
+                    <table id="solicitudTable" class="display table" cellspacing="0" width="100%">
+                        <thead id="thead_solicitud">
+                            <tr>
+                                <th>CSP</th>
+                                <th>COT</th>
+                                <th>No. Oportunidad</th>
+                                <th>Nombre del cliente</th>
+                                <th>EIM asignado</th>
+                                <th>Lider Tecnico / Torre de Control</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
         </div>
         <div class="content-fluid container-filtros-oportunidad contenedor-oportunidad" ng-show="!showTable">
            
@@ -218,6 +265,7 @@
         </div>
     </div>
     <jsp:include page="/WEB-INF/jsp/generic/busquedaSalesforce/mainBusquedaSalesforce.jsp"></jsp:include>
+    <jsp:include page="./modals/modalOportunidades.jsp"></jsp:include>
     <div class="container" ng-show="vistaAgendamiento">
         <div class="content-fluid container-filtros-oportunidad contenedor-oportunidad">
             <div class="col-12">
