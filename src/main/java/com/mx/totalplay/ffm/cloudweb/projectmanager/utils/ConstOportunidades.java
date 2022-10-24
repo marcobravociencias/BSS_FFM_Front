@@ -13,5 +13,16 @@ public class ConstOportunidades {
 	
 	@Value("${consultarDetalleOportunidad}")
 	private String consultarDetalleOportunidad;
-	
+
+	@Value("${consultarLiderTecnicoTorreControlList}")
+	private String consultarLiderTecnicoTorreControlList;
+
+	@Value("${consultarLiderTecnicoTorreControl}")
+	private String consultarLiderTecnicoTorreControl;
+
+	@Value("${consultarEnImplementacion}")
+	private String consultarEnImplementacion;
+
+	@Value("${actualizarEnImplementacion}")
+	private String actualizarEnImplementacion;
 }

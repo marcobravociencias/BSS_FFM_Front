@@ -11,29 +11,22 @@
                     <div class="row">
                         
                         <div class="col-md-6" style="width: 11%;">
-                            <label for="" class="label-filter">Vertical</label>
+                            <label for="" class="label-filter">L&iacute;der T&eacute;cnico</label>
 
                          
                                 <div class="form-group">
                                     <input type="checkbox" class="form-check-input" id="exampleCheck1">
                                 </div>
-                                        <input list="pVerticales" type="text" id="iVertical" placeholder="Vertical"
-                                        class="form-control input-filtro-coordInst form-control-sm">
-                                    <datalist id="pVerticales">
-                                        <option value="Carriers">
-                                        <option value="Gobierno Federal">
-                                            <option value="Estatre&aacute;gicas I">
-                                        <option value="Estatre&aacute;gicas II">
-                                        <option value="Estatre&aacute;gicas III">
-                                        <option value="Estatre&aacute;gicas IV">
-                                    </datalist>
+                                <select style="border-left:.4em solid" class="select-status-tecnico form-control" id="id-tecnico" ng-model="selectedLiderTecnico" ng-options="estatus.liderTecnico for estatus in resultSolicituLiderTecnico">
+                                    <option value="">Seleccione ...</option>
+							    </select>  
                               
 
                             
                             
                         </div>
                         <div class="col-md-6" style="width: 11%;">
-                                   <label for="ot_asignadao" class="label-filter">Celula</label>
+                                   <label for="ot_asignadao" class="label-filter">Torre de control</label>
                                    <div class="form-row">
                                     <div class="form-group">
                                         <input type="checkbox" class="form-check-input" id="exampleCheck1">

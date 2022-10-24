@@ -82,6 +82,16 @@ public class BandejasEimController {
         }
         return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     }
+    //solTorreLiderTec
+    @PostMapping("/solTorreLiderTec")
+    public ResponseEntity<?> solTorreLiderTec(@RequestBody String params){
+        logger.info("#### CONSULTANDO updateEim");
+        ServiceResponseResult response = bandejasEimPmService.solTorreLiderTec(params);
+        if (response.getResult() instanceof Integer) {
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
 	
 	@PostMapping("/bandejaPendientes")
     public ResponseEntity<?> bandejaPendientes(@RequestBody String params){
@@ -137,6 +147,28 @@ public class BandejasEimController {
       public ResponseEntity<?> otDia(@RequestBody String params) {
         logger.info("##### CONSULTANDO otDia" + params);
         ServiceResponseResult response = bandejasEimPmService.otDia(params);
+        if (response.getResult() instanceof Integer){
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
+
+    //bandejaSolicitudesRechazadas
+    @PostMapping("/bandejaSolicitudesRechazadas")
+    public ResponseEntity<?> bandejaSolicitudesRechazadas(@RequestBody String params) {
+        logger.info("##### CONSULTANDO bandejaSolicitudesRechazadas" + params);
+        ServiceResponseResult response = bandejasEimPmService.bandejaSolicitudesRechazadas(params);
+        if (response.getResult() instanceof Integer){
+            return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+        }
+        return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    }
+
+    //bandejaSolicitudesPendientes
+    @PostMapping("/bandejaSolicitudesPendientes")
+    public ResponseEntity<?> bandejaSolicitudesPendientes(@RequestBody String params) {
+        logger.info("##### CONSULTANDO bandejaSolicitudesPendientes" + params);
+        ServiceResponseResult response = bandejasEimPmService.bandejaSolicitudesPendientes(params);
         if (response.getResult() instanceof Integer){
             return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
         }

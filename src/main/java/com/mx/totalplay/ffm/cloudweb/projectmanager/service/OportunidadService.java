@@ -6,5 +6,10 @@ public interface OportunidadService {
 
 	public ServiceResponseResult consultarOportunidades(String params);
 	public ServiceResponseResult consultarDetalleOportunidad(String params);
-	
+
+	ServiceResponseResult consultarLiderTorreControlList(String params);
+
+	ServiceResponseResult consultarEnImplementacion(String params);
+
+	ServiceResponseResult updateTorreControl(String params);
 }

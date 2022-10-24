@@ -48,4 +48,34 @@ public class OportunidadController {
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
 
+
+	@PostMapping("/consultarLiderTorreControlList")
+	public ResponseEntity<?> consultarLiderTorreControlList(@RequestBody String params) {
+		logger.info("###### OportunidadController - consultarLiderTorreControlList");
+		ServiceResponseResult response = oportunidadService.consultarLiderTorreControlList(params);
+		if(response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+
+	@PostMapping("/consultarEnImplementacion")
+	public ResponseEntity<?> consultarEnImplementacion(@RequestBody String params) {
+		logger.info("###### OportunidadController - consultarLiderTorreControlList");
+		ServiceResponseResult response = oportunidadService.consultarEnImplementacion(params);
+		if(response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
+
+	@PostMapping("/actualizarEnImplementacion")
+	public ResponseEntity<?> actualizarEnImplementacion(@RequestBody String params) {
+		logger.info("###### OportunidadController - consultarLiderTorreControlList");
+		ServiceResponseResult response = oportunidadService.updateTorreControl(params);
+		if(response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
 }

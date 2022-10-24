@@ -289,6 +289,24 @@ public class ImplBandejaEimService implements BandejasEimPMService {
 		return response;
 	}
 	@Override
+	public ServiceResponseResult solTorreLiderTec(String params) {
+		logger.info("ImplBandejaEimService.class [metodo = solTorreLiderTec() ]\n" + params);
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		String tokenAcces = principalDetail.getAccess_token();
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constBandejasEim.getSolTorreLiderTec());
+		logger.info("URL ##" + urlRequest);
+
+		Map<String, String> paramsRequestGet = new HashMap<String, String>();
+
+		ServiceResponseResult response = restCaller.callPostBearerTokenRequest(jsonObject.toString(), urlRequest,
+				ServiceResponseResult.class, tokenAcces);
+		logger.info(response);
+		return response;
+	}
+
+	@Override
 	public ServiceResponseResult bandejaPendientes(String params) {
 		logger.info("ImplBandejaEimService.class [metodo = bandejaPendientes() ]\n" + params);
 		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
@@ -363,18 +381,18 @@ public class ImplBandejaEimService implements BandejasEimPMService {
 		return response;
 	}
 
-	@Override
-	public ServiceResponseResult consultarValidacion(String params) {
-		// TODO Auto-generated method stub
-		logger.info("ImplBandejaEimService.class [metodo = consultarValidacion() ]\n" + params);
-		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-		String vcot = jsonObject.get("cot").getAsString();
-		String vcsp = jsonObject.get("csp").getAsString();
-		String vcliente = jsonObject.get("cliente").getAsString();
-		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
-		String tokenAcces = principalDetail.getAccess_token();
-		String urlRequest = principalDetail.getDireccionAmbiente()
-				.concat(constBandejasEim.getConsultarValidacion().concat("?cliente=" + vcliente).concat("&cot=" + vcot).concat("&csp=" + vcsp));
+    @Override
+    public ServiceResponseResult consultarValidacion(String params) {
+        // TODO Auto-generated method stub
+        logger.info("ImplBandejaEimService.class [metodo = consultarValidacion() ]\n" + params);
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        String vcot = jsonObject.get("cotizacion").getAsString();
+        String vcsp = jsonObject.get("numeroCSPsTotales").getAsString();
+        String vcliente = jsonObject.get("cliente").getAsString();
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+        String tokenAcces = principalDetail.getAccess_token();
+        String urlRequest = principalDetail.getDireccionAmbiente()
+                .concat(constBandejasEim.getConsultarValidacion().concat("?cliente=" + vcliente).concat("&cotizacion=" + vcot).concat("&numeroCSPsTotales=" + vcsp));
 
 		logger.info("URL: " + urlRequest);
 
@@ -420,4 +438,47 @@ public class ImplBandejaEimService implements BandejasEimPMService {
 		return response;
 	}
 
+	//bandejaSolicitudesRechazadas
+	@Override
+	public ServiceResponseResult bandejaSolicitudesRechazadas(String params) {
+		// TODO Auto-generated method stub
+		logger.info("ImplBandejaEimService.class [metodo = bandejaSolicitudesRechazadas() ]\n" + params);
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		String srcot = jsonObject.get("cotizacion").getAsString();
+		String srcsp = jsonObject.get("numeroCSPsTotales").getAsString();
+		String srcliente = jsonObject.get("cliente").getAsString();
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		String tokenAcces = principalDetail.getAccess_token();
+		String urlRequest = principalDetail.getDireccionAmbiente()
+				.concat(constBandejasEim.getBandejaSolicitudesRechazadas().concat("?cliente=" + srcliente).concat("&cotizacion=" + srcot).concat("&numeroCSPsTotales=" + srcsp));
+
+		logger.info("URL: " + urlRequest);
+
+		Map<String, String> paramsRequestGet = new HashMap<String, String>();
+		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
+				ServiceResponseResult.class, tokenAcces);
+		return response;
+	}
+	//bandejaSolicitudesPendientes
+	@Override
+	public ServiceResponseResult bandejaSolicitudesPendientes(String params) {
+		// TODO Auto-generated method stub
+		logger.info("ImplBandejaEimService.class [metodo = bandejaSolicitudesPendientes() ]\n" + params);
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		String spCot = jsonObject.get("cotizacion").getAsString();
+		String spCsp = jsonObject.get("numeroCSPsTotales").getAsString();
+		String spCliente = jsonObject.get("cliente").getAsString();
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		String tokenAcces = principalDetail.getAccess_token();
+		String urlRequest = principalDetail.getDireccionAmbiente()
+				.concat(constBandejasEim.getBandejaSolicitudesPendientes().concat("?cliente=" + spCliente).concat("&cotizacion=" + spCot).concat("&numeroCSPsTotales=" + spCsp));
+
+		logger.info("URL: " + urlRequest);
+
+		Map<String, String> paramsRequestGet = new HashMap<String, String>();
+		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
+				ServiceResponseResult.class, tokenAcces);
+		return response;
+	}
+	
 }

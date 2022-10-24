@@ -30,7 +30,7 @@
         <link href="${pageContext.request.contextPath}/resources/libraries/jstree/css/style.min.css" rel="stylesheet" />
         <link href="${pageContext.request.contextPath}/resources/libraries/jstree/css/proton/style.css" rel="stylesheet" />
         <link href="${pageContext.request.contextPath}/resources/libraries/magnific_popup/magnific-popup.css" rel="stylesheet">
-
+        <script src="https://kit.fontawesome.com/d7c8065f97.js" crossorigin="anonymous"></script>
         
 </head>
 
@@ -51,8 +51,15 @@
                             <div class="opcion-menu" ng-click="cambiarVista(2);" ng-if="configPermisoAccionAsignarEimCSP">
                                 <i ng-class="{'active-iconmenu':vistaCoordinacion==2}" class="icon-menu-left fa fa-chalkboard-teacher"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==2}" class="titulo-menu">Validación de Líder...</span>
                             </div>
-                            
-                            <div class="opcion-menu" ng-click="cambiarVista(3);" ng-if="configPermisoAccionConsultarBandejaCSPSinEim">
+
+                            <div class="opcion-menu" ng-click="cambiarVista(6);" ng-if="configPermisoAccionAsignarEimCSP">
+                                <i ng-class="{'active-iconmenu':vistaCoordinacion==6}" class="icon-menu-left fa fa-circle"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==6}" class="titulo-menu">Solicitudes Rechazadas</span>
+                            </div>
+                            <div class="opcion-menu" ng-click="cambiarVista(7);" ng-if="configPermisoAccionAsignarEimCSP">
+                                <i ng-class="{'active-iconmenu':vistaCoordinacion==7}" class="icon-menu-left fa fa-circle"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==7}" class="titulo-menu">Solicitudes Pendientes</span>
+                            </div>
+
+                            <!--div class="opcion-menu" ng-click="cambiarVista(3);" ng-if="configPermisoAccionConsultarBandejaCSPSinEim">
                                 <i ng-class="{'active-iconmenu':vistaCoordinacion==3}" class="icon-menu-left fa fa-clock-o"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==3}" class="titulo-menu">Pendientes por Imp...</span>
                             </div>
                             <div class="opcion-menu" ng-click="cambiarVista(4);" ng-if="configPermisoAccionConsultarBandejaDependencia">
@@ -60,8 +67,8 @@
                             </div>
                             <div class="opcion-menu" ng-click="cambiarVista(5);" ng-if="configPermisoAccionConsultarBandejaImplementacion">
                                 <i ng-class="{'active-iconmenu':vistaCoordinacion==5}" class="icon-menu-left fa fa-retweet"></i>&nbsp;&nbsp;<span ng-class="{'active-text-menu':vistaCoordinacion==5}" class="titulo-menu">En implementacion</span>
-                            </div>
-                        </div>
+                            </div-->
+                    </div>
                         <div    class="right-content">
                             <div class="col-12 text-center">
                                 <span class="span-titulo-bandeja" ng-bind="nombreBandeja"></span>
@@ -81,6 +88,12 @@
                                 </div>
                                 <div id="vistaTerminada" class="col-12" ng-show="vistaCoordinacion === 5">
                                     <jsp:include page="./content/enImplementacion.jsp"></jsp:include>
+                                </div>
+                                <div id="vistaSolucionesRechazadas" class="col-12" ng-show="vistaCoordinacion === 6" ng-if="configPermisoAccionAsignarEimCSP">
+                                    <jsp:include page="./content/solicitudesRechazadas.jsp"></jsp:include>
+                                </div>
+                                <div id="vistaSolucionesPendientes" class="col-12" ng-show="vistaCoordinacion === 7" ng-if="configPermisoAccionAsignarEimCSP">
+                                    <jsp:include page="./content/solicitudesPendientes.jsp"></jsp:include>
                                 </div>
                                
                             </div>

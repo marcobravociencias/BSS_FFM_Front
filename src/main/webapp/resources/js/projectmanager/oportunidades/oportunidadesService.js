@@ -20,4 +20,34 @@ app.service("oportunidadesService", function ($http) {
         });
     };
 
+
+    this.consultarSolicitudTorreControl = function (params) {
+            return $http({
+                method: "post",
+                url: "req/consultarLiderTorreControlList",
+                data:JSON.stringify(params),
+                headers: { 'Content-Type': "application/json; charset=utf-8" },
+                transformRequest: angular.identity
+            });
+        };
+
+        this.consultarEnImplementacion = function (params) {
+            return $http({
+                method: "post",
+                url: "req/consultarEnImplementacion",
+                data:JSON.stringify(params),
+                headers: { 'Content-Type': "application/json; charset=utf-8" },
+                transformRequest: angular.identity
+            });
+        };
+
+        this.actualizarEnImplementacion = function (params) {
+            return $http({
+                method: "post",
+                url: "req/actualizarEnImplementacion",
+                data:JSON.stringify(params),
+                headers: { 'Content-Type': "application/json; charset=utf-8" },
+                transformRequest: angular.identity
+            });
+        };
 });
