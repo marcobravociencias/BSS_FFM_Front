@@ -78,4 +78,14 @@ public class OportunidadController {
 		}
 		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
 	}
+
+	@PostMapping("/updateTorreControlRechazado")
+	public ResponseEntity<?> updateTorreControlRechazado(@RequestBody String params) {
+		logger.info("###### OportunidadController - updateTorreControlRechazado");
+		ServiceResponseResult response = oportunidadService.updateTorreControlRechazado(params);
+		if(response.getResult() instanceof Integer) {
+			return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
+		}
+		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+	}
 }

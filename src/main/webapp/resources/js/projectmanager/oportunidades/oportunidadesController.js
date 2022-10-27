@@ -15,6 +15,8 @@ app.controller('oportunidadController', ['$scope', '$q', 'oportunidadesService',
 
 	var tableimplementacion;
 
+	var tableMaterialesDespacho;
+
 	let is_consulta_comentarios = false;
 	let is_consulta_historico = false;
 	let isConsultaMateriales = false;
@@ -24,6 +26,12 @@ app.controller('oportunidadController', ['$scope', '$q', 'oportunidadesService',
     $scope.contadorGeneral = {};
     $scope.camposFiltro = {};
 
+	$scope.opcionEstatus = false;
+	$scope.opcionSolicitudes = true;
+
+	$scope.selectedTorreControl = {}
+	$scope.selectedLiderTecnico = {}
+	$scope.resultSolicituLiderTecnico = []
 
 
 	$scope.geografia = [{
@@ -5617,6 +5625,11 @@ app.controller('oportunidadController', ['$scope', '$q', 'oportunidadesService',
             }
         })
     }
+
+	$scope.consultarTablas = function(){
+		$scope.consultarOportunidades();
+		$scope.consultarSolicitudes();
+	}
     
     $scope.consultarOportunidades = function() {
         
@@ -5676,15 +5689,15 @@ app.controller('oportunidadController', ['$scope', '$q', 'oportunidadesService',
                         swal.close();
 					} else {
 						swal.close();
-						mostrarMensajeErrorAlert(response.data.result.mensaje)
+						toastr.error(response.data.result.mensaje)
 					}
 				} else {
 					swal.close();
-					mostrarMensajeErrorAlert(response.data.resultDescripcion);
+					toastr.error(response.data.resultDescripcion);
 				}
 			} else {
 				swal.close();
-				mostrarMensajeErrorAlert("Error del servidor");
+				toastr.error("Error del servidor");
 			}
 		}).catch(err => handleError(err));
     }
@@ -5773,15 +5786,15 @@ app.controller('oportunidadController', ['$scope', '$q', 'oportunidadesService',
                         }
 					} else {
 						swal.close();
-						mostrarMensajeErrorAlert(response.data.result.mensaje)
+						toastr.error(response.data.result.mensaje)
 					}
 				} else {
 					swal.close();
-					mostrarMensajeErrorAlert(response.data.resultDescripcion);
+					toastr.error(response.data.resultDescripcion);
 				}
 			} else {
 				swal.close();
-				mostrarMensajeErrorAlert("Error del servidor");
+				toastr.error("Error del servidor");
 			}
 		}).catch(err => handleError(err));
     }
@@ -5800,7 +5813,10 @@ app.controller('oportunidadController', ['$scope', '$q', 'oportunidadesService',
         //     fechaInicio: "",
         //     fechaFin: ""
         // };
-		$scope.params = {}
+		$scope.params = {
+			oportunidad: $scope.camposFiltro.oportunidad ? $scope.camposFiltro.oportunidad : "",
+		};
+	//	$scope.params = {oportunidad:numeroOportunidad}
         swal({ html: '<strong>Espera un momento...</strong>', allowOutsideClick: false });
 		swal.showLoading();
 		oportunidadesService.consultarSolicitudTorreControl($scope.params).then(function success(response) {
@@ -5817,22 +5833,20 @@ app.controller('oportunidadController', ['$scope', '$q', 'oportunidadesService',
                         
 					} else {
 						swal.close();
-						mostrarMensajeErrorAlert(response.data.result.mensaje)
+						toastr.error(response.data.result.mensaje)
 					}
 				} else {
 					swal.close();
-					mostrarMensajeErrorAlert(response.data.resultDescripcion);
+					toastr.error(response.data.resultDescripcion);
 				}
 			} else {
 				swal.close();
-				mostrarMensajeErrorAlert("Error del servidor");
+				toastr.error("Error del servidor");
 			}
 		}).catch(err => handleError(err));
     }
 
-	$scope.selectedTorreControl = {}
-	$scope.selectedLiderTecnico = {}
-	$scope.resultSolicituLiderTecnico = []
+	$scope.resultSolicituLiderTecnicoArray;
 
     $scope.mostrarTablaSolicitudes = function(array) {
         if (tableSolicitud) {
@@ -5840,8 +5854,15 @@ app.controller('oportunidadController', ['$scope', '$q', 'oportunidadesService',
         }
         let arrayRow = [];
 
+		// array.forEach(i => {
+		// 	if(i.idLiderTecnico &&  idTorreControl){
+		// 		$scope.resultSolicituLiderTecnico.push(i);
+		// 	}
+		// })
+
         console.log("crear tabla de lider")
-		$scope.resultSolicituLiderTecnico = array;
+		$scope.consultarListaEim();
+		$scope.resultSolicituLiderTecnicoArray = array;
          angular.forEach(array, function (elemento, index) {
             let row = [];
             row[0] = elemento.csp;
@@ -5866,45 +5887,103 @@ app.controller('oportunidadController', ['$scope', '$q', 'oportunidadesService',
         swal.close();
     }
 
+	$scope.consultarListaEim = function(){
+		genericService.consultarListaEim().then(function success(response) {
+			if (response.data !== undefined) {
+				if (response.data.respuesta) {
+					if (response.data.result) {
+
+						if (response.data.result.eims) {
+							$scope.resultSolicituLiderTecnico = response.data.result.eims;
+							swal.close();
+						} else {
+							swal.close();
+						}
+                        
+					} else {
+						swal.close();
+						toastr.error(response.data.result.mensaje)
+					}
+				} else {
+					swal.close();
+					toastr.error(response.data.resultDescripcion);
+				}
+			} else {
+				swal.close();
+				toastr.error("Error del servidor");
+			}
+		}).catch(err => handleError(err));
+	}
+
     consultaDetalleLider = function(index) {
 		console.log(index);
-		$scope.selectedTorreControl = $scope.resultSolicituLiderTecnico[index]
+		$scope.selectedTorreControl = $scope.resultSolicituLiderTecnicoArray[index]
+		
 		console.log($scope.selectedTorreControl)
         $("#modal-detalle-lider").modal('show');
     }
 
+	$scope.rechazarLider = function(){
+
+
+		const params = {
+			cspId: $scope.selectedTorreControl.idCsp ,
+			status: "Rechazado",
+            listaCampos: {
+				liderTecnico: $scope.selectedLiderTecnico.Id,
+				torreControl: $scope.selectedLiderTecnico.Id
+			}
+        }
+		console.log("params:", params)
+		$scope.actualizarEstatusLider(params);
+
+		$scope.limpiarModalSolicitud();
+	}
+
+	$scope.limpiarModalSolicitud =function(){
+		$('#exampleCheck1').prop('checked',false);;
+		$('#exampleCheck2').prop('checked',false);;
+		$scope.selectedLiderTecnico = {};
+		$("#modal-detalle-lider").modal('hide');
+	}
+
     $scope.asignarLider = function() {
 		const params = {
 			cspId: $scope.selectedTorreControl.idCsp ,
+			status: "Asignado",
             listaCampos: {
-				liderTecnico: $scope.selectedTorreControl.idLiderTecnico,
-				torreControl: $scope.selectedTorreControl.idTorreControl
+				liderTecnico: $scope.selectedLiderTecnico.Id,
+				torreControl: $scope.selectedLiderTecnico.Id
 			}
         }
+		$scope.actualizarEstatusLider(params);
+		$scope.limpiarModalSolicitud();
+    }
+
+	$scope.actualizarEstatusLider = function(params) {
 		oportunidadesService.actualizarEnImplementacion(params).then(function success(response){
 			if(response.data !== undefined){
 				if(response.data.respuesta){
 					if(response.data.result){
 						mensajeEnvio = 'Se actualizo el CSP correctamente.';
-						objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio,MENSAJE_ACCION_EXITO, tituloAccion);
+						//objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio,MENSAJE_ACCION_EXITO, tituloAccion);
 						toastr.success('Se actualizo el CSP correctamente.');
-
+						$scope.consultarSolicitudes();
 						swal.close();
 					} else {
 						swal.close();
-						objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
-						mostrarMensajeErrorAler(response.data.resultDescripcion);
+						//objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
+						toastr.error(response.data.resultDescripcion);
 					}
 				} else {
 				swal.close();
-				objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
-				mostrarMensajeErrorAler(response.data.resultDescripcion);
+				//objectTempAccion.guardarAccionesRecientesModulo(mensajeEnvio, MENSAJE_ACCION_ERROR, tituloAccion);
+				toastr.error(response.data.resultDescripcion);
 			}
 		}
 
 		});
-        $("#modal-detalle-lider").modal('hide');
-    }
+	}
 
     $scope.contadorDetalleOportunidad = {};
     $scope.mostrarTablaDetalleOportunidad = function(array) {
@@ -6218,15 +6297,15 @@ $scope.reloadEventsImplementacion = function() {
 						swal.close();
 					} else {
 						swal.close();
-						mostrarMensajeErrorAlert(response.data.result.mensaje)
+						toastr.error(response.data.result.mensaje)
 					}
 				} else {
 					swal.close();
-					mostrarMensajeErrorAlert(response.data.resultDescripcion);
+					toastr.error(response.data.resultDescripcion);
 				}
 			} else {
 				swal.close();
-				mostrarMensajeErrorAlert("Error del servidor");
+				toastr.error("Error del servidor");
 			}
 		}).catch(err => handleError(err));
 	}
@@ -6249,19 +6328,19 @@ $scope.reloadEventsImplementacion = function() {
 								swal.close();
 							} else {
 								swal.close();
-								mostrarMensajeErrorAlert(response.data.result.resultDescription)
+								toastr.error(response.data.result.resultDescription)
 							}
 						} else {
 							swal.close();
-							mostrarMensajeErrorAlert(response.data.result.resultDescription)
+							toastr.error(response.data.result.resultDescription)
 						}
 					} else {
 						swal.close();
-						mostrarMensajeErrorAlert(response.data.resultDescripcion);
+						toastr.error(response.data.resultDescripcion);
 					}
 				} else {
 					swal.close();
-					mostrarMensajeErrorAlert("Error del servidor");
+					toastr.error("Error del servidor");
 				}
 			}).catch(err => handleError(err));
 		}
@@ -6349,15 +6428,15 @@ $scope.reloadEventsImplementacion = function() {
 							
 						} else {
 							swal.close();
-							mostrarMensajeErrorAlert(response.data.result.resultDescription)
+							toastr.error(response.data.result.resultDescription)
 						}
 					} else {
 						swal.close();
-						mostrarMensajeErrorAlert(response.data.resultDescripcion);
+						toastr.error(response.data.resultDescripcion);
 					}
 				} else {
 					swal.close();
-					mostrarMensajeErrorAlert("Error del servidor");
+					toastr.error("Error del servidor");
 				}
 			}).catch(err => handleError(err));*/
 		}
@@ -6423,11 +6502,117 @@ $scope.reloadEventsImplementacion = function() {
 				} else {
 					$scope.inicializarTableMaterialesOt();
 					$scope.isTecnicoConsultaMateriales = false;
-					mostrarMensajeErrorAlert('Ha ocurrido un error en la consulta de los datos');
+					toastr.error('Ha ocurrido un error en la consulta de los datos');
 					swal.close()
 				}
-			}).catch(err => handleError(err));
+			}).catch(err =>{ 
+				handleError(err); 
+				swal.close()
+			});
 		}
 	}
 
+	$scope.inicializarTableMaterialesOt = function () {
+		tableMaterialesDespacho = $('#table-materiales-ot').DataTable({
+			"processing": false,
+			"serverSide": false,
+			"scrollX": false,
+			"paging": true,
+			"lengthChange": false,
+			"searching": true,
+			"ordering": true,
+			"pageLength": 10,
+			"bAutoWidth": false,
+			"columns": [null, null, null, null, null, null, null, null, null, null, null, null, null],
+			"language": idioma_espanol_not_font
+		});
+	}
+
+	$scope.consultaInformacionRed = function(){
+
+	}
+
+	let tabletrayectoria;
+	$scope.consultaTrayectoria = function(){
+
+		let arraRowTrayectoria = [];
+		let resultado = [
+			{
+				empleado: "767626371283",
+				nombre: "Arturo Garcia",
+				estado: "Candelarizado",
+				fecha: "05/04/2022 09:44:44",
+				motivo: "Permisos Administrativos",
+				estatus: "Calendarizado",
+				ubicacion: '<div class="tooltip-btn"> <span  class="btn-option btn-floating btn-evidencia btn-sm btn-secondary waves-effect waves-light"><i class="icono_cons_bg fa fa-location-dot" aria-hidden="true"></i></span></div>'
+			},
+			{
+				empleado: "767626371283",
+				nombre: "Arturo Garcia",
+				estado: "Candelarizado",
+				fecha: "05/04/2022 09:44:44",
+				motivo: "Permisos Administrativos",
+				estatus: "Calendarizado",
+				ubicacion: '<div class="tooltip-btn"> <span  class="btn-option btn-floating btn-evidencia btn-sm btn-secondary waves-effect waves-light"><i class="icono_cons_bg fa fa-location-dot" aria-hidden="true"></i></span></div>'
+			},
+			{
+				empleado: "767626371283",
+				nombre: "Arturo Garcia",
+				estado: "Candelarizado",
+				fecha: "05/04/2022 09:44:44",
+				motivo: "Permisos Administrativos",
+				estatus: "Calendarizado",
+				ubicacion: '<div class="tooltip-btn"> <span  class="btn-option btn-floating btn-evidencia btn-sm btn-secondary waves-effect waves-light"><i class="icono_cons_bg fa fa-location-dot" aria-hidden="true"></i></span></div>'
+			},
+			{
+				empleado: "767626371283",
+				nombre: "Arturo Garcia",
+				estado: "Candelarizado",
+				fecha: "05/04/2022 09:44:44",
+				motivo: "Permisos Administrativos",
+				estatus: "Calendarizado",
+				ubicacion: '<div class="tooltip-btn"> <span  class="btn-option btn-floating btn-evidencia btn-sm btn-secondary waves-effect waves-light"><i class="icono_cons_bg fa fa-location-dot" aria-hidden="true"></i></span></div>'
+			},
+			{
+				empleado: "767626371283",
+				nombre: "Arturo Garcia",
+				estado: "Candelarizado",
+				fecha: "05/04/2022 09:44:44",
+				motivo: "Permisos Administrativos",
+				estatus: "Calendarizado",
+				ubicacion: '<div class="tooltip-btn"> <span  class="btn-option btn-floating btn-evidencia btn-sm btn-secondary waves-effect waves-light"><i class="icono_cons_bg fa fa-location-dot" aria-hidden="true"></i></span></div>'
+			},
+		]
+
+
+		if (tabletrayectoria) {
+			tabletrayectoria.destroy();
+		}
+
+		$.each(resultado, function (i, elemento){
+			let row = [];
+			row[0] = elemento.empleado;
+			row[1] = elemento.nombre ? elemento.nombre : 'Sin informaci&oacute;n';
+			row[2] = elemento.estado ? elemento.estado : 'Sin informaci&oacute;n';
+			row[3] = elemento.fecha ? elemento.fecha : 'Sin informaci&oacute;n';
+			row[4] = elemento.motivo ? elemento.motivo : 'Sin informaci&oacute;n';
+			row[5] = elemento.estatus ? elemento.estatus : 'Sin informaci&oacute;n';
+			row[6] = elemento.ubicacion ? elemento.ubicacion : 'Sin informaci&oacute;n';
+
+			arraRowTrayectoria.push(row);
+		})
+
+		tabletrayectoria = $('#table_info_trayectoria').DataTable({
+			"paging": true,
+			"searching": false,
+			"lengthChange": false,
+			"ordering": true,
+			"pageLength": 10,
+			"info": true,
+			"scrollX": false,
+			"data": arraRowTrayectoria,
+			"autoWidth": false,
+			"language": idioma_espanol_not_font
+		});
+	}
 }]);

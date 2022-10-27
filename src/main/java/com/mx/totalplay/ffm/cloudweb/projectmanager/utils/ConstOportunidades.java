@@ -25,4 +25,7 @@ public class ConstOportunidades {
 
 	@Value("${actualizarEnImplementacion}")
 	private String actualizarEnImplementacion;
+
+	@Value("${solTorreLiderTec}")
+	private String actualizarEnImplementacionRechazado;
 }

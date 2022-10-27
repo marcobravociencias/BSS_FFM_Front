@@ -12,8 +12,11 @@
                         <div style="padding-left: 0;" class="col-2">
                             <div class="nav flex-column nav-tabs text-center" id="v-tabs-tab-detalle-ot" role="tablist" aria-orientation="vertical">
                                 <a data-mdb-toggle="tab" href="#content-ot" class="nav-link active" id="informacion-ot">Informaci&oacute;n</a>
-                                <a ng-click="consultaHistoricoOt()" data-mdb-toggle="tab" href="#content-historico"  class="nav-link" id="info_historico">Hist&oacute;rico</a>
                                 <a ng-click="consultaChat()" data-mdb-toggle="tab" href="#content-comentarios" class="nav-link" id="comentarios">Comentarios</a>
+                                <a ng-click="consultaHistoricoOt()" data-mdb-toggle="tab" href="#content-historico"  class="nav-link" id="info_historico">Hist&oacute;rico</a>
+                                <a ng-click="consultaInformacionRed()" data-mdb-toggle="tab" href="#content-red" class="nav-link" id="info_red">Informaci&oacute;n de Red</a>
+                                <a ng-click="consultaTrayectoria()" data-mdb-toggle="tab" href="#content-trayectoria" class="nav-link" id="trayectoria">Trayectoria</a>
+                                <a ng-click="consultaMaterialesOT()" data-mdb-toggle="tab" href="#content-materiales-ot" class="nav-link" id="dispositivo-Ot">Materiales</a>
                             </div>
                         </div>
                         <div class="col-10">
@@ -232,6 +235,16 @@
                                 <div class="contenedor_detalle row tab-pane fade" id="content-historico">
                                     <div class="container">
                                         <jsp:include page="../contentTap/modalHistorico.jsp"></jsp:include>
+                                    </div>
+                                </div>
+                                <div class="contenedor_detalle row tab-pane fade" id="content-red">
+                                    <div class="container">
+                                        <jsp:include page="../contentTap/informacionRed.jsp"></jsp:include>
+                                    </div>
+                                </div>
+                                <div class="contenedor_detalle row tab-pane fade" id="content-trayectoria">
+                                    <div class="container">
+                                        <jsp:include page="../contentTap/geolocalizacion.jsp"></jsp:include>
                                     </div>
                                 </div>
                                 <div class="contenedor_detalle row tab-pane fade" id="content-materiales-ot">

@@ -12,4 +12,5 @@ public interface OportunidadService {
 	ServiceResponseResult consultarEnImplementacion(String params);
 
 	ServiceResponseResult updateTorreControl(String params);
+	ServiceResponseResult updateTorreControlRechazado(String params);
 }

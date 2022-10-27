@@ -50,4 +50,14 @@ app.service("oportunidadesService", function ($http) {
                 transformRequest: angular.identity
             });
         };
+
+        this.updateTorreControlRechazado = function (params) {
+            return $http({
+                method: "post",
+                url: "req/updateTorreControlRechazado",
+                data:JSON.stringify(params),
+                headers: { 'Content-Type': "application/json; charset=utf-8" },
+                transformRequest: angular.identity
+            });
+        };
 });

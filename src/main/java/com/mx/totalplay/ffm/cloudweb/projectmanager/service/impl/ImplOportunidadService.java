@@ -145,4 +145,22 @@ public class ImplOportunidadService implements OportunidadService{
         return response;
     }
 
+    @Override
+    public ServiceResponseResult updateTorreControlRechazado(String params) {
+        logger.info("ImplOportunidadService.class [metodo = updateTorreControlRechazado() ]\n" + params);
+        LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+
+        JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+        String tokenAcces = principalDetail.getAccess_token();
+        String urlRequest = principalDetail.getDireccionAmbiente().concat(constOportunidades.getActualizarEnImplementacionRechazado());
+        logger.info("URL ##" + urlRequest);
+
+        Map<String, String> paramsRequestGet = new HashMap<String, String>();
+
+        ServiceResponseResult response = restCaller.callPostBearerTokenRequest(jsonObject.toString(), urlRequest,
+                ServiceResponseResult.class, tokenAcces);
+        //logger.info(response);
+        return response;
+    }
+
 }

@@ -5,13 +5,53 @@
         <i class="fa fa-hdd-o fa-3x red-text icono_red"></i>
         <h5 class="font-weight-bold my-4">EQUIPO</h5>
         <div class="container">
-              <h6 style="text-aling:center;color: black;">INFORMACI&Oacute;N EQUIPO</h6>
-            <table id="tableInfoRedEquipo" style="width: 100%;">
+              <!-- <h6 style="text-aling:center;color: black;">INFORMACI&Oacute;N EQUIPO</h6> -->
+            <!-- <table id="tableInfoRedEquipo" style="width: 100%;">
                 <thead>
                     <tr><th></th></tr>
                 </thead>
                 <tbody id="tbodyInfoRedEquipo"></tbody>
-            </table>
+            </table> -->
+            <div class="info_ot_detail row">
+                <div class="col-md-6">
+                    <b class="title_span title_info_ot">Informaci&oacute;n de equipo:</b> &nbsp;
+                </div>
+                <div class="col-md-6">
+                    <span id="info_telefonia_cant_dn" class="content_info_ot">Asignada</span>
+                </div>
+            </div>
+            <div class="info_ot_detail row">
+                <div class="col-md-6">
+                    <b class="title_span title_info_ot"> Tipo de Red:</b> &nbsp;
+                </div>
+                <div class="col-md-6">
+                    <span id="info_telefonia_cant_dn" class="content_info_ot">Sin registro</span>
+                </div>
+            </div>
+            <div class="info_ot_detail row">
+                <div class="col-md-6">
+                    <b class="title_span title_info_ot"> Modelo:</b> &nbsp;
+                </div>
+                <div class="col-md-6">
+                    <span id="info_telefonia_cant_dn" class="content_info_ot">AR611W</span>
+                </div>
+            </div>
+            <div class="info_ot_detail row">
+                <div class="col-md-6">
+                    <b class="title_span title_info_ot"> Serie:</b> &nbsp;
+                </div>
+                <div class="col-md-6">
+                    <span id="info_telefonia_cant_dn" class="content_info_ot">4623874623874</span>
+                </div>
+            </div>
+            <div class="info_ot_detail row">
+                <div class="col-md-6">
+                    <b class="title_span title_info_ot"> MAC:</b> &nbsp;
+                </div>
+                <div class="col-md-6">
+                    <span id="info_telefonia_cant_dn" class="content_info_ot">5C:4B:7F:4G:7N</span>
+                </div>
+            </div>
         </div>
       </div>
   
@@ -46,10 +86,10 @@
         <div class="container col-10 offset-2" id="info_activa">
             <div class="info_ot_detail row">
                   <div class="col-md-6">
-                      <b class="title_span title_info_ot"> CANTIDAD DN:</b> &nbsp;
+                      <b class="title_span title_info_ot"> Cantidad DN:</b> &nbsp;
                   </div>
                   <div class="col-md-6">
-                      <span id="info_telefonia_cant_dn" class="content_info_ot">SIN INFORMACI&Oacute;N</span>
+                      <span id="info_telefonia_cant_dn" class="content_info_ot">Sin Informaci&oacute;n</span>
                   </div>
            </div>
            <div class="info_ot_detail row">
@@ -57,15 +97,15 @@
                       <b class="title_span title_info_ot"> SVM:</b> &nbsp;
                   </div>
                   <div class="col-md-6">
-                      <span id="info_telefonia_svm" class="content_info_ot">SIN INFORMACI&Oacute;N</span>
+                      <span id="info_telefonia_svm" class="content_info_ot">Sin Informaci&oacute;n</span>
                   </div>
            </div>
            <div class="info_ot_detail row">
                   <div class="col-md-6">
-                      <b class="title_span title_info_ot"> CODIGO POSTAL:</b> &nbsp;
+                      <b class="title_span title_info_ot"> C&oacute;digo Postal:</b> &nbsp;
                   </div>
                   <div class="col-md-6">
-                      <span id="info_telefonia_codigo_postal" class="content_info_ot">SIN INFORMACI&Oacute;N</span>
+                      <span id="info_telefonia_codigo_postal" class="content_info_ot">Sin Informaci&oacute;n</span>
                   </div>
            </div>
         </div>

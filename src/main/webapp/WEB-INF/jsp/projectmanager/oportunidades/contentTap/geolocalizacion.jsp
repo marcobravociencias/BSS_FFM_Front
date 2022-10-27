@@ -4,7 +4,7 @@
 			<table id="table_info_trayectoria" class="table-hover ">
 				<thead id="thead_table_info_trayectoria">
 					<tr>
-						<th class="title-trayectoria">#Empleado</th>
+						<th class="title-trayectoria">Empleado</th>
 						<th class="title-trayectoria">Nombre</th>
 						<th class="title-trayectoria">Estado</th>
 						<th class="title-trayectoria">Fecha</th>

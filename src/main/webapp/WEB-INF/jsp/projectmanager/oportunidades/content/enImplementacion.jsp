@@ -15,7 +15,7 @@
     
     <div class="column-style-consulta" style="width: 11%;">
       <label class="label-filter">CSP</label>
-      <input type="text" id="iCsp" placeholder=""
+      <input type="text" id="iCsp" placeholder="Ej: 23214"
              class="form-control input-filtro-coordInst form-control-sm">
   </div>
     <div class="column-style-consulta" style="width: 11%;">

@@ -17,7 +17,7 @@
                                 <div class="form-group">
                                     <input type="checkbox" class="form-check-input" id="exampleCheck1">
                                 </div>
-                                <select style="border-left:.4em solid" class="select-status-tecnico form-control" id="id-tecnico" ng-model="selectedLiderTecnico" ng-options="estatus.liderTecnico for estatus in resultSolicituLiderTecnico">
+                                <select style="border-left:.4em solid" class="select-status-tecnico form-control" id="id-tecnico" ng-model="selectedLiderTecnico" ng-options="estatus.Name for estatus in resultSolicituLiderTecnico">
                                     <option value="">Seleccione ...</option>
 							    </select>  
                               
@@ -29,7 +29,7 @@
                                    <label for="ot_asignadao" class="label-filter">Torre de control</label>
                                    <div class="form-row">
                                     <div class="form-group">
-                                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                        <input type="checkbox" class="form-check-input" id="exampleCheck2">
                                     </div>
                                     </div>
                         </div>
@@ -40,8 +40,8 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-cerrar-modal btn-secondary ripple-surface"
-                    data-mdb-dismiss="modal">
-                    Cancelar
+                ng-click="rechazarLider()">
+                    Rechazar
                 </button>
                 <button type="button" ng-click="asignarLider()"
                     class="btn btn-primary btn-guardar ripple-surface" style="height: 2.75em; padding: 0.5em 2em;">
