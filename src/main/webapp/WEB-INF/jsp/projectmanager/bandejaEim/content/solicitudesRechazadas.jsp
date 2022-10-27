@@ -27,15 +27,11 @@
   <div class="col-md-3">
   </div>
   <div class="col-md-2" style="float:right; width: 42px; padding:27px; border: 3px;">
-    <a href="#" data-toggle="tooltip" title="Solicitar L&iacute;der T&eacute;cnico y Torre de Control">
-      <i class="icon-item fas fa-user  alt" style="color:#577CE1;" role="button" data-prefix="far" data-id="hourglass-end" data-unicode="f234" data-mdb-original-title="" title="" ng-click="solTorreLiderTec(0,'r')"></i>
-    </a>
+      <i class="icon-item fas fa-user  alt" style="color:#577CE1;" role="button" data-prefix="far" ng-click="solTorreLiderTec_rechazadas(0,'r')" data-toggle="tooltip" data-placement="top" title="Solicitar L&iacute;der T&eacute;cnico y Torre de Control"></i>
   </div>
-  <!--div class="col-md-1" style="float:right; width: 42px; padding:27px; border: 3px;">
-    <a href="#" data-toggle="tooltip" title="No Requiere L&iacute;der T&eacute;cnico y Torre de Control">
-      <i class="icon-item fas fa-user-minus alt" style="color:#577CE1;" role="button" data-prefix="far" data-id="hourglass-end" data-unicode="f503" data-mdb-original-title="" title=""></i>
-    </a>
-  </div-->
+  <div class="col-md-1" style="float:right; width: 42px; padding:27px; border: 3px;">
+      <i class="icon-item fas fa-user-minus alt" style="color:#577CE1;" role="button" data-prefix="far" ng-click="solTorreLiderTec_rechazadas(1,'r')" data-toggle="tooltip" data-placement="top" title="No Requiere L&iacute;der T&eacute;cnico y Torre de Control"></i>
+  </div>
 
 </div>
 

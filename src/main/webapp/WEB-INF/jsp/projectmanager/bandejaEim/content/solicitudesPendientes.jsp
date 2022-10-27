@@ -30,11 +30,11 @@
     <table id="tablesolicitudespendientes" class="table">
       <thead id="theadsolicitudespendientes">
       <tr>
-        <th class="detail">
+        <!--th class="detail">
           <div class="fht-cell" style="width: 20px;">
             <input type="checkbox" id="check_solpendientes" name="check">
           </div>
-        </th>
+        </th-->
         <th>Oportunidad</th>
         <th>Vertical</th>
         <th>C&eacutelula</th>

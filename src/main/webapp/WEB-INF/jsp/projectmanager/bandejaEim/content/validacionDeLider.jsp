@@ -15,7 +15,7 @@
         <input type="text" id="vcot" placeholder="Ej: COT#######"
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
-
+    
     <div class="col-md-2" style="width: 85px;">
         <button id="btn-calendarizado-salesforce" ng-click="consultarValidacion()" type="button" class="btn btn-sm waves-effect waves-light btn-primary">
             <i class="fa fa-search" ></i>
@@ -26,18 +26,14 @@
     <div class="col-md-3">
     </div>
     <div class="col-md-1" style="float:right; width: 42px; padding:27px; border: 3px;">
-        <a href="" data-toggle="tooltip" title="Solicitar L&iacute;der T&eacute;cnico y Torre de Control">
-        <i class="icon-item fas fa-user alt" style="color:#577CE1;" role="button" data-prefix="far" ng-click="solTorreLiderTec(0,'v')"></i>
-        </a>
+        <i class="icon-item fas fa-user alt" style="color:#577CE1;" role="button" data-prefix="far" ng-click="solTorreLiderTec(0,'v')" data-toggle="tooltip" data-placement="top" title="Solicitar L&iacute;der T&eacute;cnico y Torre de Control"></i>
     </div>
     <div class="col-md-1" style="float:right; width: 42px; padding:27px; border: 3px;">
-    <a href="" data-toggle="tooltip" title="No Requiere L&iacute;der T&eacute;cnico y Torre de Control">
-        <i class="icon-item fas fa-user-minus alt" style="color:#577CE1;" role="button" data-prefix="far" ng-click="solTorreLiderTec(1, 'v')"></i>
-         </a>
+        <i class="icon-item fas fa-user-minus alt" style="color:#577CE1;" role="button" data-prefix="far" ng-click="solTorreLiderTec(1, 'v')" data-toggle="tooltip" data-placement="top" title="No Requiere L&iacute;der T&eacute;cnico y Torre de Control"></i>
     </div>
 
 </div>
-
+        
 
 
 <div class="row">
@@ -47,7 +43,7 @@
                 <tr>
                     <th class="detail">
                         <div class="fht-cell" style="width: 20px;">
-                            <input type="checkbox" id="check_validacion" name="check_validacion">
+                            <input type="checkbox"  id="check_validaciones" name="checkvalidacion" ng-click="validacionMasiva()">
                         </div>
                     </th>
                     <th>Oportunidad</th>

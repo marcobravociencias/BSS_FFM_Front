@@ -45,7 +45,11 @@
         <table id="tablecspSinEim" class="display table">
             <thead id="theadcspSinEim">
                 <tr>
-                   <th></th>
+                    <th class="detail">
+                       <div class="fht-cell" style="width: 20px;">
+                         <input type="checkbox"  id="check_cspsineims" name="checkcspsineim" ng-click="cspsineimMasiva()">
+                       </div>
+                     </th>
                    <th>Oportunidad</th>
                    <th>Vertical</th>
                    <th>C&eacutelula</th>
