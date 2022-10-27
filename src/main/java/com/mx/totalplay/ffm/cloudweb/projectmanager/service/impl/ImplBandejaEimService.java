@@ -90,13 +90,6 @@ public class ImplBandejaEimService implements BandejasEimPMService {
 		                        	dataArray[count][4] = object.get("cliente") != null ? object.get("cliente").getAsString().trim() : "";
 		                        	dataArray[count][5] = object.get("fechaActualizacion") != null ? object.get("fechaActualizacion").getAsString().trim() : "";
 		                        	dataArray[count][6] = object.get("estatus") != null ? object.get("estatus").getAsString().trim() : "";
-		                        	//dataArray[count][6] = object.get("estado") != null ? object.get("estado").getAsString().trim() : "";
-		                        	//dataArray[count][7] = object.get("motivo") != null ? object.get("motivo").getAsString().trim() : "";
-		                        	//dataArray[count][8] = object.get("usuarioActualiza") != null ? object.get("usuarioActualiza").getAsString().trim() : "";
-		                        	//dataArray[count][9] = object.get("tipoOrden") != null ? object.get("tipoOrden").getAsString().trim() : "";
-		                        	//dataArray[count][10] = object.get("subTipoOrden") != null ? object.get("subTipoOrden").getAsString().trim() : "";
-		                        	//dataArray[count][7] ="<div class='tooltip-btn'> <span onclick='consultaDetalleOt(" + object.get("idOrden").getAsInt() + 
-		                        	//		")' class='btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones'><th><i class='icono_cons_bg fa fa-bars' aria-hidden='true'></i></th></span></div>";
 		                        	count++;
 		                        }
 		                        dataResponse = DataTableResponse.builder()
@@ -195,13 +188,6 @@ public class ImplBandejaEimService implements BandejasEimPMService {
 		                        	dataArray[count][15] = object.get("idOrden").getAsInt() != 0 ? String.valueOf(object.get("idOrden").getAsInt()) : "";   
 		                        	dataArray[count][16] = object.get("folioSistema") != null ? object.get("folioSistema").getAsString().trim() : "";
 		                        	dataArray[count][17] = object.get("claveCliente") != null ? object.get("claveCliente").getAsString().trim() : "";
-		                        	//dataArray[count][6] = object.get("estado") != null ? object.get("estado").getAsString().trim() : "";
-		                        	//dataArray[count][7] = object.get("motivo") != null ? object.get("motivo").getAsString().trim() : "";
-		                        	//dataArray[count][8] = object.get("usuarioActualiza") != null ? object.get("usuarioActualiza").getAsString().trim() : "";
-		                        	//dataArray[count][9] = object.get("tipoOrden") != null ? object.get("tipoOrden").getAsString().trim() : "";
-		                        	//dataArray[count][10] = object.get("subTipoOrden") != null ? object.get("subTipoOrden").getAsString().trim() : "";
-		                        	//dataArray[count][7] ="<div class='tooltip-btn'> <span onclick='consultaDetalleOt(" + object.get("idOrden").getAsInt() + 
-		                        	//		")' class='btn-floating btn-option btn-sm btn-secondary waves-effect waves-light acciones'><th><i class='icono_cons_bg fa fa-bars' aria-hidden='true'></i></th></span></div>";
 		                        	count++;
 		                        }
 		                        dataResponse = DataTableResponse.builder()
@@ -239,13 +225,13 @@ public class ImplBandejaEimService implements BandejasEimPMService {
 	public ServiceResponseResult consultarSinEim(String params) {
 		logger.info("ImplBandejaEimService.class [metodo = consultarSinEim() ]\n" + params);
 		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-	    String cot = jsonObject.get("cot").getAsString();
-	    String csp = jsonObject.get("csp").getAsString();
-	    String cveCliente = jsonObject.get("cveCliente").getAsString();
+	    String scot = jsonObject.get("cot").getAsString();
+	    String scsp = jsonObject.get("csp").getAsString();
+	    String scliente = jsonObject.get("cliente").getAsString();
 		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
 		String tokenAcces = principalDetail.getAccess_token();
 		String urlRequest = principalDetail.getDireccionAmbiente()
-				.concat(constBandejasEim.getConsultaBandejaSinEimApi().concat("?").concat("cot=").concat(cot).concat("&csp=").concat(csp).concat("&cveCliente=").concat(cveCliente));
+				.concat(constBandejasEim.getConsultaBandejaSinEimApi().concat("?").concat("cot=").concat(scot).concat("&csp=").concat(scsp).concat("&cliente=").concat(scliente));
 
 		logger.info("URL: " + urlRequest);
 
@@ -288,6 +274,26 @@ public class ImplBandejaEimService implements BandejasEimPMService {
         logger.info(response);
         return response;
     }
+
+	//solTorreLiderTec
+	@Override
+	public ServiceResponseResult solTorreLiderTec(String params) {
+		logger.info("ImplBandejaEimService.class [metodo = solTorreLiderTec() ]\n" + params);
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		String tokenAcces = principalDetail.getAccess_token();
+		String urlRequest = principalDetail.getDireccionAmbiente().concat(constBandejasEim.getSolTorreLiderTec());
+		logger.info("URL ##" + urlRequest);
+
+		Map<String, String> paramsRequestGet = new HashMap<String, String>();
+
+		ServiceResponseResult response = restCaller.callPostBearerTokenRequest(jsonObject.toString(), urlRequest,
+				ServiceResponseResult.class, tokenAcces);
+		logger.info(response);
+		return response;
+	}
+
 	@Override
 	public ServiceResponseResult bandejaPendientes(String params) {
 	    logger.info("ImplBandejaEimService.class [metodo = bandejaPendientes() ]\n" + params);
@@ -341,17 +347,21 @@ public class ImplBandejaEimService implements BandejasEimPMService {
         logger.info("ImplBandejaEimService.class [metodo = bandejaImplementacion() ]\n" + params);
         LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
         JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-        String fechaVenta = jsonObject.get("fechaVenta").getAsString();
-        String estatusOs = jsonObject.get("estatusC").getAsString();
-        String vertical = jsonObject.get("vertical").getAsString();
-        String celula = jsonObject.get("celula").getAsString();
-        String nombreEim = jsonObject.get("nombreEim").getAsString();
-        String csp = jsonObject.get("csp").getAsString();
-        String tokenAcces = principalDetail.getAccess_token();
-        String urlRequest = principalDetail.getDireccionAmbiente()
-                .concat(constBandejasEim.getBandejaImplementacion().concat("&celula="+ celula).concat("&fecha="+ fechaVenta).concat("&vertical="+ vertical).concat("&eim="+ nombreEim).concat("&csp="+csp));
+		String eim = jsonObject.get("eim").getAsString();
+		String cliente = jsonObject.get("cliente").getAsString();
+		String tipoSitio = jsonObject.get("tipoSitio").getAsString();
+		String vertical = jsonObject.get("vertical").getAsString();
+		String celula = jsonObject.get("celula").getAsString();
+		String cot = jsonObject.get("cot").getAsString();
+		String csp = jsonObject.get("csp").getAsString();
 
-        logger.info("URL: " + urlRequest);
+		String tokenAcces = principalDetail.getAccess_token();
+		String urlRequest = principalDetail.getDireccionAmbiente()
+				.concat(constBandejasEim.getBandejaImplementacion().concat("&celula="+ celula).concat("&cot="+ cot)
+						.concat("&vertical="+ vertical).concat("&eim="+ eim).concat("&csp="+ csp)
+						.concat("&cliente="+ cliente).concat("&tipoSitio="+ tipoSitio));
+
+		logger.info("URL: " + urlRequest);
 
         Map<String, String> paramsRequestGet = new HashMap<String, String>();
         ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
@@ -364,13 +374,13 @@ public class ImplBandejaEimService implements BandejasEimPMService {
         // TODO Auto-generated method stub
         logger.info("ImplBandejaEimService.class [metodo = consultarValidacion() ]\n" + params);
         JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
-        String cot = jsonObject.get("cot").getAsString();
-        String csp = jsonObject.get("csp").getAsString();
-        String cveCliente = jsonObject.get("cveCliente").getAsString();
+        String vcot = jsonObject.get("cotizacion").getAsString();
+        String vcsp = jsonObject.get("numeroCSPsTotales").getAsString();
+        String vcliente = jsonObject.get("cliente").getAsString();
         LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
         String tokenAcces = principalDetail.getAccess_token();
         String urlRequest = principalDetail.getDireccionAmbiente()
-                .concat(constBandejasEim.getConsultarValidacion().concat("?cot=").concat(cot).concat("&csp=").concat(csp).concat("&cveCliente=").concat(cveCliente));
+                .concat(constBandejasEim.getConsultarValidacion().concat("?cliente=" + vcliente).concat("&cotizacion=" + vcot).concat("&numeroCSPsTotales=" + vcsp));
 
         logger.info("URL: " + urlRequest);
 
@@ -415,5 +425,48 @@ public class ImplBandejaEimService implements BandejasEimPMService {
                 ServiceResponseResult.class, tokenAcces);
         return response;
     }
+
+	//bandejaSolicitudesRechazadas
+	@Override
+	public ServiceResponseResult bandejaSolicitudesRechazadas(String params) {
+		// TODO Auto-generated method stub
+		logger.info("ImplBandejaEimService.class [metodo = bandejaSolicitudesRechazadas() ]\n" + params);
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		String srcot = jsonObject.get("cotizacion").getAsString();
+		String srcsp = jsonObject.get("numeroCSPsTotales").getAsString();
+		String srcliente = jsonObject.get("cliente").getAsString();
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		String tokenAcces = principalDetail.getAccess_token();
+		String urlRequest = principalDetail.getDireccionAmbiente()
+				.concat(constBandejasEim.getBandejaSolicitudesRechazadas().concat("?cliente=" + srcliente).concat("&cotizacion=" + srcot).concat("&numeroCSPsTotales=" + srcsp));
+
+		logger.info("URL: " + urlRequest);
+
+		Map<String, String> paramsRequestGet = new HashMap<String, String>();
+		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
+				ServiceResponseResult.class, tokenAcces);
+		return response;
+	}
+	//bandejaSolicitudesPendientes
+	@Override
+	public ServiceResponseResult bandejaSolicitudesPendientes(String params) {
+		// TODO Auto-generated method stub
+		logger.info("ImplBandejaEimService.class [metodo = bandejaSolicitudesPendientes() ]\n" + params);
+		JsonObject jsonObject = gson.fromJson(params, JsonObject.class);
+		String spCot = jsonObject.get("cotizacion").getAsString();
+		String spCsp = jsonObject.get("numeroCSPsTotales").getAsString();
+		String spCliente = jsonObject.get("cliente").getAsString();
+		LoginResult principalDetail = utilerias.obtenerObjetoPrincipal();
+		String tokenAcces = principalDetail.getAccess_token();
+		String urlRequest = principalDetail.getDireccionAmbiente()
+				.concat(constBandejasEim.getBandejaSolicitudesPendientes().concat("?cliente=" + spCliente).concat("&cotizacion=" + spCot).concat("&numeroCSPsTotales=" + spCsp));
+
+		logger.info("URL: " + urlRequest);
+
+		Map<String, String> paramsRequestGet = new HashMap<String, String>();
+		ServiceResponseResult response = restCaller.callGetBearerTokenRequest(paramsRequestGet, urlRequest,
+				ServiceResponseResult.class, tokenAcces);
+		return response;
+	}
 	
 }

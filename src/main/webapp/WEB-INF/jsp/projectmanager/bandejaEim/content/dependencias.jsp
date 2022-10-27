@@ -73,14 +73,14 @@
         <input type="text" ng-model="objetoCelula.dTipoSitio" ng-change="limpiarCamposAsignada(3)" id="dTipoSitio" placeholder="Ej: Tipo de Sitio"
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
+    <div class="column-style-consulta" style="width: 11%;">
+        <label for="os_terminada" class="label-filter">COT</label>
+        <input type="text" ng-model="objetoCelula.dCot" ng-change="limpiarCamposAsignada(5)" id="dCot" placeholder="Ej: COT#######"
+               class="form-control input-filtro-coordInst form-control-sm">
+    </div>
      <div class="column-style-consulta" style="width: 11%;">
         <label for="os_terminada" class="label-filter">CSP</label>
         <input type="text" ng-model="objetoCelula.dCsp" ng-change="limpiarCamposAsignada(4)" id="dCsp" placeholder="Ej: CSP#######"
-        class="form-control input-filtro-coordInst form-control-sm">
-    </div>
-     <div class="column-style-consulta" style="width: 11%;">
-        <label for="os_terminada" class="label-filter">COT</label>
-        <input type="text" ng-model="objetoCelula.dCot" ng-change="limpiarCamposAsignada(5)" id="dCot" placeholder="COT#######"
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
     <div class="col-md-1 div-btn-busqueda" style="width: 85px;">

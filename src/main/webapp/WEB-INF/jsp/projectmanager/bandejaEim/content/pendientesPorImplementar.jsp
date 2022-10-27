@@ -77,15 +77,16 @@
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
     <div class="column-style-consulta" style="width: 11%;">
+        <label for="os_terminada" class="label-filter">COT </label>
+        <input type="text" ng-model="objetoPendite.pOt" ng-change="limpiarCamposAsignada(3)" id="pCot" placeholder="Ej: COT#######"
+               class="form-control input-filtro-coordInst form-control-sm">
+    </div>
+    <div class="column-style-consulta" style="width: 11%;">
         <label for="os_terminada" class="label-filter">CSP </label>
         <input type="text" ng-model="objetoPendiente.pCsp" ng-change="limpiarCamposAsignada(4)" id="pCsp" placeholder="Ej: CSP#######"
         class="form-control input-filtro-coordInst form-control-sm">
     </div>
-     <div class="column-style-consulta" style="width: 11%;">
-        <label for="os_terminada" class="label-filter">COT </label>
-        <input type="text" ng-model="objetoPendite.pOt" ng-change="limpiarCamposAsignada(3)" id="pCot" placeholder="Ej: COT#######"
-        class="form-control input-filtro-coordInst form-control-sm">
-    </div>
+
     <div class="col-md-1 div-btn-busqueda" style="width: 85px;">
         <button id="btn-asignada-salesforce" ng-click="consultarPendientesPorImplementar()" type="button" class="btn btn-sm waves-effect waves-light btn-primary">
             <i class="fa fa-search" ></i>

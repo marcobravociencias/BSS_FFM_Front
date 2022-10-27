@@ -43,6 +43,12 @@
               class="search-filtro form-control form-control-sm mt-0" id="searchGeo-6"><i
               class="fa fa-search icon-search" style="margin-top: -1.9em;"></i>
           </div>
+          <div ng-show="vistaCoordinacion == 7">
+            <input placeholder="Buscar geograf&iacute;a" type="text" autocomplete="off"
+                   style=" height: 2em !important;margin-bottom: 0.5em;"
+                   class="search-filtro form-control form-control-sm mt-0" id="searchGeo-7"><i
+                  class="fa fa-search icon-search" style="margin-top: -1.9em;"></i>
+          </div>
         </div>
         <div id="jstreeGeografia-1" class="proton-demo jstreeconsulta" ng-show="vistaCoordinacion == 1"></div>
         <div id="jstreeGeografia-2" class="proton-demo jstreeconsulta" ng-show="vistaCoordinacion == 2"></div>
@@ -50,6 +56,7 @@
         <div id="jstreeGeografia-4" class="proton-demo jstreeconsulta" ng-show="vistaCoordinacion == 4"></div>
         <div id="jstreeGeografia-5" class="proton-demo jstreeconsulta" ng-show="vistaCoordinacion == 5"></div>
         <div id="jstreeGeografia-6" class="proton-demo jstreeconsulta" ng-show="vistaCoordinacion == 6"></div>
+        <div id="jstreeGeografia-7" class="proton-demo jstreeconsulta" ng-show="vistaCoordinacion == 7"></div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-cerrar-modal btn-secondary ripple-surface" data-mdb-dismiss="modal">

@@ -16,6 +16,9 @@ public interface BandejasEimPMService {
 
     public ServiceResponseResult updateEim(String params);
 
+    //solTorreLiderTec
+    public ServiceResponseResult solTorreLiderTec(String params);
+
     public ServiceResponseResult bandejaPendientes(String params);
 
     public ServiceResponseResult bandejaDependencias(String params);
@@ -27,6 +30,11 @@ public interface BandejasEimPMService {
     public ServiceResponseResult localizaOrden(String params);
 
     public ServiceResponseResult otDia(String params);
+
+    //bandejaSolicitudesRechazadas
+    public ServiceResponseResult bandejaSolicitudesRechazadas(String params);
+    //bandejaSolicitudesPendientes
+    public ServiceResponseResult bandejaSolicitudesPendientes(String params);
 	
 	
 }

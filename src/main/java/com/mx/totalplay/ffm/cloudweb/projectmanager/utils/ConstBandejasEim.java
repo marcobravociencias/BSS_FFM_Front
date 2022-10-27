@@ -22,6 +22,10 @@ public class ConstBandejasEim implements Serializable{
 	
 	@Value("${updateEim}")
 	private String updateEim;
+
+	//solTorreLiderTec
+	@Value("${solTorreLiderTec}")
+	private String solTorreLiderTec;
 	
 	@Value("${bandejaPendientes}")
     private String bandejaPendientes;
@@ -34,6 +38,12 @@ public class ConstBandejasEim implements Serializable{
 	
 	@Value("${consultarValidacion}")
     private String consultarValidacion;
+
+	@Value("${bandejaSolicitudesRechazadas}")
+	private String bandejaSolicitudesRechazadas;
+
+	@Value("${bandejaSolicitudesPendientes}")
+	private String bandejaSolicitudesPendientes;
 	
 	@Value("${localizaOrden}")
     private String localizaOrden;

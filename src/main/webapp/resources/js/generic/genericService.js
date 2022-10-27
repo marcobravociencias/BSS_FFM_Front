@@ -222,6 +222,33 @@ app.service("genericService", function ($http) {
         });
     };
 
+    //bandejaSolicitudesRechazadas
+    this.bandejaSolicitudesRechazadas = function (params) {
+        return $http({
+            method: "post",
+            url: "req/bandejaSolicitudesRechazadas",
+            data: JSON.stringify(params),
+            headers: {'Content-Type': "application/json; charset=utf-8"},
+        });
+    };
+    //bandejaSolicitudesPendientes
+    this.bandejaSolicitudesPendientes = function (params) {
+        return $http({
+            method: "post",
+            url: "req/bandejaSolicitudesPendientes",
+            data: JSON.stringify(params),
+            headers: {'Content-Type': "application/json; charset=utf-8"},
+        });
+    };
 
+    this.solTorreLiderTec = function (list) {
+        return $http({
+            method: "post",
+            url: "req/solTorreLiderTec",
+            data: JSON.stringify(list),
+            headers: {'Content-Type': "application/json; charset=utf-8"},
+            transformRequest: angular.identity
+        });
+    };
 
 })
